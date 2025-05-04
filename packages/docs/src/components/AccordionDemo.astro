@@ -1,0 +1,120 @@
+---
+import { defineAccordion } from '@aetherui/accordion';
+import { Code } from '@astrojs/starlight/components';
+
+// Register the accordion components
+defineAccordion();
+---
+
+<div class="demo-container">
+  <div class="demo">
+    <ae-accordion id="demo-accordion">
+      <ae-accordion-panel>
+        <span slot="header">Getting Started</span>
+        <div class="panel-content">
+          <p>Learn how to install and use Aether UI components in your project.</p>
+          <ul>
+            <li>Installation</li>
+            <li>Basic Usage</li>
+            <li>Framework Integration</li>
+          </ul>
+        </div>
+      </ae-accordion-panel>
+      <ae-accordion-panel>
+        <span slot="header">Components</span>
+        <div class="panel-content">
+          <p>Browse our collection of accessible, themeable components.</p>
+          <ul>
+            <li>Accordion</li>
+            <li>Button</li>
+            <li>Dialog</li>
+            <li>And more...</li>
+          </ul>
+        </div>
+      </ae-accordion-panel>
+      <ae-accordion-panel>
+        <span slot="header">Customization</span>
+        <div class="panel-content">
+          <p>Learn how to customize components to match your design system.</p>
+          <ul>
+            <li>Design Tokens</li>
+            <li>CSS Custom Properties</li>
+            <li>Theme Switching</li>
+          </ul>
+        </div>
+      </ae-accordion-panel>
+    </ae-accordion>
+
+    <div class="controls">
+      <label>
+        <input type="checkbox" id="multiselectable" />
+        Allow multiple open panels
+      </label>
+    </div>
+  </div>
+
+  <div class="code-preview">
+    <Code language="html">
+      {`<ae-accordion>
+  <ae-accordion-panel>
+    <span slot="header">Getting Started</span>
+    <div class="panel-content">
+      <p>Learn how to install and use Aether UI components...</p>
+    </div>
+  </ae-accordion-panel>
+  <!-- More panels... -->
+</ae-accordion>`}
+    </Code>
+  </div>
+</div>
+
+<script>
+  const accordion = document.getElementById('demo-accordion');
+  const multiselectable = document.getElementById('multiselectable');
+
+  multiselectable?.addEventListener('change', (e) => {
+    if (accordion) {
+      accordion.setAttribute('multiselectable', (e.target as HTMLInputElement).checked ? '' : null);
+    }
+  });
+</script>
+
+<style>
+  .demo-container {
+    display: grid;
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .demo {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    background: var(--sl-color-gray-1);
+  }
+
+  .controls {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sl-color-gray-5);
+  }
+
+  .panel-content {
+    padding: 1rem;
+  }
+
+  .panel-content ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .panel-content li {
+    margin: 0.25rem 0;
+  }
+
+  @media (min-width: 768px) {
+    .demo-container {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style> 

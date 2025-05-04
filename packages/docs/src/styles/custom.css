@@ -1,0 +1,124 @@
+/* Theme variables */
+:root {
+  /* Font settings */
+  --sl-font-mono: 'JetBrains Mono', Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console',
+    'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono',
+    'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
+  
+  /* Primary theme colors */
+  --sl-color-accent-low: #e6f0ff;
+  --sl-color-accent: #0055ff;
+  --sl-color-accent-high: #0033cc;
+  
+  /* Text colors */
+  --sl-color-text-accent: var(--sl-color-accent);
+  
+  /* Border radius */
+  --sl-border-radius: 0.5rem;
+}
+
+/* Dark mode overrides */
+:root[data-theme='dark'] {
+  --sl-color-accent-low: #002266;
+  --sl-color-accent: #4d88ff;
+  --sl-color-accent-high: #e6f0ff;
+}
+
+/* Hero component styles */
+.hero {
+  background: linear-gradient(135deg, var(--sl-color-accent-low) 0%, transparent 100%);
+  padding: 4rem 2rem;
+  border-radius: var(--sl-border-radius);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: var(--sl-color-gray-2);
+  margin-bottom: 2rem;
+}
+
+/* Interactive example styles */
+.interactive-example {
+  border: 1px solid var(--sl-color-border);
+  border-radius: var(--sl-border-radius);
+  margin: 1rem 0;
+  overflow: hidden;
+}
+
+.example-preview {
+  padding: 2rem;
+  border-bottom: 1px solid var(--sl-color-border);
+}
+
+.example-code {
+  background: var(--sl-color-bg-sidebar);
+  padding: 1rem;
+}
+
+/* Code block styles */
+.astro-code, pre {
+  padding: 1rem !important;
+  border-radius: var(--sl-border-radius) !important;
+  margin: 1rem 0 !important;
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  margin: 1rem 0;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.75rem;
+  border: 1px solid var(--sl-color-gray-5);
+}
+
+th {
+  background: var(--sl-color-gray-6);
+  font-weight: 600;
+}
+
+/* Props table specific styles */
+.props-table code {
+  color: var(--sl-color-text-accent);
+}
+
+/* Component demo layouts */
+.button-demo,
+.button-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.accordion-demo {
+  max-width: 600px;
+  margin: 1rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+  
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+}

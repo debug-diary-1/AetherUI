@@ -1,0 +1,79 @@
+---
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+  code?: string;
+  preview?: string;
+}
+
+const { code, preview } = Astro.props;
+---
+
+<div class="button-example">
+  {preview ? <Fragment set:html={preview} /> : <slot />}
+</div>
+
+{code && (
+  <div class="code-preview">
+    <Code language="html" code={code} />
+  </div>
+)}
+
+<script>
+  import { defineComponents } from '@aetherui/core';
+  
+  // Register all components
+  defineComponents();
+</script>
+
+<style>
+  .button-example {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+
+  :global(ae-button) {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Custom properties for button styling */
+  :global(:root) {
+    --ae-color-primary: #3b82f6;
+    --ae-color-primary-hover: #2563eb;
+    --ae-color-primary-foreground: #ffffff;
+    
+    --ae-color-secondary: #f3f4f6;
+    --ae-color-secondary-hover: #e5e7eb;
+    --ae-color-secondary-foreground: #1f2937;
+    
+    --ae-color-surface: #ffffff;
+    --ae-color-surface-hover: #f9fafb;
+    
+    --ae-color-text: #1f2937;
+    --ae-color-border: #e5e7eb;
+    
+    --ae-border-radius: 0.375rem;
+    --ae-transition-duration: 200ms;
+    --ae-font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  /* Dark mode support */
+  :global([data-theme="dark"]) {
+    --ae-color-primary: #60a5fa;
+    --ae-color-primary-hover: #3b82f6;
+    --ae-color-primary-foreground: #ffffff;
+    
+    --ae-color-secondary: #374151;
+    --ae-color-secondary-hover: #4b5563;
+    --ae-color-secondary-foreground: #f9fafb;
+    
+    --ae-color-surface: #1f2937;
+    --ae-color-surface-hover: #374151;
+    
+    --ae-color-text: #f9fafb;
+    --ae-color-border: #4b5563;
+  }
+</style>

@@ -1,0 +1,21 @@
+{
+  "source": ["src/tokens/**/*.json"],
+  "platforms": {
+    "css": {
+      "transformGroup": "css",
+      "buildPath": "dist/",
+      "files": [
+        {
+          "destination": "light.css",
+          "format": "css/variables",
+          "filter": "light"
+        },
+        {
+          "destination": "dark.css",
+          "format": "css/variables",
+          "filter": "dark"
+        }
+      ]
+    }
+  }
+} 

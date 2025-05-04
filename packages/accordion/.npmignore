@@ -1,0 +1,8 @@
+src
+__tests__
+*.log
+.DS_Store
+tsconfig.json
+.eslintrc.json
+.prettierrc
+vite.config.ts 

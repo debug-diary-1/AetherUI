@@ -1,0 +1,50 @@
+name: Feature Request
+description: Suggest an idea for this project
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a feature!
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: |
+        A clear and concise description of what you want to happen.
+      placeholder: |
+        I would like to see a new component that...
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: |
+        Why should this feature be implemented?
+        How would it benefit users?
+      placeholder: |
+        This feature would help users by...
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      description: |
+        Are there any alternative solutions or features you've considered?
+      placeholder: |
+        I've considered using...
+    validations:
+      required: false
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples
+      description: |
+        Are there any examples of this feature in other libraries or frameworks?
+      placeholder: |
+        Similar features can be found in...
+    validations:
+      required: false 

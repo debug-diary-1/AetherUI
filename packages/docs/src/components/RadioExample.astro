@@ -1,0 +1,36 @@
+import { defineAeRadio, defineAeRadioGroup } from '@aetherui/core';
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+  code?: string;
+  preview?: string;
+}
+
+const { code, preview } = Astro.props;
+
+// Register the radio components
+defineAeRadio();
+defineAeRadioGroup();
+
+<div class="radio-example">
+  {preview ? <Fragment set:html={preview} /> : <slot />}
+</div>
+
+{code && (
+  <div class="code-preview">
+    <Code language="html" code={code} />
+  </div>
+)}
+
+<style>
+  .radio-example {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+
+  :global(ae-radio-group) {
+    width: 100%;
+  }
+</style> 

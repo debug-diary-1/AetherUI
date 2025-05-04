@@ -1,0 +1,30 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import { registerAetherComponents } from '../components/AetherComponents';
+
+// Register button component for server-side rendering
+registerAetherComponents();
+---
+
+<slot />
+<ViewTransitions />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<script>
+  // Register components on the client side
+  window.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const { registerClientComponents } = await import('../components/AetherComponents');
+      const result = await registerClientComponents();
+      console.log('Button component registered on client', result);
+      
+      // Force custom elements to be defined
+      if (customElements && customElements.whenDefined) {
+        await customElements.whenDefined('ae-button');
+        console.log('ae-button is now defined');
+      }
+    } catch (error) {
+      console.error('Error registering components:', error);
+    }
+  });
+</script>

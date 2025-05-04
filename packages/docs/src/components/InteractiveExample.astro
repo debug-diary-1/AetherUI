@@ -1,0 +1,71 @@
+---
+interface Props {
+  code: string;
+  title?: string;
+  description?: string;
+  preview?: string;
+}
+
+const { code, title, description, preview } = Astro.props;
+---
+
+<div class="interactive-example">
+  {title && <h3 class="title">{title}</h3>}
+  {description && <p class="description">{description}</p>}
+  <div class="preview">
+    <Fragment set:html={preview || code} />
+  </div>
+  <div class="code">
+    <pre><code class="language-html">{code}</code></pre>
+  </div>
+</div>
+
+<style>
+  .interactive-example {
+    border: 1px solid var(--sl-color-border);
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+    overflow: hidden;
+  }
+
+  .title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    padding: 1rem;
+    border-bottom: 1px solid var(--sl-color-border);
+  }
+
+  .description {
+    margin: 0;
+    padding: 0 1rem 1rem;
+    color: var(--sl-color-text-light);
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--sl-color-border);
+  }
+
+  .preview {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: var(--sl-color-bg);
+  }
+
+  .code {
+    border-top: 1px solid var(--sl-color-border);
+    background: var(--sl-color-bg-sidebar);
+    padding: 1rem;
+    margin: 0;
+  }
+
+  .code pre {
+    margin: 0;
+    padding: 0;
+  }
+
+  :global(.dark) .preview {
+    background: var(--sl-color-black);
+  }
+</style>

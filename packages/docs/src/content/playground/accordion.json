@@ -1,0 +1,189 @@
+{
+  "title": "Accordion Playground",
+  "description": "Interactive playground for the Accordion component using StackBlitz WebContainers",
+  "stackblitz": {
+    "template": "node",
+    "title": "Aether UI - Accordion Playground",
+    "description": "Interactive playground for the Accordion component",
+    "files": {
+      "package.json": {
+        "content": {
+          "name": "aetherui-accordion-playground",
+          "version": "0.0.0",
+          "private": true,
+          "type": "module",
+          "scripts": {
+            "dev": "vite",
+            "build": "vite build",
+            "preview": "vite preview"
+          },
+          "dependencies": {
+            "@aetherui/accordion": "latest",
+            "@aetherui/tokens": "latest"
+          },
+          "devDependencies": {
+            "vite": "^5.0.0",
+            "typescript": "^5.0.0"
+          }
+        }
+      },
+      "vite.config.ts": {
+        "content": `import { defineConfig } from 'vite';
+import { resolve } from 'path';
+
+export default defineConfig({
+  server: {
+    port: 3000
+  }
+});`
+      },
+      "index.html": {
+        "content": `<!DOCTYPE html>
+<html>
+<head>
+  <title>Aether UI - Accordion Playground</title>
+  <link rel="stylesheet" href="/src/styles.css">
+  <script type="module" src="/src/main.ts"></script>
+</head>
+<body>
+  <div id="app"></div>
+</body>
+</html>`
+      },
+      "src/main.ts": {
+        "content": `import { defineAccordion } from '@aetherui/accordion';
+import '@aetherui/tokens/light.css';
+import './styles.css';
+
+// Register the accordion components
+defineAccordion();
+
+// Create the playground UI
+const app = document.getElementById('app');
+if (app) {
+  app.innerHTML = \`
+    <div class="playground">
+      <div class="preview">
+        <ae-accordion id="playground-accordion">
+          <ae-accordion-panel>
+            <span slot="header">Getting Started</span>
+            <div class="panel-content">
+              <p>Learn how to install and use Aether UI components in your project.</p>
+              <ul>
+                <li>Installation</li>
+                <li>Basic Usage</li>
+                <li>Framework Integration</li>
+              </ul>
+            </div>
+          </ae-accordion-panel>
+          <ae-accordion-panel>
+            <span slot="header">Components</span>
+            <div class="panel-content">
+              <p>Browse our collection of accessible, themeable components.</p>
+              <ul>
+                <li>Accordion</li>
+                <li>Button</li>
+                <li>Dialog</li>
+              </ul>
+            </div>
+          </ae-accordion-panel>
+        </ae-accordion>
+
+        <div class="controls">
+          <label>
+            <input type="checkbox" id="multiselectable" />
+            Allow multiple open panels
+          </label>
+        </div>
+      </div>
+
+      <div class="code">
+        <pre><code class="language-html">&lt;ae-accordion&gt;
+  &lt;ae-accordion-panel&gt;
+    &lt;span slot="header"&gt;Getting Started&lt;/span&gt;
+    &lt;div class="panel-content"&gt;
+      &lt;p&gt;Learn how to install and use Aether UI components...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/ae-accordion-panel&gt;
+  &lt;!-- More panels... --&gt;
+&lt;/ae-accordion&gt;</code></pre>
+      </div>
+    </div>
+  \`;
+
+  // Add interactivity
+  const accordion = document.getElementById('playground-accordion');
+  const multiselectable = document.getElementById('multiselectable');
+
+  if (accordion && multiselectable) {
+    multiselectable.addEventListener('change', (e) => {
+      accordion.setAttribute('multiselectable', (e.target as HTMLInputElement).checked ? '' : null);
+    });
+  }
+}`
+      },
+      "src/styles.css": {
+        "content": `:root {
+  --playground-bg: #f9fafb;
+  --playground-border: #e5e7eb;
+  --playground-text: #111827;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  background: var(--playground-bg);
+  color: var(--playground-text);
+}
+
+.playground {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  gap: 2rem;
+}
+
+.preview {
+  border: 1px solid var(--playground-border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background: white;
+}
+
+.controls {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--playground-border);
+}
+
+.panel-content {
+  padding: 1rem;
+}
+
+.panel-content ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.panel-content li {
+  margin: 0.25rem 0;
+}
+
+.code {
+  border: 1px solid var(--playground-border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background: white;
+  overflow-x: auto;
+}
+
+@media (min-width: 768px) {
+  .playground {
+    grid-template-columns: 1fr 1fr;
+  }
+}`
+      }
+    }
+  }
+} 

@@ -1,0 +1,25 @@
+{
+  "name": "@aetherui/docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test:playground": "tsx scripts/test-playground.ts"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.34.0",
+    "@aetherui/accordion": "workspace:*",
+    "@aetherui/tokens": "workspace:*",
+    "astro": "^5.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.0.0"
+  }
+} 

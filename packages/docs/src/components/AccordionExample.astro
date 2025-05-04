@@ -1,0 +1,40 @@
+---
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+  code?: string;
+  preview?: string;
+}
+
+const { code, preview } = Astro.props;
+---
+
+<div class="accordion-example">
+  {preview ? <Fragment set:html={preview} /> : <slot />}
+</div>
+
+{code && (
+  <div class="code-preview">
+    <Code language="html" code={code} />
+  </div>
+)}
+
+<script>
+  import { defineComponents } from '@aetherui/core';
+  
+  // Register all components
+  defineComponents();
+</script>
+
+<style>
+  .accordion-example {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+
+  :global(ae-accordion) {
+    width: 100%;
+  }
+</style>

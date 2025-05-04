@@ -1,0 +1,52 @@
+name: Accessibility Issue
+description: Report an accessibility concern or improvement
+title: "[A11y] "
+labels: ["accessibility"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping us improve accessibility!
+  - type: textarea
+    id: wcag
+    attributes:
+      label: WCAG Success Criteria
+      description: |
+        Which WCAG 2.1 success criteria does this issue relate to?
+        Please provide the success criterion number and description.
+      placeholder: |
+        WCAG 2.1 Success Criterion 1.1.1 Non-text Content
+        All non-text content that is presented to the user has a text alternative that serves the equivalent purpose...
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: |
+        Please describe the accessibility issue or improvement.
+      placeholder: |
+        The component does not provide sufficient contrast between text and background...
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: |
+        Please provide a link to a StackBlitz reproduction of the issue.
+      placeholder: https://stackblitz.com/github/aetherui/playground
+    validations:
+      required: true
+  - type: textarea
+    id: assistive-tech
+    attributes:
+      label: Assistive Technology
+      description: |
+        Which assistive technology was used to identify the issue?
+      placeholder: |
+        - Screen Reader: [e.g. VoiceOver, NVDA]
+        - Browser: [e.g. Chrome, Firefox]
+        - Version: [e.g. 22]
+    validations:
+      required: true 

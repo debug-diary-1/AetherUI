@@ -1,0 +1,144 @@
+---
+interface Props {
+  data?: {
+    hero?: {
+      title?: string;
+      tagline?: string;
+      image?: {
+        file?: { src?: string };
+        alt?: string;
+      };
+      actions?: Array<{
+        text: string;
+        link: string;
+        variant?: 'primary' | 'secondary';
+        icon?: string;
+      }>;
+    };
+  };
+}
+
+const { data } = Astro.props;
+const { title, tagline, image, actions = [] } = data?.hero || {};
+---
+
+{(title || tagline || actions.length > 0) && (
+  <div class="hero">
+    <div class="hero-content">
+      {title && <h1 class="title" set:html={title} />}
+      {tagline && <div class="tagline" set:html={tagline} />}
+      {actions.length > 0 && (
+        <div class="actions">
+          {actions.map(({ text, link, variant = 'primary', icon }) => (
+            <a href={link} class:list={['action', variant]}>
+              <span>{text}</span>
+              {icon && <span class="icon">{icon}</span>}
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+    {image?.file?.src && (
+      <div class="hero-image">
+        <img src={image.file.src} alt={image.alt || ''} />
+      </div>
+    )}
+  </div>
+)}
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    padding: 4rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--sl-color-border);
+  }
+
+  .hero-content {
+    margin: auto 0;
+  }
+
+  .title {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    color: var(--sl-color-text);
+  }
+
+  .tagline {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    margin: 1rem 0 1.5rem;
+    color: var(--sl-color-text);
+    opacity: 0.8;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .action.primary {
+    background: var(--sl-color-text-accent);
+    color: var(--sl-color-black);
+  }
+
+  .action.secondary {
+    background: var(--sl-color-bg-subtle);
+    color: var(--sl-color-text);
+  }
+
+  .action:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+
+  .hero-image {
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-image img {
+    max-width: 200px;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      grid-template-columns: 1fr;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .title {
+      font-size: 2.5rem;
+    }
+
+    .tagline {
+      font-size: 1.25rem;
+    }
+
+    .actions {
+      justify-content: center;
+    }
+
+    .hero-image {
+      justify-content: center;
+    }
+  }
+</style>
