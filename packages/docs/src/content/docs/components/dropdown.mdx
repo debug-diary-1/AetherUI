@@ -1,0 +1,249 @@
+---
+title: Dropdown
+description: Dropdown menu component for displaying a list of options or actions.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { TextMenu, TextButton, CopyValue } from '../../../components/interactive.tsx';
+
+## Overview
+
+The Dropdown component provides a popup menu that appears when a trigger element is clicked. It's commonly used for displaying a list of options, actions, or navigation items.
+
+```html
+<ae-dropdown>
+  <button>Open Menu</button>
+  <ae-menu-item slot="item" value="edit">Edit</ae-menu-item>
+  <ae-menu-item slot="item" value="duplicate">Duplicate</ae-menu-item>
+  <ae-menu-item slot="item" value="delete">Delete</ae-menu-item>
+</ae-dropdown>
+```
+
+## Features
+
+- 🎯 Smart positioning with floating-ui
+- ⌨️ Full keyboard navigation support
+- 🔍 Type-ahead search
+- 🎨 Customizable styles
+- ♿ Accessible by default
+
+## Import
+
+<Tabs>
+  <TabItem label="HTML">
+  ```html
+  <script type="module">
+    import '@aetherui/core/dropdown/define.js';
+  </script>
+  ```
+  </TabItem>
+  <TabItem label="JavaScript">
+  ```js
+  // Import and define
+  import { defineAeDropdown } from '@aetherui/core';
+  defineAeDropdown();
+
+  // Or import the class directly
+  import { AeDropdown, AeMenuItem, AeMenuSeparator } from '@aetherui/core';
+  ```
+  </TabItem>
+</Tabs>
+
+## Usage
+
+### Basic Dropdown
+
+The most common usage is a button that opens a menu of options.
+
+```html
+<ae-dropdown>
+  <button>Options</button>
+  
+  <ae-menu-item slot="item" value="edit">Edit</ae-menu-item>
+  <ae-menu-item slot="item" value="duplicate">Duplicate</ae-menu-item>
+  <ae-menu-item slot="item" value="delete">Delete</ae-menu-item>
+</ae-dropdown>
+```
+
+### With Separators
+
+Use `<ae-menu-separator>` to visually group related items.
+
+```html
+<ae-dropdown>
+  <button>More Actions</button>
+  
+  <ae-menu-item slot="item" value="edit">Edit</ae-menu-item>
+  <ae-menu-item slot="item" value="duplicate">Duplicate</ae-menu-item>
+  <ae-menu-separator slot="item"></ae-menu-separator>
+  <ae-menu-item slot="item" value="archive">Archive</ae-menu-item>
+  <ae-menu-separator slot="item"></ae-menu-separator>
+  <ae-menu-item slot="item" value="delete">Delete</ae-menu-item>
+</ae-dropdown>
+```
+
+### Disabled Items
+
+Individual menu items can be disabled.
+
+```html
+<ae-dropdown>
+  <button>Select</button>
+  
+  <ae-menu-item slot="item" value="option1">Option 1</ae-menu-item>
+  <ae-menu-item slot="item" value="option2" disabled>Option 2 (Disabled)</ae-menu-item>
+  <ae-menu-item slot="item" value="option3">Option 3</ae-menu-item>
+</ae-dropdown>
+```
+
+### With Icons and Hints
+
+Menu items can include icons and right-aligned hints like keyboard shortcuts.
+
+```html
+<ae-dropdown>
+  <button>Edit</button>
+  
+  <ae-menu-item slot="item" value="cut">
+    <span slot="icon">✂️</span>
+    Cut
+    <span slot="hint">⌘X</span>
+  </ae-menu-item>
+  
+  <ae-menu-item slot="item" value="copy">
+    <span slot="icon">📋</span>
+    Copy
+    <span slot="hint">⌘C</span>
+  </ae-menu-item>
+  
+  <ae-menu-item slot="item" value="paste">
+    <span slot="icon">📌</span>
+    Paste
+    <span slot="hint">⌘V</span>
+  </ae-menu-item>
+</ae-dropdown>
+```
+
+## Attributes
+
+### `<ae-dropdown>`
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `open` | Boolean | `false` | Whether the dropdown is open (controlled mode) |
+| `default-open` | Boolean | `false` | Initial open state (uncontrolled mode) |
+| `placement` | String | `'bottom-start'` | Menu placement relative to trigger element |
+| `strategy` | String | `'absolute'` | Positioning strategy (`'absolute'` or `'fixed'`) |
+| `disabled` | Boolean | `false` | Whether the dropdown is disabled |
+
+### `<ae-menu-item>`
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `value` | String | `''` | Value to emit when the item is selected |
+| `disabled` | Boolean | `false` | Whether the item is disabled |
+
+## Events
+
+| Event | Detail | Description |
+|-------|--------|-------------|
+| `ae-open-change` | `{ open: boolean }` | Fired when the dropdown opens or closes |
+| `ae-select` | `{ value: string }` | Fired when a menu item is selected |
+
+## Slots
+
+### `<ae-dropdown>`
+
+| Slot | Description |
+|------|-------------|
+| `default` | The trigger element (button, link, etc.) |
+| `item` | Menu items (should be `<ae-menu-item>` or `<ae-menu-separator>`) |
+
+### `<ae-menu-item>`
+
+| Slot | Description |
+|------|-------------|
+| `default` | Label/text content |
+| `icon` | Optional icon displayed before the label |
+| `hint` | Optional hint text displayed after the label (like keyboard shortcuts) |
+
+## CSS Custom Properties
+
+| Property | Description |
+|----------|-------------|
+| `--ae-dropdown-shadow` | Overlay box shadow |
+| `--ae-dropdown-radius` | Corner rounding |
+| `--ae-dropdown-bg` | Menu background color |
+| `--ae-dropdown-fg` | Text color |
+| `--ae-dropdown-item-hover-bg` | Background color on item hover |
+| `--ae-dropdown-item-active-bg` | Background color for active/focused item |
+| `--ae-dropdown-gap` | Vertical spacing between items |
+| `--ae-dropdown-max-height` | Maximum height before scrolling |
+| `--ae-dropdown-separator-color` | Color of separator lines |
+
+## Accessibility
+
+The Dropdown component follows WAI-ARIA best practices for menus:
+
+- The menu has `role="menu"` and menu items have `role="menuitem"`
+- Keyboard navigation with arrow keys, Home/End, and Enter
+- Type-ahead functionality allows users to quickly navigate to items by typing
+- Proper focus management ensures a good experience for keyboard users
+- Escape key closes the dropdown
+- Click outside detection automatically closes the menu when interacting with other elements
+
+## Examples
+
+### Basic Example
+
+<div class="example">
+  <ae-dropdown>
+    <ae-button>Open Menu</ae-button>
+    <ae-menu-item slot="item" value="edit">Edit</ae-menu-item>
+    <ae-menu-item slot="item" value="duplicate">Duplicate</ae-menu-item>
+    <ae-menu-separator slot="item"></ae-menu-separator>
+    <ae-menu-item slot="item" value="delete">Delete</ae-menu-item>
+  </ae-dropdown>
+</div>
+
+### With Icons and Hints
+
+<div class="example">
+  <ae-dropdown>
+    <ae-button>More Actions</ae-button>
+    <ae-menu-item slot="item" value="cut">
+      <span slot="icon">✂️</span>
+      Cut
+      <span slot="hint">⌘X</span>
+    </ae-menu-item>
+    <ae-menu-item slot="item" value="copy">
+      <span slot="icon">📋</span>
+      Copy
+      <span slot="hint">⌘C</span>
+    </ae-menu-item>
+    <ae-menu-item slot="item" value="paste">
+      <span slot="icon">📌</span>
+      Paste
+      <span slot="hint">⌘V</span>
+    </ae-menu-item>
+  </ae-dropdown>
+</div>
+
+<script>
+  // Initialize components
+  import { defineAeDropdown, defineAeButton } from '@aetherui/core';
+  defineAeDropdown();
+  defineAeButton();
+</script>
+
+<style>
+  .example {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--sl-color-bg-subtle);
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+  }
+</style> 
