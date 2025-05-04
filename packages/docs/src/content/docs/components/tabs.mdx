@@ -1,0 +1,286 @@
+---
+title: Tabs
+description: A set of tabbed panels for organizing content.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import TabsExample from '../../../components/TabsExample.astro';
+
+{/* Register custom elements for MDX */}
+export const components = {
+  'ae-tabs': 'ae-tabs',
+  'ae-tab': 'ae-tab',
+  'ae-tab-panel': 'ae-tab-panel'
+};
+
+# Tabs
+
+A set of tabbed panels for organizing content.
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="yarn">
+    ```bash
+    yarn add @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Basic Usage
+
+<TabsExample
+  code={`<ae-tabs orientation="horizontal" value="tab1">
+  <ae-tab slot="tab" id="tab1">First Tab</ae-tab>
+  <ae-tab slot="tab" id="tab2">Second Tab</ae-tab>
+
+  <ae-tab-panel slot="panel" id="panel1">
+    <h3>First Tab Content</h3>
+    <p>This is the content for the first tab.</p>
+  </ae-tab-panel>
+
+  <ae-tab-panel slot="panel" id="panel2">
+    <h3>Second Tab Content</h3>
+    <p>Content for the second tab panel.</p>
+  </ae-tab-panel>
+</ae-tabs>`}
+/>
+
+## Horizontal Tabs
+
+<TabsExample
+  code={`<ae-tabs value="tab1">
+  <ae-tab slot="tab" id="tab1">First Tab</ae-tab>
+  <ae-tab slot="tab" id="tab2">Second Tab</ae-tab>
+  <ae-tab slot="tab" id="tab3">Third Tab</ae-tab>
+
+  <ae-tab-panel slot="panel" id="panel1">
+    <h3>First Tab Content</h3>
+    <p>This is the content for the first tab in horizontal orientation.</p>
+  </ae-tab-panel>
+
+  <ae-tab-panel slot="panel" id="panel2">
+    <h3>Second Tab Content</h3>
+    <p>Content for the second tab panel with some example text.</p>
+    <ul>
+      <li>Feature 1</li>
+      <li>Feature 2</li>
+      <li>Feature 3</li>
+    </ul>
+  </ae-tab-panel>
+
+  <ae-tab-panel slot="panel" id="panel3">
+    <h3>Third Tab Content</h3>
+    <p>Content for the third tab panel.</p>
+  </ae-tab-panel>
+</ae-tabs>`}
+  description="Horizontal tabs are the default orientation. Use Left/Right arrow keys for keyboard navigation."
+/>
+
+## Vertical Tabs
+
+<TabsExample
+  code={`<ae-tabs value="tab1" orientation="vertical">
+  <ae-tab slot="tab" id="tab1">First Tab</ae-tab>
+  <ae-tab slot="tab" id="tab2">Second Tab</ae-tab>
+  <ae-tab slot="tab" id="tab3">Third Tab</ae-tab>
+
+  <ae-tab-panel slot="panel" id="panel1">
+    <h3>First Tab Content</h3>
+    <p>This is a vertical tabs layout, where tabs are displayed in a column rather than a row.</p>
+  </ae-tab-panel>
+
+  <ae-tab-panel slot="panel" id="panel2">
+    <h3>Second Tab Content</h3>
+    <p>Vertical tabs are useful when:</p>
+    <ul>
+      <li>You have many tabs</li>
+      <li>Tab labels are long</li>
+      <li>You want to maximize vertical space</li>
+    </ul>
+  </ae-tab-panel>
+
+  <ae-tab-panel slot="panel" id="panel3">
+    <h3>Third Tab Content</h3>
+    <p>Keyboard navigation for vertical tabs uses Up/Down arrow keys instead of Left/Right.</p>
+  </ae-tab-panel>
+</ae-tabs>`}
+  description="Vertical tabs stack the tab buttons in a column on the left side. Use Up/Down arrow keys for keyboard navigation."
+/>
+
+## Manual Activation Mode
+
+<TabsExample
+  code={`<ae-tabs value="tab1" activation="manual">
+  <ae-tab slot="tab" id="tab1">First Tab</ae-tab>
+  <ae-tab slot="tab" id="tab2">Second Tab</ae-tab>
+  <ae-tab slot="tab" id="tab3">Third Tab</ae-tab>
+
+  <ae-tab-panel slot="panel" id="panel1">
+    <h3>Manual Activation Example</h3>
+    <p>Use keyboard arrow keys to navigate between tabs, then press Enter to activate.</p>
+  </ae-tab-panel>
+
+  <ae-tab-panel slot="panel" id="panel2">
+    <h3>Second Tab Content</h3>
+    <p>This tab was activated manually.</p>
+  </ae-tab-panel>
+
+  <ae-tab-panel slot="panel" id="panel3">
+    <h3>Third Tab Content</h3>
+    <p>Manual activation can be better for certain interfaces where inadvertent tab switching would be disruptive.</p>
+  </ae-tab-panel>
+</ae-tabs>`}
+  description="In manual mode, focusing a tab with keyboard navigation doesn't automatically select it. You need to press Enter or Space to activate the tab."
+/>
+
+## Custom Styling
+
+<TabsExample
+  code={`<style>
+  .custom-tabs {
+    --ae-tabs-gap: 0;
+    --ae-tabs-indicator-color: #0066ff;
+  }
+  
+  .custom-tabs::part(tab) {
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .custom-tabs::part(tab):hover {
+    background-color: #f0f4ff;
+  }
+  
+  .custom-tabs::part(tab)[aria-selected="true"] {
+    background-color: #f0f4ff;
+    color: #0066ff;
+  }
+  
+  .custom-tabs::part(panel) {
+    padding: 1.5rem;
+    background-color: #f9fafb;
+    border-radius: 0 0 4px 4px;
+  }
+</style>
+
+<ae-tabs class="custom-tabs" value="tab1">
+  <ae-tab slot="tab" id="tab1">First Tab</ae-tab>
+  <ae-tab slot="tab" id="tab2">Second Tab</ae-tab>
+  <ae-tab slot="tab" id="tab3">Third Tab</ae-tab>
+
+  <ae-tab-panel slot="panel" id="panel1">
+    <h3>Custom Styled Tabs</h3>
+    <p>These tabs have custom styling applied using CSS parts and custom properties.</p>
+  </ae-tab-panel>
+
+  <ae-tab-panel slot="panel" id="panel2">
+    <h3>Second Tab Content</h3>
+    <p>Content for the second tab panel with custom styling.</p>
+  </ae-tab-panel>
+
+  <ae-tab-panel slot="panel" id="panel3">
+    <h3>Third Tab Content</h3>
+    <p>Content for the third tab panel with custom styling.</p>
+  </ae-tab-panel>
+</ae-tabs>`}
+  description="Customize the appearance of tabs using CSS parts and custom properties."
+/>
+
+## Import
+
+```js
+// Option 1: Import directly from core package
+import { defineAeTabs } from '@aetherui/core';
+defineAeTabs();
+
+// Option 2: Use defineAll to register all components
+import { defineAll } from '@aetherui/core';
+defineAll();
+```
+
+## Components
+
+The tabs system consists of three components:
+
+1. `ae-tabs` - The main container component
+2. `ae-tab` - Individual tab buttons
+3. `ae-tab-panel` - Content panels corresponding to tabs
+
+## Properties
+
+### ae-tabs
+
+| Property      | Attribute     | Type                    | Default       | Description                           |
+| ------------- | ------------- | ----------------------- | ------------- | ------------------------------------- |
+| `value`       | `value`       | `string`                | `''`          | ID of the active tab                  |
+| `orientation` | `orientation` | `'horizontal'/'vertical'` | `'horizontal'` | Tab layout direction                  |
+| `activation`  | `activation`  | `'auto'/'manual'`       | `'auto'`      | Auto focus vs. manual selection mode  |
+
+### ae-tab
+
+| Property       | Attribute       | Type      | Default | Description                       |
+| -------------- | --------------- | --------- | ------- | --------------------------------- |
+| `id`           | `id`            | `string`  | `''`    | Unique identifier for the tab     |
+| `ariaSelected` | `aria-selected` | `string`  | `'false'` | Whether tab is selected           |
+| `ariaControls` | `aria-controls` | `string`  | `''`    | ID of the panel this tab controls |
+| `tabIndex`     | `tabindex`      | `number`  | `-1`    | Tab index for keyboard navigation |
+
+### ae-tab-panel
+
+| Property     | Attribute     | Type     | Default | Description                |
+| ------------ | ------------- | -------- | ------- | -------------------------- |
+| `id`         | `id`          | `string` | `''`    | Unique identifier for panel |
+
+## Events
+
+| Event       | Description                  | Event Detail           |
+| ----------- | ---------------------------- | ---------------------- |
+| `ae-change` | Fires when active tab changes| `{ value: string }`    |
+
+## CSS Parts
+
+### ae-tabs
+
+| Part         | Description                |
+| ------------ | -------------------------- |
+| `tablist`    | The tab container          |
+| `tab`        | Each tab button (from ae-tab) |
+| `panel`      | Each panel (from ae-tab-panel) |
+
+## CSS Custom Properties
+
+| Property                    | Description                  | Default      |
+| --------------------------- | ---------------------------- | ------------ |
+| `--ae-tabs-gap`            | Space between tabs           | `1rem`       |
+| `--ae-tabs-padding-x`      | Horizontal padding in tab    | `0.75rem`    |
+| `--ae-tabs-padding-y`      | Vertical padding in tab      | `0.25rem`    |
+| `--ae-tabs-indicator-color`| Color of active tab indicator| `currentColor` |
+
+## Accessibility
+
+The tabs component follows WAI-ARIA guidelines:
+
+- Implements the [WAI-ARIA Tabs Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)
+- Proper keyboard navigation with arrow keys
+- Auto-focus with tab selection or manual mode available
+- Proper ARIA attributes for screen readers
+
+## JavaScript Events
+
+```js
+// Add event listener to handle tab changes
+const tabs = document.querySelector('ae-tabs');
+tabs.addEventListener('ae-change', (e) => {
+  console.log('Active tab changed to:', e.detail.value);
+});
+``` 

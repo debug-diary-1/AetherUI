@@ -1,0 +1,212 @@
+---
+title: Alert
+description: Non-modal, in-flow banner for status or messaging with optional dismiss button.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import AlertExample from '../../../components/AlertExample.astro';
+
+{/* Register custom elements for MDX */}
+export const components = {
+  'ae-alert': 'ae-alert'
+};
+
+# Alert
+
+Non-modal, in-flow banner for status or messaging with optional dismiss button.
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="yarn">
+    ```bash
+    yarn add @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Basic Usage
+
+<AlertExample
+  code={`<ae-alert>This is an informational alert.</ae-alert>`}
+/>
+
+## Variants
+
+<AlertExample
+  code={`<div style="display: flex; flex-direction: column; gap: 1rem;">
+  <ae-alert variant="info">This is an informational alert message.</ae-alert>
+  
+  <ae-alert variant="success">Operation completed successfully!</ae-alert>
+  
+  <ae-alert variant="warning">Warning: This action cannot be undone.</ae-alert>
+  
+  <ae-alert variant="error">Error: Unable to save changes. Please try again.</ae-alert>
+</div>`}
+/>
+
+## Closable Alerts
+
+<AlertExample
+  code={`<ae-alert closable>This alert can be dismissed by clicking the close button.</ae-alert>`}
+/>
+
+## Custom Icons
+
+<AlertExample
+  code={`<ae-alert variant="info">
+  <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"></circle>
+    <line x1="12" y1="16" x2="12" y2="12"></line>
+    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+  </svg>
+  You can replace the default icon with a custom one using the icon slot.
+</ae-alert>`}
+  description="Replace the default icon with a custom SVG using the icon slot."
+/>
+
+## Custom Styling
+
+<AlertExample
+  code={`<style>
+  .custom-alert {
+    --ae-alert-radius: 0;
+    --ae-alert-padding: 1.25rem;
+  }
+  
+  .custom-alert::part(base) {
+    border-left: 4px solid var(--theme-color, #0066ff);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .custom-alert[variant="info"] {
+    --theme-color: #0066ff;
+  }
+  
+  .custom-alert[variant="success"] {
+    --theme-color: #10b981;
+  }
+  
+  .custom-alert[variant="warning"] {
+    --theme-color: #f59e0b;
+  }
+  
+  .custom-alert[variant="error"] {
+    --theme-color: #ef4444;
+  }
+</style>
+
+<div style="display: flex; flex-direction: column; gap: 1rem;">
+  <ae-alert class="custom-alert" variant="info">
+    A styled info alert with a left border.
+  </ae-alert>
+  
+  <ae-alert class="custom-alert" variant="success">
+    A styled success alert with a left border.
+  </ae-alert>
+  
+  <ae-alert class="custom-alert" variant="warning">
+    A styled warning alert with a left border.
+  </ae-alert>
+  
+  <ae-alert class="custom-alert" variant="error">
+    A styled error alert with a left border.
+  </ae-alert>
+</div>`}
+  description="Customize the appearance of alerts using CSS parts and custom properties."
+/>
+
+## Import
+
+```js
+// Option 1: Import directly from core package
+import { defineAeAlert } from '@aetherui/core';
+defineAeAlert();
+
+// Option 2: Use defineAll to register all components
+import { defineAll } from '@aetherui/core';
+defineAll();
+```
+
+## Alert with JavaScript Events
+
+```js
+// Add event listener to handle close event
+document.querySelector('ae-alert').addEventListener('ae-close', () => {
+  console.log('Alert was closed!');
+  
+  // Optional: Add a fade-out animation
+  const alert = document.querySelector('ae-alert');
+  alert.style.transition = 'opacity 0.3s ease-out';
+  alert.style.opacity = '0';
+  
+  // Remove from DOM after animation
+  setTimeout(() => {
+    alert.remove();
+  }, 300);
+});
+```
+
+## Props
+
+| Property   | Attribute  | Type      | Default  | Description                             |
+| ---------- | ---------- | --------- | -------- | --------------------------------------- |
+| `variant`  | `variant`  | `string`  | `'info'` | Visual theme: 'info', 'success', 'warning', 'error' |
+| `closable` | `closable` | `boolean` | `false`  | Show a dismiss button                   |
+| `open`     | `open`     | `boolean` | `true`   | Control visibility (for animated exit)  |
+
+## Events
+
+| Event      | Description           | Event Detail |
+| ---------- | --------------------- | ------------ |
+| `ae-close` | Alert was dismissed   | None         |
+
+## Slots
+
+| Name     | Description                      |
+| -------- | -------------------------------- |
+| `default` | The alert message content       |
+| `icon`    | Optional custom icon            |
+
+## CSS Parts
+
+| Part       | Description             |
+| ---------- | ----------------------- |
+| `base`     | Alert container         |
+| `icon`     | Status icon             |
+| `content`  | Text wrapper            |
+| `close`    | Optional dismiss button |
+
+## CSS Custom Properties
+
+| Property                 | Description           | Default     |
+| ------------------------ | --------------------- | ----------- |
+| `--ae-alert-bg-info`     | Info background       | `#e8f4fd`   |
+| `--ae-alert-bg-success`  | Success background    | `#edf7ed`   |
+| `--ae-alert-bg-warning`  | Warning background    | `#fff8e1`   |
+| `--ae-alert-bg-error`    | Error background      | `#fdecea`   |
+| `--ae-alert-fg-info`     | Info text color       | `#055160`   |
+| `--ae-alert-fg-success`  | Success text color    | `#065f46`   |
+| `--ae-alert-fg-warning`  | Warning text color    | `#7a4d00`   |
+| `--ae-alert-fg-error`    | Error text color      | `#b71c1c`   |
+| `--ae-alert-radius`      | Corner rounding       | `0.375rem`  |
+| `--ae-alert-padding`     | Internal padding      | `1rem`      |
+| `--ae-space-3`           | Gap between elements  | `0.75rem`   |
+
+## Accessibility
+
+The alert component follows WAI-ARIA guidelines:
+
+- Uses `role="alert"` for warning and error variants (assertive announcements)
+- Uses `role="status"` for info and success variants (polite announcements)
+- Close button has `aria-label="Close"` for screen readers
+- Default icons are presentational and do not interfere with screen readers 

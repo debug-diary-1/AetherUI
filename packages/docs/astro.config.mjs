@@ -17,16 +17,19 @@ export default defineConfig({
       head: [
         {
           tag: 'meta',
-          attrs: { property: 'og:type', content: 'website' }
+          attrs: { property: 'og:type', content: 'website' },
         },
         {
           tag: 'meta',
-          attrs: { property: 'og:title', content: 'Aether UI Documentation' }
+          attrs: { property: 'og:title', content: 'Aether UI Documentation' },
         },
         {
           tag: 'meta',
-          attrs: { property: 'og:description', content: 'A headless, framework-agnostic Web Component library built on Lit' }
-        }
+          attrs: {
+            property: 'og:description',
+            content: 'A headless, framework-agnostic Web Component library built on Lit',
+          },
+        },
       ],
       logo: {
         src: './src/assets/logo.svg',
@@ -36,8 +39,8 @@ export default defineConfig({
         {
           label: 'GitHub',
           href: 'https://github.com/your-org/aetherui',
-          icon: 'github'
-        }
+          icon: 'github',
+        },
       ],
       editLink: {
         baseUrl: 'https://github.com/your-org/aetherui/edit/main/packages/docs/',
@@ -54,8 +57,13 @@ export default defineConfig({
         {
           label: 'Components',
           items: [
-            { label: 'Button', link: '/components/button/' },
             { label: 'Accordion', link: '/components/accordion/' },
+            { label: 'Alert', link: '/components/alert/' },
+            { label: 'Button', link: '/components/button/' },
+            { label: 'Checkbox', link: '/components/checkbox/' },
+            { label: 'Modal', link: '/components/modal/' },
+            { label: 'Radio', link: '/components/radio/' },
+            { label: 'Tabs', link: '/components/tabs/' },
           ],
         },
       ],
