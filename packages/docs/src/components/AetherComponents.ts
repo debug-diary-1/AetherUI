@@ -1,12 +1,23 @@
-// Import component definitions - focus only on button for now
-import { defineAeButton } from '@aetherui/core';
+// Import component definitions from the core package
+import {
+  defineAeButton,
+  defineAeCheckbox,
+  defineAeAccordion,
+  defineAeModal,
+  defineAeRadio,
+  defineAeRadioGroup,
+  defineAeTabs,
+  defineAeAlert,
+  defineAeDropdown,
+  defineAll
+} from '@aetherui/core';
 
 /**
  * Register all Aether UI components for server-side rendering
  */
 export function registerAetherComponents() {
-  // Register button component
-  defineAeButton();
+  // Register all components
+  defineAll();
 }
 
 /**
@@ -16,12 +27,23 @@ export function registerAetherComponents() {
 export async function registerClientComponents() {
   const core = await import('@aetherui/core');
   
-  // Register button component on client
-  core.defineAeButton();
+  // Register all components
+  core.defineAll();
   
   return { core };
 }
 
-// Export components for direct access if needed
-export { defineAeButton };
+// Export individual define functions for direct access if needed
+export {
+  defineAeButton,
+  defineAeCheckbox,
+  defineAeAccordion,
+  defineAeModal,
+  defineAeRadio,
+  defineAeRadioGroup,
+  defineAeTabs,
+  defineAeAlert,
+  defineAeDropdown,
+  defineAll
+};
 

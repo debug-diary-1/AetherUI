@@ -1,0 +1,57 @@
+---
+import { Code } from '@astrojs/starlight/components';
+---
+
+<script>
+  import { defineAeDropdown, defineAeButton } from '../components/AetherComponents';
+  
+  // Register components
+  defineAeDropdown();
+  defineAeButton();
+</script>
+
+<div class="example-wrapper">
+  {Astro.props.description && (
+    <p class="description">{Astro.props.description}</p>
+  )}
+
+  <div class="example">
+    <div class="component-preview">
+      <Fragment set:html={Astro.props.code} />
+    </div>
+
+    <Code code={Astro.props.code} lang="html" />
+  </div>
+</div>
+
+<style>
+  .example-wrapper {
+    margin: 1.5rem 0;
+  }
+
+  .description {
+    margin-bottom: 0.75rem;
+    font-style: italic;
+  }
+
+  .example {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  .component-preview {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--sl-color-white);
+    color: var(--sl-color-black);
+  }
+
+  :global(.dark) .component-preview {
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-white);
+  }
+</style>
+

@@ -61,6 +61,7 @@ export default defineConfig({
             { label: 'Alert', link: '/components/alert/' },
             { label: 'Button', link: '/components/button/' },
             { label: 'Checkbox', link: '/components/checkbox/' },
+            { label: 'Dropdown', link: '/components/dropdown/' },
             { label: 'Modal', link: '/components/modal/' },
             { label: 'Radio', link: '/components/radio/' },
             { label: 'Tabs', link: '/components/tabs/' },
