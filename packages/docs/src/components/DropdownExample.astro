@@ -1,57 +1,92 @@
 ---
 import { Code } from '@astrojs/starlight/components';
+import { Fragment } from 'astro/components';
+
+interface Props {
+  code: string;
+  preview?: string;
+  title?: string;
+  description?: string;
+}
+
+const { code, preview, title, description } = Astro.props;
 ---
 
-<script>
-  import { defineAeDropdown, defineAeButton } from '../components/AetherComponents';
-  
-  // Register components
-  defineAeDropdown();
-  defineAeButton();
-</script>
-
-<div class="example-wrapper">
-  {Astro.props.description && (
-    <p class="description">{Astro.props.description}</p>
-  )}
-
-  <div class="example">
-    <div class="component-preview">
-      <Fragment set:html={Astro.props.code} />
-    </div>
-
-    <Code code={Astro.props.code} lang="html" />
+<div class="interactive-example">
+  {title && <h3 class="title">{title}</h3>}
+  {description && <p class="description">{description}</p>}
+  <div class="preview">
+    <div set:html={preview || code} />
+  </div>
+  <div class="code">
+    <pre><code class="language-html">{code}</code></pre>
   </div>
 </div>
 
 <style>
-  .example-wrapper {
-    margin: 1.5rem 0;
-  }
-
-  .description {
-    margin-bottom: 0.75rem;
-    font-style: italic;
-  }
-
-  .example {
-    border: 1px solid var(--sl-color-gray-5);
+  .interactive-example {
+    border: 1px solid var(--sl-color-border);
     border-radius: 0.5rem;
+    margin: 1.5rem 0;
     overflow: hidden;
   }
 
-  .component-preview {
-    padding: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--sl-color-white);
-    color: var(--sl-color-black);
+  .title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    padding: 1rem;
+    border-bottom: 1px solid var(--sl-color-border);
   }
 
-  :global(.dark) .component-preview {
-    background: var(--sl-color-gray-6);
-    color: var(--sl-color-white);
+  .description {
+    margin: 0;
+    padding: 0 1rem 1rem;
+    color: var(--sl-color-text-light);
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--sl-color-border);
+  }
+
+  .preview {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center dropdown examples */
+    justify-content: center;
+    gap: 1rem;
+    background: var(--sl-color-bg);
+    min-height: 120px; /* Ensure enough space for dropdown to open */
+  }
+
+  .code {
+    border-top: 1px solid var(--sl-color-border);
+    background: var(--sl-color-bg-sidebar);
+    padding: 1rem;
+    margin: 0;
+  }
+
+  .code pre {
+    margin: 0;
+    padding: 0;
+  }
+
+  :global(.dark) .preview {
+    background: var(--sl-color-black);
+  }
+
+  /* Dropdown-specific styles */
+  :global(ae-dropdown) {
+    position: relative;
+    display: inline-block;
   }
 </style>
+
+<!-- Register custom elements client-side -->
+<script>
+  // Import happens at runtime in the browser
+  import { defineAll } from '@aetherui/core';
+  
+  // Initialize all components
+  defineAll();
+</script>
 

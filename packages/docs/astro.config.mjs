@@ -72,6 +72,7 @@ export default defineConfig({
         PageTitle: './src/components/PageTitle.astro',
         Hero: './src/components/Hero.astro',
         InteractiveExample: './src/components/InteractiveExample.astro',
+        DropdownExample: './src/components/DropdownExample.astro',
       },
       customCss: ['./src/styles/custom.css'],
       lastUpdated: true,
