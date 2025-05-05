@@ -1,6 +1,5 @@
 ---
 import { Code } from '@astrojs/starlight/components';
-import { Fragment } from 'astro/components';
 
 interface Props {
   code: string;
@@ -55,7 +54,10 @@ const { code, preview, title, description } = Astro.props;
     justify-content: center;
     gap: 1rem;
     background: var(--sl-color-bg);
-    min-height: 120px; /* Ensure enough space for dropdown to open */
+    min-height: 150px; /* Increase height for dropdown to open */
+    position: relative;  /* Needed for proper dropdown positioning */
+    z-index: 5;  /* Ensure dropdowns appear above other elements */
+    overflow: visible !important; /* Allow dropdown to overflow */
   }
 
   .code {
@@ -63,6 +65,8 @@ const { code, preview, title, description } = Astro.props;
     background: var(--sl-color-bg-sidebar);
     padding: 1rem;
     margin: 0;
+    position: relative;
+    z-index: 1;
   }
 
   .code pre {
@@ -79,14 +83,40 @@ const { code, preview, title, description } = Astro.props;
     position: relative;
     display: inline-block;
   }
+  
+  :global(ae-dropdown button) {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--sl-color-gray-5);
+    background-color: var(--sl-color-gray-1);
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  :global(.dark ae-dropdown button) {
+    background-color: var(--sl-color-gray-6);
+    border-color: var(--sl-color-gray-7);
+    color: white;
+  }
 </style>
 
 <!-- Register custom elements client-side -->
 <script>
-  // Import happens at runtime in the browser
-  import { defineAll } from '@aetherui/core';
+  // Register components when the component is mounted
+  import { defineAeDropdown, defineAeButton } from '../components/AetherComponents';
   
-  // Initialize all components
-  defineAll();
+  // Register the specific components we need
+  defineAeDropdown();
+  defineAeButton();
+  
+  // Wait for everything to be fully loaded
+  window.addEventListener('DOMContentLoaded', () => {
+    // Force open attribute on dropdowns with default-open
+    document.querySelectorAll('ae-dropdown[default-open]').forEach(dropdown => {
+      setTimeout(() => {
+        dropdown.setAttribute('open', '');
+      }, 500);
+    });
+  });
 </script>
 

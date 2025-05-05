@@ -203,66 +203,55 @@ The Dropdown component follows WAI-ARIA best practices for menus:
 
 ### Basic Example
 
-<div class="example">
-  <ae-dropdown>
-    <button>Open Menu</button>
-    <ae-menu-item slot="item" value="edit">Edit</ae-menu-item>
-    <ae-menu-item slot="item" value="duplicate">Duplicate</ae-menu-item>
-    <ae-menu-separator slot="item"></ae-menu-separator>
-    <ae-menu-item slot="item" value="delete">Delete</ae-menu-item>
-  </ae-dropdown>
-</div>
+<DropdownExample
+  title="Basic Example"
+  description="A simple dropdown menu with a separator."
+  code={`<ae-dropdown>
+  <button>Open Menu</button>
+  <ae-menu-item slot="item" value="edit">Edit</ae-menu-item>
+  <ae-menu-item slot="item" value="duplicate">Duplicate</ae-menu-item>
+  <ae-menu-separator slot="item"></ae-menu-separator>
+  <ae-menu-item slot="item" value="delete">Delete</ae-menu-item>
+</ae-dropdown>`}
+/>
 
 ### With Icons and Hints
 
-<div class="example">
-  <ae-dropdown>
-    <button>More Actions</button>
-    <ae-menu-item slot="item" value="cut">
-      <span slot="icon">✂️</span>
-      Cut
-      <span slot="hint">⌘X</span>
-    </ae-menu-item>
-    <ae-menu-item slot="item" value="copy">
-      <span slot="icon">📋</span>
-      Copy
-      <span slot="hint">⌘C</span>
-    </ae-menu-item>
-    <ae-menu-item slot="item" value="paste">
-      <span slot="icon">📌</span>
-      Paste
-      <span slot="hint">⌘V</span>
-    </ae-menu-item>
-  </ae-dropdown>
-</div>
+<DropdownExample
+  title="With Icons and Hints"
+  description="Dropdown menu items with icons and keyboard shortcuts."
+  code={`<ae-dropdown>
+  <button>More Actions</button>
+  <ae-menu-item slot="item" value="cut">
+    <span slot="icon">✂️</span>
+    Cut
+    <span slot="hint">⌘X</span>
+  </ae-menu-item>
+  <ae-menu-item slot="item" value="copy">
+    <span slot="icon">📋</span>
+    Copy
+    <span slot="hint">⌘C</span>
+  </ae-menu-item>
+  <ae-menu-item slot="item" value="paste">
+    <span slot="icon">📌</span>
+    Paste
+    <span slot="hint">⌘V</span>
+  </ae-menu-item>
+</ae-dropdown>`}
+/>
 
-<style>
-  .example {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    background: var(--sl-color-bg-subtle);
-    border-radius: 0.5rem;
-    margin: 1.5rem 0;
-    min-height: 120px;
-  }
-</style>
+### Open Menu Example
 
-<script>
-  // Initialize components when the DOM is loaded
-  document.addEventListener('DOMContentLoaded', async () => {
-    try {
-      // Import the component definitions
-      const { defineAeButton, defineAeDropdown } = await import('@aetherui/core');
-      
-      // Define the web components
-      defineAeButton();
-      defineAeDropdown();
-      
-      console.log('Dropdown components registered');
-    } catch (error) {
-      console.error('Error loading dropdown components:', error);
-    }
-  });
-</script>
+<DropdownExample
+  title="Open State Example"
+  description="This dropdown is initially open to demonstrate the appearance of the menu."
+  code={`<ae-dropdown default-open>
+  <button>Already Open</button>
+  <ae-menu-item slot="item" value="option1">Option 1</ae-menu-item>
+  <ae-menu-item slot="item" value="option2">Option 2</ae-menu-item>
+  <ae-menu-item slot="item" value="option3">Option 3</ae-menu-item>
+  <ae-menu-separator slot="item"></ae-menu-separator>
+  <ae-menu-item slot="item" value="option4">Option 4</ae-menu-item>
+</ae-dropdown>`}
+/>
+
