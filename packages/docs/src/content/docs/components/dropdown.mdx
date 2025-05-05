@@ -4,7 +4,14 @@ description: Dropdown menu component for displaying a list of options or actions
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
-import { TextMenu, TextButton, CopyValue } from '../../../components/interactive.tsx';
+import DropdownExample from '../../../components/DropdownExample.astro';
+
+{/* Register custom elements for MDX */}
+export const components = {
+  'ae-dropdown': 'ae-dropdown',
+  'ae-menu-item': 'ae-menu-item',
+  'ae-menu-separator': 'ae-menu-separator'
+};
 
 ## Overview
 
@@ -198,7 +205,7 @@ The Dropdown component follows WAI-ARIA best practices for menus:
 
 <div class="example">
   <ae-dropdown>
-    <ae-button>Open Menu</ae-button>
+    <button>Open Menu</button>
     <ae-menu-item slot="item" value="edit">Edit</ae-menu-item>
     <ae-menu-item slot="item" value="duplicate">Duplicate</ae-menu-item>
     <ae-menu-separator slot="item"></ae-menu-separator>
@@ -210,7 +217,7 @@ The Dropdown component follows WAI-ARIA best practices for menus:
 
 <div class="example">
   <ae-dropdown>
-    <ae-button>More Actions</ae-button>
+    <button>More Actions</button>
     <ae-menu-item slot="item" value="cut">
       <span slot="icon">✂️</span>
       Cut
@@ -229,13 +236,6 @@ The Dropdown component follows WAI-ARIA best practices for menus:
   </ae-dropdown>
 </div>
 
-<script>
-  // Initialize components
-  import { defineAeDropdown, defineAeButton } from '@aetherui/core';
-  defineAeDropdown();
-  defineAeButton();
-</script>
-
 <style>
   .example {
     display: flex;
@@ -245,5 +245,24 @@ The Dropdown component follows WAI-ARIA best practices for menus:
     background: var(--sl-color-bg-subtle);
     border-radius: 0.5rem;
     margin: 1.5rem 0;
+    min-height: 120px;
   }
-</style> 
+</style>
+
+<script>
+  // Initialize components when the DOM is loaded
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      // Import the component definitions
+      const { defineAeButton, defineAeDropdown } = await import('@aetherui/core');
+      
+      // Define the web components
+      defineAeButton();
+      defineAeDropdown();
+      
+      console.log('Dropdown components registered');
+    } catch (error) {
+      console.error('Error loading dropdown components:', error);
+    }
+  });
+</script>
