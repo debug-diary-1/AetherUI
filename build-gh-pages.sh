@@ -9,7 +9,7 @@ mkdir -p gh-pages
 # Build the documentation site with Astro
 echo "Building documentation with Astro..."
 cd packages/docs
-npm run build
+pnpm run build
 
 # Copy the built documentation site to the gh-pages directory
 echo "Copying docs to gh-pages/docs directory..."
