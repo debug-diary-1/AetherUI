@@ -1,0 +1,1 @@
+import{defineAll as o}from"./index.CX6jhQV8.js";o();document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll('ae-tabs:not([orientation="vertical"])').forEach(t=>{t.setAttribute("orientation","horizontal")})});

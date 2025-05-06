@@ -1,0 +1,882 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-dpdju3sv"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>TreeView | Aether UI</title><link rel="canonical" href="https://your-org.github.io/docs/components/treeview/"/><link rel="sitemap" href="/docs/sitemap-index.xml"/><link rel="shortcut icon" href="/docs/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v5.7.10"/><meta name="generator" content="Starlight v0.34.2"/><meta property="og:url" content="https://your-org.github.io/docs/components/treeview/"/><meta property="og:locale" content="en"/><meta property="og:site_name" content="Aether UI"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="Hierarchical navigation component with expand/collapse, keyboard navigation, and optional multi-select functionality."/><meta property="og:type" content="website"/><meta property="og:title" content="Aether UI Documentation"/><meta property="og:description" content="A headless, framework-agnostic Web Component library built on Lit"/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/docs/_astro/print.DNXP8c50.css" media="print"><link rel="stylesheet" href="/docs/_astro/index.BP9NrMsf.css">
+<style>@layer starlight.components{:root{--sl-badge-default-border: var(--sl-color-accent);--sl-badge-default-bg: var(--sl-color-accent-low);--sl-badge-default-text: #fff;--sl-badge-note-border: var(--sl-color-blue);--sl-badge-note-bg: var(--sl-color-blue-low);--sl-badge-note-text: #fff;--sl-badge-danger-border: var(--sl-color-red);--sl-badge-danger-bg: var(--sl-color-red-low);--sl-badge-danger-text: #fff;--sl-badge-success-border: var(--sl-color-green);--sl-badge-success-bg: var(--sl-color-green-low);--sl-badge-success-text: #fff;--sl-badge-caution-border: var(--sl-color-orange);--sl-badge-caution-bg: var(--sl-color-orange-low);--sl-badge-caution-text: #fff;--sl-badge-tip-border: var(--sl-color-purple);--sl-badge-tip-bg: var(--sl-color-purple-low);--sl-badge-tip-text: #fff}[data-theme=light]:root{--sl-badge-default-bg: var(--sl-color-accent-high);--sl-badge-note-bg: var(--sl-color-blue-high);--sl-badge-danger-bg: var(--sl-color-red-high);--sl-badge-success-bg: var(--sl-color-green-high);--sl-badge-caution-bg: var(--sl-color-orange-high);--sl-badge-tip-bg: var(--sl-color-purple-high)}.sl-badge:where(.astro-ggbihp4s){display:inline-block;border:1px solid var(--sl-color-border-badge);border-radius:.25rem;font-family:var(--sl-font-system-mono);line-height:normal;color:var(--sl-color-text-badge);background-color:var(--sl-color-bg-badge);overflow-wrap:anywhere}.sidebar-content .sl-badge:where(.astro-ggbihp4s){line-height:1;font-size:var(--sl-text-xs);padding:.125rem .375rem}.sidebar-content a[aria-current=page]>.sl-badge:where(.astro-ggbihp4s){--sl-color-bg-badge: transparent;--sl-color-border-badge: currentColor;color:inherit}.default:where(.astro-ggbihp4s){--sl-color-bg-badge: var(--sl-badge-default-bg);--sl-color-border-badge: var(--sl-badge-default-border);--sl-color-text-badge: var(--sl-badge-default-text)}.note:where(.astro-ggbihp4s){--sl-color-bg-badge: var(--sl-badge-note-bg);--sl-color-border-badge: var(--sl-badge-note-border);--sl-color-text-badge: var(--sl-badge-note-text)}.danger:where(.astro-ggbihp4s){--sl-color-bg-badge: var(--sl-badge-danger-bg);--sl-color-border-badge: var(--sl-badge-danger-border);--sl-color-text-badge: var(--sl-badge-danger-text)}.success:where(.astro-ggbihp4s){--sl-color-bg-badge: var(--sl-badge-success-bg);--sl-color-border-badge: var(--sl-badge-success-border);--sl-color-text-badge: var(--sl-badge-success-text)}.tip:where(.astro-ggbihp4s){--sl-color-bg-badge: var(--sl-badge-tip-bg);--sl-color-border-badge: var(--sl-badge-tip-border);--sl-color-text-badge: var(--sl-badge-tip-text)}.caution:where(.astro-ggbihp4s){--sl-color-bg-badge: var(--sl-badge-caution-bg);--sl-color-border-badge: var(--sl-badge-caution-border);--sl-color-text-badge: var(--sl-badge-caution-text)}.small:where(.astro-ggbihp4s){font-size:var(--sl-text-xs);padding:.125rem .25rem}.medium:where(.astro-ggbihp4s){font-size:var(--sl-text-sm);padding:.175rem .35rem}.large:where(.astro-ggbihp4s){font-size:var(--sl-text-base);padding:.225rem .45rem}.sl-markdown-content :is(h1,h2,h3,h4,h5,h6) .sl-badge:where(.astro-ggbihp4s){vertical-align:middle}}
+@layer starlight.components{svg:where(.astro-f2r6etbr){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}}
+@layer starlight.components{starlight-tabs:where(.astro-pdelyenr){display:block}.tablist-wrapper:where(.astro-pdelyenr){overflow-x:auto}:where(.astro-pdelyenr)[role=tablist]{display:flex;list-style:none;border-bottom:2px solid var(--sl-color-gray-5);padding:0}.tab:where(.astro-pdelyenr){margin-bottom:-2px}.tab:where(.astro-pdelyenr)>:where(.astro-pdelyenr)[role=tab]{display:flex;align-items:center;gap:.5rem;padding:0 1.25rem;text-decoration:none;border-bottom:2px solid var(--sl-color-gray-5);color:var(--sl-color-gray-3);outline-offset:var(--sl-outline-offset-inside);overflow-wrap:initial}.tab:where(.astro-pdelyenr) :where(.astro-pdelyenr)[role=tab][aria-selected=true]{color:var(--sl-color-white);border-color:var(--sl-color-text-accent);font-weight:600}.tablist-wrapper:where(.astro-pdelyenr)~[role=tabpanel]{margin-top:1rem}}
+@layer starlight.components{.sl-steps{--bullet-size: calc(var(--sl-line-height) * 1rem);--bullet-margin: .375rem;list-style:none;counter-reset:steps-counter var(--sl-steps-start, 0);padding-inline-start:0}.sl-steps>li{counter-increment:steps-counter;position:relative;padding-inline-start:calc(var(--bullet-size) + 1rem);padding-bottom:1px;min-height:calc(var(--bullet-size) + var(--bullet-margin))}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);position:absolute;top:0;inset-inline-start:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);font-weight:600;text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);border-radius:99rem;box-shadow:inset 0 0 0 1px var(--sl-color-gray-5)}.sl-steps>li:after{--guide-width: 1px;content:"";position:absolute;top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2);width:var(--guide-width);background-color:var(--sl-color-hairline-light)}}@layer starlight.content{.sl-steps>li>:first-child{--lh: calc(1em * var(--sl-line-height));--shift-y: calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh: calc(1em * var(--sl-line-height-headings))}@supports (--prop: 1lh){.sl-steps>li>:first-child{--lh: 1lh}}}
+</style><script type="module" src="/docs/_astro/page.7qqag-5g.js"></script><style>.example-container{margin:2rem 0;border:1px solid var(--sl-color-gray-5);border-radius:.5rem;overflow:hidden}.example-header{padding:1rem;background-color:var(--sl-color-gray-6);border-bottom:1px solid var(--sl-color-gray-5)}.example-header h3{margin:0 0 .5rem;font-size:1.2rem}.example-header p{margin:0;color:var(--sl-color-gray-3)}.example-content{display:grid;grid-template-columns:1fr;gap:1rem}@media (min-width: 768px){.example-content{grid-template-columns:1fr 1fr}}.example-preview{padding:1.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px}.placeholder{width:100%;max-width:300px}.loading-message{color:var(--sl-color-gray-4);font-style:italic;text-align:center}.hidden-code{display:none}.example-code{padding:0 1rem 1rem}@media (min-width: 768px){.example-code{border-left:1px solid var(--sl-color-gray-5)}}.example-preview ae-treeview{width:100%;max-width:300px;border:1px solid var(--sl-color-gray-5);border-radius:4px;padding:8px}[data-theme=dark] .example-preview ae-treeview{--ae-treeview-row-hover-bg: rgba(255, 255, 255, .1);--ae-treeview-row-selected-bg: rgba(56, 189, 248, .2);--ae-treeview-row-selected-fg: rgb(186, 230, 253);--ae-treeview-caret-color: #94a3b8;--ae-treeview-caret-open: #e2e8f0;--ae-treeview-checkbox-border: #4b5563;--ae-treeview-checkbox-bg: #1e293b}
+</style></head> <body class="astro-dpdju3sv"> <a href="#_top" class="astro-cv524dvk">Skip to content</a>  <div class="page sl-flex astro-2q2ytujb"> <header class="header astro-2q2ytujb"><div class="header astro-rxc7oezp"> <div class="title-wrapper sl-flex astro-rxc7oezp"> <a href="/docs/" class="site-title sl-flex astro-lig3d6eh">  <img class="astro-lig3d6eh" alt="Aether UI logo" src="/docs/_astro/logo.qHwUCW_m.svg" width="100" height="100">  <span class="astro-lig3d6eh" translate="no"> Aether UI </span> </a>  </div> <div class="sl-flex print:hidden astro-rxc7oezp"> <site-search class="astro-rxc7oezp astro-mfxtlgv6" data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-mfxtlgv6"> <svg aria-hidden="true" class="astro-mfxtlgv6 astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg> <span class="sl-hidden md:sl-block astro-mfxtlgv6" aria-hidden="true">Search</span> <kbd class="sl-hidden md:sl-flex astro-mfxtlgv6" style="display: none;"> <kbd class="astro-mfxtlgv6">Ctrl</kbd><kbd class="astro-mfxtlgv6">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-mfxtlgv6"> <div class="dialog-frame sl-flex astro-mfxtlgv6">  <button data-close-modal class="sl-flex md:sl-hidden astro-mfxtlgv6"> Cancel </button> <div class="search-container astro-mfxtlgv6"> <div id="starlight__search" class="astro-mfxtlgv6"></div> </div> </div> </dialog> </site-search>  <script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script> <script type="module" src="/docs/_astro/Search.astro_astro_type_script_index_0_lang.yV3N9JIt.js"></script>   </div> <div class="sl-hidden md:sl-flex print:hidden right-group astro-rxc7oezp"> <div class="sl-flex social-icons astro-rxc7oezp"> <a href="https://github.com/your-org/aetherui" rel="me" class="sl-flex astro-cful3oln"><span class="sr-only astro-cful3oln">GitHub</span><svg aria-hidden="true" class="astro-cful3oln astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-yf7kz56v"> <span class="sr-only astro-yf7kz56v">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-yf7kz56v astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select value="auto" autocomplete="off" class="astro-yf7kz56v"> <option value="dark" class="astro-yf7kz56v">Dark</option><option value="light" class="astro-yf7kz56v">Light</option><option value="auto" selected class="astro-yf7kz56v">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-yf7kz56v astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script> <script type="module">const r="starlight-theme",o=e=>e==="auto"||e==="dark"||e==="light"?e:"auto",c=()=>o(typeof localStorage<"u"&&localStorage.getItem(r));function n(e){typeof localStorage<"u"&&localStorage.setItem(r,e==="light"||e==="dark"?e:"")}const l=()=>matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";function t(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e==="auto"?l():e,n(e)}matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{c()==="auto"&&t("auto")});class s extends HTMLElement{constructor(){super(),t(c()),this.querySelector("select")?.addEventListener("change",a=>{a.currentTarget instanceof HTMLSelectElement&&t(o(a.currentTarget.value))})}}customElements.define("starlight-theme-select",s);</script> <script type="module">class s extends HTMLElement{constructor(){super();const e=this.querySelector("select");e&&(e.addEventListener("change",t=>{t.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=t.currentTarget.value)}),window.addEventListener("pageshow",t=>{if(!t.persisted)return;const n=e.querySelector("option[selected]")?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}}customElements.define("starlight-lang-select",s);</script> </div> </div> </header> <nav class="sidebar print:hidden astro-2q2ytujb" aria-label="Main"> <starlight-menu-button class="print:hidden astro-qant66cx"> <button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-qant66cx"> <svg aria-hidden="true" class="open-menu astro-qant66cx astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg> <svg aria-hidden="true" class="close-menu astro-qant66cx astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg> </button> </starlight-menu-button> <script type="module">class s extends HTMLElement{constructor(){super(),this.btn=this.querySelector("button"),this.btn.addEventListener("click",()=>this.toggleExpanded());const t=this.closest("nav");t&&t.addEventListener("keyup",e=>this.closeOnEscape(e))}setExpanded(t){this.setAttribute("aria-expanded",String(t)),document.body.toggleAttribute("data-mobile-menu-expanded",t)}toggleExpanded(){this.setExpanded(this.getAttribute("aria-expanded")!=="true")}closeOnEscape(t){t.code==="Escape"&&(this.setExpanded(!1),this.btn.focus())}}customElements.define("starlight-menu-button",s);</script>   <div id="starlight__sidebar" class="sidebar-pane astro-2q2ytujb"> <div class="sidebar-content sl-flex astro-2q2ytujb"> <sl-sidebar-state-persist data-hash="0d887ym" class="astro-eg5b5jqu"> <script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script>  <ul class="top-level astro-vw6on5aa"> <li class="astro-vw6on5aa"> <details open class="astro-vw6on5aa"> <sl-sidebar-restore data-index="0"></sl-sidebar-restore> <summary class="astro-vw6on5aa"> <div class="group-label astro-vw6on5aa"> <span class="large astro-vw6on5aa">Getting Started</span>  </div> <svg aria-hidden="true" class="caret astro-vw6on5aa astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-vw6on5aa"> <li class="astro-vw6on5aa"> <a href="/docs/" aria-current="false" class="astro-vw6on5aa"> <span class="astro-vw6on5aa">Introduction</span>  </a> </li><li class="astro-vw6on5aa"> <a href="/docs/getting-started/installation/" aria-current="false" class="astro-vw6on5aa"> <span class="astro-vw6on5aa">Installation</span>  </a> </li><li class="astro-vw6on5aa"> <a href="/docs/getting-started/framework-integration/" aria-current="false" class="astro-vw6on5aa"> <span class="astro-vw6on5aa">Framework Integration</span>  </a> </li> </ul>  </details> </li><li class="astro-vw6on5aa"> <details open class="astro-vw6on5aa"> <sl-sidebar-restore data-index="1"></sl-sidebar-restore> <summary class="astro-vw6on5aa"> <div class="group-label astro-vw6on5aa"> <span class="large astro-vw6on5aa">Components</span>  </div> <svg aria-hidden="true" class="caret astro-vw6on5aa astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-vw6on5aa"> <li class="astro-vw6on5aa"> <a href="/docs/components/accordion/" aria-current="false" class="astro-vw6on5aa"> <span class="astro-vw6on5aa">Accordion</span>  </a> </li><li class="astro-vw6on5aa"> <a href="/docs/components/alert/" aria-current="false" class="astro-vw6on5aa"> <span class="astro-vw6on5aa">Alert</span>  </a> </li><li class="astro-vw6on5aa"> <a href="/docs/components/button/" aria-current="false" class="astro-vw6on5aa"> <span class="astro-vw6on5aa">Button</span>  </a> </li><li class="astro-vw6on5aa"> <a href="/docs/components/checkbox/" aria-current="false" class="astro-vw6on5aa"> <span class="astro-vw6on5aa">Checkbox</span>  </a> </li><li class="astro-vw6on5aa"> <a href="/docs/components/dropdown/" aria-current="false" class="astro-vw6on5aa"> <span class="astro-vw6on5aa">Dropdown</span>  </a> </li><li class="astro-vw6on5aa"> <a href="/docs/components/modal/" aria-current="false" class="astro-vw6on5aa"> <span class="astro-vw6on5aa">Modal</span>  </a> </li><li class="astro-vw6on5aa"> <a href="/docs/components/radio/" aria-current="false" class="astro-vw6on5aa"> <span class="astro-vw6on5aa">Radio</span>  </a> </li><li class="astro-vw6on5aa"> <a href="/docs/components/tabs/" aria-current="false" class="astro-vw6on5aa"> <span class="astro-vw6on5aa">Tabs</span>  </a> </li><li class="astro-vw6on5aa"> <a href="/docs/components/treeview/" aria-current="page" class="astro-vw6on5aa"> <span class="astro-vw6on5aa">TreeView</span>  </a> </li> </ul>  </details> </li> </ul>   <script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script> </sl-sidebar-state-persist>  <div class="md:sl-hidden"> <div class="mobile-preferences sl-flex astro-ggh4jpnd"> <div class="social-icons astro-ggh4jpnd"> <a href="https://github.com/your-org/aetherui" rel="me" class="sl-flex astro-cful3oln"><span class="sr-only astro-cful3oln">GitHub</span><svg aria-hidden="true" class="astro-cful3oln astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-yf7kz56v"> <span class="sr-only astro-yf7kz56v">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-yf7kz56v astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select value="auto" autocomplete="off" class="astro-yf7kz56v"> <option value="dark" class="astro-yf7kz56v">Dark</option><option value="light" class="astro-yf7kz56v">Light</option><option value="auto" selected class="astro-yf7kz56v">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-yf7kz56v astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script>   </div>  </div> </div> </div> </nav> <div class="main-frame astro-2q2ytujb">  <script type="module">const a=document.getElementById("starlight__sidebar"),n=a?.querySelector("sl-sidebar-state-persist"),o="sl-sidebar-state",i=()=>{let t=[];const e=n?.dataset.hash||"";try{const s=sessionStorage.getItem(o),r=JSON.parse(s||"{}");Array.isArray(r.open)&&r.hash===e&&(t=r.open)}catch{}return{hash:e,open:t,scroll:a?.scrollTop||0}},c=t=>{try{sessionStorage.setItem(o,JSON.stringify(t))}catch{}},d=()=>c(i()),l=(t,e)=>{const s=i();s.open[e]=t,c(s)};n?.addEventListener("click",t=>{if(!(t.target instanceof Element))return;const e=t.target.closest("summary")?.closest("details");if(!e)return;const s=e.querySelector("sl-sidebar-restore"),r=parseInt(s?.dataset.index||"");isNaN(r)||l(!e.open,r)});addEventListener("visibilitychange",()=>{document.visibilityState==="hidden"&&d()});addEventListener("pageHide",d);</script> <div class="lg:sl-flex astro-nkpbufae"> <aside class="right-sidebar-container print:hidden astro-nkpbufae"> <div class="right-sidebar astro-nkpbufae"> <div class="lg:sl-hidden astro-ybeuyxmf"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-glivzuzs"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-glivzuzs"><details id="starlight__mobile-toc" class="astro-glivzuzs"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-glivzuzs"><div class="toggle sl-flex astro-glivzuzs">On this page<svg aria-hidden="true" class="caret astro-glivzuzs astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></div><span class="display-current astro-glivzuzs"></span></summary><div class="dropdown astro-glivzuzs"><ul class="isMobile astro-ymx7nru7" style="--depth: 0;"> <li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#_top" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#overview" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#features" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Features</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#import" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Import</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#usage" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Usage</span> </a> <ul class="isMobile astro-ymx7nru7" style="--depth: 1;"> <li class="astro-ymx7nru7" style="--depth: 1;"> <a href="#basic-treeview" class="astro-ymx7nru7" style="--depth: 1;"> <span class="astro-ymx7nru7" style="--depth: 1;">Basic TreeView</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 1;"> <a href="#with-icons" class="astro-ymx7nru7" style="--depth: 1;"> <span class="astro-ymx7nru7" style="--depth: 1;">With Icons</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 1;"> <a href="#multi-select-mode" class="astro-ymx7nru7" style="--depth: 1;"> <span class="astro-ymx7nru7" style="--depth: 1;">Multi-select Mode</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 1;"> <a href="#pre-expanded-and-pre-selected-items" class="astro-ymx7nru7" style="--depth: 1;"> <span class="astro-ymx7nru7" style="--depth: 1;">Pre-expanded and Pre-selected Items</span> </a>  </li> </ul>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#attributes" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Attributes</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#events" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Events</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#shadow-parts" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Shadow Parts</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#css-custom-properties" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">CSS Custom Properties</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#keyboard-navigation" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Keyboard Navigation</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#accessibility" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Accessibility</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#examples" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Examples</span> </a>  </li> </ul> </div></details></nav></mobile-starlight-toc><script type="module" src="/docs/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.C181hMzK.js"></script></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-ybeuyxmf"><div class="sl-container astro-ybeuyxmf"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-ymx7nru7" style="--depth: 0;"> <li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#_top" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#overview" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#features" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Features</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#import" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Import</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#usage" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Usage</span> </a> <ul class="astro-ymx7nru7" style="--depth: 1;"> <li class="astro-ymx7nru7" style="--depth: 1;"> <a href="#basic-treeview" class="astro-ymx7nru7" style="--depth: 1;"> <span class="astro-ymx7nru7" style="--depth: 1;">Basic TreeView</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 1;"> <a href="#with-icons" class="astro-ymx7nru7" style="--depth: 1;"> <span class="astro-ymx7nru7" style="--depth: 1;">With Icons</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 1;"> <a href="#multi-select-mode" class="astro-ymx7nru7" style="--depth: 1;"> <span class="astro-ymx7nru7" style="--depth: 1;">Multi-select Mode</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 1;"> <a href="#pre-expanded-and-pre-selected-items" class="astro-ymx7nru7" style="--depth: 1;"> <span class="astro-ymx7nru7" style="--depth: 1;">Pre-expanded and Pre-selected Items</span> </a>  </li> </ul>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#attributes" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Attributes</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#events" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Events</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#shadow-parts" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Shadow Parts</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#css-custom-properties" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">CSS Custom Properties</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#keyboard-navigation" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Keyboard Navigation</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#accessibility" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Accessibility</span> </a>  </li><li class="astro-ymx7nru7" style="--depth: 0;"> <a href="#examples" class="astro-ymx7nru7" style="--depth: 0;"> <span class="astro-ymx7nru7" style="--depth: 0;">Examples</span> </a>  </li> </ul> </nav></starlight-toc><script type="module" src="/docs/_astro/TableOfContents.astro_astro_type_script_index_0_lang.CKWWgpjV.js"></script></div></div> </div> </aside> <div class="main-pane astro-nkpbufae">  <main data-pagefind-body class="astro-dpdju3sv" lang="en" dir="ltr">    <div class="content-panel astro-mnjgrjwp"> <div class="sl-container astro-mnjgrjwp"> <header class="page-title astro-guvttfii"> <h1 class="title astro-guvttfii"></h1>  </header>  </div> </div>  <div class="content-panel astro-mnjgrjwp"> <div class="sl-container astro-mnjgrjwp"> <div class="sl-markdown-content"> <div class="sl-heading-wrapper level-h2"><h2 id="overview">Overview</h2><a class="sl-anchor-link" href="#overview"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Overview”</span></a></div>
+<p>The TreeView component provides a hierarchical display of data with expand/collapse functionality, keyboard navigation, and optional multi-select capability. It’s commonly used in file explorers, navigation menus, and structured data visualization.</p>
+<div class="expressive-code"><link rel="stylesheet" href="/docs/_astro/ec.v4551.css"><script type="module" src="/docs/_astro/ec.8zarh.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="html"><code><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">ae-treeview</span></span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">data</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">[</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "folder1",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Documents",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "file1", "label": "report.pdf" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "file2", "label": "data.xlsx" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "folder2", "label": "Pictures" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">>&#x3C;/</span><span style="--0:#CAECE6">ae-treeview</span><span style="--0:#7FDBCA">></span></span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="<ae-treeview  data=&#x27;[    {      &#x22;id&#x22;: &#x22;folder1&#x22;,      &#x22;label&#x22;: &#x22;Documents&#x22;,      &#x22;children&#x22;: [        { &#x22;id&#x22;: &#x22;file1&#x22;, &#x22;label&#x22;: &#x22;report.pdf&#x22; },        { &#x22;id&#x22;: &#x22;file2&#x22;, &#x22;label&#x22;: &#x22;data.xlsx&#x22; }      ]    },    { &#x22;id&#x22;: &#x22;folder2&#x22;, &#x22;label&#x22;: &#x22;Pictures&#x22; }  ]&#x27;></ae-treeview>"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="features">Features</h2><a class="sl-anchor-link" href="#features"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Features”</span></a></div>
+<ul>
+<li>🌳 Hierarchical data display</li>
+<li>⌨️ Keyboard navigation with roving tabindex pattern</li>
+<li>🔍 Type-ahead search to quickly jump to nodes</li>
+<li>✅ Single or multi-select mode</li>
+<li>♿ Fully accessible (WAI-ARIA compliant)</li>
+<li>🎨 Customizable with CSS parts and variables</li>
+</ul>
+<div class="sl-heading-wrapper level-h2"><h2 id="import">Import</h2><a class="sl-anchor-link" href="#import"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Import”</span></a></div>
+<starlight-tabs class="astro-pdelyenr"> <div class="tablist-wrapper not-content astro-pdelyenr"> <ul role="tablist" class="astro-pdelyenr"> <li role="presentation" class="tab astro-pdelyenr"> <a role="tab" href="#tab-panel-14" id="tab-14" aria-selected="true" tabindex="0" class="astro-pdelyenr">  HTML </a> </li><li role="presentation" class="tab astro-pdelyenr"> <a role="tab" href="#tab-panel-15" id="tab-15" aria-selected="false" tabindex="-1" class="astro-pdelyenr">  JavaScript </a> </li> </ul> </div> <div id="tab-panel-14" aria-labelledby="tab-14" role="tabpanel"> <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="html"><code><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">script</span><span style="--0:#7FDBCA"> </span></span><span style="--0:#C5E478;--1:#3B61B0">type</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">module</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#7FDBCA;--1:#8844AE">></span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C792EA;--1:#8844AE">import</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">@aetherui/core/treeview/define.js</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#D6DEEB;--1:#403F53">;</span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;/</span><span style="--0:#CAECE6">script</span><span style="--0:#7FDBCA">></span></span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="<script type=&#x22;module&#x22;>  import &#x27;@aetherui/core/treeview/define.js&#x27;;</script>"><div></div></button></div></figure></div> </div><div id="tab-panel-15" aria-labelledby="tab-15" role="tabpanel" hidden> <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="js"><code><div class="ec-line"><div class="code"><span style="--0:#919F9F;--1:#5D6376">// Import and define</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">import</span><span style="--0:#D6DEEB;--1:#403F53"> { defineAeTreeView } </span><span style="--0:#C792EA;--1:#8844AE">from</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">@aetherui/core</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#D6DEEB;--1:#403F53">;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">defineAeTreeView</span><span style="--0:#D6DEEB;--1:#403F53">();</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#919F9F;--1:#5D6376">// Or import the class directly</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">import</span><span style="--0:#D6DEEB;--1:#403F53"> { AeTreeView } </span><span style="--0:#C792EA;--1:#8844AE">from</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">@aetherui/core</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#D6DEEB;--1:#403F53">;</span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="// Import and defineimport { defineAeTreeView } from &#x27;@aetherui/core&#x27;;defineAeTreeView();// Or import the class directlyimport { AeTreeView } from &#x27;@aetherui/core&#x27;;"><div></div></button></div></figure></div> </div>  </starlight-tabs>  <script type="module">class r extends HTMLElement{static#e=new Map;#t;#n="starlight-synced-tabs__";constructor(){super();const t=this.querySelector('[role="tablist"]');if(this.tabs=[...t.querySelectorAll('[role="tab"]')],this.panels=[...this.querySelectorAll(':scope > [role="tabpanel"]')],this.#t=this.dataset.syncKey,this.#t){const i=r.#e.get(this.#t)??[];i.push(this),r.#e.set(this.#t,i)}this.tabs.forEach((i,c)=>{i.addEventListener("click",e=>{e.preventDefault();const n=t.querySelector('[aria-selected="true"]');e.currentTarget!==n&&this.switchTab(e.currentTarget,c)}),i.addEventListener("keydown",e=>{const n=this.tabs.indexOf(e.currentTarget),s=e.key==="ArrowLeft"?n-1:e.key==="ArrowRight"?n+1:e.key==="Home"?0:e.key==="End"?this.tabs.length-1:null;s!==null&&this.tabs[s]&&(e.preventDefault(),this.switchTab(this.tabs[s],s))})})}switchTab(t,i,c=!0){if(!t)return;const e=c?this.getBoundingClientRect().top:0;this.tabs.forEach(s=>{s.setAttribute("aria-selected","false"),s.setAttribute("tabindex","-1")}),this.panels.forEach(s=>{s.hidden=!0});const n=this.panels[i];n&&(n.hidden=!1),t.removeAttribute("tabindex"),t.setAttribute("aria-selected","true"),c&&(t.focus(),r.#r(this,t),window.scrollTo({top:window.scrollY+(this.getBoundingClientRect().top-e),behavior:"instant"}))}#i(t){!this.#t||typeof localStorage>"u"||localStorage.setItem(this.#n+this.#t,t)}static#r(t,i){const c=t.#t,e=r.#s(i);if(!c||!e)return;const n=r.#e.get(c);if(n){for(const s of n){if(s===t)continue;const a=s.tabs.findIndex(o=>r.#s(o)===e);a!==-1&&s.switchTab(s.tabs[a],a,!1)}t.#i(e)}}static#s(t){return t.textContent?.trim()}}customElements.define("starlight-tabs",r);</script>
+<div class="sl-heading-wrapper level-h2"><h2 id="usage">Usage</h2><a class="sl-anchor-link" href="#usage"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Usage”</span></a></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="basic-treeview">Basic TreeView</h3><a class="sl-anchor-link" href="#basic-treeview"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Basic TreeView”</span></a></div>
+<p>The simplest usage is to provide an array of nodes with <code dir="auto">id</code> and <code dir="auto">label</code> properties, and optional <code dir="auto">children</code> arrays.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="html"><code><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">ae-treeview</span></span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">data</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">[</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "docs",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Documents",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "report", "label": "Annual Report" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "budget", "label": "Budget Spreadsheet" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "pics",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Pictures",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "vacation", "label": "Vacation Photos" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">}</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">>&#x3C;/</span><span style="--0:#CAECE6">ae-treeview</span><span style="--0:#7FDBCA">></span></span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="<ae-treeview  data=&#x27;[    {      &#x22;id&#x22;: &#x22;docs&#x22;,      &#x22;label&#x22;: &#x22;Documents&#x22;,      &#x22;children&#x22;: [        { &#x22;id&#x22;: &#x22;report&#x22;, &#x22;label&#x22;: &#x22;Annual Report&#x22; },        { &#x22;id&#x22;: &#x22;budget&#x22;, &#x22;label&#x22;: &#x22;Budget Spreadsheet&#x22; }      ]    },    {      &#x22;id&#x22;: &#x22;pics&#x22;,      &#x22;label&#x22;: &#x22;Pictures&#x22;,      &#x22;children&#x22;: [        { &#x22;id&#x22;: &#x22;vacation&#x22;, &#x22;label&#x22;: &#x22;Vacation Photos&#x22; }      ]    }  ]&#x27;></ae-treeview>"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="with-icons">With Icons</h3><a class="sl-anchor-link" href="#with-icons"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “With Icons”</span></a></div>
+<p>You can add icons to items by including an <code dir="auto">icon</code> property in the node data.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="html"><code><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">ae-treeview</span></span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">data</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">[</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "docs",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Documents",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"icon": "📁",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "report", "label": "Report.pdf", "icon": "📄" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "budget", "label": "Budget.xlsx", "icon": "📊" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "pics",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Pictures",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"icon": "📁",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "vacation", "label": "Vacation.jpg", "icon": "🖼️" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">}</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">>&#x3C;/</span><span style="--0:#CAECE6">ae-treeview</span><span style="--0:#7FDBCA">></span></span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="<ae-treeview  data=&#x27;[    {      &#x22;id&#x22;: &#x22;docs&#x22;,      &#x22;label&#x22;: &#x22;Documents&#x22;,      &#x22;icon&#x22;: &#x22;📁&#x22;,      &#x22;children&#x22;: [        { &#x22;id&#x22;: &#x22;report&#x22;, &#x22;label&#x22;: &#x22;Report.pdf&#x22;, &#x22;icon&#x22;: &#x22;📄&#x22; },        { &#x22;id&#x22;: &#x22;budget&#x22;, &#x22;label&#x22;: &#x22;Budget.xlsx&#x22;, &#x22;icon&#x22;: &#x22;📊&#x22; }      ]    },    {      &#x22;id&#x22;: &#x22;pics&#x22;,      &#x22;label&#x22;: &#x22;Pictures&#x22;,      &#x22;icon&#x22;: &#x22;📁&#x22;,      &#x22;children&#x22;: [        { &#x22;id&#x22;: &#x22;vacation&#x22;, &#x22;label&#x22;: &#x22;Vacation.jpg&#x22;, &#x22;icon&#x22;: &#x22;🖼️&#x22; }      ]    }  ]&#x27;></ae-treeview>"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="multi-select-mode">Multi-select Mode</h3><a class="sl-anchor-link" href="#multi-select-mode"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Multi-select Mode”</span></a></div>
+<p>Enable multi-select mode to allow users to select multiple items simultaneously.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="html"><code><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">ae-treeview</span></span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">selectionMode</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">multiple</span><span style="--0:#D9F5DD;--1:#111111">"</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">data</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">[</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "item1", "label": "Item 1" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "item2", "label": "Item 2" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "item3", "label": "Item 3" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">>&#x3C;/</span><span style="--0:#CAECE6">ae-treeview</span><span style="--0:#7FDBCA">></span></span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="<ae-treeview  selectionMode=&#x22;multiple&#x22;  data=&#x27;[    { &#x22;id&#x22;: &#x22;item1&#x22;, &#x22;label&#x22;: &#x22;Item 1&#x22; },    { &#x22;id&#x22;: &#x22;item2&#x22;, &#x22;label&#x22;: &#x22;Item 2&#x22; },    { &#x22;id&#x22;: &#x22;item3&#x22;, &#x22;label&#x22;: &#x22;Item 3&#x22; }  ]&#x27;></ae-treeview>"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="pre-expanded-and-pre-selected-items">Pre-expanded and Pre-selected Items</h3><a class="sl-anchor-link" href="#pre-expanded-and-pre-selected-items"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Pre-expanded and Pre-selected Items”</span></a></div>
+<p>You can set items to be expanded or selected when the component renders.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="html"><code><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">ae-treeview</span></span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">data</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">[</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "docs",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Documents",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "report", "label": "Annual Report" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "budget", "label": "Budget Spreadsheet" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "pics",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Pictures",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "vacation", "label": "Vacation Photos" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">}</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">expanded</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">["docs"]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">selected</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">["report"]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">>&#x3C;/</span><span style="--0:#CAECE6">ae-treeview</span><span style="--0:#7FDBCA">></span></span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="<ae-treeview  data=&#x27;[    {      &#x22;id&#x22;: &#x22;docs&#x22;,      &#x22;label&#x22;: &#x22;Documents&#x22;,      &#x22;children&#x22;: [        { &#x22;id&#x22;: &#x22;report&#x22;, &#x22;label&#x22;: &#x22;Annual Report&#x22; },        { &#x22;id&#x22;: &#x22;budget&#x22;, &#x22;label&#x22;: &#x22;Budget Spreadsheet&#x22; }      ]    },    {      &#x22;id&#x22;: &#x22;pics&#x22;,      &#x22;label&#x22;: &#x22;Pictures&#x22;,      &#x22;children&#x22;: [        { &#x22;id&#x22;: &#x22;vacation&#x22;, &#x22;label&#x22;: &#x22;Vacation Photos&#x22; }      ]    }  ]&#x27;  expanded=&#x27;[&#x22;docs&#x22;]&#x27;  selected=&#x27;[&#x22;report&#x22;]&#x27;></ae-treeview>"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="attributes">Attributes</h2><a class="sl-anchor-link" href="#attributes"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Attributes”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">data</code></td><td>Array</td><td><code dir="auto">[]</code></td><td>Array of tree nodes with format <code dir="auto">{ id, label, children?, icon? }</code></td></tr><tr><td><code dir="auto">expanded</code></td><td>Array</td><td><code dir="auto">[]</code></td><td>Array of expanded node IDs (controlled)</td></tr><tr><td><code dir="auto">selectionMode</code></td><td>String</td><td><code dir="auto">'single'</code></td><td>Selection mode: <code dir="auto">'single'</code> or <code dir="auto">'multiple'</code></td></tr><tr><td><code dir="auto">selected</code></td><td>Array</td><td><code dir="auto">[]</code></td><td>Array of selected node IDs (controlled)</td></tr><tr><td><code dir="auto">indentSize</code></td><td>Number</td><td><code dir="auto">16</code></td><td>Size of indentation in pixels per level</td></tr><tr><td><code dir="auto">loading</code></td><td>Boolean</td><td><code dir="auto">false</code></td><td>Show loading state</td></tr><tr><td><code dir="auto">emptyMessage</code></td><td>String</td><td><code dir="auto">'No items'</code></td><td>Message to display when there are no items</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="events">Events</h2><a class="sl-anchor-link" href="#events"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Events”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Event</th><th>Detail</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">ae-select</code></td><td><code dir="auto">{ selected: string[] }</code></td><td>Fired when selection changes</td></tr><tr><td><code dir="auto">ae-expand-change</code></td><td><code dir="auto">{ expanded: string[] }</code></td><td>Fired when expansion state changes</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="shadow-parts">Shadow Parts</h2><a class="sl-anchor-link" href="#shadow-parts"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Shadow Parts”</span></a></div>
+<p>The following shadow parts are available for styling:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Part</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">node</code></td><td>The container for each tree node</td></tr><tr><td><code dir="auto">caret</code></td><td>Expand/collapse indicator</td></tr><tr><td><code dir="auto">caret-spacer</code></td><td>Space holder for leaf nodes (no caret)</td></tr><tr><td><code dir="auto">label</code></td><td>Text label for the node</td></tr><tr><td><code dir="auto">checkbox</code></td><td>Checkbox for multi-select mode</td></tr><tr><td><code dir="auto">icon</code></td><td>Icon container</td></tr><tr><td><code dir="auto">subtree</code></td><td>Container for child nodes</td></tr><tr><td><code dir="auto">loading</code></td><td>Loading state container</td></tr><tr><td><code dir="auto">empty</code></td><td>Empty state container</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="css-custom-properties">CSS Custom Properties</h2><a class="sl-anchor-link" href="#css-custom-properties"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “CSS Custom Properties”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--ae-treeview-indent</code></td><td>Indentation size for nested levels</td></tr><tr><td><code dir="auto">--ae-treeview-node-radius</code></td><td>Border radius for tree nodes</td></tr><tr><td><code dir="auto">--ae-treeview-font-size</code></td><td>Font size for node text</td></tr><tr><td><code dir="auto">--ae-treeview-row-hover-bg</code></td><td>Background color for node hover state</td></tr><tr><td><code dir="auto">--ae-treeview-focus-color</code></td><td>Outline color for focused node</td></tr><tr><td><code dir="auto">--ae-treeview-row-selected-bg</code></td><td>Background color for selected node</td></tr><tr><td><code dir="auto">--ae-treeview-row-selected-fg</code></td><td>Text color for selected node</td></tr><tr><td><code dir="auto">--ae-treeview-caret-size</code></td><td>Size of the caret icon</td></tr><tr><td><code dir="auto">--ae-treeview-caret-color</code></td><td>Color of the caret icon</td></tr><tr><td><code dir="auto">--ae-treeview-caret-open</code></td><td>Color of the caret icon when expanded</td></tr><tr><td><code dir="auto">--ae-treeview-icon-size</code></td><td>Size of node icons</td></tr><tr><td><code dir="auto">--ae-treeview-icon-color</code></td><td>Color of node icons</td></tr><tr><td><code dir="auto">--ae-treeview-checkbox-size</code></td><td>Size of the checkbox in multi-select mode</td></tr><tr><td><code dir="auto">--ae-treeview-checkbox-radius</code></td><td>Border radius of the checkbox</td></tr><tr><td><code dir="auto">--ae-treeview-checkbox-border</code></td><td>Border color of the checkbox</td></tr><tr><td><code dir="auto">--ae-treeview-checkbox-bg</code></td><td>Background color of the checkbox</td></tr><tr><td><code dir="auto">--ae-treeview-checkbox-selected-bg</code></td><td>Background color of selected checkbox</td></tr><tr><td><code dir="auto">--ae-treeview-checkbox-selected-border</code></td><td>Border color of selected checkbox</td></tr><tr><td><code dir="auto">--ae-treeview-empty-color</code></td><td>Text color for empty state</td></tr><tr><td><code dir="auto">--ae-treeview-loading-color</code></td><td>Text color for loading state</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="keyboard-navigation">Keyboard Navigation</h2><a class="sl-anchor-link" href="#keyboard-navigation"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Keyboard Navigation”</span></a></div>
+<p>The TreeView supports comprehensive keyboard navigation:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Action</th></tr></thead><tbody><tr><td><code dir="auto">↑</code> / <code dir="auto">↓</code></td><td>Move focus to previous/next visible node</td></tr><tr><td><code dir="auto">←</code></td><td>Collapse node if expanded, or move to parent node</td></tr><tr><td><code dir="auto">→</code></td><td>Expand node if collapsed, or move to first child if already expanded</td></tr><tr><td><code dir="auto">Home</code></td><td>Move focus to first node</td></tr><tr><td><code dir="auto">End</code></td><td>Move focus to last visible node</td></tr><tr><td><code dir="auto">Enter</code> / <code dir="auto">Space</code></td><td>Select/deselect the focused node</td></tr><tr><td><code dir="auto">*</code></td><td>Expand all siblings of the current node</td></tr><tr><td>Type characters</td><td>Jump to the next node that starts with the typed characters (type-ahead)</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="accessibility">Accessibility</h2><a class="sl-anchor-link" href="#accessibility"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Accessibility”</span></a></div>
+<p>The TreeView component follows WAI-ARIA best practices:</p>
+<ul>
+<li>The tree container has <code dir="auto">role="tree"</code></li>
+<li>Each node has <code dir="auto">role="treeitem"</code> with appropriate <code dir="auto">aria-level</code> and <code dir="auto">aria-expanded</code> attributes</li>
+<li>Implements roving tabindex pattern for keyboard navigation</li>
+<li>Type-ahead search lets users quickly navigate by typing the first few characters</li>
+<li>Multi-select mode uses <code dir="auto">aria-multiselectable="true"</code> and adds proper <code dir="auto">aria-selected</code> states</li>
+<li>Focus is visibly indicated with a clear outline</li>
+<li>All interactions can be performed with keyboard alone</li>
+</ul>
+<div class="sl-heading-wrapper level-h2"><h2 id="examples">Examples</h2><a class="sl-anchor-link" href="#examples"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Examples”</span></a></div>
+<p>Here are some interactive examples of the TreeView component:</p>
+<div class="example-container" data-example-id="treeview-example-vbc1o64cx"> <div class="example-header"> <h3>File Explorer Example</h3> <p>A simple file explorer with icons.</p> </div> <div class="example-content"> <div class="example-preview"> <div class="placeholder" data-placeholder-id="treeview-example-vbc1o64cx"> <p class="loading-message">Loading example...</p> <pre class="hidden-code">&lt;ae-treeview
+data=&#39;[
+  { 
+    &quot;id&quot;: &quot;src&quot;, 
+    &quot;label&quot;: &quot;src&quot;,
+    &quot;children&quot;: [
+      { 
+        &quot;id&quot;: &quot;components&quot;, 
+        &quot;label&quot;: &quot;components&quot;,
+        &quot;children&quot;: [
+          { &quot;id&quot;: &quot;button.js&quot;, &quot;label&quot;: &quot;button.js&quot;, &quot;icon&quot;: &quot;📄&quot; },
+          { &quot;id&quot;: &quot;dropdown.js&quot;, &quot;label&quot;: &quot;dropdown.js&quot;, &quot;icon&quot;: &quot;📄&quot; },
+          { &quot;id&quot;: &quot;treeview.js&quot;, &quot;label&quot;: &quot;treeview.js&quot;, &quot;icon&quot;: &quot;📄&quot; }
+        ]
+      },
+      { 
+        &quot;id&quot;: &quot;utils&quot;, 
+        &quot;label&quot;: &quot;utils&quot;,
+        &quot;children&quot;: [
+          { &quot;id&quot;: &quot;helpers.js&quot;, &quot;label&quot;: &quot;helpers.js&quot;, &quot;icon&quot;: &quot;📄&quot; },
+          { &quot;id&quot;: &quot;constants.js&quot;, &quot;label&quot;: &quot;constants.js&quot;, &quot;icon&quot;: &quot;📄&quot; }
+        ]
+      },
+      { &quot;id&quot;: &quot;index.js&quot;, &quot;label&quot;: &quot;index.js&quot;, &quot;icon&quot;: &quot;📄&quot; }
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;package.json&quot;,
+    &quot;label&quot;: &quot;package.json&quot;,
+    &quot;icon&quot;: &quot;📄&quot;
+  },
+  {
+    &quot;id&quot;: &quot;README.md&quot;,
+    &quot;label&quot;: &quot;README.md&quot;,
+    &quot;icon&quot;: &quot;📝&quot;
+  }
+]&#39;
+expanded=&#39;[&quot;src&quot;, &quot;components&quot;]&#39;
+&gt;&lt;/ae-treeview&gt;</pre> </div> </div> <div class="example-code"> <div class="expressive-code"><link rel="stylesheet" href="/docs/_astro/ec.v4551.css"><script type="module" src="/docs/_astro/ec.8zarh.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="html"><code><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">ae-treeview</span></span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">data</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">[</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "src",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "src",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "components",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "components",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">          </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "button.js", "label": "button.js", "icon": "📄" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">          </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "dropdown.js", "label": "dropdown.js", "icon": "📄" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">          </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "treeview.js", "label": "treeview.js", "icon": "📄" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "utils",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "utils",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">          </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "helpers.js", "label": "helpers.js", "icon": "📄" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">          </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "constants.js", "label": "constants.js", "icon": "📄" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">        </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "index.js", "label": "index.js", "icon": "📄" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "package.json",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "package.json",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"icon": "📄"</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "README.md",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "README.md",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"icon": "📝"</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#ECC48D;--1:#984E4D">]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">expanded</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">["src", "components"]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">>&#x3C;/</span><span style="--0:#CAECE6">ae-treeview</span><span style="--0:#7FDBCA">></span></span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="<ae-treeviewdata=&#x27;[  {    &#x22;id&#x22;: &#x22;src&#x22;,    &#x22;label&#x22;: &#x22;src&#x22;,    &#x22;children&#x22;: [      {        &#x22;id&#x22;: &#x22;components&#x22;,        &#x22;label&#x22;: &#x22;components&#x22;,        &#x22;children&#x22;: [          { &#x22;id&#x22;: &#x22;button.js&#x22;, &#x22;label&#x22;: &#x22;button.js&#x22;, &#x22;icon&#x22;: &#x22;📄&#x22; },          { &#x22;id&#x22;: &#x22;dropdown.js&#x22;, &#x22;label&#x22;: &#x22;dropdown.js&#x22;, &#x22;icon&#x22;: &#x22;📄&#x22; },          { &#x22;id&#x22;: &#x22;treeview.js&#x22;, &#x22;label&#x22;: &#x22;treeview.js&#x22;, &#x22;icon&#x22;: &#x22;📄&#x22; }        ]      },      {        &#x22;id&#x22;: &#x22;utils&#x22;,        &#x22;label&#x22;: &#x22;utils&#x22;,        &#x22;children&#x22;: [          { &#x22;id&#x22;: &#x22;helpers.js&#x22;, &#x22;label&#x22;: &#x22;helpers.js&#x22;, &#x22;icon&#x22;: &#x22;📄&#x22; },          { &#x22;id&#x22;: &#x22;constants.js&#x22;, &#x22;label&#x22;: &#x22;constants.js&#x22;, &#x22;icon&#x22;: &#x22;📄&#x22; }        ]      },      { &#x22;id&#x22;: &#x22;index.js&#x22;, &#x22;label&#x22;: &#x22;index.js&#x22;, &#x22;icon&#x22;: &#x22;📄&#x22; }    ]  },  {    &#x22;id&#x22;: &#x22;package.json&#x22;,    &#x22;label&#x22;: &#x22;package.json&#x22;,    &#x22;icon&#x22;: &#x22;📄&#x22;  },  {    &#x22;id&#x22;: &#x22;README.md&#x22;,    &#x22;label&#x22;: &#x22;README.md&#x22;,    &#x22;icon&#x22;: &#x22;📝&#x22;  }]&#x27;expanded=&#x27;[&#x22;src&#x22;, &#x22;components&#x22;]&#x27;></ae-treeview>"><div></div></button></div></figure></div> </div> </div> </div>  <!-- Load the inline TreeView implementation --> <script src="/inline-treeview.js"></script> <!-- Load the example helper script --> <script src="/treeview-checker.js"></script> <!-- Additional inline script specifically for this example --> <script>(function(){const exampleId = "treeview-example-vbc1o64cx";
+const code = "<ae-treeview\ndata='[\n  { \n    \"id\": \"src\", \n    \"label\": \"src\",\n    \"children\": [\n      { \n        \"id\": \"components\", \n        \"label\": \"components\",\n        \"children\": [\n          { \"id\": \"button.js\", \"label\": \"button.js\", \"icon\": \"📄\" },\n          { \"id\": \"dropdown.js\", \"label\": \"dropdown.js\", \"icon\": \"📄\" },\n          { \"id\": \"treeview.js\", \"label\": \"treeview.js\", \"icon\": \"📄\" }\n        ]\n      },\n      { \n        \"id\": \"utils\", \n        \"label\": \"utils\",\n        \"children\": [\n          { \"id\": \"helpers.js\", \"label\": \"helpers.js\", \"icon\": \"📄\" },\n          { \"id\": \"constants.js\", \"label\": \"constants.js\", \"icon\": \"📄\" }\n        ]\n      },\n      { \"id\": \"index.js\", \"label\": \"index.js\", \"icon\": \"📄\" }\n    ]\n  },\n  {\n    \"id\": \"package.json\",\n    \"label\": \"package.json\",\n    \"icon\": \"📄\"\n  },\n  {\n    \"id\": \"README.md\",\n    \"label\": \"README.md\",\n    \"icon\": \"📝\"\n  }\n]'\nexpanded='[\"src\", \"components\"]'\n></ae-treeview>";
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const placeholder = document.querySelector(`.placeholder[data-placeholder-id="${exampleId}"]`);
+    if (!placeholder) return;
+    
+    console.log(`Processing example ${exampleId}`);
+    
+    // Replace placeholder with actual code
+    placeholder.innerHTML = `${code}`;
+    
+    // Find TreeView elements in this specific example
+    const treeviews = placeholder.querySelectorAll('ae-treeview');
+    console.log(`Found ${treeviews.length} treeviews in example ${exampleId}`);
+    
+    // Process them after a delay to ensure the component is defined
+    setTimeout(() => {
+      treeviews.forEach((treeview, index) => {
+        try {
+          console.log(`Initializing TreeView ${index} in example ${exampleId}`);
+          
+          // Process data
+          if (treeview.hasAttribute('data')) {
+            const dataValue = treeview.getAttribute('data');
+            if (dataValue) {
+              try {
+                const data = JSON.parse(dataValue);
+                console.log(`Setting data for TreeView ${index}`, data);
+                treeview.data = data;
+              } catch (e) {
+                console.error(`Error parsing data for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          // Process expanded
+          if (treeview.hasAttribute('expanded')) {
+            const expandedValue = treeview.getAttribute('expanded');
+            if (expandedValue) {
+              try {
+                const expanded = JSON.parse(expandedValue);
+                console.log(`Setting expanded for TreeView ${index}`, expanded);
+                treeview.expanded = expanded;
+              } catch (e) {
+                console.error(`Error parsing expanded for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          // Process selected
+          if (treeview.hasAttribute('selected')) {
+            const selectedValue = treeview.getAttribute('selected');
+            if (selectedValue) {
+              try {
+                const selected = JSON.parse(selectedValue);
+                console.log(`Setting selected for TreeView ${index}`, selected);
+                treeview.selected = selected;
+              } catch (e) {
+                console.error(`Error parsing selected for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          console.log(`TreeView ${index} in example ${exampleId} initialized`);
+        } catch (e) {
+          console.error(`Error initializing TreeView ${index} for example ${exampleId}:`, e);
+        }
+      });
+    }, 500);
+  });
+})();</script>
+<div class="example-container" data-example-id="treeview-example-dfw9tjemt"> <div class="example-header"> <h3>Multi-select Mode</h3> <p>TreeView with multi-select capability for selecting multiple items.</p> </div> <div class="example-content"> <div class="example-preview"> <div class="placeholder" data-placeholder-id="treeview-example-dfw9tjemt"> <p class="loading-message">Loading example...</p> <pre class="hidden-code">&lt;ae-treeview
+selectionMode=&quot;multiple&quot;
+data=&#39;[
+  { 
+    &quot;id&quot;: &quot;docs&quot;, 
+    &quot;label&quot;: &quot;Documents&quot;,
+    &quot;children&quot;: [
+      { &quot;id&quot;: &quot;report&quot;, &quot;label&quot;: &quot;Annual Report&quot; },
+      { &quot;id&quot;: &quot;budget&quot;, &quot;label&quot;: &quot;Budget Spreadsheet&quot; }
+    ]
+  },
+  { 
+    &quot;id&quot;: &quot;pics&quot;, 
+    &quot;label&quot;: &quot;Pictures&quot;,
+    &quot;children&quot;: [
+      { &quot;id&quot;: &quot;vacation&quot;, &quot;label&quot;: &quot;Vacation Photos&quot; }
+    ]
+  },
+  { &quot;id&quot;: &quot;notes&quot;, &quot;label&quot;: &quot;Notes&quot; }
+]&#39;
+expanded=&#39;[&quot;docs&quot;]&#39;
+selected=&#39;[&quot;report&quot;, &quot;notes&quot;]&#39;
+&gt;&lt;/ae-treeview&gt;</pre> </div> </div> <div class="example-code"> <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="html"><code><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">ae-treeview</span></span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">selectionMode</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">multiple</span><span style="--0:#D9F5DD;--1:#111111">"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">data</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">[</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "docs",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Documents",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "report", "label": "Annual Report" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "budget", "label": "Budget Spreadsheet" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "pics",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Pictures",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "vacation", "label": "Vacation Photos" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "notes", "label": "Notes" }</span></div></div><div class="ec-line"><div class="code"><span style="--0:#ECC48D;--1:#984E4D">]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">expanded</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">["docs"]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">selected</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">["report", "notes"]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">>&#x3C;/</span><span style="--0:#CAECE6">ae-treeview</span><span style="--0:#7FDBCA">></span></span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="<ae-treeviewselectionMode=&#x22;multiple&#x22;data=&#x27;[  {    &#x22;id&#x22;: &#x22;docs&#x22;,    &#x22;label&#x22;: &#x22;Documents&#x22;,    &#x22;children&#x22;: [      { &#x22;id&#x22;: &#x22;report&#x22;, &#x22;label&#x22;: &#x22;Annual Report&#x22; },      { &#x22;id&#x22;: &#x22;budget&#x22;, &#x22;label&#x22;: &#x22;Budget Spreadsheet&#x22; }    ]  },  {    &#x22;id&#x22;: &#x22;pics&#x22;,    &#x22;label&#x22;: &#x22;Pictures&#x22;,    &#x22;children&#x22;: [      { &#x22;id&#x22;: &#x22;vacation&#x22;, &#x22;label&#x22;: &#x22;Vacation Photos&#x22; }    ]  },  { &#x22;id&#x22;: &#x22;notes&#x22;, &#x22;label&#x22;: &#x22;Notes&#x22; }]&#x27;expanded=&#x27;[&#x22;docs&#x22;]&#x27;selected=&#x27;[&#x22;report&#x22;, &#x22;notes&#x22;]&#x27;></ae-treeview>"><div></div></button></div></figure></div> </div> </div> </div>  <!-- Load the inline TreeView implementation --> <script src="/inline-treeview.js"></script> <!-- Load the example helper script --> <script src="/treeview-checker.js"></script> <!-- Additional inline script specifically for this example --> <script>(function(){const exampleId = "treeview-example-dfw9tjemt";
+const code = "<ae-treeview\nselectionMode=\"multiple\"\ndata='[\n  { \n    \"id\": \"docs\", \n    \"label\": \"Documents\",\n    \"children\": [\n      { \"id\": \"report\", \"label\": \"Annual Report\" },\n      { \"id\": \"budget\", \"label\": \"Budget Spreadsheet\" }\n    ]\n  },\n  { \n    \"id\": \"pics\", \n    \"label\": \"Pictures\",\n    \"children\": [\n      { \"id\": \"vacation\", \"label\": \"Vacation Photos\" }\n    ]\n  },\n  { \"id\": \"notes\", \"label\": \"Notes\" }\n]'\nexpanded='[\"docs\"]'\nselected='[\"report\", \"notes\"]'\n></ae-treeview>";
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const placeholder = document.querySelector(`.placeholder[data-placeholder-id="${exampleId}"]`);
+    if (!placeholder) return;
+    
+    console.log(`Processing example ${exampleId}`);
+    
+    // Replace placeholder with actual code
+    placeholder.innerHTML = `${code}`;
+    
+    // Find TreeView elements in this specific example
+    const treeviews = placeholder.querySelectorAll('ae-treeview');
+    console.log(`Found ${treeviews.length} treeviews in example ${exampleId}`);
+    
+    // Process them after a delay to ensure the component is defined
+    setTimeout(() => {
+      treeviews.forEach((treeview, index) => {
+        try {
+          console.log(`Initializing TreeView ${index} in example ${exampleId}`);
+          
+          // Process data
+          if (treeview.hasAttribute('data')) {
+            const dataValue = treeview.getAttribute('data');
+            if (dataValue) {
+              try {
+                const data = JSON.parse(dataValue);
+                console.log(`Setting data for TreeView ${index}`, data);
+                treeview.data = data;
+              } catch (e) {
+                console.error(`Error parsing data for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          // Process expanded
+          if (treeview.hasAttribute('expanded')) {
+            const expandedValue = treeview.getAttribute('expanded');
+            if (expandedValue) {
+              try {
+                const expanded = JSON.parse(expandedValue);
+                console.log(`Setting expanded for TreeView ${index}`, expanded);
+                treeview.expanded = expanded;
+              } catch (e) {
+                console.error(`Error parsing expanded for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          // Process selected
+          if (treeview.hasAttribute('selected')) {
+            const selectedValue = treeview.getAttribute('selected');
+            if (selectedValue) {
+              try {
+                const selected = JSON.parse(selectedValue);
+                console.log(`Setting selected for TreeView ${index}`, selected);
+                treeview.selected = selected;
+              } catch (e) {
+                console.error(`Error parsing selected for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          console.log(`TreeView ${index} in example ${exampleId} initialized`);
+        } catch (e) {
+          console.error(`Error initializing TreeView ${index} for example ${exampleId}:`, e);
+        }
+      });
+    }, 500);
+  });
+})();</script>
+<div class="example-container" data-example-id="treeview-example-2zsmologw"> <div class="example-header"> <h3>Menu Example</h3> <p>TreeView used as a hierarchical menu navigation.</p> </div> <div class="example-content"> <div class="example-preview"> <div class="placeholder" data-placeholder-id="treeview-example-2zsmologw"> <p class="loading-message">Loading example...</p> <pre class="hidden-code">&lt;ae-treeview
+data=&#39;[
+  {
+    &quot;id&quot;: &quot;file&quot;,
+    &quot;label&quot;: &quot;File&quot;,
+    &quot;children&quot;: [
+      { &quot;id&quot;: &quot;new&quot;, &quot;label&quot;: &quot;New&quot; },
+      { &quot;id&quot;: &quot;open&quot;, &quot;label&quot;: &quot;Open&quot; },
+      { &quot;id&quot;: &quot;save&quot;, &quot;label&quot;: &quot;Save&quot; },
+      { &quot;id&quot;: &quot;save-as&quot;, &quot;label&quot;: &quot;Save As...&quot; }
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;edit&quot;,
+    &quot;label&quot;: &quot;Edit&quot;,
+    &quot;children&quot;: [
+      { &quot;id&quot;: &quot;undo&quot;, &quot;label&quot;: &quot;Undo&quot; },
+      { &quot;id&quot;: &quot;redo&quot;, &quot;label&quot;: &quot;Redo&quot; },
+      { &quot;id&quot;: &quot;cut&quot;, &quot;label&quot;: &quot;Cut&quot; },
+      { &quot;id&quot;: &quot;copy&quot;, &quot;label&quot;: &quot;Copy&quot; },
+      { &quot;id&quot;: &quot;paste&quot;, &quot;label&quot;: &quot;Paste&quot; }
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;view&quot;,
+    &quot;label&quot;: &quot;View&quot;,
+    &quot;children&quot;: [
+      { &quot;id&quot;: &quot;zoom-in&quot;, &quot;label&quot;: &quot;Zoom In&quot; },
+      { &quot;id&quot;: &quot;zoom-out&quot;, &quot;label&quot;: &quot;Zoom Out&quot; },
+      { &quot;id&quot;: &quot;reset-zoom&quot;, &quot;label&quot;: &quot;Reset Zoom&quot; }
+    ]
+  }
+]&#39;
+&gt;&lt;/ae-treeview&gt;</pre> </div> </div> <div class="example-code"> <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="html"><code><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">ae-treeview</span></span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">data</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">[</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "file",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "File",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "new", "label": "New" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "open", "label": "Open" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "save", "label": "Save" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "save-as", "label": "Save As..." }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "edit",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Edit",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "undo", "label": "Undo" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "redo", "label": "Redo" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "cut", "label": "Cut" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "copy", "label": "Copy" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "paste", "label": "Paste" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "view",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "View",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "zoom-in", "label": "Zoom In" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "zoom-out", "label": "Zoom Out" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "reset-zoom", "label": "Reset Zoom" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#ECC48D;--1:#984E4D">]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">>&#x3C;/</span><span style="--0:#CAECE6">ae-treeview</span><span style="--0:#7FDBCA">></span></span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="<ae-treeviewdata=&#x27;[  {    &#x22;id&#x22;: &#x22;file&#x22;,    &#x22;label&#x22;: &#x22;File&#x22;,    &#x22;children&#x22;: [      { &#x22;id&#x22;: &#x22;new&#x22;, &#x22;label&#x22;: &#x22;New&#x22; },      { &#x22;id&#x22;: &#x22;open&#x22;, &#x22;label&#x22;: &#x22;Open&#x22; },      { &#x22;id&#x22;: &#x22;save&#x22;, &#x22;label&#x22;: &#x22;Save&#x22; },      { &#x22;id&#x22;: &#x22;save-as&#x22;, &#x22;label&#x22;: &#x22;Save As...&#x22; }    ]  },  {    &#x22;id&#x22;: &#x22;edit&#x22;,    &#x22;label&#x22;: &#x22;Edit&#x22;,    &#x22;children&#x22;: [      { &#x22;id&#x22;: &#x22;undo&#x22;, &#x22;label&#x22;: &#x22;Undo&#x22; },      { &#x22;id&#x22;: &#x22;redo&#x22;, &#x22;label&#x22;: &#x22;Redo&#x22; },      { &#x22;id&#x22;: &#x22;cut&#x22;, &#x22;label&#x22;: &#x22;Cut&#x22; },      { &#x22;id&#x22;: &#x22;copy&#x22;, &#x22;label&#x22;: &#x22;Copy&#x22; },      { &#x22;id&#x22;: &#x22;paste&#x22;, &#x22;label&#x22;: &#x22;Paste&#x22; }    ]  },  {    &#x22;id&#x22;: &#x22;view&#x22;,    &#x22;label&#x22;: &#x22;View&#x22;,    &#x22;children&#x22;: [      { &#x22;id&#x22;: &#x22;zoom-in&#x22;, &#x22;label&#x22;: &#x22;Zoom In&#x22; },      { &#x22;id&#x22;: &#x22;zoom-out&#x22;, &#x22;label&#x22;: &#x22;Zoom Out&#x22; },      { &#x22;id&#x22;: &#x22;reset-zoom&#x22;, &#x22;label&#x22;: &#x22;Reset Zoom&#x22; }    ]  }]&#x27;></ae-treeview>"><div></div></button></div></figure></div> </div> </div> </div>  <!-- Load the inline TreeView implementation --> <script src="/inline-treeview.js"></script> <!-- Load the example helper script --> <script src="/treeview-checker.js"></script> <!-- Additional inline script specifically for this example --> <script>(function(){const exampleId = "treeview-example-2zsmologw";
+const code = "<ae-treeview\ndata='[\n  {\n    \"id\": \"file\",\n    \"label\": \"File\",\n    \"children\": [\n      { \"id\": \"new\", \"label\": \"New\" },\n      { \"id\": \"open\", \"label\": \"Open\" },\n      { \"id\": \"save\", \"label\": \"Save\" },\n      { \"id\": \"save-as\", \"label\": \"Save As...\" }\n    ]\n  },\n  {\n    \"id\": \"edit\",\n    \"label\": \"Edit\",\n    \"children\": [\n      { \"id\": \"undo\", \"label\": \"Undo\" },\n      { \"id\": \"redo\", \"label\": \"Redo\" },\n      { \"id\": \"cut\", \"label\": \"Cut\" },\n      { \"id\": \"copy\", \"label\": \"Copy\" },\n      { \"id\": \"paste\", \"label\": \"Paste\" }\n    ]\n  },\n  {\n    \"id\": \"view\",\n    \"label\": \"View\",\n    \"children\": [\n      { \"id\": \"zoom-in\", \"label\": \"Zoom In\" },\n      { \"id\": \"zoom-out\", \"label\": \"Zoom Out\" },\n      { \"id\": \"reset-zoom\", \"label\": \"Reset Zoom\" }\n    ]\n  }\n]'\n></ae-treeview>";
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const placeholder = document.querySelector(`.placeholder[data-placeholder-id="${exampleId}"]`);
+    if (!placeholder) return;
+    
+    console.log(`Processing example ${exampleId}`);
+    
+    // Replace placeholder with actual code
+    placeholder.innerHTML = `${code}`;
+    
+    // Find TreeView elements in this specific example
+    const treeviews = placeholder.querySelectorAll('ae-treeview');
+    console.log(`Found ${treeviews.length} treeviews in example ${exampleId}`);
+    
+    // Process them after a delay to ensure the component is defined
+    setTimeout(() => {
+      treeviews.forEach((treeview, index) => {
+        try {
+          console.log(`Initializing TreeView ${index} in example ${exampleId}`);
+          
+          // Process data
+          if (treeview.hasAttribute('data')) {
+            const dataValue = treeview.getAttribute('data');
+            if (dataValue) {
+              try {
+                const data = JSON.parse(dataValue);
+                console.log(`Setting data for TreeView ${index}`, data);
+                treeview.data = data;
+              } catch (e) {
+                console.error(`Error parsing data for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          // Process expanded
+          if (treeview.hasAttribute('expanded')) {
+            const expandedValue = treeview.getAttribute('expanded');
+            if (expandedValue) {
+              try {
+                const expanded = JSON.parse(expandedValue);
+                console.log(`Setting expanded for TreeView ${index}`, expanded);
+                treeview.expanded = expanded;
+              } catch (e) {
+                console.error(`Error parsing expanded for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          // Process selected
+          if (treeview.hasAttribute('selected')) {
+            const selectedValue = treeview.getAttribute('selected');
+            if (selectedValue) {
+              try {
+                const selected = JSON.parse(selectedValue);
+                console.log(`Setting selected for TreeView ${index}`, selected);
+                treeview.selected = selected;
+              } catch (e) {
+                console.error(`Error parsing selected for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          console.log(`TreeView ${index} in example ${exampleId} initialized`);
+        } catch (e) {
+          console.error(`Error initializing TreeView ${index} for example ${exampleId}:`, e);
+        }
+      });
+    }, 500);
+  });
+})();</script>
+<div class="example-container" data-example-id="treeview-example-dkotriwu3"> <div class="example-header"> <h3>Custom Styled TreeView</h3> <p>TreeView with custom styling using CSS variables.</p> </div> <div class="example-content"> <div class="example-preview"> <div class="placeholder" data-placeholder-id="treeview-example-dkotriwu3"> <p class="loading-message">Loading example...</p> <pre class="hidden-code">&lt;style&gt;
+.custom-tree {
+  --ae-treeview-row-hover-bg: rgba(79, 70, 229, 0.1);
+  --ae-treeview-row-selected-bg: rgba(79, 70, 229, 0.2);
+  --ae-treeview-row-selected-fg: rgb(67, 56, 202);
+  --ae-treeview-focus-color: rgb(79, 70, 229);
+  --ae-treeview-caret-color: #94a3b8;
+  --ae-treeview-caret-open: #4f46e5;
+  --ae-treeview-node-radius: 6px;
+}
+&lt;/style&gt;
+
+&lt;ae-treeview
+class=&quot;custom-tree&quot;
+data=&#39;[
+  { 
+    &quot;id&quot;: &quot;inbox&quot;, 
+    &quot;label&quot;: &quot;Inbox&quot;,
+    &quot;children&quot;: [
+      { &quot;id&quot;: &quot;important&quot;, &quot;label&quot;: &quot;Important&quot; },
+      { &quot;id&quot;: &quot;starred&quot;, &quot;label&quot;: &quot;Starred&quot; }
+    ]
+  },
+  { 
+    &quot;id&quot;: &quot;drafts&quot;, 
+    &quot;label&quot;: &quot;Drafts&quot; 
+  },
+  { 
+    &quot;id&quot;: &quot;sent&quot;, 
+    &quot;label&quot;: &quot;Sent Mail&quot; 
+  },
+  { 
+    &quot;id&quot;: &quot;trash&quot;, 
+    &quot;label&quot;: &quot;Trash&quot; 
+  }
+]&#39;
+expanded=&#39;[&quot;inbox&quot;]&#39;
+selected=&#39;[&quot;important&quot;]&#39;
+&gt;&lt;/ae-treeview&gt;</pre> </div> </div> <div class="example-code"> <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="html"><code><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">style</span><span style="--0:#7FDBCA">></span></span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">.custom-tree</span><span style="--0:#D6DEEB;--1:#403F53"> {</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">--ae-treeview-row-hover-bg</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#C5E478;--1:#3B61B0">rgba</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#F78C6C;--1:#AA0982">79</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">70</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">229</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">0.1</span><span style="--0:#D6DEEB;--1:#403F53">);</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">--ae-treeview-row-selected-bg</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#C5E478;--1:#3B61B0">rgba</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#F78C6C;--1:#AA0982">79</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">70</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">229</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">0.2</span><span style="--0:#D6DEEB;--1:#403F53">);</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">--ae-treeview-row-selected-fg</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#C5E478;--1:#3B61B0">rgb</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#F78C6C;--1:#AA0982">67</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">56</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">202</span><span style="--0:#D6DEEB;--1:#403F53">);</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">--ae-treeview-focus-color</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#C5E478;--1:#3B61B0">rgb</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#F78C6C;--1:#AA0982">79</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">70</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#F78C6C;--1:#AA0982">229</span><span style="--0:#D6DEEB;--1:#403F53">);</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">--ae-treeview-caret-color</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--1:#AA0982"><span style="--0:#F78C6C">#</span><span style="--0:#FFEB95">94a3b8</span></span><span style="--0:#D6DEEB;--1:#403F53">;</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">--ae-treeview-caret-open</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--1:#AA0982"><span style="--0:#F78C6C">#</span><span style="--0:#FFEB95">4f46e5</span></span><span style="--0:#D6DEEB;--1:#403F53">;</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">--ae-treeview-node-radius</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--1:#AA0982"><span style="--0:#F78C6C">6</span><span style="--0:#FFEB95">px</span></span><span style="--0:#D6DEEB;--1:#403F53">;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;/</span><span style="--0:#CAECE6">style</span><span style="--0:#7FDBCA">></span></span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">ae-treeview</span></span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">class</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">custom-tree</span><span style="--0:#D9F5DD;--1:#111111">"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">data</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">[</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "inbox",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Inbox",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"children": [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "important", "label": "Important" },</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">      </span></span><span style="--0:#ECC48D;--1:#984E4D">{ "id": "starred", "label": "Starred" }</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "drafts",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Drafts"</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "sent",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Sent Mail"</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"id": "trash",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">    </span></span><span style="--0:#ECC48D;--1:#984E4D">"label": "Trash"</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#ECC48D;--1:#984E4D">  </span></span><span style="--0:#ECC48D;--1:#984E4D">}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#ECC48D;--1:#984E4D">]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">expanded</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">["inbox"]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">selected</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">["important"]</span><span style="--0:#D9F5DD;--1:#111111">'</span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">>&#x3C;/</span><span style="--0:#CAECE6">ae-treeview</span><span style="--0:#7FDBCA">></span></span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="<style>.custom-tree {  --ae-treeview-row-hover-bg: rgba(79, 70, 229, 0.1);  --ae-treeview-row-selected-bg: rgba(79, 70, 229, 0.2);  --ae-treeview-row-selected-fg: rgb(67, 56, 202);  --ae-treeview-focus-color: rgb(79, 70, 229);  --ae-treeview-caret-color: #94a3b8;  --ae-treeview-caret-open: #4f46e5;  --ae-treeview-node-radius: 6px;}</style><ae-treeviewclass=&#x22;custom-tree&#x22;data=&#x27;[  {    &#x22;id&#x22;: &#x22;inbox&#x22;,    &#x22;label&#x22;: &#x22;Inbox&#x22;,    &#x22;children&#x22;: [      { &#x22;id&#x22;: &#x22;important&#x22;, &#x22;label&#x22;: &#x22;Important&#x22; },      { &#x22;id&#x22;: &#x22;starred&#x22;, &#x22;label&#x22;: &#x22;Starred&#x22; }    ]  },  {    &#x22;id&#x22;: &#x22;drafts&#x22;,    &#x22;label&#x22;: &#x22;Drafts&#x22;  },  {    &#x22;id&#x22;: &#x22;sent&#x22;,    &#x22;label&#x22;: &#x22;Sent Mail&#x22;  },  {    &#x22;id&#x22;: &#x22;trash&#x22;,    &#x22;label&#x22;: &#x22;Trash&#x22;  }]&#x27;expanded=&#x27;[&#x22;inbox&#x22;]&#x27;selected=&#x27;[&#x22;important&#x22;]&#x27;></ae-treeview>"><div></div></button></div></figure></div> </div> </div> </div>  <!-- Load the inline TreeView implementation --> <script src="/inline-treeview.js"></script> <!-- Load the example helper script --> <script src="/treeview-checker.js"></script> <!-- Additional inline script specifically for this example --> <script>(function(){const exampleId = "treeview-example-dkotriwu3";
+const code = "<style>\n.custom-tree {\n  --ae-treeview-row-hover-bg: rgba(79, 70, 229, 0.1);\n  --ae-treeview-row-selected-bg: rgba(79, 70, 229, 0.2);\n  --ae-treeview-row-selected-fg: rgb(67, 56, 202);\n  --ae-treeview-focus-color: rgb(79, 70, 229);\n  --ae-treeview-caret-color: #94a3b8;\n  --ae-treeview-caret-open: #4f46e5;\n  --ae-treeview-node-radius: 6px;\n}\n</style>\n\n<ae-treeview\nclass=\"custom-tree\"\ndata='[\n  { \n    \"id\": \"inbox\", \n    \"label\": \"Inbox\",\n    \"children\": [\n      { \"id\": \"important\", \"label\": \"Important\" },\n      { \"id\": \"starred\", \"label\": \"Starred\" }\n    ]\n  },\n  { \n    \"id\": \"drafts\", \n    \"label\": \"Drafts\" \n  },\n  { \n    \"id\": \"sent\", \n    \"label\": \"Sent Mail\" \n  },\n  { \n    \"id\": \"trash\", \n    \"label\": \"Trash\" \n  }\n]'\nexpanded='[\"inbox\"]'\nselected='[\"important\"]'\n></ae-treeview>";
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const placeholder = document.querySelector(`.placeholder[data-placeholder-id="${exampleId}"]`);
+    if (!placeholder) return;
+    
+    console.log(`Processing example ${exampleId}`);
+    
+    // Replace placeholder with actual code
+    placeholder.innerHTML = `${code}`;
+    
+    // Find TreeView elements in this specific example
+    const treeviews = placeholder.querySelectorAll('ae-treeview');
+    console.log(`Found ${treeviews.length} treeviews in example ${exampleId}`);
+    
+    // Process them after a delay to ensure the component is defined
+    setTimeout(() => {
+      treeviews.forEach((treeview, index) => {
+        try {
+          console.log(`Initializing TreeView ${index} in example ${exampleId}`);
+          
+          // Process data
+          if (treeview.hasAttribute('data')) {
+            const dataValue = treeview.getAttribute('data');
+            if (dataValue) {
+              try {
+                const data = JSON.parse(dataValue);
+                console.log(`Setting data for TreeView ${index}`, data);
+                treeview.data = data;
+              } catch (e) {
+                console.error(`Error parsing data for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          // Process expanded
+          if (treeview.hasAttribute('expanded')) {
+            const expandedValue = treeview.getAttribute('expanded');
+            if (expandedValue) {
+              try {
+                const expanded = JSON.parse(expandedValue);
+                console.log(`Setting expanded for TreeView ${index}`, expanded);
+                treeview.expanded = expanded;
+              } catch (e) {
+                console.error(`Error parsing expanded for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          // Process selected
+          if (treeview.hasAttribute('selected')) {
+            const selectedValue = treeview.getAttribute('selected');
+            if (selectedValue) {
+              try {
+                const selected = JSON.parse(selectedValue);
+                console.log(`Setting selected for TreeView ${index}`, selected);
+                treeview.selected = selected;
+              } catch (e) {
+                console.error(`Error parsing selected for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          console.log(`TreeView ${index} in example ${exampleId} initialized`);
+        } catch (e) {
+          console.error(`Error initializing TreeView ${index} for example ${exampleId}:`, e);
+        }
+      });
+    }, 500);
+  });
+})();</script>
+<div class="example-container" data-example-id="treeview-example-zdxu2cnts"> <div class="example-header"> <h3>Empty and Loading States</h3> <p>TreeView in empty and loading states.</p> </div> <div class="example-content"> <div class="example-preview"> <div class="placeholder" data-placeholder-id="treeview-example-zdxu2cnts"> <p class="loading-message">Loading example...</p> <pre class="hidden-code">&lt;div style=&quot;display: flex; gap: 20px;&quot;&gt;
+&lt;ae-treeview 
+  emptyMessage=&quot;No files found&quot;
+  data=&#39;[]&#39;&gt;
+&lt;/ae-treeview&gt;
+
+&lt;ae-treeview 
+  loading
+  data=&#39;[]&#39;&gt;
+&lt;/ae-treeview&gt;
+&lt;/div&gt;</pre> </div> </div> <div class="example-code"> <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="html"><code><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">div</span><span style="--0:#7FDBCA"> </span></span><span style="--0:#C5E478;--1:#3B61B0">style</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">display: flex; gap: 20px;</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#7FDBCA;--1:#8844AE">></span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">ae-treeview</span></span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">emptyMessage</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">No files found</span><span style="--0:#D9F5DD;--1:#111111">"</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">data</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">[]</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#7FDBCA;--1:#8844AE">></span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;/</span><span style="--0:#CAECE6">ae-treeview</span><span style="--0:#7FDBCA">></span></span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;</span><span style="--0:#CAECE6">ae-treeview</span></span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">loading</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#C5E478;--1:#3B61B0">data</span><span style="--0:#7FDBCA;--1:#8844AE">=</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#ECC48D;--1:#984E4D">[]</span><span style="--0:#D9F5DD;--1:#111111">'</span><span style="--0:#7FDBCA;--1:#8844AE">></span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;/</span><span style="--0:#CAECE6">ae-treeview</span><span style="--0:#7FDBCA">></span></span></div></div><div class="ec-line"><div class="code"><span style="--1:#8844AE"><span style="--0:#7FDBCA">&#x3C;/</span><span style="--0:#CAECE6">div</span><span style="--0:#7FDBCA">></span></span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="<div style=&#x22;display: flex; gap: 20px;&#x22;><ae-treeview  emptyMessage=&#x22;No files found&#x22;  data=&#x27;[]&#x27;></ae-treeview><ae-treeview  loading  data=&#x27;[]&#x27;></ae-treeview></div>"><div></div></button></div></figure></div> </div> </div> </div>  <!-- Load the inline TreeView implementation --> <script src="/inline-treeview.js"></script> <!-- Load the example helper script --> <script src="/treeview-checker.js"></script> <!-- Additional inline script specifically for this example --> <script>(function(){const exampleId = "treeview-example-zdxu2cnts";
+const code = "<div style=\"display: flex; gap: 20px;\">\n<ae-treeview \n  emptyMessage=\"No files found\"\n  data='[]'>\n</ae-treeview>\n\n<ae-treeview \n  loading\n  data='[]'>\n</ae-treeview>\n</div>";
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const placeholder = document.querySelector(`.placeholder[data-placeholder-id="${exampleId}"]`);
+    if (!placeholder) return;
+    
+    console.log(`Processing example ${exampleId}`);
+    
+    // Replace placeholder with actual code
+    placeholder.innerHTML = `${code}`;
+    
+    // Find TreeView elements in this specific example
+    const treeviews = placeholder.querySelectorAll('ae-treeview');
+    console.log(`Found ${treeviews.length} treeviews in example ${exampleId}`);
+    
+    // Process them after a delay to ensure the component is defined
+    setTimeout(() => {
+      treeviews.forEach((treeview, index) => {
+        try {
+          console.log(`Initializing TreeView ${index} in example ${exampleId}`);
+          
+          // Process data
+          if (treeview.hasAttribute('data')) {
+            const dataValue = treeview.getAttribute('data');
+            if (dataValue) {
+              try {
+                const data = JSON.parse(dataValue);
+                console.log(`Setting data for TreeView ${index}`, data);
+                treeview.data = data;
+              } catch (e) {
+                console.error(`Error parsing data for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          // Process expanded
+          if (treeview.hasAttribute('expanded')) {
+            const expandedValue = treeview.getAttribute('expanded');
+            if (expandedValue) {
+              try {
+                const expanded = JSON.parse(expandedValue);
+                console.log(`Setting expanded for TreeView ${index}`, expanded);
+                treeview.expanded = expanded;
+              } catch (e) {
+                console.error(`Error parsing expanded for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          // Process selected
+          if (treeview.hasAttribute('selected')) {
+            const selectedValue = treeview.getAttribute('selected');
+            if (selectedValue) {
+              try {
+                const selected = JSON.parse(selectedValue);
+                console.log(`Setting selected for TreeView ${index}`, selected);
+                treeview.selected = selected;
+              } catch (e) {
+                console.error(`Error parsing selected for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          console.log(`TreeView ${index} in example ${exampleId} initialized`);
+        } catch (e) {
+          console.error(`Error initializing TreeView ${index} for example ${exampleId}:`, e);
+        }
+      });
+    }, 500);
+  });
+})();</script> </div> <footer class="sl-flex astro-3ka4guaz"> <div class="meta sl-flex astro-3ka4guaz"> <a href="https://github.com/your-org/aetherui/edit/main/packages/docs/src/content/docs/components/treeview.mdx" class="sl-flex print:hidden astro-sn5hlhew"><svg aria-hidden="true" class="astro-sn5hlhew astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.2em;"><path d="M22 7.24a1 1 0 0 0-.29-.71l-4.24-4.24a1 1 0 0 0-1.1-.22 1 1 0 0 0-.32.22l-2.83 2.83L2.29 16.05a1 1 0 0 0-.29.71V21a1 1 0 0 0 1 1h4.24a1 1 0 0 0 .76-.29l10.87-10.93L21.71 8c.1-.1.17-.2.22-.33a1 1 0 0 0 0-.24v-.14l.07-.05ZM6.83 20H4v-2.83l9.93-9.93 2.83 2.83L6.83 20ZM18.17 8.66l-2.83-2.83 1.42-1.41 2.82 2.82-1.41 1.42Z"/></svg>Edit page</a>  </div> <div class="pagination-links print:hidden astro-la7hkkmk" dir="ltr"> <a href="/docs/components/tabs/" rel="prev" class="astro-la7hkkmk"> <svg aria-hidden="true" class="astro-la7hkkmk astro-f2r6etbr" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg> <span class="astro-la7hkkmk"> Previous <br class="astro-la7hkkmk"> <span class="link-title astro-la7hkkmk">Tabs</span> </span> </a>  </div>   </footer>  </div> </div>   </main> </div> </div>  </div> </div>  </body></html>
