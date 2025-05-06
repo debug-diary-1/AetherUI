@@ -4,6 +4,7 @@ description: Dropdown menu component for displaying a list of options or actions
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
+import DropdownExample from '../../../components/DropdownExample.astro';
 
 ## Overview
 
@@ -195,50 +196,51 @@ The Dropdown component follows WAI-ARIA best practices for menus:
 
 Here are some interactive examples of the dropdown component:
 
-<div class="example-container">
-  <h3>Basic Dropdown Example</h3>
-  <div class="example">
-    <ae-dropdown>
-      <button>Open Menu</button>
-      <ae-menu-item slot="item" value="edit">Edit</ae-menu-item>
-      <ae-menu-item slot="item" value="duplicate">Duplicate</ae-menu-item>
-      <ae-menu-separator slot="item"></ae-menu-separator>
-      <ae-menu-item slot="item" value="delete">Delete</ae-menu-item>
-    </ae-dropdown>
-  </div>
-  
-  <h3>Dropdown with Icons and Hints</h3>
-  <div class="example">
-    <ae-dropdown>
-      <button>More Actions</button>
-      <ae-menu-item slot="item" value="cut">
-        <span slot="icon">✂️</span>
-        Cut
-        <span slot="hint">⌘X</span>
-      </ae-menu-item>
-      <ae-menu-item slot="item" value="copy">
-        <span slot="icon">📋</span>
-        Copy
-        <span slot="hint">⌘C</span>
-      </ae-menu-item>
-      <ae-menu-item slot="item" value="paste">
-        <span slot="icon">📌</span>
-        Paste
-        <span slot="hint">⌘V</span>
-      </ae-menu-item>
-    </ae-dropdown>
-  </div>
-  
-  <h3>Open by Default Example</h3>
-  <div class="example">
-    <ae-dropdown open>
-      <button>Menu (Open by Default)</button>
-      <ae-menu-item slot="item" value="option1">Option 1</ae-menu-item>
-      <ae-menu-item slot="item" value="option2">Option 2</ae-menu-item>
-      <ae-menu-item slot="item" value="option3">Option 3</ae-menu-item>
-    </ae-dropdown>
-  </div>
-</div>
+<DropdownExample
+  title="Basic Dropdown Example"
+  description="A simple dropdown menu with a separator."
+  code={`<ae-dropdown>
+  <button>Open Menu</button>
+  <ae-menu-item slot="item" value="edit">Edit</ae-menu-item>
+  <ae-menu-item slot="item" value="duplicate">Duplicate</ae-menu-item>
+  <ae-menu-separator slot="item"></ae-menu-separator>
+  <ae-menu-item slot="item" value="delete">Delete</ae-menu-item>
+</ae-dropdown>`}
+/>
+
+<DropdownExample
+  title="Dropdown with Icons and Hints"
+  description="Dropdown menu items with icons and keyboard shortcuts."
+  code={`<ae-dropdown>
+  <button>More Actions</button>
+  <ae-menu-item slot="item" value="cut">
+    <span slot="icon">✂️</span>
+    Cut
+    <span slot="hint">⌘X</span>
+  </ae-menu-item>
+  <ae-menu-item slot="item" value="copy">
+    <span slot="icon">📋</span>
+    Copy
+    <span slot="hint">⌘C</span>
+  </ae-menu-item>
+  <ae-menu-item slot="item" value="paste">
+    <span slot="icon">📌</span>
+    Paste
+    <span slot="hint">⌘V</span>
+  </ae-menu-item>
+</ae-dropdown>`}
+/>
+
+<DropdownExample
+  title="Open by Default Example"
+  description="A dropdown that is open by default when the page loads."
+  code={`<ae-dropdown open>
+  <button>Menu (Open by Default)</button>
+  <ae-menu-item slot="item" value="option1">Option 1</ae-menu-item>
+  <ae-menu-item slot="item" value="option2">Option 2</ae-menu-item>
+  <ae-menu-item slot="item" value="option3">Option 3</ae-menu-item>
+</ae-dropdown>`}
+/>
 
 <style>
   .example-container {

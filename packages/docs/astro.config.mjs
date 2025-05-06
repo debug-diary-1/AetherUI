@@ -2,8 +2,8 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
-  site: 'https://your-org.github.io/aetherui',
-  base: '/docs',
+  site: 'https://pallavl01.github.io',
+  base: '/AetherUI/docs',
   outDir: './dist',
   publicDir: './public',
   integrations: [
@@ -41,12 +41,12 @@ export default defineConfig({
       social: [
         {
           label: 'GitHub',
-          href: 'https://github.com/your-org/aetherui',
+          href: 'https://github.com/pallavl01/AetherUI',
           icon: 'github',
         },
       ],
       editLink: {
-        baseUrl: 'https://github.com/your-org/aetherui/edit/main/packages/docs/',
+        baseUrl: 'https://github.com/pallavl01/AetherUI/edit/main/packages/docs/',
       },
       sidebar: [
         {
