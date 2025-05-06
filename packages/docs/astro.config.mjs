@@ -2,7 +2,10 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
-  site: 'https://aetherui.dev',
+  site: 'https://your-org.github.io/aetherui',
+  base: '/docs',
+  outDir: './dist',
+  publicDir: './public',
   integrations: [
     starlight({
       title: 'Aether UI',
@@ -65,6 +68,7 @@ export default defineConfig({
             { label: 'Modal', link: '/components/modal/' },
             { label: 'Radio', link: '/components/radio/' },
             { label: 'Tabs', link: '/components/tabs/' },
+            { label: 'TreeView', link: '/components/treeview/' },
           ],
         },
       ],
@@ -73,6 +77,7 @@ export default defineConfig({
         Hero: './src/components/Hero.astro',
         InteractiveExample: './src/components/InteractiveExample.astro',
         DropdownExample: './src/components/DropdownExample.astro',
+        TreeViewExample: './src/components/TreeViewExample.astro',
       },
       customCss: ['./src/styles/custom.css'],
       lastUpdated: true,

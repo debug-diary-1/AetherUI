@@ -1,9 +1,9 @@
 ---
-title: Aether UI
+title: AetherUI Documentation
 description: A headless, framework-agnostic Web Component library built on Lit
 template: splash
 hero:
-  tagline: A modern, accessible, and framework-agnostic UI library
+  tagline: Powerful web components without the framework baggage
   image:
     file: ../../assets/logo.svg
   actions:
@@ -11,35 +11,39 @@ hero:
       link: /getting-started/installation/
       icon: right-arrow
       variant: primary
-    - text: View on GitHub
+    - text: View Components
+      link: /components/
+      icon: puzzle
+      variant: secondary
+    - text: GitHub
       link: https://github.com/your-org/aetherui
       icon: github
-      variant: secondary
+      variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Why Aether UI?
+## Build Better Web Experiences
 
 <CardGrid stagger>
   <Card title="Framework Agnostic" icon="puzzle">
-    Built with Web Components, works with any framework - React, Vue, Angular, or vanilla JavaScript.
+    Works seamlessly with any framework or vanilla JavaScript. No vendor lock-in.
   </Card>
 
   <Card title="Accessible by Default" icon="accessibility">
-    Every component follows WAI-ARIA guidelines and is thoroughly tested for accessibility.
+    WAI-ARIA compliant and thoroughly tested for inclusivity. Perfect WCAG score.
   </Card>
 
-  <Card title="Headless & Themeable" icon="palette">
-    Style components your way using CSS custom properties and shadow parts.
+  <Card title="Fully Themeable" icon="palette">
+    Style with CSS variables and shadow parts. Complete control over look and feel.
   </Card>
 
-  <Card title="TypeScript First" icon="document">
-    Full TypeScript support with accurate types and excellent IDE integration.
+  <Card title="TypeScript Native" icon="document">
+    First-class TypeScript support with accurate types for perfect IDE integration.
   </Card>
 </CardGrid>
 
-## Quick Start
+## Quick Setup
 
 ```bash
 # Install the core package
@@ -50,10 +54,45 @@ pnpm add @aetherui/core
 ```
 
 ```js
-// Import and define the button component
-import { defineAeButton } from '@aetherui/core';
-defineAeButton();
+// Import and define components you need
+import { defineAeButton, defineAeTreeview } from '@aetherui/core';
 
-// Use it in your HTML
-<ae-button>Click me!</ae-button>
+// Register once
+defineAeButton();
+defineAeTreeview();
+
+// Use anywhere in your HTML
+<ae-button variant="primary">Get Started</ae-button>
+
+<ae-treeview aria-label="File explorer">
+  <!-- Tree content here -->
+</ae-treeview>
 ```
+
+## Framework Adapters
+
+<CardGrid>
+  <Card title="React" icon="seti:react">
+    ```jsx
+    // React wrapper
+    import { AeButton } from '@aetherui/react';
+    
+    function App() {
+      return <AeButton onClick={() => alert('Clicked!')}>Click Me</AeButton>;
+    }
+    ```
+  </Card>
+
+  <Card title="Vue" icon="seti:vue">
+    ```vue
+    <!-- Vue component -->
+    <script setup>
+    import { AeButton } from '@aetherui/vue';
+    </script>
+    
+    <template>
+      <AeButton @click="handleClick">Click Me</AeButton>
+    </template>
+    ```
+  </Card>
+</CardGrid>
