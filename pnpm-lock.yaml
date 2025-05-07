@@ -7,13 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      lit:
-        specifier: ^3.0.0
-        version: 3.3.0
-      lit-portal:
-        specifier: ^1.0.5
-        version: 1.0.5(lit@3.3.0)
     devDependencies:
       '@types/node':
         specifier: ^20.0.0
@@ -147,6 +140,9 @@ importers:
       lit:
         specifier: ^3.0.0
         version: 3.3.0
+      lit-modal-portal:
+        specifier: ^0.6.0
+        version: 0.6.2(lit@3.3.0)
     devDependencies:
       '@types/node':
         specifier: ^20.0.0
@@ -3167,10 +3163,10 @@ packages:
   lit-html@3.3.0:
     resolution: {integrity: sha512-RHoswrFAxY2d8Cf2mm4OZ1DgzCoBKUKSPvA1fhtSELxUERq2aQQ2h05pO9j81gS1o7RIRJ+CePLogfyahwmynw==}
 
-  lit-portal@1.0.5:
-    resolution: {integrity: sha512-ZeXmDyoiMfP7V3JloiaOIhMOmQOu3O+xAOVbhfgdgM4CsHrnT7QnfuExbQH47RSe/r44MVld275+b2uc+gyDIg==}
+  lit-modal-portal@0.6.2:
+    resolution: {integrity: sha512-jJFL0GOxDBA71ufepiU0H63R3OGqo55z8YcxaMKLFbhdT0OXNBi0Lk9OOE6eg/h8Mp6AN8iwS+VSRz7ixeHYVw==}
     peerDependencies:
-      lit: ^2.0.0
+      lit: '>=2'
 
   lit@3.3.0:
     resolution: {integrity: sha512-DGVsqsOIHBww2DqnuZzW7QsuCdahp50ojuDaBPC7jUDRpYoH0z7kHBBYZewRzer75FwtrkmkKk7iOAwSaWdBmw==}
@@ -8122,7 +8118,7 @@ snapshots:
     dependencies:
       '@types/trusted-types': 2.0.7
 
-  lit-portal@1.0.5(lit@3.3.0):
+  lit-modal-portal@0.6.2(lit@3.3.0):
     dependencies:
       lit: 3.3.0
 

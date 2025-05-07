@@ -10,6 +10,13 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./treeview": {
+      "types": "./dist/treeview/index.d.ts",
+      "import": "./dist/treeview/index.js"
+    },
+    "./treeview/define.js": {
+      "import": "./dist/treeview/define.js"
     }
   },
   "files": [
@@ -24,7 +31,8 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.0",
-    "lit": "^3.0.0"
+    "lit": "^3.0.0",
+    "lit-modal-portal": "^0.6.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

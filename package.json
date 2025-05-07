@@ -14,7 +14,11 @@
     "test": "turbo run test",
     "clean": "turbo run clean",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "storybook": "pnpm --filter @aetherui/storybook storybook",
+    "build-storybook": "pnpm --filter @aetherui/storybook build-storybook",
+    "docs": "turbo run docs",
+    "docs:build": "turbo run docs:build"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
