@@ -11,9 +11,29 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./treeview": {
-      "types": "./dist/treeview/index.d.ts",
-      "import": "./dist/treeview/index.js"
+    "./accordion/define.js": {
+      "import": "./dist/accordion/define.js"
+    },
+    "./alert/define.js": {
+      "import": "./dist/alert/define.js"
+    },
+    "./button/define.js": {
+      "import": "./dist/button/define.js"
+    },
+    "./checkbox/define.js": {
+      "import": "./dist/checkbox/define.js"
+    },
+    "./dropdown/define.js": {
+      "import": "./dist/dropdown/define.js"
+    },
+    "./modal/define.js": {
+      "import": "./dist/modal/define.js"
+    },
+    "./radio/define.js": {
+      "import": "./dist/radio/define.js"
+    },
+    "./tabs/define.js": {
+      "import": "./dist/tabs/define.js"
     },
     "./treeview/define.js": {
       "import": "./dist/treeview/define.js"
