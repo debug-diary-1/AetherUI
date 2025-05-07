@@ -36,25 +36,25 @@ export class AeTab extends LitElement {
    * The ID for this tab
    */
   @property({ type: String, reflect: true })
-  id: string = '';
+  accessor id: string = '';
 
   /**
    * Whether this tab is selected
    */
   @property({ type: String, reflect: true, attribute: 'aria-selected' })
-  ariaSelected: string = 'false';
+  accessor ariaSelected: string = 'false';
 
   /**
    * The ID of the panel this tab controls
    */
   @property({ type: String, reflect: true, attribute: 'aria-controls' })
-  ariaControls: string = '';
+  accessor ariaControls: string = '';
 
   /**
    * Tab index for keyboard navigation
    */
   @property({ type: Number, reflect: true })
-  tabIndex: number = -1;
+  accessor tabIndex: number = -1;
 
   constructor() {
     super();
@@ -100,4 +100,6 @@ declare global {
   interface HTMLElementTagNameMap {
     'ae-tab': AeTab;
   }
-} 
+}
+
+export type AeTabElement = AeTab; 

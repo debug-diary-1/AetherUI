@@ -259,4 +259,6 @@ declare global {
   interface HTMLElementTagNameMap {
     'ae-tabs': AeTabs;
   }
-} 
+}
+
+export type AeTabsElement = AeTabs; 

@@ -10,19 +10,19 @@ export class AeTabPanel extends LitElement {
    * The ID for this panel
    */
   @property({ type: String, reflect: true })
-  id: string = '';
+  accessor id: string = '';
 
   /**
    * The ID of the tab that labels this panel
    */
   @property({ type: String, reflect: true, attribute: 'aria-labelledby' })
-  ariaLabelledby: string = '';
+  accessor ariaLabelledby: string = '';
 
   /**
    * Whether the panel is hidden
    */
   @property({ type: Boolean, reflect: true })
-  hidden: boolean = false;
+  accessor hidden: boolean = false;
 
   updated(changedProperties: PropertyValues) {
     // Forward relevant properties to the actual section element
@@ -54,4 +54,6 @@ declare global {
   interface HTMLElementTagNameMap {
     'ae-tab-panel': AeTabPanel;
   }
-} 
+}
+
+export type AeTabPanelElement = AeTabPanel; 
