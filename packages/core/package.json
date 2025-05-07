@@ -10,45 +10,10 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
     },
-    "./package.json": "./package.json",
-    "./accordion": {
-      "types": "./dist/accordion/index.d.ts",
-      "import": "./dist/accordion/index.js"
-    },
-    "./alert": {
-      "types": "./dist/alert/index.d.ts",
-      "import": "./dist/alert/index.js"
-    },
-    "./button": {
-      "types": "./dist/button/index.d.ts",
-      "import": "./dist/button/index.js"
-    },
-    "./checkbox": {
-      "types": "./dist/checkbox/index.d.ts",
-      "import": "./dist/checkbox/index.js"
-    },
-    "./dropdown": {
-      "types": "./dist/dropdown/index.d.ts",
-      "import": "./dist/dropdown/index.js"
-    },
-    "./modal": {
-      "types": "./dist/modal/index.d.ts",
-      "import": "./dist/modal/index.js"
-    },
-    "./radio": {
-      "types": "./dist/radio/index.d.ts",
-      "import": "./dist/radio/index.js"
-    },
-    "./tabs": {
-      "types": "./dist/tabs/index.d.ts",
-      "import": "./dist/tabs/index.js"
-    },
-    "./treeview": {
-      "types": "./dist/treeview/index.d.ts",
-      "import": "./dist/treeview/index.js"
-    }
+    "./package.json": "./package.json"
   },
   "files": [
     "dist"
