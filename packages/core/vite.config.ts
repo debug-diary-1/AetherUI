@@ -35,12 +35,16 @@ const entries = {
 export default defineConfig({
   build: {
     lib: {
-      entry: entries,
-      formats: ['es'],
-      fileName: (format, entryName) => `${entryName}.js`,
+      entry: resolve(__dirname, 'src/index.ts'),
+      formats: ['es', 'cjs'],
+      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
     },
     rollupOptions: {
-      external: [/^lit/],
+      external: [/^lit/, '@floating-ui/dom'],
+      output: {
+        preserveModules: true,
+        preserveModulesRoot: 'src',
+      },
     },
     target: 'es2019',
     sourcemap: true,
