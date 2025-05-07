@@ -11,7 +11,7 @@ interface Props {
       actions?: Array<{
         text: string;
         link: string;
-        variant?: 'primary' | 'secondary';
+        variant?: 'primary' | 'secondary' | 'minimal';
         icon?: string;
       }>;
     };
@@ -24,15 +24,16 @@ const { title, tagline, image, actions = [] } = data?.hero || {};
 
 {(title || tagline || actions.length > 0) && (
   <div class="hero">
+    <div class="hero-backdrop"></div>
     <div class="hero-content">
-      {title && <h1 class="title" set:html={title} />}
+      {title && <h1 class="title">{title}</h1>}
       {tagline && <div class="tagline" set:html={tagline} />}
       {actions.length > 0 && (
         <div class="actions">
           {actions.map(({ text, link, variant = 'primary', icon }) => (
             <a href={link} class:list={['action', variant]}>
-              <span>{text}</span>
-              {icon && <span class="icon">{icon}</span>}
+              <span class="action-text">{text}</span>
+              {icon && <span class:list={['icon', `icon-${icon}`]}>{icon}</span>}
             </a>
           ))}
         </div>
@@ -48,32 +49,52 @@ const { title, tagline, image, actions = [] } = data?.hero || {};
 
 <style>
   .hero {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 2rem;
     padding: 4rem 0;
     margin-bottom: 2rem;
     border-bottom: 1px solid var(--sl-color-border);
+    overflow: hidden;
+  }
+  
+  .hero-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top right, 
+                var(--sl-color-accent-low) 0%, 
+                transparent 70%);
+    opacity: 0.5;
+    z-index: -1;
   }
 
   .hero-content {
     margin: auto 0;
+    position: relative;
+    z-index: 2;
   }
 
   .title {
-    font-size: 3rem;
-    font-weight: 700;
-    line-height: 1.2;
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
     margin: 0;
     color: var(--sl-color-text);
+    position: relative;
+    overflow: hidden;
   }
 
   .tagline {
     font-size: 1.5rem;
     line-height: 1.4;
-    margin: 1rem 0 1.5rem;
+    margin: 1.5rem 0 2rem;
     color: var(--sl-color-text);
-    opacity: 0.8;
+    max-width: 36rem;
+    opacity: 0.85;
   }
 
   .actions {
@@ -90,32 +111,92 @@ const { title, tagline, image, actions = [] } = data?.hero || {};
     border-radius: 0.5rem;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
   }
 
   .action.primary {
-    background: var(--sl-color-text-accent);
-    color: var(--sl-color-black);
+    background: var(--sl-color-accent);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 85, 255, 0.2);
   }
 
   .action.secondary {
     background: var(--sl-color-bg-subtle);
     color: var(--sl-color-text);
+    border: 1px solid var(--sl-color-border);
+  }
+  
+  .action.minimal {
+    background: transparent;
+    color: var(--sl-color-text);
+    padding: 0.75rem 1rem;
   }
 
   .action:hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+  }
+  
+  .action.primary:hover {
+    box-shadow: 0 6px 16px rgba(0, 85, 255, 0.3);
+  }
+  
+  .action.secondary:hover {
+    background: var(--sl-color-bg);
+    border-color: var(--sl-color-accent);
+  }
+  
+  .action.minimal:hover {
+    background: var(--sl-color-bg-subtle);
+  }
+  
+  .icon {
+    transition: transform 0.2s ease;
+  }
+  
+  .action:hover .icon {
+    transform: translateX(2px);
+  }
+  
+  .icon-right-arrow::after {
+    content: '→';
+  }
+  
+  .icon-github::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='currentColor' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2C6.477 2 2 6.484 2 12.017C2 16.5 4.865 20.299 8.839 21.679C9.339 21.779 9.525 21.459 9.525 21.188C9.525 20.938 9.515 20.275 9.51 19.463C6.73 20.072 6.14 18.143 6.14 18.143C5.685 17.02 5.03 16.7 5.03 16.7C4.12 16.11 5.1 16.123 5.1 16.123C6.11 16.199 6.63 17.15 6.63 17.15C7.5 18.619 8.97 18.196 9.54 17.932C9.639 17.3 9.9299 16.879 10.2449 16.649C8.05 16.418 5.73 15.629 5.73 11.797C5.73 10.689 6.11 9.787 6.65 9.087C6.54 8.829 6.2 7.879 6.75 6.612C6.75 6.612 7.5699 6.337 9.4999 7.651C10.2799 7.427 11.1299 7.314 11.9699 7.311C12.8099 7.314 13.6599 7.427 14.4399 7.651C16.3699 6.337 17.1899 6.612 17.1899 6.612C17.7399 7.879 17.3999 8.829 17.2899 9.087C17.8299 9.787 18.2099 10.689 18.2099 11.797C18.2099 15.641 15.8799 16.415 13.6799 16.641C14.0699 16.926 14.4199 17.489 14.4199 18.35C14.4199 19.599 14.4099 20.841 14.4099 21.188C14.4099 21.462 14.5899 21.786 15.1049 21.679C19.0749 20.295 21.9399 16.499 21.9399 12.017C21.9399 6.484 17.4619 2 11.9399 2H12Z'/%3E%3C/svg%3E");
+    background-size: contain;
+  }
+  
+  .icon-puzzle::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 9h-4V5c0-1.105-.895-2-2-2h-2c-1.105 0-2 .895-2 2v4H5c-1.105 0-2 .895-2 2v2c0 1.105.895 2 2 2h4v4c0 1.105.895 2 2 2h2c1.105 0 2-.895 2-2v-4h4c1.105 0 2-.895 2-2v-2c0-1.105-.895-2-2-2Z'/%3E%3C/svg%3E");
+    background-size: contain;
   }
 
   .hero-image {
     display: flex;
     align-items: center;
+    position: relative;
+    z-index: 1;
   }
 
   .hero-image img {
     max-width: 200px;
     height: auto;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
   }
 
   @media (max-width: 768px) {
@@ -131,6 +212,8 @@ const { title, tagline, image, actions = [] } = data?.hero || {};
 
     .tagline {
       font-size: 1.25rem;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .actions {
@@ -139,6 +222,7 @@ const { title, tagline, image, actions = [] } = data?.hero || {};
 
     .hero-image {
       justify-content: center;
+      margin-top: 1rem;
     }
   }
 </style>
