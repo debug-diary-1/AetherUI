@@ -1,4 +1,4 @@
-import { LitElement, html, PropertyValues } from 'lit';
+import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 /**
@@ -6,6 +6,20 @@ import { customElement, property } from 'lit/decorators.js';
  */
 @customElement('ae-tab-panel')
 export class AeTabPanel extends LitElement {
+  static styles = css`
+    :host {
+      display: block;
+    }
+
+    :host(:not([selected])) {
+      display: none;
+    }
+
+    .panel {
+      padding: var(--ae-tab-panel-padding, 1rem);
+    }
+  `;
+
   /**
    * The ID for this panel
    */
@@ -24,28 +38,20 @@ export class AeTabPanel extends LitElement {
   @property({ type: Boolean, reflect: true })
   accessor hidden: boolean = false;
 
-  updated(changedProperties: PropertyValues) {
-    // Forward relevant properties to the actual section element
-    if (changedProperties.has('ariaLabelledby') || changedProperties.has('hidden')) {
-      const section = this.shadowRoot?.querySelector('section');
-      if (section) {
-        section.setAttribute('aria-labelledby', this.ariaLabelledby);
-        section.hidden = this.hidden;
-      }
-    }
+  @property({ type: Boolean, reflect: true })
+  selected = false;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute('role', 'tabpanel');
+    this.setAttribute('tabindex', '0');
   }
 
   render() {
     return html`
-      <section 
-        role="tabpanel" 
-        tabindex="0" 
-        part="panel"
-        aria-labelledby="${this.ariaLabelledby}"
-        ?hidden="${this.hidden}"
-      >
+      <div class="panel">
         <slot></slot>
-      </section>
+      </div>
     `;
   }
 }

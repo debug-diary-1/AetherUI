@@ -1,6 +1,22 @@
-export { AeTabs } from './ae-tabs';
-export { AeTab } from './ae-tab';
-export { AeTabPanel } from './ae-tab-panel';
+import { AeTabs } from './ae-tabs';
+import { AeTab } from './ae-tab';
+import { AeTabPanel } from './ae-tab-panel';
+
+export { AeTabs, AeTab, AeTabPanel };
+
+// Define custom elements if not already defined
+if (!customElements.get('ae-tabs')) {
+  customElements.define('ae-tabs', AeTabs);
+}
+
+if (!customElements.get('ae-tab')) {
+  customElements.define('ae-tab', AeTab);
+}
+
+if (!customElements.get('ae-tab-panel')) {
+  customElements.define('ae-tab-panel', AeTabPanel);
+}
+
 export { tabStyles } from './styles';
 
 export type { AeTabsElement } from './ae-tabs';

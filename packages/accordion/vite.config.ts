@@ -10,10 +10,10 @@ export default defineConfig({
       fileName: 'index',
       formats: ['es'],
     },
-    target: 'es2019',
+    target: 'es2022',
     outDir: 'dist',
     rollupOptions: {
-      external: ['lit'],
+      external: ['lit', 'lit/decorators.js'],
     },
   },
   plugins: [
@@ -25,4 +25,7 @@ export default defineConfig({
   server: {
     port: 3002,
   },
-}); 
+  esbuild: {
+    target: 'es2022',
+  },
+});

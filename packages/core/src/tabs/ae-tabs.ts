@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, property, query, queryAll } from 'lit/decorators.js';
+import { customElement, property, query, queryAll, state } from 'lit/decorators.js';
 import { tabStyles } from './styles';
 
 /**
@@ -42,6 +42,11 @@ export class AeTabs extends LitElement {
         border-right: 1px solid #ddd;
         margin-right: 1rem;
       }
+
+      .tabs {
+        display: flex;
+        border-bottom: 1px solid var(--ae-tabs-border-color, #e5e5e5);
+      }
     `
   ];
 
@@ -75,6 +80,9 @@ export class AeTabs extends LitElement {
   private _tabs: HTMLElement[] = [];
   private _panels: HTMLElement[] = [];
 
+  @state()
+  private _selectedTab = '';
+
   constructor() {
     super();
     // Explicitly set default orientation
@@ -88,6 +96,7 @@ export class AeTabs extends LitElement {
       this.setAttribute('orientation', 'horizontal');
     }
     this.addEventListener('keydown', this.handleKeyDown);
+    this.setAttribute('role', 'tablist');
   }
 
   disconnectedCallback() {
@@ -238,15 +247,21 @@ export class AeTabs extends LitElement {
     }
   }
 
+  private _handleTabSelect(event: CustomEvent) {
+    const tab = event.target as HTMLElement;
+    const tabId = tab.id;
+    this._selectedTab = tabId;
+    this.dispatchEvent(new CustomEvent('ae-tab-select', {
+      detail: { tabId },
+      bubbles: true,
+      composed: true,
+    }));
+  }
+
   render() {
     return html`
-      <div 
-        role="tablist" 
-        aria-orientation=${this.orientation} 
-        @keydown=${this.handleKeyDown}
-        part="tablist"
-      >
-        <slot name="tab"></slot>
+      <div class="tabs" aria-orientation=${this.orientation}>
+        <slot @ae-tab-select=${this._handleTabSelect}></slot>
       </div>
       <div part="panels" class="panel-container">
         <slot name="panel"></slot>

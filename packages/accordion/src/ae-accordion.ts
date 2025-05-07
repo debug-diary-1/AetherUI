@@ -26,7 +26,7 @@ export class AeAccordion extends LitElement {
   accessor defaultOpen: string[] = [];
 
   @state()
-  accessor private _openPanels = new Set<string>();
+  private accessor _openPanels = new Set<string>();
 
   connectedCallback() {
     super.connectedCallback();

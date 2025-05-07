@@ -1,4 +1,4 @@
-import { LitElement, html, PropertyValues, css } from 'lit';
+import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 /**
@@ -8,27 +8,19 @@ import { customElement, property } from 'lit/decorators.js';
 export class AeTab extends LitElement {
   static styles = css`
     :host {
-      display: block;
-    }
-    
-    button {
-      width: 100%;
-      text-align: left;
-      background: transparent;
-      border: none;
-      font: inherit;
+      display: inline-block;
+      padding: var(--ae-tab-padding, 0.5rem 1rem);
       cursor: pointer;
-      padding: var(--ae-tabs-padding-y, 0.25rem) var(--ae-tabs-padding-x, 0.75rem);
+      border-bottom: 2px solid transparent;
     }
-    
-    /* Adjust for parent orientation */
-    :host-context(ae-tabs[orientation="horizontal"]) button {
-      text-align: center;
+
+    :host([selected]) {
+      border-bottom-color: var(--ae-tab-selected-color, #0066cc);
+      color: var(--ae-tab-selected-color, #0066cc);
     }
-    
-    :host-context(ae-tabs[orientation="vertical"]) button {
-      text-align: left;
-      justify-content: flex-start;
+
+    :host(:hover) {
+      color: var(--ae-tab-hover-color, #0052a3);
     }
   `;
 
@@ -41,57 +33,34 @@ export class AeTab extends LitElement {
   /**
    * Whether this tab is selected
    */
-  @property({ type: String, reflect: true, attribute: 'aria-selected' })
-  accessor ariaSelected: string = 'false';
+  @property({ type: Boolean, reflect: true })
+  selected = false;
 
   /**
    * The ID of the panel this tab controls
    */
-  @property({ type: String, reflect: true, attribute: 'aria-controls' })
-  accessor ariaControls: string = '';
+  @property({ type: String })
+  panel = '';
 
-  /**
-   * Tab index for keyboard navigation
-   */
-  @property({ type: Number, reflect: true })
-  accessor tabIndex: number = -1;
-
-  constructor() {
-    super();
-    this.addEventListener('click', this._onClick);
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute('role', 'tab');
+    this.setAttribute('tabindex', this.selected ? '0' : '-1');
   }
 
-  private _onClick(e: Event) {
-    // Event will bubble out to parent ae-tabs
-    // where it will be handled by the click handler added in _handleSlotChange
-  }
-
-  updated(changedProperties: PropertyValues) {
-    // Forward relevant properties to the actual button element
-    if (changedProperties.has('ariaSelected') || 
-        changedProperties.has('ariaControls') || 
-        changedProperties.has('tabIndex')) {
-      
-      const button = this.shadowRoot?.querySelector('button');
-      if (button) {
-        button.setAttribute('aria-selected', this.ariaSelected);
-        button.setAttribute('aria-controls', this.ariaControls);
-        button.tabIndex = this.tabIndex;
-      }
-    }
+  private _handleClick() {
+    this.selected = true;
+    this.dispatchEvent(new CustomEvent('ae-tab-select', {
+      bubbles: true,
+      composed: true,
+    }));
   }
 
   render() {
     return html`
-      <button 
-        role="tab" 
-        part="tab"
-        aria-selected="${this.ariaSelected}"
-        aria-controls="${this.ariaControls}"
-        tabindex="${this.tabIndex}"
-      >
+      <div @click=${this._handleClick}>
         <slot></slot>
-      </button>
+      </div>
     `;
   }
 }

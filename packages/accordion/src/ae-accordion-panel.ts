@@ -44,7 +44,7 @@ export class AeAccordionPanel extends LitElement {
   accessor heading = '';
 
   @state()
-  accessor private _open = false;
+  private accessor _open = false;
 
   connectedCallback() {
     super.connectedCallback();

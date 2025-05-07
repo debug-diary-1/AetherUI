@@ -1,16 +1,22 @@
-import { forwardRef } from 'react';
-import { defineAeButton } from '@aetherui/core';
+import React, { forwardRef } from 'react';
+import type { HTMLAttributes } from 'react';
 
-// Define the custom element
-defineAeButton();
+// Import the custom elements to ensure they are registered
+import '@aetherui/core';
 
-interface AeButtonProps extends React.HTMLAttributes<HTMLElement> {
+// Define props interface for the button component
+interface AeButtonProps extends HTMLAttributes<HTMLElement> {
   disabled?: boolean;
 }
 
+// Create React wrapper for ae-button custom element
 export const AeButton = forwardRef<HTMLElement, AeButtonProps>((props, ref) => {
   const { disabled, ...rest } = props;
-  return <ae-button ref={ref} disabled={disabled} {...rest} />;
+  return React.createElement('ae-button', {
+    ref,
+    disabled,
+    ...rest
+  });
 });
 
 AeButton.displayName = 'AeButton'; 
