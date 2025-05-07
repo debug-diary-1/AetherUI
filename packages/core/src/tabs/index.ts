@@ -1,9 +1,11 @@
-import { AeTabs } from './ae-tabs';
-import { AeTab } from './ae-tab';
-import { AeTabPanel } from './ae-tab-panel';
-import { tabStyles } from './styles';
+export { AeTabs } from './ae-tabs';
+export { AeTab } from './ae-tab';
+export { AeTabPanel } from './ae-tab-panel';
+export { tabStyles } from './styles';
 
-export { AeTabs, AeTab, AeTabPanel, tabStyles };
+export type { AeTabsElement } from './ae-tabs';
+export type { AeTabElement } from './ae-tab';
+export type { AeTabPanelElement } from './ae-tab-panel';
 
 /**
  * Register all tabs components with the CustomElements registry

@@ -3,12 +3,19 @@ import { customElement, property, query, queryAll } from 'lit/decorators.js';
 import { tabStyles } from './styles';
 
 /**
- * Tabs component - Horizontal / vertical tabbed navigation
- * @fires ae-change - When active tab changes
- * @cssprop --ae-tabs-indicator-color - Active tab underline/border color
- * @cssprop --ae-tabs-gap - Space between tabs
- * @cssprop --ae-tabs-padding-x - Horizontal padding inside tabs 
- * @cssprop --ae-tabs-padding-y - Vertical padding inside tabs
+ * @element ae-tabs
+ * @summary A tabbed interface component with keyboard navigation
+ * @fires {CustomEvent<{tab: string}>} ae-tab-change - Fired when the active tab changes
+ * 
+ * @example
+ * ```html
+ * <ae-tabs>
+ *   <ae-tab slot="tab">Tab 1</ae-tab>
+ *   <ae-tab-panel>Panel 1</ae-tab-panel>
+ *   <ae-tab slot="tab">Tab 2</ae-tab>
+ *   <ae-tab-panel>Panel 2</ae-tab-panel>
+ * </ae-tabs>
+ * ```
  */
 @customElement('ae-tabs')
 export class AeTabs extends LitElement {
@@ -42,28 +49,28 @@ export class AeTabs extends LitElement {
    * The currently active tab's id
    */
   @property({ type: String, reflect: true })
-  value: string = '';
+  accessor value: string = '';
 
   /**
    * Orientation of the tabs
    */
   @property({ type: String, reflect: true })
-  orientation: 'horizontal' | 'vertical' = 'horizontal';
+  accessor orientation: 'horizontal' | 'vertical' = 'horizontal';
 
   /**
    * How tab selection works with keyboard navigation
    */
   @property({ type: String })
-  activation: 'auto' | 'manual' = 'auto';
+  accessor activation: 'auto' | 'manual' = 'auto';
 
   @query('[role="tablist"]')
-  private tabList!: HTMLElement;
+  private accessor tabList!: HTMLElement;
 
   @query('slot[name="tab"]')
-  private tabSlot!: HTMLSlotElement;
+  private accessor tabSlot!: HTMLSlotElement;
 
   @query('slot[name="panel"]')
-  private panelSlot!: HTMLSlotElement;
+  private accessor panelSlot!: HTMLSlotElement;
 
   private _tabs: HTMLElement[] = [];
   private _panels: HTMLElement[] = [];
@@ -80,6 +87,12 @@ export class AeTabs extends LitElement {
     if (!this.hasAttribute('orientation')) {
       this.setAttribute('orientation', 'horizontal');
     }
+    this.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('keydown', this.handleKeyDown);
   }
 
   firstUpdated() {
@@ -166,8 +179,8 @@ export class AeTabs extends LitElement {
     if (newValue !== this.value) {
       this.value = newValue;
       
-      this.dispatchEvent(new CustomEvent('ae-change', {
-        detail: { value: newValue },
+      this.dispatchEvent(new CustomEvent('ae-tab-change', {
+        detail: { tab: newValue },
         bubbles: true,
         composed: true
       }));
@@ -210,8 +223,8 @@ export class AeTabs extends LitElement {
       if (this.activation === 'auto') {
         this.value = newTab.id;
         
-        this.dispatchEvent(new CustomEvent('ae-change', {
-          detail: { value: newTab.id },
+        this.dispatchEvent(new CustomEvent('ae-tab-change', {
+          detail: { tab: newTab.id },
           bubbles: true,
           composed: true
         }));

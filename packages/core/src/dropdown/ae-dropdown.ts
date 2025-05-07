@@ -29,61 +29,73 @@ export class AeDropdown extends LitElement {
    * Whether the dropdown is open (controlled)
    */
   @property({ type: Boolean, reflect: true })
-  open = false;
+  accessor open = false;
 
   /**
    * Initial open state (uncontrolled)
    */
   @property({ type: Boolean, attribute: 'default-open' })
-  defaultOpen = false;
+  accessor defaultOpen = false;
 
   /**
    * Menu placement relative to trigger
    */
   @property({ type: String })
-  placement: Placement = 'bottom-start';
+  accessor placement: Placement = 'bottom-start';
 
   /**
    * Positioning strategy
    */
   @property({ type: String })
-  strategy: Strategy = 'absolute';
+  accessor strategy: Strategy = 'absolute';
 
   /**
    * Whether the dropdown trigger is disabled
    */
   @property({ type: Boolean, reflect: true })
-  disabled = false;
+  accessor disabled = false;
+
+  /**
+   * Theme of the dropdown (light or dark)
+   */
+  @property({ type: String, reflect: true })
+  accessor theme: 'light' | 'dark' = 'dark';
+
+  /**
+   * Header text for the dropdown
+   */
+  @property({ type: String })
+  accessor header = '';
 
   /**
    * Reference to the trigger element
    */
-  @query('.trigger')
-  private triggerEl!: HTMLElement;
+  @query('[data-trigger]')
+  private accessor triggerEl!: HTMLElement;
 
   /**
    * Reference to the menu/overlay element
    */
-  @query('.overlay')
-  private overlayEl!: HTMLElement;
+  @query('[data-overlay]')
+  private accessor overlayEl!: HTMLElement;
 
   /**
    * Reference to the menu element
    */
-  @query('[role="menu"]')
-  private menuEl!: HTMLElement;
+  @query('[data-menu]')
+  private accessor menuEl!: HTMLElement;
 
   /**
    * Whether the component is operating in controlled or uncontrolled mode
    */
   @state()
-  private isControlled = false;
+  private accessor isControlled = false;
 
   /**
    * Internal open state for uncontrolled usage
    */
   @state()
-  private internalOpen = false;
+  private accessor internalOpen = false;
 
   /**
    * Cleanup function for positioning
@@ -147,6 +159,10 @@ export class AeDropdown extends LitElement {
    */
   private async handleOpen() {
     if (!this.overlayEl || !this.triggerEl) return;
+    
+    // Make overlay visible before positioning
+    this.overlayEl.style.visibility = 'visible';
+    this.overlayEl.style.zIndex = '9999';
 
     // Position the menu
     this.positionMenu();
@@ -165,7 +181,7 @@ export class AeDropdown extends LitElement {
     if (!this.overlayEl || !this.triggerEl) return;
 
     try {
-      // Dynamically import floating-ui to keep the main bundle small
+      // Call updatePosition to position the overlay
       const cleanup = await updatePosition(
         this.triggerEl,
         this.overlayEl,
@@ -173,7 +189,8 @@ export class AeDropdown extends LitElement {
         this.strategy
       );
       
-      this.positionCleanup = cleanup as () => void;
+      // Store the cleanup function
+      this.positionCleanup = cleanup;
     } catch (error) {
       console.error('Error positioning dropdown menu:', error);
     }
@@ -271,6 +288,12 @@ export class AeDropdown extends LitElement {
 
       ${isOpen ? html`
         <div class="overlay" part="overlay">
+          ${this.header ? html`
+            <div class="header" part="header">
+              ${this.header}
+            </div>
+          ` : nothing}
+          
           <div 
             class="menu" 
             part="menu" 
@@ -306,13 +329,19 @@ export class AeMenuItem extends LitElement {
    * Value to emit when this item is selected
    */
   @property()
-  value: string = '';
+  accessor value: string = '';
 
   /**
    * Whether this item is disabled
    */
   @property({ type: Boolean, reflect: true })
-  disabled: boolean = false;
+  accessor disabled: boolean = false;
+
+  /**
+   * Whether this item has a submenu (will show an indicator)
+   */
+  @property({ type: Boolean, attribute: 'has-submenu' })
+  accessor hasSubmenu: boolean = false;
 
   render() {
     return html`
@@ -323,9 +352,18 @@ export class AeMenuItem extends LitElement {
         data-value=${this.value}
         tabindex="-1"
       >
-        <slot name="icon" part="item-icon"></slot>
-        <slot></slot>
+        <div part="item-content">
+          <slot name="icon" part="item-icon"></slot>
+          <slot></slot>
+        </div>
         <slot name="hint" part="item-hint"></slot>
+        ${this.hasSubmenu ? html`
+          <span part="item-submenu-indicator">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        ` : nothing}
       </button>
     `;
   }
@@ -345,10 +383,36 @@ export class AeMenuSeparator extends LitElement {
   }
 }
 
+// Define ae-menu-section for grouping items
+@customElement('ae-menu-section')
+export class AeMenuSection extends LitElement {
+  static styles = css`
+    :host {
+      display: contents;
+    }
+  `;
+
+  /**
+   * Optional title for the section
+   */
+  @property()
+  accessor title: string = '';
+
+  render() {
+    return html`
+      <div role="group" part="section">
+        ${this.title ? html`<div part="section-title">${this.title}</div>` : nothing}
+        <slot></slot>
+      </div>
+    `;
+  }
+}
+
 declare global {
   interface HTMLElementTagNameMap {
     'ae-dropdown': AeDropdown;
     'ae-menu-item': AeMenuItem;
     'ae-menu-separator': AeMenuSeparator;
+    'ae-menu-section': AeMenuSection;
   }
 } 
