@@ -9,12 +9,15 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test:playground": "tsx scripts/test-playground.ts"
+    "test:playground": "tsx scripts/test-playground.ts",
+    "docs": "astro dev",
+    "docs:build": "astro build"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.34.0",
     "@aetherui/accordion": "workspace:*",
+    "@aetherui/core": "workspace:*",
     "@aetherui/tokens": "workspace:*",
+    "@astrojs/starlight": "^0.34.0",
     "astro": "^5.7.0"
   },
   "devDependencies": {
@@ -22,4 +25,4 @@
     "tsx": "^4.7.0",
     "typescript": "^5.0.0"
   }
-} 
+}
