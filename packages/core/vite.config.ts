@@ -20,14 +20,8 @@ const entries = {
   'index': resolve(__dirname, 'src/index.ts'),
   ...Object.fromEntries(
     components.map(component => [
-      `${component}/index`,
+      component,
       resolve(__dirname, `src/${component}/index.ts`)
-    ])
-  ),
-  ...Object.fromEntries(
-    components.map(component => [
-      `${component}/define`,
-      resolve(__dirname, `src/${component}/define.ts`)
     ])
   )
 };
@@ -35,15 +29,16 @@ const entries = {
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
-      formats: ['es', 'cjs'],
-      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
+      entry: entries,
+      formats: ['es'],
+      fileName: (format, entryName) => `${entryName}.js`,
     },
     rollupOptions: {
       external: [/^lit/, '@floating-ui/dom'],
       output: {
         preserveModules: true,
         preserveModulesRoot: 'src',
+        entryFileNames: '[name].js',
       },
     },
     target: 'es2022',
@@ -53,6 +48,7 @@ export default defineConfig({
     dts({
       rollupTypes: true,
       include: ['src/**/*.ts'],
+      entryRoot: 'src',
     }),
   ],
   esbuild: {
