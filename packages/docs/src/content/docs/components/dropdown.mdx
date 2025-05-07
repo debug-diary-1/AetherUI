@@ -209,107 +209,18 @@ Here are some interactive examples of the dropdown component:
 />
 
 <DropdownExample
-  title="Dropdown with Icons and Hints"
-  description="Dropdown menu items with icons and keyboard shortcuts."
+  title="Icon Example"
+  description="Dropdown with icons."
   code={`<ae-dropdown>
-  <button>More Actions</button>
+  <button>Actions</button>
   <ae-menu-item slot="item" value="cut">
     <span slot="icon">✂️</span>
     Cut
-    <span slot="hint">⌘X</span>
   </ae-menu-item>
   <ae-menu-item slot="item" value="copy">
     <span slot="icon">📋</span>
     Copy
-    <span slot="hint">⌘C</span>
-  </ae-menu-item>
-  <ae-menu-item slot="item" value="paste">
-    <span slot="icon">📌</span>
-    Paste
-    <span slot="hint">⌘V</span>
   </ae-menu-item>
 </ae-dropdown>`}
 />
-
-<DropdownExample
-  title="Open by Default Example"
-  description="A dropdown that is open by default when the page loads."
-  code={`<ae-dropdown open>
-  <button>Menu (Open by Default)</button>
-  <ae-menu-item slot="item" value="option1">Option 1</ae-menu-item>
-  <ae-menu-item slot="item" value="option2">Option 2</ae-menu-item>
-  <ae-menu-item slot="item" value="option3">Option 3</ae-menu-item>
-</ae-dropdown>`}
-/>
-
-<style>
-  .example-container {
-    margin: 2rem 0;
-  }
-  
-  .example {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    background: var(--sl-color-bg-subtle);
-    border-radius: 0.5rem;
-    margin: 0.5rem 0 1.5rem;
-    min-height: 120px;
-    position: relative;
-    z-index: 10;
-    overflow: visible;
-  }
-  
-  /* Button styling for consistency */
-  .example button {
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--sl-color-gray-5);
-    background-color: var(--sl-color-gray-1);
-    border-radius: 0.25rem;
-    cursor: pointer;
-    font-size: 0.9rem;
-  }
-  
-  .example button:hover {
-    background-color: var(--sl-color-gray-2);
-  }
-  
-  /* Dark mode styles */
-  :global(.dark) .example button {
-    background-color: var(--sl-color-gray-6);
-    border-color: var(--sl-color-gray-7);
-    color: white;
-  }
-  
-  :global(.dark) .example button:hover {
-    background-color: var(--sl-color-gray-5);
-  }
-</style>
-
-<script>
-  // Wait for the page to be fully loaded
-  document.addEventListener('DOMContentLoaded', async () => {
-    try {
-      // Dynamic import of the core library
-      const coreModule = await import('@aetherui/core');
-      
-      // Register the dropdown components
-      if (typeof coreModule.defineAeDropdown === 'function') {
-        coreModule.defineAeDropdown();
-        console.log('Dropdown components registered successfully');
-      } else {
-        // Fallback to defineAll if available
-        if (typeof coreModule.defineAll === 'function') {
-          coreModule.defineAll();
-          console.log('All components registered via defineAll');
-        } else {
-          console.error('Could not find defineAeDropdown or defineAll functions');
-        }
-      }
-    } catch (error) {
-      console.error('Error registering dropdown components:', error);
-    }
-  });
-</script>
 
