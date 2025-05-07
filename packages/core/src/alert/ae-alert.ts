@@ -3,7 +3,14 @@ import { customElement, property } from 'lit/decorators.js';
 import { alertStyles } from './styles';
 
 /**
- * Alert component for status or messaging with optional dismiss button
+ * @element ae-alert
+ * @summary Non-modal, in-flow banner for status or messaging
+ * @fires {CustomEvent} ae-close - Fired when the alert is closed
+ * 
+ * @example
+ * ```html
+ * <ae-alert variant="success">Operation completed successfully!</ae-alert>
+ * ```
  */
 @customElement('ae-alert')
 export class AeAlert extends LitElement {
@@ -13,26 +20,29 @@ export class AeAlert extends LitElement {
    * Visual theme of the alert
    */
   @property({ type: String, reflect: true })
-  variant: 'info' | 'success' | 'warning' | 'error' = 'info';
+  accessor variant: 'info' | 'success' | 'warning' | 'error' = 'info';
 
   /**
    * Whether the alert can be closed
    */
   @property({ type: Boolean, reflect: true })
-  closable: boolean = false;
+  accessor closable = false;
 
   /**
    * Control visibility
    */
   @property({ type: Boolean, reflect: true })
-  open: boolean = true;
+  accessor open: boolean = true;
 
   /**
    * Handle close button click
    */
-  private _handleClose() {
+  private handleClose() {
     this.open = false;
-    this.dispatchEvent(new CustomEvent('ae-close'));
+    this.dispatchEvent(new CustomEvent('ae-close', {
+      bubbles: true,
+      composed: true,
+    }));
   }
 
   /**
@@ -81,7 +91,7 @@ export class AeAlert extends LitElement {
           <button 
             part="close" 
             aria-label="Close" 
-            @click=${this._handleClose}
+            @click=${this.handleClose}
           >
             <svg width="14" height="14" viewBox="0 0 14 14">
               <path fill="currentColor" d="M14 1.41L12.59 0 7 5.59 1.41 0 0 1.41 5.59 7 0 12.59 1.41 14 7 8.41 12.59 14 14 12.59 8.41 7z"/>

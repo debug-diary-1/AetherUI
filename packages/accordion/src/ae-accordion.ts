@@ -20,13 +20,13 @@ export class AeAccordion extends LitElement {
   `;
 
   @property({ type: Boolean })
-  multiselectable = false;
+  accessor multiselectable = false;
 
   @property({ type: Array })
-  defaultOpen: string[] = [];
+  accessor defaultOpen: string[] = [];
 
   @state()
-  private _openPanels = new Set<string>();
+  accessor private _openPanels = new Set<string>();
 
   connectedCallback() {
     super.connectedCallback();

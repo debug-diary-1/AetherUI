@@ -18,7 +18,7 @@ const { code, preview, title, description } = Astro.props;
     <div set:html={preview || code} />
   </div>
   <div class="code">
-    <pre><code class="language-html">{code}</code></pre>
+    <Code code={code} lang="html" />
   </div>
 </div>
 
@@ -53,10 +53,10 @@ const { code, preview, title, description } = Astro.props;
     align-items: center; /* Center dropdown examples */
     justify-content: center;
     gap: 1rem;
-    background: var(--sl-color-bg);
+    background: var(--sl-color-bg-subtle);
     min-height: 150px; /* Increase height for dropdown to open */
     position: relative;  /* Needed for proper dropdown positioning */
-    z-index: 5;  /* Ensure dropdowns appear above other elements */
+    z-index: 10;  /* Ensure dropdowns appear above other elements */
     overflow: visible !important; /* Allow dropdown to overflow */
   }
 
@@ -84,7 +84,8 @@ const { code, preview, title, description } = Astro.props;
     display: inline-block;
   }
   
-  :global(ae-dropdown button) {
+  /* Button styling for consistency */
+  :global(button) {
     padding: 0.5rem 1rem;
     border: 1px solid var(--sl-color-gray-5);
     background-color: var(--sl-color-gray-1);
@@ -92,31 +93,69 @@ const { code, preview, title, description } = Astro.props;
     cursor: pointer;
     font-size: 0.9rem;
   }
-  
-  :global(.dark ae-dropdown button) {
+
+  :global(button:hover) {
+    background-color: var(--sl-color-gray-2);
+  }
+
+  :global(.dark) button {
     background-color: var(--sl-color-gray-6);
     border-color: var(--sl-color-gray-7);
     color: white;
   }
+
+  :global(.dark) button:hover {
+    background-color: var(--sl-color-gray-5);
+  }
 </style>
 
-<!-- Register custom elements client-side -->
+<!-- Load and register AetherUI components -->
 <script>
-  // Register components when the component is mounted
-  import { defineAeDropdown, defineAeButton } from '../components/AetherComponents';
-  
-  // Register the specific components we need
-  defineAeDropdown();
-  defineAeButton();
-  
+  async function loadAetherUI() {
+    if (window.AetherUI) return;
+
+    try {
+      // Try to import the main package
+      const module = await import('@aetherui/core');
+      window.AetherUI = module;
+      
+      // Register all components if possible
+      if (module.defineAll) {
+        module.defineAll();
+      } else {
+        // Fallback to individual registrations if needed
+        [
+          'defineAeDropdown',
+          'defineAeMenuItem',
+          'defineAeMenuSeparator'
+        ].forEach(def => {
+          if (typeof module[def] === 'function') {
+            module[def]();
+          }
+        });
+      }
+      
+      console.log('Successfully loaded AetherUI components');
+    } catch (error) {
+      console.warn('Failed to load AetherUI library:', error);
+    }
+  }
+
   // Wait for everything to be fully loaded
-  window.addEventListener('DOMContentLoaded', () => {
-    // Force open attribute on dropdowns with default-open
-    document.querySelectorAll('ae-dropdown[default-open]').forEach(dropdown => {
+  window.addEventListener('load', async () => {
+    try {
+      // Try to load the library
+      await loadAetherUI();
+      
+      // Initialize open dropdowns after a short delay
       setTimeout(() => {
-        dropdown.setAttribute('open', '');
+        document.querySelectorAll('ae-dropdown[default-open], ae-dropdown[open]').forEach(dropdown => {
+          dropdown.setAttribute('open', '');
+        });
       }, 500);
-    });
+    } catch (error) {
+      console.warn('Failed to initialize dropdown components:', error);
+    }
   });
 </script>
 

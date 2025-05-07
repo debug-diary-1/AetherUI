@@ -1,8 +1,8 @@
 import { html } from 'lit';
-import { defineAeTabs } from '@aetherui/core';
+import { defineAll } from '@aetherui/core';
 
-// Register the tabs components
-defineAeTabs();
+// Register all components
+defineAll();
 
 // Helper function to ensure horizontal orientation is explicitly set
 const forceHorizontalLayout = (element) => {

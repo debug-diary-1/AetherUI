@@ -1,96 +1,102 @@
-import { LitElement, html, css } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { LitElement, html } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
+import { accordionStyles } from './styles';
 
+/**
+ * @element ae-accordion
+ * @summary A collapsible disclosure component that shows or hides content panels
+ * @fires {CustomEvent<{expanded: string[]}>} ae-expand-change - Fired when expansion state changes
+ * 
+ * @example
+ * ```html
+ * <ae-accordion>
+ *   <ae-accordion-item>
+ *     <span slot="header">Section 1</span>
+ *     <p>Content for section 1</p>
+ *   </ae-accordion-item>
+ * </ae-accordion>
+ * ```
+ */
+@customElement('ae-accordion')
 export class AeAccordion extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      width: 100%;
-    }
-
-    ::slotted(ae-accordion-item) {
-      margin-bottom: 0.5rem;
-    }
-
-    ::slotted(ae-accordion-item:last-child) {
-      margin-bottom: 0;
-    }
-  `;
+  static styles = accordionStyles;
 
   @property({ type: Boolean, reflect: true })
-  multiselectable = false;
+  accessor multiselectable = false;
 
   @property({ type: Array })
-  defaultOpen: string[] = [];
+  accessor expanded: string[] = [];
 
   @state()
-  private openPanels = new Set<string>();
+  private accessor openPanels = new Set<string>();
 
   private items = new Set<any>();
 
   connectedCallback() {
     super.connectedCallback();
-    this.setAttribute('role', 'presentation');
-    if (this.defaultOpen.length > 0) {
-      this.openPanels = new Set(this.defaultOpen);
-    }
+    this.setupMutationObserver();
   }
 
-  handleSlotChange(e: Event) {
-    const slot = e.target as HTMLSlotElement;
-    const elements = slot.assignedElements();
-    
-    // Clear previous items
-    this.items.clear();
-    
-    // Add new items
-    elements.forEach(element => {
-      if (element.tagName.toLowerCase() === 'ae-accordion-item') {
-        this.items.add(element);
-        // Set initial state
-        const headerId = element.getAttribute('headerid');
-        if (headerId) {
-          element.open = this.openPanels.has(headerId);
-        }
+  private setupMutationObserver() {
+    const observer = new MutationObserver(() => {
+      this.updateItems();
+    });
+
+    observer.observe(this, { childList: true, subtree: true });
+  }
+
+  private updateItems() {
+    const items = Array.from(this.querySelectorAll('ae-accordion-item'));
+    items.forEach(item => {
+      const headerId = item.getAttribute('data-header-id');
+      if (headerId) {
+        (item as any).open = this.openPanels.has(headerId);
       }
     });
   }
 
-  handlePanelChange(event: CustomEvent) {
-    const headerId = event.detail.headerId;
-    const isOpen = event.detail.open;
-    const target = event.target as HTMLElement;
+  private handleHeaderClick(event: Event) {
+    const header = (event.target as HTMLElement).closest('[data-header-id]');
+    if (!header) return;
 
-    if (isOpen) {
-      if (!this.multiselectable) {
-        // Close all other panels
-        this.items.forEach(item => {
-          if (item !== target) {
-            item.open = false;
-          }
-        });
-        this.openPanels.clear();
-      }
-      this.openPanels.add(headerId);
+    const headerId = header.getAttribute('data-header-id');
+    if (!headerId) return;
+
+    if (this.multiselectable) {
+      this.togglePanel(headerId);
     } else {
-      this.openPanels.delete(headerId);
+      this.openPanels.forEach(id => {
+        if (id !== headerId) {
+          this.openPanels.delete(id);
+        }
+      });
+      this.togglePanel(headerId);
     }
 
-    this.dispatchEvent(
-      new CustomEvent('ae-change', {
-        detail: { open: Array.from(this.openPanels) },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this.updateItems();
+    this.dispatchEvent(new CustomEvent('ae-expand-change', {
+      detail: { expanded: Array.from(this.openPanels) },
+      bubbles: true,
+      composed: true,
+    }));
+  }
+
+  private togglePanel(headerId: string) {
+    if (this.openPanels.has(headerId)) {
+      this.openPanels.delete(headerId);
+    } else {
+      this.openPanels.add(headerId);
+    }
   }
 
   render() {
     return html`
-      <slot 
-        @slotchange=${this.handleSlotChange}
-        @ae-panel-change=${this.handlePanelChange}
-      ></slot>
+      <div
+        role="presentation"
+        @click="${this.handleHeaderClick}"
+      >
+        <slot></slot>
+      </div>
     `;
   }
 } 

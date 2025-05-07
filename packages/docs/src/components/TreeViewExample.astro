@@ -1,0 +1,1170 @@
+---
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+  title: string;
+  description: string;
+  code: string;
+}
+
+const { title, description, code } = Astro.props;
+
+// Generate unique ID for this example
+const exampleId = `treeview-example-${Math.random().toString(36).substring(2, 11)}`;
+const multiSelectId = `treeview-multi-${Math.random().toString(36).substring(2, 11)}`;
+const menuExampleId = `treeview-menu-${Math.random().toString(36).substring(2, 11)}`;
+const customStyledId = `treeview-custom-${Math.random().toString(36).substring(2, 11)}`;
+const emptyLoadingId = `treeview-empty-loading-${Math.random().toString(36).substring(2, 11)}`;
+---
+
+<div class="example-container" data-example-id={exampleId}>
+  <div class="example-header">
+    <h3>{title}</h3>
+    <p>{description}</p>
+  </div>
+  
+  <div class="example-content">
+    <div class="example-preview">
+      <!-- File Explorer Example -->
+      {title === "File Explorer Example" && (
+        <div class="mock-treeview" id={`treeview-${exampleId}`}>
+          <div role="tree">
+            <div class="tree-node-container">
+              <div role="treeitem" aria-expanded="true" class="tree-node" data-node-id="src">
+                <span class="tree-caret">▶</span>
+                <span class="tree-label">src</span>
+              </div>
+              <div role="group" class="tree-children">
+                <div class="tree-node-container">
+                  <div role="treeitem" aria-expanded="true" class="tree-node" data-node-id="components">
+                    <span class="tree-caret">▶</span>
+                    <span class="tree-label">components</span>
+                  </div>
+                  <div role="group" class="tree-children">
+                    <div class="tree-node-container">
+                      <div role="treeitem" class="tree-node" data-node-id="button.js">
+                        <span class="tree-caret-spacer"></span>
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-label">button.js</span>
+                      </div>
+                    </div>
+                    <div class="tree-node-container">
+                      <div role="treeitem" class="tree-node" data-node-id="dropdown.js">
+                        <span class="tree-caret-spacer"></span>
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-label">dropdown.js</span>
+                      </div>
+                    </div>
+                    <div class="tree-node-container">
+                      <div role="treeitem" class="tree-node" data-node-id="treeview.js">
+                        <span class="tree-caret-spacer"></span>
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-label">treeview.js</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tree-node-container">
+                  <div role="treeitem" aria-expanded="false" class="tree-node" data-node-id="utils">
+                    <span class="tree-caret">▶</span>
+                    <span class="tree-label">utils</span>
+                  </div>
+                  <div role="group" class="tree-children" style="display: none;">
+                    <div class="tree-node-container">
+                      <div role="treeitem" class="tree-node" data-node-id="helpers.js">
+                        <span class="tree-caret-spacer"></span>
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-label">helpers.js</span>
+                      </div>
+                    </div>
+                    <div class="tree-node-container">
+                      <div role="treeitem" class="tree-node" data-node-id="constants.js">
+                        <span class="tree-caret-spacer"></span>
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-label">constants.js</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="index.js">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-icon">📄</span>
+                    <span class="tree-label">index.js</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tree-node-container">
+              <div role="treeitem" class="tree-node" data-node-id="package.json">
+                <span class="tree-caret-spacer"></span>
+                <span class="tree-icon">📄</span>
+                <span class="tree-label">package.json</span>
+              </div>
+            </div>
+            <div class="tree-node-container">
+              <div role="treeitem" class="tree-node" data-node-id="readme.md">
+                <span class="tree-caret-spacer"></span>
+                <span class="tree-icon">📝</span>
+                <span class="tree-label">README.md</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <!-- Multi-select Mode Example -->
+      {title === "Multi-select Mode" && (
+        <div class="mock-treeview multiselect" id={multiSelectId}>
+          <div role="tree" aria-multiselectable="true">
+            <div class="tree-node-container">
+              <div role="treeitem" aria-expanded="true" class="tree-node" data-node-id="docs">
+                <span class="tree-caret">▶</span>
+                <span class="tree-checkbox" role="checkbox" aria-checked="false"></span>
+                <span class="tree-label">Documents</span>
+              </div>
+              <div role="group" class="tree-children">
+                <div class="tree-node-container">
+                  <div role="treeitem" aria-selected="true" class="tree-node" data-node-id="report">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-checkbox" role="checkbox" aria-checked="true"></span>
+                    <span class="tree-label">Annual Report</span>
+                  </div>
+                </div>
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="budget">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-checkbox" role="checkbox" aria-checked="false"></span>
+                    <span class="tree-label">Budget Spreadsheet</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tree-node-container">
+              <div role="treeitem" aria-expanded="false" class="tree-node" data-node-id="pics">
+                <span class="tree-caret">▶</span>
+                <span class="tree-checkbox" role="checkbox" aria-checked="false"></span>
+                <span class="tree-label">Pictures</span>
+              </div>
+              <div role="group" class="tree-children" style="display: none;">
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="vacation">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-checkbox" role="checkbox" aria-checked="false"></span>
+                    <span class="tree-label">Vacation Photos</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tree-node-container">
+              <div role="treeitem" class="tree-node" aria-selected="true" data-node-id="notes">
+                <span class="tree-caret-spacer"></span>
+                <span class="tree-checkbox" role="checkbox" aria-checked="true"></span>
+                <span class="tree-label">Notes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <!-- Menu Example -->
+      {title === "Menu Example" && (
+        <div class="mock-treeview menu-example" id={menuExampleId}>
+          <div role="tree">
+            <div class="tree-node-container">
+              <div role="treeitem" aria-expanded="false" class="tree-node" data-node-id="file">
+                <span class="tree-caret">▶</span>
+                <span class="tree-label">File</span>
+              </div>
+              <div role="group" class="tree-children" style="display: none;">
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="new">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">New</span>
+                  </div>
+                </div>
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="open">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">Open</span>
+                  </div>
+                </div>
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="save">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">Save</span>
+                  </div>
+                </div>
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="save-as">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">Save As...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tree-node-container">
+              <div role="treeitem" aria-expanded="false" class="tree-node" data-node-id="edit">
+                <span class="tree-caret">▶</span>
+                <span class="tree-label">Edit</span>
+              </div>
+              <div role="group" class="tree-children" style="display: none;">
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="undo">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">Undo</span>
+                  </div>
+                </div>
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="redo">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">Redo</span>
+                  </div>
+                </div>
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="cut">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">Cut</span>
+                  </div>
+                </div>
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="copy">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">Copy</span>
+                  </div>
+                </div>
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="paste">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">Paste</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tree-node-container">
+              <div role="treeitem" aria-expanded="false" class="tree-node" data-node-id="view">
+                <span class="tree-caret">▶</span>
+                <span class="tree-label">View</span>
+              </div>
+              <div role="group" class="tree-children" style="display: none;">
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="zoom-in">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">Zoom In</span>
+                  </div>
+                </div>
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="zoom-out">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">Zoom Out</span>
+                  </div>
+                </div>
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="reset-zoom">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">Reset Zoom</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <!-- Custom Styled TreeView Example -->
+      {title === "Custom Styled TreeView" && (
+        <div class="mock-treeview custom-tree" id={customStyledId}>
+          <div role="tree">
+            <div class="tree-node-container">
+              <div role="treeitem" aria-expanded="true" class="tree-node" data-node-id="inbox">
+                <span class="tree-caret">▶</span>
+                <span class="tree-label">Inbox</span>
+              </div>
+              <div role="group" class="tree-children">
+                <div class="tree-node-container">
+                  <div role="treeitem" aria-selected="true" class="tree-node" data-node-id="important">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">Important</span>
+                  </div>
+                </div>
+                <div class="tree-node-container">
+                  <div role="treeitem" class="tree-node" data-node-id="starred">
+                    <span class="tree-caret-spacer"></span>
+                    <span class="tree-label">Starred</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tree-node-container">
+              <div role="treeitem" class="tree-node" data-node-id="drafts">
+                <span class="tree-caret-spacer"></span>
+                <span class="tree-label">Drafts</span>
+              </div>
+            </div>
+            <div class="tree-node-container">
+              <div role="treeitem" class="tree-node" data-node-id="sent">
+                <span class="tree-caret-spacer"></span>
+                <span class="tree-label">Sent Mail</span>
+              </div>
+            </div>
+            <div class="tree-node-container">
+              <div role="treeitem" class="tree-node" data-node-id="trash">
+                <span class="tree-caret-spacer"></span>
+                <span class="tree-label">Trash</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <!-- Empty and Loading States Example -->
+      {title === "Empty and Loading States" && (
+        <div class="empty-loading-container" id={emptyLoadingId}>
+          <div class="mock-treeview empty-tree">
+            <div class="tree-empty">
+              No files found
+            </div>
+          </div>
+          
+          <div class="mock-treeview loading-tree">
+            <div class="tree-loading">
+              <span class="tree-spinner"></span>
+              Loading...
+            </div>
+          </div>
+          
+          <div class="state-toggle">
+            <button class="toggle-button active" data-state="both">Both States</button>
+            <button class="toggle-button" data-state="empty">Empty Only</button>
+            <button class="toggle-button" data-state="loading">Loading Only</button>
+            <button class="toggle-button" data-state="toggle">Toggle States</button>
+          </div>
+        </div>
+      )}
+
+      <!-- Generic example for other cases -->
+      {!["File Explorer Example", "Multi-select Mode", "Menu Example", "Custom Styled TreeView", "Empty and Loading States"].includes(title) && (
+        <div class="mock-treeview" id={`treeview-${exampleId}`}>
+          <div class="example-message">See example code for implementation details.</div>
+        </div>
+      )}
+    </div>
+    
+    <div class="example-code">
+      <Code code={code} lang="html" />
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .example-container {
+    margin: 2rem 0;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .example-header {
+    padding: 1rem;
+    background-color: var(--sl-color-gray-6);
+    border-bottom: 1px solid var(--sl-color-gray-5);
+  }
+  
+  .example-header h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+  }
+  
+  .example-header p {
+    margin: 0;
+    color: var(--sl-color-gray-3);
+  }
+  
+  .example-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .example-content {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .example-preview {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    background: var(--sl-color-bg-subtle);
+  }
+
+  .example-code {
+    padding: 0 1rem 1rem;
+    background: var(--sl-color-bg-sidebar);
+  }
+  
+  @media (min-width: 768px) {
+    .example-code {
+      border-left: 1px solid var(--sl-color-gray-5);
+    }
+  }
+  
+  .example-message {
+    color: var(--sl-color-gray-4);
+    font-style: italic;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  /* Mock TreeView styling */
+  .mock-treeview {
+    width: 100%;
+    max-width: 300px;
+    background: var(--sl-color-bg);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 4px;
+    padding: 8px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Tree container */
+  [role="tree"] {
+    display: block;
+    padding: 4px;
+    outline: none;
+  }
+
+  /* Basic node container */
+  .tree-node-container {
+    display: block;
+    width: 100%;
+  }
+
+  /* Node styling */
+  .tree-node {
+    display: flex;
+    align-items: center;
+    padding: 4px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    min-height: 30px;
+    outline: none;
+  }
+
+  .tree-node:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .tree-node[aria-selected="true"] {
+    background-color: rgba(79, 70, 229, 0.1);
+    color: #4f46e5;
+  }
+
+  /* Caret icon */
+  .tree-caret {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+    margin-right: 4px;
+    transition: transform 150ms ease;
+    color: #6b7280;
+  }
+
+  .tree-node[aria-expanded="true"] .tree-caret {
+    transform: rotate(90deg);
+  }
+
+  .tree-caret-spacer {
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+    margin-right: 4px;
+  }
+
+  /* Checkbox */
+  .tree-checkbox {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    min-width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    border: 2px solid #d1d5db;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .tree-checkbox[aria-checked="true"] {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+  }
+  
+  .tree-checkbox[aria-checked="true"]::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    left: 5px;
+    top: 1px;
+  }
+  
+  /* Indeterminate state for checkboxes */
+  .tree-checkbox[data-indeterminate="true"] {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+  }
+  
+  .tree-checkbox[data-indeterminate="true"]::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 2px;
+    background-color: white;
+    left: 3px;
+    top: 6px;
+  }
+
+  /* Icon styling */
+  .tree-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+    margin-right: 4px;
+  }
+
+  /* Label styling */
+  .tree-label {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+  }
+
+  /* Children container (indentation) */
+  .tree-children {
+    display: block;
+    padding-left: 20px;
+  }
+
+  /* Menu example specific styles */
+  .menu-example .tree-node {
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .menu-example .tree-children .tree-node {
+    padding-left: 28px;
+  }
+
+  .menu-example .tree-node:hover {
+    background-color: rgba(79, 70, 229, 0.1);
+  }
+
+  .menu-example .tree-node[aria-selected="true"] {
+    background-color: rgba(79, 70, 229, 0.2);
+    color: #4f46e5;
+  }
+  
+  /* Custom Tree styling */
+  .custom-tree .tree-node {
+    border-radius: 6px;
+  }
+  
+  .custom-tree .tree-node:hover {
+    background-color: rgba(79, 70, 229, 0.1);
+  }
+  
+  .custom-tree .tree-node[aria-selected="true"] {
+    background-color: rgba(79, 70, 229, 0.2);
+    color: rgb(67, 56, 202);
+  }
+  
+  .custom-tree .tree-caret {
+    color: #94a3b8;
+  }
+  
+  .custom-tree .tree-node[aria-expanded="true"] .tree-caret {
+    color: #4f46e5;
+  }
+
+  /* Dark mode support */
+  :root[data-theme="dark"] .mock-treeview {
+    background: var(--sl-color-gray-6);
+    border-color: var(--sl-color-gray-5);
+  }
+  
+  :root[data-theme="dark"] .tree-node:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  :root[data-theme="dark"] .tree-caret {
+    color: #94a3b8;
+  }
+  
+  :root[data-theme="dark"] .tree-node[aria-selected="true"] {
+    background-color: rgba(79, 70, 229, 0.2);
+    color: rgb(167, 139, 250);
+  }
+  
+  :root[data-theme="dark"] .tree-checkbox {
+    border-color: #4b5563;
+    background-color: transparent;
+  }
+  
+  :root[data-theme="dark"] .tree-checkbox[aria-checked="true"],
+  :root[data-theme="dark"] .tree-checkbox[data-indeterminate="true"] {
+    background-color: #6366f1;
+    border-color: #6366f1;
+  }
+  
+  :root[data-theme="dark"] .menu-example .tree-node:hover {
+    background-color: rgba(79, 70, 229, 0.2);
+  }
+
+  :root[data-theme="dark"] .menu-example .tree-node[aria-selected="true"] {
+    background-color: rgba(79, 70, 229, 0.3);
+    color: rgb(167, 139, 250);
+  }
+  
+  :root[data-theme="dark"] .custom-tree .tree-node:hover {
+    background-color: rgba(79, 70, 229, 0.1);
+  }
+  
+  :root[data-theme="dark"] .custom-tree .tree-node[aria-selected="true"] {
+    background-color: rgba(79, 70, 229, 0.2);
+    color: rgb(167, 139, 250);
+  }
+
+  /* Empty & Loading States */
+  .empty-loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .empty-loading-container .mock-treeview {
+    width: 100%;
+  }
+  
+  .tree-empty {
+    padding: 16px;
+    text-align: center;
+    color: #6b7280;
+    font-style: italic;
+  }
+  
+  .tree-loading {
+    padding: 16px;
+    text-align: center;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .tree-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #4f46e5;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: tree-spin 1s linear infinite;
+  }
+  
+  .state-toggle {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .toggle-button {
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--sl-color-gray-5);
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-gray-2);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.15s ease;
+  }
+  
+  .toggle-button:hover {
+    background: var(--sl-color-gray-5);
+  }
+  
+  .toggle-button.active {
+    background: rgba(79, 70, 229, 0.1);
+    border-color: rgba(79, 70, 229, 0.3);
+    color: #4f46e5;
+  }
+  
+  :root[data-theme="dark"] .tree-empty,
+  :root[data-theme="dark"] .tree-loading {
+    color: #94a3b8;
+  }
+  
+  :root[data-theme="dark"] .tree-spinner {
+    border-color: #6366f1;
+    border-right-color: transparent;
+  }
+  
+  :root[data-theme="dark"] .toggle-button.active {
+    background: rgba(79, 70, 229, 0.2);
+    color: rgb(167, 139, 250);
+  }
+  
+  @keyframes tree-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<!-- Import and define the TreeView component -->
+<script>
+  import { defineAeTreeView } from '@aetherui/core/treeview';
+  defineAeTreeView();
+</script>
+
+<!-- Example initialization script -->
+<script define:vars={{ exampleId, code }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const placeholder = document.querySelector(`.placeholder[data-placeholder-id="${exampleId}"]`);
+    if (!placeholder) return;
+    
+    console.log(`Processing example ${exampleId}`);
+    
+    // Create a div to parse the HTML
+    const parser = new DOMParser();
+    const htmlDoc = parser.parseFromString(code, 'text/html');
+    placeholder.innerHTML = ''; // Clear loading message
+    
+    // Extract all elements from the parsed document
+    const elements = Array.from(htmlDoc.body.children);
+    
+    // Append them to the placeholder
+    elements.forEach(element => {
+      placeholder.appendChild(document.importNode(element, true));
+    });
+    
+    // Find TreeView elements in this specific example
+    const treeviews = placeholder.querySelectorAll('ae-treeview');
+    console.log(`Found ${treeviews.length} treeviews in example ${exampleId}`);
+    
+    // Process them after a delay to ensure the component is defined
+    setTimeout(() => {
+      treeviews.forEach((treeview, index) => {
+        try {
+          console.log(`Initializing TreeView ${index} in example ${exampleId}`);
+          
+          // Process data
+          if (treeview.hasAttribute('data')) {
+            const dataValue = treeview.getAttribute('data');
+            if (dataValue) {
+              try {
+                const data = JSON.parse(dataValue);
+                console.log(`Setting data for TreeView ${index}`, data);
+                // @ts-ignore
+                treeview.data = data;
+              } catch (e) {
+                console.error(`Error parsing data for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          // Process expanded
+          if (treeview.hasAttribute('expanded')) {
+            const expandedValue = treeview.getAttribute('expanded');
+            if (expandedValue) {
+              try {
+                const expanded = JSON.parse(expandedValue);
+                console.log(`Setting expanded for TreeView ${index}`, expanded);
+                // @ts-ignore
+                treeview.expanded = expanded;
+              } catch (e) {
+                console.error(`Error parsing expanded for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          // Process selected
+          if (treeview.hasAttribute('selected')) {
+            const selectedValue = treeview.getAttribute('selected');
+            if (selectedValue) {
+              try {
+                const selected = JSON.parse(selectedValue);
+                console.log(`Setting selected for TreeView ${index}`, selected);
+                // @ts-ignore
+                treeview.selected = selected;
+              } catch (e) {
+                console.error(`Error parsing selected for TreeView ${index}:`, e);
+              }
+            }
+          }
+          
+          // Force an update and style refresh
+          treeview.style.display = 'block';
+          
+          console.log(`TreeView ${index} in example ${exampleId} initialized`);
+        } catch (e) {
+          console.error(`Error initializing TreeView ${index} for example ${exampleId}:`, e);
+        }
+      });
+    }, 500);
+  });
+</script>
+
+<!-- Script to handle tree interaction -->
+<script define:vars={{ exampleId, multiSelectId, menuExampleId, customStyledId, emptyLoadingId }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Single select treeview
+    const treeview = document.getElementById(`treeview-${exampleId}`);
+    if (treeview) {
+      // Add click handlers to all nodes
+      const treeNodes = treeview.querySelectorAll('.tree-node');
+      
+      treeNodes.forEach(node => {
+        node.addEventListener('click', (event) => {
+          // Get the caret element
+          const caret = node.querySelector('.tree-caret');
+          
+          // Check if the node has children (has a caret)
+          if (caret) {
+            // Find the next sibling element (the children container)
+            const childrenContainer = node.parentNode.querySelector('.tree-children');
+            if (childrenContainer) {
+              // Toggle expanded state
+              const isExpanded = node.getAttribute('aria-expanded') === 'true';
+              
+              // Update the expanded state
+              node.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+              
+              // Toggle the visibility of the children container
+              childrenContainer.style.display = isExpanded ? 'none' : 'block';
+              
+              event.stopPropagation();
+            }
+          }
+          
+          // Toggle selection state
+          treeNodes.forEach(n => {
+            n.setAttribute('aria-selected', 'false');
+          });
+          
+          node.setAttribute('aria-selected', 'true');
+        });
+      });
+    }
+    
+    // Multi-select treeview
+    const multiTreeview = document.getElementById(multiSelectId);
+    if (multiTreeview) {
+      // Helper functions for multi-select propagation
+      function getChildNodes(node) {
+        const container = node.parentNode.querySelector('.tree-children');
+        if (!container) return [];
+        return Array.from(container.querySelectorAll('.tree-node'));
+      }
+      
+      function getChildCheckboxes(node) {
+        const container = node.parentNode.querySelector('.tree-children');
+        if (!container) return [];
+        return Array.from(container.querySelectorAll('.tree-checkbox'));
+      }
+      
+      function getParentNode(node) {
+        const parentGroup = node.closest('.tree-children');
+        if (!parentGroup) return null;
+        return parentGroup.parentNode.querySelector('.tree-node');
+      }
+      
+      function areAllChildrenChecked(childCheckboxes) {
+        if (childCheckboxes.length === 0) return false;
+        return childCheckboxes.every(cb => cb.getAttribute('aria-checked') === 'true');
+      }
+      
+      function areSomeChildrenChecked(childCheckboxes) {
+        if (childCheckboxes.length === 0) return false;
+        return childCheckboxes.some(cb => cb.getAttribute('aria-checked') === 'true');
+      }
+      
+      function setCheckboxState(checkbox, isChecked, isIndeterminate = false) {
+        checkbox.setAttribute('aria-checked', isChecked ? 'true' : 'false');
+        checkbox.setAttribute('data-indeterminate', isIndeterminate ? 'true' : 'false');
+        
+        const node = checkbox.closest('.tree-node');
+        if (node) {
+          node.setAttribute('aria-selected', isChecked ? 'true' : 'false');
+        }
+      }
+      
+      function updateParentCheckbox(node) {
+        const parentNode = getParentNode(node);
+        if (!parentNode) return;
+        
+        const parentCheckbox = parentNode.querySelector('.tree-checkbox');
+        if (!parentCheckbox) return;
+        
+        const siblings = Array.from(node.parentNode.querySelectorAll(':scope > .tree-node-container > .tree-node > .tree-checkbox'));
+        
+        if (areAllChildrenChecked(siblings)) {
+          setCheckboxState(parentCheckbox, true, false);
+        } else if (areSomeChildrenChecked(siblings)) {
+          // Set visual indeterminate state
+          setCheckboxState(parentCheckbox, false, true);
+        } else {
+          setCheckboxState(parentCheckbox, false, false);
+        }
+        
+        // Recursively update ancestors
+        updateParentCheckbox(parentNode);
+      }
+      
+      function propagateSelectionToChildren(node, isChecked) {
+        const childCheckboxes = getChildCheckboxes(node);
+        childCheckboxes.forEach(checkbox => {
+          setCheckboxState(checkbox, isChecked);
+          const childNode = checkbox.closest('.tree-node');
+          if (childNode) {
+            propagateSelectionToChildren(childNode, isChecked);
+          }
+        });
+      }
+    
+      // Add click handlers
+      const treeNodes = multiTreeview.querySelectorAll('.tree-node');
+      
+      treeNodes.forEach(node => {
+        node.addEventListener('click', (event) => {
+          const target = event.target;
+          
+          // Handle checkbox click
+          if (target.classList.contains('tree-checkbox')) {
+            const isChecked = target.getAttribute('aria-checked') === 'true';
+            const newState = !isChecked;
+            
+            // Set this checkbox state
+            setCheckboxState(target, newState);
+            
+            // Propagate selection down to all children
+            propagateSelectionToChildren(node, newState);
+            
+            // Update parent checkboxes
+            updateParentCheckbox(node);
+            
+            event.stopPropagation();
+            return;
+          }
+          
+          // Handle caret click for expand/collapse
+          if (target.classList.contains('tree-caret')) {
+            const childrenContainer = node.parentNode.querySelector('.tree-children');
+            if (childrenContainer) {
+              const isExpanded = node.getAttribute('aria-expanded') === 'true';
+              node.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+              childrenContainer.style.display = isExpanded ? 'none' : 'block';
+            }
+            event.stopPropagation();
+            return;
+          }
+          
+          // Toggle checkbox when clicking anywhere else on the node
+          const checkbox = node.querySelector('.tree-checkbox');
+          if (checkbox) {
+            const isChecked = checkbox.getAttribute('aria-checked') === 'true';
+            const newState = !isChecked;
+            
+            // Set this checkbox state
+            setCheckboxState(checkbox, newState);
+            
+            // Propagate selection down to all children
+            propagateSelectionToChildren(node, newState);
+            
+            // Update parent checkboxes
+            updateParentCheckbox(node);
+          }
+        });
+      });
+    }
+    
+    // Menu example
+    const menuTreeview = document.getElementById(menuExampleId);
+    if (menuTreeview) {
+      const menuNodes = menuTreeview.querySelectorAll('.tree-node');
+      
+      menuNodes.forEach(node => {
+        node.addEventListener('click', (event) => {
+          // Get the node ID for tracking actions
+          const nodeId = node.getAttribute('data-node-id');
+          console.log(`Menu item clicked: ${nodeId}`);
+          
+          // Handle caret/expansion
+          const caret = node.querySelector('.tree-caret');
+          if (caret) {
+            const childrenContainer = node.parentNode.querySelector('.tree-children');
+            if (childrenContainer) {
+              const isExpanded = node.getAttribute('aria-expanded') === 'true';
+              
+              // Close other expanded menus if we're opening a top-level menu
+              if (!isExpanded && node.closest('.tree-children') === null) {
+                menuTreeview.querySelectorAll('[role="treeitem"][aria-expanded="true"]').forEach(expanded => {
+                  if (expanded !== node && expanded.closest('.tree-children') === null) {
+                    expanded.setAttribute('aria-expanded', 'false');
+                    const container = expanded.parentNode.querySelector('.tree-children');
+                    if (container) container.style.display = 'none';
+                  }
+                });
+              }
+              
+              // Toggle the current menu
+              node.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+              childrenContainer.style.display = isExpanded ? 'none' : 'block';
+              
+              event.stopPropagation();
+              return;
+            }
+          }
+          
+          // Handle selection for menu items without children
+          if (!caret) {
+            // Clear any previous selection
+            menuNodes.forEach(n => {
+              n.setAttribute('aria-selected', 'false');
+            });
+            
+            // Set this node as selected
+            node.setAttribute('aria-selected', 'true');
+            
+            // If this is a leaf node, also close any open parent menus
+            // This simulates a real menu where selecting an item closes the menu
+            const closeMenuAfterAction = false; // Set to true to close menus after selection
+            if (closeMenuAfterAction) {
+              menuTreeview.querySelectorAll('[role="treeitem"][aria-expanded="true"]').forEach(expanded => {
+                expanded.setAttribute('aria-expanded', 'false');
+                const container = expanded.parentNode.querySelector('.tree-children');
+                if (container) container.style.display = 'none';
+              });
+            }
+            
+            event.stopPropagation();
+          }
+        });
+      });
+    }
+    
+    // Custom styled treeview
+    const customTree = document.getElementById(customStyledId);
+    if (customTree) {
+      const treeNodes = customTree.querySelectorAll('.tree-node');
+      
+      treeNodes.forEach(node => {
+        node.addEventListener('click', (event) => {
+          // Handle caret/expansion
+          const caret = node.querySelector('.tree-caret');
+          if (caret) {
+            const childrenContainer = node.parentNode.querySelector('.tree-children');
+            if (childrenContainer) {
+              const isExpanded = node.getAttribute('aria-expanded') === 'true';
+              node.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+              childrenContainer.style.display = isExpanded ? 'none' : 'block';
+              event.stopPropagation();
+              return;
+            }
+          }
+          
+          // Handle selection
+          treeNodes.forEach(n => {
+            n.setAttribute('aria-selected', 'false');
+          });
+          
+          node.setAttribute('aria-selected', 'true');
+        });
+      });
+    }
+
+    // Empty and Loading States Example
+    const emptyLoadingContainer = document.getElementById(emptyLoadingId);
+    if (emptyLoadingContainer) {
+      const emptyTree = emptyLoadingContainer.querySelector('.empty-tree');
+      const loadingTree = emptyLoadingContainer.querySelector('.loading-tree');
+      const toggleButtons = emptyLoadingContainer.querySelectorAll('.toggle-button');
+      
+      let isToggling = false;
+      let toggleInterval;
+      
+      // Toggle state buttons
+      toggleButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Clear active state
+          toggleButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+          
+          // Clear any ongoing toggle
+          if (toggleInterval) {
+            clearInterval(toggleInterval);
+            isToggling = false;
+          }
+          
+          const state = button.getAttribute('data-state');
+          
+          switch (state) {
+            case 'both':
+              emptyTree.style.display = 'block';
+              loadingTree.style.display = 'block';
+              break;
+            case 'empty':
+              emptyTree.style.display = 'block';
+              loadingTree.style.display = 'none';
+              break;
+            case 'loading':
+              emptyTree.style.display = 'none';
+              loadingTree.style.display = 'block';
+              break;
+            case 'toggle':
+              isToggling = true;
+              // Start with empty state
+              emptyTree.style.display = 'block';
+              loadingTree.style.display = 'none';
+              
+              // Toggle between states every 2 seconds
+              toggleInterval = setInterval(() => {
+                if (emptyTree.style.display === 'block') {
+                  emptyTree.style.display = 'none';
+                  loadingTree.style.display = 'block';
+                } else {
+                  emptyTree.style.display = 'block';
+                  loadingTree.style.display = 'none';
+                }
+              }, 2000);
+              break;
+          }
+        });
+      });
+    }
+  });
+</script>

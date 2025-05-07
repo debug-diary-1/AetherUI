@@ -10,7 +10,7 @@ const { code, preview } = Astro.props;
 ---
 
 <div class="accordion-example">
-  {preview ? <Fragment set:html={preview} /> : <slot />}
+  {preview ? <div set:html={preview} /> : <slot />}
 </div>
 
 {code && (
@@ -20,10 +20,10 @@ const { code, preview } = Astro.props;
 )}
 
 <script>
-  import { defineComponents } from '@aetherui/core';
+  import { defineAeAccordion } from '@aetherui/core';
   
-  // Register all components
-  defineComponents();
+  // Register accordion components
+  defineAeAccordion();
 </script>
 
 <style>

@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
-import { property } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
+@customElement('ae-accordion-item')
 export class AeAccordionItem extends LitElement {
   static styles = css`
     :host {
@@ -76,10 +77,10 @@ export class AeAccordionItem extends LitElement {
   `;
 
   @property({ type: String })
-  headerId = crypto.randomUUID();
+  accessor headerId = crypto.randomUUID();
 
   @property({ type: Boolean, reflect: true })
-  open = false;
+  accessor open = false;
 
   private panelHeight = 0;
 

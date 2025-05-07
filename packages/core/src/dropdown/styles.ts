@@ -3,6 +3,7 @@ import { css } from 'lit';
 export const dropdownStyles = css`
   :host { 
     display: contents; 
+    position: relative;
   }
 
   /* Trigger styling */
@@ -21,30 +22,55 @@ export const dropdownStyles = css`
   ::part(overlay) {
     background: var(--ae-dropdown-bg, #fff);
     color: var(--ae-dropdown-fg, #111);
-    border-radius: var(--ae-dropdown-radius, 6px);
-    box-shadow: var(--ae-dropdown-shadow, 0 4px 12px rgba(0,0,0,.1));
-    padding: 0.25rem 0;
-    z-index: 1000;
-    min-width: 160px;
+    border-radius: var(--ae-dropdown-radius, 8px);
+    box-shadow: var(--ae-dropdown-shadow, 0 6px 16px rgba(0,0,0,.3));
+    padding: 0;
+    z-index: 9999;
+    min-width: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    border: var(--ae-dropdown-border, none);
+  }
+
+  /* Header styling */
+  ::part(header) {
+    padding: 12px 16px;
+    font-weight: 600;
+    background: var(--ae-dropdown-header-bg, inherit);
+    color: var(--ae-dropdown-header-fg, inherit);
+    border-bottom: var(--ae-dropdown-header-border, 1px solid rgba(255,255,255,0.1));
+    display: flex;
+    align-items: center;
   }
 
   /* Menu styling */
   ::part(menu) {
     display: flex;
     flex-direction: column;
-    gap: var(--ae-dropdown-gap, 0.25rem);
     outline: none;
     padding: 0;
     margin: 0;
-    max-height: var(--ae-dropdown-max-height, 300px);
+    max-height: var(--ae-dropdown-max-height, 400px);
     overflow-y: auto;
+  }
+
+  /* Section styling */
+  ::part(section) {
+    border-bottom: var(--ae-dropdown-section-border, 1px solid rgba(255,255,255,0.1));
+    padding: 8px 0;
+  }
+
+  ::part(section):last-child {
+    border-bottom: none;
   }
 
   /* Menu item styling */
   ::part(item) {
     display: flex;
     align-items: center;
-    padding: 0.375rem 0.75rem;
+    padding: 8px 16px;
     background: transparent;
     border: none;
     text-align: left;
@@ -52,38 +78,89 @@ export const dropdownStyles = css`
     color: inherit;
     font: inherit;
     width: 100%;
-    justify-content: flex-start;
+    justify-content: space-between;
+    font-size: var(--ae-dropdown-item-font-size, 0.9rem);
+  }
+
+  ::part(item-content) {
+    display: flex;
+    align-items: center;
+    flex: 1;
   }
 
   ::part(item):hover {
-    background: var(--ae-dropdown-item-hover-bg, #f3f4f6);
+    background: var(--ae-dropdown-item-hover-bg, rgba(255,255,255,0.1));
   }
 
   ::part(item)[data-active] {
-    background: var(--ae-dropdown-item-active-bg, #e5e7eb);
+    background: var(--ae-dropdown-item-active-bg, rgba(255,255,255,0.2));
+  }
+
+  ::part(item)[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  ::part(item[disabled]):hover {
+    background: transparent;
   }
 
   /* Separator styling */
   ::part(separator) {
     height: 1px;
-    background-color: var(--ae-dropdown-separator-color, #e5e7eb);
-    margin: 0.25rem 0;
+    background-color: var(--ae-dropdown-separator-color, rgba(255,255,255,0.1));
+    margin: 8px 0;
     border: none;
   }
 
   /* Icon support for menu items */
   ::part(item-icon) {
     display: inline-flex;
-    margin-right: 0.5rem;
+    margin-right: 12px;
     width: 16px;
     height: 16px;
+    flex-shrink: 0;
   }
 
   /* Support for right-aligned text (like shortcut hints) */
   ::part(item-hint) {
-    display: inline-block;
-    margin-left: auto;
-    font-size: 0.85em;
+    display: inline-flex;
+    margin-left: 16px;
+    font-size: 0.8em;
     opacity: 0.7;
+    flex-shrink: 0;
+    color: var(--ae-dropdown-hint-color, rgba(255,255,255,0.7));
+    background: var(--ae-dropdown-hint-bg, transparent);
+    padding: var(--ae-dropdown-hint-padding, 2px 4px);
+    border-radius: var(--ae-dropdown-hint-radius, 3px);
+  }
+
+  /* Support for submenu indicators */
+  ::part(item-submenu-indicator) {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 8px;
+  }
+
+  /* Default dark theme to match example */
+  :host {
+    --ae-dropdown-bg: #111;
+    --ae-dropdown-fg: #fff;
+    --ae-dropdown-item-hover-bg: rgba(255,255,255,0.1);
+    --ae-dropdown-item-active-bg: rgba(255,255,255,0.2);
+    --ae-dropdown-separator-color: rgba(255,255,255,0.1);
+    --ae-dropdown-header-border: 1px solid rgba(255,255,255,0.1);
+    --ae-dropdown-section-border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* Light theme override */
+  :host([theme="light"]) {
+    --ae-dropdown-bg: #fff;
+    --ae-dropdown-fg: #111;
+    --ae-dropdown-item-hover-bg: rgba(0,0,0,0.05);
+    --ae-dropdown-item-active-bg: rgba(0,0,0,0.1);
+    --ae-dropdown-separator-color: rgba(0,0,0,0.1);
+    --ae-dropdown-header-border: 1px solid rgba(0,0,0,0.1);
+    --ae-dropdown-section-border: 1px solid rgba(0,0,0,0.1);
   }
 `; 

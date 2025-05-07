@@ -9,6 +9,7 @@ import {
   defineAeTabs,
   defineAeAlert,
   defineAeDropdown,
+  defineAeTreeView,
   defineAll
 } from '@aetherui/core';
 
@@ -44,6 +45,7 @@ export {
   defineAeTabs,
   defineAeAlert,
   defineAeDropdown,
+  defineAeTreeView,
   defineAll
 };
 

@@ -1,97 +1,83 @@
 import { css } from 'lit';
 
 export const tabStyles = css`
-  /* Base styles for the host element - horizontal by default */
   :host {
-    display: block !important;
-    width: 100%;
+    display: block;
   }
 
-  /* Base tablist styles - horizontal by default */
-  [part="tablist"] {
+  .tabs {
     display: flex;
-    flex-direction: row;
-    gap: var(--ae-tabs-gap, 1rem);
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 1rem;
-    border-right: none;
-    margin-right: 0;
-  }
-
-  /* Flex layout for vertical orientation - only applied when orientation="vertical" */
-  :host([orientation="vertical"]) {
-    display: flex !important;
-  }
-
-  /* Vertical tablist styles - only applied when orientation="vertical" */
-  :host([orientation="vertical"]) [part="tablist"] {
     flex-direction: column;
-    min-width: 150px;
-    border-right: 1px solid #ddd;
-    margin-right: 1rem;
-    border-bottom: none;
-    margin-bottom: 0;
   }
 
-  /* Button/tab styles */
-  ::part(tab) {
+  .tabs[data-orientation="vertical"] {
+    flex-direction: row;
+  }
+
+  .tablist {
+    display: flex;
+    gap: var(--ae-tabs-gap, 0.5rem);
+    border-bottom: var(--ae-tabs-border, 1px solid #e5e7eb);
+  }
+
+  .tabs[data-orientation="vertical"] .tablist {
+    flex-direction: column;
+    border-bottom: none;
+    border-right: var(--ae-tabs-border, 1px solid #e5e7eb);
+  }
+
+  ::slotted([role="tab"]) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--ae-tabs-padding, 0.75rem 1rem);
+    color: var(--ae-tabs-color, #6b7280);
     background: transparent;
-    padding: var(--ae-tabs-padding-y, 0.25rem) var(--ae-tabs-padding-x, 0.75rem);
     border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: var(--ae-tabs-radius, 4px 4px 0 0);
+    font-size: var(--ae-tabs-font-size, inherit);
+    font-weight: var(--ae-tabs-font-weight, 500);
     cursor: pointer;
-    font: inherit;
-    position: relative;
+    transition: all 0.2s ease;
   }
 
-  /* Selected tab styles - horizontal by default */
-  ::part(tab)[aria-selected="true"] {
-    border-bottom: 2px solid var(--ae-tabs-indicator-color, currentColor);
-    border-right: none;
-    font-weight: bold;
-    margin-bottom: -1px;
-  }
-
-  /* Selected tab styles - vertical */
-  :host([orientation="vertical"]) ::part(tab)[aria-selected="true"] {
-    border-right: 2px solid var(--ae-tabs-indicator-color, currentColor);
+  .tabs[data-orientation="vertical"] ::slotted([role="tab"]) {
     border-bottom: none;
-    font-weight: bold;
-    margin-bottom: 0;
+    border-right: 2px solid transparent;
+    border-radius: var(--ae-tabs-radius, 4px 0 0 4px);
   }
 
-  /* Panel container for vertical layout */
-  :host([orientation="vertical"]) .panel-container {
+  ::slotted([role="tab"]:hover) {
+    color: var(--ae-tabs-hover-color, #4b5563);
+    background: var(--ae-tabs-hover-bg, #f3f4f6);
+  }
+
+  ::slotted([role="tab"][aria-selected="true"]) {
+    color: var(--ae-tabs-active-color, #4f46e5);
+    border-bottom-color: var(--ae-tabs-active-border-color, #4f46e5);
+  }
+
+  .tabs[data-orientation="vertical"] ::slotted([role="tab"][aria-selected="true"]) {
+    border-bottom-color: transparent;
+    border-right-color: var(--ae-tabs-active-border-color, #4f46e5);
+  }
+
+  ::slotted([role="tab"]:focus-visible) {
+    outline: 2px solid var(--ae-tabs-focus-color, #4f46e5);
+    outline-offset: -2px;
+  }
+
+  .panels {
     flex: 1;
+    padding: var(--ae-tabs-panel-padding, 1rem);
   }
 
-  /* Panel styles */
-  ::part(panel) {
-    padding: 1rem 0;
+  ::slotted([role="tabpanel"]) {
+    display: none;
   }
 
-  /* Specificity cascade for tabs without explicit orientation (treat as horizontal) */
-  :host:not([orientation="vertical"]) {
-    display: block !important;
-  }
-
-  :host:not([orientation="vertical"]) [part="tablist"] {
-    flex-direction: row !important;
-    border-bottom: 1px solid #ddd !important;
-    border-right: none !important;
-    margin-bottom: 1rem !important;
-    margin-right: 0 !important;
-  }
-
-  /* Ensure horizontal tabs for compatibility */
-  :host([orientation="horizontal"]) {
-    display: block !important;
-  }
-
-  :host([orientation="horizontal"]) [part="tablist"] {
-    flex-direction: row !important;
-    border-bottom: 1px solid #ddd !important;
-    border-right: none !important;
-    margin-bottom: 1rem !important;
-    margin-right: 0 !important;
+  ::slotted([role="tabpanel"]:not([hidden])) {
+    display: block;
   }
 `; 

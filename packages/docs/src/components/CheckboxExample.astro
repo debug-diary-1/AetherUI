@@ -1,0 +1,76 @@
+---
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+  code?: string;
+  preview?: string;
+}
+
+const { code, preview } = Astro.props;
+---
+
+<div class="checkbox-example">
+  {preview ? <div class="preview" set:html={preview} /> : <slot />}
+  {code && (
+    <div class="code-preview">
+      <Code code={code} lang="html" />
+    </div>
+  )}
+</div>
+
+<script>
+  import { defineAll } from '@aetherui/core';
+  defineAll();
+</script>
+
+<style>
+  .checkbox-example {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: var(--sl-color-gray-1);
+  }
+
+  .preview {
+    padding: 1.5rem;
+    border-radius: 0.25rem;
+    background: var(--sl-color-white);
+    position: relative;
+    min-height: 100px;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  /* Light mode styles */
+  :global(.preview ae-checkbox) {
+    --ae-color-primary: var(--sl-color-accent);
+    --ae-color-border: var(--sl-color-gray-4);
+    --ae-color-surface: var(--sl-color-white);
+    --ae-checkbox-size: 1rem;
+  }
+
+  :global(.preview ae-checkbox::part(control)) {
+    border-radius: 0.25rem;
+  }
+
+  :global(.preview ae-checkbox::part(indicator)) {
+    color: var(--sl-color-white);
+  }
+
+  /* Dark mode styles */
+  :global([data-theme="dark"] .preview) {
+    background: var(--sl-color-gray-6);
+  }
+
+  :global([data-theme="dark"] .preview ae-checkbox) {
+    --ae-color-primary: var(--sl-color-accent);
+    --ae-color-border: var(--sl-color-gray-3);
+    --ae-color-surface: var(--sl-color-gray-7);
+  }
+
+  :global([data-theme="dark"] .preview ae-checkbox::part(label)) {
+    color: var(--sl-color-white);
+  }
+</style> 

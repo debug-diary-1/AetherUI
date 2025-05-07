@@ -1,7 +1,7 @@
-import { AeDropdown, AeMenuItem, AeMenuSeparator } from './ae-dropdown';
+import { AeDropdown, AeMenuItem, AeMenuSeparator, AeMenuSection } from './ae-dropdown';
 import { dropdownStyles } from './styles';
 
-export { AeDropdown, AeMenuItem, AeMenuSeparator, dropdownStyles };
+export { AeDropdown, AeMenuItem, AeMenuSeparator, AeMenuSection, dropdownStyles };
 
 /**
  * Register all dropdown-related components with the CustomElements registry
@@ -10,7 +10,7 @@ export { AeDropdown, AeMenuItem, AeMenuSeparator, dropdownStyles };
  * ```ts
  * import { defineAeDropdown } from '@aetherui/core';
  * 
- * defineAeDropdown(); // Now <ae-dropdown>, <ae-menu-item>, and <ae-menu-separator> are available
+ * defineAeDropdown(); // Now <ae-dropdown>, <ae-menu-item>, <ae-menu-separator>, and <ae-menu-section> are available
  * ```
  */
 export function defineAeDropdown(): void {
@@ -24,5 +24,9 @@ export function defineAeDropdown(): void {
   
   if (!customElements.get('ae-menu-separator')) {
     customElements.define('ae-menu-separator', AeMenuSeparator);
+  }
+  
+  if (!customElements.get('ae-menu-section')) {
+    customElements.define('ae-menu-section', AeMenuSection);
   }
 } 

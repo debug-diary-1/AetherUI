@@ -1,0 +1,419 @@
+---
+title: TreeView
+description: Hierarchical navigation component with expand/collapse, keyboard navigation, and optional multi-select functionality.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import TreeViewExample from '../../../components/TreeViewExample.astro';
+
+## Overview
+
+The TreeView component provides a hierarchical display of data with expand/collapse functionality, keyboard navigation, and optional multi-select capability. It's commonly used in file explorers, navigation menus, and structured data visualization.
+
+```html
+<ae-treeview
+  data='[
+    { 
+      "id": "folder1", 
+      "label": "Documents",
+      "children": [
+        { "id": "file1", "label": "report.pdf" },
+        { "id": "file2", "label": "data.xlsx" }
+      ]
+    },
+    { "id": "folder2", "label": "Pictures" }
+  ]'
+></ae-treeview>
+```
+
+## Features
+
+- 🌳 Hierarchical data display
+- ⌨️ Keyboard navigation with roving tabindex pattern
+- 🔍 Type-ahead search to quickly jump to nodes
+- ✅ Single or multi-select mode
+- ♿ Fully accessible (WAI-ARIA compliant)
+- 🎨 Customizable with CSS parts and variables
+
+## Import
+
+<Tabs>
+  <TabItem label="HTML">
+  ```html
+  <script type="module">
+    import '@aetherui/core/treeview/define.js';
+  </script>
+  ```
+  </TabItem>
+  <TabItem label="JavaScript">
+  ```js
+  // Import and define
+  import { defineAeTreeView } from '@aetherui/core';
+  defineAeTreeView();
+
+  // Or import the class directly
+  import { AeTreeView } from '@aetherui/core';
+  ```
+  </TabItem>
+</Tabs>
+
+## Usage
+
+### Basic TreeView
+
+The simplest usage is to provide an array of nodes with `id` and `label` properties, and optional `children` arrays.
+
+```html
+<ae-treeview
+  data='[
+    { 
+      "id": "docs", 
+      "label": "Documents",
+      "children": [
+        { "id": "report", "label": "Annual Report" },
+        { "id": "budget", "label": "Budget Spreadsheet" }
+      ]
+    },
+    { 
+      "id": "pics", 
+      "label": "Pictures",
+      "children": [
+        { "id": "vacation", "label": "Vacation Photos" }
+      ]
+    }
+  ]'
+></ae-treeview>
+```
+
+### With Icons
+
+You can add icons to items by including an `icon` property in the node data.
+
+```html
+<ae-treeview
+  data='[
+    { 
+      "id": "docs", 
+      "label": "Documents",
+      "icon": "📁",
+      "children": [
+        { "id": "report", "label": "Report.pdf", "icon": "📄" },
+        { "id": "budget", "label": "Budget.xlsx", "icon": "📊" }
+      ]
+    },
+    { 
+      "id": "pics", 
+      "label": "Pictures",
+      "icon": "📁",
+      "children": [
+        { "id": "vacation", "label": "Vacation.jpg", "icon": "🖼️" }
+      ]
+    }
+  ]'
+></ae-treeview>
+```
+
+### Multi-select Mode
+
+Enable multi-select mode to allow users to select multiple items simultaneously.
+
+```html
+<ae-treeview
+  selectionMode="multiple"
+  data='[
+    { "id": "item1", "label": "Item 1" },
+    { "id": "item2", "label": "Item 2" },
+    { "id": "item3", "label": "Item 3" }
+  ]'
+></ae-treeview>
+```
+
+### Pre-expanded and Pre-selected Items
+
+You can set items to be expanded or selected when the component renders.
+
+```html
+<ae-treeview
+  data='[
+    { 
+      "id": "docs", 
+      "label": "Documents",
+      "children": [
+        { "id": "report", "label": "Annual Report" },
+        { "id": "budget", "label": "Budget Spreadsheet" }
+      ]
+    },
+    { 
+      "id": "pics", 
+      "label": "Pictures",
+      "children": [
+        { "id": "vacation", "label": "Vacation Photos" }
+      ]
+    }
+  ]'
+  expanded='["docs"]'
+  selected='["report"]'
+></ae-treeview>
+```
+
+## Attributes
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `data` | Array | `[]` | Array of tree nodes with format `{ id, label, children?, icon? }` |
+| `expanded` | Array | `[]` | Array of expanded node IDs (controlled) |
+| `selectionMode` | String | `'single'` | Selection mode: `'single'` or `'multiple'` |
+| `selected` | Array | `[]` | Array of selected node IDs (controlled) |
+| `indentSize` | Number | `16` | Size of indentation in pixels per level |
+| `loading` | Boolean | `false` | Show loading state |
+| `emptyMessage` | String | `'No items'` | Message to display when there are no items |
+
+## Events
+
+| Event | Detail | Description |
+|-------|--------|-------------|
+| `ae-select` | `{ selected: string[] }` | Fired when selection changes |
+| `ae-expand-change` | `{ expanded: string[] }` | Fired when expansion state changes |
+
+## Shadow Parts
+
+The following shadow parts are available for styling:
+
+| Part | Description |
+|------|-------------|
+| `node` | The container for each tree node |
+| `caret` | Expand/collapse indicator |
+| `caret-spacer` | Space holder for leaf nodes (no caret) |
+| `label` | Text label for the node |
+| `checkbox` | Checkbox for multi-select mode |
+| `icon` | Icon container |
+| `subtree` | Container for child nodes |
+| `loading` | Loading state container |
+| `empty` | Empty state container |
+
+## CSS Custom Properties
+
+| Property | Description |
+|----------|-------------|
+| `--ae-treeview-indent` | Indentation size for nested levels |
+| `--ae-treeview-node-radius` | Border radius for tree nodes |
+| `--ae-treeview-font-size` | Font size for node text |
+| `--ae-treeview-row-hover-bg` | Background color for node hover state |
+| `--ae-treeview-focus-color` | Outline color for focused node |
+| `--ae-treeview-row-selected-bg` | Background color for selected node |
+| `--ae-treeview-row-selected-fg` | Text color for selected node |
+| `--ae-treeview-caret-size` | Size of the caret icon |
+| `--ae-treeview-caret-color` | Color of the caret icon |
+| `--ae-treeview-caret-open` | Color of the caret icon when expanded |
+| `--ae-treeview-icon-size` | Size of node icons |
+| `--ae-treeview-icon-color` | Color of node icons |
+| `--ae-treeview-checkbox-size` | Size of the checkbox in multi-select mode |
+| `--ae-treeview-checkbox-radius` | Border radius of the checkbox |
+| `--ae-treeview-checkbox-border` | Border color of the checkbox |
+| `--ae-treeview-checkbox-bg` | Background color of the checkbox |
+| `--ae-treeview-checkbox-selected-bg` | Background color of selected checkbox |
+| `--ae-treeview-checkbox-selected-border` | Border color of selected checkbox |
+| `--ae-treeview-empty-color` | Text color for empty state |
+| `--ae-treeview-loading-color` | Text color for loading state |
+
+## Keyboard Navigation
+
+The TreeView supports comprehensive keyboard navigation:
+
+| Key | Action |
+|-----|--------|
+| `↑` / `↓` | Move focus to previous/next visible node |
+| `←` | Collapse node if expanded, or move to parent node |
+| `→` | Expand node if collapsed, or move to first child if already expanded |
+| `Home` | Move focus to first node |
+| `End` | Move focus to last visible node |
+| `Enter` / `Space` | Select/deselect the focused node |
+| `*` | Expand all siblings of the current node |
+| Type characters | Jump to the next node that starts with the typed characters (type-ahead) |
+
+## Accessibility
+
+The TreeView component follows WAI-ARIA best practices:
+
+- The tree container has `role="tree"` 
+- Each node has `role="treeitem"` with appropriate `aria-level` and `aria-expanded` attributes
+- Implements roving tabindex pattern for keyboard navigation
+- Type-ahead search lets users quickly navigate by typing the first few characters
+- Multi-select mode uses `aria-multiselectable="true"` and adds proper `aria-selected` states
+- Focus is visibly indicated with a clear outline
+- All interactions can be performed with keyboard alone
+
+## Examples
+
+Here are some interactive examples of the TreeView component:
+
+<TreeViewExample
+  title="File Explorer Example"
+  description="A simple file explorer with icons."
+  code={`<ae-treeview
+  data='[
+    { 
+      "id": "src", 
+      "label": "src",
+      "children": [
+        { 
+          "id": "components", 
+          "label": "components",
+          "children": [
+            { "id": "button.js", "label": "button.js", "icon": "📄" },
+            { "id": "dropdown.js", "label": "dropdown.js", "icon": "📄" },
+            { "id": "treeview.js", "label": "treeview.js", "icon": "📄" }
+          ]
+        },
+        { 
+          "id": "utils", 
+          "label": "utils",
+          "children": [
+            { "id": "helpers.js", "label": "helpers.js", "icon": "📄" },
+            { "id": "constants.js", "label": "constants.js", "icon": "📄" }
+          ]
+        },
+        { "id": "index.js", "label": "index.js", "icon": "📄" }
+      ]
+    },
+    {
+      "id": "package.json",
+      "label": "package.json",
+      "icon": "📄"
+    },
+    {
+      "id": "README.md",
+      "label": "README.md",
+      "icon": "📝"
+    }
+  ]'
+  expanded='["src", "components"]'
+></ae-treeview>`}
+/>
+
+<TreeViewExample
+  title="Multi-select Mode"
+  description="TreeView with multi-select capability for selecting multiple items."
+  code={`<ae-treeview
+  selectionMode="multiple"
+  data='[
+    { 
+      "id": "docs", 
+      "label": "Documents",
+      "children": [
+        { "id": "report", "label": "Annual Report" },
+        { "id": "budget", "label": "Budget Spreadsheet" }
+      ]
+    },
+    { 
+      "id": "pics", 
+      "label": "Pictures",
+      "children": [
+        { "id": "vacation", "label": "Vacation Photos" }
+      ]
+    },
+    { "id": "notes", "label": "Notes" }
+  ]'
+  expanded='["docs"]'
+  selected='["report", "notes"]'
+></ae-treeview>`}
+/>
+
+<TreeViewExample
+  title="Menu Example"
+  description="TreeView used as a hierarchical menu navigation."
+  code={`<ae-treeview
+  data='[
+    {
+      "id": "file",
+      "label": "File",
+      "children": [
+        { "id": "new", "label": "New" },
+        { "id": "open", "label": "Open" },
+        { "id": "save", "label": "Save" },
+        { "id": "save-as", "label": "Save As..." }
+      ]
+    },
+    {
+      "id": "edit",
+      "label": "Edit",
+      "children": [
+        { "id": "undo", "label": "Undo" },
+        { "id": "redo", "label": "Redo" },
+        { "id": "cut", "label": "Cut" },
+        { "id": "copy", "label": "Copy" },
+        { "id": "paste", "label": "Paste" }
+      ]
+    },
+    {
+      "id": "view",
+      "label": "View",
+      "children": [
+        { "id": "zoom-in", "label": "Zoom In" },
+        { "id": "zoom-out", "label": "Zoom Out" },
+        { "id": "reset-zoom", "label": "Reset Zoom" }
+      ]
+    }
+  ]'
+></ae-treeview>`}
+/>
+
+<TreeViewExample
+  title="Custom Styled TreeView"
+  description="TreeView with custom styling using CSS variables."
+  code={`<style>
+  .custom-tree {
+    --ae-treeview-row-hover-bg: rgba(79, 70, 229, 0.1);
+    --ae-treeview-row-selected-bg: rgba(79, 70, 229, 0.2);
+    --ae-treeview-row-selected-fg: rgb(67, 56, 202);
+    --ae-treeview-focus-color: rgb(79, 70, 229);
+    --ae-treeview-caret-color: #94a3b8;
+    --ae-treeview-caret-open: #4f46e5;
+    --ae-treeview-node-radius: 6px;
+  }
+</style>
+
+<ae-treeview
+  class="custom-tree"
+  data='[
+    { 
+      "id": "inbox", 
+      "label": "Inbox",
+      "children": [
+        { "id": "important", "label": "Important" },
+        { "id": "starred", "label": "Starred" }
+      ]
+    },
+    { 
+      "id": "drafts", 
+      "label": "Drafts" 
+    },
+    { 
+      "id": "sent", 
+      "label": "Sent Mail" 
+    },
+    { 
+      "id": "trash", 
+      "label": "Trash" 
+    }
+  ]'
+  expanded='["inbox"]'
+  selected='["important"]'
+></ae-treeview>`}
+/>
+
+<TreeViewExample
+  title="Empty and Loading States"
+  description="TreeView in empty and loading states."
+  code={`<div style="display: flex; gap: 20px;">
+  <ae-treeview 
+    emptyMessage="No files found"
+    data='[]'>
+  </ae-treeview>
+  
+  <ae-treeview 
+    loading
+    data='[]'>
+  </ae-treeview>
+</div>`}
+/> 

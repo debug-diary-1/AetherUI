@@ -26,6 +26,24 @@
       "outputs": [],
       "env": ["CI=true"],
       "cache": false
+    },
+    "storybook": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
+    "build-storybook": {
+      "dependsOn": ["^build"],
+      "outputs": ["storybook-static/**"]
+    },
+    "docs": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
+    "docs:build": {
+      "dependsOn": ["^build"],
+      "outputs": ["packages/docs/dist/**"]
     }
   }
 }

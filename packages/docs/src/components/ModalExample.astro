@@ -1,0 +1,135 @@
+---
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+  code?: string;
+  preview?: string;
+}
+
+const { code, preview } = Astro.props;
+---
+
+<div class="modal-example">
+  {preview ? <div class="preview" set:html={preview} /> : <slot />}
+  {code && <Code code={code} lang="html" />}
+</div>
+
+<script>
+  import { defineAll } from '@aetherui/core';
+  
+  // Register all components
+  defineAll();
+  
+  function initializeModals() {
+    document.querySelectorAll('ae-modal').forEach(modal => {
+      // Find open buttons in the preview container or parent
+      const container = modal.closest('.preview') || modal.parentElement;
+      if (!container) return;
+
+      // Handle open buttons
+      container.querySelectorAll('[data-open-modal]').forEach(openBtn => {
+        openBtn.addEventListener('click', () => {
+          console.log('Opening modal');
+          modal.setAttribute('open', '');
+        });
+      });
+
+      // Handle close buttons
+      container.querySelectorAll('[data-close-modal]').forEach(closeBtn => {
+        closeBtn.addEventListener('click', () => {
+          console.log('Closing modal');
+          modal.removeAttribute('open');
+        });
+      });
+
+      // Handle backdrop clicks
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          console.log('Closing modal via backdrop');
+          modal.removeAttribute('open');
+        }
+      });
+
+      // Handle escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.hasAttribute('open')) {
+          console.log('Closing modal via escape');
+          modal.removeAttribute('open');
+        }
+      });
+    });
+  }
+
+  // Initialize immediately and after a short delay to catch dynamically loaded content
+  initializeModals();
+  setTimeout(initializeModals, 100);
+</script>
+
+<style>
+  .modal-example {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: var(--sl-color-gray-1);
+  }
+
+  .preview {
+    padding: 1rem;
+    border-radius: 0.25rem;
+    background: var(--sl-color-white);
+    position: relative;
+    min-height: 100px;
+  }
+
+  :global(.preview ae-button) {
+    margin: 0.5rem;
+    --ae-color-primary: var(--sl-color-accent);
+    --ae-color-primary-hover: var(--sl-color-accent-high);
+    --ae-color-secondary: var(--sl-color-gray-5);
+    --ae-color-secondary-hover: var(--sl-color-gray-6);
+    --ae-border-radius: 0.375rem;
+    --ae-transition-duration: 200ms;
+  }
+
+  /* Light mode styles */
+  :global(.preview ae-modal) {
+    --ae-color-surface: var(--sl-color-white);
+    --ae-color-border: var(--sl-color-gray-3);
+    --ae-modal-text-color: var(--sl-color-black);
+    --ae-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+
+  /* Dark mode styles */
+  :global([data-theme="dark"] .preview ae-modal) {
+    --ae-color-surface: var(--sl-color-gray-6);
+    --ae-color-border: var(--sl-color-gray-4);
+    --ae-modal-text-color: var(--sl-color-white);
+    --ae-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+  }
+
+  /* Ensure proper heading contrast */
+  :global(.preview ae-modal h2) {
+    color: var(--ae-modal-text-color);
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  /* Ensure proper paragraph contrast */
+  :global(.preview ae-modal p) {
+    color: var(--ae-modal-text-color);
+    margin: 0.75rem 0;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  /* Ensure proper button contrast in dark mode */
+  :global([data-theme="dark"] .preview ae-modal ae-button[variant="secondary"]) {
+    --ae-color-secondary: var(--sl-color-gray-4);
+    --ae-color-secondary-hover: var(--sl-color-gray-3);
+  }
+</style>

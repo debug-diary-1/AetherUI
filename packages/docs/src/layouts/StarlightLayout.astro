@@ -1,9 +1,9 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
-import { registerAetherComponents } from '../components/AetherComponents';
 
-// Register button component for server-side rendering
-registerAetherComponents();
+// Remove server-side registration since it's causing issues
+// import { registerAetherComponents } from '../components/AetherComponents';
+// registerAetherComponents();
 ---
 
 <slot />
@@ -11,18 +11,41 @@ registerAetherComponents();
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
 <script>
-  // Register components on the client side
-  window.addEventListener('DOMContentLoaded', async () => {
+  // Direct client-side component registration
+  document.addEventListener('DOMContentLoaded', async () => {
     try {
-      const { registerClientComponents } = await import('../components/AetherComponents');
-      const result = await registerClientComponents();
-      console.log('Button component registered on client', result);
+      // Import the core package
+      const core = await import('@aetherui/core');
       
-      // Force custom elements to be defined
-      if (customElements && customElements.whenDefined) {
-        await customElements.whenDefined('ae-button');
-        console.log('ae-button is now defined');
+      // Define all components
+      if (typeof core.defineAll === 'function') {
+        core.defineAll();
+        console.log('Aether UI components registered on client');
       }
+      
+      // Explicitly define TreeView
+      if (typeof core.defineAeTreeView === 'function') {
+        core.defineAeTreeView();
+        console.log('TreeView component registered');
+      }
+      
+      // Initialize any TreeViews on the page
+      document.querySelectorAll('ae-treeview').forEach(treeview => {
+        if (treeview.hasAttribute('data')) {
+          try {
+            const dataValue = treeview.getAttribute('data');
+            if (dataValue) {
+              const data = JSON.parse(dataValue);
+              console.log('Setting TreeView data:', data);
+              // @ts-ignore: Property assignment
+              treeview.data = data;
+            }
+          } catch (e) {
+            console.error('Error parsing TreeView data:', e);
+          }
+        }
+      });
+      
     } catch (error) {
       console.error('Error registering components:', error);
     }

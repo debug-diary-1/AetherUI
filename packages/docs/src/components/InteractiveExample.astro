@@ -4,21 +4,111 @@ interface Props {
   title?: string;
   description?: string;
   preview?: string;
+  darkMode?: boolean;
 }
 
-const { code, title, description, preview } = Astro.props;
+const { 
+  code, 
+  title, 
+  description, 
+  preview,
+  darkMode = false
+} = Astro.props;
+
+// Generate a unique ID for this example
+const id = `example-${Math.random().toString(36).substring(2, 11)}`;
 ---
 
-<div class="interactive-example">
-  {title && <h3 class="title">{title}</h3>}
+<div class="interactive-example" id={id}>
+  <div class="example-header">
+    {title && <h3 class="title">{title}</h3>}
+    <div class="example-controls">
+      <button class="control-button code-toggle" aria-label="Toggle code visibility">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+      </button>
+      {darkMode && (
+        <button class="control-button theme-toggle" aria-label="Toggle dark mode">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+        </button>
+      )}
+    </div>
+  </div>
   {description && <p class="description">{description}</p>}
-  <div class="preview">
-    <Fragment set:html={preview || code} />
+  <div class="preview" data-theme="light">
+    <div class="preview-content">
+      <Fragment set:html={preview || code} />
+    </div>
   </div>
   <div class="code">
+    <div class="code-header">
+      <span class="code-label">HTML</span>
+      <button class="copy-button" aria-label="Copy code">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+      </button>
+    </div>
     <pre><code class="language-html">{code}</code></pre>
   </div>
 </div>
+
+<script define:vars={{ id, darkMode }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const example = document.getElementById(id);
+    if (!example) return;
+    
+    // Code toggle
+    const codeToggle = example.querySelector('.code-toggle');
+    const codeBlock = example.querySelector('.code');
+    
+    if (codeToggle && codeBlock) {
+      codeToggle.addEventListener('click', () => {
+        const isHidden = codeBlock.classList.toggle('hidden');
+        codeToggle.setAttribute('aria-expanded', !isHidden);
+      });
+    }
+    
+    // Theme toggle
+    if (darkMode) {
+      const themeToggle = example.querySelector('.theme-toggle');
+      const preview = example.querySelector('.preview');
+      
+      if (themeToggle && preview) {
+        themeToggle.addEventListener('click', () => {
+          const currentTheme = preview.getAttribute('data-theme');
+          const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+          preview.setAttribute('data-theme', newTheme);
+          
+          // Update icon
+          themeToggle.innerHTML = newTheme === 'light' 
+            ? '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>'
+            : '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>';
+        });
+      }
+    }
+    
+    // Copy button
+    const copyButton = example.querySelector('.copy-button');
+    const codeElement = example.querySelector('code');
+    
+    if (copyButton && codeElement) {
+      copyButton.addEventListener('click', async () => {
+        const text = codeElement.textContent;
+        
+        try {
+          await navigator.clipboard.writeText(text);
+          copyButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>';
+          copyButton.classList.add('success');
+          
+          setTimeout(() => {
+            copyButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>';
+            copyButton.classList.remove('success');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+        }
+      });
+    }
+  });
+</script>
 
 <style>
   .interactive-example {
@@ -26,19 +116,57 @@ const { code, title, description, preview } = Astro.props;
     border-radius: 0.5rem;
     margin: 1.5rem 0;
     overflow: hidden;
+    box-shadow: var(--ae-shadow-sm);
+    transition: box-shadow var(--ae-transition-normal);
+  }
+
+  .interactive-example:hover {
+    box-shadow: var(--ae-shadow-md);
+  }
+  
+  .example-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: var(--sl-color-bg-offset);
+    border-bottom: 1px solid var(--sl-color-border);
   }
 
   .title {
     font-size: 1rem;
     font-weight: 600;
     margin: 0;
-    padding: 1rem;
-    border-bottom: 1px solid var(--sl-color-border);
+  }
+  
+  .example-controls {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .control-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--sl-color-bg);
+    border: 1px solid var(--sl-color-border);
+    border-radius: 0.25rem;
+    color: var(--sl-color-text);
+    cursor: pointer;
+    transition: all var(--ae-transition-fast);
+  }
+  
+  .control-button:hover {
+    background: var(--sl-color-bg-offset);
+    color: var(--sl-color-accent);
+    border-color: var(--sl-color-accent-low);
   }
 
   .description {
     margin: 0;
-    padding: 0 1rem 1rem;
+    padding: 0.75rem 1rem;
     color: var(--sl-color-text-light);
     font-size: 0.9rem;
     border-bottom: 1px solid var(--sl-color-border);
@@ -49,23 +177,81 @@ const { code, title, description, preview } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
     background: var(--sl-color-bg);
+    min-height: 150px;
+    transition: background var(--ae-transition-normal);
+  }
+  
+  .preview[data-theme="dark"] {
+    background: var(--sl-color-black);
+    color: var(--sl-color-white);
+  }
+  
+  .preview-content {
+    width: 100%;
   }
 
   .code {
-    border-top: 1px solid var(--sl-color-border);
     background: var(--sl-color-bg-sidebar);
-    padding: 1rem;
     margin: 0;
+    transition: all var(--ae-transition-normal);
+    max-height: 500px;
+    overflow: auto;
+  }
+  
+  .code.hidden {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    border-top: none;
+  }
+  
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.1);
+    font-family: var(--sl-font-mono);
+    font-size: 0.8rem;
+    color: var(--sl-color-text-light);
+  }
+  
+  .copy-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--sl-color-text-light);
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color var(--ae-transition-fast);
+  }
+  
+  .copy-button:hover {
+    color: var(--sl-color-text);
+  }
+  
+  .copy-button.success {
+    color: #4CAF50;
   }
 
   .code pre {
     margin: 0;
-    padding: 0;
+    padding: 1rem;
   }
-
-  :global(.dark) .preview {
-    background: var(--sl-color-black);
+  
+  /* Responsive */
+  @media (max-width: 640px) {
+    .preview {
+      padding: 1.5rem 1rem;
+    }
+  }
+  
+  /* Dark mode */
+  :global(.dark) .preview[data-theme="light"] {
+    background: white;
+    color: black;
   }
 </style>

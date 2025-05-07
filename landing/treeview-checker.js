@@ -38,107 +38,74 @@
     if (!customElements.get('ae-treeview')) {
       console.log('Defining TreeView manually');
 
-      // Create a basic mock implementation if real component is not available
-      class MockTreeView extends HTMLElement {
+      // Inline basic TreeView definition as a fallback
+      class BasicTreeView extends HTMLElement {
         constructor() {
           super();
-          this._data = [];
           this.attachShadow({ mode: 'open' });
+          this._data = [];
+          this._expanded = [];
+          this._selected = [];
+        }
+
+        set data(value) {
+          this._data = value;
           this.render();
         }
 
-        setData(data) {
-          this._data = data;
+        set expanded(value) {
+          this._expanded = value;
+          this.render();
+        }
+
+        set selected(value) {
+          this._selected = value;
           this.render();
         }
 
         render() {
-          // Create a basic tree structure
           this.shadowRoot.innerHTML = `
             <style>
-              :host {
-                display: block;
-                font-family: system-ui, sans-serif;
-                border: 1px solid #e5e7eb;
-                border-radius: 6px;
-                padding: 1rem;
-                color: #333;
-              }
-              .tree-node {
-                margin-bottom: 8px;
-              }
-              .tree-parent {
-                font-weight: 600;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-              }
-              .tree-parent:before {
-                content: '▶';
-                display: inline-block;
-                margin-right: 6px;
-                font-size: 10px;
-                transition: transform 0.15s ease;
-              }
-              .tree-parent.expanded:before {
-                transform: rotate(90deg);
-              }
-              .tree-children {
-                padding-left: 1.5rem;
-                margin-top: 4px;
-                display: none;
-              }
-              .tree-parent.expanded + .tree-children {
-                display: block;
-              }
-              .tree-leaf {
-                padding-left: 1rem;
-              }
+              :host { display: block; }
+              .treeview { padding: 8px; }
+              .node { padding: 4px; cursor: pointer; }
+              .node:hover { background-color: #f5f5f5; }
+              .node[aria-selected="true"] { background-color: #e0e7ff; }
+              .caret { display: inline-block; width: 16px; margin-right: 4px; }
+              .label { margin-left: 4px; }
+              .subtree { margin-left: 16px; }
             </style>
-            <div class="tree-container">
-              ${this._renderNodes(this._data)}
+            <div class="treeview">
+              ${this._renderNodes(this._data || [], 1)}
             </div>
           `;
-
-          // Add event listeners
-          this.shadowRoot.querySelectorAll('.tree-parent').forEach((node) => {
-            node.addEventListener('click', () => {
-              node.classList.toggle('expanded');
-            });
-          });
         }
 
-        _renderNodes(nodes) {
-          if (!nodes || !nodes.length) {
-            return '<div class="tree-node">No items to display</div>';
-          }
-
+        _renderNodes(nodes, level) {
           return nodes
             .map((node) => {
-              if (node.children && node.children.length) {
-                return `
-                <div class="tree-node">
-                  <div class="tree-parent" data-id="${node.id}">${node.label}</div>
-                  <div class="tree-children">
-                    ${this._renderNodes(node.children)}
-                  </div>
-                </div>
-              `;
-              } else {
-                return `
-                <div class="tree-node">
-                  <div class="tree-leaf" data-id="${node.id}">${node.label}</div>
-                </div>
-              `;
+              const hasChildren = node.children && node.children.length > 0;
+              const isExpanded = this._expanded.includes(node.id);
+              const isSelected = this._selected.includes(node.id);
+
+              return `
+              <div class="node" role="treeitem" aria-level="${level}" aria-selected="${isSelected}">
+                <span class="caret">${hasChildren ? '▶' : ''}</span>
+                <span class="label">${node.label || ''}</span>
+              </div>
+              ${
+                hasChildren && isExpanded
+                  ? `<div class="subtree" role="group">${this._renderNodes(node.children, level + 1)}</div>`
+                  : ''
               }
+            `;
             })
             .join('');
         }
       }
 
-      // Register the mock component
-      customElements.define('ae-treeview', MockTreeView);
-      console.log('Mock TreeView component registered for demo purposes');
+      // Register the fallback TreeView
+      customElements.define('ae-treeview', BasicTreeView);
     }
 
     // Process examples
@@ -183,7 +150,7 @@
               const data = JSON.parse(dataStr);
               console.log(`Setting data for TreeView ${tvIndex}`, data);
               setTimeout(() => {
-                treeview.setData(data);
+                treeview.data = data;
               }, 0);
             } catch (e) {
               console.error(`Error parsing data attribute for TreeView ${tvIndex}:`, e);

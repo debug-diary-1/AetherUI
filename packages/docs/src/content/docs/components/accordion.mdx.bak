@@ -1,0 +1,137 @@
+---
+title: Accordion
+description: A collapsible disclosure component that shows or hides content panels.
+---
+
+import { InteractiveExample, Tabs, TabItem } from '@astrojs/starlight/components';
+import AccordionExample from '../../../components/AccordionExample.astro';
+
+# Accordion
+
+The Accordion component is a collapsible disclosure component that shows or hides content panels one-to-one with headers.
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="yarn">
+    ```bash
+    yarn add @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Basic Usage
+
+<AccordionExample
+  code={`<ae-accordion>
+  <ae-accordion-item>
+    <span slot="header">Section 1</span>
+    <p>Content for section 1</p>
+  </ae-accordion-item>
+  <ae-accordion-item>
+    <span slot="header">Section 2</span>
+    <p>Content for section 2</p>
+  </ae-accordion-item>
+</ae-accordion>`}
+  preview={`<ae-accordion>
+  <ae-accordion-item>
+    <span slot="header">Section 1</span>
+    <p>Content for section 1</p>
+  </ae-accordion-item>
+  <ae-accordion-item>
+    <span slot="header">Section 2</span>
+    <p>Content for section 2</p>
+  </ae-accordion-item>
+</ae-accordion>`}
+/>
+
+## Multi-selectable
+
+<AccordionExample
+  code={`<ae-accordion multiselectable>
+  <ae-accordion-item>
+    <span slot="header">Section 1</span>
+    <p>Content for section 1</p>
+  </ae-accordion-item>
+  <ae-accordion-item>
+    <span slot="header">Section 2</span>
+    <p>Content for section 2</p>
+  </ae-accordion-item>
+</ae-accordion>`}
+  preview={`<ae-accordion multiselectable>
+  <ae-accordion-item>
+    <span slot="header">Section 1</span>
+    <p>Content for section 1</p>
+  </ae-accordion-item>
+  <ae-accordion-item>
+    <span slot="header">Section 2</span>
+    <p>Content for section 2</p>
+  </ae-accordion-item>
+</ae-accordion>`}
+/>
+
+## Default Open
+
+<AccordionExample
+  code={`<ae-accordion defaultOpen='["section-1"]'>
+  <ae-accordion-item headerId="section-1">
+    <span slot="header">Section 1</span>
+    <p>Content for section 1</p>
+  </ae-accordion-item>
+  <ae-accordion-item headerId="section-2">
+    <span slot="header">Section 2</span>
+    <p>Content for section 2</p>
+  </ae-accordion-item>
+</ae-accordion>`}
+  preview={`<ae-accordion defaultOpen='["section-1"]'>
+  <ae-accordion-item headerId="section-1">
+    <span slot="header">Section 1</span>
+    <p>Content for section 1</p>
+  </ae-accordion-item>
+  <ae-accordion-item headerId="section-2">
+    <span slot="header">Section 2</span>
+    <p>Content for section 2</p>
+  </ae-accordion-item>
+</ae-accordion>`}
+/>
+
+## Props
+
+### Accordion Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `multiselectable` | `boolean` | `false` | Allow multiple panels to be open at once |
+| `defaultOpen` | `string[]` | `[]` | Array of header IDs to be open by default |
+
+### Accordion Item Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `headerId` | `string` | auto-generated | Unique ID for the accordion header |
+| `open` | `boolean` | `false` | Whether the panel is open |
+
+## Events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `ae-change` | `{ open: string[] }` | Fired when the open state changes |
+
+## Accessibility
+
+The accordion component follows WAI-ARIA guidelines:
+
+- Uses proper ARIA roles (`button`, `region`)
+- Implements keyboard navigation (Enter/Space to toggle, arrow keys to navigate)
+- Maintains proper focus management
+- Includes proper ARIA attributes (`aria-expanded`, `aria-controls`, `aria-labelledby`)

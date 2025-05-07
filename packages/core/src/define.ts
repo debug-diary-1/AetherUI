@@ -5,6 +5,8 @@ import { defineAeModal } from './modal/define';
 import { defineAeCheckbox } from './checkbox';
 import { defineAeTabs } from './tabs';
 import { defineAeAlert } from './alert';
+import { defineAeDropdown } from './dropdown';
+import { defineAeTreeView } from './treeview';
 
 export {
   defineAeAccordion,
@@ -15,6 +17,8 @@ export {
   defineAeCheckbox,
   defineAeTabs,
   defineAeAlert,
+  defineAeDropdown,
+  defineAeTreeView,
 };
 
 export function defineAll() {
@@ -26,4 +30,6 @@ export function defineAll() {
   defineAeCheckbox();
   defineAeTabs();
   defineAeAlert();
+  defineAeDropdown();
+  defineAeTreeView();
 } 

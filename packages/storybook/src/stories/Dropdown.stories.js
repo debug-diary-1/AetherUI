@@ -1,14 +1,19 @@
 import { html } from 'lit';
-import { AeDropdown, AeMenuItem, AeMenuSeparator, defineAeDropdown } from '@aetherui/core';
+import { defineAll } from '@aetherui/core';
 
-// Register the dropdown components
-defineAeDropdown();
+// Register all components
+defineAll();
 
 export default {
   title: 'Components/Dropdown',
   component: 'ae-dropdown',
   parameters: {
     layout: 'centered',
+    // Ensure the dropdown can overflow the container
+    docs: {
+      inlineStories: false,
+      iframeHeight: 200,
+    },
   },
   tags: ['autodocs'],
   argTypes: {
@@ -58,22 +63,24 @@ export default {
 // Basic dropdown
 export const Basic = {
   render: (args) => html`
-    <ae-dropdown
-      ?open=${args.open}
-      ?default-open=${args.defaultOpen}
-      ?disabled=${args.disabled}
-      placement=${args.placement}
-      strategy=${args.strategy}
-      @ae-select=${(e) => console.log('Selected:', e.detail.value)}
-    >
-      <ae-button>Open Menu</ae-button>
+    <div style="padding: 50px;">
+      <ae-dropdown
+        ?open=${args.open}
+        ?default-open=${args.defaultOpen}
+        ?disabled=${args.disabled}
+        placement=${args.placement}
+        strategy=${args.strategy}
+        @ae-select=${(e) => console.log('Selected:', e.detail.value)}
+      >
+        <ae-button>Open Menu</ae-button>
 
-      <ae-menu-item slot="item" value="edit">Edit</ae-menu-item>
-      <ae-menu-item slot="item" value="duplicate">Duplicate</ae-menu-item>
-      <ae-menu-item slot="item" value="archive">Archive</ae-menu-item>
-      <ae-menu-separator slot="item"></ae-menu-separator>
-      <ae-menu-item slot="item" value="delete">Delete</ae-menu-item>
-    </ae-dropdown>
+        <ae-menu-item slot="item" value="edit">Edit</ae-menu-item>
+        <ae-menu-item slot="item" value="duplicate">Duplicate</ae-menu-item>
+        <ae-menu-item slot="item" value="archive">Archive</ae-menu-item>
+        <ae-menu-separator slot="item"></ae-menu-separator>
+        <ae-menu-item slot="item" value="delete">Delete</ae-menu-item>
+      </ae-dropdown>
+    </div>
   `,
   args: {
     placement: 'bottom-start',
@@ -84,41 +91,64 @@ export const Basic = {
   },
 };
 
+// Always open dropdown for demonstration
+export const AlwaysOpen = {
+  render: (args) => html`
+    <div style="padding: 50px;">
+      <ae-dropdown open placement=${args.placement} strategy=${args.strategy}>
+        <ae-button>Menu (Always Open)</ae-button>
+
+        <ae-menu-item slot="item" value="edit">Edit</ae-menu-item>
+        <ae-menu-item slot="item" value="duplicate">Duplicate</ae-menu-item>
+        <ae-menu-item slot="item" value="archive">Archive</ae-menu-item>
+        <ae-menu-separator slot="item"></ae-menu-separator>
+        <ae-menu-item slot="item" value="delete">Delete</ae-menu-item>
+      </ae-dropdown>
+    </div>
+  `,
+  args: {
+    placement: 'bottom-start',
+    strategy: 'absolute',
+  },
+};
+
 // Dropdown with custom trigger
 export const CustomTrigger = {
   render: (args) => html`
-    <ae-dropdown
-      ?open=${args.open}
-      ?default-open=${args.defaultOpen}
-      ?disabled=${args.disabled}
-      placement=${args.placement}
-      strategy=${args.strategy}
-    >
-      <button
-        style="padding: 8px 16px; background: #eee; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 4px;"
+    <div style="padding: 50px;">
+      <ae-dropdown
+        ?open=${args.open}
+        ?default-open=${args.defaultOpen}
+        ?disabled=${args.disabled}
+        placement=${args.placement}
+        strategy=${args.strategy}
       >
-        Options
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+        <button
+          style="padding: 8px 16px; background: #eee; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 4px;"
         >
-          <path
-            d="M4 6L8 10L12 6"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></path>
-        </svg>
-      </button>
+          Options
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 6L8 10L12 6"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </button>
 
-      <ae-menu-item slot="item" value="item1">Menu item 1</ae-menu-item>
-      <ae-menu-item slot="item" value="item2">Menu item 2</ae-menu-item>
-      <ae-menu-item slot="item" value="item3">Menu item 3</ae-menu-item>
-    </ae-dropdown>
+        <ae-menu-item slot="item" value="item1">Menu item 1</ae-menu-item>
+        <ae-menu-item slot="item" value="item2">Menu item 2</ae-menu-item>
+        <ae-menu-item slot="item" value="item3">Menu item 3</ae-menu-item>
+      </ae-dropdown>
+    </div>
   `,
   args: {
     placement: 'bottom-start',
@@ -132,81 +162,83 @@ export const CustomTrigger = {
 // Dropdown with icons and hints
 export const WithIconsAndHints = {
   render: (args) => html`
-    <ae-dropdown
-      ?open=${args.open}
-      ?default-open=${args.defaultOpen}
-      ?disabled=${args.disabled}
-      placement=${args.placement}
-      strategy=${args.strategy}
-    >
-      <ae-button>More Actions</ae-button>
+    <div style="padding: 50px;">
+      <ae-dropdown
+        ?open=${args.open}
+        ?default-open=${args.defaultOpen}
+        ?disabled=${args.disabled}
+        placement=${args.placement}
+        strategy=${args.strategy}
+      >
+        <ae-button>More Actions</ae-button>
 
-      <ae-menu-item slot="item" value="cut">
-        <span slot="icon">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M6 4L12 10M12 4L6 10"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            ></path>
-            <circle cx="4" cy="4" r="1.5" stroke="currentColor"></circle>
-            <circle cx="4" cy="10" r="1.5" stroke="currentColor"></circle>
-          </svg>
-        </span>
-        Cut
-        <span slot="hint">⌘X</span>
-      </ae-menu-item>
+        <ae-menu-item slot="item" value="cut">
+          <span slot="icon">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 4L12 10M12 4L6 10"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              ></path>
+              <circle cx="4" cy="4" r="1.5" stroke="currentColor"></circle>
+              <circle cx="4" cy="10" r="1.5" stroke="currentColor"></circle>
+            </svg>
+          </span>
+          Cut
+          <span slot="hint">⌘X</span>
+        </ae-menu-item>
 
-      <ae-menu-item slot="item" value="copy">
-        <span slot="icon">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect x="3" y="3" width="6" height="6" rx="1" stroke="currentColor"></rect>
-            <path
-              d="M7 7V11C7 11.5523 7.44772 12 8 12H12C12.5523 12 13 11.5523 13 11V7C13 6.44772 12.5523 6 12 6H8"
-              stroke="currentColor"
-            ></path>
-          </svg>
-        </span>
-        Copy
-        <span slot="hint">⌘C</span>
-      </ae-menu-item>
+        <ae-menu-item slot="item" value="copy">
+          <span slot="icon">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="3" y="3" width="6" height="6" rx="1" stroke="currentColor"></rect>
+              <path
+                d="M7 7V11C7 11.5523 7.44772 12 8 12H12C12.5523 12 13 11.5523 13 11V7C13 6.44772 12.5523 6 12 6H8"
+                stroke="currentColor"
+              ></path>
+            </svg>
+          </span>
+          Copy
+          <span slot="hint">⌘C</span>
+        </ae-menu-item>
 
-      <ae-menu-item slot="item" value="paste">
-        <span slot="icon">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5 5H11V12C11 12.5523 10.5523 13 10 13H6C5.44772 13 5 12.5523 5 12V5Z"
-              stroke="currentColor"
-            ></path>
-            <path
-              d="M6 2.5C6 2.22386 6.22386 2 6.5 2H9.5C9.77614 2 10 2.22386 10 2.5V5H6V2.5Z"
-              stroke="currentColor"
-            ></path>
-          </svg>
-        </span>
-        Paste
-        <span slot="hint">⌘V</span>
-      </ae-menu-item>
-    </ae-dropdown>
+        <ae-menu-item slot="item" value="paste">
+          <span slot="icon">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 5H11V12C11 12.5523 10.5523 13 10 13H6C5.44772 13 5 12.5523 5 12V5Z"
+                stroke="currentColor"
+              ></path>
+              <path
+                d="M6 2.5C6 2.22386 6.22386 2 6.5 2H9.5C9.77614 2 10 2.22386 10 2.5V5H6V2.5Z"
+                stroke="currentColor"
+              ></path>
+            </svg>
+          </span>
+          Paste
+          <span slot="hint">⌘V</span>
+        </ae-menu-item>
+      </ae-dropdown>
+    </div>
   `,
   args: {
     placement: 'bottom-start',
@@ -220,22 +252,24 @@ export const WithIconsAndHints = {
 // Dropdown with disabled items
 export const WithDisabledItems = {
   render: (args) => html`
-    <ae-dropdown
-      ?open=${args.open}
-      ?default-open=${args.defaultOpen}
-      ?disabled=${args.disabled}
-      placement=${args.placement}
-      strategy=${args.strategy}
-    >
-      <ae-button>Select an Option</ae-button>
+    <div style="padding: 50px;">
+      <ae-dropdown
+        ?open=${args.open}
+        ?default-open=${args.defaultOpen}
+        ?disabled=${args.disabled}
+        placement=${args.placement}
+        strategy=${args.strategy}
+      >
+        <ae-button>Select an Option</ae-button>
 
-      <ae-menu-item slot="item" value="option1">Option 1</ae-menu-item>
-      <ae-menu-item slot="item" value="option2" disabled>Option 2 (Disabled)</ae-menu-item>
-      <ae-menu-item slot="item" value="option3">Option 3</ae-menu-item>
-      <ae-menu-separator slot="item"></ae-menu-separator>
-      <ae-menu-item slot="item" value="option4" disabled>Option 4 (Disabled)</ae-menu-item>
-      <ae-menu-item slot="item" value="option5">Option 5</ae-menu-item>
-    </ae-dropdown>
+        <ae-menu-item slot="item" value="option1">Option 1</ae-menu-item>
+        <ae-menu-item slot="item" value="option2" disabled>Option 2 (Disabled)</ae-menu-item>
+        <ae-menu-item slot="item" value="option3">Option 3</ae-menu-item>
+        <ae-menu-separator slot="item"></ae-menu-separator>
+        <ae-menu-item slot="item" value="option4" disabled>Option 4 (Disabled)</ae-menu-item>
+        <ae-menu-item slot="item" value="option5">Option 5</ae-menu-item>
+      </ae-dropdown>
+    </div>
   `,
   args: {
     placement: 'bottom-start',
@@ -316,5 +350,75 @@ export const NestedExample = {
     disabled: false,
     open: false,
     defaultOpen: false,
+  },
+};
+
+// Create a user account menu example like in the screenshot
+export const UserAccountMenu = {
+  render: (args) => html`
+    <div style="padding: 80px 0;">
+      <ae-dropdown
+        ?open=${args.open}
+        header="My Account"
+        theme="dark"
+        placement=${args.placement}
+        strategy=${args.strategy}
+      >
+        <ae-button>Open</ae-button>
+
+        <ae-menu-section slot="item">
+          <ae-menu-item slot="item" value="profile">
+            Profile
+            <span slot="hint">⌥⇧P</span>
+          </ae-menu-item>
+
+          <ae-menu-item slot="item" value="billing">
+            Billing
+            <span slot="hint">⌘B</span>
+          </ae-menu-item>
+
+          <ae-menu-item slot="item" value="settings">
+            Settings
+            <span slot="hint">⌘S</span>
+          </ae-menu-item>
+
+          <ae-menu-item slot="item" value="keyboard-shortcuts">
+            Keyboard shortcuts
+            <span slot="hint">⌘K</span>
+          </ae-menu-item>
+        </ae-menu-section>
+
+        <ae-menu-section slot="item">
+          <ae-menu-item slot="item" value="team"> Team </ae-menu-item>
+
+          <ae-menu-item slot="item" value="invite-users" has-submenu> Invite users </ae-menu-item>
+
+          <ae-menu-item slot="item" value="new-team">
+            New Team
+            <span slot="hint">⌘+T</span>
+          </ae-menu-item>
+        </ae-menu-section>
+
+        <ae-menu-section slot="item">
+          <ae-menu-item slot="item" value="github"> GitHub </ae-menu-item>
+
+          <ae-menu-item slot="item" value="support"> Support </ae-menu-item>
+
+          <ae-menu-item slot="item" value="api"> API </ae-menu-item>
+        </ae-menu-section>
+
+        <ae-menu-section slot="item">
+          <ae-menu-item slot="item" value="logout">
+            Log out
+            <span slot="hint">⌥⌘Q</span>
+          </ae-menu-item>
+        </ae-menu-section>
+      </ae-dropdown>
+    </div>
+  `,
+  args: {
+    placement: 'bottom-start',
+    strategy: 'absolute',
+    open: true,
   },
 };

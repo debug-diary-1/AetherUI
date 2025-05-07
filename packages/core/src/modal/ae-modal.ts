@@ -1,266 +1,205 @@
-import { LitElement, html, css } from 'lit';
-import { property, query } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { modalStyles } from './styles';
 
+/**
+ * @element ae-modal
+ * @summary A modal dialog component with backdrop and focus management
+ * @fires {CustomEvent} ae-open - Fired when the modal opens
+ * @fires {CustomEvent} ae-close - Fired when the modal closes
+ * 
+ * @example
+ * ```html
+ * <ae-modal>
+ *   <h2 slot="header">Modal Title</h2>
+ *   <div slot="body">Modal content goes here</div>
+ *   <div slot="footer">
+ *     <button>Close</button>
+ *   </div>
+ * </ae-modal>
+ * ```
+ */
+@customElement('ae-modal')
 export class AeModal extends LitElement {
-  static styles = css`
-    :host {
-      --ae-modal-overlay-bg: rgba(0, 0, 0, 0.5);
-      --ae-modal-z-index: 1000;
-      --ae-transition-duration: 200ms;
-      --ae-modal-text-color: var(--ae-color-text, #1a1a1a);
-      position: fixed;
-      inset: 0;
-      display: none;
-      z-index: var(--ae-modal-z-index);
-    }
-
-    :host([open]) {
-      display: block;
-    }
-
-    .overlay {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--ae-modal-overlay-bg);
-      backdrop-filter: blur(4px);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity var(--ae-transition-duration) ease,
-                  visibility var(--ae-transition-duration) ease;
-    }
-
-    :host([open]) .overlay {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .panel {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      min-width: 20rem;
-      max-width: 90vw;
-      max-height: 90vh;
-      background: var(--ae-color-surface, #fff);
-      color: var(--ae-modal-text-color);
-      border-radius: var(--ae-border-radius, 0.375rem);
-      box-shadow: var(--ae-shadow-lg);
-      transform: scale(0.95);
-      opacity: 0;
-      transition: transform var(--ae-transition-duration) ease,
-                  opacity var(--ae-transition-duration) ease;
-    }
-
-    :host([open]) .panel {
-      transform: scale(1);
-      opacity: 1;
-    }
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem;
-      border-bottom: 1px solid var(--ae-color-border);
-      color: var(--ae-modal-text-color);
-      font-weight: 600;
-    }
-
-    .body {
-      flex: 1;
-      padding: 1rem;
-      overflow-y: auto;
-      color: var(--ae-modal-text-color);
-    }
-
-    .footer {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 0.5rem;
-      padding: 1rem;
-      border-top: 1px solid var(--ae-color-border);
-    }
-
-    .close-button {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      padding: 0.5rem;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      color: var(--ae-modal-text-color);
-    }
-
-    .close-button:hover {
-      opacity: 0.8;
-    }
-
-    .close-button:focus-visible {
-      outline: 2px solid var(--ae-color-primary);
-      outline-offset: 2px;
-      border-radius: var(--ae-border-radius);
-    }
-  `;
+  static styles = modalStyles;
 
   @property({ type: Boolean, reflect: true })
-  open = false;
+  accessor open = false;
 
-  @property({ type: Boolean })
-  underlay = true;
+  @property({ type: Boolean, reflect: true })
+  accessor closable = true;
 
-  @property()
-  initialFocus: string | HTMLElement | null = null;
+  @property({ type: Boolean, reflect: true })
+  accessor backdrop = true;
 
-  @query('.panel')
-  private panel!: HTMLElement;
+  @property({ type: String })
+  accessor size: 'small' | 'medium' | 'large' = 'medium';
 
+  private accessor panel!: HTMLElement;
   private previousActiveElement: HTMLElement | null = null;
   private focusableElements: HTMLElement[] = [];
 
   connectedCallback() {
     super.connectedCallback();
-    this.setAttribute('role', 'dialog');
-    this.setAttribute('aria-modal', 'true');
-    document.addEventListener('keydown', this.handleKeyDown.bind(this));
+    this.addEventListener('keydown', this.handleKeyDown);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('keydown', this.handleKeyDown.bind(this));
-    this.restoreScroll();
+    this.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  attributeChangedCallback(name: string, old: string | null, value: string | null) {
-    super.attributeChangedCallback(name, old, value);
-    if (name === 'open') {
-      this.open = value !== null;
+  updated(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has('open')) {
       if (this.open) {
-        this.lockScroll();
-        this.trapFocus();
+        this.openModal();
       } else {
-        this.restoreScroll();
-        this.restoreFocus();
+        this.closeModal();
       }
     }
   }
 
-  private lockScroll() {
-    document.body.style.overflow = 'hidden';
-  }
-
-  private restoreScroll() {
-    document.body.style.overflow = '';
-  }
-
-  private trapFocus() {
+  private openModal() {
+    // Save current focus
     this.previousActiveElement = document.activeElement as HTMLElement;
-    
-    // Get all focusable elements
-    this.focusableElements = Array.from(
-      this.panel.querySelectorAll(
-        'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      )
-    ) as HTMLElement[];
 
-    // Focus initial element or first focusable element
-    const initialElement = 
-      typeof this.initialFocus === 'string' 
-        ? this.panel.querySelector(this.initialFocus) 
-        : this.initialFocus;
+    // Set up focus trap
+    requestAnimationFrame(() => {
+      this.panel = this.renderRoot.querySelector('[part="panel"]') as HTMLElement;
+      this.focusableElements = Array.from(
+        this.panel.querySelectorAll(
+          'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      ) as HTMLElement[];
 
-    if (initialElement instanceof HTMLElement) {
-      initialElement.focus();
-    } else if (this.focusableElements.length > 0) {
-      this.focusableElements[0].focus();
-    }
+      // Focus first focusable element or panel itself
+      const firstFocusable = this.focusableElements[0];
+      if (firstFocusable) {
+        firstFocusable.focus();
+      } else {
+        this.panel.focus();
+      }
+    });
+
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+
+    this.dispatchEvent(new CustomEvent('ae-open', {
+      bubbles: true,
+      composed: true,
+    }));
   }
 
-  private restoreFocus() {
+  private closeModal() {
+    // Restore focus
     if (this.previousActiveElement) {
       this.previousActiveElement.focus();
-    }
-  }
-
-  private handleKeyDown(event: KeyboardEvent) {
-    if (!this.hasAttribute('open')) return;
-
-    if (event.key === 'Escape') {
-      this.removeAttribute('open');
-      this.requestClose('escape');
-      return;
+      this.previousActiveElement = null;
     }
 
-    if (event.key === 'Tab') {
-      if (this.focusableElements.length === 0) return;
+    // Restore body scroll
+    document.body.style.overflow = '';
 
-      const firstElement = this.focusableElements[0];
-      const lastElement = this.focusableElements[this.focusableElements.length - 1];
-      
-      if (event.shiftKey && document.activeElement === firstElement) {
-        event.preventDefault();
-        lastElement.focus();
-      } else if (!event.shiftKey && document.activeElement === lastElement) {
-        event.preventDefault();
-        firstElement.focus();
-      }
+    this.dispatchEvent(new CustomEvent('ae-close', {
+      bubbles: true,
+      composed: true,
+    }));
+  }
+
+  private handleKeyDown = (event: KeyboardEvent) => {
+    if (!this.open) return;
+
+    switch (event.key) {
+      case 'Escape':
+        if (this.closable) {
+          this.open = false;
+        }
+        break;
+
+      case 'Tab':
+        if (!this.focusableElements.length) return;
+
+        const firstFocusable = this.focusableElements[0];
+        const lastFocusable = this.focusableElements[this.focusableElements.length - 1];
+
+        if (event.shiftKey && document.activeElement === firstFocusable) {
+          event.preventDefault();
+          lastFocusable.focus();
+        } else if (!event.shiftKey && document.activeElement === lastFocusable) {
+          event.preventDefault();
+          firstFocusable.focus();
+        }
+        break;
     }
-  }
+  };
 
-  private handleOverlayClick(event: MouseEvent) {
-    if (event.target === event.currentTarget && this.underlay) {
-      this.removeAttribute('open');
-      this.requestClose('backdrop');
+  private handleBackdropClick = (event: MouseEvent) => {
+    if (this.closable && event.target === event.currentTarget) {
+      this.open = false;
     }
-  }
-
-  private requestClose(reason: 'escape' | 'backdrop' | 'api') {
-    this.removeAttribute('open');
-    this.dispatchEvent(
-      new CustomEvent('ae-request-close', {
-        detail: { reason },
-        bubbles: true,
-        composed: true,
-      })
-    );
-  }
+  };
 
   render() {
+    if (!this.open) return null;
+
     return html`
-      <div 
-        class="overlay"
-        part="overlay"
-        @click=${this.handleOverlayClick}
+      <div
+        part="backdrop"
+        class="backdrop"
+        ?backdrop="${this.backdrop}"
+        @click="${this.handleBackdropClick}"
       >
-        <div 
-          class="panel"
+        <div
           part="panel"
+          class="panel"
+          role="dialog"
+          aria-modal="true"
+          tabindex="-1"
+          data-size="${this.size}"
         >
-          <div class="header" part="header">
+          <div part="header" class="header">
             <slot name="header"></slot>
-            <button
-              class="close-button"
-              aria-label="Close"
-              @click=${() => this.requestClose('api')}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M18 6L6 18M6 6l12 12" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </button>
+            ${this.closable ? html`
+              <button
+                part="close-button"
+                class="close-button"
+                aria-label="Close dialog"
+                @click="${() => this.open = false}"
+              >
+                <svg
+                  part="close-icon"
+                  class="close-icon"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            ` : null}
           </div>
-          <div class="body" part="body">
-            <slot></slot>
+
+          <div part="body" class="body">
+            <slot name="body"></slot>
           </div>
-          <div class="footer" part="footer">
+
+          <div part="footer" class="footer">
             <slot name="footer"></slot>
           </div>
         </div>
       </div>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'ae-modal': AeModal;
   }
 } 

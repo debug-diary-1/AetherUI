@@ -46,7 +46,7 @@ export default defineConfig({
         preserveModulesRoot: 'src',
       },
     },
-    target: 'es2019',
+    target: 'es2022',
     sourcemap: true,
   },
   plugins: [
@@ -55,4 +55,13 @@ export default defineConfig({
       include: ['src/**/*.ts'],
     }),
   ],
+  esbuild: {
+    target: 'es2022',
+    tsconfigRaw: {
+      compilerOptions: {
+        useDefineForClassFields: false,
+        experimentalDecorators: true,
+      },
+    },
+  },
 }); 

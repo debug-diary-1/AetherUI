@@ -10,20 +10,17 @@ const { code, preview } = Astro.props;
 ---
 
 <div class="button-example">
-  {preview ? <Fragment set:html={preview} /> : <slot />}
+  {preview ? <div class="preview" set:html={preview} /> : <slot />}
+  {code && (
+    <div class="code-preview">
+      <Code code={code} lang="html" />
+    </div>
+  )}
 </div>
 
-{code && (
-  <div class="code-preview">
-    <Code language="html" code={code} />
-  </div>
-)}
-
 <script>
-  import { defineComponents } from '@aetherui/core';
-  
-  // Register all components
-  defineComponents();
+  import { defineAll } from '@aetherui/core';
+  defineAll();
 </script>
 
 <style>
@@ -31,49 +28,137 @@ const { code, preview } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 1rem 0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: var(--sl-color-gray-1);
   }
 
-  :global(ae-button) {
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
+  .preview {
+    padding: 1.5rem;
+    border-radius: 0.25rem;
+    background: var(--sl-color-white);
+    position: relative;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
-  /* Custom properties for button styling */
-  :global(:root) {
-    --ae-color-primary: #3b82f6;
-    --ae-color-primary-hover: #2563eb;
-    --ae-color-primary-foreground: #ffffff;
+  /* Light mode styles */
+  :global(.preview ae-button) {
+    /* Primary variant - Use for main actions */
+    --ae-color-primary: var(--sl-color-accent);
+    --ae-color-primary-hover: var(--sl-color-accent-high);
+    --ae-color-primary-foreground: var(--sl-color-white);
     
-    --ae-color-secondary: #f3f4f6;
-    --ae-color-secondary-hover: #e5e7eb;
-    --ae-color-secondary-foreground: #1f2937;
+    /* Secondary variant - Use for secondary actions */
+    --ae-color-secondary: var(--sl-color-gray-2);
+    --ae-color-secondary-hover: var(--sl-color-gray-3);
+    --ae-color-secondary-foreground: var(--sl-color-gray-9);
     
-    --ae-color-surface: #ffffff;
-    --ae-color-surface-hover: #f9fafb;
+    /* Ghost variant - Use for subtle actions */
+    --ae-color-ghost: transparent;
+    --ae-color-ghost-hover: var(--sl-color-gray-2);
+    --ae-color-ghost-foreground: var(--sl-color-gray-9);
     
-    --ae-color-text: #1f2937;
-    --ae-color-border: #e5e7eb;
+    /* Focus ring styles */
+    --ae-focus-ring-color: var(--sl-color-accent);
+    --ae-focus-ring-width: 2px;
+    --ae-focus-ring-offset: 2px;
     
+    /* Common styles */
     --ae-border-radius: 0.375rem;
     --ae-transition-duration: 200ms;
-    --ae-font-family: system-ui, -apple-system, sans-serif;
+    --ae-font-family: var(--sl-font);
+    --ae-font-weight: 500;
   }
 
-  /* Dark mode support */
-  :global([data-theme="dark"]) {
-    --ae-color-primary: #60a5fa;
-    --ae-color-primary-hover: #3b82f6;
-    --ae-color-primary-foreground: #ffffff;
+  /* Icon styles */
+  :global(.preview ae-button::part(icon)) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  :global(.preview ae-button[icon-only]) {
+    aspect-ratio: 1;
+    padding: 0.5rem;
+  }
+
+  /* Dark mode styles */
+  :global([data-theme="dark"] .preview) {
+    background: var(--sl-color-gray-6);
+  }
+
+  :global([data-theme="dark"] .preview ae-button) {
+    /* Primary variant */
+    --ae-color-primary: var(--sl-color-accent);
+    --ae-color-primary-hover: var(--sl-color-accent-high);
+    --ae-color-primary-foreground: var(--sl-color-white);
     
-    --ae-color-secondary: #374151;
-    --ae-color-secondary-hover: #4b5563;
-    --ae-color-secondary-foreground: #f9fafb;
+    /* Secondary variant */
+    --ae-color-secondary: var(--sl-color-gray-5);
+    --ae-color-secondary-hover: var(--sl-color-gray-4);
+    --ae-color-secondary-foreground: var(--sl-color-white);
     
-    --ae-color-surface: #1f2937;
-    --ae-color-surface-hover: #374151;
-    
-    --ae-color-text: #f9fafb;
-    --ae-color-border: #4b5563;
+    /* Ghost variant */
+    --ae-color-ghost: transparent;
+    --ae-color-ghost-hover: var(--sl-color-gray-5);
+    --ae-color-ghost-foreground: var(--sl-color-white);
+
+    /* Focus ring */
+    --ae-focus-ring-color: var(--sl-color-accent-high);
+  }
+
+  /* Variant recommendations */
+  :global(.preview .variant-description) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    background: var(--sl-color-gray-1);
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  :global(.preview .variant-description h3) {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--sl-color-gray-9);
+  }
+
+  :global(.preview .variant-description p) {
+    font-size: 0.875rem;
+    margin: 0;
+    color: var(--sl-color-gray-7);
+  }
+
+  :global([data-theme="dark"] .preview .variant-description) {
+    background: var(--sl-color-gray-7);
+  }
+
+  :global([data-theme="dark"] .preview .variant-description h3) {
+    color: var(--sl-color-white);
+  }
+
+  :global([data-theme="dark"] .preview .variant-description p) {
+    color: var(--sl-color-gray-2);
+  }
+
+  /* Button groups */
+  :global(.preview .button-group) {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  :global(.preview .button-group--vertical) {
+    flex-direction: column;
+    align-items: stretch;
   }
 </style>

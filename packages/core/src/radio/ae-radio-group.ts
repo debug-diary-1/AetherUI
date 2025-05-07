@@ -1,90 +1,70 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, property, queryAssignedElements } from 'lit/decorators.js';
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { radioGroupStyles } from './styles';
+import { AeRadio } from './ae-radio';
 
+/**
+ * @element ae-radio-group
+ * @summary A container for radio buttons that manages their state
+ * @fires {CustomEvent<{value: string}>} ae-change - Fired when the selected radio changes
+ * 
+ * @example
+ * ```html
+ * <ae-radio-group name="options">
+ *   <ae-radio value="1">Option 1</ae-radio>
+ *   <ae-radio value="2">Option 2</ae-radio>
+ * </ae-radio-group>
+ * ```
+ */
 @customElement('ae-radio-group')
 export class AeRadioGroup extends LitElement {
-  static styles = css`
-    :host {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    :host([orientation="horizontal"]) {
-      flex-direction: row;
-      align-items: center;
-    }
-  `;
+  static styles = radioGroupStyles;
 
   @property({ type: String })
-  value = '';
+  accessor name = '';
 
-  @property({ type: String, reflect: true })
-  orientation: 'vertical' | 'horizontal' = 'vertical';
+  @property({ type: String })
+  accessor value = '';
 
-  @queryAssignedElements({ selector: 'ae-radio' })
-  private radios!: AeRadio[];
+  @property({ type: Boolean, reflect: true })
+  accessor disabled = false;
+
+  private radios: NodeListOf<AeRadio> = null!;
 
   connectedCallback() {
     super.connectedCallback();
-    this.setAttribute('role', 'radiogroup');
-  }
-
-  private handleChange(event: CustomEvent) {
-    const target = event.target as AeRadio;
-    this.value = target.value;
     this.updateRadios();
   }
 
   private updateRadios() {
+    this.radios = this.querySelectorAll('ae-radio');
     this.radios.forEach(radio => {
+      radio.name = this.name;
+      radio.disabled = this.disabled;
       radio.checked = radio.value === this.value;
+      radio.addEventListener('ae-change', this.handleRadioChange.bind(this));
     });
   }
 
-  private handleKeydown(event: KeyboardEvent) {
-    if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-      return;
-    }
-
-    event.preventDefault();
-    const currentIndex = this.radios.findIndex(radio => radio.checked);
-    let nextIndex = currentIndex;
-
-    if (this.orientation === 'vertical') {
-      if (event.key === 'ArrowUp') {
-        nextIndex = currentIndex > 0 ? currentIndex - 1 : this.radios.length - 1;
-      } else if (event.key === 'ArrowDown') {
-        nextIndex = currentIndex < this.radios.length - 1 ? currentIndex + 1 : 0;
-      }
-    } else {
-      if (event.key === 'ArrowLeft') {
-        nextIndex = currentIndex > 0 ? currentIndex - 1 : this.radios.length - 1;
-      } else if (event.key === 'ArrowRight') {
-        nextIndex = currentIndex < this.radios.length - 1 ? currentIndex + 1 : 0;
-      }
-    }
-
-    const nextRadio = this.radios[nextIndex];
-    if (nextRadio && !nextRadio.disabled) {
-      nextRadio.checked = true;
-      this.value = nextRadio.value;
-      this.dispatchEvent(
-        new CustomEvent('ae-change', {
-          detail: { value: this.value },
-          bubbles: true,
-          composed: true,
-        })
-      );
-    }
+  private handleRadioChange(event: Event) {
+    const radio = event.target as AeRadio;
+    this.value = radio.value;
+    this.updateRadios();
+    this.dispatchEvent(new CustomEvent('ae-change', {
+      detail: { value: this.value },
+      bubbles: true,
+      composed: true,
+    }));
   }
 
   render() {
     return html`
-      <slot
-        @ae-change=${this.handleChange}
-        @keydown=${this.handleKeydown}
-      ></slot>
+      <div
+        part="base"
+        role="radiogroup"
+      >
+        <slot @slotchange="${this.updateRadios}"></slot>
+      </div>
     `;
   }
 } 

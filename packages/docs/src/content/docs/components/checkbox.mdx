@@ -1,0 +1,241 @@
+---
+title: Checkbox
+description: A binary choice component with support for indeterminate state and accessibility.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import CheckboxExample from '../../../components/CheckboxExample.astro';
+
+{/* Register custom elements for MDX */}
+export const components = {
+  'ae-checkbox': 'ae-checkbox'
+};
+
+# Checkbox
+
+The Checkbox component provides a binary choice input with support for indeterminate states.
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="yarn">
+    ```bash
+    yarn add @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Basic Usage
+
+<CheckboxExample
+  code={`<ae-checkbox>Accept terms and conditions</ae-checkbox>`}
+  preview={`<ae-checkbox>Accept terms and conditions</ae-checkbox>`}
+/>
+
+## States
+
+<CheckboxExample
+  code={`<div style="display: flex; flex-direction: column; gap: 1rem;">
+  <!-- Checked state -->
+  <ae-checkbox checked>Checked checkbox</ae-checkbox>
+  
+  <!-- Unchecked state (default) -->
+  <ae-checkbox>Unchecked checkbox</ae-checkbox>
+  
+  <!-- Indeterminate state -->
+  <ae-checkbox indeterminate>Indeterminate checkbox</ae-checkbox>
+  
+  <!-- Disabled states -->
+  <ae-checkbox disabled>Disabled checkbox</ae-checkbox>
+  <ae-checkbox checked disabled>Disabled checked checkbox</ae-checkbox>
+  <ae-checkbox indeterminate disabled>Disabled indeterminate checkbox</ae-checkbox>
+</div>`}
+  preview={`<div style="display: flex; flex-direction: column; gap: 1rem;">
+  <!-- Checked state -->
+  <ae-checkbox checked>Checked checkbox</ae-checkbox>
+  
+  <!-- Unchecked state (default) -->
+  <ae-checkbox>Unchecked checkbox</ae-checkbox>
+  
+  <!-- Indeterminate state -->
+  <ae-checkbox indeterminate>Indeterminate checkbox</ae-checkbox>
+  
+  <!-- Disabled states -->
+  <ae-checkbox disabled>Disabled checkbox</ae-checkbox>
+  <ae-checkbox checked disabled>Disabled checked checkbox</ae-checkbox>
+  <ae-checkbox indeterminate disabled>Disabled indeterminate checkbox</ae-checkbox>
+</div>`}
+/>
+
+## Customizing Size
+
+Adjust the checkbox size using the `--ae-checkbox-size` custom property.
+
+<CheckboxExample
+  code={`<div style="display: flex; flex-direction: column; gap: 1rem;">
+  <ae-checkbox style="--ae-checkbox-size: 0.875rem;">Small checkbox</ae-checkbox>
+  <ae-checkbox>Default size checkbox</ae-checkbox>
+  <ae-checkbox style="--ae-checkbox-size: 1.25rem;">Large checkbox</ae-checkbox>
+  <ae-checkbox style="--ae-checkbox-size: 1.5rem;">Extra large checkbox</ae-checkbox>
+</div>`}
+  preview={`<div style="display: flex; flex-direction: column; gap: 1rem;">
+  <ae-checkbox style="--ae-checkbox-size: 0.875rem;">Small checkbox</ae-checkbox>
+  <ae-checkbox>Default size checkbox</ae-checkbox>
+  <ae-checkbox style="--ae-checkbox-size: 1.25rem;">Large checkbox</ae-checkbox>
+  <ae-checkbox style="--ae-checkbox-size: 1.5rem;">Extra large checkbox</ae-checkbox>
+</div>`}
+/>
+
+## Custom Styling
+
+Customize the checkbox appearance using CSS custom properties and parts.
+
+<CheckboxExample
+  code={`<style>
+  .custom-checkbox {
+    --ae-color-primary: #8b5cf6;
+    --ae-checkbox-size: 1.25rem;
+  }
+  
+  .custom-checkbox::part(control) {
+    border-radius: 50%;
+  }
+  
+  .square-checkbox::part(control) {
+    border-radius: 0;
+    border-width: 2px;
+  }
+  
+  .square-checkbox::part(indicator) {
+    color: #ef4444;
+  }
+  
+  .square-checkbox::part(label) {
+    font-weight: 600;
+  }
+</style>
+
+<div style="display: flex; flex-direction: column; gap: 1rem;">
+  <ae-checkbox class="custom-checkbox" checked>Circular checkbox</ae-checkbox>
+  <ae-checkbox class="square-checkbox" checked>Square checkbox with red indicator</ae-checkbox>
+</div>`}
+  preview={`<style>
+  .custom-checkbox {
+    --ae-color-primary: #8b5cf6;
+    --ae-checkbox-size: 1.25rem;
+  }
+  
+  .custom-checkbox::part(control) {
+    border-radius: 50%;
+  }
+  
+  .square-checkbox::part(control) {
+    border-radius: 0;
+    border-width: 2px;
+  }
+  
+  .square-checkbox::part(indicator) {
+    color: #ef4444;
+  }
+  
+  .square-checkbox::part(label) {
+    font-weight: 600;
+  }
+</style>
+
+<div style="display: flex; flex-direction: column; gap: 1rem;">
+  <ae-checkbox class="custom-checkbox" checked>Circular checkbox</ae-checkbox>
+  <ae-checkbox class="square-checkbox" checked>Square checkbox with red indicator</ae-checkbox>
+</div>`}
+/>
+
+## Event Handling
+
+The checkbox emits an `ae-change` event when its state changes.
+
+<CheckboxExample
+  code={`<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const checkbox = document.querySelector('#event-demo');
+    const status = document.querySelector('#event-status');
+    
+    if (checkbox && status) {
+      checkbox.addEventListener('ae-change', (e) => {
+        status.textContent = \`Checkbox is now \${e.detail.checked ? 'checked' : 'unchecked'}\`;
+      });
+    }
+  });
+</script>
+
+<div style="display: flex; flex-direction: column; gap: 1rem;">
+  <ae-checkbox id="event-demo">Toggle me</ae-checkbox>
+  <div id="event-status">Toggle the checkbox to see events</div>
+</div>`}
+  preview={`<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const checkbox = document.querySelector('#event-demo');
+    const status = document.querySelector('#event-status');
+    
+    if (checkbox && status) {
+      checkbox.addEventListener('ae-change', (e) => {
+        status.textContent = \`Checkbox is now \${e.detail.checked ? 'checked' : 'unchecked'}\`;
+      });
+    }
+  });
+</script>
+
+<div style="display: flex; flex-direction: column; gap: 1rem;">
+  <ae-checkbox id="event-demo">Toggle me</ae-checkbox>
+  <div id="event-status">Toggle the checkbox to see events</div>
+</div>`}
+/>
+
+## Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `checked` | `boolean` | `false` | Controlled checked state |
+| `defaultChecked` | `boolean` | `false` | Initial checked state for uncontrolled usage |
+| `indeterminate` | `boolean` | `false` | Sets the checkbox to an indeterminate/mixed state |
+| `disabled` | `boolean` | `false` | Disables the checkbox |
+
+## Events
+
+| Name | Detail | Description |
+|------|--------|-------------|
+| `ae-change` | `{ checked: boolean }` | Fired when the checkbox state changes |
+
+## CSS Parts
+
+| Name | Description |
+|------|-------------|
+| `control` | The checkbox control (box that contains the checkmark) |
+| `indicator` | The checkmark or indeterminate indicator |
+| `label` | The label text container |
+
+## CSS Custom Properties
+
+| Name | Description |
+|------|-------------|
+| `--ae-checkbox-size` | Size of the checkbox control |
+| `--ae-color-primary` | Primary color used for the checked state |
+| `--ae-color-border` | Border color for the unchecked state |
+| `--ae-color-surface` | Background color for the unchecked state |
+
+## Accessibility
+
+The checkbox component follows WAI-ARIA guidelines:
+
+- Uses native `<input type="checkbox">` to maintain accessibility
+- Properly syncs `aria-checked="mixed"` for indeterminate states
+- Supports keyboard navigation and focus management
+- Associates the label text with the checkbox input for clear context 
