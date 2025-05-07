@@ -1,4 +1,4 @@
-import { defineAeRadio, defineAeRadioGroup } from '@aetherui/core';
+---
 import { Code } from '@astrojs/starlight/components';
 
 interface Props {
@@ -8,29 +8,119 @@ interface Props {
 
 const { code, preview } = Astro.props;
 
-// Register the radio components
-defineAeRadio();
-defineAeRadioGroup();
+// Ensure preview HTML is properly escaped for template literals
+const sanitizedPreview = preview?.replace(/\${/g, '\\${');
+---
 
 <div class="radio-example">
-  {preview ? <Fragment set:html={preview} /> : <slot />}
+  {sanitizedPreview && <div class="preview" set:html={sanitizedPreview} />}
+  {!sanitizedPreview && <slot />}
+  {code && (
+    <div class="code-preview">
+      <Code code={code} lang="html" />
+    </div>
+  )}
 </div>
 
-{code && (
-  <div class="code-preview">
-    <Code language="html" code={code} />
-  </div>
-)}
+<script>
+  import { defineAeRadio, defineAeRadioGroup } from '@aetherui/core';
+  
+  // Register radio components
+  defineAeRadio();
+  defineAeRadioGroup();
+</script>
 
 <style>
   .radio-example {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 1rem 0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: var(--sl-color-gray-1);
   }
 
-  :global(ae-radio-group) {
+  .preview {
+    padding: 1.5rem;
+    border-radius: 0.25rem;
+    background: var(--sl-color-white);
+    position: relative;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  /* Light mode styles */
+  :global(.preview ae-radio-group) {
     width: 100%;
+    --ae-color-border: var(--sl-color-gray-4);
+    --ae-color-surface: var(--sl-color-white);
+    --ae-color-primary: var(--sl-color-accent);
+    --ae-color-text: var(--sl-color-black);
+    --ae-font-size-sm: 1rem;
+    display: flex;
+    gap: 1rem;
+  }
+
+  /* Horizontal orientation styles */
+  :global(.preview ae-radio-group[orientation="horizontal"]) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2.5rem;
+    padding: 0.5rem 0;
+  }
+
+  /* Custom radio styling using parts */
+  :global(.preview ae-radio) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: max-content;
+  }
+
+  :global(.preview ae-radio::part(control)) {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-width: 2px;
+    transition: all 200ms ease;
+    flex-shrink: 0;
+  }
+
+  :global(.preview ae-radio::part(indicator)) {
+    background: var(--sl-color-accent);
+    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  :global(.preview ae-radio::part(label)) {
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+
+  :global(.preview ae-radio:hover::part(control)) {
+    border-color: var(--sl-color-accent);
+    transform: scale(1.05);
+  }
+
+  /* Dark mode styles */
+  :global([data-theme="dark"] .preview) {
+    background: var(--sl-color-gray-6);
+  }
+
+  :global([data-theme="dark"] .preview ae-radio-group) {
+    --ae-color-border: var(--sl-color-gray-5);
+    --ae-color-surface: var(--sl-color-gray-7);
+    --ae-color-primary: var(--sl-color-accent-high);
+    --ae-color-text: var(--sl-color-gray-1);
+  }
+
+  :global([data-theme="dark"] .preview ae-radio::part(indicator)) {
+    background: var(--sl-color-accent-high);
+  }
+
+  :global([data-theme="dark"] .preview ae-radio:hover::part(control)) {
+    border-color: var(--sl-color-accent-high);
   }
 </style> 
