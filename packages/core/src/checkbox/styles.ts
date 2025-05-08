@@ -48,6 +48,7 @@ export const checkboxStyles = css`
     transition: opacity 0.2s ease;
   }
 
+  /* Checked state */
   input:checked + .control {
     border-color: var(--ae-checkbox-checked-border-color, #4f46e5);
     background: var(--ae-checkbox-checked-bg, #4f46e5);
@@ -58,11 +59,25 @@ export const checkboxStyles = css`
     color: var(--ae-checkbox-checked-icon-color, white);
   }
 
+  /* Indeterminate state */
+  .control.indeterminate {
+    border-color: var(--ae-checkbox-indeterminate-border-color, #4f46e5);
+    background: var(--ae-checkbox-indeterminate-bg, #4f46e5);
+  }
+
+  .control.indeterminate .icon,
+  .control.indeterminate .indeterminate-icon {
+    opacity: 1;
+    color: var(--ae-checkbox-indeterminate-icon-color, white);
+  }
+
+  /* Focus state */
   input:focus-visible + .control {
     outline: 2px solid var(--ae-checkbox-focus-ring-color, #4f46e5);
     outline-offset: 2px;
   }
 
+  /* Disabled state */
   input:disabled + .control {
     border-color: var(--ae-checkbox-disabled-border-color, #e5e7eb);
     background: var(--ae-checkbox-disabled-bg, #f3f4f6);

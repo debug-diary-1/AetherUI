@@ -167,34 +167,50 @@ The checkbox emits an `ae-change` event when its state changes.
   document.addEventListener('DOMContentLoaded', () => {
     const checkbox = document.querySelector('#event-demo');
     const status = document.querySelector('#event-status');
+    const setIndeterminateBtn = document.querySelector('#set-indeterminate');
     
     if (checkbox && status) {
       checkbox.addEventListener('ae-change', (e) => {
-        status.textContent = \`Checkbox is now \${e.detail.checked ? 'checked' : 'unchecked'}\`;
+        status.textContent = \`Checkbox is now \${e.detail.indeterminate ? 'indeterminate' : e.detail.checked ? 'checked' : 'unchecked'}\`;
       });
+      
+      if (setIndeterminateBtn) {
+        setIndeterminateBtn.addEventListener('click', () => {
+          checkbox.indeterminate = true;
+        });
+      }
     }
   });
 </script>
 
 <div style="display: flex; flex-direction: column; gap: 1rem;">
   <ae-checkbox id="event-demo">Toggle me</ae-checkbox>
+  <button id="set-indeterminate">Set to indeterminate</button>
   <div id="event-status">Toggle the checkbox to see events</div>
 </div>`}
   preview={`<script>
   document.addEventListener('DOMContentLoaded', () => {
     const checkbox = document.querySelector('#event-demo');
     const status = document.querySelector('#event-status');
+    const setIndeterminateBtn = document.querySelector('#set-indeterminate');
     
     if (checkbox && status) {
       checkbox.addEventListener('ae-change', (e) => {
-        status.textContent = \`Checkbox is now \${e.detail.checked ? 'checked' : 'unchecked'}\`;
+        status.textContent = \`Checkbox is now \${e.detail.indeterminate ? 'indeterminate' : e.detail.checked ? 'checked' : 'unchecked'}\`;
       });
+      
+      if (setIndeterminateBtn) {
+        setIndeterminateBtn.addEventListener('click', () => {
+          checkbox.indeterminate = true;
+        });
+      }
     }
   });
 </script>
 
 <div style="display: flex; flex-direction: column; gap: 1rem;">
   <ae-checkbox id="event-demo">Toggle me</ae-checkbox>
+  <button id="set-indeterminate">Set to indeterminate</button>
   <div id="event-status">Toggle the checkbox to see events</div>
 </div>`}
 />
@@ -212,24 +228,39 @@ The checkbox emits an `ae-change` event when its state changes.
 
 | Name | Detail | Description |
 |------|--------|-------------|
-| `ae-change` | `{ checked: boolean }` | Fired when the checkbox state changes |
+| `ae-change` | `{ checked: boolean, indeterminate: boolean }` | Fired when the checkbox state changes |
 
 ## CSS Parts
 
 | Name | Description |
 |------|-------------|
+| `base` | The label container wrapping the checkbox |
 | `control` | The checkbox control (box that contains the checkmark) |
-| `indicator` | The checkmark or indeterminate indicator |
+| `icon` | The checkmark icon when checked |
+| `indeterminate-icon` | The dash icon when in indeterminate state |
 | `label` | The label text container |
+| `input` | The native checkbox input (visually hidden) |
 
 ## CSS Custom Properties
 
 | Name | Description |
 |------|-------------|
 | `--ae-checkbox-size` | Size of the checkbox control |
-| `--ae-color-primary` | Primary color used for the checked state |
-| `--ae-color-border` | Border color for the unchecked state |
-| `--ae-color-surface` | Background color for the unchecked state |
+| `--ae-checkbox-border-color` | Border color for the unchecked state |
+| `--ae-checkbox-bg` | Background color for the unchecked state |
+| `--ae-checkbox-border-radius` | Border radius of the checkbox control |
+| `--ae-checkbox-checked-border-color` | Border color for the checked state |
+| `--ae-checkbox-checked-bg` | Background color for the checked state |
+| `--ae-checkbox-checked-icon-color` | Color of the checkmark icon |
+| `--ae-checkbox-indeterminate-border-color` | Border color for the indeterminate state |
+| `--ae-checkbox-indeterminate-bg` | Background color for the indeterminate state |
+| `--ae-checkbox-indeterminate-icon-color` | Color of the indeterminate dash icon |
+| `--ae-checkbox-disabled-border-color` | Border color when disabled |
+| `--ae-checkbox-disabled-bg` | Background color when disabled |
+| `--ae-checkbox-disabled-text-color` | Text color when disabled |
+| `--ae-checkbox-text-color` | Text color for the label |
+| `--ae-checkbox-font-size` | Font size for the label |
+| `--ae-checkbox-focus-ring-color` | Color of the focus ring |
 
 ## Accessibility
 
