@@ -44,8 +44,7 @@ export const checkboxStyles = css`
   .icon, .indeterminate-icon {
     width: 12px;
     height: 12px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    color: var(--ae-checkbox-checked-icon-color, white);
   }
 
   /* Checked state */
@@ -54,23 +53,14 @@ export const checkboxStyles = css`
     background: var(--ae-checkbox-checked-bg, #4f46e5);
   }
 
-  input:checked + .control .icon {
-    opacity: 1;
-    color: var(--ae-checkbox-checked-icon-color, white);
-  }
-
   /* Indeterminate state - with higher specificity than checked state */
-  :host([indeterminate]) .control,
-  :host([indeterminate][checked]) .control {
+  :host([indeterminate]) .control {
     border-color: var(--ae-checkbox-indeterminate-border-color, #4f46e5);
     background: var(--ae-checkbox-indeterminate-bg, #4f46e5);
   }
 
-  :host([indeterminate]) .control .icon,
-  :host([indeterminate]) .control .indeterminate-icon,
-  :host([indeterminate][checked]) .control .icon,
-  :host([indeterminate][checked]) .control .indeterminate-icon {
-    opacity: 1;
+  /* Icon colors */
+  :host([indeterminate]) .indeterminate-icon {
     color: var(--ae-checkbox-indeterminate-icon-color, white);
   }
 

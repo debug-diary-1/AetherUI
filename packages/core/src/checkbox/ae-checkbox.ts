@@ -84,32 +84,32 @@ export class AeCheckbox extends LitElement {
           ${this._setInputRef}
         />
         <span part="control" class="control">
-          ${this.indeterminate 
-            ? html`<svg
-                part="indeterminate-icon"
-                class="icon indeterminate-icon"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <line x1="3" y1="8" x2="13" y2="8"></line>
-              </svg>`
-            : html`<svg
-                part="icon"
-                class="icon"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="3 8 7 12 13 4"></polyline>
-              </svg>`
-          }
+          <svg
+            part="icon"
+            class="icon"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="${this.indeterminate ? 'display: none;' : 'display: block;'}"
+          >
+            <polyline points="3 8 7 12 13 4"></polyline>
+          </svg>
+          <svg
+            part="indeterminate-icon"
+            class="indeterminate-icon"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="${this.indeterminate ? 'display: block;' : 'display: none;'}"
+          >
+            <line x1="3" y1="8" x2="13" y2="8"></line>
+          </svg>
         </span>
         <span part="label" class="label">
           <slot></slot>
