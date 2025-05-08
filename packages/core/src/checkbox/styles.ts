@@ -41,7 +41,7 @@ export const checkboxStyles = css`
     transition: all 0.2s ease;
   }
 
-  .icon {
+  .icon, .indeterminate-icon {
     width: 12px;
     height: 12px;
     opacity: 0;
@@ -59,14 +59,17 @@ export const checkboxStyles = css`
     color: var(--ae-checkbox-checked-icon-color, white);
   }
 
-  /* Indeterminate state */
-  .control.indeterminate {
+  /* Indeterminate state - with higher specificity than checked state */
+  :host([indeterminate]) .control,
+  :host([indeterminate][checked]) .control {
     border-color: var(--ae-checkbox-indeterminate-border-color, #4f46e5);
     background: var(--ae-checkbox-indeterminate-bg, #4f46e5);
   }
 
-  .control.indeterminate .icon,
-  .control.indeterminate .indeterminate-icon {
+  :host([indeterminate]) .control .icon,
+  :host([indeterminate]) .control .indeterminate-icon,
+  :host([indeterminate][checked]) .control .icon,
+  :host([indeterminate][checked]) .control .indeterminate-icon {
     opacity: 1;
     color: var(--ae-checkbox-indeterminate-icon-color, white);
   }
@@ -82,6 +85,23 @@ export const checkboxStyles = css`
     border-color: var(--ae-checkbox-disabled-border-color, #e5e7eb);
     background: var(--ae-checkbox-disabled-bg, #f3f4f6);
     cursor: not-allowed;
+  }
+
+  /* Disabled indeterminate state */
+  :host([disabled][indeterminate]) .control {
+    border-color: var(--ae-checkbox-disabled-border-color, #e5e7eb); 
+    background: var(--ae-checkbox-disabled-bg, #f3f4f6);
+  }
+
+  :host([disabled][indeterminate]) .control .indeterminate-icon {
+    opacity: 0.6;
+    color: var(--ae-checkbox-disabled-text-color, #9ca3af);
+  }
+
+  /* Disabled checked state */
+  :host([disabled][checked]) .control .icon {
+    opacity: 0.6;
+    color: var(--ae-checkbox-disabled-text-color, #9ca3af);
   }
 
   input:disabled ~ .label {

@@ -79,10 +79,11 @@ export class AeCheckbox extends LitElement {
           .required="${this.required}"
           .name="${this.name}"
           .value="${this.value}"
+          aria-checked="${this.indeterminate ? 'mixed' : this.checked}"
           @change="${this.handleChange}"
           ${this._setInputRef}
         />
-        <span part="control" class="${this.indeterminate ? 'control indeterminate' : 'control'}">
+        <span part="control" class="control">
           ${this.indeterminate 
             ? html`<svg
                 part="indeterminate-icon"
@@ -120,7 +121,15 @@ export class AeCheckbox extends LitElement {
   private _setInputRef = (el: HTMLInputElement) => {
     this._inputElement = el;
     if (el) {
+      // Always set the indeterminate state explicitly
       el.indeterminate = this.indeterminate;
+    }
+  }
+  
+  // Override firstUpdated to set the initial indeterminate state
+  firstUpdated() {
+    if (this._inputElement) {
+      this._inputElement.indeterminate = this.indeterminate;
     }
   }
 }
