@@ -45,18 +45,20 @@ const { code, preview } = Astro.props;
 
   /* Light mode styles */
   :global(.preview ae-checkbox) {
-    --ae-color-primary: var(--sl-color-accent);
-    --ae-color-border: var(--sl-color-gray-4);
-    --ae-color-surface: var(--sl-color-white);
     --ae-checkbox-size: 1rem;
+    --ae-checkbox-border-color: var(--sl-color-gray-4);
+    --ae-checkbox-bg: var(--sl-color-white);
+    --ae-checkbox-checked-border-color: var(--sl-color-accent);
+    --ae-checkbox-checked-bg: var(--sl-color-accent);
+    --ae-checkbox-checked-icon-color: var(--sl-color-white);
+    --ae-checkbox-indeterminate-border-color: var(--sl-color-accent);
+    --ae-checkbox-indeterminate-bg: var(--sl-color-accent);
+    --ae-checkbox-indeterminate-icon-color: var(--sl-color-white);
+    --ae-checkbox-focus-ring-color: var(--sl-color-accent);
   }
 
   :global(.preview ae-checkbox::part(control)) {
     border-radius: 0.25rem;
-  }
-
-  :global(.preview ae-checkbox::part(indicator)) {
-    color: var(--sl-color-white);
   }
 
   /* Dark mode styles */
@@ -65,9 +67,12 @@ const { code, preview } = Astro.props;
   }
 
   :global([data-theme="dark"] .preview ae-checkbox) {
-    --ae-color-primary: var(--sl-color-accent);
-    --ae-color-border: var(--sl-color-gray-3);
-    --ae-color-surface: var(--sl-color-gray-7);
+    --ae-checkbox-border-color: var(--sl-color-gray-3);
+    --ae-checkbox-bg: var(--sl-color-gray-7);
+    --ae-checkbox-checked-border-color: var(--sl-color-accent);
+    --ae-checkbox-checked-bg: var(--sl-color-accent);
+    --ae-checkbox-indeterminate-border-color: var(--sl-color-accent);
+    --ae-checkbox-indeterminate-bg: var(--sl-color-accent);
   }
 
   :global([data-theme="dark"] .preview ae-checkbox::part(label)) {

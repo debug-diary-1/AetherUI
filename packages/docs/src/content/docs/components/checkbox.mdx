@@ -102,8 +102,11 @@ Customize the checkbox appearance using CSS custom properties and parts.
 <CheckboxExample
   code={`<style>
   .custom-checkbox {
-    --ae-color-primary: #8b5cf6;
     --ae-checkbox-size: 1.25rem;
+    --ae-checkbox-checked-bg: #8b5cf6;
+    --ae-checkbox-checked-border-color: #8b5cf6;
+    --ae-checkbox-indeterminate-bg: #8b5cf6;
+    --ae-checkbox-indeterminate-border-color: #8b5cf6;
   }
   
   .custom-checkbox::part(control) {
@@ -115,23 +118,39 @@ Customize the checkbox appearance using CSS custom properties and parts.
     border-width: 2px;
   }
   
-  .square-checkbox::part(indicator) {
+  .square-checkbox::part(icon) {
+    color: #ef4444;
+  }
+
+  .square-checkbox::part(indeterminate-icon) {
     color: #ef4444;
   }
   
   .square-checkbox::part(label) {
     font-weight: 600;
   }
+
+  .orange-indeterminate {
+    --ae-checkbox-indeterminate-bg: #f59e0b;
+    --ae-checkbox-indeterminate-border-color: #f59e0b;
+    --ae-checkbox-indeterminate-icon-color: #ffffff;
+  }
 </style>
 
 <div style="display: flex; flex-direction: column; gap: 1rem;">
-  <ae-checkbox class="custom-checkbox" checked>Circular checkbox</ae-checkbox>
-  <ae-checkbox class="square-checkbox" checked>Square checkbox with red indicator</ae-checkbox>
+  <ae-checkbox class="custom-checkbox" checked>Round purple checkbox (checked)</ae-checkbox>
+  <ae-checkbox class="custom-checkbox" indeterminate>Round purple checkbox (indeterminate)</ae-checkbox>
+  <ae-checkbox class="square-checkbox" checked>Square checkbox with red indicator (checked)</ae-checkbox>
+  <ae-checkbox class="square-checkbox" indeterminate>Square checkbox with red indicator (indeterminate)</ae-checkbox>
+  <ae-checkbox class="orange-indeterminate" indeterminate>Orange indeterminate indicator</ae-checkbox>
 </div>`}
   preview={`<style>
   .custom-checkbox {
-    --ae-color-primary: #8b5cf6;
     --ae-checkbox-size: 1.25rem;
+    --ae-checkbox-checked-bg: #8b5cf6;
+    --ae-checkbox-checked-border-color: #8b5cf6;
+    --ae-checkbox-indeterminate-bg: #8b5cf6;
+    --ae-checkbox-indeterminate-border-color: #8b5cf6;
   }
   
   .custom-checkbox::part(control) {
@@ -143,18 +162,172 @@ Customize the checkbox appearance using CSS custom properties and parts.
     border-width: 2px;
   }
   
-  .square-checkbox::part(indicator) {
+  .square-checkbox::part(icon) {
+    color: #ef4444;
+  }
+
+  .square-checkbox::part(indeterminate-icon) {
     color: #ef4444;
   }
   
   .square-checkbox::part(label) {
     font-weight: 600;
   }
+
+  .orange-indeterminate {
+    --ae-checkbox-indeterminate-bg: #f59e0b;
+    --ae-checkbox-indeterminate-border-color: #f59e0b;
+    --ae-checkbox-indeterminate-icon-color: #ffffff;
+  }
 </style>
 
 <div style="display: flex; flex-direction: column; gap: 1rem;">
-  <ae-checkbox class="custom-checkbox" checked>Circular checkbox</ae-checkbox>
-  <ae-checkbox class="square-checkbox" checked>Square checkbox with red indicator</ae-checkbox>
+  <ae-checkbox class="custom-checkbox" checked>Round purple checkbox (checked)</ae-checkbox>
+  <ae-checkbox class="custom-checkbox" indeterminate>Round purple checkbox (indeterminate)</ae-checkbox>
+  <ae-checkbox class="square-checkbox" checked>Square checkbox with red indicator (checked)</ae-checkbox>
+  <ae-checkbox class="square-checkbox" indeterminate>Square checkbox with red indicator (indeterminate)</ae-checkbox>
+  <ae-checkbox class="orange-indeterminate" indeterminate>Orange indeterminate indicator</ae-checkbox>
+</div>`}
+/>
+
+## Common Patterns
+
+### Select All Pattern
+
+The indeterminate state is commonly used for "Select All" checkboxes that control multiple child checkboxes.
+
+<CheckboxExample
+  code={`<style>
+  .select-all-container {
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .child-list {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 1.5rem;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const parentCheckbox = document.querySelector('#parent-checkbox');
+    const childCheckboxes = document.querySelectorAll('.child-checkbox');
+    
+    // Update parent based on children
+    function updateParentState() {
+      const totalChildren = childCheckboxes.length;
+      const checkedCount = Array.from(childCheckboxes).filter(cb => cb.checked).length;
+      
+      if (checkedCount === 0) {
+        parentCheckbox.checked = false;
+        parentCheckbox.indeterminate = false;
+      } else if (checkedCount === totalChildren) {
+        parentCheckbox.checked = true;
+        parentCheckbox.indeterminate = false;
+      } else {
+        parentCheckbox.checked = false;
+        parentCheckbox.indeterminate = true;
+      }
+    }
+    
+    // Add event listeners to child checkboxes
+    childCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('ae-change', updateParentState);
+    });
+    
+    // Add event listener to parent checkbox
+    parentCheckbox.addEventListener('ae-change', (e) => {
+      const newCheckedState = e.detail.checked;
+      childCheckboxes.forEach(checkbox => {
+        checkbox.checked = newCheckedState;
+      });
+    });
+    
+    // Initialize parent state
+    updateParentState();
+  });
+</script>
+
+<div class="select-all-container">
+  <ae-checkbox id="parent-checkbox">Select All Items</ae-checkbox>
+  
+  <div class="child-list">
+    <ae-checkbox class="child-checkbox">Item 1</ae-checkbox>
+    <ae-checkbox class="child-checkbox" checked>Item 2</ae-checkbox>
+    <ae-checkbox class="child-checkbox">Item 3</ae-checkbox>
+    <ae-checkbox class="child-checkbox">Item 4</ae-checkbox>
+  </div>
+</div>`}
+  preview={`<style>
+  .select-all-container {
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .child-list {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 1.5rem;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const parentCheckbox = document.querySelector('#parent-checkbox');
+    const childCheckboxes = document.querySelectorAll('.child-checkbox');
+    
+    // Update parent based on children
+    function updateParentState() {
+      const totalChildren = childCheckboxes.length;
+      const checkedCount = Array.from(childCheckboxes).filter(cb => cb.checked).length;
+      
+      if (checkedCount === 0) {
+        parentCheckbox.checked = false;
+        parentCheckbox.indeterminate = false;
+      } else if (checkedCount === totalChildren) {
+        parentCheckbox.checked = true;
+        parentCheckbox.indeterminate = false;
+      } else {
+        parentCheckbox.checked = false;
+        parentCheckbox.indeterminate = true;
+      }
+    }
+    
+    // Add event listeners to child checkboxes
+    childCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('ae-change', updateParentState);
+    });
+    
+    // Add event listener to parent checkbox
+    parentCheckbox.addEventListener('ae-change', (e) => {
+      const newCheckedState = e.detail.checked;
+      childCheckboxes.forEach(checkbox => {
+        checkbox.checked = newCheckedState;
+      });
+    });
+    
+    // Initialize parent state
+    updateParentState();
+  });
+</script>
+
+<div class="select-all-container">
+  <ae-checkbox id="parent-checkbox">Select All Items</ae-checkbox>
+  
+  <div class="child-list">
+    <ae-checkbox class="child-checkbox">Item 1</ae-checkbox>
+    <ae-checkbox class="child-checkbox" checked>Item 2</ae-checkbox>
+    <ae-checkbox class="child-checkbox">Item 3</ae-checkbox>
+    <ae-checkbox class="child-checkbox">Item 4</ae-checkbox>
+  </div>
 </div>`}
 />
 
@@ -185,7 +358,7 @@ The checkbox emits an `ae-change` event when its state changes.
 
 <div style="display: flex; flex-direction: column; gap: 1rem;">
   <ae-checkbox id="event-demo">Toggle me</ae-checkbox>
-  <button id="set-indeterminate">Set to indeterminate</button>
+  <button id="set-indeterminate" style="align-self: flex-start; padding: 0.5rem 1rem; background: #4f46e5; color: white; border: none; border-radius: 0.25rem; cursor: pointer;">Set to indeterminate</button>
   <div id="event-status">Toggle the checkbox to see events</div>
 </div>`}
   preview={`<script>
@@ -210,7 +383,7 @@ The checkbox emits an `ae-change` event when its state changes.
 
 <div style="display: flex; flex-direction: column; gap: 1rem;">
   <ae-checkbox id="event-demo">Toggle me</ae-checkbox>
-  <button id="set-indeterminate">Set to indeterminate</button>
+  <button id="set-indeterminate" style="align-self: flex-start; padding: 0.5rem 1rem; background: #4f46e5; color: white; border: none; border-radius: 0.25rem; cursor: pointer;">Set to indeterminate</button>
   <div id="event-status">Toggle the checkbox to see events</div>
 </div>`}
 />
