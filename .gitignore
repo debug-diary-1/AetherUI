@@ -6,6 +6,9 @@ node_modules
 dist
 .turbo
 
+# Vite timestamp files
+*.timestamp-*.mjs
+
 # IDE
 .vscode
 .idea
@@ -54,4 +57,4 @@ coverage
 .turbo
 
 # TypeScript
-*.tsbuildinfo 
+*.tsbuildinfo

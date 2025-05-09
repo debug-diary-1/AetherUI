@@ -1,0 +1,30 @@
+# Build outputs
+dist/
+*.timestamp-*.mjs
+**/*.timestamp-*.mjs
+
+# Node modules
+node_modules/
+
+# Turborepo
+.turbo/
+
+# Build artifacts
+*.d.ts
+*.js.map
+
+# Generated files
+*.generated.ts
+*.generated.js
+
+# Test coverage
+coverage/
+
+# Storybook
+storybook-static/
+
+# Docs build
+packages/docs/dist/
+
+# Types
+*.d.ts
