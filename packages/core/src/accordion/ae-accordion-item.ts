@@ -3,9 +3,34 @@ import { customElement, property } from 'lit/decorators.js';
 import { accordionItemStyles } from './styles';
 
 /**
+ * An individual collapsible panel within an accordion.
+ * 
  * @element ae-accordion-item
- * @summary An individual collapsible panel within an accordion
+ * 
+ * @property {string} headerId - Unique identifier for this accordion item
+ * @property {boolean} open - Whether this panel is currently open
+ * @property {boolean} disabled - Whether this accordion item is disabled
+ * 
  * @fires {CustomEvent<{headerId: string, open: boolean}>} ae-panel-change - Fired when this panel is opened or closed
+ * @fires {CustomEvent<{headerId: string, open: boolean}>} ae-accordion-item-change - Standardized event fired when opened/closed
+ * 
+ * @slot - Default slot for panel content
+ * @slot header - Content for the accordion header/button
+ * 
+ * @csspart item - The container element
+ * @csspart header - The clickable header button
+ * @csspart icon - The expand/collapse icon
+ * @csspart panel - The content panel
+ * 
+ * @cssproperty --ae-accordion-header-bg - Header background color
+ * @cssproperty --ae-accordion-header-color - Header text color
+ * @cssproperty --ae-accordion-header-active-bg - Open header background color
+ * @cssproperty --ae-accordion-header-active-color - Open header text color
+ * @cssproperty --ae-accordion-header-hover-bg - Header hover background
+ * @cssproperty --ae-accordion-icon-color - Icon color
+ * @cssproperty --ae-accordion-icon-active-color - Open state icon color
+ * @cssproperty --ae-accordion-panel-bg - Panel background color
+ * @cssproperty --ae-accordion-panel-color - Panel text color
  */
 @customElement('ae-accordion-item')
 export class AeAccordionItem extends LitElement {
@@ -40,9 +65,23 @@ export class AeAccordionItem extends LitElement {
   updated(changedProperties: Map<string, any>) {
     if (changedProperties.has('open')) {
       this.updatePanelHeight();
+      
+      // Create event detail
+      const detail = { headerId: this.headerId, open: this.open };
+      
+      // Dispatch standardized event
+      this.dispatchEvent(
+        new CustomEvent('ae-accordion-item-change', {
+          detail,
+          bubbles: true,
+          composed: true,
+        })
+      );
+      
+      // Dispatch legacy event for backward compatibility
       this.dispatchEvent(
         new CustomEvent('ae-panel-change', {
-          detail: { headerId: this.headerId, open: this.open },
+          detail,
           bubbles: true,
           composed: true,
         })
