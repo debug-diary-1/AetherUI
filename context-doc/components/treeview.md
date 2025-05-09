@@ -14,10 +14,10 @@ Hierarchical navigation control with expand/collapse, keyboard roving, and optio
 | `selected`      | `string[]`               | `[]`       | Controlled selected IDs (honours `selectionMode`). |
 | `indentSize`    | `number`                 | `16`       | Pixels to indent each depth level.                 |
 
-| Event              | Payload                  |
-| ------------------ | ------------------------ |
-| `ae-select`        | `{ selected: string[] }` |
-| `ae-expand-change` | `{ expanded: string[] }` |
+| Event                | Payload                  |
+| -------------------- | ------------------------ |
+| `ae-treeview-select` | `{ selected: string[] }` |
+| `ae-treeview-expand` | `{ expanded: string[] }` |
 
 ## 3 · Accessibility
 
@@ -128,4 +128,4 @@ packages/treeview/
 
 ---
 
-*Updated: {{date}}*
+*Updated: 2025-05-09*

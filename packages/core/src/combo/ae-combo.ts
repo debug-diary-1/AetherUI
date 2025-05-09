@@ -14,8 +14,15 @@ import comboStyles from './styles';
  * 
  * @element ae-combo
  * 
- * @fires ae-select - Fired when an item is selected
- * @fires ae-input - Fired on each keystroke
+ * @property {(string|ComboItem)[]} items - Items to display in the dropdown
+ * @property {string} value - Current input value (controlled)
+ * @property {string} placeholder - Placeholder text for the input
+ * @property {boolean} disabled - Whether the input is disabled
+ * @property {boolean} freeInput - Whether user can enter values not in the list
+ * @property {ComboFilterFunction} filterFn - Custom filter function
+ * 
+ * @fires {CustomEvent<{value: string, item: ComboItem | null}>} ae-combo-select - Fired when an item is selected
+ * @fires {CustomEvent<{value: string}>} ae-combo-input - Fired on each keystroke
  * 
  * @slot - Default slot (not used)
  * 
@@ -25,6 +32,15 @@ import comboStyles from './styles';
  * @csspart listbox - Scroll container
  * @csspart option - Each list option
  * @csspart highlight - Query match highlights
+ * 
+ * @cssproperty --ae-combo-border - Input border color
+ * @cssproperty --ae-combo-radius - Corner radius of input & listbox
+ * @cssproperty --ae-combo-bg - Input background
+ * @cssproperty --ae-combo-fg - Text color
+ * @cssproperty --ae-combo-option-hover-bg - Hover/active option background
+ * @cssproperty --ae-combo-option-selected-bg - Selected option background
+ * @cssproperty --ae-combo-option-selected-fg - Selected option text color
+ * @cssproperty --ae-combo-shadow - Overlay shadow
  */
 export class AeCombo extends LitElement {
   static styles = comboStyles;
@@ -116,7 +132,7 @@ export class AeCombo extends LitElement {
       }
     }
     
-    this.dispatchEvent(new CustomEvent('ae-input', {
+    this.dispatchEvent(new CustomEvent('ae-combo-input', {
       detail: { value: input.value },
       bubbles: true,
       composed: true
@@ -158,7 +174,7 @@ export class AeCombo extends LitElement {
     this.inputElement.value = item.label;
     this.isOpen = false;
     
-    this.dispatchEvent(new CustomEvent('ae-select', {
+    this.dispatchEvent(new CustomEvent('ae-combo-select', {
       detail: { value: item.id, item },
       bubbles: true,
       composed: true
@@ -201,7 +217,7 @@ export class AeCombo extends LitElement {
           } else if (this.freeInput) {
             // Allow free input if enabled
             this.isOpen = false;
-            this.dispatchEvent(new CustomEvent('ae-select', {
+            this.dispatchEvent(new CustomEvent('ae-combo-select', {
               detail: { value: this.value, item: null },
               bubbles: true,
               composed: true

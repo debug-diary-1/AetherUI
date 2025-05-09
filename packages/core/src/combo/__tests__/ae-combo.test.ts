@@ -95,10 +95,10 @@ describe('ae-combo', () => {
     expect(element.items[1].disabled).toBe(true);
   });
 
-  it('should emit ae-input event on input', async () => {
+  it('should emit ae-combo-input event on input', async () => {
     const inputEl = element.shadowRoot!.querySelector('input')!;
     const listener = vi.fn();
-    element.addEventListener('ae-input', listener);
+    element.addEventListener('ae-combo-input', listener);
     
     inputEl.value = 'test';
     inputEl.dispatchEvent(new Event('input'));
@@ -108,7 +108,7 @@ describe('ae-combo', () => {
     expect(event.detail.value).toBe('test');
   });
 
-  it('should emit ae-select event when option is selected', async () => {
+  it('should emit ae-combo-select event when option is selected', async () => {
     element.items = ['Apple', 'Banana', 'Cherry'];
     await element.updateComplete;
     
@@ -123,7 +123,7 @@ describe('ae-combo', () => {
       option.dispatchEvent(new MouseEvent('click'));
     });
     
-    const { detail } = await oneEvent(element, 'ae-select');
+    const { detail } = await oneEvent(element, 'ae-combo-select');
     expect(detail.value).toBe('Apple');
   });
 
@@ -176,7 +176,7 @@ describe('ae-combo', () => {
       }));
     });
     
-    const { detail } = await oneEvent(element, 'ae-select');
+    const { detail } = await oneEvent(element, 'ae-combo-select');
     expect(detail.value).toBe('Apple');
   });
 });

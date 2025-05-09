@@ -15,10 +15,10 @@ An **autocomplete dropdown** that allows free‑type input or selection from a f
 | `freeInput`   | `boolean`                                     | `true`   | Allow values not present in list.                       |
 | `filterFn`    | `(query: string, item: ComboItem) => boolean` | built‑in | Custom filter.                                          |
 
-| Event       | Payload                                     |          |
-| ----------- | ------------------------------------------- | -------- |
-| `ae-select` | \`{ value: string; item: ComboItem          | null }\` |
-| `ae-input`  | `{ value: string }` fired on each keystroke |          |
+| Event             | Payload                                     |
+| ----------------- | ------------------------------------------- |
+| `ae-combo-select` | `{ value: string; item: ComboItem | null }` |
+| `ae-combo-input`  | `{ value: string }` fired on each keystroke |
 
 ## 3 · Accessibility
 
