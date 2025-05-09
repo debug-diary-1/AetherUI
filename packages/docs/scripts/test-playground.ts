@@ -31,7 +31,7 @@ for (const file of requiredFiles) {
 
 // Verify dependencies
 const packageJson = JSON.parse(playgroundConfig.stackblitz.files['package.json'].content);
-const requiredDeps = ['@aetherui/accordion', '@aetherui/tokens'];
+const requiredDeps = ['@aetherui/core', '@aetherui/tokens'];
 for (const dep of requiredDeps) {
   if (!packageJson.dependencies[dep]) {
     throw new Error(`Missing required dependency: ${dep}`);
@@ -57,7 +57,6 @@ try {
   const workspaceYaml = `packages:
   - 'packages/*'
   - 'packages/docs'
-  - 'packages/accordion'
   - 'packages/tokens'
   - 'packages/adapters'`;
   execSync(`echo '${workspaceYaml}' > ${join(tempDir, 'pnpm-workspace.yaml')}`);
