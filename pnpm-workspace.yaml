@@ -1,7 +1,6 @@
 packages:
   - packages/*
   - packages/docs
-  - packages/accordion
   - packages/tokens
   - packages/adapters
 onlyBuiltDependencies:

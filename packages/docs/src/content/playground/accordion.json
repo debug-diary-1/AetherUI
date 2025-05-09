@@ -18,7 +18,7 @@
             "preview": "vite preview"
           },
           "dependencies": {
-            "@aetherui/accordion": "latest",
+            "@aetherui/core": "latest",
             "@aetherui/tokens": "latest"
           },
           "devDependencies": {
@@ -51,12 +51,12 @@ export default defineConfig({
 </html>`
       },
       "src/main.ts": {
-        "content": `import { defineAccordion } from '@aetherui/accordion';
+        "content": `import { defineAeAccordion } from '@aetherui/core';
 import '@aetherui/tokens/light.css';
 import './styles.css';
 
 // Register the accordion components
-defineAccordion();
+defineAeAccordion();
 
 // Create the playground UI
 const app = document.getElementById('app');
