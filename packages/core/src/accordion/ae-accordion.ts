@@ -3,9 +3,25 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { accordionStyles } from './styles';
 
 /**
+ * A collapsible disclosure component that shows or hides content panels.
+ * 
  * @element ae-accordion
- * @summary A collapsible disclosure component that shows or hides content panels
- * @fires {CustomEvent<{expanded: string[]}>} ae-expand-change - Fired when expansion state changes
+ * 
+ * @property {boolean} multiselectable - Allows multiple panels to be open simultaneously
+ * @property {string[]} value - Array of panel IDs that are currently open/expanded
+ * @property {string[]} defaultValue - Initial panel IDs to open (uncontrolled mode)
+ * 
+ * @fires {CustomEvent<{value: string[]}>} ae-accordion-change - Fired when open/expanded panels change
+ * 
+ * @slot - Default slot for accordion items
+ * 
+ * @csspart base - The container element for the accordion
+ * 
+ * @cssproperty --ae-accordion-bg - Background color
+ * @cssproperty --ae-accordion-border - Border style
+ * @cssproperty --ae-accordion-radius - Border radius
+ * @cssproperty --ae-accordion-shadow - Box shadow
+ * @cssproperty --ae-accordion-divider - Divider between items
  * 
  * @example
  * ```html
@@ -28,7 +44,21 @@ export class AeAccordion extends LitElement {
   accessor multiselectable = false;
 
   /**
-   * Array of panel IDs that are currently expanded
+   * Array of panel IDs that are currently open/expanded (controlled)
+   */
+  @property({ type: Array, attribute: 'value' })
+  accessor value: string[] = [];
+
+  /**
+   * Initial panel IDs to open (uncontrolled mode)
+   * This property is only used during initialization
+   */
+  @property({ type: Array, attribute: 'default-value' })
+  accessor defaultValue: string[] = [];
+
+  /**
+   * @deprecated Use value instead
+   * @internal Maintained for backward compatibility
    */
   @property({ type: Array })
   accessor expanded: string[] = [];
@@ -41,13 +71,17 @@ export class AeAccordion extends LitElement {
     this.setupMutationObserver();
     this.setAttribute('role', 'accordion');
     
-    // Initialize from expanded property
-    if (this.expanded.length) {
+    // Initialize from value/expanded property
+    const initialValue = this.value.length > 0 ? this.value : 
+                         this.expanded.length > 0 ? this.expanded :
+                         this.defaultValue;
+                        
+    if (initialValue.length) {
       if (this.multiselectable) {
-        this.expanded.forEach(id => this.openPanels.add(id));
+        initialValue.forEach(id => this.openPanels.add(id));
       } else {
         // In non-multiselectable mode, only keep the first panel open
-        this.openPanels.add(this.expanded[0]);
+        this.openPanels.add(initialValue[0]);
       }
       this.updateItems();
     }
@@ -93,8 +127,9 @@ export class AeAccordion extends LitElement {
       });
     }
     
-    // Update expanded property to match
-    this.expanded = Array.from(this.openPanels);
+    // Update value and expanded property to match
+    this.value = Array.from(this.openPanels);
+    this.expanded = this.value; // Keep expanded in sync for backward compatibility
     
     // Force the update on all items to ensure consistency
     this.updateItems();
@@ -115,8 +150,14 @@ export class AeAccordion extends LitElement {
   }
 
   updated(changedProperties: Map<string, unknown>) {
-    if (changedProperties.has('expanded')) {
+    if (changedProperties.has('value')) {
+      this.openPanels = new Set(this.value);
+      this.expanded = this.value; // Keep expanded in sync for backward compatibility
+      this.updateItems();
+    } else if (changedProperties.has('expanded')) {
+      // Support legacy expanded property
       this.openPanels = new Set(this.expanded);
+      this.value = this.expanded; // Keep value in sync for backward compatibility
       this.updateItems();
     }
   }
@@ -133,8 +174,9 @@ export class AeAccordion extends LitElement {
         const firstPanelId = openPanelIds[0];
         this.openPanels.clear();
         this.openPanels.add(firstPanelId);
-        // Update the expanded property to match
-        this.expanded = [firstPanelId];
+        // Update the value property to match
+        this.value = [firstPanelId];
+        this.expanded = this.value; // Keep expanded in sync
       }
     }
     
@@ -185,10 +227,18 @@ export class AeAccordion extends LitElement {
     // Update all accordion items to reflect the new state
     this.updateItems();
     
-    // Update the expanded property
-    this.expanded = Array.from(this.openPanels);
+    // Update the value property
+    this.value = Array.from(this.openPanels);
+    this.expanded = this.value; // Keep expanded in sync for backward compatibility
     
-    // Dispatch event with the expanded panels
+    // Dispatch standardized event
+    this.dispatchEvent(new CustomEvent('ae-accordion-change', {
+      detail: { value: this.value },
+      bubbles: true,
+      composed: true,
+    }));
+    
+    // Also dispatch legacy event for backward compatibility
     this.dispatchEvent(new CustomEvent('ae-expand-change', {
       detail: { expanded: this.expanded },
       bubbles: true,

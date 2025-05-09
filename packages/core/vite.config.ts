@@ -18,7 +18,8 @@ const components = [
 ];
 
 // Create entries object with index and components
-const entries = {
+// Use Record<string, string> type to allow dynamic keys
+const entries: Record<string, string> = {
   'index': resolve(__dirname, 'src/index.ts'),
   'auto-register': resolve(__dirname, 'src/auto-register.ts'),
 };

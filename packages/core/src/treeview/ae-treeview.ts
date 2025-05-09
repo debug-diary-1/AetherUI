@@ -7,8 +7,36 @@ import { treeviewStyles } from './styles';
 /**
  * @element ae-treeview
  * @summary Hierarchical navigation component with expand/collapse and selection capabilities
- * @fires {CustomEvent<{selected: string[]}>} ae-select - Fired when selection changes
- * @fires {CustomEvent<{expanded: string[]}>} ae-expand-change - Fired when expansion state changes
+ *
+ * @property {TreeNode[]} data - Nodes to display in the tree view
+ * @property {string[]} expanded - List of node IDs that should be expanded
+ * @property {string[]} selected - List of node IDs that should be selected
+ * @property {'single'|'multiple'} selectionMode - Whether to allow single or multiple selection
+ * @property {number} indentSize - Pixels to indent each depth level
+ * @property {boolean} loading - Shows a loading state when true
+ * @property {string} emptyMessage - Message to display when there are no items
+ * 
+ * @fires {CustomEvent<{selected: string[]}>} ae-treeview-select - Fired when selection changes
+ * @fires {CustomEvent<{expanded: string[]}>} ae-treeview-expand - Fired when expansion state changes
+ * 
+ * @csspart node - Focusable row for each item
+ * @csspart caret - Toggle icon wrapper
+ * @csspart caret-spacer - Placeholder for caret on leaf nodes
+ * @csspart icon - Node icon wrapper
+ * @csspart checkbox - Checkbox indicator
+ * @csspart label - Text label
+ * @csspart empty - Empty state container
+ * @csspart loading - Loading state container
+ * @csspart spinner - Loading spinner
+ * 
+ * @cssproperty --ae-treeview-indent - Pixel indent per depth (default: 16px)
+ * @cssproperty --ae-treeview-caret-size - Caret icon size (default: 12px)
+ * @cssproperty --ae-treeview-row-hover-bg - Hover background color
+ * @cssproperty --ae-treeview-row-selected-bg - Selected row background color
+ * @cssproperty --ae-treeview-row-selected-fg - Selected text color
+ * @cssproperty --ae-treeview-caret-color - Caret icon color
+ * @cssproperty --ae-treeview-caret-open - Expanded caret icon color
+ * @cssproperty --ae-treeview-focus-color - Focus outline color
  * 
  * @example
  * ```html
@@ -17,7 +45,7 @@ import { treeviewStyles } from './styles';
  *   .expanded="${['node1', 'node3']}"
  *   .selected="${['node2']}"
  *   selection-mode="multiple"
- *   @ae-select="${handleSelection}"
+ *   @ae-treeview-select="${handleSelection}"
  * ></ae-treeview>
  * ```
  * 
@@ -99,7 +127,7 @@ export class AeTreeView extends LitElement {
       : [...this.expanded, nodeId];
 
     this.expanded = newExpanded;
-    this.dispatchEvent(new CustomEvent('ae-expand-change', {
+    this.dispatchEvent(new CustomEvent('ae-treeview-expand', {
       detail: { expanded: newExpanded },
       bubbles: true,
       composed: true,
@@ -119,7 +147,7 @@ export class AeTreeView extends LitElement {
     }
 
     this.selected = newSelected;
-    this.dispatchEvent(new CustomEvent('ae-select', {
+    this.dispatchEvent(new CustomEvent('ae-treeview-select', {
       detail: { selected: newSelected },
       bubbles: true,
       composed: true,
