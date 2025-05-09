@@ -164,29 +164,13 @@ body {
 .hero::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: radial-gradient(circle, rgba(var(--sl-color-accent-rgb), 0.1) 0%, transparent 70%);
   z-index: -1;
   opacity: 0.6;
-  animation: pulse 15s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
 }
 
 .hero-title {
@@ -358,19 +342,9 @@ th {
   }
 }
 
-/* Background effect for splash page */
-[data-page-layout="splash"]::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  background-image: 
-    radial-gradient(circle at 15% 15%, rgba(var(--sl-color-accent-rgb), 0.03) 0%, transparent 20%),
-    radial-gradient(circle at 85% 85%, rgba(var(--sl-color-accent-rgb), 0.03) 0%, transparent 20%);
-  z-index: -2;
+/* Simplified background for splash page */
+[data-page-layout="splash"] {
+  background-color: var(--sl-color-bg);
 }
 
 /* Mobile adjustments */
@@ -394,31 +368,10 @@ th {
   }
 }
 
-/* Animation for code snippets */
+/* Simplified code snippet styling */
 .code-snippet pre {
   position: relative;
   overflow: hidden;
-}
-
-.code-snippet pre::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(var(--sl-color-accent-rgb), 0.03) 5%, 
-    transparent 10%);
-  transform: translateX(-100%);
-  animation: codeScan 3s ease-in-out infinite;
-}
-
-@keyframes codeScan {
-  0% { transform: translateX(-100%); }
-  50% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
 }
 
 /* Logo styles */
@@ -438,12 +391,16 @@ th {
   transform: rotate(10deg) scale(1.05);
 }
 
-/* Header enhancements */
+/* Header styles - simplified */
 .header {
   position: sticky;
   top: 0;
   z-index: 10;
-  backdrop-filter: blur(10px);
+  background-color: rgba(var(--sl-color-gray-1, 255, 255, 255), 0.95);
+}
+
+[data-theme='dark'] .header {
+  background-color: rgba(var(--sl-color-gray-7, 0, 0, 0), 0.95);
 }
 
 /* Mobile optimizations */

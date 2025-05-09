@@ -7,6 +7,8 @@ import { defineAeTabs } from './tabs';
 import { defineAeAlert } from './alert';
 import { defineAeDropdown } from './dropdown';
 import { defineAeTreeView } from './treeview';
+import { defineAeAutocomplete } from './autocomplete';
+import { defineAeCombo } from './combo';
 
 export {
   defineAeAccordion,
@@ -19,6 +21,8 @@ export {
   defineAeAlert,
   defineAeDropdown,
   defineAeTreeView,
+  defineAeAutocomplete,
+  defineAeCombo,
 };
 
 export function defineAll() {
@@ -32,4 +36,6 @@ export function defineAll() {
   defineAeAlert();
   defineAeDropdown();
   defineAeTreeView();
-} 
+  defineAeAutocomplete();
+  defineAeCombo();
+}

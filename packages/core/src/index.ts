@@ -8,6 +8,8 @@ export * from './tabs';
 export * from './alert';
 export * from './dropdown';
 export * from './treeview';
+export * from './autocomplete';
+export * from './combo';
 
 // Export define functions
 export { defineAeButton } from './button';
@@ -19,6 +21,8 @@ export { defineAeTabs } from './tabs';
 export { defineAeAlert } from './alert';
 export { defineAeDropdown } from './dropdown';
 export { defineAeTreeView } from './treeview';
+export { defineAeAutocomplete } from './autocomplete';
+export { defineAeCombo } from './combo';
 
 // Export define all function
 export { defineAll } from './define';
@@ -34,12 +38,13 @@ export { AeRadioGroup } from './radio/ae-radio-group';
 export { AeAccordion } from './accordion/ae-accordion';
 export { AeModal } from './modal/ae-modal';
 export { AeTreeView } from './treeview/ae-treeview';
+export { AeAutocomplete } from './autocomplete/ae-autocomplete';
+export { AeCombo } from './combo/ae-combo';
 
-// Register custom elements
-import { AeModal } from './modal/ae-modal';
-import { AeButton } from './button';
-import { AeCheckbox } from './checkbox';
-
-customElements.define('ae-modal', AeModal);
-customElements.define('ae-button', AeButton);
-customElements.define('ae-checkbox', AeCheckbox);
+// Auto-register components if in browser environment
+if (typeof window !== 'undefined') {
+  // Use defineAll to register all components at once
+  import('./define').then(({ defineAll }) => {
+    defineAll();
+  });
+}

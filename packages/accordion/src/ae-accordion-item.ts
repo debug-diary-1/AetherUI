@@ -13,9 +13,10 @@ export class AeAccordionItem extends LitElement {
 
   /**
    * Unique identifier for this accordion item
+   * Can be a UUID or a custom string identifier
    */
   @property({ type: String })
-  accessor headerId = crypto.randomUUID();
+  accessor headerId: string = crypto.randomUUID();
 
   /**
    * Whether this panel is currently open
