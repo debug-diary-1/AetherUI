@@ -2,65 +2,110 @@ import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 /**
- * Individual tab component to be used inside ae-tabs
+ * @element ae-tab
+ * @summary Individual tab component for use with ae-tabs
  */
 @customElement('ae-tab')
 export class AeTab extends LitElement {
   static styles = css`
     :host {
-      display: inline-block;
-      padding: var(--ae-tab-padding, 0.5rem 1rem);
+      display: inline-flex;
+      box-sizing: border-box;
+      position: relative;
+      padding-bottom: 2px; /* Space for the indicator */
+    }
+    
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: var(--ae-tabs-padding, 0.75rem 1rem);
+      background: transparent;
+      border: none;
+      font: inherit;
+      color: var(--ae-tabs-color, inherit);
       cursor: pointer;
-      border-bottom: 2px solid transparent;
+      transition: color 0.2s ease;
     }
-
-    :host([selected]) {
-      border-bottom-color: var(--ae-tab-selected-color, #0066cc);
-      color: var(--ae-tab-selected-color, #0066cc);
+    
+    button:hover {
+      background-color: var(--ae-tabs-hover-bg, rgba(0, 0, 0, 0.04));
     }
-
-    :host(:hover) {
-      color: var(--ae-tab-hover-color, #0052a3);
+    
+    :host([aria-selected="true"]) button {
+      color: var(--ae-tabs-active-color, #4f46e5);
+      font-weight: var(--ae-tabs-selected-weight, 500);
+    }
+    
+    /* The indicator for selected tab - horizontal (default) */
+    .indicator {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background-color: transparent;
+      transition: background-color 0.2s ease;
+    }
+    
+    /* Special indicator for vertical tabs - applied via custom attribute */
+    :host([data-vertical-tab]) .indicator {
+      left: auto;
+      right: 0;
+      top: 0;
+      bottom: auto;
+      width: 2px;
+      height: 100%;
+    }
+    
+    /* Indicator color when selected */
+    :host([aria-selected="true"]) .indicator {
+      background-color: var(--ae-tabs-active-color, #4f46e5);
+    }
+    
+    button:focus-visible {
+      outline: 2px solid var(--ae-tabs-focus-color, #4f46e5);
+      outline-offset: -2px;
     }
   `;
 
   /**
-   * The ID for this tab
+   * ID of the tab
    */
   @property({ type: String, reflect: true })
   accessor id: string = '';
 
   /**
-   * Whether this tab is selected
+   * Whether tab is selected
    */
-  @property({ type: Boolean, reflect: true })
-  selected = false;
+  @property({ type: String, reflect: true, attribute: 'aria-selected' })
+  accessor ariaSelected: string = 'false';
 
   /**
-   * The ID of the panel this tab controls
+   * ID of the panel this tab controls
    */
-  @property({ type: String })
-  panel = '';
+  @property({ type: String, reflect: true, attribute: 'aria-controls' })
+  accessor ariaControls: string = '';
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.setAttribute('role', 'tab');
-    this.setAttribute('tabindex', this.selected ? '0' : '-1');
-  }
-
-  private _handleClick() {
-    this.selected = true;
-    this.dispatchEvent(new CustomEvent('ae-tab-select', {
-      bubbles: true,
-      composed: true,
-    }));
-  }
+  /**
+   * Tab index for keyboard navigation
+   */
+  @property({ type: Number, reflect: true })
+  accessor tabIndex: number = -1;
 
   render() {
     return html`
-      <div @click=${this._handleClick}>
+      <button
+        role="tab"
+        part="tab"
+        aria-selected="${this.ariaSelected}"
+        aria-controls="${this.ariaControls}"
+        tabindex="${this.tabIndex}"
+      >
         <slot></slot>
-      </div>
+      </button>
+      <div class="indicator" part="indicator"></div>
     `;
   }
 }
@@ -71,4 +116,4 @@ declare global {
   }
 }
 
-export type AeTabElement = AeTab; 
+export type AeTabElement = AeTab;

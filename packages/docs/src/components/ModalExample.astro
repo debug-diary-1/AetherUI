@@ -7,62 +7,115 @@ interface Props {
 }
 
 const { code, preview } = Astro.props;
+
+// Generate a unique ID for this example to avoid conflicts
+const exampleId = `modal-example-${Math.random().toString(36).slice(2, 10)}`;
 ---
 
-<div class="modal-example">
+<div class="modal-example" id={exampleId}>
   {preview ? <div class="preview" set:html={preview} /> : <slot />}
   {code && <Code code={code} lang="html" />}
 </div>
 
 <script>
-  import { defineAll } from '@aetherui/core';
+  // Auto-register all components
+  import '@aetherui/core/auto-register';
   
-  // Register all components
-  defineAll();
+  // Wait for DOM to be loaded and hydrated
+  document.addEventListener('DOMContentLoaded', initDocument);
+  document.addEventListener('astro:page-load', initDocument);
   
-  function initializeModals() {
-    document.querySelectorAll('ae-modal').forEach(modal => {
-      // Find open buttons in the preview container or parent
-      const container = modal.closest('.preview') || modal.parentElement;
-      if (!container) return;
-
-      // Handle open buttons
-      container.querySelectorAll('[data-open-modal]').forEach(openBtn => {
-        openBtn.addEventListener('click', () => {
-          console.log('Opening modal');
-          modal.setAttribute('open', '');
+  // Keep track of initialized examples
+  const initializedExamples = new Set();
+  
+  function initDocument() {
+    try {
+      // Initialize modal examples after a short delay to ensure DOM is ready
+      setTimeout(() => {
+        initializeModalExamples();
+      }, 100);
+    } catch (error) {
+      console.error('Error in modal initialization:', error);
+    }
+  }
+  
+  function initializeModalExamples() {
+    document.querySelectorAll('.modal-example').forEach(example => {
+      const exampleId = example.id;
+      
+      // Skip if already initialized
+      if (initializedExamples.has(exampleId)) {
+        return;
+      }
+      
+      console.log(`Initializing modal example ${exampleId}`);
+      
+      // Get components within this example
+      const modal = example.querySelector('ae-modal');
+      const openBtns = example.querySelectorAll('[data-open-modal]');
+      const closeBtns = example.querySelectorAll('[data-close-modal]');
+      
+      if (!modal) {
+        console.warn(`No modal found in example ${exampleId}`);
+        return;
+      }
+      
+      console.log(`Found modal and ${openBtns.length} open buttons, ${closeBtns.length} close buttons in ${exampleId}`);
+      
+      // Apply some direct styling to buttons
+      openBtns.forEach(btn => {
+        if (btn.tagName.toLowerCase() === 'ae-button') {
+          btn.setAttribute('variant', 'primary');
+        }
+        
+        // Add click handler
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log(`Open button clicked in ${exampleId}`);
+          
+          try {
+            modal.setAttribute('open', '');
+            if ('open' in modal) {
+              // @ts-ignore - Custom element property
+              modal.open = true;
+            }
+          } catch (err) {
+            console.error('Error opening modal:', err);
+          }
         });
       });
-
-      // Handle close buttons
-      container.querySelectorAll('[data-close-modal]').forEach(closeBtn => {
-        closeBtn.addEventListener('click', () => {
-          console.log('Closing modal');
-          modal.removeAttribute('open');
+      
+      // Add click handlers to close buttons
+      closeBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log(`Close button clicked in ${exampleId}`);
+          
+          try {
+            modal.removeAttribute('open');
+            if ('open' in modal) {
+              // @ts-ignore - Custom element property
+              modal.open = false;
+            }
+          } catch (err) {
+            console.error('Error closing modal:', err);
+          }
         });
       });
-
-      // Handle backdrop clicks
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          console.log('Closing modal via backdrop');
-          modal.removeAttribute('open');
-        }
+      
+      // Log modal events
+      modal.addEventListener('ae-open', () => {
+        console.log(`Modal opened in ${exampleId}`);
       });
-
-      // Handle escape key
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.hasAttribute('open')) {
-          console.log('Closing modal via escape');
-          modal.removeAttribute('open');
-        }
+      
+      modal.addEventListener('ae-close', () => {
+        console.log(`Modal closed in ${exampleId}`);
       });
+      
+      // Mark this example as initialized
+      initializedExamples.add(exampleId);
     });
   }
-
-  // Initialize immediately and after a short delay to catch dynamically loaded content
-  initializeModals();
-  setTimeout(initializeModals, 100);
 </script>
 
 <style>
@@ -84,52 +137,50 @@ const { code, preview } = Astro.props;
     min-height: 100px;
   }
 
-  :global(.preview ae-button) {
-    margin: 0.5rem;
-    --ae-color-primary: var(--sl-color-accent);
-    --ae-color-primary-hover: var(--sl-color-accent-high);
-    --ae-color-secondary: var(--sl-color-gray-5);
-    --ae-color-secondary-hover: var(--sl-color-gray-6);
-    --ae-border-radius: 0.375rem;
-    --ae-transition-duration: 200ms;
-  }
-
-  /* Light mode styles */
-  :global(.preview ae-modal) {
-    --ae-color-surface: var(--sl-color-white);
-    --ae-color-border: var(--sl-color-gray-3);
-    --ae-modal-text-color: var(--sl-color-black);
-    --ae-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  }
-
   /* Dark mode styles */
-  :global([data-theme="dark"] .preview ae-modal) {
-    --ae-color-surface: var(--sl-color-gray-6);
-    --ae-color-border: var(--sl-color-gray-4);
-    --ae-modal-text-color: var(--sl-color-white);
-    --ae-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+  :global([data-theme="dark"] .preview) {
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-white);
   }
 
-  /* Ensure proper heading contrast */
+  /* Native button styling */
+  :global(.preview button[data-open-modal]) {
+    background-color: var(--sl-color-accent);
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  :global(.preview button[data-open-modal]:hover) {
+    background-color: var(--sl-color-accent-high);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Modal backdrop styling */
+  :global(.preview ae-modal::part(backdrop)) {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    backdrop-filter: blur(2px);
+  }
+
+  /* Content styling */
   :global(.preview ae-modal h2) {
-    color: var(--ae-modal-text-color);
+    color: var(--ae-modal-text-color, inherit);
     margin: 0;
     font-size: 1.25rem;
     font-weight: 600;
     line-height: 1.4;
   }
 
-  /* Ensure proper paragraph contrast */
   :global(.preview ae-modal p) {
-    color: var(--ae-modal-text-color);
+    color: var(--ae-modal-text-color, inherit);
     margin: 0.75rem 0;
     line-height: 1.6;
     opacity: 0.9;
   }
-
-  /* Ensure proper button contrast in dark mode */
-  :global([data-theme="dark"] .preview ae-modal ae-button[variant="secondary"]) {
-    --ae-color-secondary: var(--sl-color-gray-4);
-    --ae-color-secondary-hover: var(--sl-color-gray-3);
-  }
 </style>
+

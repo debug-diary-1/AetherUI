@@ -1,5 +1,5 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, property, query, queryAll, state } from 'lit/decorators.js';
+import { LitElement, html, PropertyValues } from 'lit';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { tabStyles } from './styles';
 
 /**
@@ -11,53 +11,24 @@ import { tabStyles } from './styles';
  * ```html
  * <ae-tabs>
  *   <ae-tab slot="tab">Tab 1</ae-tab>
- *   <ae-tab-panel>Panel 1</ae-tab-panel>
+ *   <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
  *   <ae-tab slot="tab">Tab 2</ae-tab>
- *   <ae-tab-panel>Panel 2</ae-tab-panel>
+ *   <ae-tab-panel slot="panel">Panel 2</ae-tab-panel>
  * </ae-tabs>
  * ```
  */
 @customElement('ae-tabs')
 export class AeTabs extends LitElement {
-  static styles = [
-    tabStyles,
-    css`
-      :host {
-        display: block;
-        width: 100%;
-      }
-      
-      :host([orientation="vertical"]) {
-        display: flex;
-        width: 100%;
-      }
-      
-      .panel-container {
-        flex: 1;
-      }
-      
-      /* Vertical layout specific styles */
-      :host([orientation="vertical"]) [part="tablist"] {
-        min-width: 150px;
-        border-right: 1px solid #ddd;
-        margin-right: 1rem;
-      }
-
-      .tabs {
-        display: flex;
-        border-bottom: 1px solid var(--ae-tabs-border-color, #e5e5e5);
-      }
-    `
-  ];
+  static styles = tabStyles;
 
   /**
-   * The currently active tab's id
+   * The ID of the active tab
    */
   @property({ type: String, reflect: true })
   accessor value: string = '';
 
   /**
-   * Orientation of the tabs
+   * Orientation of the tabs layout
    */
   @property({ type: String, reflect: true })
   accessor orientation: 'horizontal' | 'vertical' = 'horizontal';
@@ -68,181 +39,169 @@ export class AeTabs extends LitElement {
   @property({ type: String })
   accessor activation: 'auto' | 'manual' = 'auto';
 
-  @query('[role="tablist"]')
-  private accessor tabList!: HTMLElement;
-
   @query('slot[name="tab"]')
-  private accessor tabSlot!: HTMLSlotElement;
+  private tabSlot!: HTMLSlotElement;
 
   @query('slot[name="panel"]')
-  private accessor panelSlot!: HTMLSlotElement;
+  private panelSlot!: HTMLSlotElement;
 
-  private _tabs: HTMLElement[] = [];
-  private _panels: HTMLElement[] = [];
+  private tabs: HTMLElement[] = [];
+  private panels: HTMLElement[] = [];
 
   @state()
   private _selectedTab = '';
 
   constructor() {
     super();
-    // Explicitly set default orientation
-    this.orientation = 'horizontal';
+    this.addEventListener('keydown', this._handleKeyDown);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    // Ensure orientation attribute is set
-    if (!this.hasAttribute('orientation')) {
-      this.setAttribute('orientation', 'horizontal');
-    }
-    this.addEventListener('keydown', this.handleKeyDown);
-    this.setAttribute('role', 'tablist');
+    // Always enforce orientation attribute to match property
+    this.setAttribute('orientation', this.orientation);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('keydown', this.handleKeyDown);
+    this.removeEventListener('keydown', this._handleKeyDown);
   }
 
   firstUpdated() {
-    // Set up slot change listeners to handle dynamically added tabs and panels
-    this.tabSlot.addEventListener('slotchange', () => this._handleSlotChange());
-    this.panelSlot.addEventListener('slotchange', () => this._handleSlotChange());
+    // Set up slot change listeners
+    this.tabSlot.addEventListener('slotchange', () => this._updateTabs());
+    this.panelSlot.addEventListener('slotchange', () => this._updateTabs());
     
-    // Initial setup
-    this._handleSlotChange();
-    
-    // Set ARIA orientation
-    if (this.tabList) {
-      this.tabList.setAttribute('aria-orientation', this.orientation);
-    }
+    // Initial configuration
+    this._updateTabs();
   }
 
-  private _handleSlotChange() {
-    // Get assigned elements from slots
-    this._tabs = this.tabSlot.assignedElements() as HTMLElement[];
-    this._panels = this.panelSlot.assignedElements() as HTMLElement[];
-    
-    // Initialize tab and panel relationships
-    this._tabs.forEach((tab, index) => {
-      const panel = this._panels[index];
-      if (tab && panel) {
-        const tabId = tab.id || `tab-${index}`;
-        const panelId = panel.id || `panel-${index}`;
-        
-        tab.id = tabId;
-        panel.id = panelId;
-        
-        tab.setAttribute('aria-controls', panelId);
-        panel.setAttribute('aria-labelledby', tabId);
-        
-        // Add click handler to each tab
-        tab.addEventListener('click', (e) => this.handleTabClick(e));
-      }
-    });
-
-    // If no tab is active, activate the first tab
-    if (!this.value && this._tabs.length > 0) {
-      this.value = this._tabs[0].id;
-    }
-
-    this.updateActiveTab();
-  }
-
-  updated(changedProps: Map<string, any>) {
-    if (changedProps.has('value')) {
-      this.updateActiveTab();
-    }
-    
-    if (changedProps.has('orientation') && this.tabList) {
-      this.tabList.setAttribute('aria-orientation', this.orientation);
+  updated(changedProps: PropertyValues) {
+    // If orientation changes, make sure attribute is updated
+    if (changedProps.has('orientation')) {
+      this.setAttribute('orientation', this.orientation);
       
-      // Force style refresh when orientation changes
-      this.requestUpdate();
+      // Update tabs to set vertical-tab attribute
+      const isVertical = this.orientation === 'vertical';
+      this.tabs.forEach(tab => {
+        if (isVertical) {
+          tab.setAttribute('data-vertical-tab', '');
+        } else {
+          tab.removeAttribute('data-vertical-tab');
+        }
+      });
+    }
+    
+    // Update active tab when value changes
+    if (changedProps.has('value')) {
+      this._updateActiveTab();
     }
   }
 
-  private updateActiveTab() {
-    if (!this._tabs.length) return;
+  private _updateTabs() {
+    // Get tabs and panels from slots
+    this.tabs = Array.from(this.tabSlot.assignedElements()) as HTMLElement[];
+    this.panels = Array.from(this.panelSlot.assignedElements()) as HTMLElement[];
+    
+    const isVertical = this.orientation === 'vertical';
+    
+    // Set up relations between tabs and panels
+    this.tabs.forEach((tab, index) => {
+      const panel = this.panels[index];
+      if (!tab || !panel) return;
+      
+      // Generate IDs if needed
+      const tabId = tab.id || `tab-${index}`;
+      const panelId = panel.id || `panel-${index}`;
+      
+      // Set IDs and ARIA attributes
+      tab.id = tabId;
+      panel.id = panelId;
+      tab.setAttribute('aria-controls', panelId);
+      panel.setAttribute('aria-labelledby', tabId);
+      
+      // Set vertical tab attribute for styling
+      if (isVertical) {
+        tab.setAttribute('data-vertical-tab', '');
+      } else {
+        tab.removeAttribute('data-vertical-tab');
+      }
+      
+      // Add click handler
+      tab.addEventListener('click', () => this._activateTab(tab.id));
+    });
+    
+    // Select first tab if no tab is active
+    if (!this.value && this.tabs.length > 0) {
+      this.value = this.tabs[0].id;
+    }
+    
+    this._updateActiveTab();
+  }
 
-    this._tabs.forEach(tab => {
+  private _updateActiveTab() {
+    // Update selected state for tabs
+    this.tabs.forEach(tab => {
       const isSelected = tab.id === this.value;
       tab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
-      
-      // Find the tab button element
-      const button = tab.shadowRoot?.querySelector('[role="tab"]') || tab;
-      if (button instanceof HTMLElement) {
-        button.tabIndex = isSelected ? 0 : -1;
-      }
+      tab.tabIndex = isSelected ? 0 : -1;
     });
-
-    this._panels.forEach(panel => {
+    
+    // Show/hide panels
+    this.panels.forEach(panel => {
       panel.hidden = panel.getAttribute('aria-labelledby') !== this.value;
     });
   }
 
-  private handleTabClick(e: Event) {
-    const tab = e.currentTarget as HTMLElement;
-    const newValue = tab.id;
-    
-    if (newValue !== this.value) {
-      this.value = newValue;
-      
+  private _activateTab(tabId: string) {
+    if (tabId !== this.value) {
+      this.value = tabId;
       this.dispatchEvent(new CustomEvent('ae-tab-change', {
-        detail: { tab: newValue },
+        detail: { tab: tabId },
         bubbles: true,
         composed: true
       }));
     }
   }
 
-  private handleKeyDown(e: KeyboardEvent) {
-    if (this._tabs.length === 0) return;
-
-    // Find index of current tab
-    const currentIndex = this._tabs.findIndex(tab => tab.id === this.value);
+  private _handleKeyDown = (e: KeyboardEvent) => {
+    if (this.tabs.length === 0) return;
+    
+    // Find current tab index
+    const currentIndex = this.tabs.findIndex(tab => tab.id === this.value);
     if (currentIndex === -1) return;
     
-    let newIndex: number | null = null;
-    const isHorizontal = this.orientation === 'horizontal';
-
-    // Handle keyboard navigation based on orientation
+    const isHorizontal = this.orientation !== 'vertical';
+    let nextIndex: number | null = null;
+    
+    // Handle navigation based on orientation
     switch (e.key) {
       case isHorizontal ? 'ArrowRight' : 'ArrowDown':
-        newIndex = (currentIndex + 1) % this._tabs.length;
+        nextIndex = (currentIndex + 1) % this.tabs.length;
         break;
       case isHorizontal ? 'ArrowLeft' : 'ArrowUp':
-        newIndex = (currentIndex - 1 + this._tabs.length) % this._tabs.length;
+        nextIndex = (currentIndex - 1 + this.tabs.length) % this.tabs.length;
         break;
       case 'Home':
-        newIndex = 0;
+        nextIndex = 0;
         break;
       case 'End':
-        newIndex = this._tabs.length - 1;
+        nextIndex = this.tabs.length - 1;
         break;
       default:
-        return;
+        return;  // Not a key we handle
     }
-
-    if (newIndex !== null) {
+    
+    if (nextIndex !== null) {
       e.preventDefault();
-      const newTab = this._tabs[newIndex];
+      const nextTab = this.tabs[nextIndex];
       
-      // In auto activation mode, activate the tab automatically
+      // Focus the tab
+      nextTab.focus();
+      
+      // Auto-activate if in auto mode
       if (this.activation === 'auto') {
-        this.value = newTab.id;
-        
-        this.dispatchEvent(new CustomEvent('ae-tab-change', {
-          detail: { tab: newTab.id },
-          bubbles: true,
-          composed: true
-        }));
-      }
-      
-      // Focus the new tab
-      const button = newTab.shadowRoot?.querySelector('[role="tab"]') || newTab;
-      if (button instanceof HTMLElement) {
-        button.focus();
+        this._activateTab(nextTab.id);
       }
     }
   }
@@ -260,10 +219,10 @@ export class AeTabs extends LitElement {
 
   render() {
     return html`
-      <div class="tabs" aria-orientation=${this.orientation}>
-        <slot @ae-tab-select=${this._handleTabSelect}></slot>
+      <div class="tablist" role="tablist" aria-orientation="${this.orientation}">
+        <slot name="tab"></slot>
       </div>
-      <div part="panels" class="panel-container">
+      <div class="panels">
         <slot name="panel"></slot>
       </div>
     `;
@@ -276,4 +235,4 @@ declare global {
   }
 }
 
-export type AeTabsElement = AeTabs; 
+export type AeTabsElement = AeTabs;

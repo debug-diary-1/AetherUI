@@ -65,7 +65,7 @@ if (app) {
     <div class="playground">
       <div class="preview">
         <ae-accordion id="playground-accordion">
-          <ae-accordion-panel>
+          <ae-accordion-item data-header-id="getting-started">
             <span slot="header">Getting Started</span>
             <div class="panel-content">
               <p>Learn how to install and use Aether UI components in your project.</p>
@@ -75,8 +75,8 @@ if (app) {
                 <li>Framework Integration</li>
               </ul>
             </div>
-          </ae-accordion-panel>
-          <ae-accordion-panel>
+          </ae-accordion-item>
+          <ae-accordion-item data-header-id="components">
             <span slot="header">Components</span>
             <div class="panel-content">
               <p>Browse our collection of accessible, themeable components.</p>
@@ -86,7 +86,7 @@ if (app) {
                 <li>Dialog</li>
               </ul>
             </div>
-          </ae-accordion-panel>
+          </ae-accordion-item>
         </ae-accordion>
 
         <div class="controls">
@@ -99,12 +99,12 @@ if (app) {
 
       <div class="code">
         <pre><code class="language-html">&lt;ae-accordion&gt;
-  &lt;ae-accordion-panel&gt;
+  &lt;ae-accordion-item data-header-id="getting-started"&gt;
     &lt;span slot="header"&gt;Getting Started&lt;/span&gt;
     &lt;div class="panel-content"&gt;
       &lt;p&gt;Learn how to install and use Aether UI components...&lt;/p&gt;
     &lt;/div&gt;
-  &lt;/ae-accordion-panel&gt;
+  &lt;/ae-accordion-item&gt;
   &lt;!-- More panels... --&gt;
 &lt;/ae-accordion&gt;</code></pre>
       </div>

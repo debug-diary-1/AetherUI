@@ -1,32 +1,5 @@
 import { html } from 'lit';
-import { defineAll } from '@aetherui/core';
-
-// Register all components
-defineAll();
-
-// Helper function to ensure horizontal orientation is explicitly set
-const forceHorizontalLayout = (element) => {
-  setTimeout(() => {
-    // Find all ae-tabs elements that don't have orientation="vertical"
-    const tabs = document.querySelectorAll('ae-tabs:not([orientation="vertical"])');
-    tabs.forEach((tab) => {
-      // Set orientation to horizontal
-      tab.setAttribute('orientation', 'horizontal');
-
-      // Force the tablist to be horizontal
-      const tablist = tab.shadowRoot?.querySelector('[part="tablist"]');
-      if (tablist) {
-        tablist.style.flexDirection = 'row';
-        tablist.style.borderBottom = '1px solid #ddd';
-        tablist.style.borderRight = 'none';
-        tablist.style.marginBottom = '1rem';
-        tablist.style.marginRight = '0';
-      }
-    });
-  }, 0);
-
-  return element;
-};
+import { AeTabs } from '@aetherui/core';
 
 export default {
   title: 'Components/Tabs',
@@ -52,12 +25,6 @@ export default {
       description: 'Apply custom styles',
     },
   },
-  decorators: [
-    (story) => {
-      const rendered = story();
-      return forceHorizontalLayout(rendered);
-    },
-  ],
 };
 
 export const Default = {
@@ -106,7 +73,18 @@ export const Default = {
       : '';
 
     const handleChange = (e) => {
-      console.log('Tab changed:', e.detail.value);
+      console.log('Tab changed:', e.detail.tab);
+      
+      // Debug - verify the tab is actually getting selected
+      const tabs = document.querySelectorAll(`#${e.currentTarget.id} ae-tab`);
+      tabs.forEach(tab => {
+        if (tab.id === e.detail.tab) {
+          console.log('Setting selected tab:', tab.id);
+          tab.setAttribute('aria-selected', 'true');
+        } else {
+          tab.setAttribute('aria-selected', 'false');
+        }
+      });
     };
 
     return html`
@@ -117,10 +95,9 @@ export const Default = {
           class="custom-tabs"
           id="demo-tabs"
           value=${args.value}
-          orientation="horizontal"
+          orientation=${args.orientation}
           activation=${args.activation}
-          @ae-change=${handleChange}
-          style="display: block !important;"
+          @ae-tab-change=${handleChange}
         >
           <ae-tab slot="tab" id="tab1">First Tab</ae-tab>
           <ae-tab slot="tab" id="tab2">Second Tab</ae-tab>
@@ -213,7 +190,18 @@ export const Vertical = {
       : '';
 
     const handleChange = (e) => {
-      console.log('Tab changed:', e.detail.value);
+      console.log('Tab changed:', e.detail.tab);
+      
+      // Debug - verify the tab is actually getting selected
+      const tabs = document.querySelectorAll(`#${e.currentTarget.id} ae-tab`);
+      tabs.forEach(tab => {
+        if (tab.id === e.detail.tab) {
+          console.log('Setting selected tab:', tab.id);
+          tab.setAttribute('aria-selected', 'true');
+        } else {
+          tab.setAttribute('aria-selected', 'false');
+        }
+      });
     };
 
     return html`
@@ -226,7 +214,7 @@ export const Vertical = {
           value=${args.value}
           orientation="vertical"
           activation=${args.activation}
-          @ae-change=${handleChange}
+          @ae-tab-change=${handleChange}
         >
           <ae-tab slot="tab" id="tab1">First Tab</ae-tab>
           <ae-tab slot="tab" id="tab2">Second Tab</ae-tab>
@@ -283,7 +271,18 @@ export const ManualActivation = {
   },
   render: (args) => {
     const handleChange = (e) => {
-      console.log('Tab changed:', e.detail.value);
+      console.log('Tab changed:', e.detail.tab);
+      
+      // Debug - verify the tab is actually getting selected
+      const tabs = document.querySelectorAll(`#${e.currentTarget.id} ae-tab`);
+      tabs.forEach(tab => {
+        if (tab.id === e.detail.tab) {
+          console.log('Setting selected tab:', tab.id);
+          tab.setAttribute('aria-selected', 'true');
+        } else {
+          tab.setAttribute('aria-selected', 'false');
+        }
+      });
     };
 
     return html`
@@ -298,8 +297,7 @@ export const ManualActivation = {
           value=${args.value}
           orientation="horizontal"
           activation="manual"
-          @ae-change=${handleChange}
-          style="display: block !important;"
+          @ae-tab-change=${handleChange}
         >
           <ae-tab slot="tab" id="tab1">First Tab</ae-tab>
           <ae-tab slot="tab" id="tab2">Second Tab</ae-tab>
@@ -332,19 +330,46 @@ export const Both = {
   render: () => {
     return html`
       <div
-        style="width: 100%; font-family: system-ui, sans-serif; display: flex; flex-direction: column; gap: 50px;"
+        style="width: 100%; font-family: system-ui, sans-serif; display: flex; flex-direction: column; gap: 60px;"
       >
         <section>
-          <h2>Horizontal Tabs</h2>
+          <h2>Default/Horizontal Tabs</h2>
           <div style="max-width: 600px;">
-            <ae-tabs orientation="horizontal" value="tab1" style="display: block !important;">
+            <!-- Not specifying orientation to verify default is horizontal -->
+            <ae-tabs value="tab1">
               <ae-tab slot="tab" id="tab1">First Tab</ae-tab>
               <ae-tab slot="tab" id="tab2">Second Tab</ae-tab>
               <ae-tab slot="tab" id="tab3">Third Tab</ae-tab>
 
               <ae-tab-panel slot="panel" id="panel1">
-                <h3>Horizontal Tabs Example</h3>
-                <p>This is a standard horizontal tabs layout with tabs arranged in a row.</p>
+                <h3>Default Horizontal Tabs</h3>
+                <p>This is using the default orientation which should be horizontal (tabs in a row).</p>
+              </ae-tab-panel>
+
+              <ae-tab-panel slot="panel" id="panel2">
+                <h3>Second Tab Content</h3>
+                <p>Content for the second tab in horizontal orientation.</p>
+              </ae-tab-panel>
+
+              <ae-tab-panel slot="panel" id="panel3">
+                <h3>Third Tab Content</h3>
+                <p>Content for the third tab in horizontal orientation.</p>
+              </ae-tab-panel>
+            </ae-tabs>
+          </div>
+        </section>
+
+        <section>
+          <h2>Explicit Horizontal Tabs</h2>
+          <div style="max-width: 600px;">
+            <ae-tabs orientation="horizontal" value="tab1">
+              <ae-tab slot="tab" id="tab1">First Tab</ae-tab>
+              <ae-tab slot="tab" id="tab2">Second Tab</ae-tab>
+              <ae-tab slot="tab" id="tab3">Third Tab</ae-tab>
+
+              <ae-tab-panel slot="panel" id="panel1">
+                <h3>Explicit Horizontal Tabs</h3>
+                <p>These tabs have orientation="horizontal" explicitly set.</p>
               </ae-tab-panel>
 
               <ae-tab-panel slot="panel" id="panel2">

@@ -70,17 +70,14 @@ const { code, preview, title, description } = Astro.props;
     background: var(--sl-color-black);
   }
    
-  /* Force horizontal orientation by default */
-  :global(ae-tabs:not([orientation="vertical"])) {
-    display: block !important;
+  /* Basic styling for example container */
+  .preview {
+    contain: content;
   }
-
-  :global(ae-tabs:not([orientation="vertical"])) :global([part="tablist"]) {
-    flex-direction: row !important;
-    border-bottom: 1px solid #ddd !important;
-    border-right: none !important;
-    margin-bottom: 1rem !important;
-    margin-right: 0 !important;
+  
+  /* Just margin for the tabs component */
+  .preview ae-tabs {
+    margin-bottom: 1rem;
   }
 </style>
 
@@ -92,14 +89,21 @@ const { code, preview, title, description } = Astro.props;
   // Initialize all components
   defineAll();
   
-  // Fix orientation of tabs after components are loaded
+  // Make sure orientation attributes are correctly set
   document.addEventListener('DOMContentLoaded', () => {
-    // Select all tabs without a vertical orientation
-    const horizontalTabs = document.querySelectorAll('ae-tabs:not([orientation="vertical"])');
-    
-    // Set horizontal orientation explicitly
-    horizontalTabs.forEach(tab => {
-      tab.setAttribute('orientation', 'horizontal');
-    });
+    // Wait for components to be defined and attached
+    setTimeout(() => {
+      // For each ae-tabs element...
+      document.querySelectorAll('ae-tabs').forEach(tabElement => {
+        // Ensure orientation attribute is explicitly set
+        const isVertical = tabElement.getAttribute('orientation') === 'vertical';
+        
+        if (isVertical) {
+          tabElement.setAttribute('orientation', 'vertical');
+        } else {
+          tabElement.setAttribute('orientation', 'horizontal');
+        }
+      });
+    }, 100);
   });
 </script>

@@ -1,8 +1,5 @@
 import { html } from 'lit';
-import { defineAll } from '@aetherui/core';
-
-// Register all components
-defineAll();
+import { AeAlert } from '@aetherui/core';
 
 export default {
   title: 'Components/Alert',

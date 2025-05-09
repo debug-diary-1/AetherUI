@@ -2,8 +2,18 @@ import { execSync } from 'child_process';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
+interface PlaygroundFile {
+  content: string;
+}
+
+interface PlaygroundConfig {
+  stackblitz: {
+    files: Record<string, PlaygroundFile>;
+  };
+}
+
 const playgroundPath = join(process.cwd(), 'src/content/playground/accordion.json');
-const playgroundConfig = JSON.parse(readFileSync(playgroundPath, 'utf-8'));
+const playgroundConfig = JSON.parse(readFileSync(playgroundPath, 'utf-8')) as PlaygroundConfig;
 
 // Verify StackBlitz configuration
 console.log('Verifying StackBlitz configuration...');
@@ -37,7 +47,7 @@ try {
   execSync(`mkdir -p ${tempDir}`);
   
   // Write files to temp directory
-  for (const [file, content] of Object.entries(playgroundConfig.stackblitz.files)) {
+  for (const [file, content] of Object.entries<PlaygroundFile>(playgroundConfig.stackblitz.files)) {
     const filePath = join(tempDir, file);
     execSync(`mkdir -p ${filePath.split('/').slice(0, -1).join('/')}`);
     execSync(`echo '${content.content}' > ${filePath}`);

@@ -10,6 +10,7 @@ import {
   defineAeAlert,
   defineAeDropdown,
   defineAeTreeView,
+  defineAeCombo,
   defineAll
 } from '@aetherui/core';
 
@@ -46,6 +47,7 @@ export {
   defineAeAlert,
   defineAeDropdown,
   defineAeTreeView,
+  defineAeCombo,
   defineAll
 };
 

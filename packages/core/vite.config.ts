@@ -2,12 +2,38 @@ import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
 
+// Define component entries
+const components = [
+  'accordion',
+  'alert',
+  'button',
+  'checkbox',
+  'dropdown',
+  'modal',
+  'radio',
+  'tabs',
+  'treeview',
+  'combo',
+  'autocomplete'
+];
+
+// Create entries object with index and components
+const entries = {
+  'index': resolve(__dirname, 'src/index.ts'),
+  'auto-register': resolve(__dirname, 'src/auto-register.ts'),
+};
+
+// Add individual component entries
+components.forEach(component => {
+  entries[`${component}/index`] = resolve(__dirname, `src/${component}/index.ts`);
+});
+
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
-      formats: ['es'],
-      fileName: 'index',
+      entry: entries,
+      formats: ['es', 'cjs'],
+      fileName: (format, entryName) => `${entryName}.${format === 'es' ? 'js' : 'cjs'}`,
     },
     rollupOptions: {
       external: [/^lit/, '@floating-ui/dom'],
@@ -35,4 +61,4 @@ export default defineConfig({
       },
     },
   },
-}); 
+});

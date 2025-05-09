@@ -1,83 +1,98 @@
 import { css } from 'lit';
 
 export const tabStyles = css`
+  /* Host element - the main container */
   :host {
-    display: block;
-  }
-
-  .tabs {
     display: flex;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  
+  /* Default horizontal orientation */
+  :host(:not([orientation="vertical"])) {
     flex-direction: column;
   }
-
-  .tabs[data-orientation="vertical"] {
+  
+  /* Vertical orientation */
+  :host([orientation="vertical"]) {
     flex-direction: row;
   }
-
+  
+  /* Tab list container - horizontal (default) */
   .tablist {
     display: flex;
+    flex-direction: row;
     gap: var(--ae-tabs-gap, 0.5rem);
     border-bottom: var(--ae-tabs-border, 1px solid #e5e7eb);
+    margin-bottom: var(--ae-tabs-margin, 1rem);
+    width: 100%;
   }
-
-  .tabs[data-orientation="vertical"] .tablist {
+  
+  /* Tab list container - vertical */
+  :host([orientation="vertical"]) .tablist {
     flex-direction: column;
     border-bottom: none;
     border-right: var(--ae-tabs-border, 1px solid #e5e7eb);
+    margin-bottom: 0;
+    margin-right: var(--ae-tabs-margin, 1rem);
+    min-width: 150px;
+    width: auto;
   }
-
-  ::slotted([role="tab"]) {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--ae-tabs-padding, 0.75rem 1rem);
-    color: var(--ae-tabs-color, #6b7280);
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid transparent;
-    border-radius: var(--ae-tabs-radius, 4px 4px 0 0);
-    font-size: var(--ae-tabs-font-size, inherit);
-    font-weight: var(--ae-tabs-font-weight, 500);
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .tabs[data-orientation="vertical"] ::slotted([role="tab"]) {
-    border-bottom: none;
-    border-right: 2px solid transparent;
-    border-radius: var(--ae-tabs-radius, 4px 0 0 4px);
-  }
-
-  ::slotted([role="tab"]:hover) {
-    color: var(--ae-tabs-hover-color, #4b5563);
-    background: var(--ae-tabs-hover-bg, #f3f4f6);
-  }
-
-  ::slotted([role="tab"][aria-selected="true"]) {
-    color: var(--ae-tabs-active-color, #4f46e5);
-    border-bottom-color: var(--ae-tabs-active-border-color, #4f46e5);
-  }
-
-  .tabs[data-orientation="vertical"] ::slotted([role="tab"][aria-selected="true"]) {
-    border-bottom-color: transparent;
-    border-right-color: var(--ae-tabs-active-border-color, #4f46e5);
-  }
-
-  ::slotted([role="tab"]:focus-visible) {
-    outline: 2px solid var(--ae-tabs-focus-color, #4f46e5);
-    outline-offset: -2px;
-  }
-
+  
+  /* Panel container */
   .panels {
     flex: 1;
-    padding: var(--ae-tabs-panel-padding, 1rem);
   }
-
-  ::slotted([role="tabpanel"]) {
+  
+  /* Tab slot styling */
+  ::slotted(ae-tab) {
+    display: inline-flex;
+  }
+  
+  /* Horizontal tab indicator - using relative & absolute positioning for the indicator */
+  :host(:not([orientation="vertical"])) ::slotted(ae-tab) {
+    position: relative;
+  }
+  
+  :host(:not([orientation="vertical"])) ::slotted(ae-tab[aria-selected="true"]) {
+    color: var(--ae-tabs-active-color, #4f46e5);
+  }
+  
+  :host(:not([orientation="vertical"])) ::slotted(ae-tab[aria-selected="true"])::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--ae-tabs-active-color, #4f46e5);
+  }
+  
+  /* Vertical tab indicator */
+  :host([orientation="vertical"]) ::slotted(ae-tab) {
+    position: relative;
+  }
+  
+  :host([orientation="vertical"]) ::slotted(ae-tab[aria-selected="true"]) {
+    color: var(--ae-tabs-active-color, #4f46e5);
+  }
+  
+  :host([orientation="vertical"]) ::slotted(ae-tab[aria-selected="true"])::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background-color: var(--ae-tabs-active-color, #4f46e5);
+  }
+  
+  /* Panel styling */
+  ::slotted(ae-tab-panel) {
     display: none;
   }
-
-  ::slotted([role="tabpanel"]:not([hidden])) {
+  
+  ::slotted(ae-tab-panel:not([hidden])) {
     display: block;
   }
-`; 
+`;

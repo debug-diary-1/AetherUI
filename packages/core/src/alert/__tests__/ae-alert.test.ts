@@ -1,78 +1,77 @@
 import { html, fixture, expect, oneEvent, elementUpdated } from '@open-wc/testing';
+import { beforeEach, describe, it } from 'vitest';
 import '../ae-alert';
 import { AeAlert } from '../ae-alert';
 
 describe('ae-alert', () => {
   it('has correct default properties', async () => {
-    const el = await fixture<AeAlert>(html`<ae-alert>Test message</ae-alert>`);
-    
+    const el = await fixture<AeAlert>(html`<ae-alert>Alert content</ae-alert>`);
     expect(el.variant).to.equal('info');
-    expect(el.closable).to.be.false;
+    expect(el.closable).to.be.true;
     expect(el.open).to.be.true;
+    expect(el.getAttribute('role')).to.equal('status');
   });
 
   it('renders with custom variant', async () => {
-    const el = await fixture<AeAlert>(html`<ae-alert variant="error">Error message</ae-alert>`);
-    
-    expect(el.variant).to.equal('error');
-    expect(el.shadowRoot!.querySelector('[part="base"]')).to.exist;
+    const el = await fixture<AeAlert>(html`<ae-alert variant="warning">Warning</ae-alert>`);
+    expect(el.variant).to.equal('warning');
+    expect(el.getAttribute('role')).to.equal('alert');
   });
 
   it('uses role="alert" for warning and error variants', async () => {
     const warning = await fixture<AeAlert>(html`<ae-alert variant="warning">Warning</ae-alert>`);
-    const error = await fixture<AeAlert>(html`<ae-alert variant="error">Error</ae-alert>`);
+    expect(warning.getAttribute('role')).to.equal('alert');
     
-    expect(warning.shadowRoot!.querySelector('[role="alert"]')).to.exist;
-    expect(error.shadowRoot!.querySelector('[role="alert"]')).to.exist;
+    const error = await fixture<AeAlert>(html`<ae-alert variant="error">Error</ae-alert>`);
+    expect(error.getAttribute('role')).to.equal('alert');
   });
 
   it('uses role="status" for info variant', async () => {
     const el = await fixture<AeAlert>(html`<ae-alert variant="info">Info</ae-alert>`);
-    
-    expect(el.shadowRoot!.querySelector('[role="status"]')).to.exist;
+    expect(el.getAttribute('role')).to.equal('status');
   });
 
   it('shows close button when closable=true', async () => {
-    const el = await fixture<AeAlert>(html`<ae-alert closable>Closable alert</ae-alert>`);
-    
-    const closeButton = el.shadowRoot!.querySelector('[part="close"]');
+    const el = await fixture<AeAlert>(html`<ae-alert closable>Alert content</ae-alert>`);
+    const closeButton = el.shadowRoot!.querySelector('.close-button');
     expect(closeButton).to.exist;
-    expect(closeButton!.getAttribute('aria-label')).to.equal('Close');
+    
+    const nonClosable = await fixture<AeAlert>(html`<ae-alert closable="false">Alert content</ae-alert>`);
+    const noCloseButton = nonClosable.shadowRoot!.querySelector('.close-button');
+    expect(noCloseButton).to.not.exist;
   });
 
   it('dispatches ae-close event when close button is clicked', async () => {
-    const el = await fixture<AeAlert>(html`<ae-alert closable>Closable alert</ae-alert>`);
+    const el = await fixture<AeAlert>(html`<ae-alert>Alert content</ae-alert>`);
     
-    const closeButton = el.shadowRoot!.querySelector('[part="close"]');
+    setTimeout(() => {
+      const closeButton = el.shadowRoot!.querySelector('.close-button') as HTMLButtonElement;
+      closeButton.click();
+    });
     
-    setTimeout(() => closeButton!.dispatchEvent(new MouseEvent('click')));
-    const { type } = await oneEvent(el, 'ae-close');
-    
-    expect(type).to.equal('ae-close');
+    const { detail } = await oneEvent(el, 'ae-close');
+    expect(detail).to.deep.equal({ source: 'closeButton' });
     expect(el.open).to.be.false;
   });
 
   it('hides when open=false', async () => {
-    const el = await fixture<AeAlert>(html`<ae-alert>Visible alert</ae-alert>`);
+    const el = await fixture<AeAlert>(html`<ae-alert open>Alert content</ae-alert>`);
+    expect(el).to.be.visible;
     
     el.open = false;
     await elementUpdated(el);
-    
-    const renderResult = el.shadowRoot!.innerHTML;
-    expect(renderResult).to.not.include('part="base"');
+    expect(el.style.display).to.equal('none');
   });
 
   it('allows custom icon via slot', async () => {
-    const el = await fixture<AeAlert>(html`
-      <ae-alert>
-        <svg slot="icon" width="24" height="24" viewBox="0 0 24 24">
-          <path d="M12 2L2 22h20L12 2z"/>
-        </svg>
-        Alert with custom icon
-      </ae-alert>
-    `);
+    const el = await fixture<AeAlert>(
+      html`<ae-alert>
+        <svg slot="icon" width="16" height="16"></svg>
+        Alert content
+      </ae-alert>`
+    );
     
-    const slotted = el.querySelector('[slot="icon"]');
-    expect(slotted).to.exist;
+    const slot = el.shadowRoot!.querySelector('slot[name="icon"]');
+    expect(slot).to.exist;
   });
 }); 

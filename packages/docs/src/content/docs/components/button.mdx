@@ -1,18 +1,39 @@
 ---
-title: Button
-description: A clickable button component with various styles and states.
+title: Button Component
+description: Primary action trigger with variants (primary, secondary, ghost, icon-only) and sizes (sm, md, lg).
 ---
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ButtonExample from '../../../components/ButtonExample.astro';
+import '@aetherui/core/auto-register';
 
 {/* Register custom elements for MDX */}
 export const components = {
   'ae-button': 'ae-button'
 };
 
-# Button
+# Button Component
 
-The Button component is a clickable element that triggers an action.
+The Button component is a clickable element that triggers an action with different variants and sizes.
+
+## All Variants
+
+<ButtonExample
+  title="Button Variants"
+  description="AetherUI provides primary, secondary and ghost variants in both normal and disabled states."
+  code={`<div style="display: flex; flex-direction: column; gap: 16px;">
+  <div class="button-group">
+    <ae-button variant="primary">Primary</ae-button>
+    <ae-button variant="secondary">Secondary</ae-button>
+    <ae-button variant="ghost">Ghost</ae-button>
+  </div>
+
+  <div class="button-group">
+    <ae-button variant="primary" disabled>Primary Disabled</ae-button>
+    <ae-button variant="secondary" disabled>Secondary Disabled</ae-button>
+    <ae-button variant="ghost" disabled>Ghost Disabled</ae-button>
+  </div>
+</div>`}
+/>
 
 ## Installation
 
@@ -34,185 +55,77 @@ The Button component is a clickable element that triggers an action.
   </TabItem>
 </Tabs>
 
+## Import
+
+```js
+// Option 1: Import the specific component definition (for minimal bundle size)
+import '@aetherui/core/button/define.js';
+
+// Option 2: Import all components through auto-register (recommended)
+import '@aetherui/core/auto-register';
+
+// Option 3: Import all components at once (includes auto-registration)
+import '@aetherui/core';
+```
+
 ## Basic Usage
 
 <ButtonExample
+  title="Basic Button"
+  description="The default button uses the primary variant with medium size."
   code={`<ae-button>Default Button</ae-button>`}
-  preview={`<ae-button>Default Button</ae-button>`}
 />
 
 ## Variants
 
+The button component supports three variants: `primary`, `secondary`, and `ghost`.
+
 <ButtonExample
-  code={`<!-- Primary variant -->
-<div class="button-group--vertical" style="width: 100%;">
-  <div class="button-group">
-    <ae-button variant="primary">Primary Button</ae-button>
-    <ae-button variant="primary">
-      <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 5v14M5 12h14"/>
-      </svg>
-      Primary with Icon
-    </ae-button>
-    <ae-button variant="primary" disabled>Primary Disabled</ae-button>
-  </div>
-
-  <!-- Secondary variant -->
-  <div class="button-group">
-    <ae-button variant="secondary">Secondary Button</ae-button>
-    <ae-button variant="secondary">
-      <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 5v14M5 12h14"/>
-      </svg>
-      Secondary with Icon
-    </ae-button>
-    <ae-button variant="secondary" disabled>Secondary Disabled</ae-button>
-  </div>
-
-  <!-- Ghost variant -->
-  <div class="button-group">
-    <ae-button variant="ghost">Ghost Button</ae-button>
-    <ae-button variant="ghost">
-      <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 5v14M5 12h14"/>
-      </svg>
-      Ghost with Icon
-    </ae-button>
-    <ae-button variant="ghost" disabled>Ghost Disabled</ae-button>
-  </div>
-</div>
-
-<div class="variant-description">
-  <h3>When to use each variant:</h3>
-  <p><strong>Primary:</strong> Use for the main action in a section or form. High emphasis, colored background. There should typically be only one primary button per view.</p>
-  <p><strong>Secondary:</strong> Use for alternative actions that are less important than the primary action. Medium emphasis, subtle background.</p>
-  <p><strong>Ghost:</strong> Use for the least prominent actions, often in toolbars or card actions. Low emphasis, transparent background.</p>
-</div>`}
-  preview={`<!-- Primary variant -->
-<div class="button-group--vertical" style="width: 100%;">
-  <div class="button-group">
-    <ae-button variant="primary">Primary Button</ae-button>
-    <ae-button variant="primary">
-      <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 5v14M5 12h14"/>
-      </svg>
-      Primary with Icon
-    </ae-button>
-    <ae-button variant="primary" disabled>Primary Disabled</ae-button>
-  </div>
-
-  <!-- Secondary variant -->
-  <div class="button-group">
-    <ae-button variant="secondary">Secondary Button</ae-button>
-    <ae-button variant="secondary">
-      <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 5v14M5 12h14"/>
-      </svg>
-      Secondary with Icon
-    </ae-button>
-    <ae-button variant="secondary" disabled>Secondary Disabled</ae-button>
-  </div>
-
-  <!-- Ghost variant -->
-  <div class="button-group">
-    <ae-button variant="ghost">Ghost Button</ae-button>
-    <ae-button variant="ghost">
-      <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 5v14M5 12h14"/>
-      </svg>
-      Ghost with Icon
-    </ae-button>
-    <ae-button variant="ghost" disabled>Ghost Disabled</ae-button>
-  </div>
-</div>
-
-<div class="variant-description">
-  <h3>When to use each variant:</h3>
-  <p><strong>Primary:</strong> Use for the main action in a section or form. High emphasis, colored background. There should typically be only one primary button per view.</p>
-  <p><strong>Secondary:</strong> Use for alternative actions that are less important than the primary action. Medium emphasis, subtle background.</p>
-  <p><strong>Ghost:</strong> Use for the least prominent actions, often in toolbars or card actions. Low emphasis, transparent background.</p>
+  title="Button Variants"
+  description="Choose from primary (default), secondary, and ghost variants to match your UI hierarchy."
+  code={`<div class="button-group">
+  <ae-button variant="primary">Primary Button</ae-button>
+  <ae-button variant="secondary">Secondary Button</ae-button>
+  <ae-button variant="ghost">Ghost Button</ae-button>
 </div>`}
 />
 
 ## Sizes
 
-<ButtonExample
-  code={`<div class="button-group--vertical">
-  <!-- Small size -->
-  <div class="button-group">
-    <ae-button size="sm" variant="primary">Small</ae-button>
-    <ae-button size="sm" variant="secondary">Small</ae-button>
-    <ae-button size="sm" variant="ghost">Small</ae-button>
-  </div>
-
-  <!-- Medium size (default) -->
-  <div class="button-group">
-    <ae-button size="md" variant="primary">Medium</ae-button>
-    <ae-button size="md" variant="secondary">Medium</ae-button>
-    <ae-button size="md" variant="ghost">Medium</ae-button>
-  </div>
-
-  <!-- Large size -->
-  <div class="button-group">
-    <ae-button size="lg" variant="primary">Large</ae-button>
-    <ae-button size="lg" variant="secondary">Large</ae-button>
-    <ae-button size="lg" variant="ghost">Large</ae-button>
-  </div>
-</div>`}
-  preview={`<div class="button-group--vertical">
-  <!-- Small size -->
-  <div class="button-group">
-    <ae-button size="sm" variant="primary">Small</ae-button>
-    <ae-button size="sm" variant="secondary">Small</ae-button>
-    <ae-button size="sm" variant="ghost">Small</ae-button>
-  </div>
-
-  <!-- Medium size (default) -->
-  <div class="button-group">
-    <ae-button size="md" variant="primary">Medium</ae-button>
-    <ae-button size="md" variant="secondary">Medium</ae-button>
-    <ae-button size="md" variant="ghost">Medium</ae-button>
-  </div>
-
-  <!-- Large size -->
-  <div class="button-group">
-    <ae-button size="lg" variant="primary">Large</ae-button>
-    <ae-button size="lg" variant="secondary">Large</ae-button>
-    <ae-button size="lg" variant="ghost">Large</ae-button>
-  </div>
-</div>`}
-/>
-
-## Icon Buttons
+The button component supports three sizes: `sm`, `md` (default), and `lg`.
 
 <ButtonExample
+  title="Button Sizes"
+  description="Use different sizes (sm, md, lg) to create visual hierarchy and match your design needs."
   code={`<div class="button-group">
-  <!-- Icon at start -->
-  <ae-button variant="primary">
-    <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M12 5v14M5 12h14"/>
-    </svg>
-    Add Item
-  </ae-button>
-
-  <!-- Icon at end -->
-  <ae-button variant="secondary" icon-position="end">
-    Settings
-    <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M12 15l-3-3 3-3M21 12H9"/>
-    </svg>
-  </ae-button>
-
-  <!-- Icon only -->
-  <ae-button variant="ghost" aria-label="Add item">
-    <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M12 5v14M5 12h14"/>
-    </svg>
-  </ae-button>
+  <ae-button size="sm">Small</ae-button>
+  <ae-button size="md">Medium</ae-button>
+  <ae-button size="lg">Large</ae-button>
 </div>`}
-  preview={`<div class="button-group">
-  <!-- Icon at start -->
-  <ae-button variant="primary">
+/>
+
+## Disabled State
+
+<ButtonExample
+  title="Disabled Buttons"
+  description="Buttons can be disabled to indicate that an action is not available."
+  code={`<div class="button-group">
+  <ae-button variant="primary" disabled>Disabled Primary</ae-button>
+  <ae-button variant="secondary" disabled>Disabled Secondary</ae-button>
+  <ae-button variant="ghost" disabled>Disabled Ghost</ae-button>
+</div>`}
+/>
+
+## Icons
+
+The button supports icons through the `icon` slot. You can position the icon at the start or end using the `icon-position` attribute.
+
+<ButtonExample
+  title="Buttons with Icons"
+  description="Add icons to buttons using the icon slot. Icons can be positioned at the start or end."
+  code={`<div class="button-group">
+  <!-- Icon at start (default) -->
+  <ae-button>
     <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M12 5v14M5 12h14"/>
     </svg>
@@ -220,10 +133,10 @@ The Button component is a clickable element that triggers an action.
   </ae-button>
 
   <!-- Icon at end -->
-  <ae-button variant="secondary" icon-position="end">
-    Settings
+  <ae-button icon-position="end">
+    Next
     <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M12 15l-3-3 3-3M21 12H9"/>
+      <path d="M9 18l6-6-6-6"/>
     </svg>
   </ae-button>
 
@@ -236,52 +149,12 @@ The Button component is a clickable element that triggers an action.
 </div>`}
 />
 
-## Common Patterns
+## Common Usage Patterns
 
 <ButtonExample
-  code={`<!-- Form actions -->
-<div class="button-group--vertical" style="width: 100%;">
-  <!-- Form actions -->
-  <div class="button-group">
-    <ae-button variant="primary">Save Changes</ae-button>
-    <ae-button variant="secondary">Cancel</ae-button>
-  </div>
-
-  <!-- Dialog actions -->
-  <div class="button-group">
-    <ae-button variant="primary">Confirm</ae-button>
-    <ae-button variant="ghost">Cancel</ae-button>
-  </div>
-
-  <!-- Toolbar actions -->
-  <div class="button-group">
-    <ae-button variant="ghost" aria-label="Add item">
-      <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 5v14M5 12h14"/>
-      </svg>
-    </ae-button>
-    <ae-button variant="ghost" aria-label="Edit">
-      <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
-        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
-      </svg>
-    </ae-button>
-    <ae-button variant="ghost" aria-label="Delete">
-      <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
-      </svg>
-    </ae-button>
-  </div>
-</div>
-
-<div class="variant-description">
-  <h3>Common Usage Patterns:</h3>
-  <p><strong>Form Actions:</strong> Use Primary for Submit/Save and Secondary for Cancel. This creates a clear hierarchy of actions.</p>
-  <p><strong>Dialog Actions:</strong> Use Primary for Confirm/OK and Ghost for Cancel/Close. The ghost variant makes the cancel action less prominent.</p>
-  <p><strong>Toolbar Actions:</strong> Use Ghost buttons with icons for a clean, unobtrusive look. Always include aria-labels for accessibility.</p>
-</div>`}
-  preview={`<!-- Form actions -->
-<div class="button-group--vertical" style="width: 100%;">
+  title="Common Button Patterns"
+  description="Examples of how to use button variants in different UI contexts."
+  code={`<div class="button-group--vertical" style="width: 100%;">
   <!-- Form actions -->
   <div class="button-group">
     <ae-button variant="primary">Save Changes</ae-button>
@@ -327,9 +200,9 @@ The Button component is a clickable element that triggers an action.
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `'primary' \| 'secondary' \| 'ghost'` | `'primary'` | The visual style variant of the button |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | The size of the button |
-| `disabled` | `boolean` | `false` | Whether the button is disabled |
+| `variant` | `'primary' \| 'secondary' \| 'ghost'` | `'primary'` | Visual style variant of the button |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Applied to padding & font-size |
+| `disabled` | `boolean` | `false` | Native disable state |
 | `icon-position` | `'start' \| 'end'` | `'start'` | Position of the icon when both icon and text are present |
 
 ## Slots
@@ -344,35 +217,59 @@ The Button component is a clickable element that triggers an action.
 | Name | Description |
 |------|-------------|
 | `base` | The button element |
+| `label` | Text wrapper element |
 | `icon` | The icon wrapper element |
 
 ## CSS Custom Properties
 
 | Name | Description |
 |------|-------------|
-| `--ae-color-primary` | Primary button background color |
-| `--ae-color-primary-hover` | Primary button hover background color |
-| `--ae-color-primary-foreground` | Primary button text color |
-| `--ae-color-secondary` | Secondary button background color |
-| `--ae-color-secondary-hover` | Secondary button hover background color |
-| `--ae-color-secondary-foreground` | Secondary button text color |
-| `--ae-color-ghost` | Ghost button background color |
-| `--ae-color-ghost-hover` | Ghost button hover background color |
-| `--ae-color-ghost-foreground` | Ghost button text color |
+| `--ae-button-bg-primary` | Primary button background color |
+| `--ae-button-fg-primary` | Primary button text color |
+| `--ae-button-bg-secondary` | Secondary button background color |
+| `--ae-button-fg-secondary` | Secondary button text color |
+| `--ae-color-brand-600` | Used for ghost button color and focus ring |
+| `--ae-button-radius` | Button border radius |
+| `--ae-button-padding-x` | Horizontal button padding |
+| `--ae-button-padding-y` | Vertical button padding |
+| `--ae-button-gap` | Gap between button text and icon |
 | `--ae-focus-ring-color` | Focus ring color |
-| `--ae-focus-ring-width` | Focus ring width |
-| `--ae-focus-ring-offset` | Focus ring offset |
-| `--ae-border-radius` | Button border radius |
-| `--ae-font-family` | Button font family |
-| `--ae-font-weight` | Button font weight |
+
+## Styling Examples
+
+Custom styling can be applied using CSS custom properties and shadow parts:
+
+```css
+/* Make ghost variant transparent with brand-color text */
+ae-button[variant="ghost"]::part(base) {
+  background: transparent;
+  color: var(--ae-color-brand-600);
+}
+
+/* Apply custom theme colors */
+:root {
+  --ae-button-bg-primary: #5e3bee;
+  --ae-button-fg-primary: white;
+  --ae-color-brand-600: #5e3bee;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --ae-button-bg-primary: #7353eb;
+  --ae-color-brand-600: #7353eb;
+}
+```
 
 ## Accessibility
 
 The button component follows WAI-ARIA guidelines:
 
-- Uses native `<button>` element
-- Supports keyboard navigation
-- Maintains proper focus management with visible focus rings
+- Uses native `<button>` element semantics
 - Requires aria-labels for icon-only buttons
-- Includes proper ARIA attributes when disabled
+- Supports keyboard navigation
+- Maintains proper focus styling with visible focus rings
+- Includes proper disabled state styling and attributes
 
+## Browser Support
+
+- Chrome, Edge, Safari 15+, Firefox ESR

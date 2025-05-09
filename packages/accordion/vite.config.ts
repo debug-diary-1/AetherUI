@@ -22,10 +22,16 @@ export default defineConfig({
       rollupTypes: true,
     }),
   ],
-  server: {
-    port: 3002,
-  },
   esbuild: {
     target: 'es2022',
+    tsconfigRaw: {
+      compilerOptions: {
+        useDefineForClassFields: false,
+        experimentalDecorators: true,
+      },
+    },
+  },
+  server: {
+    port: 3002,
   },
 });

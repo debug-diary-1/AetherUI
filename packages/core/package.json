@@ -13,7 +13,67 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     },
-    "./package.json": "./package.json"
+    "./auto-register": {
+      "import": "./dist/auto-register.js",
+      "require": "./dist/auto-register.js",
+      "types": "./dist/auto-register.d.ts"
+    },
+    "./accordion": {
+      "types": "./dist/accordion/index.d.ts",
+      "import": "./dist/accordion/index.js",
+      "require": "./dist/accordion/index.js"
+    },
+    "./button": {
+      "types": "./dist/button/index.d.ts",
+      "import": "./dist/button/index.js",
+      "require": "./dist/button/index.js"
+    },
+    "./checkbox": {
+      "types": "./dist/checkbox/index.d.ts",
+      "import": "./dist/checkbox/index.js",
+      "require": "./dist/checkbox/index.js"
+    },
+    "./dropdown": {
+      "types": "./dist/dropdown/index.d.ts",
+      "import": "./dist/dropdown/index.js",
+      "require": "./dist/dropdown/index.js"
+    },
+    "./modal": {
+      "types": "./dist/modal/index.d.ts",
+      "import": "./dist/modal/index.js",
+      "require": "./dist/modal/index.js"
+    },
+    "./radio": {
+      "types": "./dist/radio/index.d.ts",
+      "import": "./dist/radio/index.js",
+      "require": "./dist/radio/index.js"
+    },
+    "./tabs": {
+      "types": "./dist/tabs/index.d.ts",
+      "import": "./dist/tabs/index.js",
+      "require": "./dist/tabs/index.js"
+    },
+    "./treeview": {
+      "types": "./dist/treeview/index.d.ts",
+      "import": "./dist/treeview/index.js",
+      "require": "./dist/treeview/index.js"
+    },
+    "./alert": {
+      "types": "./dist/alert/index.d.ts",
+      "import": "./dist/alert/index.js",
+      "require": "./dist/alert/index.js"
+    },
+    "./combo": {
+      "types": "./dist/combo/index.d.ts",
+      "import": "./dist/combo/index.js",
+      "require": "./dist/combo/index.js"
+    },
+    "./package.json": "./package.json",
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "require": "./dist/*/index.js"
+    }
   },
   "files": [
     "dist"
@@ -31,11 +91,13 @@
     "lit-modal-portal": "^0.6.0"
   },
   "devDependencies": {
+    "@open-wc/testing": "^3.2.0",
+    "@types/jest": "^29.5.0",
     "@types/node": "^20.0.0",
     "rimraf": "^5.0.0",
     "typescript": "^5.0.0",
     "vite": "^5.0.0",
     "vite-plugin-dts": "^3.0.0",
-    "vitest": "^1.0.0"
+    "vitest": "^0.34.0"
   }
 }

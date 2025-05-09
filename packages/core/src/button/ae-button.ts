@@ -17,6 +17,7 @@ import { styles } from './styles';
  * @slot icon - Icon content
  * 
  * @csspart base - The button element
+ * @csspart label - Text wrapper element
  * @csspart icon - The icon wrapper
  */
 export class AeButton extends LitElement {
@@ -40,13 +41,12 @@ export class AeButton extends LitElement {
   render() {
     return html`
       <button
-        class="base base--${this.variant} base--${this.size}"
         part="base"
         ?disabled=${this.disabled}
         @click=${this._handleClick}
       >
         <slot name="icon" part="icon"></slot>
-        <slot></slot>
+        <span part="label"><slot></slot></span>
       </button>
     `;
   }
@@ -65,7 +65,7 @@ export class AeButton extends LitElement {
     this.updateComplete.then(() => {
       const hasIcon = this.querySelector('[slot="icon"]') !== null;
       const hasLabel = Array.from(this.childNodes).some(node => {
-        if (node.nodeType === Node.TEXT_NODE) return true;
+        if (node.nodeType === Node.TEXT_NODE) return node.textContent?.trim() !== '';
         if (node.nodeType === Node.ELEMENT_NODE) {
           const element = node as Element;
           return !element.hasAttribute('slot');

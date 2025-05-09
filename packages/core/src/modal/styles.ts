@@ -10,19 +10,22 @@ export const modalStyles = css`
     --ae-modal-border-radius: var(--ae-border-radius, 0.5rem);
     --ae-modal-padding: 1.5rem;
     --ae-modal-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --ae-modal-backdrop-color: rgba(0, 0, 0, 0.4);
+    --ae-modal-backdrop-blur: 2px;
   }
 
-  .overlay {
+  .backdrop {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--ae-modal-backdrop-color);
+    backdrop-filter: blur(var(--ae-modal-backdrop-blur));
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 50;
   }
 
-  .modal {
+  .panel {
     position: relative;
     width: var(--ae-modal-width);
     max-width: var(--ae-modal-max-width);
@@ -30,9 +33,28 @@ export const modalStyles = css`
     max-height: var(--ae-modal-max-height);
     background: var(--ae-modal-background);
     border-radius: var(--ae-modal-border-radius);
-    padding: var(--ae-modal-padding);
     box-shadow: var(--ae-modal-shadow);
     overflow: auto;
+  }
+
+  .header {
+    padding: var(--ae-modal-padding);
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--ae-color-border, #eaeaea);
+    position: relative;
+  }
+
+  .body {
+    padding: var(--ae-modal-padding);
+  }
+
+  .footer {
+    padding: var(--ae-modal-padding);
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--ae-color-border, #eaeaea);
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
   }
 
   .close-button {
@@ -50,5 +72,22 @@ export const modalStyles = css`
 
   .close-button:hover {
     opacity: 1;
+  }
+
+  .close-icon {
+    display: block;
+  }
+
+  /* Size variants */
+  .panel[data-size="small"] {
+    --ae-modal-width: 24rem;
+  }
+
+  .panel[data-size="medium"] {
+    --ae-modal-width: 32rem;
+  }
+
+  .panel[data-size="large"] {
+    --ae-modal-width: 48rem;
   }
 `; 
