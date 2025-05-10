@@ -19,17 +19,27 @@ export class PaginationManager {
    * @param options Configuration options
    */
   initialize(
-    pagination?: Partial<PaginationState>,
+    paginationOrRowCount?: Partial<PaginationState> | number,
     options?: {
       pageSizeOptions?: number[];
       enablePagination?: boolean;
       rowCount?: number;
     }
   ): void {
-    this._pagination = { 
-      ...DEFAULT_PAGINATION_STATE, 
-      ...pagination 
-    };
+    // Handle the case where a number is passed (for backward compatibility)
+    if (typeof paginationOrRowCount === 'number') {
+      this._rowCount = paginationOrRowCount;
+      this._pagination = { ...DEFAULT_PAGINATION_STATE };
+    } else {
+      this._pagination = { 
+        ...DEFAULT_PAGINATION_STATE, 
+        ...(paginationOrRowCount || {})
+      };
+      
+      if (options?.rowCount !== undefined) {
+        this._rowCount = options.rowCount;
+      }
+    }
     
     if (options) {
       if (options.pageSizeOptions) {
@@ -37,8 +47,10 @@ export class PaginationManager {
       }
       
       this._enablePagination = options.enablePagination ?? true;
-      this._rowCount = options.rowCount;
     }
+    
+    // Update derived properties
+    this.updateDerivedState();
   }
   
   /**
@@ -47,6 +59,43 @@ export class PaginationManager {
    */
   getPagination(): PaginationState {
     return { ...this._pagination };
+  }
+  
+  /**
+   * Alias for getPagination for backward compatibility
+   * @returns Current pagination state with additional properties
+   */
+  getPaginationState(): PaginationState {
+    return {
+      ...this._pagination,
+      page: this._pagination.pageIndex + 1,
+      totalItems: this._rowCount || 0,
+      totalPages: this.getPageCount()
+    };
+  }
+  
+  /**
+   * Update derived state properties
+   */
+  private updateDerivedState(): void {
+    // Implementation stays empty for now
+  }
+  
+  /**
+   * Update total items count
+   * @param count New total items count
+   */
+  updateTotalItems(count: number): void {
+    this._rowCount = count;
+  }
+  
+  /**
+   * Set page (1-based for compatibility)
+   * @param page Page number (1-based)
+   * @returns True if pagination changed
+   */
+  setPage(page: number): boolean {
+    return this.setPageIndex(page - 1);
   }
   
   /**

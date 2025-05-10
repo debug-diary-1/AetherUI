@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DataTable Manual Test</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .demo-table {
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    
+    h1 {
+      color: #333;
+    }
+    
+    h2 {
+      color: #555;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+      margin-top: 30px;
+    }
+    
+    button {
+      padding: 8px 16px;
+      background-color: #5e7ce2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    
+    button:hover {
+      background-color: #4b69c8;
+    }
+    
+    .controls {
+      margin-bottom: 20px;
+    }
+  </style>
+  <script type="module">
+    import { html } from 'https://unpkg.com/lit@3.0.0/index.js?module';
+    
+    // Custom element registration
+    customElements.define('ae-datatable', class extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `<div>DataTable Placeholder</div>`;
+      }
+    });
+    
+    // Sample data
+    const data = [
+      { id: 1, name: 'John Doe', age: 30, email: 'john@example.com', status: 'Active' },
+      { id: 2, name: 'Jane Smith', age: 25, email: 'jane@example.com', status: 'Active' },
+      { id: 3, name: 'Bob Johnson', age: 40, email: 'bob@example.com', status: 'Inactive' },
+      { id: 4, name: 'Alice Williams', age: 35, email: 'alice@example.com', status: 'Active' },
+      { id: 5, name: 'Charlie Brown', age: 28, email: 'charlie@example.com', status: 'Pending' }
+    ];
+    
+    // Column definitions
+    const columns = [
+      { id: 'name', field: 'name', header: 'Name' },
+      { id: 'age', field: 'age', header: 'Age', align: 'right' },
+      { id: 'email', field: 'email', header: 'Email' },
+      { id: 'status', field: 'status', header: 'Status' }
+    ];
+    
+    // Initialize table when DOM is loaded
+    window.addEventListener('DOMContentLoaded', () => {
+      const table = document.getElementById('demo-table');
+      console.log('Table initialized', table);
+      
+      // Set up event listeners
+      document.getElementById('toggle-sort').addEventListener('click', () => {
+        console.log('Toggle sort');
+      });
+      
+      document.getElementById('toggle-filter').addEventListener('click', () => {
+        console.log('Toggle filter');
+      });
+      
+      document.getElementById('toggle-selection').addEventListener('click', () => {
+        console.log('Toggle selection');
+      });
+      
+      document.getElementById('toggle-pagination').addEventListener('click', () => {
+        console.log('Toggle pagination');
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>DataTable Component Manual Test</h1>
+  
+  <div class="demo-table">
+    <h2>Basic DataTable</h2>
+    
+    <div class="controls">
+      <button id="toggle-sort">Toggle Sort</button>
+      <button id="toggle-filter">Toggle Filter</button>
+      <button id="toggle-selection">Toggle Selection</button>
+      <button id="toggle-pagination">Toggle Pagination</button>
+    </div>
+    
+    <ae-datatable id="demo-table"></ae-datatable>
+  </div>
+</body>
+</html>

@@ -1,7 +1,7 @@
 /**
  * Sorting direction
  */
-export type SortDirection = 'asc' | 'desc';
+export type SortDirection = 'asc' | 'desc' | 'none';
 
 /**
  * Individual sort configuration for a column
@@ -18,6 +18,11 @@ export interface SortItem {
  * Full sorting state for a table
  */
 export type SortingState = SortItem[];
+
+/**
+ * Alias for backward compatibility
+ */
+export type SortState = SortingState;
 
 /**
  * Default implementation of a sort comparator

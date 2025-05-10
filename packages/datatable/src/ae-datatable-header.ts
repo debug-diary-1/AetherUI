@@ -1,8 +1,8 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { DATATABLE_HEADER_ELEMENT_NAME } from './index';
+import { DATATABLE_HEADER_ELEMENT_NAME } from './constants';
 import { headerCellStyles } from './styles';
-import { SortDirection } from './models/sort-model';
+import type { SortDirection } from './models/sort-model';
 
 /**
  * Header cell component for the datatable
@@ -30,25 +30,25 @@ export class AeDatatableHeader extends LitElement {
    * Whether the column is sortable
    */
   @property({ type: Boolean, reflect: true })
-  accessor sortable = true;
+  sortable = true;
 
   /**
    * Current sort direction
    */
   @property({ type: String, reflect: true })
-  accessor direction: SortDirection = 'none';
+  direction: SortDirection = 'none';
 
   /**
    * Whether the column is resizable
    */
   @property({ type: Boolean, reflect: true })
-  accessor resizable = true;
+  resizable = true;
 
   /**
    * Text alignment
    */
   @property({ type: String, reflect: true })
-  accessor align: 'left' | 'center' | 'right' = 'left';
+  align: 'left' | 'center' | 'right' = 'left';
 
   /**
    * Track resize state

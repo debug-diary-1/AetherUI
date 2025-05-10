@@ -15,6 +15,11 @@ export interface ColumnFilter {
 export type ColumnFiltersState = ColumnFilter[];
 
 /**
+ * Alias for backward compatibility
+ */
+export type FilterState = ColumnFiltersState;
+
+/**
  * Default implementation of a string filter function
  * @param value The value to check
  * @param filter The filter string to match against

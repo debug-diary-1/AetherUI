@@ -1,13 +1,15 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
-import { ColumnDef } from '../models/column-model';
-import { SortState, SortDirection } from '../models/sort-model';
-import { FilterState } from '../models/filter-model';
-import { PaginationState } from '../models/pagination-model';
+import type { ColumnDef } from '../models/column-model';
+import type { SortState, SortDirection } from '../models/sort-model';
+import type { FilterState } from '../models/filter-model';
+import type { PaginationState } from '../models/pagination-model';
 import { ColumnManager } from '../core/column-manager';
 import { SortManager } from '../core/sort-manager';
 import { FilterManager } from '../core/filter-manager';
 import { SelectionManager } from '../core/selection-manager';
 import { PaginationManager } from '../core/pagination-manager';
+import { filterData } from '../utils/filter-utils';
+import { sortData } from '../utils/sort-utils';
 
 /**
  * A reactive controller for datatable components that handles all data operations
@@ -20,9 +22,9 @@ export class DataTableController<T> implements ReactiveController {
   
   // Core managers
   private _columnManager: ColumnManager<T>;
-  private _sortManager: SortManager<T>;
-  private _filterManager: FilterManager<T>;
-  private _selectionManager: SelectionManager<T>;
+  private _sortManager: SortManager;
+  private _filterManager: FilterManager;
+  private _selectionManager: SelectionManager;
   private _paginationManager: PaginationManager;
   
   /**
@@ -32,9 +34,9 @@ export class DataTableController<T> implements ReactiveController {
   constructor(host: ReactiveControllerHost) {
     this._host = host;
     this._columnManager = new ColumnManager<T>();
-    this._sortManager = new SortManager<T>();
-    this._filterManager = new FilterManager<T>();
-    this._selectionManager = new SelectionManager<T>();
+    this._sortManager = new SortManager();
+    this._filterManager = new FilterManager();
+    this._selectionManager = new SelectionManager();
     this._paginationManager = new PaginationManager();
     
     host.addController(this);
@@ -50,7 +52,7 @@ export class DataTableController<T> implements ReactiveController {
     this._columnManager.initialize(columns);
     this._sortManager.initialize();
     this._filterManager.initialize();
-    this._selectionManager.initialize(this._data);
+    this._selectionManager.initialize();
     this._paginationManager.initialize(data.length);
     
     this.processData();
@@ -60,24 +62,37 @@ export class DataTableController<T> implements ReactiveController {
    * Process the data with current sorting, filtering, and pagination
    */
   private processData(): void {
+    // Start with a copy of the original data
     let result = [...this._data];
     
-    // Apply filters
-    result = this._filterManager.applyFilters(result, this._columnManager.getAllColumns());
+    // Apply filters first
+    const columnFilters = this._filterManager.getColumnFilters();
+    const globalFilter = this._filterManager.getGlobalFilter();
     
-    // Apply sorting
-    result = this._sortManager.applySort(result, this._columnManager.getAllColumns());
+    // Filter the data based on column and global filters
+    result = filterData(result, columnFilters, globalFilter, this._columnManager.getAllColumns());
     
-    // Update pagination with new data length
+    // Then apply sorting
+    const sortState = this._sortManager.getSorting();
+    
+    // Sort the filtered data
+    result = sortData(result, sortState, this._columnManager.getAllColumns());
+    
+    // Update pagination with new filtered data length
     this._paginationManager.updateTotalItems(result.length);
     
     // Get current page data
-    const { page, pageSize } = this._paginationManager.getPaginationState();
+    const paginationState = this._paginationManager.getPaginationState();
+    const pageIndex = paginationState.pageIndex;
+    const pageSize = paginationState.pageSize;
+    
+    // Slice data for current page if pagination is enabled
     if (pageSize > 0) {
-      const start = (page - 1) * pageSize;
+      const start = pageIndex * pageSize;
       result = result.slice(start, start + pageSize);
     }
     
+    // Update processed data and notify host to re-render
     this._processedData = result;
     this._host.requestUpdate();
   }
@@ -153,14 +168,14 @@ export class DataTableController<T> implements ReactiveController {
    * Get current sort state
    */
   getSortState(): SortState {
-    return this._sortManager.getSortState();
+    return this._sortManager.getSorting();
   }
   
   /**
    * Set sort state
    */
   setSortState(columnId: string, direction: SortDirection, multiSort = false): void {
-    this._sortManager.setSortState(columnId, direction, multiSort);
+    this._sortManager.toggleSorting(columnId, multiSort, direction === 'asc' ? false : direction === 'desc' ? true : undefined);
     this.processData();
   }
   
@@ -168,7 +183,7 @@ export class DataTableController<T> implements ReactiveController {
    * Clear all sorting
    */
   clearSort(): void {
-    this._sortManager.clearSort();
+    this._sortManager.clearSorting();
     this.processData();
   }
   
@@ -176,7 +191,7 @@ export class DataTableController<T> implements ReactiveController {
    * Get current filter state
    */
   getFilterState(): FilterState {
-    return this._filterManager.getFilterState();
+    return this._filterManager.getColumnFilters();
   }
   
   /**
@@ -207,14 +222,14 @@ export class DataTableController<T> implements ReactiveController {
    * Get selected row IDs
    */
   getSelectedRows(): (string | number)[] {
-    return this._selectionManager.getSelectedRows();
+    return this._selectionManager.getSelectedRowIds();
   }
   
   /**
    * Set row selection state
    */
   setRowSelection(rowId: string | number, selected: boolean): void {
-    this._selectionManager.setRowSelection(rowId, selected);
+    this._selectionManager.toggleRowSelection(String(rowId), selected);
     this._host.requestUpdate();
   }
   
@@ -222,7 +237,7 @@ export class DataTableController<T> implements ReactiveController {
    * Toggle row selection
    */
   toggleRowSelection(rowId: string | number): void {
-    this._selectionManager.toggleRowSelection(rowId);
+    this._selectionManager.toggleRowSelection(String(rowId));
     this._host.requestUpdate();
   }
   
@@ -230,7 +245,8 @@ export class DataTableController<T> implements ReactiveController {
    * Select all rows
    */
   selectAllRows(): void {
-    this._selectionManager.selectAllRows(this._processedData);
+    const rowIds = this._processedData.map((_, index) => String(index));
+    this._selectionManager.selectAll(rowIds);
     this._host.requestUpdate();
   }
   
@@ -238,7 +254,7 @@ export class DataTableController<T> implements ReactiveController {
    * Deselect all rows
    */
   deselectAllRows(): void {
-    this._selectionManager.deselectAllRows();
+    this._selectionManager.deselectAll();
     this._host.requestUpdate();
   }
   
@@ -246,7 +262,7 @@ export class DataTableController<T> implements ReactiveController {
    * Check if a row is selected
    */
   isRowSelected(rowId: string | number): boolean {
-    return this._selectionManager.isRowSelected(rowId);
+    return this._selectionManager.isRowSelected(String(rowId));
   }
   
   /**
@@ -323,7 +339,7 @@ export class DataTableController<T> implements ReactiveController {
    */
   updateData(data: T[]): void {
     this._data = [...data];
-    this._selectionManager.initialize(this._data);
+    this._selectionManager.initialize();
     this._paginationManager.updateTotalItems(data.length);
     this.processData();
   }

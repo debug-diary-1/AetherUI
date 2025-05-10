@@ -29,6 +29,7 @@
     "lit": "^3.0.0"
   },
   "devDependencies": {
+    "@open-wc/testing": "^4.0.0",
     "@types/node": "^20.0.0",
     "rimraf": "^5.0.0",
     "typescript": "^5.0.0",

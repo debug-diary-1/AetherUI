@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimal Full-Page DataTable</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: -apple-system, system-ui, sans-serif;
+    }
+    
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .header {
+      background-color: #1e293b;
+      color: white;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .main {
+      flex: 1;
+      padding: 1rem;
+      overflow: auto;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card-header {
+      padding: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      background-color: #f8fafc;
+    }
+    
+    .card-body {
+      flex: 1;
+      padding: 0;
+      overflow: auto;
+    }
+    
+    .footer {
+      padding: 1rem;
+      background-color: #f8fafc;
+      border-top: 1px solid #e5e7eb;
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+    
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+
+    /* Placeholder styles for fallback content */
+    .placeholder-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .placeholder-table th {
+      background-color: #f1f5f9;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .placeholder-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .placeholder-table tr:hover {
+      background-color: #f8fafc;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>AetherUI DataTable - Full-Page Example</h1>
+    </header>
+    
+    <main class="main">
+      <div class="card">
+        <div class="card-header">
+          <h2>User Management Dashboard</h2>
+        </div>
+        
+        <div class="card-body" id="table-container">
+          <!-- Placeholder content before component loads -->
+          <table class="placeholder-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>John Doe</td>
+                <td>john@example.com</td>
+                <td>Active</td>
+              </tr>
+              <tr>
+                <td>Jane Smith</td>
+                <td>jane@example.com</td>
+                <td>Active</td>
+              </tr>
+              <tr>
+                <td>Bob Johnson</td>
+                <td>bob@example.com</td>
+                <td>Inactive</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+    
+    <footer class="footer">
+      <div>AetherUI DataTable Component Demo</div>
+    </footer>
+  </div>
+
+  <!-- Initialize the DataTable component with all needed approaches -->
+  <script type="module">
+    // Data for the table
+    const data = [
+      { id: 1, name: 'John Doe', email: 'john@example.com', status: 'Active' },
+      { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'Active' },
+      { id: 3, name: 'Bob Johnson', email: 'bob@example.com', status: 'Inactive' },
+      { id: 4, name: 'Alice Brown', email: 'alice@example.com', status: 'Active' },
+      { id: 5, name: 'Charlie Davis', email: 'charlie@example.com', status: 'Pending' }
+    ];
+    
+    // Basic column definition
+    const columns = [
+      { id: 'name', field: 'name', header: 'Name' },
+      { id: 'email', field: 'email', header: 'Email' },
+      { id: 'status', field: 'status', header: 'Status' }
+    ];
+    
+    async function createDataTable() {
+      try {
+        // Create datatable element first
+        const table = document.createElement('ae-datatable');
+        
+        // Set up properties
+        table.data = data;
+        table.columns = columns;
+        table.sortable = true;
+        table.filterable = true;
+        table.selectable = true;
+        table.paginated = true;
+        table.pageSize = 3;
+        
+        // Clear the container and add the table
+        const container = document.getElementById('table-container');
+        container.innerHTML = '';
+        container.appendChild(table);
+        
+        console.log('DataTable created and appended successfully');
+        return true;
+      } catch (error) {
+        console.error('Error creating DataTable:', error);
+        return false;
+      }
+    }
+    
+    async function initializeModule() {
+      try {
+        // Direct import of the module
+        const module = await import('./dist/index.js');
+        
+        // Register components if possible
+        if (module.defineDataTableElements) {
+          module.defineDataTableElements();
+          console.log('Components registered successfully');
+          
+          // Create the DataTable
+          await createDataTable();
+        } else {
+          console.error('defineDataTableElements not found in module');
+        }
+      } catch (error) {
+        console.error('Error importing module:', error);
+        
+        // Try fallback approach
+        try {
+          // Alternatively, we can use the AeDataTable class directly if available
+          const { AeDataTable } = await import('./dist/index2.js');
+          const { DATATABLE_ELEMENT_NAME } = await import('./dist/index13.js');
+          
+          if (AeDataTable && DATATABLE_ELEMENT_NAME) {
+            console.log('Using direct imports as fallback');
+            
+            if (!customElements.get(DATATABLE_ELEMENT_NAME)) {
+              customElements.define(DATATABLE_ELEMENT_NAME, AeDataTable);
+              console.log('DataTable element defined via direct import');
+            }
+            
+            // Create the DataTable
+            await createDataTable();
+          }
+        } catch (fallbackError) {
+          console.error('Fallback approach failed:', fallbackError);
+        }
+      }
+    }
+    
+    // Wait for DOM content to be loaded
+    window.addEventListener('DOMContentLoaded', initializeModule);
+  </script>
+</body>
+</html>

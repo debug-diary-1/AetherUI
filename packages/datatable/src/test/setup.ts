@@ -1,12 +1,14 @@
 // Test setup file
-global.ResizeObserver = class ResizeObserver {
+
+// Mock classes for browser APIs not available in Node.js
+class MockResizeObserver {
   observe() {}
   unobserve() {}
   disconnect() {}
-};
+}
 
 // Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
+class MockIntersectionObserver {
   constructor(callback: IntersectionObserverCallback) {
     this.callback = callback;
   }
@@ -14,6 +16,15 @@ global.IntersectionObserver = class IntersectionObserver {
   observe() {}
   unobserve() {}
   disconnect() {}
-};
+  root: Element | Document | null = null;
+  rootMargin: string = '0px';
+  thresholds: ReadonlyArray<number> = [0];
+  takeRecords(): IntersectionObserverEntry[] { return []; }
+}
 
-// Setup any global test utilities here
+// Set global mocks
+(global as any).ResizeObserver = MockResizeObserver;
+(global as any).IntersectionObserver = MockIntersectionObserver;
+
+// Note: registerCustomElements() is now called directly in component test files
+// to avoid automatically importing all components in every test

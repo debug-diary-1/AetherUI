@@ -7,6 +7,15 @@ export interface PaginationState {
   
   /** Number of rows per page */
   pageSize: number;
+  
+  /** Current page (1-based, for compatibility) */
+  page?: number;
+  
+  /** Total number of items */
+  totalItems?: number;
+  
+  /** Total number of pages */
+  totalPages?: number;
 }
 
 /**

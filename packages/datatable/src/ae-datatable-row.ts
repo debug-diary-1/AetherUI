@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { DATATABLE_ROW_ELEMENT_NAME } from './index';
+import { DATATABLE_ROW_ELEMENT_NAME } from './constants';
 import { rowStyles } from './styles';
 
 /**
@@ -21,13 +21,13 @@ export class AeDatatableRow extends LitElement {
    * Whether the row is selected
    */
   @property({ type: Boolean, reflect: true })
-  accessor selected = false;
+  selected = false;
 
   /**
    * Whether the row is selectable
    */
   @property({ type: Boolean, reflect: true })
-  accessor selectable = false;
+  selectable = false;
 
   /**
    * Handle row click

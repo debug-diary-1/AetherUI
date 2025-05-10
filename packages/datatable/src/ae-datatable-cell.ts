@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { DATATABLE_CELL_ELEMENT_NAME } from './index';
+import { DATATABLE_CELL_ELEMENT_NAME } from './constants';
 import { cellStyles } from './styles';
 
 /**
@@ -20,7 +20,7 @@ export class AeDatatableCell extends LitElement {
    * Text alignment
    */
   @property({ type: String, reflect: true })
-  accessor align: 'left' | 'center' | 'right' = 'left';
+  align: 'left' | 'center' | 'right' = 'left';
 
   render() {
     return html`

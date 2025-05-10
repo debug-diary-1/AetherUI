@@ -2,12 +2,12 @@ import { LitElement, html, TemplateResult, PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import { DATATABLE_ELEMENT_NAME, DATATABLE_HEADER_ELEMENT_NAME, DATATABLE_ROW_ELEMENT_NAME, DATATABLE_CELL_ELEMENT_NAME } from './index';
+import { DATATABLE_ELEMENT_NAME } from './constants';
 import { datatableStyles } from './styles';
 import { DataTableController } from './controllers/datatable-controller';
-import { ColumnDef } from './models/column-model';
-import { SortDirection } from './models/sort-model';
-import { PaginationState } from './models/pagination-model';
+import type { ColumnDef } from './models/column-model';
+import type { SortDirection } from './models/sort-model';
+import type { PaginationState } from './models/pagination-model';
 import './ae-datatable-header';
 import './ae-datatable-row';
 import './ae-datatable-cell';
@@ -60,74 +60,74 @@ import './ae-datatable-cell';
  * @cssproperty --ae-datatable-header-text-color - Header text color
  * @cssproperty --ae-datatable-resize-handle-color - Column resize handle color
  */
-export class AeDataTable<T extends Record<string, any>> extends LitElement {
+export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
   static styles = datatableStyles;
 
   /**
    * The data to display in the table
    */
   @property({ type: Array })
-  accessor data: T[] = [];
+  data: T[] = [];
 
   /**
    * Column definitions
    */
   @property({ type: Array })
-  accessor columns: ColumnDef<T>[] = [];
+  columns: ColumnDef<T>[] = [];
 
   /**
    * Whether the table supports sorting
    */
   @property({ type: Boolean, reflect: true })
-  accessor sortable = true;
+  sortable = true;
 
   /**
    * Whether the table supports filtering
    */
   @property({ type: Boolean, reflect: true })
-  accessor filterable = true;
+  filterable = true;
 
   /**
    * Whether rows can be selected
    */
   @property({ type: Boolean, reflect: true })
-  accessor selectable = false;
+  selectable = false;
 
   /**
    * Selection mode ('single' or 'multiple')
    */
   @property({ type: String, reflect: true, attribute: 'selection-mode' })
-  accessor selectionMode: 'single' | 'multiple' = 'multiple';
+  selectionMode: 'single' | 'multiple' = 'multiple';
 
   /**
    * Whether to enable pagination
    */
   @property({ type: Boolean, reflect: true })
-  accessor paginated = false;
+  paginated = false;
 
   /**
    * Number of rows per page
    */
   @property({ type: Number, reflect: true, attribute: 'page-size' })
-  accessor pageSize = 10;
+  pageSize = 10;
 
   /**
    * Message to display when there is no data
    */
   @property({ type: String, reflect: true, attribute: 'empty-message' })
-  accessor emptyMessage = 'No data to display';
+  emptyMessage = 'No data to display';
 
   /**
    * Whether to use virtualized scrolling for large datasets
    */
   @property({ type: Boolean, reflect: true })
-  accessor virtualized = false;
+  virtualized = false;
 
   /**
    * Whether columns can be resized
    */
   @property({ type: Boolean, reflect: true })
-  accessor resizable = true;
+  resizable = true;
 
   /**
    * The controller managing all data operations
@@ -138,7 +138,13 @@ export class AeDataTable<T extends Record<string, any>> extends LitElement {
    * Current pagination state
    */
   @state()
-  private paginationState: PaginationState = { page: 1, pageSize: 10, totalItems: 0, totalPages: 1 };
+  private paginationState: PaginationState = { 
+    pageIndex: 0, 
+    pageSize: 10, 
+    page: 1, 
+    totalItems: 0, 
+    totalPages: 1 
+  };
 
   /**
    * Global filter value
@@ -354,14 +360,16 @@ export class AeDataTable<T extends Record<string, any>> extends LitElement {
       return html``;
     }
     
-    const { page, pageSize, totalItems, totalPages } = this.paginationState;
-    const start = (page - 1) * pageSize + 1;
-    const end = Math.min(page * pageSize, totalItems);
+    const { pageIndex, pageSize, totalItems, totalPages } = this.paginationState;
+    const page = pageIndex + 1; // Convert to 1-based for display
+    const start = pageIndex * pageSize + 1;
+    const end = Math.min((pageIndex + 1) * pageSize, totalItems || 0);
+    const totalPagesVal = totalPages || 1;
     
     return html`
       <div class="datatable__footer" part="footer">
         <div class="datatable__pagination-info">
-          Showing ${start}-${end} of ${totalItems} items
+          Showing ${start}-${end} of ${totalItems || 0} items
         </div>
         <div class="datatable__pagination" part="pagination">
           <button 
@@ -376,16 +384,16 @@ export class AeDataTable<T extends Record<string, any>> extends LitElement {
           >
             Previous
           </button>
-          <span>Page ${page} of ${totalPages}</span>
+          <span>Page ${page} of ${totalPagesVal}</span>
           <button 
-            ?disabled=${page === totalPages}
+            ?disabled=${page === totalPagesVal}
             @click=${() => this.handlePageChange(page + 1)}
           >
             Next
           </button>
           <button 
-            ?disabled=${page === totalPages}
-            @click=${() => this.handlePageChange(totalPages)}
+            ?disabled=${page === totalPagesVal}
+            @click=${() => this.handlePageChange(totalPagesVal)}
           >
             Last
           </button>
@@ -442,13 +450,17 @@ export class AeDataTable<T extends Record<string, any>> extends LitElement {
         
         ${visibleColumns.map(column => {
           const sortInfo = sortState.find(s => s.id === column.id);
+          // Convert from desc boolean to direction string
+          const direction: SortDirection = sortInfo 
+            ? (sortInfo.desc ? 'desc' : 'asc') 
+            : 'none';
           
           return html`
             <ae-datatable-header
               id=${column.id}
               .sortable=${this.sortable && column.sortable !== false}
               .resizable=${this.resizable && column.resizable !== false}
-              .direction=${sortInfo?.direction || 'none'}
+              .direction=${direction}
               .align=${column.align || 'left'}
               @ae-datatable-header-sort=${(e: CustomEvent) => this.handleSort(column.id, e.detail.direction, e.detail.multiSort)}
               @ae-datatable-header-resize=${(e: CustomEvent) => this.handleColumnResize(column.id, e.detail.width)}
@@ -480,14 +492,14 @@ export class AeDataTable<T extends Record<string, any>> extends LitElement {
       `;
     }
     
-    const bodyStyle = {
-      gridTemplateColumns: this.gridTemplateColumns
-    };
-    
     return html`
-      <div class="datatable__body" part="body">
+      <div class="datatable__body" part="body" style=${styleMap({ gridTemplateColumns: this.gridTemplateColumns })}>
         ${repeat(processedData, (item: T, index) => {
-          const rowId = (item as any).id || index;
+          // Use either the item's id or the index as a string for the rowId
+          const rawId = (item as Record<string, unknown>).id;
+          const rowId = (rawId !== undefined && (typeof rawId === 'string' || typeof rawId === 'number')) 
+            ? rawId 
+            : index;
           const isSelected = this.controller.isRowSelected(rowId);
           
           return html`
