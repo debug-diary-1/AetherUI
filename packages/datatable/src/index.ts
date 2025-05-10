@@ -11,8 +11,68 @@ export * from './utils/filter-utils';
 export * from './utils/virtualization-utils';
 export * from './controllers/datatable-controller';
 
-// Define custom element names as constants for easy reference
-export const DATATABLE_ELEMENT_NAME = 'ae-datatable';
-export const DATATABLE_HEADER_ELEMENT_NAME = 'ae-datatable-header';
-export const DATATABLE_ROW_ELEMENT_NAME = 'ae-datatable-row';
-export const DATATABLE_CELL_ELEMENT_NAME = 'ae-datatable-cell';
+// Export constants
+export * from './constants';
+
+// Import components for registration
+import { AeDataTable } from './ae-datatable';
+import { AeDatatableHeader } from './ae-datatable-header';
+import { AeDatatableRow } from './ae-datatable-row';
+import { AeDatatableCell } from './ae-datatable-cell';
+
+// Import constants directly to avoid circular dependency
+import { 
+  DATATABLE_ELEMENT_NAME, 
+  DATATABLE_HEADER_ELEMENT_NAME,
+  DATATABLE_ROW_ELEMENT_NAME,
+  DATATABLE_CELL_ELEMENT_NAME
+} from './constants';
+
+// Register components to ensure they're available
+// This is important for ensuring the components are available when the module is imported
+try {
+  if (!customElements.get(DATATABLE_ELEMENT_NAME)) {
+    customElements.define(DATATABLE_ELEMENT_NAME, AeDataTable);
+  }
+  
+  if (!customElements.get(DATATABLE_HEADER_ELEMENT_NAME)) {
+    customElements.define(DATATABLE_HEADER_ELEMENT_NAME, AeDatatableHeader);
+  }
+  
+  if (!customElements.get(DATATABLE_ROW_ELEMENT_NAME)) {
+    customElements.define(DATATABLE_ROW_ELEMENT_NAME, AeDatatableRow);
+  }
+  
+  if (!customElements.get(DATATABLE_CELL_ELEMENT_NAME)) {
+    customElements.define(DATATABLE_CELL_ELEMENT_NAME, AeDatatableCell);
+  }
+} catch (error) {
+  console.warn('Error registering datatable components:', error);
+}
+
+// Export function to explicitly define elements for users who need manual control
+export function defineDataTableElements() {
+  try {
+    // Using imported constants to avoid circular dependencies
+    if (!customElements.get(DATATABLE_ELEMENT_NAME)) {
+      customElements.define(DATATABLE_ELEMENT_NAME, AeDataTable);
+    }
+    
+    if (!customElements.get(DATATABLE_HEADER_ELEMENT_NAME)) {
+      customElements.define(DATATABLE_HEADER_ELEMENT_NAME, AeDatatableHeader);
+    }
+    
+    if (!customElements.get(DATATABLE_ROW_ELEMENT_NAME)) {
+      customElements.define(DATATABLE_ROW_ELEMENT_NAME, AeDatatableRow);
+    }
+    
+    if (!customElements.get(DATATABLE_CELL_ELEMENT_NAME)) {
+      customElements.define(DATATABLE_CELL_ELEMENT_NAME, AeDatatableCell);
+    }
+    
+    return true;
+  } catch (error) {
+    console.warn('Error defining datatable elements:', error);
+    return false;
+  }
+}
