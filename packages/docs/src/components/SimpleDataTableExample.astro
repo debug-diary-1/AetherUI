@@ -1,0 +1,667 @@
+---
+// Import the datatable component directly
+// This is intentionally left as a client-side import in the script tag
+// rather than a server-side import here, to avoid SSR issues with custom elements
+---
+
+<div class="simple-datatable-example">
+  <div class="datatable-container">
+    <!-- We'll render a simplified HTML representation first -->
+    <div id="dataTablePlaceholder" class="datatable-static">
+      <div class="datatable-toolbar">
+        <div class="datatable-filter">
+          <input type="text" placeholder="Search..." />
+        </div>
+      </div>
+      <div class="datatable-content">
+        <table>
+          <thead>
+            <tr>
+              <th class="checkbox-col"><input type="checkbox" /></th>
+              <th class="sort-asc">Name</th>
+              <th class="number-col">Age</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th class="actions-col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td>John Doe</td>
+              <td class="number-col">30</td>
+              <td>john@example.com</td>
+              <td><span class="status status-active">Active</span></td>
+              <td class="actions-col">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td>Jane Smith</td>
+              <td class="number-col">25</td>
+              <td>jane@example.com</td>
+              <td><span class="status status-active">Active</span></td>
+              <td class="actions-col">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+              </td>
+            </tr>
+            <tr class="selected-row">
+              <td><input type="checkbox" checked /></td>
+              <td>Bob Johnson</td>
+              <td class="number-col">40</td>
+              <td>bob@example.com</td>
+              <td><span class="status status-inactive">Inactive</span></td>
+              <td class="actions-col">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="datatable-pagination">
+        <div class="pagination-info">
+          Showing 1-3 of 15 items
+        </div>
+        <div class="pagination-controls">
+          <button>First</button>
+          <button>Previous</button>
+          <span>Page 1 of 5</span>
+          <button>Next</button>
+          <button>Last</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- This will be replaced by the actual component when it loads -->
+    <ae-datatable id="exampleTable" style="display: none;" aria-hidden="true"></ae-datatable>
+  </div>
+  
+  <div class="features-grid">
+    <div class="feature-card">
+      <h4><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg> Sorting</h4>
+      <p>Click on column headers to toggle between ascending, descending, and unsorted states. Hold Shift for multi-column sorting.</p>
+    </div>
+    <div class="feature-card">
+      <h4><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg> Filtering</h4>
+      <p>Filter data using the global search box or column-specific filters. Supports string, numeric, and date filtering.</p>
+    </div>
+    <div class="feature-card">
+      <h4><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg> Selection</h4>
+      <p>Select rows individually or use the header checkbox to select all. Selection state is preserved during pagination and filtering.</p>
+    </div>
+    <div class="feature-card">
+      <h4><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="16" x2="12" y2="16"></line><line x1="12" y1="8" x2="12" y2="8"></line></svg> Pagination</h4>
+      <p>Navigate through large datasets with pagination controls. Customize the number of rows displayed per page.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .simple-datatable-example {
+    border: 1px solid var(--sl-color-gray-5, #e5e7eb);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    color: var(--sl-color-gray-9, #111827);
+    position: relative;
+  }
+  
+  .datatable-container {
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--sl-color-gray-4, #e5e7eb);
+    border-radius: 0.375rem;
+    min-height: 400px;
+  }
+  
+  /* Static DataTable styles */
+  .datatable-static {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-family: var(--sl-font-sans);
+  }
+  
+  .datatable-toolbar {
+    display: flex;
+    padding: 1rem;
+    border-bottom: 1px solid var(--sl-color-gray-4, #e5e7eb);
+  }
+  
+  .datatable-filter input {
+    padding: 0.5rem;
+    border: 1px solid var(--sl-color-gray-4, #e5e7eb);
+    border-radius: 0.25rem;
+    width: 100%;
+    min-width: 250px;
+  }
+  
+  .datatable-content {
+    overflow-x: auto;
+  }
+  
+  .datatable-static table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .datatable-static th, 
+  .datatable-static td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--sl-color-gray-4, #e5e7eb);
+  }
+  
+  .datatable-static th {
+    font-weight: 600;
+    background-color: var(--sl-color-gray-1, #f9fafb);
+    position: relative;
+    white-space: nowrap;
+  }
+  
+  .datatable-static th.sort-asc::after {
+    content: "↑";
+    margin-left: 0.5rem;
+    color: var(--sl-color-blue-6, #3b82f6);
+  }
+  
+  .datatable-static th.sort-desc::after {
+    content: "↓";
+    margin-left: 0.5rem;
+    color: var(--sl-color-blue-6, #3b82f6);
+  }
+  
+  .datatable-static .number-col {
+    text-align: right;
+  }
+  
+  .datatable-static .checkbox-col {
+    width: 40px;
+    text-align: center;
+  }
+  
+  .datatable-static .actions-col {
+    width: 150px;
+    text-align: right;
+    white-space: nowrap;
+  }
+  
+  .datatable-static tr:hover td {
+    background-color: var(--sl-color-gray-1, #f9fafb);
+  }
+  
+  .datatable-static tr.selected-row td {
+    background-color: var(--sl-color-blue-1, #eff6ff);
+  }
+  
+  .datatable-static .btn-edit,
+  .datatable-static .btn-delete {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid var(--sl-color-gray-4, #e5e7eb);
+    background: white;
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+  
+  .datatable-static .btn-delete {
+    border-color: var(--sl-color-red-3, #fecaca);
+    color: var(--sl-color-red-7, #dc2626);
+    margin-left: 0.25rem;
+  }
+  
+  .datatable-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-top: 1px solid var(--sl-color-gray-4, #e5e7eb);
+    font-size: 0.875rem;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .pagination-controls button {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--sl-color-gray-4, #e5e7eb);
+    border-radius: 0.25rem;
+    background: white;
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+  
+  /* Status badges */
+  :global(.status) {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+  
+  :global(.status-active) {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: rgb(21, 128, 61);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+  }
+  
+  :global(.status-inactive) {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: rgb(185, 28, 28);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+  }
+  
+  :global(.status-pending) {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: rgb(180, 83, 9);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+  }
+  
+  :global(.status-default) {
+    background-color: rgba(100, 116, 139, 0.2);
+    color: rgb(71, 85, 105);
+    border: 1px solid rgba(100, 116, 139, 0.4);
+  }
+  
+  /* Dark mode support for status badges */
+  :global(.dark) :global(.status-active) {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: rgb(74, 222, 128);
+    border-color: rgba(74, 222, 128, 0.4);
+  }
+  
+  :global(.dark) :global(.status-inactive) {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: rgb(252, 165, 165);
+    border-color: rgba(252, 165, 165, 0.4);
+  }
+  
+  :global(.dark) :global(.status-pending) {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: rgb(253, 186, 116);
+    border-color: rgba(253, 186, 116, 0.4);
+  }
+  
+  :global(.dark) :global(.status-default) {
+    background-color: rgba(100, 116, 139, 0.2);
+    color: rgb(148, 163, 184);
+    border-color: rgba(148, 163, 184, 0.4);
+  }
+  
+  /* Feature grid */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .feature-card {
+    padding: 1rem;
+    border: 1px solid var(--sl-color-gray-3, #e5e7eb);
+    border-radius: 0.375rem;
+    background-color: white;
+  }
+  
+  .feature-card h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: var(--sl-color-gray-9, #111827);
+  }
+  
+  .feature-card p {
+    margin: 0;
+    color: var(--sl-color-gray-7, #4b5563);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  
+  .feature-card svg {
+    color: var(--sl-color-blue-6, #3b82f6);
+  }
+  
+  /* Dark mode adjustments */
+  :global(.dark) .simple-datatable-example {
+    color: var(--sl-color-gray-1, #f9fafb);
+  }
+  
+  :global(.dark) .datatable-container {
+    border-color: var(--sl-color-gray-6, #4b5563);
+  }
+  
+  :global(.dark) .feature-card {
+    background-color: var(--sl-color-gray-8, #1f2937);
+    border-color: var(--sl-color-gray-7, #374151);
+    color: var(--sl-color-gray-1, #f9fafb);
+  }
+  
+  :global(.dark) .feature-card p {
+    color: var(--sl-color-gray-3, #d1d5db);
+  }
+  
+  /* Button styles for dark mode */
+  :global(.dark) button {
+    background-color: var(--sl-color-gray-8, #1f2937) !important;
+    color: var(--sl-color-gray-2, #e5e7eb) !important;
+    border-color: var(--sl-color-gray-7, #374151) !important;
+  }
+  
+  :global(.dark) button[style*="color: var(--sl-color-red-7, #dc2626)"] {
+    color: var(--sl-color-red-3, #fecaca) !important;
+    border-color: var(--sl-color-red-8, #991b1b) !important;
+  }
+  
+  /* Dark mode for static table */
+  :global(.dark) .datatable-static input {
+    background-color: var(--sl-color-gray-8, #1f2937);
+    border-color: var(--sl-color-gray-7, #374151);
+    color: var(--sl-color-gray-2, #e5e7eb);
+  }
+  
+  :global(.dark) .datatable-static th {
+    background-color: var(--sl-color-gray-8, #1f2937);
+    border-color: var(--sl-color-gray-7, #374151);
+    color: var(--sl-color-gray-2, #e5e7eb);
+  }
+  
+  :global(.dark) .datatable-static td {
+    border-color: var(--sl-color-gray-7, #374151);
+    color: var(--sl-color-gray-3, #d1d5db);
+  }
+  
+  :global(.dark) .datatable-static tr:hover td {
+    background-color: var(--sl-color-gray-9, #111827);
+  }
+  
+  :global(.dark) .datatable-static tr.selected-row td {
+    background-color: var(--sl-color-blue-9, #1e3a8a);
+  }
+  
+  :global(.dark) .datatable-toolbar,
+  :global(.dark) .datatable-pagination {
+    border-color: var(--sl-color-gray-7, #374151);
+  }
+  
+  :global(.dark) .datatable-static .btn-edit,
+  :global(.dark) .datatable-static .btn-delete {
+    background-color: var(--sl-color-gray-8, #1f2937);
+    border-color: var(--sl-color-gray-7, #374151);
+    color: var(--sl-color-gray-3, #d1d5db);
+  }
+  
+  :global(.dark) .datatable-static .btn-delete {
+    border-color: var(--sl-color-red-8, #991b1b);
+    color: var(--sl-color-red-3, #fecaca);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Custom element styles */
+  ae-datatable {
+    display: block;
+    width: 100%;
+    min-height: 400px;
+  }
+</style>
+
+<script>
+  // Register custom element definition helper for the datatable component
+  function registerDataTableElements() {
+    // Import DataTable component dynamically
+    import('@aetherui/datatable')
+      .then(module => {
+        console.log('DataTable component loaded successfully');
+        
+        // The import itself should register the custom elements
+        // If the elements aren't registered for some reason, use the explicit function
+        if (!customElements.get('ae-datatable') && typeof module.defineDataTableElements === 'function') {
+          const success = module.defineDataTableElements();
+          console.log('DataTable elements manually defined:', success);
+        }
+        
+        // Check registration status
+        const isRegistered = !!customElements.get('ae-datatable');
+        console.log('ae-datatable registration status:', isRegistered);
+        
+        // Initialize the datatable regardless
+        initializeDataTable();
+        
+        return isRegistered;
+      })
+      .catch(error => {
+        console.error('DataTable component failed to load:', error);
+        // Show the placeholder since we couldn't load the component
+        const placeholder = document.getElementById('dataTablePlaceholder');
+        if (placeholder) {
+          placeholder.style.display = 'block';
+        }
+        return false;
+      });
+  }
+  
+  // Data for the DataTable
+  const data = [
+    { id: 1, name: 'John Doe', age: 30, email: 'john@example.com', status: 'Active' },
+    { id: 2, name: 'Jane Smith', age: 25, email: 'jane@example.com', status: 'Active' },
+    { id: 3, name: 'Bob Johnson', age: 40, email: 'bob@example.com', status: 'Inactive' },
+    { id: 4, name: 'Alice Williams', age: 35, email: 'alice@example.com', status: 'Active' },
+    { id: 5, name: 'Charlie Brown', age: 28, email: 'charlie@example.com', status: 'Pending' },
+    { id: 6, name: 'Diana Prince', age: 32, email: 'diana@example.com', status: 'Active' },
+    { id: 7, name: 'Ethan Hunt', age: 42, email: 'ethan@example.com', status: 'Active' },
+    { id: 8, name: 'Fiona Apple', age: 36, email: 'fiona@example.com', status: 'Inactive' },
+    { id: 9, name: 'George Lucas', age: 55, email: 'george@example.com', status: 'Active' },
+    { id: 10, name: 'Hannah Baker', age: 24, email: 'hannah@example.com', status: 'Pending' },
+    { id: 11, name: 'Ian Malcolm', age: 45, email: 'ian@example.com', status: 'Active' },
+    { id: 12, name: 'Julia Roberts', age: 39, email: 'julia@example.com', status: 'Active' },
+    { id: 13, name: 'Kevin Hart', age: 33, email: 'kevin@example.com', status: 'Inactive' },
+    { id: 14, name: 'Laura Palmer', age: 22, email: 'laura@example.com', status: 'Pending' },
+    { id: 15, name: 'Michael Scott', age: 38, email: 'michael@example.com', status: 'Active' }
+  ];
+  
+  // Column definitions with custom renderers
+  const columnDefs = [
+    { id: 'name', field: 'name', header: 'Name', sortable: true },
+    { id: 'age', field: 'age', header: 'Age', sortable: true, align: 'right' },
+    { id: 'email', field: 'email', header: 'Email', sortable: true },
+    { 
+      id: 'status', 
+      field: 'status', 
+      header: 'Status', 
+      sortable: true,
+      // Custom renderer for the status column - will be applied if lit and the renderer function work
+      renderer: function(value, row) {
+        const statusClass = `status-${value.toLowerCase()}`;
+        return {
+          // This template result will be used if lit is available
+          // If not, it falls back to the format function or string value
+          _$litType$: 1, 
+          strings: ['<span class="status ', '">', '</span>'], 
+          values: [statusClass, value]
+        };
+      },
+      // Fallback format function used when renderer can't be used
+      format: function(value) {
+        return `<span class="status status-${value.toLowerCase()}">${value}</span>`;
+      }
+    },
+    { 
+      id: 'actions',
+      header: 'Actions',
+      // Custom renderer for the actions column
+      renderer: function(_, row) {
+        return {
+          _$litType$: 1,
+          strings: ['<div class="actions"><button class="btn-edit" @click=', '>Edit</button><button class="btn-delete" @click=', '>Delete</button></div>'],
+          values: [
+            () => editRow(row.id),
+            () => deleteRow(row.id)
+          ]
+        };
+      }
+    }
+  ];
+  
+  // Action handlers (just for demo purposes)
+  function editRow(id) {
+    console.log(`Editing row ${id}`);
+    alert(`Editing row ${id}`);
+  }
+  
+  function deleteRow(id) {
+    console.log(`Deleting row ${id}`);
+    alert(`Deleting row ${id}`);
+  }
+  
+  // Initialize the datatable when the component is available
+  function initializeDataTable() {
+    try {
+      const table = document.getElementById('exampleTable');
+      const placeholder = document.getElementById('dataTablePlaceholder');
+      
+      // Only proceed if we have both elements
+      if (table && placeholder) {
+        // Check if custom element is defined
+        if (customElements.get('ae-datatable')) {
+          console.log('DataTable custom element is registered, initializing...');
+          
+          // Hide the placeholder and show the real table
+          placeholder.style.display = 'none';
+          table.style.display = 'block';
+          
+          // Set up columns with simpler renderers that are more reliable in Astro
+          const simplifiedColumns = [
+            { id: 'name', field: 'name', header: 'Name', sortable: true },
+            { id: 'age', field: 'age', header: 'Age', sortable: true, align: 'right' },
+            { id: 'email', field: 'email', header: 'Email', sortable: true },
+            { 
+              id: 'status', 
+              field: 'status', 
+              header: 'Status', 
+              sortable: true,
+              // Use format instead of renderer for better compatibility
+              format: function(value) {
+                return `<span class="status status-${String(value).toLowerCase()}">${value}</span>`;
+              }
+            },
+            { 
+              id: 'actions',
+              header: 'Actions',
+              // Use format for better compatibility
+              format: function() {
+                return `<div class="action-buttons">
+                  <button class="btn-edit" onclick="alert('Edit clicked')">Edit</button>
+                  <button class="btn-delete" onclick="alert('Delete clicked')">Delete</button>
+                </div>`;
+              }
+            }
+          ];
+          
+          // Configure the datatable with the simplified columns
+          table.data = data;
+          table.columns = simplifiedColumns;
+          
+          // Enable features
+          table.sortable = true;
+          table.filterable = true;
+          table.selectable = true;
+          table.paginated = true;
+          table.pageSize = 5;
+          table.selectionMode = 'multiple';
+          table.resizable = true;
+          
+          // Add event listeners
+          table.addEventListener('ae-datatable-sort', e => {
+            console.log('Sort changed:', e.detail);
+          });
+          
+          table.addEventListener('ae-datatable-select', e => {
+            console.log('Selection changed:', e.detail);
+          });
+          
+          console.log('DataTable initialized successfully');
+          return true;
+        } else {
+          console.warn('ae-datatable custom element is not registered, showing fallback');
+          // Show the placeholder since the component isn't registered
+          placeholder.style.display = 'block';
+          table.style.display = 'none';
+          return false;
+        }
+      } else {
+        console.log('DataTable component not found or placeholder missing');
+        return false;
+      }
+    } catch (error) {
+      console.error('Error initializing DataTable:', error);
+      // Ensure placeholder is visible in case of error
+      const placeholder = document.getElementById('dataTablePlaceholder');
+      if (placeholder) {
+        placeholder.style.display = 'block';
+      }
+      
+      const table = document.getElementById('exampleTable');
+      if (table) {
+        table.style.display = 'none';
+      }
+      
+      return false;
+    }
+  }
+  
+  // Run initialization on various lifecycle events to ensure it loads
+  
+  // Try to load on script execution
+  try {
+    registerDataTableElements();
+  } catch (e) {
+    console.warn('Failed to register DataTable elements on initial load:', e);
+  }
+  
+  // Try on DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      // If the datatable is already registered, initialize directly
+      if (customElements.get('ae-datatable')) {
+        initializeDataTable();
+      } else {
+        // Otherwise, attempt to register and retry with a delay
+        registerDataTableElements();
+        
+        // Give a little more time and try again
+        setTimeout(() => {
+          if (!initializeDataTable()) {
+            console.log('Using static DataTable fallback after timeout');
+          }
+        }, 1000);
+      }
+    } catch (e) {
+      console.warn('Error during DOMContentLoaded initialization:', e);
+    }
+  });
+  
+  // One final attempt with a longer delay
+  setTimeout(() => {
+    if (document.getElementById('dataTablePlaceholder').style.display !== 'none') {
+      console.log('Final attempt to initialize DataTable');
+      registerDataTableElements();
+    }
+  }, 2000);
+</script>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Test</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 2rem;
+      background-color: #f5f7f9;
+    }
+    
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    /* Test styling using ::part */
+    ae-button::part(base) {
+      font-weight: bold;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Primary button override */
+    ae-button[variant="primary"]::part(base) {
+      background-color: #ff5722;
+      border-color: #ff5722;
+    }
+    
+    /* Secondary button override */
+    ae-button[variant="secondary"]::part(base) {
+      background-color: #e0e0e0;
+      color: #333;
+      border: 1px solid #ccc;
+    }
+    
+    /* Ghost button override */
+    ae-button[variant="ghost"]::part(base) {
+      color: #ff5722;
+      border: 1px dashed #ff5722;
+    }
+    
+    /* Part test for focus and hover */
+    ae-button::part(base):hover {
+      filter: brightness(1.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Button Component Test</h1>
+  <p>This page tests the button component and its shadow parts.</p>
+  
+  <h2>Default Buttons</h2>
+  <div class="buttons">
+    <ae-button variant="primary">Primary Button</ae-button>
+    <ae-button variant="secondary">Secondary Button</ae-button>
+    <ae-button variant="ghost">Ghost Button</ae-button>
+  </div>
+  
+  <h2>Disabled Buttons</h2>
+  <div class="buttons">
+    <ae-button variant="primary" disabled>Primary (Disabled)</ae-button>
+    <ae-button variant="secondary" disabled>Secondary (Disabled)</ae-button>
+    <ae-button variant="ghost" disabled>Ghost (Disabled)</ae-button>
+  </div>
+  
+  <h2>Button with Icon</h2>
+  <div class="buttons">
+    <ae-button>
+      <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+      With Icon
+    </ae-button>
+    
+    <ae-button icon-position="end">
+      With End Icon
+      <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+    </ae-button>
+  </div>
+  
+  <h2>Icon-Only Button</h2>
+  <div class="buttons">
+    <ae-button aria-label="Add item">
+      <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+    </ae-button>
+  </div>
+  
+  <script type="module">
+    // Import the components
+    import { defineAeButton } from './dist/button/index.js';
+    
+    // Register components
+    defineAeButton();
+    
+    // Inspect the shadow DOM after components are loaded
+    setTimeout(() => {
+      const button = document.querySelector('ae-button');
+      if (button && button.shadowRoot) {
+        console.log('Button shadow DOM:', button.shadowRoot);
+        const baseElement = button.shadowRoot.querySelector('[part="base"]');
+        console.log('Base part element:', baseElement);
+      } else {
+        console.error('Button shadow DOM not found or not accessible');
+      }
+    }, 1000);
+  </script>
+</body>
+</html>

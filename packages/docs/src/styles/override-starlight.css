@@ -1,0 +1,50 @@
+/**
+ * Override Starlight specific styles, targeting their layers
+ */
+
+/* Target Starlight's layers with higher specificity */
+@layer starlight.reset {
+  code, pre, kbd, samp {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  }
+  
+  .astro-code, .astro-code code {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  }
+}
+
+@layer starlight.global {
+  :root {
+    --sl-font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  }
+  
+  .sl-markdown-content code {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  }
+}
+
+/* Ultra-high specificity selector to override Starlight styles */
+html body .sl-markdown-content code,
+html body pre code,
+html body .astro-code,
+html body .astro-code code,
+html body .expressive-code pre,
+html body .code-snippet,
+html body :not(pre) > code {
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+}
+
+/* Use @supports as an additional trick to boost specificity */
+@supports (font-family: 'JetBrains Mono') {
+  code, pre, .astro-code, pre code {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  }
+}
+
+/* Use attribute selectors for higher specificity */
+[class*="astro-code"],
+[class*="language-"],
+[data-theme] code,
+[data-theme] pre {
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+}

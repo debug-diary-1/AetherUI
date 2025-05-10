@@ -1,0 +1,314 @@
+---
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+  code?: string;
+  preview?: string;
+  title?: string;
+  description?: string;
+}
+
+const { code, preview, title, description } = Astro.props;
+const exampleId = `autocomplete-example-${Math.random().toString(36).slice(2, 10)}`;
+---
+
+<div class="autocomplete-example" id={exampleId}>
+  {title && <h3 class="example-title">{title}</h3>}
+  {description && <p class="example-description">{description}</p>}
+  
+  <div class="preview">
+    {preview ? <div set:html={preview} /> : code ? <div set:html={code} /> : <slot />}
+    
+    {!preview && !code && !Astro.slots.has('default') && (
+      <div class="default-examples">
+        <!-- Static Data Example -->
+        <div class="example-container">
+          <h4>Static Data</h4>
+          <div id="static-example"></div>
+          <div class="tip">Type to filter from a list of countries</div>
+        </div>
+        
+        <!-- Async Data Example -->
+        <div class="example-container">
+          <h4>Async Data (Simulated)</h4>
+          <div id="async-example"></div>
+          <div class="tip">Type to search (2-second simulated API delay)</div>
+        </div>
+      </div>
+    )}
+  </div>
+  
+  {code && (
+    <div class="code-preview">
+      <Code code={code} lang="html" />
+    </div>
+  )}
+</div>
+
+<script>
+  // Directly import from core and define the component inline
+  // for more reliable initialization
+  import { defineAeAutocomplete } from '@aetherui/core';
+  
+  // Try to register the component immediately
+  try {
+    defineAeAutocomplete();
+    console.log('AeAutocomplete registered successfully');
+  } catch (e) {
+    console.warn('AeAutocomplete registration issue:', e);
+  }
+  
+  document.addEventListener('DOMContentLoaded', initExamples);
+  document.addEventListener('astro:page-load', initExamples);
+  
+  async function importAndDefine() {
+    try {
+      // Load the core module dynamically
+      const core = await import('@aetherui/core');
+      
+      // Define the component from the imported module
+      if (typeof core.defineAeAutocomplete === 'function') {
+        core.defineAeAutocomplete();
+        console.log('AeAutocomplete defined through dynamic import');
+      } else if (typeof core.defineAll === 'function') {
+        core.defineAll();
+        console.log('All components defined through defineAll');
+      }
+      return true;
+    } catch (e) {
+      console.error('Failed to import or define AeAutocomplete:', e);
+      return false;
+    }
+  }
+  
+  async function initExamples() {
+    console.log('Initializing autocomplete examples');
+    
+    // Make sure the component is registered
+    await importAndDefine();
+    
+    try {
+      // Manually render and set up the components
+      renderStaticExample();
+      renderAsyncExample();
+    } catch (error) {
+      console.error('Error initializing autocomplete examples:', error);
+    }
+  }
+  
+  function renderStaticExample() {
+    // Static data example
+    const staticContainer = document.getElementById('static-example');
+    if (staticContainer) {
+      console.log('Setting up static example');
+      
+      // Create element directly rather than innerHTML for better initialization
+      const autocomplete = document.createElement('ae-autocomplete');
+      autocomplete.id = 'countries-autocomplete';
+      autocomplete.setAttribute('placeholder', 'Type a country name...');
+      
+      // Clear container and append element
+      staticContainer.innerHTML = '';
+      staticContainer.appendChild(autocomplete);
+      
+      // Set static options with a delay to ensure component is ready
+      setTimeout(() => {
+        try {
+          autocomplete.options = [
+            'United States',
+            'Canada',
+            'United Kingdom',
+            'Australia',
+            'Germany',
+            'France',
+            'Japan',
+            'Brazil',
+            'India',
+            'China',
+            'Mexico',
+            'Italy',
+            'Spain',
+            'South Korea',
+            'Russia'
+          ];
+          
+          console.log('Set options on static autocomplete');
+          
+          // Add event listener
+          autocomplete.addEventListener('ae-select', (e) => {
+            console.log('Selected:', e.detail.value);
+          });
+        } catch (e) {
+          console.error('Error setting options on static autocomplete:', e);
+        }
+      }, 100);
+    }
+  }
+  
+  function renderAsyncExample() {
+    // Async data example
+    const asyncContainer = document.getElementById('async-example');
+    if (asyncContainer) {
+      console.log('Setting up async example');
+      
+      // Create element directly
+      const autocomplete = document.createElement('ae-autocomplete');
+      autocomplete.id = 'async-autocomplete';
+      autocomplete.setAttribute('placeholder', 'Type to search...');
+      autocomplete.setAttribute('throttle', '400');
+      
+      // Create loading status element
+      const loadingStatus = document.createElement('div');
+      loadingStatus.id = 'loading-status';
+      loadingStatus.className = 'loading-status';
+      
+      // Clear container and append elements
+      asyncContainer.innerHTML = '';
+      asyncContainer.appendChild(autocomplete);
+      asyncContainer.appendChild(loadingStatus);
+      
+      // Set async options loader with a delay
+      setTimeout(() => {
+        try {
+          // Set async options loader (simulated)
+          autocomplete.loadOptions = async (query) => {
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Filter based on query
+            if (!query) return [];
+            
+            const fruits = ['Apple', 'Banana', 'Cherry', 'Dragonfruit', 'Elderberry', 
+                           'Fig', 'Grape', 'Honeydew', 'Kiwi', 'Lemon', 'Mango', 
+                           'Nectarine', 'Orange', 'Papaya', 'Quince', 'Raspberry',
+                           'Strawberry', 'Tangerine', 'Watermelon'];
+            
+            return fruits
+              .filter(fruit => fruit.toLowerCase().includes(query.toLowerCase()))
+              .map(fruit => ({ id: fruit.toLowerCase(), label: fruit }));
+          };
+          
+          console.log('Set loadOptions on async autocomplete');
+          
+          // Add loading status indicator
+          autocomplete.addEventListener('ae-load', () => {
+            if (loadingStatus) loadingStatus.textContent = 'Loading...';
+          });
+          
+          autocomplete.addEventListener('ae-load-end', (e) => {
+            if (loadingStatus) {
+              loadingStatus.textContent = `Found ${e.detail.items.length} results`;
+              setTimeout(() => {
+                loadingStatus.textContent = '';
+              }, 2000);
+            }
+          });
+        } catch (e) {
+          console.error('Error setting loadOptions on async autocomplete:', e);
+        }
+      }, 100);
+    }
+  }
+</script>
+
+<style>
+  .autocomplete-example {
+    background-color: var(--sl-color-gray-1);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--sl-color-gray-3);
+    margin-bottom: 2rem;
+  }
+  
+  .example-title {
+    margin: 0;
+    padding: 1.25rem 1.5rem;
+    background-color: var(--sl-color-accent-low);
+    border-bottom: 1px solid var(--sl-color-accent-low);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--sl-color-accent);
+    letter-spacing: -0.01em;
+  }
+  
+  .example-description {
+    margin: 0;
+    padding: 0 1.5rem;
+    padding-top: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--sl-color-gray-8);
+    line-height: 1.4;
+  }
+  
+  .preview {
+    padding: 1.5rem;
+  }
+  
+  .default-examples {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .default-examples {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .example-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .example-container h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--sl-color-gray-9);
+  }
+  
+  .tip {
+    font-size: 0.75rem;
+    color: var(--sl-color-gray-6);
+    margin-top: 0.25rem;
+    font-style: italic;
+  }
+  
+  .loading-status {
+    font-size: 0.8rem;
+    color: var(--sl-color-accent);
+    margin-top: 0.5rem;
+    min-height: 1.2rem;
+  }
+  
+  /* Dark mode styles */
+  :global([data-theme="dark"]) .autocomplete-example {
+    background-color: var(--sl-color-gray-6);
+    border-color: var(--sl-color-gray-5);
+  }
+  
+  :global([data-theme="dark"]) .example-title {
+    background-color: rgba(var(--sl-color-accent-RGB), 0.15);
+    border-color: rgba(var(--sl-color-accent-RGB), 0.2);
+    color: var(--sl-color-accent-high);
+  }
+  
+  :global([data-theme="dark"]) .example-description {
+    color: var(--sl-color-gray-2);
+  }
+  
+  :global([data-theme="dark"]) .example-container h4 {
+    color: var(--sl-color-gray-2);
+  }
+  
+  :global([data-theme="dark"]) .tip {
+    color: var(--sl-color-gray-4);
+  }
+  
+  :global([data-theme="dark"]) .loading-status {
+    color: var(--sl-color-accent-high);
+  }
+</style>

@@ -1,0 +1,22 @@
+/* Create a new layer that will sit on top of Starlight's layers */
+@layer base, starlight, starlight.reset, starlight.global, aether-override;
+
+/* Place our layer last to take precedence */
+@layer aether-override {
+  /* Target everything more specifically */
+  :where(html) :where(body) :where(code),
+  :where(html) :where(body) :where(pre),
+  :where(html) :where(body) :where(kbd),
+  :where(html) :where(body) :where(.astro-code),
+  :where(html) :where(body) :where(.shiki),
+  :where(html) :where(body) :where(pre code),
+  :where(html) :where(body) :where([data-theme]:not([data-theme="dark"]) code),
+  :where(html) :where(body) :where([data-theme="dark"] code) {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+  }
+
+  /* Set the actual CSS variable that Starlight uses */
+  :root {
+    --sl-font-mono: 'JetBrains Mono', 'Fira Code', monospace !important;
+  }
+}

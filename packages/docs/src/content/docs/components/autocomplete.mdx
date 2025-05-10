@@ -1,0 +1,194 @@
+---
+title: Autocomplete
+description: An input control that presents type-ahead suggestions with static or async data
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import AutocompleteExample from '../../../components/AutocompleteExample.astro';
+import '@aetherui/core/auto-register';
+
+# Autocomplete
+
+The Autocomplete component (`ae-autocomplete`) provides type-ahead suggestions as the user types, supporting both static data arrays and asynchronous data loading.
+
+## Features
+
+- Support for static data passed as an array
+- Support for async data fetched via a `loadOptions` callback
+- Built-in loading state with spinner
+- Configurable debounce/throttle interval to avoid excessive API calls
+- Text highlighting for matching portions
+- Keyboard navigation and accessibility
+
+## Examples
+
+<AutocompleteExample 
+  title="Autocomplete Examples"
+  description="Type to filter from a list or search asynchronously"
+/>
+
+## Usage
+
+### Basic Static List
+
+```html
+<ae-autocomplete id="countries" placeholder="Type a country name..."></ae-autocomplete>
+
+<script>
+  const autocomplete = document.getElementById('countries');
+  
+  // Pass array of strings
+  autocomplete.options = [
+    'United States',
+    'Canada',
+    'United Kingdom',
+    'Germany',
+    'France',
+    'Japan',
+    'Brazil',
+    'Australia'
+  ];
+  
+  // Listen for selection events
+  autocomplete.addEventListener('ae-select', (e) => {
+    console.log('Selected:', e.detail.value);
+  });
+</script>
+```
+
+### With Objects
+
+```html
+<ae-autocomplete id="colors" placeholder="Select a color..."></ae-autocomplete>
+
+<script>
+  const autocomplete = document.getElementById('colors');
+  
+  // Pass array of objects
+  autocomplete.options = [
+    { id: 'red', label: 'Red' },
+    { id: 'blue', label: 'Blue' },
+    { id: 'green', label: 'Green' },
+    { id: 'yellow', label: 'Yellow' },
+    { id: 'purple', label: 'Purple' }
+  ];
+</script>
+```
+
+### Async Loading
+
+```html
+<ae-autocomplete 
+  id="search" 
+  placeholder="Search..." 
+  throttle="400"
+></ae-autocomplete>
+
+<script>
+  const autocomplete = document.getElementById('search');
+  
+  // Set async loader
+  autocomplete.loadOptions = async (query) => {
+    // Only search if query has content
+    if (!query) return [];
+    
+    try {
+      // Call your API here
+      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+      const data = await response.json();
+      
+      // Map to expected format
+      return data.results.map(item => ({
+        id: item.id,
+        label: item.name
+      }));
+    } catch (error) {
+      console.error('Search failed:', error);
+      return [];
+    }
+  };
+  
+  // Track loading state
+  autocomplete.addEventListener('ae-load', () => {
+    console.log('Loading started...');
+  });
+  
+  autocomplete.addEventListener('ae-load-end', (e) => {
+    console.log(`Found ${e.detail.items.length} results`);
+  });
+</script>
+```
+
+## Properties
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `options` | `string[] \| AutoItem[]` | `[]` | Static list of options. Ignored if `loadOptions` supplied. |
+| `loadOptions` | `(query: string) => Promise<AutoItem[]>` | `undefined` | Async loader; component renders loading state while pending. |
+| `value` | `string` | `''` | Current input value (controlled). |
+| `placeholder` | `string` | `''` | Input placeholder. |
+| `throttle` | `number` | `200` | Debounce ms before calling `loadOptions`. |
+| `disabled` | `boolean` | `false` | Disable interaction. |
+
+Where `AutoItem` is `{ id: string; label: string; disabled?: boolean }`.
+
+## Events
+
+| Event | Detail | Description |
+| --- | --- | --- |
+| `ae-select` | `{ value: string, item: AutoItem \| null }` | Fired when an item is selected. |
+| `ae-input` | `{ value: string }` | Fired on each keystroke (after debounce for async). |
+| `ae-load` | `{ query: string }` | Fired before `loadOptions` promise. |
+| `ae-load-end` | `{ query: string, items: AutoItem[] }` | Fired after promise resolves/rejects. |
+
+## CSS Parts
+
+| Part | Description |
+| --- | --- |
+| `input` | Text input field. |
+| `overlay` | Positioned wrapper for the popup. |
+| `listbox` | Scroll container for suggestions. |
+| `option` | Each suggestion option. |
+| `spinner` | Loading indicator. |
+| `highlight` | Query match highlights. |
+
+## CSS Custom Properties
+
+| Property | Default | Description |
+| --- | --- | --- |
+| `--ae-auto-bg` | `#fff` | Overlay background. |
+| `--ae-auto-border` | `1px solid #d1d5db` | Border style. |
+| `--ae-auto-radius` | `0.375rem` | Rounded corners. |
+| `--ae-auto-shadow` | `0 4px 12px rgba(0,0,0,0.1)` | Overlay elevation. |
+| `--ae-auto-option-hover-bg` | `#f3f4f6` | Hover background. |
+| `--ae-auto-option-selected-bg` | `#ebeffd` | Selected background. |
+| `--ae-auto-spinner-size` | `16px` | Loading spinner dimension. |
+| `--ae-auto-spinner-color` | `#5e7ce2` | Loading spinner color. |
+| `--ae-auto-highlight-bg` | `rgba(94, 124, 226, 0.15)` | Highlight background color. |
+
+## Accessibility
+
+- Input has `role="combobox"` and `aria-autocomplete="list"`.
+- Suggestion list has `role="listbox"` with `aria-busy="true"` when loading.
+- Suggestions have `role="option"` with proper `aria-selected` and `aria-disabled` attributes.
+- Full keyboard support: Arrow keys navigate, Enter selects, Escape closes.
+
+## Custom Styling Example
+
+```css
+/* Custom border color */
+ae-autocomplete::part(input) {
+  border: 2px solid #5e7ce2;
+}
+
+/* Custom spinner color */
+ae-autocomplete::part(spinner) {
+  border-top-color: #ff6b6b;
+}
+
+/* Custom highlight style */
+ae-autocomplete::part(highlight) {
+  background-color: #ffd54f;
+  font-weight: bold;
+}
+```

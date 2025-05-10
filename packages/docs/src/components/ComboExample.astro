@@ -1,0 +1,188 @@
+---
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+  code?: string;
+  preview?: string;
+  title?: string;
+  description?: string;
+}
+
+const { code, preview, title, description } = Astro.props;
+const exampleId = `combo-example-${Math.random().toString(36).slice(2, 10)}`;
+---
+
+<div class="combo-example" id={exampleId}>
+  {title && <h3 class="example-title">{title}</h3>}
+  {description && <p class="example-description">{description}</p>}
+  
+  <div class="preview">
+    {preview ? <div set:html={preview} /> : code ? <div set:html={code} /> : <slot />}
+    
+    <!-- Default examples when no code or slot is provided -->
+    {!preview && !code && !Astro.slots.has('default') && (
+      <div class="combo-examples">
+        <div class="example">
+          <h4>Basic Combobox</h4>
+          <div id="basic-wrapper"></div>
+        </div>
+
+        <div class="example">
+          <h4>With Preselected Value</h4>
+          <div id="preselected-wrapper"></div>
+        </div>
+
+        <div class="example">
+          <h4>Disabled Combobox</h4>
+          <div id="disabled-wrapper"></div>
+        </div>
+      </div>
+    )}
+  </div>
+  
+  {code && (
+    <div class="code-preview">
+      <Code code={code} lang="html" />
+    </div>
+  )}
+</div>
+
+<script>
+  import '@aetherui/core/auto-register';
+  
+  document.addEventListener('astro:page-load', initExamples);
+  
+  function initExamples() {
+    // Use a simpler approach with vanilla HTML and JS
+    
+    // Basic combo
+    const basicWrapper = document.getElementById('basic-wrapper');
+    if (basicWrapper) {
+      basicWrapper.innerHTML = `
+        <ae-combo id="basic-combo" placeholder="Select a fruit..."></ae-combo>
+        <script>
+          setTimeout(function() {
+            const combo = document.getElementById('basic-combo');
+            if (combo) {
+              combo.items = [
+                'Apple',
+                'Banana',
+                'Cherry',
+                'Dragonfruit',
+                'Elderberry',
+                'Fig',
+                'Grape',
+                'Honeydew'
+              ];
+            }
+          }, 100);
+        <\/script>
+      `;
+    }
+    
+    // Preselected combo
+    const preselectedWrapper = document.getElementById('preselected-wrapper');
+    if (preselectedWrapper) {
+      preselectedWrapper.innerHTML = `
+        <ae-combo id="preselected-combo" placeholder="Select a color..." value="Blue"></ae-combo>
+        <script>
+          setTimeout(function() {
+            const combo = document.getElementById('preselected-combo');
+            if (combo) {
+              combo.items = [
+                { id: 'red', label: 'Red' },
+                { id: 'blue', label: 'Blue' },
+                { id: 'green', label: 'Green' },
+                { id: 'yellow', label: 'Yellow' },
+                { id: 'purple', label: 'Purple' },
+                { id: 'orange', label: 'Orange' },
+                { id: 'black', label: 'Black', disabled: true }
+              ];
+            }
+          }, 100);
+        <\/script>
+      `;
+    }
+    
+    // Disabled combo
+    const disabledWrapper = document.getElementById('disabled-wrapper');
+    if (disabledWrapper) {
+      disabledWrapper.innerHTML = `
+        <ae-combo id="disabled-combo" placeholder="You cannot select me" disabled></ae-combo>
+      `;
+    }
+  }
+</script>
+
+<style>
+  .combo-example {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    background: var(--sl-color-gray-1);
+  }
+
+  .example-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--sl-color-gray-9);
+  }
+  
+  .example-description {
+    font-size: 0.9rem;
+    color: var(--sl-color-gray-7);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .preview {
+    padding: 1.5rem;
+    border-radius: 0.25rem;
+    background: var(--sl-color-white);
+    position: relative;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Dark mode styles */
+  :global([data-theme="dark"] .preview) {
+    background: var(--sl-color-gray-6);
+  }
+
+  :global([data-theme="dark"] .example-title) {
+    color: var(--sl-color-gray-1);
+  }
+  
+  :global([data-theme="dark"] .example-description) {
+    color: var(--sl-color-gray-3);
+  }
+  
+  /* Combo examples */
+  .combo-examples {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+  }
+  
+  .example {
+    max-width: 300px;
+    width: 100%;
+  }
+  
+  .example h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--sl-color-gray-7);
+  }
+  
+  :global([data-theme="dark"] .example h4) {
+    color: var(--sl-color-gray-3);
+  }
+</style>

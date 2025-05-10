@@ -1,0 +1,78 @@
+---
+---
+
+<div class="example">
+  <h3>Basic DataTable Example</h3>
+  <div class="datatable-container">
+    <ae-datatable id="basicTable"></ae-datatable>
+  </div>
+</div>
+
+<style>
+  .example {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .datatable-container {
+    height: 300px;
+  }
+  
+  h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+</style>
+
+<script>
+  // Import the DataTable component
+  import '@aetherui/datatable';
+  
+  // Sample data
+  const data = [
+    { id: 1, name: 'John Doe', age: 30, email: 'john@example.com', status: 'Active' },
+    { id: 2, name: 'Jane Smith', age: 25, email: 'jane@example.com', status: 'Active' },
+    { id: 3, name: 'Bob Johnson', age: 40, email: 'bob@example.com', status: 'Inactive' },
+    { id: 4, name: 'Alice Williams', age: 35, email: 'alice@example.com', status: 'Active' },
+    { id: 5, name: 'Charlie Brown', age: 28, email: 'charlie@example.com', status: 'Pending' },
+  ];
+  
+  // Column definitions
+  const columns = [
+    { id: 'name', field: 'name', header: 'Name', sortable: true },
+    { id: 'age', field: 'age', header: 'Age', sortable: true, align: 'right' },
+    { id: 'email', field: 'email', header: 'Email', sortable: true },
+    { id: 'status', field: 'status', header: 'Status', sortable: true }
+  ];
+  
+  // Initialize the datatable when the DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    const table = document.getElementById('basicTable');
+    if (table) {
+      // Need to cast to any type since we're using custom properties
+      const datatableElement = table as any;
+      
+      datatableElement.data = data;
+      datatableElement.columns = columns;
+      datatableElement.sortable = true;
+      datatableElement.filterable = true;
+      datatableElement.paginated = true;
+      datatableElement.pageSize = 5;
+      
+      // Log events for demonstration
+      datatableElement.addEventListener('ae-datatable-sort', (e) => {
+        console.log('Sort event:', e.detail);
+      });
+      
+      datatableElement.addEventListener('ae-datatable-filter', (e) => {
+        console.log('Filter event:', e.detail);
+      });
+      
+      datatableElement.addEventListener('ae-datatable-page', (e) => {
+        console.log('Page event:', e.detail);
+      });
+    }
+  });
+</script>

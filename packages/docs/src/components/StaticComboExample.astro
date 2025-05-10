@@ -1,0 +1,730 @@
+---
+import '@aetherui/core/auto-register';
+import { defineAeCombo } from '@aetherui/core';
+
+// Define the combo component at component render time
+try {
+  defineAeCombo();
+} catch (e) {
+  // Component might already be defined
+}
+
+// Define data for the examples
+const fruitsData = [
+  'Apple',
+  'Banana',
+  'Cherry',
+  'Dragonfruit',
+  'Elderberry',
+  'Fig',
+  'Grape',
+  'Honeydew'
+];
+
+const colorsData = [
+  { id: 'red', label: 'Red' },
+  { id: 'blue', label: 'Blue' },
+  { id: 'green', label: 'Green' },
+  { id: 'yellow', label: 'Yellow' },
+  { id: 'purple', label: 'Purple' },
+  { id: 'orange', label: 'Orange' },
+  { id: 'black', label: 'Black', disabled: true }
+];
+
+const defaultValue = "Blue";
+---
+
+<div class="demo-container">
+  <div class="combo-demo">
+    <div class="demo-header">
+      <div class="header-content">
+        <h3>Combobox Component</h3>
+        <p class="description">
+          A searchable input field with dropdown suggestions that filters as you type.
+        </p>
+      </div>
+    </div>
+    
+    <div class="examples">
+      <div class="example">
+        <div class="example-header">
+          <h4>Searchable Fruit Selector</h4>
+          <span class="tag">Filter-enabled</span>
+        </div>
+        <div class="example-wrapper">
+          <!-- Fallback for non-JS or before component loads -->
+          <select class="fallback-select">
+            <option value="">Type to search fruits...</option>
+            {fruitsData.map(fruit => (
+              <option value={fruit}>{fruit}</option>
+            ))}
+          </select>
+          
+          <!-- Actual combo component -->
+          <ae-combo
+            id="fruits-combo"
+            placeholder="Type to search fruits..."
+            class="combo-component hidden"
+          ></ae-combo>
+        </div>
+        <div class="example-hint">
+          <span class="hint-label">Try it:</span> Click and type "<strong>a</strong>" in the input field to filter
+        </div>
+        <div class="typing-indicator">
+          <div class="cursor-icon">|</div>
+          <div class="typing-text">Type here to filter results</div>
+        </div>
+        
+        <div class="filter-demo">
+          <div class="filter-header">
+            <div class="filter-title">Filter Results</div>
+            <div class="filter-example">When you type "<strong>ap</strong>"</div>
+          </div>
+          <div class="filtered-items">
+            <div class="filtered-item match">Apple</div>
+            <div class="filtered-item match">Grape</div>
+            <div class="filtered-item no-match">Banana</div>
+            <div class="filtered-item no-match">Cherry</div>
+            <div class="filtered-item no-match">Dragonfruit</div>
+            <div class="filtered-item no-match">Elderberry</div>
+            <div class="filtered-item no-match">Fig</div>
+            <div class="filtered-item no-match">Honeydew</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="example">
+        <div class="example-header">
+          <h4>Smart Color Picker</h4>
+          <span class="tag">With highlighting</span>
+        </div>
+        <div class="example-wrapper">
+          <!-- Fallback for non-JS or before component loads -->
+          <select class="fallback-select">
+            <option value="">Search for a color...</option>
+            {colorsData.map(color => (
+              <option value={color.id} selected={color.label === defaultValue}>
+                {color.label}
+              </option>
+            ))}
+          </select>
+          
+          <!-- Actual combo component -->
+          <ae-combo
+            id="colors-combo"
+            placeholder="Search for a color..."
+            value={defaultValue}
+            class="combo-component hidden"
+          ></ae-combo>
+        </div>
+        <div class="example-hint">
+          <span class="hint-label">Try it:</span> Click and type "<strong>b</strong>" to filter and see highlighting
+        </div>
+        <div class="typing-indicator">
+          <div class="cursor-icon">|</div>
+          <div class="typing-text">Type in this input field</div>
+        </div>
+        
+        <div class="filter-demo">
+          <div class="filter-header">
+            <div class="filter-title">Match Highlighting</div>
+            <div class="filter-example">When you type "<strong>b</strong>"</div>
+          </div>
+          <div class="filter-highlight-example">
+            <div class="highlight-item">
+              <span class="color-swatch blue"></span>
+              <span><mark>B</mark>lue</span>
+            </div>
+            <div class="highlight-item">
+              <span class="color-swatch black"></span>
+              <span><mark>B</mark>lack</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="example">
+        <div class="example-header">
+          <h4>Free-text Entry</h4>
+          <span class="tag">Custom values</span>
+        </div>
+        <div class="example-wrapper">
+          <!-- Fallback for non-JS or before component loads -->
+          <select class="fallback-select">
+            <option value="">Enter any country...</option>
+            <option>United States</option>
+            <option>Canada</option>
+            <option>Japan</option>
+            <option>Germany</option>
+            <option>Brazil</option>
+          </select>
+          
+          <!-- Actual combo component -->
+          <ae-combo
+            id="countries-combo"
+            placeholder="Enter any country..."
+            class="combo-component hidden"
+          ></ae-combo>
+        </div>
+        <div class="example-hint">
+          <span class="hint-label">Try it:</span> Type a country not in the list to add it
+        </div>
+        <div class="typing-indicator">
+          <div class="cursor-icon">|</div>
+          <div class="typing-text">Type any country name here</div>
+        </div>
+        
+        <div class="filter-demo">
+          <div class="filter-header">
+            <div class="filter-title">Free-text Input</div>
+            <div class="filter-example">Type any value, even if not in the list</div>
+          </div>
+          <div class="custom-value-demo">
+            <div class="custom-value-steps">
+              <div class="step">1. Type "<strong>France</strong>" (not in list)</div>
+              <div class="step">2. Press Enter to select</div>
+              <div class="step">3. Value is accepted even though it wasn't in options</div>
+            </div>
+            <div class="free-input-note">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd"></path>
+              </svg>
+              <span>Enable with <code>free-input="true"</code> (default)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Register the component to ensure it's defined
+  import '@aetherui/core/auto-register';
+  import { defineAeCombo } from '@aetherui/core';
+  
+  // Define data for initialization
+  const fruitsData = [
+    'Apple',
+    'Banana',
+    'Cherry',
+    'Dragonfruit',
+    'Elderberry',
+    'Fig',
+    'Grape',
+    'Honeydew'
+  ];
+
+  const colorsData = [
+    { id: 'red', label: 'Red' },
+    { id: 'blue', label: 'Blue' },
+    { id: 'green', label: 'Green' },
+    { id: 'yellow', label: 'Yellow' },
+    { id: 'purple', label: 'Purple' },
+    { id: 'orange', label: 'Orange' },
+    { id: 'black', label: 'Black', disabled: true }
+  ];
+  
+  const countriesData = [
+    'United States',
+    'Canada',
+    'Japan',
+    'Germany',
+    'Brazil'
+  ];
+  
+  // Function to initialize the components and swap visibility
+  function initializeComponents() {
+    try {
+      // Make sure it's defined
+      defineAeCombo();
+    } catch (e) {
+      // Component might already be defined
+    }
+    
+    // Set up the fruits combo
+    const fruitsCombo = document.getElementById('fruits-combo');
+    if (fruitsCombo) {
+      fruitsCombo.items = fruitsData;
+    }
+    
+    // Set up the colors combo
+    const colorsCombo = document.getElementById('colors-combo');
+    if (colorsCombo) {
+      colorsCombo.items = colorsData;
+    }
+    
+    // Set up the countries combo
+    const countriesCombo = document.getElementById('countries-combo');
+    if (countriesCombo) {
+      countriesCombo.items = countriesData;
+    }
+    
+    // Show the combos, hide the selects
+    document.querySelectorAll('.fallback-select').forEach(el => {
+      el.classList.add('hidden');
+    });
+    
+    document.querySelectorAll('.combo-component').forEach(el => {
+      el.classList.remove('hidden');
+    });
+  }
+  
+  // Initialize when components are defined (best way)
+  if (customElements.get('ae-combo')) {
+    initializeComponents();
+  } else {
+    customElements.whenDefined('ae-combo').then(initializeComponents);
+  }
+  
+  // Also initialize on page load events - both standard and Astro's custom events
+  document.addEventListener('DOMContentLoaded', initializeComponents);
+  document.addEventListener('astro:page-load', initializeComponents);
+  
+  // Re-initialize if the user navigates away and comes back
+  document.addEventListener('astro:after-swap', initializeComponents);
+</script>
+
+<style>
+  .demo-container {
+    padding: 1px; /* Prevent margin collapse */
+    margin-bottom: 2.5rem;
+  }
+  
+  .combo-demo {
+    background-color: var(--sl-color-gray-1);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--sl-color-gray-3);
+  }
+  
+  .demo-header {
+    background-color: var(--sl-color-accent-low);
+    border-bottom: 1px solid var(--sl-color-accent-low);
+    padding: 1.25rem 1.5rem;
+    position: relative;
+  }
+  
+  .header-content {
+    position: relative;
+  }
+  
+  h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--sl-color-accent);
+    letter-spacing: -0.01em;
+  }
+  
+  .description {
+    font-size: 0.9rem;
+    color: var(--sl-color-gray-8);
+    margin: 0.35rem 0 0;
+    line-height: 1.4;
+  }
+  
+  .examples {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1.5rem;
+  }
+  
+  .example {
+    max-width: 350px;
+  }
+  
+  .example-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  
+  .example h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--sl-color-gray-9);
+  }
+  
+  .tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    background-color: var(--sl-color-gray-3);
+    color: var(--sl-color-gray-7);
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  
+  .example-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 0.35rem;
+  }
+  
+  .example-hint {
+    font-size: 0.75rem;
+    color: var(--sl-color-gray-6);
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  /* Typing indicator */
+  .typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0 0.75rem;
+    background-color: var(--sl-color-gray-1);
+    border: 1px dashed var(--sl-color-accent-low);
+    border-radius: 0.375rem;
+    padding: 0.35rem 0.65rem;
+  }
+  
+  .cursor-icon {
+    color: var(--sl-color-accent);
+    font-weight: bold;
+    animation: cursor-blink 1s infinite;
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+  
+  .typing-text {
+    font-size: 0.8rem;
+    color: var(--sl-color-gray-8);
+    font-style: italic;
+  }
+  
+  @keyframes cursor-blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  .hint-label {
+    font-weight: 600;
+    color: var(--sl-color-gray-8);
+  }
+  
+  strong {
+    color: var(--sl-color-accent);
+    font-weight: 600;
+  }
+  
+  /* Filter demo styles */
+  .filter-demo {
+    margin-top: 1rem;
+    border: 1px solid var(--sl-color-gray-4);
+    border-radius: 0.375rem;
+    overflow: hidden;
+    font-size: 0.85rem;
+  }
+  
+  .filter-header {
+    background-color: var(--sl-color-gray-3);
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .filter-title {
+    font-weight: 600;
+    color: var(--sl-color-gray-8);
+    font-size: 0.8rem;
+  }
+  
+  .filter-example {
+    font-size: 0.75rem;
+    color: var(--sl-color-gray-7);
+  }
+  
+  .filtered-items {
+    padding: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.25rem;
+    background-color: white;
+  }
+  
+  .filtered-item {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+  }
+  
+  .filtered-item.match {
+    background-color: var(--sl-color-accent-low);
+    color: var(--sl-color-accent);
+    font-weight: 500;
+  }
+  
+  .filtered-item.no-match {
+    color: var(--sl-color-gray-6);
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+  
+  /* Highlight example */
+  .filter-highlight-example {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: white;
+  }
+  
+  .highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.25rem;
+    background-color: var(--sl-color-gray-1);
+  }
+  
+  .color-swatch {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+  
+  .color-swatch.blue {
+    background-color: #3b82f6;
+  }
+  
+  .color-swatch.black {
+    background-color: #333;
+  }
+  
+  mark {
+    background-color: rgba(var(--sl-color-accent-RGB), 0.2);
+    color: var(--sl-color-accent);
+    padding: 0 2px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+  
+  /* Free input demo styles */
+  .custom-value-demo {
+    padding: 0.75rem;
+    background-color: white;
+  }
+  
+  .custom-value-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .step {
+    font-size: 0.75rem;
+    color: var(--sl-color-gray-8);
+    padding: 0.2rem 0;
+  }
+  
+  .free-input-note {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    color: var(--sl-color-gray-7);
+    background-color: var(--sl-color-gray-1);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    border-left: 3px solid var(--sl-color-accent);
+    margin-top: 0.5rem;
+  }
+  
+  .free-input-note svg {
+    color: var(--sl-color-accent);
+    flex-shrink: 0;
+  }
+  
+  code {
+    font-family: monospace;
+    background-color: var(--sl-color-gray-3);
+    padding: 0.15rem 0.25rem;
+    border-radius: 0.25rem;
+    font-size: 0.7rem;
+    color: var(--sl-color-accent);
+  }
+  
+  .fallback-select {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    background: white;
+    color: #111;
+    font: inherit;
+    transition: border-color 180ms cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .fallback-select:focus {
+    outline: none;
+    border-color: var(--sl-color-accent);
+    box-shadow: 0 0 0 3px rgba(var(--sl-color-accent-RGB), 0.2);
+  }
+  
+  .fallback-select:hover:not(:disabled) {
+    border-color: #bbc1cc;
+  }
+  
+  .fallback-select:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    background-color: #f9fafb;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .combo-component {
+    width: 100%;
+  }
+  
+  /* Dark mode styles */
+  :global([data-theme="dark"]) .combo-demo {
+    background-color: var(--sl-color-gray-6);
+    border-color: var(--sl-color-gray-5);
+  }
+  
+  :global([data-theme="dark"]) .demo-header {
+    background-color: rgba(var(--sl-color-accent-RGB), 0.15);
+    border-color: rgba(var(--sl-color-accent-RGB), 0.2);
+  }
+  
+  :global([data-theme="dark"]) h3 {
+    color: var(--sl-color-accent-high);
+  }
+  
+  :global([data-theme="dark"]) .description {
+    color: var(--sl-color-gray-2);
+  }
+  
+  :global([data-theme="dark"]) .example h4 {
+    color: var(--sl-color-gray-2);
+  }
+  
+  :global([data-theme="dark"]) .tag {
+    background-color: var(--sl-color-gray-5);
+    color: var(--sl-color-gray-2);
+  }
+  
+  :global([data-theme="dark"]) .example-hint {
+    color: var(--sl-color-gray-4);
+  }
+  
+  :global([data-theme="dark"]) .fallback-select {
+    background-color: var(--sl-color-gray-7);
+    color: var(--sl-color-gray-1);
+    border-color: var(--sl-color-gray-5);
+  }
+  
+  :global([data-theme="dark"]) .fallback-select:focus {
+    border-color: var(--sl-color-accent-high);
+    box-shadow: 0 0 0 3px rgba(var(--sl-color-accent-RGB), 0.3);
+  }
+  
+  :global([data-theme="dark"]) .fallback-select:hover:not(:disabled) {
+    border-color: var(--sl-color-gray-4);
+  }
+  
+  /* Dark mode for filter demo */
+  :global([data-theme="dark"]) .hint-label {
+    color: var(--sl-color-gray-2);
+  }
+  
+  :global([data-theme="dark"]) strong {
+    color: var(--sl-color-accent-high);
+  }
+  
+  :global([data-theme="dark"]) .filter-demo {
+    border-color: var(--sl-color-gray-5);
+  }
+  
+  :global([data-theme="dark"]) .filter-header {
+    background-color: var(--sl-color-gray-5);
+  }
+  
+  :global([data-theme="dark"]) .filter-title {
+    color: var(--sl-color-gray-2);
+  }
+  
+  :global([data-theme="dark"]) .filter-example {
+    color: var(--sl-color-gray-3);
+  }
+  
+  :global([data-theme="dark"]) .filtered-items,
+  :global([data-theme="dark"]) .filter-highlight-example {
+    background-color: var(--sl-color-gray-6);
+  }
+  
+  :global([data-theme="dark"]) .filtered-item.match {
+    background-color: rgba(var(--sl-color-accent-RGB), 0.2);
+    color: var(--sl-color-accent-high);
+  }
+  
+  :global([data-theme="dark"]) .filtered-item.no-match {
+    color: var(--sl-color-gray-4);
+  }
+  
+  :global([data-theme="dark"]) .highlight-item {
+    background-color: var(--sl-color-gray-5);
+  }
+  
+  :global([data-theme="dark"]) mark {
+    background-color: rgba(var(--sl-color-accent-RGB), 0.3);
+    color: var(--sl-color-accent-high);
+  }
+  
+  /* Dark mode for free input demo */
+  :global([data-theme="dark"]) .custom-value-demo {
+    background-color: var(--sl-color-gray-6);
+  }
+  
+  :global([data-theme="dark"]) .step {
+    color: var(--sl-color-gray-2);
+  }
+  
+  :global([data-theme="dark"]) .free-input-note {
+    color: var(--sl-color-gray-3);
+    background-color: var(--sl-color-gray-5);
+    border-left-color: var(--sl-color-accent-high);
+  }
+  
+  :global([data-theme="dark"]) .free-input-note svg {
+    color: var(--sl-color-accent-high);
+  }
+  
+  :global([data-theme="dark"]) code {
+    background-color: var(--sl-color-gray-7);
+    color: var(--sl-color-accent-high);
+  }
+  
+  /* Dark mode for typing indicator */
+  :global([data-theme="dark"]) .typing-indicator {
+    background-color: var(--sl-color-gray-5);
+    border-color: rgba(var(--sl-color-accent-RGB), 0.3);
+  }
+  
+  :global([data-theme="dark"]) .cursor-icon {
+    color: var(--sl-color-accent-high);
+  }
+  
+  :global([data-theme="dark"]) .typing-text {
+    color: var(--sl-color-gray-2);
+  }
+</style>

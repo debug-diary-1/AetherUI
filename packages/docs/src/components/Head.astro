@@ -1,0 +1,47 @@
+---
+// Custom head component to include in specific pages
+---
+
+<!-- Preload essential fonts for faster rendering -->
+<link rel="preload" href="https://fonts.gstatic.com/s/jetbrainsmono/v13/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8FqtqPWac.woff2" as="font" type="font/woff2" crossorigin>
+
+<!-- Preconnect to Google Fonts to improve loading performance -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Load JetBrains Mono for all code elements -->
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Inline style for immediate application -->
+<style is:inline>
+  :root {
+    --sl-font-mono: 'JetBrains Mono', monospace !important;
+  }
+  
+  code, pre, .astro-code, .astro-code code {
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+</style>
+
+<!-- Script to ensure monospace font is applied -->
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Apply monospace font to all code elements
+    const applyMonospaceFont = () => {
+      const codeElements = document.querySelectorAll('code, pre, .astro-code, pre code');
+      codeElements.forEach(el => {
+        el.style.fontFamily = "'JetBrains Mono', monospace";
+      });
+    };
+    
+    // Apply immediately
+    applyMonospaceFont();
+    
+    // Apply after content loads (for dynamic content)
+    document.addEventListener('astro:page-load', applyMonospaceFont);
+    
+    // Apply periodically for a short time to catch any late-loading elements
+    const interval = setInterval(applyMonospaceFont, 500);
+    setTimeout(() => clearInterval(interval), 5000);
+  });
+</script>

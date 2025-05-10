@@ -1,0 +1,131 @@
+---
+title: Combobox
+description: An autocomplete dropdown input component
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import StaticComboExample from '../../../components/StaticComboExample.astro';
+
+# Combobox
+
+The Combobox component (`ae-combo`) provides an autocomplete input that allows users to either select from a dropdown list or type their own values.
+
+## Features
+
+- Customizable list of options
+- Keyboard navigation (arrow keys, enter, escape)
+- Type-ahead filtering
+- Free-text input option
+- Highlighting of matched text
+- Accessible following ARIA combobox pattern
+
+## Examples
+
+<StaticComboExample />
+
+## Usage
+
+```html
+<ae-combo
+  placeholder="Select an option..."
+  value="Initial value"
+  free-input="true"
+></ae-combo>
+
+<script>
+  const combo = document.querySelector('ae-combo');
+  
+  // Set options as strings
+  combo.items = ['Apple', 'Banana', 'Cherry'];
+  
+  // Or as objects with ids
+  combo.items = [
+    { id: 'apple', label: 'Apple' },
+    { id: 'banana', label: 'Banana' },
+    { id: 'cherry', label: 'Cherry', disabled: true }
+  ];
+  
+  // Listen for selection events
+  combo.addEventListener('ae-select', (e) => {
+    console.log('Selected:', e.detail.value);
+    console.log('Selected item:', e.detail.item);
+  });
+  
+  // Listen for input events
+  combo.addEventListener('ae-input', (e) => {
+    console.log('Input value:', e.detail.value);
+  });
+</script>
+```
+
+## Properties
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `string[] \| ComboItem[]` | `[]` | Items to display in the dropdown. Can be strings or objects with `id`, `label`, and optional `disabled` properties. |
+| `value` | `string` | `''` | Current input value (controlled). |
+| `placeholder` | `string` | `''` | Placeholder text for the input. |
+| `disabled` | `boolean` | `false` | Whether the input is disabled. |
+| `freeInput` | `boolean` | `true` | Whether the user can enter values not in the list. |
+| `filterFn` | `(query: string, item: ComboItem) => boolean` | built-in | Custom filter function. |
+
+## Events
+
+| Event | Detail | Description |
+| --- | --- | --- |
+| `ae-select` | `{ value: string, item: ComboItem \| null }` | Fired when an item is selected or input is confirmed. |
+| `ae-input` | `{ value: string }` | Fired on each keystroke. |
+
+## CSS Parts
+
+| Part | Description |
+| --- | --- |
+| `input` | Text input field. |
+| `caret` | Dropdown arrow icon wrapper. |
+| `overlay` | Positioned wrapper for the popup. |
+| `listbox` | Scroll container. |
+| `option` | Each list option. |
+| `highlight` | Query match highlights. |
+
+## CSS Custom Properties
+
+| Property | Default | Description |
+| --- | --- | --- |
+| `--ae-combo-border` | `#d1d5db` | Input border color. |
+| `--ae-combo-radius` | `var(--ae-border-radius-sm)` | Corner radius of input & listbox. |
+| `--ae-combo-bg` | `var(--ae-color-surface)` | Input background. |
+| `--ae-combo-fg` | `var(--ae-color-text-primary)` | Text color. |
+| `--ae-combo-option-hover-bg` | `var(--ae-color-base-50)` | Hover/active option background. |
+| `--ae-combo-option-selected-bg` | `var(--ae-color-brand-50)` | Selected option background. |
+| `--ae-combo-option-selected-fg` | `var(--ae-color-brand-900)` | Selected option text. |
+| `--ae-combo-shadow` | `var(--ae-elevation-3)` | Overlay shadow. |
+| `--ae-combo-highlight-bg` | `rgba(94, 124, 226, 0.2)` | Background color for query match highlights. |
+
+## Accessibility
+
+- Root input has `role="combobox"`, `aria-autocomplete="list"`, `aria-expanded`.
+- Popup list has `role="listbox"`; list items have `role="option"`.
+- Keyboard navigation: Arrow Down opens & moves highlight, Enter selects, Esc closes.
+- Item selection updates `aria-selected` appropriately.
+- Disabled items have `aria-disabled="true"`.
+
+## Custom Styling Example
+
+```css
+/* Style the input */
+ae-combo::part(input) {
+  border: 2px solid #5e7ce2;
+  padding: 0.75rem 1rem;
+}
+
+/* Style the options */
+ae-combo::part(option) {
+  padding: 0.5rem 1rem;
+}
+
+/* Style the highlights */
+ae-combo::part(highlight) {
+  background-color: #ffd54f;
+  font-weight: bold;
+}
+```

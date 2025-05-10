@@ -1,0 +1,64 @@
+<\!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AetherUI Button Test</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        padding: 2rem;
+        line-height: 1.5;
+      }
+      .container {
+        margin-bottom: 2rem;
+      }
+      .row {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Button Component Test</h1>
+    
+    <div class="container">
+      <h2>Variants</h2>
+      <div class="row">
+        <lit-button variant="primary">Primary</lit-button>
+        <lit-button variant="secondary">Secondary</lit-button>
+        <lit-button variant="ghost">Ghost</lit-button>
+      </div>
+      
+      <h2>States</h2>
+      <div class="row">
+        <lit-button disabled>Disabled</lit-button>
+      </div>
+    </div>
+    
+    <script type="module" src="/src/lit-button.js"></script>
+    <script type="module">
+      // Log component info after a delay
+      setTimeout(() => {
+        document.querySelectorAll('lit-button').forEach(btn => {
+          console.log('Button:', btn.tagName, 'Variant:', btn.getAttribute('variant'));
+          console.log('Shadow root:', btn.shadowRoot);
+          
+          if (btn.shadowRoot) {
+            const buttonEl = btn.shadowRoot.querySelector('button');
+            if (buttonEl) {
+              console.log('Button element:', buttonEl);
+              const styles = window.getComputedStyle(buttonEl);
+              console.log('  - background-color:', styles.backgroundColor);
+              console.log('  - color:', styles.color);
+              console.log('  - border-color:', styles.borderColor);
+            }
+          }
+        });
+      }, 2000);
+    </script>
+  </body>
+</html>
+EOT < /dev/null

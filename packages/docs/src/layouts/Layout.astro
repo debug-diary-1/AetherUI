@@ -1,0 +1,99 @@
+---
+// Import the component initialization script
+import { initAetherComponents } from '../scripts/init-components.js';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.5;
+      
+      /* CORE COLOR TOKENS */
+      /* Brand colors */
+      --ae-color-brand-50: #edf1fd;
+      --ae-color-brand-100: #dae3fa;
+      --ae-color-brand-200: #b5c7f6;
+      --ae-color-brand-300: #90abf1;
+      --ae-color-brand-400: #7694ec;
+      --ae-color-brand-500: #5e7ce2; /* Primary brand color */
+      --ae-color-brand-600: #4b69c8;
+      --ae-color-brand-700: #4055ab;
+      --ae-color-brand-800: #34448f;
+      --ae-color-brand-900: #2c3b72;
+      
+      /* Gray scale */
+      --ae-color-base-50: #fafafa;
+      --ae-color-base-100: #f5f5f5;
+      --ae-color-base-200: #e5e5e5; /* Light gray for backgrounds */
+      --ae-color-base-300: #d4d4d4; /* Border colors */
+      --ae-color-base-400: #a3a3a3;
+      --ae-color-base-500: #737373;
+      --ae-color-base-600: #525252;
+      --ae-color-base-700: #404040;
+      --ae-color-base-800: #262626;
+      --ae-color-base-900: #171717;
+      
+      /* Text colors */
+      --ae-color-text-primary: #171717; /* Base text color */
+      --ae-color-text-secondary: #525252; /* Secondary text color */
+      --ae-color-text-muted: #737373; /* Muted text color */
+      --ae-color-text-white: #ffffff; /* Text on dark backgrounds */
+      
+      /* COMPONENT TOKENS */
+      /* Button component tokens */
+      /* Primary variant */
+      --ae-button-bg-primary: var(--ae-color-brand-500);
+      --ae-button-fg-primary: var(--ae-color-text-white);
+      --ae-button-bg-primary-hover: var(--ae-color-brand-600);
+      --ae-button-border-primary: var(--ae-color-brand-500);
+      
+      /* Secondary variant */
+      --ae-button-bg-secondary: var(--ae-color-base-200);
+      --ae-button-fg-secondary: var(--ae-color-text-primary);
+      --ae-button-bg-secondary-hover: var(--ae-color-base-300);
+      --ae-button-border-secondary: var(--ae-color-base-300);
+      
+      /* Ghost variant */
+      --ae-button-bg-ghost: transparent;
+      --ae-button-fg-ghost: var(--ae-color-brand-600);
+      --ae-button-bg-ghost-hover: rgba(94, 124, 226, 0.1);
+      --ae-button-border-ghost: transparent;
+      
+      /* Common button styles */
+      --ae-button-radius: 0.375rem;
+      --ae-button-padding-x: 1rem;
+      --ae-button-padding-y: 0.5rem;
+      --ae-button-gap: 0.5rem;
+      --ae-focus-ring-color: var(--ae-color-brand-500);
+      --ae-focus-ring-width: 2px;
+      --ae-button-transition-duration: 200ms;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  
+  <!-- Initialize components -->
+  <script>
+    // Auto-register all components (this will register once no matter how many times it's imported)
+    import '@aetherui/core/auto-register';
+  </script>
+</head>
+<body>
+  <slot />
+</body>
+</html>

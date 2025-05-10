@@ -1,0 +1,233 @@
+---
+---
+
+<div class="simple-combo-example">
+  <h3>Basic Combobox Examples</h3>
+  
+  <div class="examples">
+    <div class="example">
+      <h4>Fruits Example</h4>
+      <div class="combo-placeholder" data-type="fruits"></div>
+    </div>
+    
+    <div class="example">
+      <h4>Colors Example</h4>
+      <div class="combo-placeholder" data-type="colors"></div>
+    </div>
+    
+    <div class="example">
+      <h4>Disabled Example</h4>
+      <div class="combo-placeholder" data-type="disabled"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { defineAeCombo } from '@aetherui/core';
+  
+  // Debug logging
+  console.log('SimpleComboExample script loading');
+  
+  // Wait for the page to load
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded fired');
+    initializeCombos();
+  });
+  
+  document.addEventListener('astro:page-load', () => {
+    console.log('astro:page-load fired');
+    initializeCombos();
+  });
+  
+  // Listen for cleanup to log (debugging)
+  document.addEventListener('astro:before-swap', () => {
+    console.log('astro:before-swap fired - cleaning up');
+  });
+  
+  // Make sure the component is defined
+  try {
+    defineAeCombo();
+    console.log('AeCombo defined on script load');
+  } catch (e) {
+    console.error('Failed to define AeCombo:', e);
+  }
+  
+  /**
+   * Explicitly render HTML for each combo directly
+   */
+  function initializeCombos() {
+    console.log('Initializing combos...');
+    
+    // Initialize all components by directly calling defineAeCombo
+    try {
+      if (!customElements.get('ae-combo')) {
+        defineAeCombo();
+        console.log('AeCombo defined in initialize');
+      } else {
+        console.log('AeCombo already defined');
+      }
+    } catch (e) {
+      console.error('Error defining AeCombo:', e);
+    }
+    
+    const placeholders = document.querySelectorAll('.combo-placeholder');
+    console.log(`Found ${placeholders.length} placeholders`);
+    
+    // Directly insert the components without waiting
+    placeholders.forEach(placeholder => {
+      const type = placeholder.getAttribute('data-type');
+      console.log(`Processing placeholder type: ${type}`);
+      
+      try {
+        if (type === 'fruits') {
+          // Create element directly instead of using innerHTML
+          const combo = document.createElement('ae-combo');
+          combo.id = 'fruits-combo-' + Math.random().toString(36).substring(2, 8); // Unique ID
+          combo.setAttribute('placeholder', 'Select a fruit...');
+          
+          // First clear placeholder
+          placeholder.innerHTML = '';
+          // Then append the new element
+          placeholder.appendChild(combo);
+          
+          // Set items with delay
+          setTimeout(() => {
+            try {
+              combo.items = [
+                'Apple',
+                'Banana',
+                'Cherry',
+                'Dragonfruit',
+                'Elderberry',
+                'Fig',
+                'Grape',
+                'Honeydew'
+              ];
+              console.log('Set items on fruits combo');
+            } catch (e) {
+              console.error('Failed to set items on fruits combo:', e);
+            }
+          }, 100);
+        } 
+        else if (type === 'colors') {
+          // Create element directly
+          const combo = document.createElement('ae-combo');
+          combo.id = 'colors-combo-' + Math.random().toString(36).substring(2, 8); // Unique ID
+          combo.setAttribute('placeholder', 'Select a color...');
+          combo.setAttribute('value', 'Blue');
+          
+          // First clear placeholder
+          placeholder.innerHTML = '';
+          // Then append the new element
+          placeholder.appendChild(combo);
+          
+          // Set items with delay
+          setTimeout(() => {
+            try {
+              combo.items = [
+                { id: 'red', label: 'Red' },
+                { id: 'blue', label: 'Blue' },
+                { id: 'green', label: 'Green' },
+                { id: 'yellow', label: 'Yellow' },
+                { id: 'purple', label: 'Purple' }
+              ];
+              console.log('Set items on colors combo');
+            } catch (e) {
+              console.error('Failed to set items on colors combo:', e);
+            }
+          }, 100);
+        }
+        else if (type === 'disabled') {
+          // Create element directly
+          const combo = document.createElement('ae-combo');
+          combo.id = 'disabled-combo-' + Math.random().toString(36).substring(2, 8); // Unique ID
+          combo.setAttribute('placeholder', 'You cannot select me');
+          combo.setAttribute('disabled', '');
+          
+          // First clear placeholder
+          placeholder.innerHTML = '';
+          // Then append the new element
+          placeholder.appendChild(combo);
+        }
+      } catch (e) {
+        console.error(`Error creating combo for type ${type}:`, e);
+        
+        // Add a fallback if the component creation fails
+        placeholder.innerHTML = `
+          <select class="ae-combo-fallback">
+            <option value="">Fallback - component creation failed</option>
+          </select>
+        `;
+      }
+    });
+  }
+</script>
+
+<style>
+  .simple-combo-example {
+    background-color: var(--sl-color-gray-1);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .simple-combo-example h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--sl-color-gray-9);
+  }
+  
+  .examples {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .example {
+    max-width: 300px;
+    width: 100%;
+  }
+  
+  .example h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--sl-color-gray-7);
+  }
+  
+  .combo-placeholder {
+    width: 100%;
+  }
+  
+  /* Fallback styling for browsers without Web Components */
+  .ae-combo-fallback {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    background: white;
+    color: #111;
+    font: inherit;
+  }
+  
+  /* Dark mode styles */
+  :global([data-theme="dark"]) .simple-combo-example {
+    background-color: var(--sl-color-gray-6);
+  }
+  
+  :global([data-theme="dark"]) .simple-combo-example h3 {
+    color: var(--sl-color-gray-1);
+  }
+  
+  :global([data-theme="dark"]) .example h4 {
+    color: var(--sl-color-gray-3);
+  }
+  
+  :global([data-theme="dark"]) .ae-combo-fallback {
+    background-color: var(--sl-color-gray-7);
+    color: var(--sl-color-gray-1);
+    border-color: var(--sl-color-gray-5);
+  }
+</style>
