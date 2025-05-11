@@ -1,9 +1,9 @@
 name: Deploy Docs and Storybook to GitHub Pages
 
 on:
-  # Runs on pushes targeting the default branch
+  # Runs on pushes targeting the default branch or our fix branch
   push:
-    branches: ["main"]
+    branches: ["main", "fix/docs-deploy"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
