@@ -106,9 +106,41 @@ function aetherCoreVirtualModulePlugin() {
           // Define all components at once
           export const defineAll = noop;
 
-          // Re-export component classes
-          export class AeButton extends HTMLElement {}
-          export class AeCheckbox extends HTMLElement {}
+          // Re-export component classes with ES2022 compatibility
+          export class AeButton extends HTMLElement {
+            static get properties() {
+              return {
+                variant: { type: String, reflect: true },
+                disabled: { type: Boolean, reflect: true },
+                loading: { type: Boolean, reflect: true },
+                icon: { type: String }
+              };
+            }
+
+            // Use regular property getters/setters instead of accessor syntax
+            get variant() { return this._variant || 'primary'; }
+            set variant(val) { this._variant = val; }
+
+            get disabled() { return this._disabled || false; }
+            set disabled(val) { this._disabled = val; }
+
+            get loading() { return this._loading || false; }
+            set loading(val) { this._loading = val; }
+
+            get icon() { return this._icon || ''; }
+            set icon(val) { this._icon = val; }
+          }
+
+          export class AeCheckbox extends HTMLElement {
+            static get properties() {
+              return {
+                checked: { type: Boolean, reflect: true },
+                disabled: { type: Boolean, reflect: true },
+                value: { type: String }
+              };
+            }
+          }
+
           export class AeAccordion extends HTMLElement {}
           export class AeModal extends HTMLElement {}
           export class AeRadio extends HTMLElement {}
@@ -197,7 +229,25 @@ export default defineConfig({
       compilerOptions: {
         skipLibCheck: true,
         noImplicitAny: false,
-        isolatedModules: true
+        isolatedModules: true,
+        target: "ES2022",
+        useDefineForClassFields: true
+      }
+    }
+  },
+  build: {
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
+    rollupOptions: {
+      onwarn(warning, warn) {
+        // Ignore specific warnings
+        if (warning.code === 'UNUSED_EXTERNAL_IMPORT' ||
+            warning.code === 'UNRESOLVED_IMPORT' ||
+            warning.code === 'THIS_IS_UNDEFINED') {
+          return;
+        }
+        warn(warning);
       }
     }
   },
