@@ -64,7 +64,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pnpm install --frozen-lockfile
+          pnpm install --no-frozen-lockfile
 
       # Build Core Packages First
       - name: Build dependencies
