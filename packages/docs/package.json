@@ -14,8 +14,6 @@
     "docs:build": "astro build"
   },
   "dependencies": {
-    "@aetherui/core": "workspace:*",
-    "@aetherui/tokens": "workspace:*",
     "@astrojs/starlight": "^0.34.0",
     "astro": "^5.7.0"
   },

@@ -29,23 +29,23 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
+        
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-
+          
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 10.10.0
           run_install: false
-
+          
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
+        
       - name: Setup pnpm cache
         uses: actions/cache@v4
         with:
@@ -53,7 +53,7 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-
+      
       - name: Setup Turborepo cache
         uses: actions/cache@v4
         with:
@@ -76,7 +76,9 @@ jobs:
       - name: Install docs dependencies
         run: |
           cd packages/docs
-          npm install --no-package-lock html-escaper zod p-limit @types/node
+          # Don't use npm directly as it doesn't understand workspace protocol
+          pnpm install --no-frozen-lockfile
+          pnpm add html-escaper zod p-limit @types/node
 
       # Build docs with improved error handling
       - name: Build docs
@@ -88,7 +90,7 @@ jobs:
           # Add configuration to skip type checking
           echo '{ "compilerOptions": { "skipLibCheck": true } }' > tsconfig.build.json
           # Build with type checking disabled
-          VITE_SKIP_TYPE_CHECK=true pnpm build || npm run build || echo "Docs build failed, will use fallback"
+          VITE_SKIP_TYPE_CHECK=true pnpm build || echo "Docs build failed, will use fallback"
 
       # Try to build Storybook with improved type handling
       - name: Build Storybook
@@ -99,7 +101,7 @@ jobs:
           cd storybook
           # Skip type checking for storybook
           echo "Building with simplified configuration"
-          SKIP_TYPESCRIPT_CHECK=true VITE_SKIP_TYPE_CHECK=true pnpm build-storybook || npm run build-storybook || echo "Storybook build failed, will use fallback"
+          SKIP_TYPESCRIPT_CHECK=true VITE_SKIP_TYPE_CHECK=true pnpm build-storybook || echo "Storybook build failed, will use fallback"
 
       # Create a merged output directory for GitHub Pages
       - name: Prepare combined output
@@ -107,14 +109,13 @@ jobs:
           # Create output directories
           mkdir -p ./.output
           mkdir -p ./.output/storybook
-
-          # Copy Docs (main site)
-          echo "Copying docs to output..."
+          
+          # Copy Docs (main site) if built successfully
           if [ -d "./packages/docs/dist" ]; then
+            echo "Copying docs to output..."
             cp -r ./packages/docs/dist/* ./.output/
           else
             echo "Creating fallback docs page..."
-            mkdir -p ./.output
             cat > ./.output/index.html << 'EOF'
             <!DOCTYPE html>
             <html lang="en">
@@ -124,13 +125,14 @@ jobs:
               <title>AetherUI Documentation</title>
               <style>
                 body {
-                  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                   max-width: 800px;
                   margin: 0 auto;
                   padding: 20px;
                   line-height: 1.6;
+                  color: #333;
                 }
-                h1 { color: #3a86ff; }
+                h1, h2 { color: #3a86ff; }
                 .notice {
                   background: #f8f9fa;
                   border-left: 4px solid #3a86ff;
@@ -149,18 +151,17 @@ jobs:
             </head>
             <body>
               <h1>AetherUI Documentation</h1>
-
               <div class="notice">
                 <p><strong>Documentation:</strong> Full documentation is coming soon.</p>
               </div>
-
-              <p>In the meantime, check out <a href="./storybook/">Storybook</a> for component examples.</p>
+              <p>AetherUI is a headless, framework-agnostic Web Component library built on Lit.</p>
+              <p>Check out <a href="./storybook/">Storybook</a> for component examples.</p>
             </body>
             </html>
             EOF
           fi
-
-          # Copy Storybook if it built successfully
+          
+          # Copy Storybook if built successfully
           if [ -d "./storybook/storybook-static" ] && [ -f "./storybook/storybook-static/index.html" ]; then
             echo "Copying Storybook to output..."
             cp -r ./storybook/storybook-static/* ./.output/storybook/
@@ -176,7 +177,7 @@ jobs:
               <title>AetherUI Storybook</title>
               <style>
                 body {
-                  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                   max-width: 800px;
                   margin: 0 auto;
                   padding: 20px;
@@ -196,69 +197,45 @@ jobs:
                   color: #3a86ff;
                   text-decoration: none;
                 }
-                .preview {
-                  margin-top: 30px;
+                .component-card {
+                  margin-top: 20px;
                   border: 1px solid #e9ecef;
                   border-radius: 8px;
-                  overflow: hidden;
-                }
-                .preview-header {
-                  background: #f8f9fa;
-                  padding: 10px 15px;
-                  border-bottom: 1px solid #e9ecef;
-                }
-                .preview-content {
-                  padding: 20px;
-                  display: flex;
-                  gap: 10px;
+                  padding: 15px;
                 }
                 .btn {
+                  display: inline-block;
                   padding: 10px 15px;
                   border-radius: 4px;
+                  background: #3a86ff;
+                  color: white;
                   border: none;
                   cursor: pointer;
                   font-family: inherit;
-                }
-                .btn-primary {
-                  background: #3a86ff;
-                  color: white;
+                  margin-right: 10px;
                 }
                 .btn-secondary {
                   background: #6c757d;
-                  color: white;
                 }
               </style>
             </head>
             <body>
               <h1>AetherUI Storybook</h1>
-
               <div class="notice">
                 <p><strong>Storybook:</strong> Full interactive Storybook is coming soon.</p>
               </div>
-
-              <h2>Component Previews</h2>
-
-              <div class="preview">
-                <div class="preview-header">Button</div>
-                <div class="preview-content">
-                  <button class="btn btn-primary">Primary</button>
-                  <button class="btn btn-secondary">Secondary</button>
-                </div>
+              <h2>Basic Component Examples</h2>
+              <div class="component-card">
+                <h3>Button</h3>
+                <button class="btn">Primary</button>
+                <button class="btn btn-secondary">Secondary</button>
               </div>
-
               <a href="../" class="back-link">← Back to AetherUI home</a>
             </body>
             </html>
             EOF
           fi
-
-          # Add landing page if none exists
-          if [ ! -f "./.output/index.html" ] && [ -f "./landing/index.html" ]; then
-            echo "Adding landing page from landing directory..."
-            cp ./landing/index.html ./.output/
-            cp ./landing/*.js ./.output/ || echo "No landing JS files to copy"
-          fi
-
+          
           # Verify the output structure
           echo "Output structure:"
           find ./.output -type f | sort | head -n 20
@@ -266,7 +243,7 @@ jobs:
       # Setup GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v4
-
+      
       # Upload artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
