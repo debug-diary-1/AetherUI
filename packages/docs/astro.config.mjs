@@ -2,7 +2,8 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
-  site: 'https://aetherui.dev',
+  site: 'https://pallavl01.github.io',
+  base: '/AetherUI',
   integrations: [
     starlight({
       title: 'Aether UI',
