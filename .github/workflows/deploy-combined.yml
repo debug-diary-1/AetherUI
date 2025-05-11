@@ -249,8 +249,7 @@ jobs:
           </body>
           </html>
           SBEOF
-          fi
-          
+
           # Verify the output structure
           echo "Output structure:"
           find ./.output -type f | sort | head -n 20
