@@ -1,7 +1,7 @@
 /**
  * Sorting direction
  */
-export type SortDirection = 'asc' | 'desc';
+export type SortDirection = 'asc' | 'desc' | 'none';
 
 /**
  * Individual sort configuration for a column
@@ -9,9 +9,12 @@ export type SortDirection = 'asc' | 'desc';
 export interface SortItem {
   /** Column ID to sort by */
   id: string;
-  
-  /** Sort direction (asc or desc) */
+
+  /** Sort direction (true for descending, false for ascending) */
   desc: boolean;
+
+  /** Sort direction as string ('asc', 'desc', 'none') */
+  direction: SortDirection;
 }
 
 /**

@@ -2,19 +2,27 @@
  * Pagination state
  */
 export interface PaginationState {
-  /** Current page index (0-based) */
-  pageIndex: number;
-  
+  /** Current page (1-based) */
+  page: number;
+
   /** Number of rows per page */
   pageSize: number;
+
+  /** Total number of items */
+  totalItems: number;
+
+  /** Total number of pages */
+  totalPages: number;
 }
 
 /**
  * Default pagination state
  */
 export const DEFAULT_PAGINATION_STATE: PaginationState = {
-  pageIndex: 0,
-  pageSize: 10
+  page: 1,
+  pageSize: 10,
+  totalItems: 0,
+  totalPages: 1
 };
 
 /**
@@ -52,29 +60,33 @@ export interface PaginationInfo {
 }
 
 /**
- * Calculate pagination information 
+ * Calculate pagination information
  * @param pagination Current pagination state
- * @param totalRowCount Total number of rows
+ * @param totalRowCount Total number of rows (optional if already in pagination state)
  * @returns Pagination details
  */
 export function getPaginationInfo(
   pagination: PaginationState,
-  totalRowCount: number
+  totalRowCount?: number
 ): PaginationInfo {
-  const { pageIndex, pageSize } = pagination;
-  
-  const totalPages = Math.max(1, Math.ceil(totalRowCount / pageSize));
+  const { page, pageSize, totalItems = totalRowCount || 0 } = pagination;
+
+  // Convert 1-based page to 0-based pageIndex for calculations
+  const pageIndex = page - 1;
+
+  // Use totalItems from pagination state or from parameter
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
   const firstRowIndex = pageIndex * pageSize;
-  const lastRowIndex = Math.min(firstRowIndex + pageSize - 1, totalRowCount - 1);
-  
+  const lastRowIndex = Math.min(firstRowIndex + pageSize - 1, totalItems - 1);
+
   return {
-    currentPage: pageIndex + 1,
+    currentPage: page,
     totalPages,
     firstRowIndex,
     lastRowIndex,
     firstRowNumber: firstRowIndex + 1,
     lastRowNumber: lastRowIndex + 1,
-    canPreviousPage: pageIndex > 0,
-    canNextPage: pageIndex < totalPages - 1
+    canPreviousPage: page > 1,
+    canNextPage: page < totalPages
   };
 }

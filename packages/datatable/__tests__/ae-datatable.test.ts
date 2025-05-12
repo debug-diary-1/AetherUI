@@ -87,7 +87,10 @@ describe('AeDataTable', () => {
       <ae-datatable .data=${[]} .columns=${columns} empty-message="No data available"></ae-datatable>
     `);
     
-    await emptyTable.updateComplete;
+    // For LitElement components
+    if ('updateComplete' in emptyTable) {
+      await (emptyTable as any).updateComplete;
+    }
     
     // Check for empty message
     const emptyMessage = emptyTable.shadowRoot!.querySelector('.datatable__empty');
@@ -105,7 +108,10 @@ describe('AeDataTable', () => {
       ></ae-datatable>
     `);
     
-    await selectableTable.updateComplete;
+    // For LitElement components
+    if ('updateComplete' in selectableTable) {
+      await (selectableTable as any).updateComplete;
+    }
     
     // Check for selection checkbox in header
     const selectionHeader = selectableTable.shadowRoot!.querySelector('ae-datatable-header-cell[id="selection"]');

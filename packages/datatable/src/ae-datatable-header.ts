@@ -2,7 +2,7 @@ import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { DATATABLE_HEADER_ELEMENT_NAME } from './index';
 import { headerCellStyles } from './styles';
-import { SortDirection } from './models/sort-model';
+import type { SortDirection } from './models/sort-model';
 
 /**
  * Header cell component for the datatable

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AetherUI - Web Component Library</title>
+  <style>
+    :root {
+      --color-primary: #4761E4;
+      --color-primary-light: #6C82EA;
+      --color-primary-dark: #2945CB;
+      --color-bg: #FFFFFF;
+      --color-bg-offset: #F4F6FC;
+      --color-text: #1A202C;
+      --color-text-secondary: #4A5568;
+      --color-border: #E2E8F0;
+      --container-width: 1280px;
+      --radius: 0.5rem;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--color-text);
+      background-color: var(--color-bg);
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-width);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    header {
+      background-color: var(--color-bg-offset);
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--color-primary);
+    }
+
+    .hero {
+      padding: 5rem 0;
+      text-align: center;
+      background-color: var(--color-bg-offset);
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      color: var(--color-text-secondary);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: var(--radius);
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-primary-dark);
+    }
+
+    .btn-secondary {
+      background-color: white;
+      color: var(--color-primary);
+      border: 1px solid var(--color-primary);
+      margin-left: 1rem;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--color-bg-offset);
+    }
+
+    .section {
+      padding: 5rem 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-title p {
+      font-size: 1.125rem;
+      color: var(--color-text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .components-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .component-card {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      background-color: white;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .component-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .component-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-primary);
+    }
+
+    .component-card p {
+      color: var(--color-text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .coming-soon {
+      display: inline-block;
+      background-color: var(--color-bg-offset);
+      color: var(--color-text-secondary);
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 20px;
+      margin-left: 0.5rem;
+    }
+
+    .features {
+      background-color: var(--color-bg-offset);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background-color: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      background-color: var(--color-primary-light);
+      color: white;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 0.75rem;
+    }
+
+    footer {
+      background-color: var(--color-bg-offset);
+      padding: 3rem 0;
+      border-top: 1px solid var(--color-border);
+      margin-top: 2rem;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      color: var(--color-text-secondary);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-link {
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .social-link:hover {
+      color: var(--color-primary);
+    }
+
+    @media (max-width: 768px) {
+      .components-grid, .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <div class="logo">AetherUI</div>
+      <nav class="nav">
+        <a href="#components" class="nav-link">Components</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="https://github.com/pallavL01/AetherUI" class="nav-link">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>A modern Web Component library<br>built on Lit</h1>
+      <p>AetherUI provides a set of framework-agnostic, headless UI components for building high-quality web interfaces.</p>
+      <div class="buttons">
+        <a href="#components" class="btn btn-primary">Explore Components</a>
+        <a href="https://github.com/pallavL01/AetherUI" class="btn btn-secondary">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="components" class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Components</h2>
+        <p>AetherUI offers a growing collection of UI components built with web standards. Each component is designed to be accessible, customizable, and framework-agnostic.</p>
+      </div>
+
+      <div class="components-grid">
+        <div class="component-card">
+          <h3>Accordion</h3>
+          <p>Expandable content sections that can be toggled open or closed.</p>
+        </div>
+        
+        <div class="component-card">
+          <h3>Alert</h3>
+          <p>Notification messages that provide feedback to user actions.</p>
+        </div>
+        
+        <div class="component-card">
+          <h3>Autocomplete</h3>
+          <p>Text input with suggestion filtering for quick entry.</p>
+        </div>
+        
+        <div class="component-card">
+          <h3>Button</h3>
+          <p>Interactive controls for forms and user interaction.</p>
+        </div>
+        
+        <div class="component-card">
+          <h3>Checkbox</h3>
+          <p>Selection control that allows multiple options to be chosen.</p>
+        </div>
+        
+        <div class="component-card">
+          <h3>Combo</h3>
+          <p>Combination of text input and dropdown for flexible selection.</p>
+        </div>
+        
+        <div class="component-card">
+          <h3>DataTable</h3>
+          <p>Interactive table for displaying and manipulating tabular data.</p>
+        </div>
+        
+        <div class="component-card">
+          <h3>Dropdown</h3>
+          <p>Menu that appears below a button to show additional options.</p>
+        </div>
+        
+        <div class="component-card">
+          <h3>Modal</h3>
+          <p>Dialog overlay that focuses user attention on important content.</p>
+        </div>
+        
+        <div class="component-card">
+          <h3>Radio</h3>
+          <p>Selection control that allows only one option to be chosen.</p>
+        </div>
+        
+        <div class="component-card">
+          <h3>Tabs</h3>
+          <p>Tabbed interface for organizing content into separate views.</p>
+        </div>
+        
+        <div class="component-card">
+          <h3>TreeView</h3>
+          <p>Hierarchical display of nested items with expand/collapse functionality.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="section features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Features</h2>
+        <p>AetherUI is built with modern web standards and best practices.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <h3>Framework-Agnostic</h3>
+          <p>Use with any framework or no framework at all. Built on Web Components, compatible everywhere.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3>Customizable</h3>
+          <p>Headless design that allows complete styling control through CSS custom properties.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">♿</div>
+          <h3>Accessible</h3>
+          <p>Built with accessibility in mind, following WAI-ARIA patterns and keyboard navigation.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">📦</div>
+          <h3>Modular</h3>
+          <p>Import only what you need. Each component can be used independently.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Lightweight</h3>
+          <p>Optimized for performance with minimal dependencies.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">📝</div>
+          <h3>TypeScript</h3>
+          <p>Full TypeScript support with type definitions for enhanced developer experience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-text">
+        &copy; 2023 AetherUI. Documentation coming soon.
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/pallavL01/AetherUI" class="social-link">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

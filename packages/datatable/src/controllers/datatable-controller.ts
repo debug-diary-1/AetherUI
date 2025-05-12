@@ -1,7 +1,7 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
 import { ColumnDef } from '../models/column-model';
-import { SortState, SortDirection } from '../models/sort-model';
-import { FilterState } from '../models/filter-model';
+import { SortingState, SortDirection } from '../models/sort-model';
+import { ColumnFiltersState as FilterState } from '../models/filter-model';
 import { PaginationState } from '../models/pagination-model';
 import { ColumnManager } from '../core/column-manager';
 import { SortManager } from '../core/sort-manager';
@@ -50,7 +50,7 @@ export class DataTableController<T> implements ReactiveController {
     this._columnManager.initialize(columns);
     this._sortManager.initialize();
     this._filterManager.initialize();
-    this._selectionManager.initialize(this._data);
+    this._selectionManager.initialize();
     this._paginationManager.initialize(data.length);
     
     this.processData();
@@ -152,15 +152,16 @@ export class DataTableController<T> implements ReactiveController {
   /**
    * Get current sort state
    */
-  getSortState(): SortState {
-    return this._sortManager.getSortState();
+  getSortState(): SortingState {
+    return this._sortManager.getSorting();
   }
   
   /**
    * Set sort state
    */
   setSortState(columnId: string, direction: SortDirection, multiSort = false): void {
-    this._sortManager.setSortState(columnId, direction, multiSort);
+    const desc = direction === 'desc';
+    this._sortManager.toggleSorting(columnId, multiSort, desc);
     this.processData();
   }
   
@@ -168,7 +169,7 @@ export class DataTableController<T> implements ReactiveController {
    * Clear all sorting
    */
   clearSort(): void {
-    this._sortManager.clearSort();
+    this._sortManager.clearSorting();
     this.processData();
   }
   
@@ -176,7 +177,7 @@ export class DataTableController<T> implements ReactiveController {
    * Get current filter state
    */
   getFilterState(): FilterState {
-    return this._filterManager.getFilterState();
+    return this._filterManager.getColumnFilters();
   }
   
   /**
@@ -323,7 +324,7 @@ export class DataTableController<T> implements ReactiveController {
    */
   updateData(data: T[]): void {
     this._data = [...data];
-    this._selectionManager.initialize(this._data);
+    this._selectionManager.initialize();
     this._paginationManager.updateTotalItems(data.length);
     this.processData();
   }

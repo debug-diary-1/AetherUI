@@ -12,11 +12,12 @@ async function fixture<T extends HTMLElement>(html: string): Promise<T> {
   template.innerHTML = html;
   const element = template.content.firstElementChild as T;
   document.body.appendChild(element);
-  
-  if (element.updateComplete) {
-    await element.updateComplete;
+
+  // For LitElement components
+  if ('updateComplete' in element) {
+    await (element as any).updateComplete;
   }
-  
+
   return element;
 }
 

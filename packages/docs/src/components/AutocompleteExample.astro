@@ -1,0 +1,152 @@
+---
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+  code?: string;
+  preview?: string;
+  title?: string;
+  description?: string;
+}
+
+const { code, preview, title, description } = Astro.props;
+const exampleId = `autocomplete-example-${Math.random().toString(36).slice(2, 10)}`;
+---
+
+<div class="autocomplete-example" id={exampleId}>
+  {title && <h3 class="example-title">{title}</h3>}
+  {description && <p class="example-description">{description}</p>}
+  
+  <div class="preview">
+    {preview ? <div set:html={preview} /> : code ? <div set:html={code} /> : <slot />}
+  </div>
+  
+  {code && (
+    <div class="code-preview">
+      <Code code={code} lang="html" />
+    </div>
+  )}
+</div>
+
+<script>
+  // Import the auto-register module which registers all components
+  import '@aetherui/core/auto-register';
+  
+  // Set up event listeners for initializing the examples
+  document.addEventListener('DOMContentLoaded', initializeExamples);
+  document.addEventListener('astro:page-load', initializeExamples);
+  
+  function initializeExamples() {
+    // Get all autocomplete examples in the page
+    const examples = document.querySelectorAll('.autocomplete-example');
+    
+    examples.forEach((example) => {
+      const id = example.id;
+      
+      // Get autocomplete elements in this example
+      const autocompletes = example.querySelectorAll('ae-autocomplete');
+      
+      // Initialize each autocomplete with data if it has a data-options attribute
+      autocompletes.forEach((autocomplete, index) => {
+        const dataOptions = autocomplete.getAttribute('data-options');
+        
+        if (dataOptions) {
+          try {
+            // Parse the options as JSON
+            const options = JSON.parse(dataOptions);
+            autocomplete.options = options;
+          } catch (e) {
+            console.error('Error parsing autocomplete options:', e);
+          }
+        }
+        
+        // Add selection event listener for demo purposes
+        autocomplete.addEventListener('ae-autocomplete-select', (e) => {
+          console.log(`Selected: ${e.detail.value}`, e.detail.option);
+        });
+      });
+    });
+  }
+</script>
+
+<style>
+  .autocomplete-example {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    background: var(--sl-color-gray-1);
+  }
+
+  .example-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--sl-color-gray-9);
+  }
+  
+  .example-description {
+    font-size: 0.9rem;
+    color: var(--sl-color-gray-7);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .preview {
+    padding: 1.5rem;
+    border-radius: 0.25rem;
+    background: var(--sl-color-white);
+    position: relative;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Dark mode styles */
+  :global([data-theme="dark"] .preview) {
+    background: var(--sl-color-gray-6);
+  }
+
+  :global([data-theme="dark"] .example-title) {
+    color: var(--sl-color-gray-1);
+  }
+  
+  :global([data-theme="dark"] .example-description) {
+    color: var(--sl-color-gray-3);
+  }
+
+  /* Autocomplete custom styling for examples */
+  :global(.preview ae-autocomplete) {
+    max-width: 400px;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  :global(.label) {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--sl-color-gray-8);
+  }
+  
+  :global([data-theme="dark"] .label) {
+    color: var(--sl-color-gray-2);
+  }
+  
+  :global(.option-group) {
+    margin-bottom: 2rem;
+  }
+  
+  :global(.option-group-title) {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    color: var(--sl-color-gray-9);
+  }
+  
+  :global([data-theme="dark"] .option-group-title) {
+    color: var(--sl-color-gray-1);
+  }
+</style>

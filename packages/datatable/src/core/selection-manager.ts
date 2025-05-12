@@ -10,8 +10,72 @@ export type SelectionTrigger = 'row' | 'checkbox' | 'both';
 
 /**
  * The SelectionManager class is responsible for handling row selection
+ * @template T The type of data being selected
  */
-export class SelectionManager {
+export class SelectionManager<T> {
+  // Add methods for selecting rows based on data objects
+
+  /**
+   * Get the ID for a row (for use in selection tracking)
+   * @param row Row data
+   * @returns String ID for the row
+   */
+  getRowId(row: T): string {
+    // First check for an id property directly on the row
+    if (row && typeof (row as any).id !== 'undefined') {
+      return String((row as any).id);
+    }
+
+    // Then check for an _id property (common in MongoDB)
+    if (row && typeof (row as any)._id !== 'undefined') {
+      return String((row as any)._id);
+    }
+
+    // Fallback to JSON stringifying the object
+    return JSON.stringify(row);
+  }
+
+  /**
+   * Select or deselect all rows in the provided data set
+   * @param data Array of row data
+   * @param select Whether to select (true) or deselect (false)
+   * @returns True if selection changed
+   */
+  selectAllRows(data: T[]): boolean {
+    if (this._selectionMode !== 'multiple') return false;
+
+    const rowIds = data.map(row => this.getRowId(row));
+    return this.selectAll(rowIds);
+  }
+
+  /**
+   * Deselect all rows
+   * @returns True if selection changed
+   */
+  deselectAllRows(): boolean {
+    return this.deselectAll();
+  }
+
+  /**
+   * Get the selected state for a row by ID
+   * @param rowId Row ID (string or number)
+   * @returns True if the row is selected
+   */
+  isRowSelected(rowId: string | number): boolean {
+    const id = typeof rowId === 'number' ? String(rowId) : rowId;
+    return !!this._selectedRows[id];
+  }
+
+  /**
+   * Set selection state for a specific row
+   * @param row Row data object
+   * @param selected Whether the row should be selected
+   * @returns True if selection changed
+   */
+  setRowSelection(rowId: string | number, selected: boolean): boolean {
+    const id = typeof rowId === 'number' ? String(rowId) : rowId;
+    return this.toggleRowSelection(id, selected);
+  }
   private _selectionMode: SelectionMode = 'none';
   private _selectionTrigger: SelectionTrigger = 'checkbox';
   private _selectedRows: Record<string, boolean> = {};
@@ -37,11 +101,21 @@ export class SelectionManager {
   }
   
   /**
-   * Get selected rows
+   * Get selected rows as a mapping
    * @returns Object mapping row IDs to selection state
    */
-  getSelectedRows(): Record<string, boolean> {
+  getSelectedRowsMap(): Record<string, boolean> {
     return { ...this._selectedRows };
+  }
+
+  /**
+   * Get selected rows as an array of IDs
+   * @returns Array of selected row IDs
+   */
+  getSelectedRows(): (string | number)[] {
+    return Object.entries(this._selectedRows)
+      .filter(([_, selected]) => selected)
+      .map(([id]) => id);
   }
   
   /**
@@ -82,27 +156,30 @@ export class SelectionManager {
    * @param value Force a specific selection state
    * @returns True if selection changed
    */
-  toggleRowSelection(rowId: string, value?: boolean): boolean {
+  toggleRowSelection(rowId: string | number, value?: boolean): boolean {
     if (this._selectionMode === 'none') return false;
-    
-    const isSelected = this._selectedRows[rowId] || false;
+
+    // Convert number to string if needed
+    const id = typeof rowId === 'number' ? String(rowId) : rowId;
+
+    const isSelected = this._selectedRows[id] || false;
     const newValue = value !== undefined ? value : !isSelected;
-    
+
     if (newValue === isSelected) return false;
-    
+
     let newSelectedRows: Record<string, boolean>;
-    
+
     if (this._selectionMode === 'single') {
       // For single mode, deselect all other rows
-      newSelectedRows = newValue ? { [rowId]: true } : {};
+      newSelectedRows = newValue ? { [id]: true } : {};
     } else {
       // For multiple mode, just toggle this row
       newSelectedRows = { ...this._selectedRows };
-      
+
       if (newValue) {
-        newSelectedRows[rowId] = true;
+        newSelectedRows[id] = true;
       } else {
-        delete newSelectedRows[rowId];
+        delete newSelectedRows[id];
       }
     }
     
@@ -133,23 +210,15 @@ export class SelectionManager {
     return this.setSelectedRows({});
   }
   
-  /**
-   * Check if a row is selected
-   * @param rowId Row ID to check
-   * @returns True if the row is selected
-   */
-  isRowSelected(rowId: string): boolean {
-    return !!this._selectedRows[rowId];
-  }
+  /* This duplicate method was removed to fix TS2393 */
   
   /**
-   * Get all selected row IDs
+   * Get all selected row IDs (alias for getSelectedRows for backward compatibility)
    * @returns Array of selected row IDs
+   * @deprecated Use getSelectedRows instead
    */
   getSelectedRowIds(): string[] {
-    return Object.entries(this._selectedRows)
-      .filter(([_, selected]) => selected)
-      .map(([id]) => id);
+    return this.getSelectedRows().map(id => String(id));
   }
   
   /**

@@ -7,7 +7,7 @@ import { datatableStyles } from './styles';
 import { DataTableController } from './controllers/datatable-controller';
 import { ColumnDef } from './models/column-model';
 import { SortDirection } from './models/sort-model';
-import { PaginationState } from './models/pagination-model';
+import type { PaginationState } from './models/pagination-model';
 import './ae-datatable-header';
 import './ae-datatable-row';
 import './ae-datatable-cell';

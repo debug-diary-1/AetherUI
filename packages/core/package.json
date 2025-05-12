@@ -68,6 +68,11 @@
       "import": "./dist/combo/index.js",
       "require": "./dist/combo/index.js"
     },
+    "./autocomplete": {
+      "types": "./dist/autocomplete/index.d.ts",
+      "import": "./dist/autocomplete/index.js",
+      "require": "./dist/autocomplete/index.js"
+    },
     "./package.json": "./package.json",
     "./*": {
       "types": "./dist/*/index.d.ts",
