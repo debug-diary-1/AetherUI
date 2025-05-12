@@ -1,0 +1,288 @@
+<!-- Debug scripts for troubleshooting Storybook issues -->
+<script>
+    // Capture all errors
+    window.errors = [];
+    window.addEventListener('error', function(event) {
+        console.error('Runtime error caught:', event.message);
+        window.errors.push({
+            message: event.message,
+            source: event.filename,
+            line: event.lineno,
+            timestamp: new Date().toISOString()
+        });
+    });
+
+    // Log when document is fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Document fully loaded');
+    });
+
+    // Check if custom elements are supported
+    console.log('Custom Elements supported:', !!window.customElements);
+</script>
+
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    margin: 0;
+    padding: 1rem;
+  }
+
+  .story-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 800px;
+  }
+
+  .example-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .example-divider {
+    margin: 1rem 0;
+    border-top: 1px solid #eaeaea;
+  }
+
+  .example-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #666;
+  }
+
+  /* Global Storybook styles */
+  .sb-show-main.sb-main-padded {
+    padding: 1rem;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Light Theme (default) */
+  :root, .light-theme {
+    /* Common variables */
+    --ae-border-radius: 4px;
+    --ae-transition-speed: 0.2s;
+    --ae-focus-ring-width: 2px;
+
+    /* Colors */
+    --ae-primary: #3b82f6;
+    --ae-primary-hover: #2563eb;
+    --ae-primary-active: #1d4ed8;
+    --ae-secondary: #6b7280;
+    --ae-secondary-hover: #4b5563;
+    --ae-success: #10b981;
+    --ae-warning: #f59e0b;
+    --ae-error: #ef4444;
+    --ae-info: #3b82f6;
+
+    /* Background colors */
+    --ae-background: #ffffff;
+    --ae-background-secondary: #f9fafb;
+    --ae-background-tertiary: #f3f4f6;
+
+    /* Text colors */
+    --ae-text-primary: #111827;
+    --ae-text-secondary: #4b5563;
+    --ae-text-tertiary: #6b7280;
+    --ae-text-disabled: #9ca3af;
+    --ae-text-inverse: #ffffff;
+
+    /* Border colors */
+    --ae-border-color: #d1d5db;
+    --ae-border-color-hover: #9ca3af;
+    --ae-border-color-focus: #3b82f6;
+
+    /* Shadow */
+    --ae-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --ae-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --ae-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+    /* Component-specific variables */
+    /* Button */
+    --ae-button-primary-bg: var(--ae-primary);
+    --ae-button-primary-text: var(--ae-text-inverse);
+    --ae-button-primary-hover-bg: var(--ae-primary-hover);
+    --ae-button-secondary-bg: var(--ae-background-tertiary);
+    --ae-button-secondary-text: var(--ae-text-primary);
+    --ae-button-secondary-hover-bg: var(--ae-background-secondary);
+    --ae-button-disabled-bg: var(--ae-background-tertiary);
+    --ae-button-disabled-text: var(--ae-text-disabled);
+
+    /* Autocomplete */
+    --ae-autocomplete-border-color: var(--ae-border-color);
+    --ae-autocomplete-background: var(--ae-background);
+    --ae-autocomplete-text-color: var(--ae-text-primary);
+    --ae-autocomplete-highlight-color: var(--ae-primary);
+    --ae-autocomplete-dropdown-shadow: var(--ae-shadow-md);
+    --ae-autocomplete-dropdown-background: var(--ae-background);
+    --ae-autocomplete-group-background: var(--ae-background-tertiary);
+    --ae-autocomplete-highlight-background: var(--ae-background-tertiary);
+
+    /* Checkbox & Radio */
+    --ae-checkbox-border-color: var(--ae-border-color);
+    --ae-checkbox-background: var(--ae-background);
+    --ae-checkbox-checked-bg: var(--ae-primary);
+    --ae-checkbox-checked-border: var(--ae-primary);
+    --ae-checkbox-focus-ring: rgba(59, 130, 246, 0.5);
+
+    /* Tabs */
+    --ae-tabs-border-color: var(--ae-border-color);
+    --ae-tabs-active-color: var(--ae-primary);
+    --ae-tabs-background: var(--ae-background);
+    --ae-tabs-text-color: var(--ae-text-primary);
+    --ae-tabs-hover-background: var(--ae-background-tertiary);
+
+    /* TreeView */
+    --ae-treeview-item-hover-bg: var(--ae-background-tertiary);
+    --ae-treeview-selected-bg: rgba(59, 130, 246, 0.1);
+    --ae-treeview-selected-border: var(--ae-primary);
+    --ae-treeview-text-color: var(--ae-text-primary);
+    --ae-treeview-icon-color: var(--ae-text-secondary);
+
+    /* Combo */
+    --ae-combo-border-color: var(--ae-border-color);
+    --ae-combo-background: var(--ae-background);
+    --ae-combo-text-color: var(--ae-text-primary);
+    --ae-combo-dropdown-shadow: var(--ae-shadow-md);
+    --ae-combo-focus-border: var(--ae-primary);
+  }
+
+  /* Dark Theme */
+  .dark-theme {
+    /* Colors */
+    --ae-primary: #3b82f6;
+    --ae-primary-hover: #60a5fa;
+    --ae-primary-active: #93c5fd;
+    --ae-secondary: #6b7280;
+    --ae-secondary-hover: #9ca3af;
+    --ae-success: #10b981;
+    --ae-warning: #f59e0b;
+    --ae-error: #ef4444;
+    --ae-info: #3b82f6;
+
+    /* Background colors */
+    --ae-background: #1f2937;
+    --ae-background-secondary: #111827;
+    --ae-background-tertiary: #374151;
+
+    /* Text colors */
+    --ae-text-primary: #f9fafb;
+    --ae-text-secondary: #e5e7eb;
+    --ae-text-tertiary: #d1d5db;
+    --ae-text-disabled: #6b7280;
+    --ae-text-inverse: #111827;
+
+    /* Border colors */
+    --ae-border-color: #4b5563;
+    --ae-border-color-hover: #9ca3af;
+    --ae-border-color-focus: #60a5fa;
+
+    /* Shadow */
+    --ae-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --ae-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --ae-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+
+    /* Component-specific variables */
+    /* Button */
+    --ae-button-primary-bg: var(--ae-primary);
+    --ae-button-primary-text: var(--ae-text-primary);
+    --ae-button-primary-hover-bg: var(--ae-primary-hover);
+    --ae-button-secondary-bg: var(--ae-background-tertiary);
+    --ae-button-secondary-text: var(--ae-text-primary);
+    --ae-button-secondary-hover-bg: var(--ae-background-secondary);
+    --ae-button-disabled-bg: var(--ae-background-tertiary);
+    --ae-button-disabled-text: var(--ae-text-disabled);
+
+    /* Autocomplete */
+    --ae-autocomplete-border-color: var(--ae-border-color);
+    --ae-autocomplete-background: var(--ae-background);
+    --ae-autocomplete-text-color: var(--ae-text-primary);
+    --ae-autocomplete-highlight-color: var(--ae-primary);
+    --ae-autocomplete-dropdown-shadow: var(--ae-shadow-md);
+    --ae-autocomplete-dropdown-background: var(--ae-background);
+    --ae-autocomplete-group-background: var(--ae-background-tertiary);
+    --ae-autocomplete-highlight-background: var(--ae-background-tertiary);
+
+    /* Checkbox & Radio */
+    --ae-checkbox-border-color: var(--ae-border-color);
+    --ae-checkbox-background: var(--ae-background);
+    --ae-checkbox-checked-bg: var(--ae-primary);
+    --ae-checkbox-checked-border: var(--ae-primary);
+    --ae-checkbox-focus-ring: rgba(59, 130, 246, 0.5);
+
+    /* Tabs */
+    --ae-tabs-border-color: var(--ae-border-color);
+    --ae-tabs-active-color: var(--ae-primary);
+    --ae-tabs-background: var(--ae-background);
+    --ae-tabs-text-color: var(--ae-text-primary);
+    --ae-tabs-hover-background: var(--ae-background-tertiary);
+
+    /* TreeView */
+    --ae-treeview-item-hover-bg: var(--ae-background-tertiary);
+    --ae-treeview-selected-bg: rgba(59, 130, 246, 0.2);
+    --ae-treeview-selected-border: var(--ae-primary);
+    --ae-treeview-text-color: var(--ae-text-primary);
+    --ae-treeview-icon-color: var(--ae-text-secondary);
+
+    /* Combo */
+    --ae-combo-border-color: var(--ae-border-color);
+    --ae-combo-background: var(--ae-background);
+    --ae-combo-text-color: var(--ae-text-primary);
+    --ae-combo-dropdown-shadow: var(--ae-shadow-md);
+    --ae-combo-focus-border: var(--ae-primary);
+  }
+
+  /* Component-specific styles */
+  ae-autocomplete {
+    max-width: 400px;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  ae-button {
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+
+  ae-checkbox, ae-radio {
+    margin-right: 16px;
+    margin-bottom: 8px;
+  }
+
+  ae-tabs {
+    max-width: 600px;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  ae-treeview {
+    max-width: 300px;
+    height: 300px;
+    margin-bottom: 1rem;
+  }
+
+  ae-combo {
+    max-width: 400px;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  /* Debug panel */
+  .debug-info {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background: var(--ae-background-secondary);
+    border: 1px solid var(--ae-border-color);
+    color: var(--ae-text-primary);
+    padding: 10px;
+    font-size: 12px;
+    max-width: 300px;
+    max-height: 200px;
+    overflow: auto;
+    z-index: 9999;
+  }
+</style>
