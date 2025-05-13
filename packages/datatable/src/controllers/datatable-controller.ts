@@ -52,8 +52,24 @@ export class DataTableController<T> implements ReactiveController {
     this._filterManager.initialize();
     this._selectionManager.initialize();
     this._paginationManager.initialize(data.length);
-    
+
     this.processData();
+  }
+
+  /**
+   * Initialize selection with external state and options
+   * @param selectedRows External selection state
+   * @param options Selection options
+   */
+  initializeSelection(
+    selectedRows: Record<string, boolean> = {},
+    options?: {
+      selectionMode?: 'none' | 'single' | 'multiple';
+      selectionTrigger?: 'row' | 'checkbox' | 'both';
+    }
+  ): void {
+    this._selectionManager.initialize(selectedRows, options);
+    this._host.requestUpdate();
   }
   
   /**
@@ -172,6 +188,15 @@ export class DataTableController<T> implements ReactiveController {
     this._sortManager.clearSorting();
     this.processData();
   }
+
+  /**
+   * Set the entire sort state at once
+   * @param sortState Array of sort configurations
+   */
+  setSortingState(sortState: SortingState): void {
+    this._sortManager.setSorting(sortState);
+    this.processData();
+  }
   
   /**
    * Get current filter state
@@ -194,6 +219,33 @@ export class DataTableController<T> implements ReactiveController {
   setColumnFilter(columnId: string, filter: string): void {
     this._filterManager.setColumnFilter(columnId, filter);
     this.processData();
+  }
+
+  /**
+   * Set advanced column filter
+   * @param columnId Column ID to filter
+   * @param filter Advanced filter configuration
+   */
+  setAdvancedColumnFilter(columnId: string, filter: any): void {
+    this._filterManager.setAdvancedColumnFilter(columnId, filter);
+    this.processData();
+  }
+
+  /**
+   * Get advanced column filters
+   * @returns Map of column IDs to advanced filter configurations
+   */
+  getAdvancedFilters(): Map<string, any> {
+    return this._filterManager.getAdvancedFilters();
+  }
+
+  /**
+   * Get advanced filter for a specific column
+   * @param columnId Column ID
+   * @returns The filter configuration or null
+   */
+  getAdvancedColumnFilter(columnId: string): any {
+    return this._filterManager.getAdvancedColumnFilter(columnId);
   }
   
   /**
@@ -271,6 +323,14 @@ export class DataTableController<T> implements ReactiveController {
   setPageSize(size: number): void {
     this._paginationManager.setPageSize(size);
     this.processData();
+  }
+
+  /**
+   * Set total row count for server-side pagination
+   */
+  setRowCount(count: number): void {
+    this._paginationManager.setTotalItems(count);
+    this._host.requestUpdate();
   }
   
   /**

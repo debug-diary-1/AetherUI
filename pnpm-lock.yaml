@@ -214,6 +214,9 @@ importers:
       '@aetherui/core':
         specifier: workspace:*
         version: link:../core
+      '@aetherui/datatable':
+        specifier: workspace:*
+        version: link:../datatable
       '@aetherui/tokens':
         specifier: workspace:*
         version: link:../tokens
@@ -260,6 +263,9 @@ importers:
       '@aetherui/core':
         specifier: workspace:*
         version: link:../core
+      '@aetherui/datatable':
+        specifier: workspace:*
+        version: link:../datatable
       lit-html:
         specifier: ^3.3.0
         version: 3.3.0

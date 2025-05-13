@@ -22,8 +22,7 @@
     "build": "vite build",
     "dev": "vite",
     "clean": "rimraf dist",
-    "lint": "eslint src --ext .ts",
-    "test": "vitest"
+    "lint": "eslint src --ext .ts"
   },
   "dependencies": {
     "lit": "^3.0.0"

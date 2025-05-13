@@ -1,0 +1,144 @@
+---
+import { registerAetherComponents } from './AetherComponents';
+
+// Register components for SSR
+registerAetherComponents();
+
+// Generate a unique ID for this example
+const id = `datatable-example-${Math.random().toString(36).substring(2, 11)}`;
+---
+
+<div class="example-container">
+  <div class="example">
+    <ae-datatable id={id}></ae-datatable>
+  </div>
+</div>
+
+<script define:vars={{ id }}>
+  // Initialize the datatable with example data
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      // Import the components to ensure they're registered
+      const { registerClientComponents } = await import('./AetherComponents');
+      const { datatable } = await registerClientComponents();
+
+      // Get the example table
+      const table = document.getElementById(id);
+      if (!table) return;
+
+      // Define sample data
+      const data = [
+        { id: 1, name: 'John Doe', age: 30, email: 'john@example.com', status: 'Active' },
+        { id: 2, name: 'Jane Smith', age: 25, email: 'jane@example.com', status: 'Active' },
+        { id: 3, name: 'Bob Johnson', age: 40, email: 'bob@example.com', status: 'Inactive' },
+        { id: 4, name: 'Alice Williams', age: 35, email: 'alice@example.com', status: 'Active' },
+        { id: 5, name: 'Charlie Brown', age: 28, email: 'charlie@example.com', status: 'Pending' },
+      ];
+
+      // Define columns with a custom renderer for the status column
+      const columns = [
+        { id: 'name', field: 'name', header: 'Name', sortable: true, width: '150px' },
+        { id: 'age', field: 'age', header: 'Age', sortable: true, align: 'right', width: '80px' },
+        { id: 'email', field: 'email', header: 'Email', width: '200px' },
+        {
+          id: 'status',
+          field: 'status',
+          header: 'Status',
+          width: '120px',
+          renderer: (value) => {
+            const getStatusColor = (status) => {
+              switch (status) {
+                case 'Active': return '#10b981';
+                case 'Inactive': return '#ef4444';
+                case 'Pending': return '#f59e0b';
+                default: return '#6b7280';
+              }
+            };
+
+            const getStatusBg = (status) => {
+              switch (status) {
+                case 'Active': return '#d1fae5';
+                case 'Inactive': return '#fee2e2';
+                case 'Pending': return '#fef3c7';
+                default: return '#f3f4f6';
+              }
+            };
+
+            return `
+              <span style="
+                display: inline-block;
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-weight: 500;
+                font-size: 0.875rem;
+                color: ${getStatusColor(value)};
+                background-color: ${getStatusBg(value)};
+              ">
+                ${value}
+              </span>
+            `;
+          }
+        }
+      ];
+
+      // Set properties on the table
+      table.data = data;
+      table.columns = columns;
+      table.sortable = true;
+      table.filterable = true;
+      table.paginated = true;
+      table.pageSize = 3;
+
+      // Add event listeners
+      table.addEventListener('ae-datatable-sort', (e) => {
+        console.log('Sort event:', e.detail);
+      });
+
+      table.addEventListener('ae-datatable-filter', (e) => {
+        console.log('Filter event:', e.detail);
+      });
+
+      table.addEventListener('ae-datatable-page', (e) => {
+        console.log('Page event:', e.detail);
+      });
+    } catch (error) {
+      console.error('Error initializing datatable example:', error);
+    }
+  });
+</script>
+
+<style>
+  .example-container {
+    margin: 2rem 0;
+  }
+
+  .example {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    background-color: var(--sl-color-white);
+  }
+
+  /* Dark mode support */
+  :global(.dark) .example {
+    background-color: var(--sl-color-gray-6);
+    border-color: var(--sl-color-gray-4);
+  }
+
+  /* Custom properties to match the site theme */
+  ae-datatable {
+    --ae-datatable-border-color: var(--sl-color-gray-4);
+    --ae-datatable-header-bg: var(--sl-color-gray-2);
+    --ae-datatable-hover-bg: var(--sl-color-gray-3);
+    --ae-datatable-text-color: var(--sl-color-text);
+    --ae-datatable-header-text-color: var(--sl-color-text-accent);
+    --ae-datatable-border-radius: 0.25rem;
+    --ae-datatable-cell-padding: 0.75rem;
+  }
+
+  :global(.dark) ae-datatable {
+    --ae-datatable-border-color: var(--sl-color-gray-5);
+    --ae-datatable-header-bg: var(--sl-color-gray-7);
+    --ae-datatable-hover-bg: var(--sl-color-gray-5);
+  }
+</style>

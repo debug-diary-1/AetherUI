@@ -1,15 +1,7 @@
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
   stories: [
-    '../src/stories/Debug.stories.js',
-    '../src/stories/AeAlert.stories.js',
-    '../src/stories/AeAutocomplete.stories.js',
-    '../src/stories/AeCombo.stories.js',
-    '../src/stories/AeTabs.stories.js',
-    '../src/stories/AeTreeView.stories.js',
-    // Exclude data table stories temporarily as they had dependency issues
-    // '../src/stories/AeDataTable.stories.js',
-    // '../src/stories/AeDataTableComplete.stories.js',
+    '../src/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)',
   ],
   addons: [
     '@storybook/addon-links',
@@ -38,8 +30,7 @@ const config = {
         dedupe: ['lit-html', 'lit-element', 'lit'],
       },
       optimizeDeps: {
-        include: ['lit-html', 'lit'],
-        exclude: ['@aether-ui/datatable', '@aetherui/datatable']
+        include: ['lit-html', 'lit']
       }
     };
   },

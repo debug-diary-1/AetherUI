@@ -1,5 +1,6 @@
 export * from './ae-datatable';
 export * from './ae-datatable-header';
+export * from './ae-datatable-header-cell';
 export * from './ae-datatable-row';
 export * from './ae-datatable-cell';
 export * from './models/column-model';
@@ -17,6 +18,7 @@ export * from './constants';
 // Import components for registration
 import { AeDataTable } from './ae-datatable';
 import { AeDatatableHeader } from './ae-datatable-header';
+import { AeDatatableHeaderCell } from './ae-datatable-header-cell';
 import { AeDatatableRow } from './ae-datatable-row';
 import { AeDatatableCell } from './ae-datatable-cell';
 
@@ -24,6 +26,7 @@ import { AeDatatableCell } from './ae-datatable-cell';
 import { 
   DATATABLE_ELEMENT_NAME, 
   DATATABLE_HEADER_ELEMENT_NAME,
+  DATATABLE_HEADER_CELL_ELEMENT_NAME,
   DATATABLE_ROW_ELEMENT_NAME,
   DATATABLE_CELL_ELEMENT_NAME
 } from './constants';
@@ -37,6 +40,10 @@ try {
   
   if (!customElements.get(DATATABLE_HEADER_ELEMENT_NAME)) {
     customElements.define(DATATABLE_HEADER_ELEMENT_NAME, AeDatatableHeader);
+  }
+  
+  if (!customElements.get(DATATABLE_HEADER_CELL_ELEMENT_NAME)) {
+    customElements.define(DATATABLE_HEADER_CELL_ELEMENT_NAME, AeDatatableHeaderCell);
   }
   
   if (!customElements.get(DATATABLE_ROW_ELEMENT_NAME)) {
@@ -60,6 +67,10 @@ export function defineDataTableElements() {
     
     if (!customElements.get(DATATABLE_HEADER_ELEMENT_NAME)) {
       customElements.define(DATATABLE_HEADER_ELEMENT_NAME, AeDatatableHeader);
+    }
+    
+    if (!customElements.get(DATATABLE_HEADER_CELL_ELEMENT_NAME)) {
+      customElements.define(DATATABLE_HEADER_CELL_ELEMENT_NAME, AeDatatableHeaderCell);
     }
     
     if (!customElements.get(DATATABLE_ROW_ELEMENT_NAME)) {

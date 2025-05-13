@@ -1,8 +1,10 @@
-import { LitElement, html } from 'lit';
-import { property } from 'lit/decorators.js';
+import { LitElement, html, css } from 'lit';
+import { property, state } from 'lit/decorators.js';
 import { DATATABLE_HEADER_ELEMENT_NAME } from './index';
 import { headerCellStyles } from './styles';
 import type { SortDirection } from './models/sort-model';
+import './components/column-filter';
+import type { ColumnFilterValue } from './components/column-filter';
 
 /**
  * Header cell component for the datatable
@@ -49,6 +51,37 @@ export class AeDatatableHeader extends LitElement {
    */
   @property({ type: String, reflect: true })
   accessor align: 'left' | 'center' | 'right' = 'left';
+
+  /**
+   * Whether the column is filterable
+   */
+  @property({ type: Boolean, reflect: true })
+  accessor filterable = true;
+
+  /**
+   * Current filter value
+   */
+  @property({ type: Object })
+  accessor filter: ColumnFilterValue | null = null;
+
+  /**
+   * Column data type
+   */
+  @property({ type: String })
+  accessor dataType: 'string' | 'number' | 'boolean' | 'date' = 'string';
+
+  /**
+   * Column index for positioning (1-based, set via attribute)
+   * This is handled through HTML attribute data-col-index
+   */
+  @property({ type: String, reflect: true, attribute: 'data-col-index' })
+  accessor dataColIndex: string = '0';
+
+  /**
+   * Filter panel state
+   */
+  @state()
+  private filterPanelOpen = false;
 
   /**
    * Track resize state
@@ -166,12 +199,118 @@ export class AeDatatableHeader extends LitElement {
     }
 
     const iconClass = `header-cell__sort-icon header-cell__sort-icon--${this.direction}`;
-    
+
     return html`
       <div class=${iconClass} part="sort-icon">
         ▲
       </div>
     `;
+  }
+
+  /**
+   * Handle filter button click
+   */
+  private handleFilterClick(e: Event) {
+    e.stopPropagation(); // Don't trigger sort
+    this.filterPanelOpen = !this.filterPanelOpen;
+  }
+
+  /**
+   * Handle filter change
+   */
+  private handleFilterChange(e: CustomEvent) {
+    const { columnId, filter } = e.detail;
+
+    // Dispatch filter event
+    this.dispatchEvent(new CustomEvent('ae-datatable-header-filter', {
+      detail: {
+        columnId: this.id,
+        filter
+      },
+      bubbles: true,
+      composed: true
+    }));
+
+    // Update internal state
+    this.filter = filter;
+    this.filterPanelOpen = false;
+  }
+
+  /**
+   * Close filter panel
+   */
+  private handleFilterClose() {
+    this.filterPanelOpen = false;
+  }
+
+  /**
+   * Render filter button and panel
+   */
+  private renderFilter() {
+    if (!this.filterable) {
+      return '';
+    }
+
+    // Determine if there's an active filter
+    const hasActiveFilter = !!this.filter && this.filter.value !== '';
+
+    // Class for the filter icon based on active status
+    const filterIconClass = hasActiveFilter
+      ? 'header-cell__filter-icon header-cell__filter-icon--active'
+      : 'header-cell__filter-icon';
+
+    // Get operator label for the tooltip
+    const operatorLabel = hasActiveFilter ? this.getOperatorLabel(this.filter.operator) : '';
+
+    // Build the tooltip text that shows the active filter
+    const tooltipText = hasActiveFilter
+      ? `Filter: ${operatorLabel} "${this.filter.value}${this.filter.valueTo ? ' to ' + this.filter.valueTo : ''}"`
+      : 'Filter';
+
+    return html`
+      <div class="header-cell__filter" @click=${this.handleFilterClick}>
+        <div class=${filterIconClass} part="filter-icon" title=${tooltipText}>
+          ${hasActiveFilter ? '🔍' : '◇'}
+        </div>
+
+        ${this.filterPanelOpen ? html`
+          <div class="header-cell__filter-panel">
+            <ae-datatable-column-filter
+              .columnId=${this.id}
+              .columnLabel=${this.textContent?.trim() || this.id}
+              .filterValue=${this.filter || { value: '', operator: 'contains' }}
+              .dataType=${this.dataType}
+              @filter-change=${this.handleFilterChange}
+              @filter-close=${this.handleFilterClose}
+            ></ae-datatable-column-filter>
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  /**
+   * Get operator label for tooltip display
+   */
+  private getOperatorLabel(operator?: string): string {
+    if (!operator) return '';
+
+    switch (operator) {
+      case 'equals': return 'Equals';
+      case 'notEquals': return 'Not Equals';
+      case 'contains': return 'Contains';
+      case 'notContains': return 'Does Not Contain';
+      case 'startsWith': return 'Starts With';
+      case 'endsWith': return 'Ends With';
+      case 'lessThan': return 'Less Than';
+      case 'lessThanOrEqual': return 'Less Than or Equal';
+      case 'greaterThan': return 'Greater Than';
+      case 'greaterThanOrEqual': return 'Greater Than or Equal';
+      case 'between': return 'Between';
+      case 'isNull': return 'Is Empty';
+      case 'isNotNull': return 'Is Not Empty';
+      default: return operator;
+    }
   }
 
   /**
@@ -192,8 +331,9 @@ export class AeDatatableHeader extends LitElement {
       >
         <slot name="content"><slot></slot></slot>
         ${this.renderSortIcon()}
+        ${this.renderFilter()}
       </div>
-      
+
       ${this.resizable ? html`
         <div
           class="header-cell__resize-handle"

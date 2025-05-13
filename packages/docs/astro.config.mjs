@@ -90,6 +90,7 @@ export default defineConfig({
             { label: 'Autocomplete', link: '/components/autocomplete/' },
             { label: 'Button', link: '/components/button/' },
             { label: 'Checkbox', link: '/components/checkbox/' },
+            { label: 'DataTable', link: '/components/datatable/' },
             { label: 'Dropdown', link: '/components/dropdown/' },
             { label: 'Modal', link: '/components/modal/' },
             { label: 'Radio', link: '/components/radio/' },
@@ -105,6 +106,7 @@ export default defineConfig({
         DropdownExample: './src/components/DropdownExample.astro',
         TreeViewExample: './src/components/TreeViewExample.astro',
         AutocompleteExample: './src/components/AutocompleteExample.astro',
+        DataTableExample: './src/components/DataTableExample.astro',
       },
       customCss: [
         './src/styles/custom.css', 

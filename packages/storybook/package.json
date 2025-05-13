@@ -19,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "@aetherui/core": "workspace:*",
+    "@aetherui/datatable": "workspace:*",
     "lit-html": "^3.3.0"
   },
   "devDependencies": {

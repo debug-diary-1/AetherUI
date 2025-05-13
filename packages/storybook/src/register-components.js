@@ -12,10 +12,31 @@ import { defineAeDropdown } from '@aetherui/core/dropdown';
 import { defineAeModal } from '@aetherui/core/modal';
 import { defineAeRadio } from '@aetherui/core/radio';
 
+// Import datatable
+// We'll attempt to import the datatable components but handle failures gracefully
+let defineDataTableElements;
+try {
+  // Dynamic import would be better but Vite static analysis might not handle it
+  // Using this approach to prevent blocking other components if datatable fails
+  const datatableModule = import('@aetherui/datatable');
+  datatableModule.then(module => {
+    defineDataTableElements = module.defineDataTableElements;
+    // Register datatable elements when the module is loaded
+    if (defineDataTableElements) {
+      defineDataTableElements();
+      console.log('✓ DataTable components registered successfully');
+    }
+  }).catch(err => {
+    console.warn('DataTable module could not be loaded:', err.message);
+  });
+} catch (err) {
+  console.warn('Could not import DataTable module:', err.message);
+}
+
 // Function to register all components
 function registerComponents() {
   console.log('Registering AetherUI components...');
-  
+
   try {
     // Register each component with error handling
     const registerComponent = (name, defineFn) => {
@@ -26,7 +47,7 @@ function registerComponents() {
         console.error(`Error registering ${name}:`, error.message);
       }
     };
-    
+
     // Register all components
     registerComponent('AeAutocomplete', defineAeAutocomplete);
     registerComponent('AeAlert', defineAeAlert);
@@ -39,7 +60,7 @@ function registerComponents() {
     registerComponent('AeDropdown', defineAeDropdown);
     registerComponent('AeModal', defineAeModal);
     registerComponent('AeRadio', defineAeRadio);
-    
+
     console.log('All components registered!');
   } catch (error) {
     console.error('Error during component registration:', error);
