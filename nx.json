@@ -1,8 +1,6 @@
 {
   "$schema": "https://nx.dev/schema",
-  "affected": {
-    "defaultBase": "main"
-  },
+  "affected": { "defaultBase": "main" },
   "namedInputs": {
     "default": ["{projectRoot}/**/*"],
     "production": [
@@ -16,20 +14,11 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [
-        "{projectRoot}/dist/**",
-        "{projectRoot}/.next/**"
-      ],
+      "outputs": ["{projectRoot}/dist/**", "{projectRoot}/.next/**"],
       "inputs": ["production", "^production", "env"]
     },
-    "dev": {
-      "cache": false,
-      "persistent": true
-    },
-    "lint": {
-      "cache": true,
-      "inputs": ["default"]
-    },
+    "dev": { "cache": false, "persistent": true },
+    "lint": { "cache": true, "inputs": ["default"] },
     "test": {
       "dependsOn": ["build"],
       "outputs": ["{projectRoot}/coverage/**"],
@@ -40,44 +29,22 @@
         "{projectRoot}/test/**/*.tsx"
       ]
     },
-    "clean": {
-      "cache": false
-    },
-    "perf": {
-      "dependsOn": ["build"],
-      "outputs": [],
-      "cache": false,
-      "options": {
-        "CI": "true"
-      }
-    },
-    "storybook": {
-      "dependsOn": ["^build"],
-      "cache": false,
-      "persistent": true
-    },
+    "clean": { "cache": false },
+    "perf": { "dependsOn": ["build"], "outputs": [], "cache": false, "options": { "CI": "true" } },
+    "storybook": { "dependsOn": ["^build"], "cache": false, "persistent": true },
     "build-storybook": {
       "dependsOn": ["^build"],
       "outputs": ["{projectRoot}/storybook-static/**"]
     },
-    "docs": {
-      "dependsOn": ["^build"],
-      "cache": false,
-      "persistent": true
-    },
-    "docs:build": {
-      "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/dist/**"]
-    }
+    "docs": { "dependsOn": ["^build"], "cache": false, "persistent": true },
+    "docs:build": { "dependsOn": ["^build"], "outputs": ["{projectRoot}/dist/**"] }
   },
   "nxCloudAccessToken": "",
   "plugins": [
     {
       "plugin": "@nx/js/typescript",
       "options": {
-        "typecheck": {
-          "targetName": "typecheck"
-        },
+        "typecheck": { "targetName": "typecheck" },
         "build": {
           "targetName": "build",
           "configName": "tsconfig.lib.json",
@@ -100,5 +67,6 @@
         "watchDepsTargetName": "watch-deps"
       }
     }
-  ]
+  ],
+  "nxCloudId": "6824f482c1e21f788a8229da"
 }
