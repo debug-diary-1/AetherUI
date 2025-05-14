@@ -239,17 +239,15 @@ export const MultipleToasts = () => {
 // Custom content with HTML
 export const CustomContentToast = () => {
   const showCustomToast = () => {
-    // Use the showToast API instead of DOM manipulation
+    // Use the showToast API with HTML content
     showToast({
-      message: `
-        <div style="display: flex; align-items: center; gap: 0.5rem;">
-          <div style="width: 24px; height: 24px; background: #3b82f6; border-radius: 50%;"></div>
-          <div>
-            <div style="font-weight: bold;">New Message</div>
-            <div style="font-size: 0.875rem;">You have a new message from User123</div>
-          </div>
+      message: `<div style="display: flex; align-items: center; gap: 0.5rem;">
+        <div style="width: 24px; height: 24px; background: #3b82f6; border-radius: 50%;"></div>
+        <div>
+          <div style="font-weight: bold;">New Message</div>
+          <div style="font-size: 0.875rem;">You have a new message from User123</div>
         </div>
-      `,
+      </div>`,
       variant: 'info',
       duration: 8000
     });
@@ -258,6 +256,36 @@ export const CustomContentToast = () => {
   return html`
     <button @click=${showCustomToast}>
       Show Toast with Custom Content
+    </button>
+  `;
+};
+
+// Using the HTML helper method
+export const HtmlHelper = () => {
+  const showHtmlToast = () => {
+    // Use the html helper from createToastHelpers
+    const toastHelpers = createToastHelpers();
+    toastHelpers.html(`
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" />
+          <path d="M16 10L10.5 15.5L8 13" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <div style="font-weight: bold; margin-bottom: 0.25rem;">Payment Successful</div>
+          <div style="font-size: 0.875rem;">Your payment of $199.99 has been processed.</div>
+        </div>
+      </div>
+    `, {
+      variant: 'success',
+      duration: 7000,
+      placement: 'top-right'
+    });
+  };
+
+  return html`
+    <button @click=${showHtmlToast}>
+      Show Toast with HTML Helper
     </button>
   `;
 };

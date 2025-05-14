@@ -1,9 +1,9 @@
 import { showToast as showToastBase, ToastOptions } from './toast-manager';
 
 /**
- * Helper type that omits the variant from toast options
+ * Helper type for toast options without the variant property
  */
-export type ToastOptionsWithoutVariant = Omit<ToastOptions, 'variant'>;
+export type ToastOptionsWithoutVariant = Omit<ToastOptions, 'variant' | 'message'>;
 
 /**
  * Convenience helper function to show a toast
