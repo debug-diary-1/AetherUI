@@ -11,11 +11,13 @@ import { defineAeCheckbox } from '@aetherui/core/checkbox';
 import { defineAeDropdown } from '@aetherui/core/dropdown';
 import { defineAeModal } from '@aetherui/core/modal';
 import { defineAeRadio } from '@aetherui/core/radio';
+// Import AeToast through the package exports
+// Toast component is registered in toast-wrapper.js directly
 
 // Function to register all components
 function registerComponents() {
   console.log('Registering AetherUI components...');
-  
+
   try {
     // Register each component with error handling
     const registerComponent = (name, defineFn) => {
@@ -26,7 +28,7 @@ function registerComponents() {
         console.error(`Error registering ${name}:`, error.message);
       }
     };
-    
+
     // Register all components
     registerComponent('AeAutocomplete', defineAeAutocomplete);
     registerComponent('AeAlert', defineAeAlert);
@@ -39,7 +41,9 @@ function registerComponents() {
     registerComponent('AeDropdown', defineAeDropdown);
     registerComponent('AeModal', defineAeModal);
     registerComponent('AeRadio', defineAeRadio);
-    
+    // AeToast is registered in toast-wrapper.js directly
+    console.log(`✓ AeToast registered via toast-wrapper.js`);
+
     console.log('All components registered!');
   } catch (error) {
     console.error('Error during component registration:', error);

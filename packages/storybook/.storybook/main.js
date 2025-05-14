@@ -6,6 +6,7 @@ const config = {
     '../src/stories/AeAutocomplete.stories.js',
     '../src/stories/AeCombo.stories.js',
     '../src/stories/AeTabs.stories.js',
+    '../src/stories/AeToast.stories.js',
     '../src/stories/AeTreeView.stories.js',
     // Exclude data table stories temporarily as they had dependency issues
     // '../src/stories/AeDataTable.stories.js',

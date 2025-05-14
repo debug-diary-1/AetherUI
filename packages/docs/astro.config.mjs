@@ -94,6 +94,7 @@ export default defineConfig({
             { label: 'Modal', link: '/components/modal/' },
             { label: 'Radio', link: '/components/radio/' },
             { label: 'Tabs', link: '/components/tabs/' },
+            { label: 'Toast', link: '/components/toast/' },
             { label: 'TreeView', link: '/components/treeview/' },
           ],
         },
@@ -105,6 +106,7 @@ export default defineConfig({
         DropdownExample: './src/components/DropdownExample.astro',
         TreeViewExample: './src/components/TreeViewExample.astro',
         AutocompleteExample: './src/components/AutocompleteExample.astro',
+        ToastExample: './src/components/ToastExample.astro',
       },
       customCss: [
         './src/styles/custom.css', 

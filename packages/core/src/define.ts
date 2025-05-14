@@ -9,6 +9,7 @@ import { defineAeDropdown } from './dropdown';
 import { defineAeTreeView } from './treeview';
 import { defineAeAutocomplete } from './autocomplete';
 import { defineAeCombo } from './combo';
+import { defineAeToast } from './toast';
 
 export {
   defineAeAccordion,
@@ -23,6 +24,7 @@ export {
   defineAeTreeView,
   defineAeAutocomplete,
   defineAeCombo,
+  defineAeToast,
 };
 
 export function defineAll() {
@@ -38,4 +40,5 @@ export function defineAll() {
   defineAeTreeView();
   defineAeAutocomplete();
   defineAeCombo();
+  defineAeToast();
 }

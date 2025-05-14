@@ -1,0 +1,342 @@
+---
+title: Toast
+description: Ephemeral non-modal notifications that appear and disappear automatically.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import ToastExample from '../../../components/ToastExample.astro';
+
+# Toast
+
+Toast components provide brief, temporary notifications that appear and disappear automatically. They're designed for short, transient feedback like success messages, errors, or confirmations.
+
+## Features
+
+- **Non-modal notifications** that don't interrupt the user's flow
+- **Multiple variants**: info, success, warning, and error
+- **Configurable duration** with auto-dismiss timer (or sticky)
+- **Pause on hover** to give users time to read longer messages
+- **Placement options** in any corner of the screen
+- **Stacking support** for multiple notifications
+- **Accessible** with appropriate ARIA attributes and keyboard support
+
+## Usage
+
+<Tabs>
+  <TabItem label="HTML">
+  ```html
+  <!-- In your HTML page -->
+  <script type="module">
+    import { showToast, createToastHelpers } from '@aetherui/core/toast';
+    
+    // Using the simple API
+    showToast({
+      message: 'Operation completed successfully!',
+      variant: 'success',
+      duration: 5000,
+      placement: 'bottom-right',
+      pauseOnHover: true
+    });
+    
+    // Or with convenience helpers
+    const toast = createToastHelpers();
+    toast.success('Operation completed successfully!');
+    toast.error('Something went wrong');
+  </script>
+  ```
+  </TabItem>
+  
+  <TabItem label="React">
+  ```jsx
+  import { useEffect } from 'react';
+  import { showToast, createToastHelpers } from '@aetherui/core/toast';
+
+  function MyComponent() {
+    // Create toast helpers
+    const toast = createToastHelpers();
+    
+    const handleSuccess = () => {
+      toast.success('Operation completed successfully!');
+    };
+    
+    const handleError = () => {
+      toast.error('Something went wrong', {
+        duration: 8000, // 8 seconds
+        placement: 'top-right'
+      });
+    };
+    
+    return (
+      <div>
+        <button onClick={handleSuccess}>Success</button>
+        <button onClick={handleError}>Error</button>
+      </div>
+    );
+  }
+  ```
+  </TabItem>
+  
+  <TabItem label="Vue">
+  ```vue
+  <template>
+    <div>
+      <button @click="showSuccessToast">Success</button>
+      <button @click="showErrorToast">Error</button>
+    </div>
+  </template>
+
+  <script>
+  import { showToast, createToastHelpers } from '@aetherui/core/toast';
+
+  export default {
+    setup() {
+      const toast = createToastHelpers();
+      
+      const showSuccessToast = () => {
+        toast.success('Operation completed successfully!');
+      };
+      
+      const showErrorToast = () => {
+        toast.error('Something went wrong', {
+          duration: 8000,
+          placement: 'top-right'
+        });
+      };
+      
+      return {
+        showSuccessToast,
+        showErrorToast
+      };
+    }
+  };
+  </script>
+  ```
+  </TabItem>
+</Tabs>
+
+## Component API
+
+### Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `message` | `string` | `''` | Main text content (can also use default slot) |
+| `variant` | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'` | Visual styling preset |
+| `open` | `boolean` | `true` | Controls visibility |
+| `duration` | `number` | `5000` | Auto-dismiss time in ms (0 = sticky) |
+| `placement` | `'top-right' \| 'bottom-right' \| 'top-left' \| 'bottom-left'` | `'bottom-right'` | Screen corner position |
+| `pauseOnHover` | `boolean` | `true` | Pause countdown when hovered |
+
+### Events
+
+| Event | Detail | Description |
+|-------|--------|-------------|
+| `ae-close` | `{ source: 'timeout' \| 'closeButton' \| 'keyboard' }` | Fired when toast is dismissed |
+| `ae-click` | `{ originalEvent: MouseEvent }` | Fired when toast is clicked |
+
+### Slots
+
+| Name | Description |
+|------|-------------|
+| (default) | Main content of the toast |
+| `icon` | Custom icon (replaces default variant icon) |
+
+### CSS Parts
+
+| Part | Description |
+|------|-------------|
+| `toast` | Main container |
+| `icon` | Status icon |
+| `content` | Message text wrapper |
+| `close` | Close button |
+| `progress` | Progress bar showing time remaining |
+
+### CSS Custom Properties
+
+| Property | Description |
+|----------|-------------|
+| `--ae-toast-bg-info` | Info variant background color |
+| `--ae-toast-bg-success` | Success variant background color |
+| `--ae-toast-bg-warning` | Warning variant background color |
+| `--ae-toast-bg-error` | Error variant background color |
+| `--ae-toast-fg-*` | Corresponding text colors |
+| `--ae-toast-radius` | Corner rounding |
+| `--ae-toast-shadow` | Elevation shadow |
+| `--ae-toast-progress-height` | Progress bar thickness |
+| `--ae-toast-z-index` | Stacking layer |
+
+## Helper Functions
+
+The toast component provides two helper functions for creating toasts programmatically:
+
+### `showToast(options)`
+
+```js
+showToast({
+  message: 'Your message here',
+  variant: 'success',  // 'info', 'success', 'warning', 'error'
+  duration: 5000,      // milliseconds (0 = sticky)
+  placement: 'bottom-right',
+  pauseOnHover: true
+});
+```
+
+### `createToastHelpers()`
+
+```js
+const toast = createToastHelpers();
+
+// Convenience methods
+toast.info('Information message');
+toast.success('Success message');
+toast.warning('Warning message');
+toast.error('Error message');
+
+// With additional options
+toast.success('Custom success', {
+  duration: 8000,
+  placement: 'top-right',
+  pauseOnHover: false
+});
+```
+
+## Examples
+
+<ToastExample />
+
+### Basic Toast Variants
+
+```js
+import { createToastHelpers } from '@aetherui/core/toast';
+
+const toast = createToastHelpers();
+
+// Different variants
+toast.info('This is an information message');
+toast.success('Operation completed successfully!');
+toast.warning('This action cannot be undone');
+toast.error('Something went wrong');
+```
+
+### Custom Duration
+
+```js
+import { showToast } from '@aetherui/core/toast';
+
+// Quick toast (2 seconds)
+showToast({
+  message: 'Quick notification',
+  duration: 2000
+});
+
+// Sticky toast (no auto-dismiss)
+showToast({
+  message: 'This will stay until closed',
+  duration: 0
+});
+```
+
+### Custom Placement
+
+```js
+import { showToast } from '@aetherui/core/toast';
+
+// Different placements
+showToast({
+  message: 'Top right notification',
+  placement: 'top-right'
+});
+
+showToast({
+  message: 'Bottom left notification',
+  placement: 'bottom-left'
+});
+```
+
+### Custom HTML Content
+
+```js
+// Creating a custom toast element
+const toast = document.createElement('ae-toast');
+toast.variant = 'info';
+toast.duration = 5000;
+
+// Adding custom HTML content
+const content = document.createElement('div');
+content.innerHTML = `
+  <div style="display: flex; align-items: center; gap: 0.5rem;">
+    <img src="/avatar.jpg" style="width: 24px; height: 24px; border-radius: 50%;">
+    <div>
+      <div style="font-weight: bold;">New Message</div>
+      <div style="font-size: 0.875rem;">You have a new message from User123</div>
+    </div>
+  </div>
+`;
+
+toast.appendChild(content);
+document.body.appendChild(toast);
+```
+
+## Accessibility
+
+The Toast component implements several accessibility features:
+
+- Uses appropriate ARIA roles: `role="status"` for info/success and `role="alert"` for warning/error
+- Sets `aria-live="polite"` or `aria-live="assertive"` based on importance
+- Makes toast focusable with keyboard navigation (ESC to dismiss)
+- Does not steal focus when appearing
+- Supports reduced-motion preferences
+
+## Best Practices
+
+- **Keep messages brief** and to the point
+- **Use appropriate variants** based on the importance of the message
+- **Set appropriate durations** based on message length (longer messages need more time)
+- **Don't overuse toasts** – they're best for transient feedback, not critical information
+- **Place consistently** – don't mix placements unnecessarily
+- **Consider mobile users** when designing toast content
+
+## Customization
+
+### Custom Styling
+
+```css
+/* Customize toast appearance */
+ae-toast::part(toast) {
+  max-width: 400px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Customize success variant */
+ae-toast[variant="success"]::part(toast) {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+/* Add subtle outline for high-contrast users */
+@media (forced-colors: active) {
+  ae-toast::part(toast) {
+    outline: 2px solid CanvasText;
+  }
+}
+```
+
+### Custom Animation
+
+```css
+/* Custom entrance animation */
+@keyframes slide-in {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+ae-toast::part(toast) {
+  animation: slide-in 0.3s ease-out;
+}
+```
