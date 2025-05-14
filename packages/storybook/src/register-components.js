@@ -11,7 +11,8 @@ import { defineAeCheckbox } from '@aetherui/core/checkbox';
 import { defineAeDropdown } from '@aetherui/core/dropdown';
 import { defineAeModal } from '@aetherui/core/modal';
 import { defineAeRadio } from '@aetherui/core/radio';
-import { defineAeToast } from '@aetherui/core/toast';
+// Import AeToast directly
+import { AeToast } from '@aetherui/core/src/toast/ae-toast';
 
 // Function to register all components
 function registerComponents() {
@@ -40,7 +41,15 @@ function registerComponents() {
     registerComponent('AeDropdown', defineAeDropdown);
     registerComponent('AeModal', defineAeModal);
     registerComponent('AeRadio', defineAeRadio);
-    registerComponent('AeToast', defineAeToast);
+    // Register AeToast directly
+    try {
+      if (!customElements.get('ae-toast')) {
+        customElements.define('ae-toast', AeToast);
+        console.log(`✓ AeToast registered successfully`);
+      }
+    } catch (error) {
+      console.error(`Error registering AeToast:`, error.message);
+    }
     
     console.log('All components registered!');
   } catch (error) {

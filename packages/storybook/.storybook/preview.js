@@ -22,7 +22,7 @@ const preview = {
         order: [
           'Debug',
           'Components',
-          ['Autocomplete', 'Alert', 'Button', 'Checkbox', 'Combo', 'Dropdown', 'Modal', 'Radio', 'Tabs', 'TreeView'],
+          ['Autocomplete', 'Alert', 'Button', 'Checkbox', 'Combo', 'Dropdown', 'Modal', 'Radio', 'Tabs', 'Toast', 'TreeView'],
         ],
       },
     },

@@ -1,8 +1,6 @@
 import { html } from 'lit';
-import { defineAeToast, showToast, createToastHelpers } from '@aetherui/core/toast';
-
-// Register the component
-defineAeToast();
+// Import from the wrapper to avoid dynamic imports
+import { showToast, createToastHelpers } from '../toast-wrapper';
 
 export default {
   title: 'Components/AeToast',
@@ -241,24 +239,20 @@ export const MultipleToasts = () => {
 // Custom content with HTML
 export const CustomContentToast = () => {
   const showCustomToast = () => {
-    // Create a custom element that will be inserted into the toast
-    const customContent = document.createElement('div');
-    customContent.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <img src="https://via.placeholder.com/24" style="border-radius: 50%;">
-        <div>
-          <div style="font-weight: bold;">New Message</div>
-          <div style="font-size: 0.875rem;">You have a new message from User123</div>
+    // Use the showToast API instead of DOM manipulation
+    showToast({
+      message: `
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <div style="width: 24px; height: 24px; background: #3b82f6; border-radius: 50%;"></div>
+          <div>
+            <div style="font-weight: bold;">New Message</div>
+            <div style="font-size: 0.875rem;">You have a new message from User123</div>
+          </div>
         </div>
-      </div>
-    `;
-    
-    // Create and show the toast
-    const toast = document.createElement('ae-toast');
-    toast.duration = 8000;
-    toast.variant = 'info';
-    toast.appendChild(customContent);
-    document.body.appendChild(toast);
+      `,
+      variant: 'info',
+      duration: 8000
+    });
   };
 
   return html`
