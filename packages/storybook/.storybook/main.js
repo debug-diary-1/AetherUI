@@ -1,4 +1,6 @@
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
+const path = require('path');
+
 const config = {
   stories: [
     '../src/stories/Debug.stories.js',
@@ -39,12 +41,13 @@ const config = {
         dedupe: ['lit-html', 'lit-element', 'lit'],
         alias: {
           'lit-element/lit-element.js': 'lit',
-          'lit-html/lit-html.js': 'lit'
+          'lit-html/lit-html.js': 'lit',
+          'lit': path.resolve(__dirname, './lit-shim.js')
         }
       },
       optimizeDeps: {
-        include: ['lit-html', 'lit'],
-        exclude: ['@aether-ui/datatable', '@aetherui/datatable']
+        include: ['lit-html', 'lit-element'],
+        exclude: ['@aether-ui/datatable', '@aetherui/datatable', 'lit']
       },
       build: {
         rollupOptions: {
