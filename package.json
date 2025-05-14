@@ -12,7 +12,10 @@
     "build:affected": "nx affected -t build",
     "dev": "nx run-many -t dev",
     "lint": "nx run-many -t lint",
-    "test": "nx run-many -t test",
+    "test": "nx run-many -t test --sequential",
+    "test:parallel": "nx run-many -t test --parallel=3",
+    "test:low-memory": "bash ./scripts/test-with-memory-limit.sh 512",
+    "test:unit": "cd packages/core && vitest run --config vitest.config.js",
     "clean": "nx run-many -t clean",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
@@ -49,12 +52,18 @@
     "eslint-config-prettier": "^9.0.0",
     "husky": "^8.0.0",
     "jiti": "2.4.2",
-    "lint-staged": "^13.0.0",
+    "lint-staged": "^14.0.0",
     "nx": "^21.0.3",
     "prettier": "^3.0.0",
     "turbo": "^2.0.0",
     "typescript": "~5.7.2",
     "vite": "^6.0.0",
     "vitest": "^3.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "micromatch": "^4.0.8",
+      "esbuild": "^0.25.0" 
+    }
   }
 }
