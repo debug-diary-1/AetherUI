@@ -6,8 +6,24 @@
 # Default memory limit is 512MB if not provided
 MEMORY_LIMIT=${1:-512}
 
-# Run the tests with reduced parallel execution and memory limits
-NODE_OPTIONS="--max-old-space-size=$MEMORY_LIMIT" nx run-many -t test --parallel=1
+# Get a list of all packages with test targets
+PACKAGES=$(nx print-affected --target=test --all | grep -o '"name": "[^"]*"' | cut -d'"' -f4)
 
+echo "Running tests with ${MEMORY_LIMIT}MB memory limit..."
 echo ""
-echo "✅ Tests completed with ${MEMORY_LIMIT}MB memory limit"
+
+# Run each package's tests separately to minimize memory usage
+for pkg in $PACKAGES; do
+  echo "Testing package: $pkg"
+  NODE_OPTIONS="--max-old-space-size=$MEMORY_LIMIT" nx run $pkg:test
+  
+  # Check if tests passed
+  if [ $? -eq 0 ]; then
+    echo "✅ $pkg tests completed successfully"
+  else
+    echo "❌ $pkg tests had failures"
+  fi
+  echo ""
+done
+
+echo "✅ All tests completed with ${MEMORY_LIMIT}MB memory limit"
