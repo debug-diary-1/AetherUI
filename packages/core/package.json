@@ -73,6 +73,11 @@
       "import": "./dist/autocomplete/index.js",
       "require": "./dist/autocomplete/index.js"
     },
+    "./toast": {
+      "types": "./dist/toast/index.d.ts",
+      "import": "./dist/toast/index.js",
+      "require": "./dist/toast/index.js"
+    },
     "./package.json": "./package.json",
     "./*": {
       "types": "./dist/*/index.d.ts",

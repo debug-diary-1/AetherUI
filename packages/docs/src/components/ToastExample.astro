@@ -1,0 +1,127 @@
+---
+/**
+ * Toast example component for Astro docs
+ * Demonstrates how to use the Toast component with interactive controls
+ */
+---
+
+<script>
+// This will only run on the client side
+document.addEventListener('DOMContentLoaded', () => {
+  // Import the toast helper on the client
+  import('@aetherui/core/toast').then(({ createToastHelpers, defineAeToast }) => {
+    // Register the toast component
+    defineAeToast();
+    
+    // Create toast helpers
+    const toast = createToastHelpers();
+
+    // Add click handlers to all toast demo buttons
+    document.querySelectorAll('.toast-demo-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const variant = button.getAttribute('data-variant') || 'info';
+        const message = button.getAttribute('data-message') || 'Toast notification';
+        const duration = Number(button.getAttribute('data-duration') || 5000);
+        const placement = button.getAttribute('data-placement') || 'bottom-right';
+        const pauseOnHover = button.getAttribute('data-pause-on-hover') !== 'false';
+        
+        // Show the toast with the specified options
+        switch (variant) {
+          case 'info':
+            toast.info(message, { duration, placement, pauseOnHover });
+            break;
+          case 'success':
+            toast.success(message, { duration, placement, pauseOnHover });
+            break;
+          case 'warning':
+            toast.warning(message, { duration, placement, pauseOnHover });
+            break;
+          case 'error':
+            toast.error(message, { duration, placement, pauseOnHover });
+            break;
+          default:
+            toast.info(message, { duration, placement, pauseOnHover });
+        }
+      });
+    });
+  });
+});
+</script>
+
+<div class="toast-demo">
+  <div class="toast-options">
+    <div>
+      <button
+        class="toast-demo-button"
+        data-variant="info"
+        data-message="This is an information message"
+      >
+        Show Info Toast
+      </button>
+      <button
+        class="toast-demo-button"
+        data-variant="success"
+        data-message="Operation completed successfully!"
+      >
+        Show Success Toast
+      </button>
+      <button
+        class="toast-demo-button"
+        data-variant="warning"
+        data-message="Warning: This action cannot be undone"
+      >
+        Show Warning Toast
+      </button>
+      <button
+        class="toast-demo-button"
+        data-variant="error"
+        data-message="Error: Something went wrong"
+      >
+        Show Error Toast
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .toast-demo {
+    border: 1px solid var(--sl-color-gray-3);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    background-color: var(--sl-color-gray-1);
+  }
+
+  .toast-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .toast-options > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .toast-demo-button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    background-color: var(--sl-color-white);
+    border: 1px solid var(--sl-color-gray-4);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-family: var(--sl-font);
+    font-size: 0.875rem;
+  }
+
+  .toast-demo-button:hover {
+    background-color: var(--sl-color-gray-2);
+  }
+
+  @media (max-width: 640px) {
+    .toast-options > div {
+      flex-direction: column;
+    }
+  }
+</style>
