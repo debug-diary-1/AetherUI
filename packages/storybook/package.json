@@ -18,8 +18,7 @@
   "author": "AetherUI Team",
   "license": "MIT",
   "dependencies": {
-    "@aetherui/core": "workspace:*",
-    "lit-html": "^3.3.0"
+    "@aetherui/core": "workspace:*"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^8.0.0",
@@ -31,7 +30,9 @@
     "@storybook/web-components": "^8.0.0",
     "@storybook/web-components-vite": "^8.0.0",
     "chromatic": "^10.0.0",
-    "lit": "^3.0.0",
+    "lit": "^3.3.0",
+    "lit-element": "^4.2.0",
+    "lit-html": "^3.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "storybook": "^8.0.0",

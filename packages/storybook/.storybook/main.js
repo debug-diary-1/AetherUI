@@ -42,7 +42,8 @@ const config = {
         alias: {
           'lit-element/lit-element.js': 'lit',
           'lit-html/lit-html.js': 'lit',
-          'lit': path.resolve(__dirname, './lit-shim.js')
+          'lit': path.resolve(__dirname, './lit-shim.js'),
+          'lit/decorators.js': path.resolve(__dirname, './lit-decorators-shim.js')
         }
       },
       optimizeDeps: {
@@ -51,7 +52,7 @@ const config = {
       },
       build: {
         rollupOptions: {
-          external: [/^lit-element/, /^lit-html/]
+          external: [/^lit-element/, /^lit-html/, /^lit\/decorators/]
         }
       }
     };
