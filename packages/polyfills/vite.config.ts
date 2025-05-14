@@ -15,6 +15,12 @@ export default defineConfig({
     rollupOptions: {
       external: [],
     },
+    outDir: 'dist'
   },
-  plugins: [dts()],
+  plugins: [
+    dts({
+      entryRoot: 'src',
+      outDir: 'dist'
+    })
+  ],
 }); 

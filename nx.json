@@ -1,0 +1,104 @@
+{
+  "$schema": "https://nx.dev/schema",
+  "affected": {
+    "defaultBase": "main"
+  },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*"],
+    "production": [
+      "!{projectRoot}/**/*.spec.ts",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/src/test-setup.[jt]s"
+    ],
+    "env": ["{workspaceRoot}/**/.env.*local"]
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [
+        "{projectRoot}/dist/**",
+        "{projectRoot}/.next/**"
+      ],
+      "inputs": ["production", "^production", "env"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "cache": true,
+      "inputs": ["default"]
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "outputs": ["{projectRoot}/coverage/**"],
+      "inputs": [
+        "{projectRoot}/src/**/*.tsx",
+        "{projectRoot}/src/**/*.ts",
+        "{projectRoot}/test/**/*.ts",
+        "{projectRoot}/test/**/*.tsx"
+      ]
+    },
+    "clean": {
+      "cache": false
+    },
+    "perf": {
+      "dependsOn": ["build"],
+      "outputs": [],
+      "cache": false,
+      "options": {
+        "CI": "true"
+      }
+    },
+    "storybook": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
+    "build-storybook": {
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/storybook-static/**"]
+    },
+    "docs": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
+    "docs:build": {
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/dist/**"]
+    }
+  },
+  "nxCloudAccessToken": "",
+  "plugins": [
+    {
+      "plugin": "@nx/js/typescript",
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        },
+        "build": {
+          "targetName": "build",
+          "configName": "tsconfig.lib.json",
+          "buildDepsName": "build-deps",
+          "watchDepsName": "watch-deps"
+        }
+      }
+    },
+    {
+      "plugin": "@nx/vite/plugin",
+      "options": {
+        "buildTargetName": "vite:build",
+        "testTargetName": "vite:test",
+        "serveTargetName": "serve",
+        "devTargetName": "vite:dev",
+        "previewTargetName": "preview",
+        "serveStaticTargetName": "serve-static",
+        "typecheckTargetName": "vite:typecheck",
+        "buildDepsTargetName": "build-deps",
+        "watchDepsTargetName": "watch-deps"
+      }
+    }
+  ]
+}

@@ -1,8 +1,35 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { AeToast } from '../ae-toast';
 
+// Define interfaces for the mock elements
+interface MockElement {
+  textContent?: string;
+  style?: {
+    getPropertyValue: (prop: string) => string;
+  };
+  getAttribute?: () => string;
+  click?: () => void;
+  dispatchEvent?: jest.Mock;
+}
+
+interface MockShadowRoot {
+  querySelector: (selector: string) => MockElement | null;
+  querySelectorAll: () => Element[];
+}
+
+interface ToastProps {
+  message?: string;
+  variant?: string;
+  open?: boolean;
+  duration?: number;
+  placement?: string;
+  pauseOnHover?: boolean;
+  textContent?: string;
+  hasCustomIcon?: boolean;
+}
+
 // Helper to create a mock instance of AeToast with the given properties
-function createMockToast(props = {}) {
+function createMockToast(props: ToastProps = {}) {
   const toast = new AeToast();
 
   // Apply default properties
@@ -17,10 +44,10 @@ function createMockToast(props = {}) {
   Object.assign(toast, props);
 
   // Mock shadowRoot
-  const shadowRoot = {
-    querySelector: (selector) => {
+  const shadowRoot: MockShadowRoot = {
+    querySelector: (selector: string) => {
       if (selector === '[part="content"]') {
-        return { textContent: toast.message || toast.textContent || '' };
+        return { textContent: toast.message || (toast as any).textContent || '' };
       }
       if (selector === '[part="progress"]') {
         return toast.duration > 0 ? { style: { getPropertyValue: () => `${toast.duration / 1000}s` } } : null;
@@ -47,7 +74,7 @@ function createMockToast(props = {}) {
   });
 
   // Mock other necessary methods
-  toast.getAttribute = (attr) => {
+  toast.getAttribute = (attr: string) => {
     if (attr === 'role') {
       return (toast.variant === 'error' || toast.variant === 'warning') ? 'alert' : 'status';
     }
@@ -61,8 +88,8 @@ function createMockToast(props = {}) {
   toast.dispatchEvent = vi.fn();
 
   // content and slots
-  toast.textContent = props.textContent || '';
-  toast.querySelector = (selector) => {
+  (toast as any).textContent = props.textContent || '';
+  toast.querySelector = (selector: string) => {
     if (selector === '[slot="icon"]') {
       return props.hasCustomIcon ? {} : null;
     }
@@ -128,7 +155,7 @@ describe('ae-toast', () => {
     toast.close = vi.fn();
 
     // Mock the timer
-    toast._timer = setTimeout(() => toast.close('timeout'), 1000);
+    (toast as any)._timer = setTimeout(() => toast.close('timeout'), 1000);
 
     // Fast-forward time by more than duration
     vi.advanceTimersByTime(1100);
@@ -144,7 +171,7 @@ describe('ae-toast', () => {
     toast.close = vi.fn();
 
     // No timer should be set with duration 0
-    expect(toast._timer).toBeUndefined();
+    expect((toast as any)._timer).toBeUndefined();
 
     // Fast-forward time
     vi.advanceTimersByTime(10000);
@@ -157,40 +184,40 @@ describe('ae-toast', () => {
     const toast = createMockToast({ duration: 2000, pauseOnHover: true });
 
     // Mock methods
-    toast._pauseTimer = vi.fn();
-    toast._resumeTimer = vi.fn();
+    (toast as any)._pauseTimer = vi.fn();
+    (toast as any)._resumeTimer = vi.fn();
 
     // Simulate mouseenter
     toast.dispatchEvent(new MouseEvent('mouseenter'));
 
     // Check if pause was called
-    expect(toast._pauseTimer).toHaveBeenCalled();
+    expect((toast as any)._pauseTimer).toHaveBeenCalled();
 
     // Simulate mouseleave
     toast.dispatchEvent(new MouseEvent('mouseleave'));
 
     // Check if resume was called
-    expect(toast._resumeTimer).toHaveBeenCalled();
+    expect((toast as any)._resumeTimer).toHaveBeenCalled();
   });
 
   it('does not pause timer when pauseOnHover is false', () => {
     const toast = createMockToast({ duration: 2000, pauseOnHover: false });
 
     // Mock methods
-    toast._pauseTimer = vi.fn();
-    toast._resumeTimer = vi.fn();
+    (toast as any)._pauseTimer = vi.fn();
+    (toast as any)._resumeTimer = vi.fn();
 
     // Simulate mouseenter
     toast.dispatchEvent(new MouseEvent('mouseenter'));
 
     // Check if pause was not called
-    expect(toast._pauseTimer).not.toHaveBeenCalled();
+    expect((toast as any)._pauseTimer).not.toHaveBeenCalled();
 
     // Simulate mouseleave
     toast.dispatchEvent(new MouseEvent('mouseleave'));
 
     // Check if resume was not called
-    expect(toast._resumeTimer).not.toHaveBeenCalled();
+    expect((toast as any)._resumeTimer).not.toHaveBeenCalled();
   });
 
   it('dispatches ae-close event when close button is clicked', () => {
@@ -226,7 +253,7 @@ describe('ae-toast', () => {
     const toast = createMockToast();
 
     // Mock the _handleClick method
-    toast._handleClick = vi.fn().mockImplementation((e) => {
+    (toast as any)._handleClick = vi.fn().mockImplementation((e: MouseEvent) => {
       toast.dispatchEvent(new CustomEvent('ae-click', {
         bubbles: true,
         composed: true,
@@ -239,7 +266,7 @@ describe('ae-toast', () => {
 
     // Simulate toast click
     const mockEvent = new MouseEvent('click');
-    toast._handleClick(mockEvent);
+    (toast as any)._handleClick(mockEvent);
 
     // Check that event was dispatched
     expect(toast.dispatchEvent).toHaveBeenCalled();
@@ -249,14 +276,14 @@ describe('ae-toast', () => {
     const toast = createMockToast({ hasCustomIcon: true });
 
     // Mock _getDefaultIcon to check if slot is used
-    toast._getDefaultIcon = vi.fn().mockImplementation(() => {
+    (toast as any)._getDefaultIcon = vi.fn().mockImplementation(() => {
       if (toast.querySelector('[slot="icon"]')) {
         return { type: 'slot' };
       }
       return { type: 'default' };
     });
 
-    const iconResult = toast._getDefaultIcon();
+    const iconResult = (toast as any)._getDefaultIcon();
     expect(iconResult.type).toBe('slot');
   });
 
@@ -282,7 +309,7 @@ describe('ae-toast', () => {
     const toast = createMockToast();
 
     // Mock the _handleKeyDown method
-    toast._handleKeyDown = vi.fn().mockImplementation((e) => {
+    (toast as any)._handleKeyDown = vi.fn().mockImplementation((e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         toast.close('keyboard');
       }
@@ -293,7 +320,7 @@ describe('ae-toast', () => {
 
     // Simulate Escape key
     const event = new KeyboardEvent('keydown', { key: 'Escape' });
-    toast._handleKeyDown(event);
+    (toast as any)._handleKeyDown(event);
 
     // Should close on Escape
     expect(toast.close).toHaveBeenCalledWith('keyboard');

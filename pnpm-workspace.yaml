@@ -4,5 +4,7 @@ packages:
   - packages/tokens
   - packages/adapters
 onlyBuiltDependencies:
+  - '@swc/core'
   - esbuild
+  - nx
   - sharp

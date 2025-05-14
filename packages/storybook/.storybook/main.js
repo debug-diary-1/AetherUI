@@ -37,10 +37,19 @@ const config = {
       },
       resolve: {
         dedupe: ['lit-html', 'lit-element', 'lit'],
+        alias: {
+          'lit-element/lit-element.js': 'lit',
+          'lit-html/lit-html.js': 'lit'
+        }
       },
       optimizeDeps: {
         include: ['lit-html', 'lit'],
         exclude: ['@aether-ui/datatable', '@aetherui/datatable']
+      },
+      build: {
+        rollupOptions: {
+          external: [/^lit-element/, /^lit-html/]
+        }
       }
     };
   },

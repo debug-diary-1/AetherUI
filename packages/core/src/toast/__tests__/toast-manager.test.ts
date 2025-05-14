@@ -73,7 +73,7 @@ describe('Toast Manager', () => {
 
     try {
       // Mock the static method
-      const mockInstances = [];
+      const mockInstances: Array<{ mock: boolean }> = [];
       ToastManager.getInstance = vi.fn().mockImplementation(() => {
         const instance = { mock: true };
         mockInstances.push(instance);
@@ -119,7 +119,11 @@ describe('Toast Manager', () => {
 
   it('adds toasts to the correct placement container', () => {
     // Mock container creation and toast appending
-    const containers: Record<string, { children: any[] }> = {
+    interface Container {
+      children: Array<{ tagName: string }>;
+    }
+    
+    const containers: Record<string, Container> = {
       'bottom-right': { children: [] },
       'top-left': { children: [] }
     };
@@ -128,13 +132,13 @@ describe('Toast Manager', () => {
     mockContainers.set('top-left', containers['top-left']);
 
     // Mock getContainer to use our test containers
-    vi.spyOn(ToastManager.prototype as any, 'getContainer').mockImplementation(function(placement: string) {
+    vi.spyOn(ToastManager.prototype as any, 'getContainer').mockImplementation(function(placement: string): Container {
       return containers[placement];
     });
 
     // Mock the show method to append to our containers
     vi.spyOn(ToastManager.prototype as any, 'show').mockImplementation(function(options: any) {
-      const container = containers[options.placement];
+      const container = containers[options.placement as string];
       container.children.push({ tagName: 'AE-TOAST' });
     });
 
@@ -148,38 +152,53 @@ describe('Toast Manager', () => {
   });
 
   it('removes toast from container when closed', async () => {
+    interface MockToast {
+      tagName: string;
+      parentNode: any;
+      addEventListener: (event: string, callback: () => void) => void;
+      dispatchEvent: jest.Mock;
+    }
+    
+    interface MockContainer {
+      children: MockToast[];
+      removeChild?: (child: MockToast) => MockToast;
+    }
+    
     // Setup a mock container with one toast
-    const container = { children: [{ tagName: 'AE-TOAST', parentNode: null }] };
-    container.children[0].parentNode = container;
-    mockContainers.set('bottom-right', container);
-
-    // Mock removeChild method
-    vi.spyOn(container, 'children', 'get').mockReturnValue([{
+    const mockToast: MockToast = {
       tagName: 'AE-TOAST',
-      parentNode: container,
-      addEventListener: (event: string, callback: any) => {
+      parentNode: null,
+      addEventListener: (event: string, callback: () => void) => {
         // Immediately call the animationend callback
         if (event === 'animationend') {
           callback();
         }
       },
       dispatchEvent: vi.fn()
-    }]);
+    };
+    
+    const container: MockContainer = { 
+      children: [mockToast]
+    };
+    
+    // Set parent reference
+    mockToast.parentNode = container;
+    
+    mockContainers.set('bottom-right', container);
 
     vi.spyOn(ToastManager.prototype as any, 'getContainer').mockReturnValue(container);
 
-    // Simulate toast closing
-    const toast = container.children[0];
-    vi.spyOn(container, 'removeChild').mockImplementation(() => {
+    // Add removeChild method
+    container.removeChild = vi.fn().mockImplementation((child: MockToast) => {
       container.children = [];
-      return toast;
+      return child;
     });
 
     // Trigger close event handler
-    const closeHandler = vi.fn().mockImplementation((toast: any) => {
-      container.removeChild(toast);
+    const closeHandler = vi.fn().mockImplementation((toast: MockToast) => {
+      container.removeChild!(toast);
     });
-    closeHandler(toast);
+    closeHandler(mockToast);
 
     // Check that toast was removed
     expect(container.children.length).toBe(0);

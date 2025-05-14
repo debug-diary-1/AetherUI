@@ -56,5 +56,17 @@ coverage
 # Turbo
 .turbo
 
+# Nx
+.nx/
+.nx/cache
+
 # TypeScript
 *.tsbuildinfo
+
+# Storybook
+storybook-static/
+**/storybook-static/
+**/.claude/settings.local.json
+
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
