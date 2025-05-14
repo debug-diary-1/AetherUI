@@ -1,4 +1,6 @@
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
+import path from 'path';
+
 const config = {
   stories: [
     '../src/stories/Debug.stories.js',
@@ -25,24 +27,53 @@ const config = {
     autodocs: 'tag',
   },
   
-  // Simple Vite configuration
-  viteFinal(config) {
-    return {
-      ...config,
-      define: {
-        'process.env': JSON.stringify({
-          NODE_ENV: 'development',
-          STORYBOOK_DESCRIPTION: 'AetherUI Component Library'
-        })
-      },
-      resolve: {
-        dedupe: ['lit-html', 'lit-element', 'lit'],
-      },
-      optimizeDeps: {
-        include: ['lit-html', 'lit'],
-        exclude: ['@aether-ui/datatable', '@aetherui/datatable']
-      }
-    };
+  // Simplified Vite configuration
+  async viteFinal(config) {
+    // Import external Vite config for simpler setup
+    try {
+      // Using dynamic import for ESM compatibility
+      const overrideConfig = await import('./vite.config.override.js')
+        .then(module => module.default || module)
+        .catch(err => {
+          console.error('Failed to import vite.config.override.js:', err);
+          return {};
+        });
+      
+      console.log('Using vite.config.override.js');
+      return {
+        ...config,
+        ...overrideConfig,
+        define: {
+          'process.env': JSON.stringify({
+            NODE_ENV: 'development',
+            STORYBOOK_DESCRIPTION: 'AetherUI Component Library'
+          })
+        }
+      };
+    } catch (error) {
+      console.error('Failed to load vite.config.override.js, using fallback config', error);
+      // Fallback to basic configuration
+      return {
+        ...config,
+        define: {
+          'process.env': JSON.stringify({
+            NODE_ENV: 'development',
+            STORYBOOK_DESCRIPTION: 'AetherUI Component Library'
+          })
+        },
+        resolve: {
+          alias: {
+            'lit': path.resolve('../node_modules/lit'),
+            'lit/decorators.js': path.resolve('../node_modules/lit/decorators.js'),
+            'lit/directive-helpers.js': path.resolve('../node_modules/lit/directive-helpers.js')
+          }
+        },
+        optimizeDeps: {
+          // Simplified include without shims
+          include: ['lit-html', 'lit-element', 'lit']
+        }
+      };
+    }
   },
 };
 

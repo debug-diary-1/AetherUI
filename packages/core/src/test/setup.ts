@@ -32,7 +32,8 @@ global.window = {
     getPropertyValue: () => ''
   }),
   CustomEvent: class CustomEvent extends Event {
-    constructor(name, options) {
+    detail: Record<string, any>;
+    constructor(name: string, options?: { detail?: Record<string, any> }) {
       super(name);
       this.detail = options?.detail || {};
     }
@@ -51,39 +52,101 @@ global.document = {
 } as any;
 
 // Set up a unified fake Event class
-global.Event = class Event {
+// Using an interface to match the expected static methods
+interface EventStatic {
+  new(type: string, eventInitDict?: EventInit): Event;
+  prototype: Event;
+  readonly NONE: 0;
+  readonly CAPTURING_PHASE: 1;
+  readonly AT_TARGET: 2;
+  readonly BUBBLING_PHASE: 3;
+}
+
+class EventMock {
   type: string;
   bubbles: boolean;
   cancelable: boolean;
   
-  constructor(type, options?) {
+  static NONE = 0;
+  static CAPTURING_PHASE = 1;
+  static AT_TARGET = 2;
+  static BUBBLING_PHASE = 3;
+  
+  constructor(type: string, options?: { bubbles?: boolean; cancelable?: boolean }) {
     this.type = type;
     this.bubbles = options?.bubbles || false;
     this.cancelable = options?.cancelable || false;
   }
   
-  stopPropagation() {}
-  preventDefault() {}
-};
+  stopPropagation(): void {}
+  preventDefault(): void {}
+}
+
+// Cast the EventMock class to match the EventStatic interface
+global.Event = EventMock as unknown as EventStatic;
 
 // Mock key events
-global.KeyboardEvent = class KeyboardEvent extends Event {
+interface KeyboardEventStatic {
+  new(type: string, eventInitDict?: KeyboardEventInit): KeyboardEvent;
+  prototype: KeyboardEvent;
+  readonly DOM_KEY_LOCATION_STANDARD: 0;
+  readonly DOM_KEY_LOCATION_LEFT: 1;
+  readonly DOM_KEY_LOCATION_RIGHT: 2;
+  readonly DOM_KEY_LOCATION_NUMPAD: 3;
+}
+
+class KeyboardEventMock extends EventMock {
   key: string;
   
-  constructor(type, options?) {
+  static DOM_KEY_LOCATION_STANDARD = 0;
+  static DOM_KEY_LOCATION_LEFT = 1;
+  static DOM_KEY_LOCATION_RIGHT = 2;
+  static DOM_KEY_LOCATION_NUMPAD = 3;
+  
+  constructor(type: string, options?: { key?: string }) {
     super(type);
     this.key = options?.key || '';
   }
-};
+}
+
+global.KeyboardEvent = KeyboardEventMock as unknown as KeyboardEventStatic;
 
 // Mock mouse events
-global.MouseEvent = class MouseEvent extends Event {
+interface MouseEventStatic {
+  new(type: string, eventInitDict?: MouseEventInit): MouseEvent;
+  prototype: MouseEvent;
+}
+
+class MouseEventMock extends EventMock {
   clientX: number;
   clientY: number;
+  altKey: boolean = false;
+  button: number = 0;
+  buttons: number = 0;
+  ctrlKey: boolean = false;
+  metaKey: boolean = false;
+  movementX: number = 0;
+  movementY: number = 0;
+  offsetX: number = 0;
+  offsetY: number = 0;
+  pageX: number = 0;
+  pageY: number = 0;
+  relatedTarget: EventTarget | null = null;
+  screenX: number = 0;
+  screenY: number = 0;
+  shiftKey: boolean = false;
+  x: number = 0;
+  y: number = 0;
   
-  constructor(type, options?) {
+  constructor(type: string, options?: { clientX?: number; clientY?: number }) {
     super(type);
     this.clientX = options?.clientX || 0;
     this.clientY = options?.clientY || 0;
   }
-};
+  
+  getModifierState(_key: string): boolean {
+    return false;
+  }
+}
+
+global.MouseEvent = MouseEventMock as unknown as MouseEventStatic;

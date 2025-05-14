@@ -23,11 +23,5 @@
     "useDefineForClassFields": false
   },
   "include": ["packages/**/*.ts", "packages/**/*.tsx"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.timestamp-*.mjs",
-    "**/dist/**",
-    "packages/*/dist/**"
-  ]
+  "exclude": ["node_modules", "dist", "**/*.timestamp-*.mjs", "**/dist/**", "packages/*/dist/**"]
 }
