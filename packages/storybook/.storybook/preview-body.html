@@ -1,0 +1,61 @@
+<!-- This file is loaded during the storybook render process -->
+<div id="component-debug-panel" style="display:none; position:fixed; bottom:0; right:0; background:#f5f5f5; border:1px solid #ddd; padding:10px; max-width:300px; z-index:9999; font-family:monospace; font-size:12px;">
+  <h4 style="margin-top:0;">Component Status</h4>
+  <div id="component-status"></div>
+  <button id="register-components-btn" style="margin-top:10px; padding:5px;">Force Register</button>
+</div>
+
+<script>
+  // This script adds a debug panel to help diagnose component registration issues
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check component registration periodically
+    function checkComponentStatus() {
+      const components = [
+        'ae-autocomplete', 'ae-alert', 'ae-combo', 'ae-tabs', 'ae-treeview',
+        'ae-accordion', 'ae-button', 'ae-checkbox', 'ae-dropdown', 'ae-modal', 'ae-radio'
+      ];
+      
+      const statusElement = document.getElementById('component-status');
+      if (!statusElement) return;
+      
+      statusElement.innerHTML = '';
+      let allRegistered = true;
+      
+      components.forEach(function(tag) {
+        const isRegistered = !!customElements.get(tag);
+        const row = document.createElement('div');
+        row.innerHTML = tag + ': ' + (isRegistered ? '✓' : '✗');
+        row.style.color = isRegistered ? 'green' : 'red';
+        statusElement.appendChild(row);
+        
+        if (!isRegistered) allRegistered = false;
+      });
+      
+      // Show debug panel if any components are missing
+      if (!allRegistered) {
+        document.getElementById('component-debug-panel').style.display = 'block';
+      }
+    }
+    
+    // Force registration button
+    document.getElementById('register-components-btn').addEventListener('click', function() {
+      try {
+        // Try to import components directly
+        import('/packages/storybook/src/source-components.js')
+          .then(() => {
+            console.log('Force imported components');
+            setTimeout(checkComponentStatus, 500);
+          })
+          .catch(err => console.error('Force import failed:', err));
+      } catch (e) {
+        console.error('Force registration error:', e);
+      }
+    });
+    
+    // Run initial check after a delay
+    setTimeout(checkComponentStatus, 3000);
+    
+    // Run check periodically
+    setInterval(checkComponentStatus, 10000);
+  });
+</script>

@@ -311,9 +311,6 @@ importers:
       '@aetherui/core':
         specifier: workspace:*
         version: link:../core
-      lit-html:
-        specifier: ^3.3.0
-        version: 3.3.0
     devDependencies:
       '@storybook/addon-a11y':
         specifier: ^8.0.0
@@ -343,7 +340,13 @@ importers:
         specifier: ^10.0.0
         version: 10.9.6
       lit:
-        specifier: ^3.0.0
+        specifier: ^3.3.0
+        version: 3.3.0
+      lit-element:
+        specifier: ^4.2.0
+        version: 4.2.0
+      lit-html:
+        specifier: ^3.3.0
         version: 3.3.0
       react:
         specifier: ^18.2.0

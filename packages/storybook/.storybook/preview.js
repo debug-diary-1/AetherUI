@@ -2,6 +2,14 @@
 import '../src/register-components.js';
 import { html } from 'lit-html';
 
+// Try source components as a fallback if needed
+const useSourceImports = true; // Set to false to disable
+if (useSourceImports) {
+  import('../src/source-components.js')
+    .then(() => console.log('Source components loaded'))
+    .catch(e => console.warn('Failed to load source components:', e));
+}
+
 /** @type { import('@storybook/web-components').Preview } */
 const preview = {
   parameters: {

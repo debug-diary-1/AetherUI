@@ -1,12 +1,12 @@
 /**
  * This is a shim file to properly export the required functions from lit 
- * that Storybook expects
+ * that Storybook expects (ESM version)
  */
-const { html, css } = require('lit');
-const { LitElement } = require('lit-element');
-const { render } = require('lit-html');
+import { html, css } from 'lit';
+import { LitElement } from 'lit-element';
+import { render } from 'lit-html';
 
-module.exports = {
+export {
   html,
   css,
   LitElement,
