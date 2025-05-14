@@ -1,4 +1,4 @@
-import '../../../test-lit-polyfill'; // Import polyfill to fix DOM issues
+import '../../../src/test-lit-polyfill'; // Import polyfill to fix DOM issues
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { AeToast } from '../ae-toast';
 
