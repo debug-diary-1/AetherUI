@@ -14,23 +14,27 @@ jobs:
         with:
           fetch-depth: 0
           
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'pnpm'
-          
       - name: Install PNPM
         uses: pnpm/action-setup@v2
         with:
           version: 10.10.0
           run_install: false
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'pnpm'
       
       - name: Install dependencies
         run: pnpm install
       
-      # Remove Nx Cloud commands for now since it's not configured
-      # If you want to use Nx Cloud, add NX_CLOUD_ACCESS_TOKEN to your GitHub secrets
+      # Nx Cloud configuration
+      - name: Start Nx Cloud CI Run
+        run: npx nx-cloud start-ci-run --stop-agents-after="build" --agent-count=3
+        env:
+          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+        continue-on-error: true
       
       - name: Run affected lint
         run: npx nx affected --target=lint --parallel=3 --base=origin/main
