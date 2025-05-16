@@ -26,6 +26,20 @@
         "cwd": "packages/core"
       }
     },
+    "test:memory": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "NODE_OPTIONS=--max-old-space-size=512 MEMORY_OPTIMIZED=true vitest run",
+        "cwd": "packages/core"
+      }
+    },
+    "test:api": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "NODE_OPTIONS=--max-old-space-size=512 MEMORY_OPTIMIZED=true vitest run \"**/*api*.test.ts\"",
+        "cwd": "packages/core"
+      }
+    },
     "clean": {
       "executor": "nx:run-commands",
       "options": {

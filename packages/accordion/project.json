@@ -26,6 +26,13 @@
         "cwd": "packages/accordion"
       }
     },
+    "test:memory": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "NODE_OPTIONS=--max-old-space-size=512 vitest run --no-workspace --config ../../vitest.memory.config.js",
+        "cwd": "packages/accordion"
+      }
+    },
     "clean": {
       "executor": "nx:run-commands",
       "options": {

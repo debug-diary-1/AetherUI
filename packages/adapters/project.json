@@ -32,6 +32,13 @@
         "cwd": "packages/adapters"
       }
     },
+    "test:memory": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "NODE_OPTIONS=--max-old-space-size=512 vitest run --no-workspace --config ../../vitest.memory.config.js",
+        "cwd": "packages/adapters"
+      }
+    },
     "clean": {
       "executor": "nx:run-commands",
       "options": {

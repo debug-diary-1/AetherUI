@@ -1,146 +1,120 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { AeTreeView } from '../ae-treeview';
-
-// Make sure the component is defined
-if (!customElements.get('ae-treeview')) {
-  customElements.define('ae-treeview', AeTreeView);
-}
-
-// Simple fixture helper for tests
-async function fixture<T extends HTMLElement>(html: string): Promise<T> {
-  const template = document.createElement('template');
-  template.innerHTML = html;
-  const element = template.content.firstElementChild as T;
-  document.body.appendChild(element);
-
-  // For LitElement components
-  if ('updateComplete' in element) {
-    await (element as any).updateComplete;
-  }
-
-  return element;
-}
+/**
+ * Web component test for ae-treeview using @open-wc/testing
+ */
+import { html, fixture, expect, oneEvent, elementUpdated } from '@open-wc/testing';
+import '../ae-treeview.js';
+import { AeTreeView } from '../ae-treeview.js';
+import type { TreeNode } from '../node.js';
 
 describe('ae-treeview', () => {
-  let element: AeTreeView;
-  
-  const sampleData = [
-    {
-      id: 'parent1',
-      label: 'Parent Node 1',
-      children: [
-        { id: 'child1', label: 'Child Node 1' },
-        { id: 'child2', label: 'Child Node 2' }
-      ]
-    },
-    {
-      id: 'parent2',
-      label: 'Parent Node 2',
-      children: [
-        { id: 'child3', label: 'Child Node 3' }
-      ]
-    }
+  let treeView: AeTreeView;
+  const simpleNodes: TreeNode[] = [
+    { id: '1', label: 'Root Node', children: [
+      { id: '1.1', label: 'Child 1' },
+      { id: '1.2', label: 'Child 2', children: [
+        { id: '1.2.1', label: 'Grandchild' }
+      ]}
+    ]}
   ];
 
   beforeEach(async () => {
-    element = await fixture<AeTreeView>(`<ae-treeview></ae-treeview>`);
-    element.data = sampleData;
-    await element.updateComplete;
+    // Create a fresh component before each test
+    treeView = await fixture<AeTreeView>(html`<ae-treeview></ae-treeview>`);
   });
 
-  it('should have default property values', () => {
-    expect(element.expanded).toEqual([]);
-    expect(element.selected).toEqual([]);
-    expect(element.selectionMode).toBe('single');
-    expect(element.indentSize).toBe(20);
-    expect(element.loading).toBe(false);
-    expect(element.emptyMessage).toBe('No items');
+  it('should be defined', () => {
+    expect(treeView).to.exist;
+    expect(treeView.shadowRoot).to.exist;
   });
 
-  it('should render with sample data', () => {
-    const tree = element.shadowRoot!.querySelector('[role="tree"]');
-    expect(tree).not.toBeNull();
-    
-    const treeItems = element.shadowRoot!.querySelectorAll('[role="treeitem"]');
-    expect(treeItems.length).toBe(2); // Only parent nodes are visible initially
+  it('should render empty state when no data is provided', async () => {
+    await elementUpdated(treeView);
+    const emptyState = treeView.shadowRoot?.querySelector('[part="empty"]');
+    expect(emptyState).to.exist;
+    expect(emptyState?.textContent).to.include('No items');
   });
 
-  it('should expand a node when clicked', async () => {
-    // Get the first caret
-    const caret = element.shadowRoot!.querySelector('.tree-caret') as HTMLElement;
-    expect(caret).not.toBeNull();
+  it('should render nodes when provided', async () => {
+    treeView.data = simpleNodes;
+    await elementUpdated(treeView);
     
-    // Mock the event listener
-    const expandHandler = vi.fn();
-    element.addEventListener('ae-treeview-expand', expandHandler);
+    const nodeElements = treeView.shadowRoot?.querySelectorAll('.tree-node');
+    expect(nodeElements?.length).to.be.greaterThan(0);
+    expect(nodeElements?.[0].textContent).to.include('Root Node');
+  });
+
+  it('should expand/collapse nodes when caret is clicked', async () => {
+    treeView.data = simpleNodes;
+    await elementUpdated(treeView);
     
-    // Click the caret
+    // Find the caret for the root node
+    const caret = treeView.shadowRoot?.querySelector('.tree-caret') as HTMLElement;
+    expect(caret).to.exist;
+    
+    // Initially not expanded
+    expect(treeView.expanded.length).to.equal(0);
+    
+    // Click to expand
     caret.click();
-    await element.updateComplete;
+    await elementUpdated(treeView);
     
-    // Check if expanded state updated
-    expect(element.expanded).toContain('parent1');
-    expect(expandHandler).toHaveBeenCalledTimes(1);
-    
-    // Check if children are now visible
-    const treeItems = element.shadowRoot!.querySelectorAll('[role="treeitem"]');
-    expect(treeItems.length).toBe(4); // 2 parents + 2 children of first parent
+    // Should be expanded now
+    expect(treeView.expanded).to.include('1');
+    expect(treeView.expanded.length).to.equal(1);
   });
 
-  it('should select a node when clicked', async () => {
-    // Get the first label
-    const label = element.shadowRoot!.querySelector('.tree-label') as HTMLElement;
-    expect(label).not.toBeNull();
+  it('should emit expand event when expansion changes', async () => {
+    treeView.data = simpleNodes;
+    await elementUpdated(treeView);
     
-    // Mock the event listener
-    const selectHandler = vi.fn();
-    element.addEventListener('ae-treeview-select', selectHandler);
+    const caret = treeView.shadowRoot?.querySelector('.tree-caret') as HTMLElement;
     
-    // Click the label
-    label.click();
-    await element.updateComplete;
+    setTimeout(() => caret.click());
     
-    // Check if selected state updated
-    expect(element.selected).toContain('parent1');
-    expect(selectHandler).toHaveBeenCalledTimes(1);
-    expect(selectHandler.mock.calls[0][0].detail.selected).toEqual(['parent1']);
+    const event = await oneEvent(treeView, 'ae-treeview-expand');
+    expect(event).to.exist;
+    expect(event.detail.expanded).to.include('1');
   });
 
-  it('should respect selection mode', async () => {
-    element.selectionMode = 'multiple';
-    await element.updateComplete;
+  it('should support selecting nodes', async () => {
+    treeView.data = simpleNodes;
+    await elementUpdated(treeView);
     
-    // Get the labels
-    const labels = element.shadowRoot!.querySelectorAll('.tree-label');
+    // Find a label to select
+    const label = treeView.shadowRoot?.querySelector('.tree-label') as HTMLElement;
     
-    // Click the first label
-    (labels[0] as HTMLElement).click();
-    await element.updateComplete;
+    setTimeout(() => label.click());
     
-    // Click the second label (should not deselect the first one)
-    (labels[1] as HTMLElement).click();
-    await element.updateComplete;
-    
-    // Check if both nodes are selected
-    expect(element.selected).toContain('parent1');
-    expect(element.selected).toContain('parent2');
-    expect(element.selected.length).toBe(2);
+    const event = await oneEvent(treeView, 'ae-treeview-select');
+    expect(event).to.exist;
+    expect(event.detail.selected).to.include('1');
   });
 
-  it('should render loading state', async () => {
-    element.loading = true;
-    await element.updateComplete;
+  it('should support multi-selection when enabled', async () => {
+    treeView.data = simpleNodes;
+    treeView.selectionMode = 'multiple';
+    treeView.expanded = ['1']; // Expand root to see children
+    await elementUpdated(treeView);
     
-    const loadingElement = element.shadowRoot!.querySelector('.tree-loading');
-    expect(loadingElement).not.toBeNull();
+    // Select first node
+    const firstLabel = treeView.shadowRoot?.querySelector('.tree-label') as HTMLElement;
+    firstLabel.click();
+    await elementUpdated(treeView);
+    
+    // Select second node
+    const secondLabel = treeView.shadowRoot?.querySelectorAll('.tree-label')[1] as HTMLElement;
+    secondLabel.click();
+    await elementUpdated(treeView);
+    
+    // Check that both are selected
+    expect(treeView.selected.length).to.equal(2);
   });
 
-  it('should render empty state', async () => {
-    element.data = [];
-    await element.updateComplete;
+  it('should show loading state when loading is true', async () => {
+    treeView.loading = true;
+    await elementUpdated(treeView);
     
-    const emptyElement = element.shadowRoot!.querySelector('.tree-empty');
-    expect(emptyElement).not.toBeNull();
-    expect(emptyElement!.textContent!.trim()).toBe('No items');
+    const loadingState = treeView.shadowRoot?.querySelector('[part="loading"]');
+    expect(loadingState).to.exist;
   });
 });

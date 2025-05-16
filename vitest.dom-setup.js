@@ -1,11 +1,21 @@
-// Fix for createTreeWalker and other DOM API issues in JSDOM
-import { beforeAll, vi } from 'vitest';
+/**
+ * Improved DOM setup for testing Web Components with Vitest & JSDOM
+ * This file provides a complete testing environment for Lit components
+ * with optimized memory usage and proper @open-wc/testing support
+ */
+import { beforeAll, vi, afterEach } from 'vitest';
+import '@open-wc/testing';
 
-// Global DOM mocks
+// Global DOM setup
 beforeAll(() => {
   // Ensure document and window exist
   global.document = global.document || {};
   global.window = global.window || {};
+  
+  // Create a proper document.body if it doesn't exist
+  if (typeof document !== 'undefined' && !document.body) {
+    document.body = document.createElement('body');
+  }
   
   // Ensure document.defaultView and window.document are properly linked
   if (typeof document !== 'undefined' && typeof window !== 'undefined') {
@@ -19,7 +29,7 @@ beforeAll(() => {
       const walker = {
         root,
         currentNode: root,
-        whatToShow: whatToShow || NodeFilter.SHOW_ALL,
+        whatToShow: whatToShow || (typeof NodeFilter !== 'undefined' ? NodeFilter.SHOW_ALL : -1),
         filter,
         
         // Implement the required methods
@@ -43,6 +53,14 @@ beforeAll(() => {
       shadowRoot.host = this;
       shadowRoot.mode = mode;
       
+      // Add critical methods to shadowRoot
+      if (!shadowRoot.querySelector) {
+        shadowRoot.querySelector = function(selector) { return null; };
+      }
+      if (!shadowRoot.querySelectorAll) {
+        shadowRoot.querySelectorAll = function(selector) { return []; };
+      }
+      
       Object.defineProperty(this, 'shadowRoot', {
         get: function() {
           return mode === 'open' ? shadowRoot : null;
@@ -53,7 +71,22 @@ beforeAll(() => {
     };
   }
 
-  // Mock customElements
+  // Mock adoptedStyleSheets - needed for lit@2+
+  if (typeof document !== 'undefined' && !('adoptedStyleSheets' in document)) {
+    Object.defineProperty(Document.prototype, 'adoptedStyleSheets', {
+      get() { return []; },
+      set() {}
+    });
+    
+    if (typeof ShadowRoot !== 'undefined') {
+      Object.defineProperty(ShadowRoot.prototype, 'adoptedStyleSheets', {
+        get() { return []; },
+        set() {}
+      });
+    }
+  }
+
+  // Mock customElements registry
   if (typeof window !== 'undefined') {
     window.customElements = window.customElements || {
       define: vi.fn(),
@@ -63,40 +96,56 @@ beforeAll(() => {
     };
   }
   
-  // Mock other APIs needed by Lit
+  // Mock other APIs needed by Lit and Web Components
   if (typeof window !== 'undefined') {
-    // Ensure MutationObserver exists
+    // Observer APIs
     window.MutationObserver = window.MutationObserver || class {
-      constructor(callback) {
-        this.callback = callback;
-      }
+      constructor(callback) { this.callback = callback; }
       observe() {}
       disconnect() {}
       takeRecords() { return []; }
     };
     
-    // Ensure ResizeObserver exists
     window.ResizeObserver = window.ResizeObserver || class {
-      constructor(callback) {
-        this.callback = callback;
-      }
+      constructor(callback) { this.callback = callback; }
       observe() {}
       unobserve() {}
       disconnect() {}
     };
     
-    // Add additional browser APIs used by web components
+    window.IntersectionObserver = window.IntersectionObserver || class {
+      constructor(callback) { this.callback = callback; }
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    };
+    
+    // Style and computation APIs
     window.getComputedStyle = window.getComputedStyle || (() => ({
       getPropertyValue: () => '',
+      setProperty: () => {}
     }));
+    
+    window.CSSStyleSheet = window.CSSStyleSheet || class {
+      constructor() { this.cssRules = []; }
+      replaceSync() {}
+    };
     
     // Add location if needed by tests
     if (!window.location) {
       window.location = { href: 'http://localhost/' };
     }
+    
+    // CSS Animation API
+    window.Animation = window.Animation || class {
+      constructor() {}
+      play() {}
+      pause() {}
+      cancel() {}
+    };
   }
   
-  // Add NodeFilter constants if needed by tests
+  // Add NodeFilter constants
   global.NodeFilter = global.NodeFilter || {
     SHOW_ALL: -1,
     SHOW_ELEMENT: 1,
@@ -104,4 +153,20 @@ beforeAll(() => {
     FILTER_REJECT: 2,
     FILTER_SKIP: 3
   };
+  
+  // Set test environment flag to help conditional logic in components
+  global.IS_TEST_ENV = true;
+});
+
+// Clean up after each test to prevent memory leaks
+afterEach(() => {
+  // Remove any elements added to the document body 
+  if (document && document.body) {
+    document.body.innerHTML = '';
+  }
+  
+  // Force garbage collection for better memory management if needed
+  if (global.gc) {
+    global.gc();
+  }
 });

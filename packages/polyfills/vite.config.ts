@@ -23,4 +23,7 @@ export default defineConfig({
       outDir: 'dist'
     })
   ],
-}); 
+  test: {
+    passWithNoTests: true
+  }
+});

@@ -1,5 +1,14 @@
-// Core package test setup - provides DOM API implementations for JSDOM
+// Core package test setup for @open-wc/testing compatibility
+import '@open-wc/testing';
 import { vi } from 'vitest';
+
+// Set up globals for testing
+global.ResizeObserver = global.ResizeObserver || class ResizeObserver {
+  constructor() {}
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
 
 // Ensure global objects exist
 global.document = global.document || {};

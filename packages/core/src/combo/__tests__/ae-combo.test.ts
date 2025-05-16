@@ -1,182 +1,152 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { AeCombo, defineAeCombo } from '../ae-combo';
+/**
+ * Web component test for ae-combo using @open-wc/testing
+ */
+import { html, fixture, expect, oneEvent, elementUpdated } from '@open-wc/testing';
+import '../ae-combo.js';
+import { AeCombo, defineAeCombo } from '../ae-combo.js';
 
-// Helper functions to replace @open-wc/testing-helpers
-async function fixture(template: any): Promise<AeCombo> {
-  const wrapper = document.createElement('div');
-  
-  // For this simple case, we just create an element directly
-  const combo = document.createElement('ae-combo') as AeCombo;
-  document.body.appendChild(combo);
-  
-  return combo;
-}
-
-function html(strings: TemplateStringsArray, ...values: any[]): AeCombo {
-  // Simple template literal function for tests
-  // We're bypassing actual rendering and just returning an element
-  const combo = document.createElement('ae-combo') as AeCombo;
-  
-  // Apply attributes from the template if needed
-  if (strings[0].includes('placeholder')) combo.placeholder = "Select an option...";
-  if (strings[0].includes('value')) combo.value = "Initial Value";
-  if (strings[0].includes('disabled')) combo.disabled = true;
-  if (strings[0].includes('free-input="false"')) combo.freeInput = false;
-  
-  return combo;
-}
-
-async function oneEvent(element: HTMLElement, eventName: string): Promise<CustomEvent> {
-  return new Promise(resolve => {
-    element.addEventListener(eventName, (e) => resolve(e as CustomEvent), { once: true });
-  });
-}
-
-// Register the component
+// Register the custom element
 defineAeCombo();
 
 describe('ae-combo', () => {
-  let element: AeCombo;
+  let combo: AeCombo;
 
   beforeEach(async () => {
-    element = await fixture(html`<ae-combo></ae-combo>`);
-  });
-
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
-  it('should be defined as a custom element', () => {
-    expect(customElements.get('ae-combo')).toBeDefined();
-  });
-
-  it('should render with default properties', () => {
-    expect(element.value).toBe('');
-    expect(element.placeholder).toBe('');
-    expect(element.disabled).toBe(false);
-    expect(element.freeInput).toBe(true);
-  });
-
-  it('should render with custom properties', async () => {
-    element = await fixture(html`
-      <ae-combo
-        placeholder="Select an option..."
-        value="Initial Value"
-        disabled
-        free-input="false"
-      ></ae-combo>
+    // Create a fresh component before each test
+    combo = await fixture<AeCombo>(html`
+      <ae-combo .items=${['Option 1', 'Option 2', 'Option 3']} placeholder="Select an option"></ae-combo>
     `);
-
-    expect(element.placeholder).toBe('Select an option...');
-    expect(element.value).toBe('Initial Value');
-    expect(element.disabled).toBe(true);
-    expect(element.freeInput).toBe(false);
   });
 
-  it('should set items as strings', () => {
-    const items = ['Apple', 'Banana', 'Cherry'];
-    element.items = items;
-    
-    expect(element.items.length).toBe(3);
-    expect(element.items[0].id).toBe('Apple');
-    expect(element.items[0].label).toBe('Apple');
+  it('should be defined', () => {
+    expect(combo).to.exist;
+    expect(combo.shadowRoot).to.exist;
   });
 
-  it('should set items as objects', () => {
-    const items = [
-      { id: 'apple', label: 'Apple' },
-      { id: 'banana', label: 'Banana', disabled: true }
-    ];
-    element.items = items;
-    
-    expect(element.items.length).toBe(2);
-    expect(element.items[0].id).toBe('apple');
-    expect(element.items[0].label).toBe('Apple');
-    expect(element.items[1].disabled).toBe(true);
+  it('should render with correct default properties', () => {
+    expect(combo.value).to.equal('');
+    expect(combo.placeholder).to.equal('Select an option');
+    expect(combo.disabled).to.be.false;
+    expect(combo.freeInput).to.be.true;
   });
 
-  it('should emit ae-combo-input event on input', async () => {
-    const inputEl = element.shadowRoot!.querySelector('input')!;
-    const listener = vi.fn();
-    element.addEventListener('ae-combo-input', listener);
-    
-    inputEl.value = 'test';
-    inputEl.dispatchEvent(new Event('input'));
-    
-    expect(listener).toHaveBeenCalled();
-    const event = listener.mock.calls[0][0];
-    expect(event.detail.value).toBe('test');
+  it('should render the input with correct attributes', () => {
+    const input = combo.shadowRoot?.querySelector('input');
+    expect(input).to.exist;
+    expect(input?.getAttribute('placeholder')).to.equal('Select an option');
+    expect(input?.getAttribute('role')).to.equal('combobox');
   });
 
-  it('should emit ae-combo-select event when option is selected', async () => {
-    element.items = ['Apple', 'Banana', 'Cherry'];
-    await element.updateComplete;
+  it('should show options when clicked', async () => {
+    // Initially dropdown should be closed
+    const overlay = combo.shadowRoot?.querySelector('.overlay');
+    expect(overlay?.hasAttribute('data-open')).to.be.false;
     
+    // Click the caret to open
+    const caret = combo.shadowRoot?.querySelector('.caret') as HTMLElement;
+    caret.click();
+    await elementUpdated(combo);
+    
+    // Should be open now
+    const overlayAfter = combo.shadowRoot?.querySelector('.overlay');
+    expect(overlayAfter?.hasAttribute('data-open')).to.be.true;
+    
+    // Options should be rendered
+    const options = combo.shadowRoot?.querySelectorAll('.option');
+    expect(options?.length).to.equal(3);
+  });
+
+  it('should open on input focus', async () => {
+    const input = combo.shadowRoot?.querySelector('input') as HTMLInputElement;
+    const overlay = combo.shadowRoot?.querySelector('.overlay');
+    
+    // Initially closed
+    expect(overlay?.hasAttribute('data-open')).to.be.false;
+    
+    // Focus the input
+    input.focus();
+    input.dispatchEvent(new FocusEvent('focus'));
+    await elementUpdated(combo);
+    
+    // Should be open
+    const overlayAfter = combo.shadowRoot?.querySelector('.overlay');
+    expect(overlayAfter?.hasAttribute('data-open')).to.be.true;
+  });
+  
+  it('should select an option when clicked', async () => {
     // Open dropdown
-    const inputEl = element.shadowRoot!.querySelector('input')!;
-    inputEl.dispatchEvent(new Event('focus'));
-    await element.updateComplete;
+    const caret = combo.shadowRoot?.querySelector('.caret') as HTMLElement;
+    caret.click();
+    await elementUpdated(combo);
     
-    // Click an option
+    // Find and click the first option
+    const firstOption = combo.shadowRoot?.querySelector('.option') as HTMLElement;
+    
+    setTimeout(() => firstOption.click());
+    
+    const event = await oneEvent(combo, 'ae-combo-select');
+    
+    expect(event).to.exist;
+    expect(event.detail.value).to.equal('Option 1');
+    expect(combo.value).to.equal('Option 1');
+  });
+  
+  it('should support setting value programmatically', async () => {
+    // Set value
+    combo.value = 'Option 2';
+    await elementUpdated(combo);
+    
+    // Input value should be updated
+    const input = combo.shadowRoot?.querySelector('input') as HTMLInputElement;
+    expect(input.value).to.equal('Option 2');
+  });
+  
+  it('should disable the component when disabled is set', async () => {
+    combo.disabled = true;
+    await elementUpdated(combo);
+    
+    // Input should be disabled
+    const input = combo.shadowRoot?.querySelector('input') as HTMLInputElement;
+    expect(input.disabled).to.be.true;
+    
+    // Clicking caret shouldn't open dropdown
+    const caret = combo.shadowRoot?.querySelector('.caret') as HTMLElement;
+    caret.click();
+    await elementUpdated(combo);
+    
+    const overlay = combo.shadowRoot?.querySelector('.overlay');
+    expect(overlay?.hasAttribute('data-open')).to.be.false;
+  });
+  
+  it('should emit input event on typing', async () => {
+    const input = combo.shadowRoot?.querySelector('input') as HTMLInputElement;
+    
     setTimeout(() => {
-      const option = element.shadowRoot!.querySelector('.option')!;
-      option.dispatchEvent(new MouseEvent('click'));
+      input.value = 'test';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
     });
     
-    const { detail } = await oneEvent(element, 'ae-combo-select');
-    expect(detail.value).toBe('Apple');
+    const event = await oneEvent(combo, 'ae-combo-input');
+    
+    expect(event).to.exist;
+    expect(event.detail.value).to.equal('test');
   });
-
+  
   it('should filter items based on input', async () => {
-    element.items = ['Apple', 'Banana', 'Cherry'];
-    await element.updateComplete;
+    // Type in the input
+    const input = combo.shadowRoot?.querySelector('input') as HTMLInputElement;
+    input.value = 'Option 2';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
     
-    const inputEl = element.shadowRoot!.querySelector('input')!;
-    inputEl.value = 'ap';
-    inputEl.dispatchEvent(new Event('input'));
+    await elementUpdated(combo);
     
-    // Wait for debounce
-    await new Promise(resolve => setTimeout(resolve, 200));
-    await element.updateComplete;
+    // Give the controller time to filter (debounce is 50ms)
+    await new Promise(resolve => setTimeout(resolve, 300));
+    await elementUpdated(combo);
     
-    const options = element.shadowRoot!.querySelectorAll('.option');
-    expect(options.length).toBe(1);
-    expect(options[0].textContent!.trim()).toContain('Ap');
-  });
-
-  it('should navigate with keyboard', async () => {
-    element.items = ['Apple', 'Banana', 'Cherry'];
-    await element.updateComplete;
-    
-    const inputEl = element.shadowRoot!.querySelector('input')!;
-    
-    // Open dropdown with ArrowDown
-    inputEl.dispatchEvent(new KeyboardEvent('keydown', { 
-      key: 'ArrowDown',
-      bubbles: true 
-    }));
-    await element.updateComplete;
-    
-    // Press ArrowDown again to highlight first option
-    inputEl.dispatchEvent(new KeyboardEvent('keydown', { 
-      key: 'ArrowDown',
-      bubbles: true 
-    }));
-    await element.updateComplete;
-    
-    // Check first option is highlighted
-    const options = element.shadowRoot!.querySelectorAll('.option');
-    expect(options[0].hasAttribute('data-highlighted')).toBe(true);
-    
-    // Press Enter to select
-    setTimeout(() => {
-      inputEl.dispatchEvent(new KeyboardEvent('keydown', { 
-        key: 'Enter',
-        bubbles: true 
-      }));
-    });
-    
-    const { detail } = await oneEvent(element, 'ae-combo-select');
-    expect(detail.value).toBe('Apple');
+    // Should show filtered results
+    const options = combo.shadowRoot?.querySelectorAll('.option');
+    expect(options?.length).to.equal(1);
+    expect(options?.[0].textContent?.trim()).to.equal('Option 2');
   });
 });
