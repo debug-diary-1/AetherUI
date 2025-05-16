@@ -38,7 +38,7 @@ export class AeAccordionItem extends LitElement {
     this.setAttribute('data-header-id', this.headerId);
   }
 
-  updated(changedProperties: Map<string, any>) {
+  updated(changedProperties: Map<string, unknown>) {
     if (changedProperties.has('open')) {
       this.updatePanelHeight();
       this.dispatchEvent(

@@ -2,7 +2,7 @@ import { LitElement, html, TemplateResult, PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import { DATATABLE_ELEMENT_NAME, DATATABLE_HEADER_ELEMENT_NAME, DATATABLE_ROW_ELEMENT_NAME, DATATABLE_CELL_ELEMENT_NAME } from './index';
+import { DATATABLE_ELEMENT_NAME } from './index';
 import { datatableStyles } from './styles';
 import { DataTableController } from './controllers/datatable-controller';
 import { ColumnDef } from './models/column-model';
@@ -480,9 +480,6 @@ export class AeDataTable<T extends Record<string, any>> extends LitElement {
       `;
     }
     
-    const bodyStyle = {
-      gridTemplateColumns: this.gridTemplateColumns
-    };
     
     return html`
       <div class="datatable__body" part="body">
