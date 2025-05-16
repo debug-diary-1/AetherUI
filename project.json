@@ -12,7 +12,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "echo 'No linting for root project'",
+        "command": "echo 'No linting for root project' && exit 0",
         "cwd": "."
       }
     }

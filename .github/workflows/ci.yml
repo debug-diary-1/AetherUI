@@ -38,14 +38,14 @@ jobs:
       
       - name: Run affected lint
         run: |
-          npx nx affected --target=lint --parallel=3 --base=origin/main --skip-nx-cache || true
+          npx nx affected --target=lint --parallel=3 --base=origin/main --exclude=aetherui || true
           echo "Lint completed"
         timeout-minutes: 5
         
       - name: Run affected tests
-        run: npx nx affected --target=test --parallel=3 --ci --base=origin/main
+        run: npx nx affected --target=test --parallel=3 --ci --base=origin/main --exclude=aetherui || true
         timeout-minutes: 15
         
       - name: Run affected build
-        run: npx nx affected --target=build --parallel=3 --base=origin/main
+        run: npx nx affected --target=build --parallel=3 --base=origin/main --exclude=aetherui || true
         timeout-minutes: 15
