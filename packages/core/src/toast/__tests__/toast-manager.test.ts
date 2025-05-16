@@ -40,7 +40,7 @@ class MockToastManager {
     mockToastInstances.push(mockToast);
     
     // Handle event listeners
-    mockToast.addEventListener.mockImplementation((event: string, callback: Function) => {
+    mockToast.addEventListener.mockImplementation((event: string, callback: EventListener) => {
       if (event === 'ae-close') {
         // Store callback for later invocation in tests
         mockToast.closeCallback = () => {

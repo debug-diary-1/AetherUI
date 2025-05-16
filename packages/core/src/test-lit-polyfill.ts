@@ -64,10 +64,10 @@ if (typeof window !== 'undefined') {
   // Setup customElements registry
   if (!window.customElements) {
     window.customElements = {
-      define: (name: string, constructor: CustomElementConstructor) => {},
-      get: (name: string) => undefined,
-      upgrade: (root: Node) => {},
-      whenDefined: (name: string) => Promise.resolve(),
+      define: (_name: string, _constructor: CustomElementConstructor) => {},
+      get: (_name: string) => undefined,
+      upgrade: (_root: Node) => {},
+      whenDefined: (_name: string) => Promise.resolve(),
     };
   }
 }
@@ -93,7 +93,7 @@ if (typeof Element !== 'undefined') {
       
       // Add methods to the shadowRoot
       if (!(shadowRoot as any).querySelector) {
-        (shadowRoot as any).querySelector = (selector: string) => null;
+        (shadowRoot as any).querySelector = (_selector: string) => null;
       }
       
       (this as any).shadowRoot = mode === 'open' ? shadowRoot : null;

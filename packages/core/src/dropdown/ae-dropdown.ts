@@ -1,7 +1,5 @@
 import { LitElement, html, PropertyValues, nothing, css } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
-import { live } from 'lit/directives/live.js';
 import { dropdownStyles } from './styles';
 import { KeyboardController } from './keyboard';
 import { updatePosition } from './positioning';
