@@ -1,6 +1,0 @@
----
-description: 
-globs: *.tsx,*.ts
-alwaysApply: false
----
-always follow the guidlines from the context.md and all the components spec from context-doc/components/** . moreover when writing unit test keep iterating till it get fix with no errors 
