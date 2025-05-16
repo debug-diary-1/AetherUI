@@ -25,6 +25,7 @@
     "build-storybook": "nx run @aetherui/storybook:build-storybook",
     "docs": "nx run-many -t docs",
     "docs:build": "nx run-many -t docs:build",
+    "graph": "nx graph",
     "nx:graph": "nx graph",
     "nx:reset": "nx reset",
     "build:parallel": "nx run-many -t build --parallel --max-parallel=8"
