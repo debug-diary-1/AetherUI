@@ -4,7 +4,7 @@
   "private": true,
   "packageManager": "pnpm@10.10.0",
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=20.19.0",
     "pnpm": "10.10.0"
   },
   "scripts": {
@@ -13,6 +13,11 @@
     "dev": "nx run-many -t dev",
     "lint": "nx run-many -t lint",
     "test": "nx run-many -t test",
+    "test:fast": "nx run-many -t test --parallel=3",
+    "test:memory": "nx run-many -t test:memory --sequential",
+    "test:api": "nx run-many -t test:api",
+    "test:wc": "nx run-many -t test:wc",
+    "test:changed": "nx affected -t test",
     "clean": "nx run-many -t clean",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
@@ -20,6 +25,7 @@
     "build-storybook": "nx run @aetherui/storybook:build-storybook",
     "docs": "nx run-many -t docs",
     "docs:build": "nx run-many -t docs:build",
+    "graph": "nx graph",
     "nx:graph": "nx graph",
     "nx:reset": "nx reset",
     "build:parallel": "nx run-many -t build --parallel --max-parallel=8"
@@ -45,16 +51,26 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitest/ui": "^3.0.0",
+    "@web/dev-server-esbuild": "^1.0.4",
+    "@web/test-runner": "^0.20.1",
+    "@web/test-runner-playwright": "^0.11.0",
+    "esbuild-plugin-lit-css": "^3.0.2",
     "eslint": "^8.0.0",
     "eslint-config-prettier": "^9.0.0",
     "husky": "^8.0.0",
     "jiti": "2.4.2",
-    "lint-staged": "^13.0.0",
+    "lint-staged": "^14.0.0",
     "nx": "^21.0.3",
     "prettier": "^3.0.0",
     "turbo": "^2.0.0",
     "typescript": "~5.7.2",
     "vite": "^6.0.0",
     "vitest": "^3.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "micromatch": "^4.0.8",
+      "esbuild": "^0.25.0"
+    }
   }
 }

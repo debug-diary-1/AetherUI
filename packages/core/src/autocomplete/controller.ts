@@ -306,7 +306,6 @@ export class AutocompleteController implements ReactiveController {
     const query = this._value.toLowerCase();
     const textLower = text.toLowerCase();
     const result: { text: string; isMatch: boolean }[] = [];
-    let lastIndex = 0;
 
     const startIndex = textLower.indexOf(query);
     if (startIndex === -1) {

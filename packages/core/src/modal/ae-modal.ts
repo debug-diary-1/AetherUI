@@ -116,7 +116,7 @@ export class AeModal extends LitElement {
         }
         break;
 
-      case 'Tab':
+      case 'Tab': {
         if (!this.focusableElements.length) return;
 
         const firstFocusable = this.focusableElements[0];
@@ -130,6 +130,7 @@ export class AeModal extends LitElement {
           firstFocusable.focus();
         }
         break;
+      }
     }
   };
 

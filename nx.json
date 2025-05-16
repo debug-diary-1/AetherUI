@@ -31,14 +31,49 @@
       "inputs": ["default"]
     },
     "test": {
-      "dependsOn": ["build"],
       "outputs": ["{projectRoot}/coverage/**"],
       "inputs": [
         "{projectRoot}/src/**/*.tsx",
         "{projectRoot}/src/**/*.ts",
         "{projectRoot}/test/**/*.ts",
         "{projectRoot}/test/**/*.tsx"
-      ]
+      ],
+      "dependsOn": [],
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "vitest"
+      }
+    },
+    "test:memory": {
+      "outputs": ["{projectRoot}/coverage/**"],
+      "inputs": [
+        "{projectRoot}/src/**/*.tsx",
+        "{projectRoot}/src/**/*.ts",
+        "{projectRoot}/test/**/*.ts",
+        "{projectRoot}/test/**/*.tsx"
+      ],
+      "dependsOn": [],
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "NODE_OPTIONS=--max-old-space-size=512 MEMORY_OPTIMIZED=true vitest run"
+      }
+    },
+    "test:api": {
+      "outputs": ["{projectRoot}/coverage/**"],
+      "inputs": [
+        "{projectRoot}/src/**/*.tsx",
+        "{projectRoot}/src/**/*.ts",
+        "{projectRoot}/test/**/*.ts",
+        "{projectRoot}/test/**/*.tsx"
+      ],
+      "dependsOn": [],
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "NODE_OPTIONS=--max-old-space-size=512 MEMORY_OPTIMIZED=true vitest run \"**/*api*.test.ts\""
+      }
     },
     "clean": {
       "cache": false
@@ -71,6 +106,10 @@
     }
   },
   "nxCloudAccessToken": "",
+  "nxCloud": {
+    "organization": "MpAIVrTJI3",
+    "accessToken": ""
+  },
   "plugins": [
     {
       "plugin": "@nx/js/typescript",

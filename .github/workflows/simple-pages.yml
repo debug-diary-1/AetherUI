@@ -33,7 +33,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -95,7 +95,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -506,7 +506,7 @@ jobs:
       
       # Upload and deploy
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: .output
       

@@ -1,6 +1,5 @@
 import { html, LitElement } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ComboController } from './controller';
 import type { ComboFilterFunction, ComboItem } from './types';

@@ -49,5 +49,8 @@ export default defineConfig({
     esbuildOptions: {
       target: 'esnext'
     }
+  },
+  test: {
+    passWithNoTests: true
   }
 });

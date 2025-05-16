@@ -1,5 +1,5 @@
 import { defineAeButton } from '@aetherui/core';
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 
 // Define the custom element
 defineAeButton();
@@ -8,11 +8,11 @@ interface AeButtonProps {
   disabled?: boolean;
 }
 
-export const AeButton = defineComponent({
+export const AeButton = defineComponent<AeButtonProps>({
   name: 'AeButton',
   props: {
     disabled: {
-      type: Boolean,
+      type: Boolean as PropType<boolean>,
       default: false
     }
   },

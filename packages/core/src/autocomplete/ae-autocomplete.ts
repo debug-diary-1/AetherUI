@@ -417,7 +417,7 @@ export class AeAutocomplete extends LitElement {
             ${repeat(
               options,
               option => option.id,
-              (option, index) => {
+              (option, _index) => {
                 // Calculate the overall index in the flat list
                 const flatIndex = filteredOptions.findIndex(o => o.id === option.id);
                 
