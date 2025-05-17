@@ -1,0 +1,57 @@
+---
+import InteractiveExample from './InteractiveExample.astro';
+---
+
+<InteractiveExample componentName="TooltipExample" height="200px">
+  <div class="demo-container">
+    <div class="button-grid">
+      <ae-tooltip text="This is a basic tooltip">
+        <button>Basic Tooltip</button>
+      </ae-tooltip>
+      
+      <ae-tooltip text="This tooltip appears on the right" placement="right">
+        <button>Right Placement</button>
+      </ae-tooltip>
+      
+      <ae-tooltip text="This tooltip has a scale animation" animation="scale">
+        <button>Scale Animation</button>
+      </ae-tooltip>
+      
+      <ae-tooltip text="This tooltip takes longer to appear" hover-delay="1000">
+        <button>Long Delay</button>
+      </ae-tooltip>
+    </div>
+  </div>
+
+  <style>
+    .demo-container {
+      padding: 2rem;
+    }
+    
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      justify-items: center;
+      align-items: center;
+    }
+    
+    button {
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      border: 1px solid #ccc;
+      background: white;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    button:hover {
+      background-color: #f0f0f0;
+    }
+    
+    button:focus {
+      outline: 2px solid #0066cc;
+      outline-offset: 2px;
+    }
+  </style>
+</InteractiveExample>

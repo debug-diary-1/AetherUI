@@ -10,6 +10,7 @@ import { defineAeTreeView } from './treeview';
 import { defineAeAutocomplete } from './autocomplete';
 import { defineAeCombo } from './combo';
 import { defineAeToast } from './toast';
+import { defineAeTooltip } from './tooltip';
 
 export {
   defineAeAccordion,
@@ -25,6 +26,7 @@ export {
   defineAeAutocomplete,
   defineAeCombo,
   defineAeToast,
+  defineAeTooltip,
 };
 
 export function defineAll() {
@@ -41,4 +43,5 @@ export function defineAll() {
   defineAeAutocomplete();
   defineAeCombo();
   defineAeToast();
+  defineAeTooltip();
 }

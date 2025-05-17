@@ -78,6 +78,11 @@
       "import": "./dist/toast/index.js",
       "require": "./dist/toast/index.js"
     },
+    "./tooltip": {
+      "types": "./dist/tooltip/index.d.ts",
+      "import": "./dist/tooltip/index.js",
+      "require": "./dist/tooltip/index.js"
+    },
     "./package.json": "./package.json",
     "./*": {
       "types": "./dist/*/index.d.ts",
