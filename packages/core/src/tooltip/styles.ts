@@ -2,10 +2,8 @@ import { css } from 'lit';
 
 export const tooltipStyles = css`
   :host {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: var(--ae-tooltip-z-index, 1200);
+    position: relative;
+    display: inline-block;
   }
 
   /* Hidden state */
@@ -15,7 +13,7 @@ export const tooltipStyles = css`
 
   /* Overlay container */
   [part="overlay"] {
-    position: absolute;
+    position: fixed;
     background: var(--ae-tooltip-bg, #111);
     color: var(--ae-tooltip-fg, #fff);
     padding: var(--ae-tooltip-padding, 0.375rem 0.5rem);
@@ -27,6 +25,7 @@ export const tooltipStyles = css`
     line-height: 1.4;
     opacity: 0;
     transition: opacity 150ms ease-in-out;
+    z-index: var(--ae-tooltip-z-index, 1200);
   }
 
   :host([open]) [part="overlay"] {

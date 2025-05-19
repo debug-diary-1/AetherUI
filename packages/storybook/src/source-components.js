@@ -24,6 +24,9 @@ try {
   // Toast is part of the core package
   import('@aetherui/core/toast').then(m => console.log('Toast loaded')).catch(e => console.warn('Toast import failed:', e));
   
+  // Tooltip is part of the core package
+  import('@aetherui/core/tooltip').then(m => console.log('Tooltip loaded')).catch(e => console.warn('Tooltip import failed:', e));
+  
   console.log('Package exports import completed');
 } catch (error) {
   console.error('Error with package imports:', error);

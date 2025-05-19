@@ -65,7 +65,7 @@ export class AeTooltip extends LitElement {
   showArrow = true;
 
   /** Animation type (fade or scale) */
-  @property()
+  @property({ reflect: true })
   animation: 'fade' | 'scale' = 'fade';
 
   @query('[part="overlay"]')
@@ -104,7 +104,10 @@ export class AeTooltip extends LitElement {
   }
 
   protected firstUpdated() {
-    this._findAnchorElement();
+    // Wait for the next tick to ensure slot content is ready
+    requestAnimationFrame(() => {
+      this._findAnchorElement();
+    });
   }
 
   protected updated(changedProperties: PropertyValues) {
@@ -139,8 +142,10 @@ export class AeTooltip extends LitElement {
 
   /** Show the tooltip */
   show() {
+    console.log('show() called', { disabled: this.disabled, currentOpen: this.open });
     if (!this.disabled) {
       this.open = true;
+      console.log('Tooltip opened');
     }
   }
 
@@ -155,8 +160,19 @@ export class AeTooltip extends LitElement {
   }
 
   private _findAnchorElement() {
-    const slotted = this._slot?.assignedElements()[0] as HTMLElement;
+    console.log('_findAnchorElement called');
+    console.log('Slot element:', this._slot);
+    
+    const assignedElements = this._slot?.assignedElements() || [];
+    console.log('Assigned elements:', assignedElements);
+    
+    const slotted = assignedElements[0] as HTMLElement;
     this._anchorElement = slotted || this;
+    
+    console.log('Found anchor element:', this._anchorElement);
+    console.log('Anchor is slotted:', slotted === this._anchorElement);
+    console.log('Anchor tagName:', this._anchorElement.tagName);
+    
     this._setupAnchorEventListeners();
   }
 
@@ -175,8 +191,12 @@ export class AeTooltip extends LitElement {
   }
 
   private _setupAnchorEventListeners() {
-    if (!this._anchorElement) return;
+    if (!this._anchorElement) {
+      console.log('No anchor element found');
+      return;
+    }
 
+    console.log('Setting up event listeners on:', this._anchorElement);
     this._anchorElement.addEventListener('mouseenter', this._handleMouseEnter);
     this._anchorElement.addEventListener('mouseleave', this._handleMouseLeave);
     this._anchorElement.addEventListener('focus', this._handleFocus);
@@ -193,6 +213,7 @@ export class AeTooltip extends LitElement {
   }
 
   private _onMouseEnter() {
+    console.log('_onMouseEnter called', { disabled: this.disabled, text: this.text });
     if (this.disabled) return;
     
     this._isHovering = true;
@@ -201,10 +222,12 @@ export class AeTooltip extends LitElement {
     if (this.hoverDelay > 0) {
       this._hoverTimer = window.setTimeout(() => {
         if (this._isHovering) {
+          console.log('Showing tooltip after delay');
           this.show();
         }
       }, this.hoverDelay);
     } else {
+      console.log('Showing tooltip immediately');
       this.show();
     }
   }
@@ -276,6 +299,11 @@ export class AeTooltip extends LitElement {
   private async _updatePosition() {
     if (!this._anchorElement || !this._overlay) return;
 
+    console.log('_updatePosition called');
+    console.log('Anchor element:', this._anchorElement);
+    console.log('Anchor element rect:', this._anchorElement.getBoundingClientRect());
+    console.log('Overlay element:', this._overlay);
+
     const options: PositionOptions = {
       placement: this.placement,
       strategy: this.strategy,
@@ -290,6 +318,8 @@ export class AeTooltip extends LitElement {
         this._overlay,
         options
       );
+
+      console.log('Position result:', result);
 
       // Apply positioning
       Object.assign(this._overlay.style, {

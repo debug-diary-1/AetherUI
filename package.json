@@ -24,6 +24,7 @@
     "storybook": "nx run @aetherui/storybook:storybook",
     "build-storybook": "nx run @aetherui/storybook:build-storybook",
     "docs": "nx run-many -t docs",
+    "docs:dev": "nx run @aetherui/docs:dev",
     "docs:build": "nx run-many -t docs:build",
     "graph": "nx graph",
     "nx:graph": "nx graph",

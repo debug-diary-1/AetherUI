@@ -1,57 +1,142 @@
 ---
-import InteractiveExample from './InteractiveExample.astro';
 ---
 
-<InteractiveExample componentName="TooltipExample" height="200px">
-  <div class="demo-container">
-    <div class="button-grid">
+<div class="demo-container">
+  <div class="button-grid">
+    <div class="tooltip-wrapper">
       <ae-tooltip text="This is a basic tooltip">
         <button>Basic Tooltip</button>
       </ae-tooltip>
-      
+    </div>
+    
+    <div class="tooltip-wrapper">
       <ae-tooltip text="This tooltip appears on the right" placement="right">
         <button>Right Placement</button>
       </ae-tooltip>
-      
+    </div>
+    
+    <div class="tooltip-wrapper">
       <ae-tooltip text="This tooltip has a scale animation" animation="scale">
         <button>Scale Animation</button>
       </ae-tooltip>
-      
+    </div>
+    
+    <div class="tooltip-wrapper">
       <ae-tooltip text="This tooltip takes longer to appear" hover-delay="1000">
         <button>Long Delay</button>
       </ae-tooltip>
     </div>
   </div>
+</div>
 
-  <style>
-    .demo-container {
-      padding: 2rem;
-    }
-    
-    .button-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1rem;
-      justify-items: center;
-      align-items: center;
-    }
-    
-    button {
-      padding: 0.5rem 1rem;
-      border-radius: 0.25rem;
-      border: 1px solid #ccc;
-      background: white;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    
-    button:hover {
-      background-color: #f0f0f0;
-    }
-    
-    button:focus {
-      outline: 2px solid #0066cc;
-      outline-offset: 2px;
-    }
-  </style>
-</InteractiveExample>
+<style>
+  .demo-container {
+    padding: 2rem;
+  }
+  
+  .button-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    justify-items: center;
+    align-items: center;
+  }
+  
+  .tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  
+  button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #4b5563;  /* Darker border for better contrast */
+    background: #f3f4f6;        /* Light gray background */
+    color: #111827;             /* Dark text for high contrast */
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+  
+  button:hover {
+    background-color: #e5e7eb;
+    border-color: #374151;
+  }
+  
+  button:focus {
+    outline: 2px solid #0066cc;
+    outline-offset: 2px;
+  }
+  
+  button:active {
+    background-color: #d1d5db;
+  }
+</style>
+
+<script>
+  // Wait for the component to load and define it
+  document.addEventListener('DOMContentLoaded', () => {
+    import('@aetherui/core').then(({ defineAeTooltip }) => {
+      defineAeTooltip();
+      console.log('Tooltip component registered from TooltipExample');
+      
+      // Debug: Check if tooltips are working
+      setTimeout(() => {
+        const tooltips = document.querySelectorAll('ae-tooltip');
+        console.log('Found tooltips in TooltipExample:', tooltips.length);
+        
+        tooltips.forEach((tooltip, index) => {
+          console.log(`Tooltip ${index}:`, {
+            element: tooltip,
+            text: tooltip.getAttribute('text'),
+            open: tooltip.getAttribute('open'),
+            tagName: tooltip.tagName,
+            constructor: tooltip.constructor.name,
+            shadowRoot: tooltip.shadowRoot
+          });
+          
+          // Manually set one tooltip to open for debugging
+          if (index === 0) {
+            tooltip.open = true;
+            console.log('Set first tooltip to open');
+            
+            setTimeout(() => {
+              const overlay = tooltip.shadowRoot?.querySelector('[part="overlay"]');
+              if (overlay) {
+                console.log('Overlay styles:', {
+                  position: getComputedStyle(overlay).position,
+                  left: getComputedStyle(overlay).left,
+                  top: getComputedStyle(overlay).top,
+                  display: getComputedStyle(overlay).display,
+                  opacity: getComputedStyle(overlay).opacity
+                });
+              }
+            }, 100);
+          }
+          
+          // Test event handling
+          const button = tooltip.querySelector('button');
+          if (button) {
+            // Manual hover test
+            button.addEventListener('click', () => {
+              console.log(`Button ${index} clicked, testing tooltip.show()`);
+              tooltip.show();
+              setTimeout(() => {
+                console.log(`Tooltip ${index} open state:`, tooltip.open);
+                const overlay = tooltip.shadowRoot?.querySelector('[part="overlay"]');
+                if (overlay) {
+                  console.log('Overlay position after click:', {
+                    left: getComputedStyle(overlay).left,
+                    top: getComputedStyle(overlay).top
+                  });
+                }
+              }, 100);
+            });
+          }
+        });
+      }, 500);
+    });
+  });
+</script>

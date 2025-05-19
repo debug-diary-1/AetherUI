@@ -73,6 +73,11 @@ try {
     console.log('Radio imported');
   }).catch(e => console.error('Radio import failed:', e));
   
+  import('@aetherui/core/tooltip').then(m => {
+    if (m && m.defineAeTooltip) m.defineAeTooltip();
+    console.log('Tooltip imported');
+  }).catch(e => console.error('Tooltip import failed:', e));
+  
   // Toast is loaded separately through toast-wrapper.js
   console.log('✓ AeToast registered via toast-wrapper.js');
 } catch (error) {
@@ -86,7 +91,7 @@ setTimeout(() => {
   // Check if components are defined
   const components = [
     'ae-autocomplete', 'ae-alert', 'ae-combo', 'ae-tabs', 'ae-treeview',
-    'ae-accordion', 'ae-button', 'ae-checkbox', 'ae-dropdown', 'ae-modal', 'ae-radio'
+    'ae-accordion', 'ae-button', 'ae-checkbox', 'ae-dropdown', 'ae-modal', 'ae-radio', 'ae-tooltip'
   ];
   
   const missingComponents = components.filter(tag => !customElements.get(tag));
