@@ -3,6 +3,7 @@ import starlight from '@astrojs/starlight';
 
 export default defineConfig({
   site: 'https://aetherui.dev',
+  outDir: './dist',
   integrations: [
     starlight({
       title: 'Aether UI',

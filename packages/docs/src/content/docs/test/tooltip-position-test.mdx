@@ -19,28 +19,30 @@ description: Test tooltip positioning
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    import('@aetherui/core').then(({ defineAeTooltip }) => {
-      defineAeTooltip();
-      console.log('Tooltip component registered for position test');
+    import('@aetherui/core').then((core) => {
+      if (core.defineAeTooltip) {
+        core.defineAeTooltip();
+        console.log('Tooltip component registered for position test');
       
-      // Test static open tooltip
-      setTimeout(() => {
-        const tooltips = document.querySelectorAll('ae-tooltip');
-        const staticTooltip = tooltips[0];
-        
-        if (staticTooltip) {
-          console.log('Static tooltip:', staticTooltip);
-          console.log('Static tooltip open:', staticTooltip.open);
-          console.log('Static tooltip shadowRoot:', staticTooltip.shadowRoot);
+        // Test static open tooltip
+        setTimeout(() => {
+          const tooltips = document.querySelectorAll('ae-tooltip');
+          const staticTooltip = tooltips[0];
           
-          // Look at the overlay element
-          const overlay = staticTooltip.shadowRoot?.querySelector('[part="overlay"]');
-          console.log('Overlay element:', overlay);
-          if (overlay) {
-            console.log('Overlay computed style:', getComputedStyle(overlay));
+          if (staticTooltip) {
+            console.log('Static tooltip:', staticTooltip);
+            console.log('Static tooltip open:', staticTooltip.open);
+            console.log('Static tooltip shadowRoot:', staticTooltip.shadowRoot);
+            
+            // Look at the overlay element
+            const overlay = staticTooltip.shadowRoot?.querySelector('[part="overlay"]');
+            console.log('Overlay element:', overlay);
+            if (overlay) {
+              console.log('Overlay computed style:', getComputedStyle(overlay));
+            }
           }
-        }
-      }, 1000);
+        }, 1000);
+      }
     });
   });
 </script>

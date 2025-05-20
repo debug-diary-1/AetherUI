@@ -16,9 +16,11 @@ import '@aetherui/core';
 <script>
   // Register tooltip component when page loads
   if (typeof window !== 'undefined') {
-    import('@aetherui/core').then(({ defineAeTooltip }) => {
-      defineAeTooltip();
-      console.log('Tooltip component registered');
+    import('@aetherui/core').then((core) => {
+      if (core.defineAeTooltip) {
+        core.defineAeTooltip();
+        console.log('Tooltip component registered');
+      }
     });
   }
 </script>
