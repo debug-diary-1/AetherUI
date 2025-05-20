@@ -1,0 +1,46 @@
+---
+title: Tooltip Position Test
+description: Test tooltip positioning
+---
+
+# Tooltip Position Test
+
+<div style="padding: 100px; text-align: center;">
+  <ae-tooltip text="Test tooltip" open="true">
+    <button style="padding: 10px 20px;">Static Open Tooltip</button>
+  </ae-tooltip>
+</div>
+
+<div style="padding: 50px; margin-top: 50px;">
+  <ae-tooltip text="Hover tooltip">
+    <button style="padding: 10px 20px;">Hover Tooltip</button>
+  </ae-tooltip>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    import('@aetherui/core').then(({ defineAeTooltip }) => {
+      defineAeTooltip();
+      console.log('Tooltip component registered for position test');
+      
+      // Test static open tooltip
+      setTimeout(() => {
+        const tooltips = document.querySelectorAll('ae-tooltip');
+        const staticTooltip = tooltips[0];
+        
+        if (staticTooltip) {
+          console.log('Static tooltip:', staticTooltip);
+          console.log('Static tooltip open:', staticTooltip.open);
+          console.log('Static tooltip shadowRoot:', staticTooltip.shadowRoot);
+          
+          // Look at the overlay element
+          const overlay = staticTooltip.shadowRoot?.querySelector('[part="overlay"]');
+          console.log('Overlay element:', overlay);
+          if (overlay) {
+            console.log('Overlay computed style:', getComputedStyle(overlay));
+          }
+        }
+      }, 1000);
+    });
+  });
+</script>

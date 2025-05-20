@@ -1,0 +1,103 @@
+---
+title: Tooltip
+description: A lightweight tooltip component that shows contextual information on hover/focus
+---
+
+import TooltipExample from '../../../components/TooltipExample.astro';
+
+# Tooltip
+
+The `ae-tooltip` component provides contextual information on hover or focus without stealing focus from the main content.
+
+## Usage
+
+```html
+<ae-tooltip text="This is helpful information">
+  <button>Hover or focus me</button>
+</ae-tooltip>
+```
+
+<TooltipExample />
+
+## Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `text` | `string` | `''` | The text content to display |
+| `open` | `boolean` | `false` | Whether the tooltip is visible |
+| `hoverDelay` | `number` | `100` | Delay before showing on hover (ms) |
+| `hideDelay` | `number` | `100` | Delay before hiding on leave (ms) |
+| `placement` | `string` | `'top'` | Preferred placement position |
+| `strategy` | `string` | `'absolute'` | Positioning strategy |
+| `disabled` | `boolean` | `false` | Whether the tooltip is disabled |
+| `showArrow` | `boolean` | `true` | Whether to show the arrow indicator |
+| `animation` | `string` | `'fade'` | Animation type (fade or scale) |
+
+## Events
+
+| Event | Detail | Description |
+|-------|--------|-------------|
+| `ae-open-change` | `{ open: boolean }` | Fired when tooltip opens or closes |
+
+## Placement Options
+
+The tooltip supports various placement options:
+
+- `top`, `top-start`, `top-end`
+- `bottom`, `bottom-start`, `bottom-end`
+- `left`, `left-start`, `left-end`
+- `right`, `right-start`, `right-end`
+
+## CSS Custom Properties
+
+| Property | Default | Description |
+|----------|---------|-------------|
+| `--ae-tooltip-bg` | `#111` | Background color |
+| `--ae-tooltip-fg` | `#fff` | Text color |
+| `--ae-tooltip-radius` | `4px` | Border radius |
+| `--ae-tooltip-shadow` | `0 2px 8px rgba(0,0,0,.15)` | Box shadow |
+| `--ae-tooltip-padding` | `0.375rem 0.5rem` | Internal padding |
+| `--ae-tooltip-z-index` | `1200` | Z-index value |
+| `--ae-tooltip-font-size` | `0.8125rem` | Font size |
+
+## Accessibility
+
+- The tooltip has `role="tooltip"`
+- Automatically manages `aria-describedby` on the anchor element
+- Supports keyboard navigation (ESC to close)
+- Maintains proper focus management
+- Respects `prefers-reduced-motion`
+
+## Examples
+
+### Basic Tooltip
+
+```html
+<ae-tooltip text="Click to submit the form">
+  <button type="submit">Submit</button>
+</ae-tooltip>
+```
+
+### Disabled Tooltip
+
+```html
+<ae-tooltip text="This button is currently disabled" disabled>
+  <button disabled>Disabled Button</button>
+</ae-tooltip>
+```
+
+### Custom Placement
+
+```html
+<ae-tooltip text="Left placement" placement="left">
+  <button>Hover me</button>
+</ae-tooltip>
+```
+
+### Delayed Tooltip
+
+```html
+<ae-tooltip text="This tooltip has a longer delay" hover-delay="500">
+  <button>Slow hover</button>
+</ae-tooltip>
+```

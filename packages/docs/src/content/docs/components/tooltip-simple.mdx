@@ -1,0 +1,24 @@
+---
+title: Tooltip Simple Test
+description: Simple tooltip test
+---
+
+import '@aetherui/core';
+
+# Tooltip Simple Test
+
+<div style="padding: 100px; text-align: center;">
+  <ae-tooltip text="This is a test tooltip">
+    <button style="padding: 10px 20px;">Hover me for tooltip</button>
+  </ae-tooltip>
+</div>
+
+<script>
+  // Register tooltip component when page loads
+  if (typeof window !== 'undefined') {
+    import('@aetherui/core').then(({ defineAeTooltip }) => {
+      defineAeTooltip();
+      console.log('Tooltip component registered');
+    });
+  }
+</script>

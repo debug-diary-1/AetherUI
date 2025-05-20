@@ -9,6 +9,7 @@ export * from './alert';
 export * from './dropdown';
 export * from './treeview';
 export * from './toast';
+export * from './tooltip';
 
 // Handle autocomplete and combo exports with naming conflicts
 import * as AutocompleteExports from './autocomplete';
@@ -71,6 +72,7 @@ export { defineAeAlert } from './alert';
 export { defineAeDropdown } from './dropdown';
 export { defineAeTreeView } from './treeview';
 export { defineAeToast } from './toast';
+export { defineAeTooltip } from './tooltip';
 
 // Export component classes explicitly for Storybook
 export { AeButton } from './button/ae-button';
@@ -85,6 +87,7 @@ export { AeModal } from './modal/ae-modal';
 export { AeTreeView } from './treeview/ae-treeview';
 export { AeToast } from './toast/ae-toast';
 export { showToast, createToastHelpers } from './toast/api';
+export { AeTooltip } from './tooltip/ae-tooltip';
 
 // Auto-register components if in browser environment
 if (typeof window !== 'undefined') {

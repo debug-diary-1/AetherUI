@@ -30,7 +30,7 @@ const preview = {
         order: [
           'Debug',
           'Components',
-          ['Autocomplete', 'Alert', 'Button', 'Checkbox', 'Combo', 'Dropdown', 'Modal', 'Radio', 'Tabs', 'Toast', 'TreeView'],
+          ['Autocomplete', 'Alert', 'Button', 'Checkbox', 'Combo', 'Dropdown', 'Modal', 'Radio', 'Tabs', 'Toast', 'Tooltip', 'TreeView'],
         ],
       },
     },
