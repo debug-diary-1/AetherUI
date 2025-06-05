@@ -52,6 +52,27 @@ describe('ae-alert', () => {
     expect(closeButton).to.exist;
   });
 
+  it('renders a default icon when no icon slot is provided', async () => {
+    const el = await fixture<AeAlert>(html`<ae-alert>Alert content</ae-alert>`);
+
+    const defaultIcon = el.shadowRoot!.querySelector('svg[part="icon"]');
+    expect(defaultIcon).to.exist;
+  });
+
+  it('uses slotted content to replace the default icon', async () => {
+    const el = await fixture<AeAlert>(html`<ae-alert><span slot="icon" id="custom-icon">X</span>Alert content</ae-alert>`);
+
+    const defaultIcon = el.shadowRoot!.querySelector('svg[part="icon"]');
+    const slottedIconSlot = el.shadowRoot!.querySelector('slot[name="icon"]');
+
+    expect(defaultIcon).to.be.null;
+    expect(slottedIconSlot).to.exist;
+    const assigned = (slottedIconSlot as HTMLSlotElement).assignedNodes({ flatten: true });
+    expect(assigned.length).to.be.greaterThan(0);
+    const slottedSpan = el.querySelector('#custom-icon');
+    expect(assigned).to.include(slottedSpan);
+  });
+
   it('emits ae-close event when closed', async () => {
     const el = await fixture<AeAlert>(html`<ae-alert closable>Alert content</ae-alert>`);
     
