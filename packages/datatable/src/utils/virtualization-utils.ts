@@ -50,7 +50,8 @@ export function calculateVirtualization(
   // Calculate visible indexes
   const visibleRowsCount = Math.ceil(viewportHeight / rowHeight);
   const startIndex = Math.floor(scrollTop / rowHeight);
-  const endIndex = Math.min(startIndex + visibleRowsCount + overscan, totalRows - 1);
+  // End index of the visible range (without overscan)
+  const endIndex = Math.min(startIndex + visibleRowsCount - 1, totalRows - 1);
   
   // Calculate overscan (extra items for smooth scrolling)
   const overscanStart = Math.max(0, startIndex - overscan);
