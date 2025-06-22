@@ -5,8 +5,10 @@ import { modalStyles } from './styles';
 /**
  * @element ae-modal
  * @summary A modal dialog component with backdrop and focus management
- * @fires {CustomEvent} ae-open - Fired when the modal opens
- * @fires {CustomEvent} ae-close - Fired when the modal closes
+ * @fires {CustomEvent} ae-modal-open - Fired when the modal opens
+ * @fires {CustomEvent} ae-modal-close - Fired when the modal closes
+ * @fires {CustomEvent} ae-open - @deprecated Use ae-modal-open instead
+ * @fires {CustomEvent} ae-close - @deprecated Use ae-modal-close instead
  * 
  * @example
  * ```html
@@ -84,6 +86,13 @@ export class AeModal extends LitElement {
     // Prevent body scroll
     document.body.style.overflow = 'hidden';
 
+    // Dispatch the new standard event
+    this.dispatchEvent(new CustomEvent('ae-modal-open', {
+      bubbles: true,
+      composed: true,
+    }));
+    
+    // Also dispatch the old event for backward compatibility
     this.dispatchEvent(new CustomEvent('ae-open', {
       bubbles: true,
       composed: true,
@@ -100,6 +109,13 @@ export class AeModal extends LitElement {
     // Restore body scroll
     document.body.style.overflow = '';
 
+    // Dispatch the new standard event
+    this.dispatchEvent(new CustomEvent('ae-modal-close', {
+      bubbles: true,
+      composed: true,
+    }));
+    
+    // Also dispatch the old event for backward compatibility
     this.dispatchEvent(new CustomEvent('ae-close', {
       bubbles: true,
       composed: true,

@@ -2,6 +2,17 @@
   "name": "aetherui",
   "version": "0.0.0",
   "private": true,
+  "description": "Monorepo for AetherUI - A headless, framework-agnostic Web Component library",
+  "author": "AetherUI Contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/pallavL01/AetherUI#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pallavL01/AetherUI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pallavL01/AetherUI/issues"
+  },
   "packageManager": "pnpm@10.10.0",
   "engines": {
     "node": ">=20.19.0",

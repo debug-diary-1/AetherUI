@@ -1,7 +1,27 @@
 {
   "name": "@aetherui/core",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
+  "description": "Headless, framework-agnostic Web Component library built with Lit",
+  "author": "AetherUI Contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/pallavL01/AetherUI#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pallavL01/AetherUI.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/pallavL01/AetherUI/issues"
+  },
+  "keywords": [
+    "web-components",
+    "lit",
+    "headless-ui",
+    "component-library",
+    "aetherui",
+    "typescript",
+    "accessibility"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

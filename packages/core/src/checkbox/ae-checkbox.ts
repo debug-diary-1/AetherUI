@@ -5,7 +5,8 @@ import { checkboxStyles } from './styles';
 /**
  * @element ae-checkbox
  * @summary A checkbox input component with customizable styles
- * @fires {CustomEvent<{checked: boolean, indeterminate: boolean}>} ae-change - Fired when the checkbox state changes
+ * @fires {CustomEvent<{checked: boolean, indeterminate: boolean}>} ae-checkbox-change - Fired when the checkbox state changes
+ * @fires {CustomEvent<{checked: boolean, indeterminate: boolean}>} ae-change - @deprecated Use ae-checkbox-change instead
  * 
  * @example
  * ```html
@@ -40,6 +41,17 @@ export class AeCheckbox extends LitElement {
     const target = event.target as HTMLInputElement;
     this.checked = target.checked;
     this.indeterminate = false; // Clicking clears the indeterminate state
+    // Dispatch the new standard event
+    this.dispatchEvent(new CustomEvent('ae-checkbox-change', {
+      detail: { 
+        checked: this.checked,
+        indeterminate: this.indeterminate 
+      },
+      bubbles: true,
+      composed: true,
+    }));
+    
+    // Also dispatch the old event for backward compatibility
     this.dispatchEvent(new CustomEvent('ae-change', {
       detail: { 
         checked: this.checked,

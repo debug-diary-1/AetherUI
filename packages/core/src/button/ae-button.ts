@@ -6,33 +6,59 @@ import { buttonStyles } from './styles';
 
 /**
  * Primary action trigger with variants (primary, secondary, ghost, icon‑only) and sizes (sm, md, lg).
+ * 
  * @element ae-button
  * 
- * @property {string} variant - Visual style token mapping ('primary' | 'secondary' | 'ghost')
- * @property {string} size - Applied to padding & font‑size ('sm' | 'md' | 'lg')
- * @property {boolean} disabled - Native disable state
- * @property {string} iconPosition - Position of the icon ('start' | 'end')
- * @property {boolean} iconOnly - Whether the button contains only an icon
+ * @property {'primary' | 'secondary' | 'ghost'} variant - Visual style of the button (defaults to 'primary')
+ * @property {'sm' | 'md' | 'lg'} size - Size of the button affecting padding and font-size (defaults to 'md')
+ * @property {boolean} disabled - Whether the button is disabled and cannot be interacted with
+ * @property {'start' | 'end'} iconPosition - Position of the icon relative to the label (defaults to 'start')
+ * @property {boolean} iconOnly - Whether the button contains only an icon (auto-detected, but can be set manually)
  * 
- * @fires {CustomEvent} ae-button-click - Fired when the button is clicked and not disabled
+ * @fires {CustomEvent<{sourceEvent: Event}>} ae-button-click - Fired when the button is clicked and not disabled
  * 
  * @slot - Button label text (default slot)
- * @slot icon - Icon content
+ * @slot icon - Icon content (SVG or other icon element)
  * 
- * @csspart base - The button element
- * @csspart label - Text wrapper element
- * @csspart icon - The icon wrapper
+ * @csspart base - The button element itself
+ * @csspart label - Text wrapper element for the default slot content
+ * @csspart icon - The icon wrapper element
  * 
- * @cssproperty --ae-button-bg-primary - Primary button background color
- * @cssproperty --ae-button-fg-primary - Primary button text color
- * @cssproperty --ae-button-bg-secondary - Secondary button background color
- * @cssproperty --ae-button-fg-secondary - Secondary button text color
- * @cssproperty --ae-button-bg-ghost - Ghost button background color
- * @cssproperty --ae-button-fg-ghost - Ghost button text color
- * @cssproperty --ae-button-radius - Corner radius
- * @cssproperty --ae-button-padding-x - Horizontal padding
- * @cssproperty --ae-button-padding-y - Vertical padding
- * @cssproperty --ae-button-gap - Space between icon and label
+ * @cssproperty --ae-button-bg-primary - Primary button background color (default: #5e7ce2)
+ * @cssproperty --ae-button-fg-primary - Primary button text color (default: white)
+ * @cssproperty --ae-button-bg-primary-hover - Primary button hover background color (default: #4b69c8)
+ * @cssproperty --ae-button-bg-secondary - Secondary button background color (default: #f3f4f6)
+ * @cssproperty --ae-button-fg-secondary - Secondary button text color (default: #333333)
+ * @cssproperty --ae-button-bg-secondary-hover - Secondary button hover background color (default: #e5e7eb)
+ * @cssproperty --ae-button-bg-ghost - Ghost button background color (default: transparent)
+ * @cssproperty --ae-button-fg-ghost - Ghost button text color (default: #5e7ce2)
+ * @cssproperty --ae-button-bg-ghost-hover - Ghost button hover background color (default: rgba(94, 124, 226, 0.08))
+ * @cssproperty --ae-button-radius - Button border radius (default: 0.375rem)
+ * @cssproperty --ae-button-padding-x - Horizontal padding (default: 1rem)
+ * @cssproperty --ae-button-padding-y - Vertical padding (default: 0.5rem)
+ * @cssproperty --ae-button-gap - Space between icon and label (default: 0.5rem)
+ * @cssproperty --ae-button-transition-duration - Transition duration for hover effects (default: 200ms)
+ * @cssproperty --ae-button-transition-timing - Transition timing function (default: ease)
+ * 
+ * @example
+ * ```html
+ * <ae-button variant="primary">Click me</ae-button>
+ * ```
+ * 
+ * @example
+ * ```html
+ * <ae-button variant="secondary" size="lg">
+ *   <svg slot="icon" width="20" height="20">...</svg>
+ *   Save Document
+ * </ae-button>
+ * ```
+ * 
+ * @example
+ * ```html
+ * <ae-button icon-only aria-label="Settings">
+ *   <svg slot="icon" width="20" height="20">...</svg>
+ * </ae-button>
+ * ```
  */
 export class AeButton extends LitElement {
   static styles = buttonStyles;
