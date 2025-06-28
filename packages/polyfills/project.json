@@ -32,10 +32,10 @@
       }
     },
     "test": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/vite:test",
       "options": {
-        "command": "vitest run",
-        "cwd": "packages/polyfills"
+        "configFile": "packages/polyfills/vitest.config.ts",
+        "passWithNoTests": true
       }
     },
     "test:memory": {
