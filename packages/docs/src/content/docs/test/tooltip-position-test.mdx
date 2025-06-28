@@ -17,7 +17,7 @@ description: Test tooltip positioning
   </ae-tooltip>
 </div>
 
-<script>
+<script dangerouslySetInnerHTML={{__html: `
   document.addEventListener('DOMContentLoaded', () => {
     import('@aetherui/core').then((core) => {
       if (core.defineAeTooltip) {
@@ -45,4 +45,4 @@ description: Test tooltip positioning
       }, 1000);
     });
   });
-</script>
+`}} />
