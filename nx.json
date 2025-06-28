@@ -3,6 +3,8 @@
   "affected": {
     "defaultBase": "main"
   },
+  "parallel": 2,
+  "cacheableOperations": ["build", "test", "lint", "typecheck"],
   "namedInputs": {
     "default": ["{projectRoot}/**/*"],
     "production": [
@@ -20,7 +22,14 @@
         "{projectRoot}/dist/**",
         "{projectRoot}/.next/**"
       ],
-      "inputs": ["production", "^production", "env"]
+      "inputs": ["production", "^production", "env"],
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "commands": [
+          "NODE_OPTIONS='--max-old-space-size=4096' pnpm vite build"
+        ]
+      }
     },
     "dev": {
       "cache": false,
@@ -42,7 +51,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "{projectRoot}",
-        "command": "vitest"
+        "command": "NODE_OPTIONS='--max-old-space-size=2048' vitest"
       }
     },
     "test:memory": {

@@ -31,21 +31,21 @@ jobs:
       
       # Nx Cloud configuration
       - name: Start Nx Cloud CI Run
-        run: npx nx-cloud start-ci-run --stop-agents-after="build" --agent-count=3
+        run: npx nx-cloud start-ci-run --stop-agents-after="build" --agent-count=2
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
         continue-on-error: true
       
       - name: Run affected lint
         run: |
-          npx nx affected --target=lint --parallel=3 --base=origin/main --exclude=aetherui || true
+          npx nx affected --target=lint --parallel=2 --base=origin/main --exclude=aetherui || true
           echo "Lint completed"
         timeout-minutes: 5
         
       - name: Run affected tests
-        run: npx nx affected --target=test --parallel=3 --ci --base=origin/main --exclude=aetherui || true
+        run: NODE_OPTIONS='--max-old-space-size=2048' npx nx affected --target=test --parallel=2 --ci --base=origin/main --exclude=aetherui || true
         timeout-minutes: 15
         
       - name: Run affected build
-        run: npx nx affected --target=build --parallel=3 --base=origin/main --exclude=aetherui || true
+        run: NODE_OPTIONS='--max-old-space-size=4096' npx nx affected --target=build --parallel=2 --base=origin/main --exclude=aetherui || true
         timeout-minutes: 15

@@ -121,6 +121,8 @@
     "test": "pnpm test:api && pnpm test:wc",
     "test:wc": "web-test-runner",
     "test:wc:watch": "web-test-runner --watch",
+    "test:wc:vitest": "vitest run --config vitest.wc.config.ts",
+    "test:wc:vitest:watch": "vitest watch --config vitest.wc.config.ts",
     "test:api": "vitest run src/**/__tests__/api.test.ts",
     "test:unit": "vitest run --exclude \"src/**/__tests__/*.test.ts\"",
     "test:unit:watch": "vitest watch --exclude \"src/**/__tests__/*.test.ts\"",

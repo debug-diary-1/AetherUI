@@ -40,6 +40,13 @@
         "cwd": "packages/core"
       }
     },
+    "test:wc:vitest": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "NODE_OPTIONS=--max-old-space-size=512 vitest run --config vitest.wc.config.ts",
+        "cwd": "packages/core"
+      }
+    },
     "clean": {
       "executor": "nx:run-commands",
       "options": {
