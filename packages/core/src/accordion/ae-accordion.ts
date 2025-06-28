@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { accordionStyles } from './styles';
+import type { AeAccordionItem } from './ae-accordion-item';
 
 /**
  * A collapsible disclosure component that shows or hides content panels.

@@ -19,12 +19,12 @@ if (typeof document !== 'undefined') {
       }
       
       // Add to internal children collection
-      if (!(this as Record<string, unknown>)._childNodes) {
-        (this as Record<string, unknown>)._childNodes = [];
+      if (!(this as unknown as Record<string, unknown>)._childNodes) {
+        (this as unknown as Record<string, unknown>)._childNodes = [];
       }
       
-      (this as Record<string, unknown>)._childNodes.push(node);
-      (node as Record<string, unknown>).parentNode = this;
+      (this as unknown as Record<string, unknown>)._childNodes.push(node);
+      (node as unknown as Record<string, unknown>).parentNode = this;
       
       return node;
     };
@@ -68,13 +68,14 @@ if (typeof window !== 'undefined') {
       get: (_name: string) => undefined,
       upgrade: (_root: Node) => {},
       whenDefined: (_name: string) => Promise.resolve(HTMLElement as CustomElementConstructor),
-    };
+      getName: (_constructor: CustomElementConstructor) => null
+    } as CustomElementRegistry;
   }
 }
 
 // Add necessary NodeFilter constants
 if (typeof NodeFilter === 'undefined') {
-  (window as Record<string, unknown>).NodeFilter = {
+  (window as unknown as Record<string, unknown>).NodeFilter = {
     SHOW_ALL: -1,
     SHOW_ELEMENT: 1,
     FILTER_ACCEPT: 1,
@@ -88,15 +89,15 @@ if (typeof Element !== 'undefined') {
   if (!Element.prototype.attachShadow) {
     Element.prototype.attachShadow = function(init: ShadowRootInit): ShadowRoot {
       const shadowRoot = document.createElement('div') as unknown as ShadowRoot;
-      (shadowRoot as Record<string, unknown>).host = this;
-      (shadowRoot as Record<string, unknown>).mode = init.mode;
+      (shadowRoot as unknown as Record<string, unknown>).host = this;
+      (shadowRoot as unknown as Record<string, unknown>).mode = init.mode;
       
       // Add methods to the shadowRoot
-      if (!(shadowRoot as Record<string, unknown>).querySelector) {
-        (shadowRoot as Record<string, unknown>).querySelector = (_selector: string) => null;
+      if (!(shadowRoot as unknown as Record<string, unknown>).querySelector) {
+        (shadowRoot as unknown as Record<string, unknown>).querySelector = (_selector: string) => null;
       }
       
-      (this as Record<string, unknown>).shadowRoot = init.mode === 'open' ? shadowRoot : null;
+      (this as unknown as Record<string, unknown>).shadowRoot = init.mode === 'open' ? shadowRoot : null;
       return shadowRoot;
     };
   }

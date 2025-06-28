@@ -25,12 +25,17 @@ global.MouseEvent = dom.window.MouseEvent;
 // Mock createTreeWalker if not available
 if (!document.createTreeWalker) {
   document.createTreeWalker = function(root: Node, whatToShow?: number, filter?: NodeFilter | null) {
-    const currentNode = root;
+    let currentNode = root;
     return {
       root,
       whatToShow: whatToShow || NodeFilter.SHOW_ALL,
-      filter,
-      currentNode,
+      filter: filter || null,
+      get currentNode() {
+        return currentNode;
+      },
+      set currentNode(node: Node) {
+        currentNode = node;
+      },
       nextNode() {
         // Simple implementation - just return null
         return null;
@@ -53,7 +58,7 @@ if (!document.createTreeWalker) {
       nextSibling() {
         return null;
       }
-    };
+    } as TreeWalker;
   };
 }
 
