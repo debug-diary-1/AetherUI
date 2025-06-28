@@ -12,7 +12,8 @@
       "options": {
         "command": "vite build",
         "cwd": "packages/adapters"
-      }
+      },
+      "dependsOn": ["@aetherui/core:build"]
     },
     "lint": {
       "executor": "nx:run-commands",

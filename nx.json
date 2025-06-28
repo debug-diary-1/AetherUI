@@ -61,13 +61,7 @@
         "{projectRoot}/.next/**"
       ],
       "inputs": ["production", "^production", "env"],
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "{projectRoot}",
-        "commands": [
-          "NODE_OPTIONS='--max-old-space-size=4096' pnpm vite build"
-        ]
-      }
+      "cache": true
     },
     "dev": {
       "cache": false,
