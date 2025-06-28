@@ -10,7 +10,7 @@ if (useSourceImports) {
     .catch(e => console.warn('Failed to load source components:', e));
 }
 
-/** @type { import('@storybook/web-components').Preview } */
+/** @type { import('@storybook/web-components-vite').Preview } */
 const preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },

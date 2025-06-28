@@ -12,19 +12,19 @@ if (typeof document !== 'undefined') {
 
   // Ensure document.body has appendChild method
   if (!document.body.appendChild) {
-    document.body.appendChild = function(node: Node) {
+    document.body.appendChild = function<T extends Node>(node: T): T {
       // Mock implementation
       if (node.parentNode) {
         node.parentNode.removeChild(node);
       }
       
       // Add to internal children collection
-      if (!this.childNodes) {
-        this.childNodes = [];
+      if (!(this as any)._childNodes) {
+        (this as any)._childNodes = [];
       }
       
-      this.childNodes.push(node);
-      node.parentNode = this;
+      (this as any)._childNodes.push(node);
+      (node as any).parentNode = this;
       
       return node;
     };
@@ -33,7 +33,7 @@ if (typeof document !== 'undefined') {
   // Ensure document.createTreeWalker is available and working properly
   if (!document.createTreeWalker || 
     (document.createTreeWalker && typeof document.createTreeWalker !== 'function')) {
-    document.createTreeWalker = function(root: any, whatToShow: number, filter: any) {
+    document.createTreeWalker = function(root: Node, whatToShow: number, filter: NodeFilter | null) {
       return {
         root,
         currentNode: root,
@@ -67,7 +67,7 @@ if (typeof window !== 'undefined') {
       define: (_name: string, _constructor: CustomElementConstructor) => {},
       get: (_name: string) => undefined,
       upgrade: (_root: Node) => {},
-      whenDefined: (_name: string) => Promise.resolve(),
+      whenDefined: (_name: string) => Promise.resolve(HTMLElement as CustomElementConstructor),
     };
   }
 }
@@ -86,17 +86,17 @@ if (typeof NodeFilter === 'undefined') {
 // Mock Element.prototype methods if needed
 if (typeof Element !== 'undefined') {
   if (!Element.prototype.attachShadow) {
-    Element.prototype.attachShadow = function({ mode }: { mode: string }) {
-      const shadowRoot = document.createElement('div');
-      shadowRoot.host = this;
-      (shadowRoot as any).mode = mode;
+    Element.prototype.attachShadow = function(init: ShadowRootInit): ShadowRoot {
+      const shadowRoot = document.createElement('div') as any as ShadowRoot;
+      (shadowRoot as any).host = this;
+      (shadowRoot as any).mode = init.mode;
       
       // Add methods to the shadowRoot
       if (!(shadowRoot as any).querySelector) {
         (shadowRoot as any).querySelector = (_selector: string) => null;
       }
       
-      (this as any).shadowRoot = mode === 'open' ? shadowRoot : null;
+      (this as any).shadowRoot = init.mode === 'open' ? shadowRoot : null;
       return shadowRoot;
     };
   }

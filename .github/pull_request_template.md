@@ -1,56 +1,48 @@
 ## Description
 
-<!-- 
-Describe the changes in this PR. 
-For component standardization, include which components were updated.
--->
+Please include a summary of the changes and which issue is fixed. Include relevant motivation and context.
 
-## Type of Change
+Fixes # (issue)
 
-- [ ] Bug fix (non-breaking change that fixes an issue)
-- [ ] New feature (non-breaking change that adds functionality)
-- [ ] Component standardization (following STANDARDS.md)
-- [ ] Breaking change (fix or feature that would cause existing functionality to change)
+## Type of change
+
+Please delete options that are not relevant.
+
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - [ ] Documentation update
+- [ ] Component addition
+- [ ] Performance improvement
+- [ ] Code refactoring
 
 ## Checklist
 
-- [ ] My code follows the standards outlined in STANDARDS.md
-- [ ] I have performed a self-review of my own code
-- [ ] I have added tests that prove my fix is effective or my feature works
+- [ ] My code follows the style guidelines of this project
+- [ ] I have performed a self-review of my code
+- [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] I have made corresponding changes to the documentation
+- [ ] My changes generate no new warnings
+- [ ] I have added tests that prove my fix is effective or that my feature works
 - [ ] New and existing unit tests pass locally with my changes
-- [ ] I have updated the documentation accordingly
-- [ ] I have verified there are no TypeScript errors
-- [ ] I have checked for accessibility compliance
+- [ ] I have run `pnpm lint` and fixed any issues
+- [ ] I have run `pnpm format` to format my code
+- [ ] I have run `pnpm test` and all tests pass
+- [ ] I have checked my code for accessibility (ARIA attributes, keyboard navigation)
 
-## For Component Standardization
+## Component Checklist (if adding/modifying components)
 
-If standardizing a component:
+- [ ] Component follows naming conventions from STANDARDS.md
+- [ ] JSDoc comments added with proper annotations
+- [ ] Shadow parts and CSS custom properties documented
+- [ ] Accessibility requirements met (WAI-ARIA compliant)
+- [ ] Keyboard navigation implemented
+- [ ] Both Web Component and API tests written
+- [ ] Component added to exports in package.json
+- [ ] Example added to documentation/storybook
 
-- [ ] Properties follow naming conventions
-- [ ] Events follow `ae-component-action` pattern
-- [ ] CSS custom properties follow `--ae-component-property-variant` pattern
-- [ ] JSDoc comments are complete and accurate
-- [ ] Keyboard navigation is properly implemented
-- [ ] Accessibility attributes are correctly applied
-- [ ] Backward compatibility is maintained
-- [ ] Type exports follow correct patterns
+## Screenshots (if applicable)
 
-## Accessibility
+## Additional Notes
 
-- [ ] Component meets WCAG 2.1 AA standards
-- [ ] Proper ARIA attributes are used
-- [ ] Keyboard navigation works as expected
-- [ ] Color contrast meets requirements
-- [ ] Focus management is handled correctly
-
-## Screenshots/Recordings
-
-<!-- 
-If applicable, add screenshots or recordings demonstrating the changes.
-Especially important for visual changes to components.
--->
-
-## Related Issues
-
-<!-- Link to any related issues that this PR addresses -->
+Add any additional notes or context about the pull request here.

@@ -144,6 +144,111 @@ When renaming properties or events to conform to standards:
 - Use template caching for repeated elements
 - Follow bundle size guidelines for each component
 
+## 11. Testing Standards
+
+### Test Organization
+
+- **Web Component Tests**: Place in `src/{component}/__tests__/ae-{component}.test.ts`
+  - Use Web Test Runner with `@open-wc/testing`
+  - Test actual DOM rendering and shadow DOM behavior
+  
+- **Unit/API Tests**: Place in `src/{component}/__tests__/{feature}.unit.test.ts` or `api.test.ts`
+  - Use Vitest for fast, lightweight testing
+  - Mock components and test business logic without DOM
+  - Ideal for CI/CD with memory constraints
+
+### Test File Naming
+
+- `ae-*.test.ts` - Web Component tests (requires browser)
+- `*.unit.test.ts` - Unit tests (no browser required)
+- `api.test.ts` - API/integration tests
+- `*-manager.test.ts` - Service/manager class tests
+
+### Running Tests
+
+```bash
+# All tests (unit + WC)
+pnpm test
+
+# Unit/API tests only (no browser)
+pnpm test:api
+
+# Web Component tests only (requires Playwright)
+pnpm test:wc
+
+# Memory-constrained environments
+pnpm test:memory
+```
+
+## 12. File Structure Standards
+
+### Component Directory Structure
+
+```
+src/
+└── {component}/
+    ├── ae-{component}.ts      # Main component class
+    ├── styles.ts              # Component styles using lit's css``
+    ├── index.ts               # Public exports
+    ├── types.ts               # TypeScript interfaces/types
+    ├── controller.ts          # Lit ReactiveController (if needed)
+    └── __tests__/
+        ├── ae-{component}.test.ts    # Web Component tests
+        └── {component}.unit.test.ts  # Unit tests
+```
+
+### Export Standards
+
+Each component's `index.ts` should export:
+
+```ts
+// Component class
+export { AeComponent } from './ae-component.js';
+
+// Component registration function
+export { defineAeComponent } from './ae-component.js';
+
+// TypeScript types
+export type { AeComponentProps } from './types.js';
+
+// Styles (if needed externally)
+export { styles } from './styles.js';
+```
+
+## 13. Build Configuration Standards
+
+### Package.json Exports
+
+- Place `types` condition last in export conditions to avoid warnings
+- Maintain both ESM and CJS builds for compatibility
+- Use proper sideEffects configuration
+
+```json
+{
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  }
+}
+```
+
+## 14. Error Handling Standards
+
+- Use console.warn for development warnings (e.g., deprecated properties)
+- Throw errors for critical failures (e.g., missing required slots)
+- Dispatch error events for async operations
+- Include helpful error messages with component context
+
+## 15. Memory and Performance Testing
+
+- Run tests with memory limits in CI: `NODE_OPTIONS='--max-old-space-size=512'`
+- Use sequential test execution for memory-constrained environments
+- Monitor bundle sizes with each PR
+- Test components with large datasets to ensure performance
+
 ---
 
 This standardization document ensures AetherUI components maintain consistency across the library and provide a predictable developer experience.

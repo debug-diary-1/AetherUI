@@ -1,5 +1,8 @@
+import { createRequire } from "node:module";
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
-import path from 'path';
+import path, { dirname, join } from 'path';
+
+const require = createRequire(import.meta.url);
 
 const config = {
   stories: [
@@ -15,13 +18,12 @@ const config = {
     // '../src/stories/AeDataTable.stories.js',
     // '../src/stories/AeDataTableComplete.stories.js',
   ],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-a11y'],
+
+  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-a11y"), getAbsolutePath("@storybook/addon-docs")],
+
   framework: {
-    name: '@storybook/web-components-vite',
+    name: getAbsolutePath("@storybook/web-components-vite"),
     options: {},
-  },
-  docs: {
-    autodocs: 'tag',
   },
 
   // Simplified Vite configuration
@@ -71,7 +73,11 @@ const config = {
         },
       };
     }
-  },
+  }
 };
 
 export default config;
+
+function getAbsolutePath(value) {
+  return dirname(require.resolve(join(value, "package.json")));
+}

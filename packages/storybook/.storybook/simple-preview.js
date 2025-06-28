@@ -1,6 +1,6 @@
 // Very minimal preview.js with only the essential features
 
-/** @type { import('@storybook/web-components').Preview } */
+/** @type { import('@storybook/web-components-vite').Preview } */
 const preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },

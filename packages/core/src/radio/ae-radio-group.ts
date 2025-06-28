@@ -4,15 +4,31 @@ import { radioGroupStyles } from './styles';
 import { AeRadio } from './ae-radio';
 
 /**
+ * A container component that manages a group of radio buttons and their selection state.
+ * 
  * @element ae-radio-group
- * @summary A container for radio buttons that manages their state
+ * 
+ * @property {string} name - The name attribute for all radio buttons in the group
+ * @property {string} value - The value of the currently selected radio button
+ * @property {boolean} disabled - Whether all radio buttons in the group are disabled
+ * 
+ * @fires {CustomEvent<{value: string}>} ae-radio-group-change - Fired when the selected radio changes
  * @fires {CustomEvent<{value: string}>} ae-change - Fired when the selected radio changes
+ * @deprecated The ae-change event is deprecated. Use ae-radio-group-change instead.
+ * 
+ * @slot - The radio buttons (ae-radio elements) to be grouped
+ * 
+ * @csspart base - The component's base wrapper
+ * 
+ * @cssproperty --ae-radio-group-gap - The gap between radio buttons
+ * @cssproperty --ae-radio-group-direction - The flex direction (column or row)
  * 
  * @example
  * ```html
- * <ae-radio-group name="options">
+ * <ae-radio-group name="options" value="2">
  *   <ae-radio value="1">Option 1</ae-radio>
  *   <ae-radio value="2">Option 2</ae-radio>
+ *   <ae-radio value="3">Option 3</ae-radio>
  * </ae-radio-group>
  * ```
  */
@@ -50,6 +66,16 @@ export class AeRadioGroup extends LitElement {
     const radio = event.target as AeRadio;
     this.value = radio.value;
     this.updateRadios();
+    
+    // Dispatch the new standard event
+    this.dispatchEvent(new CustomEvent('ae-radio-group-change', {
+      detail: { value: this.value },
+      bubbles: true,
+      composed: true,
+    }));
+    
+    // Also dispatch the old event for backward compatibility
+    // @deprecated Use ae-radio-group-change instead
     this.dispatchEvent(new CustomEvent('ae-change', {
       detail: { value: this.value },
       bubbles: true,

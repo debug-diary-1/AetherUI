@@ -3,6 +3,9 @@
  * when the default one doesn't work with the lit shims.
  */
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default {
   resolve: {
@@ -25,6 +28,5 @@ export default {
   },
   optimizeDeps: {
     include: ['lit', 'lit-html', 'lit-element', '@lit/reactive-element']
-  }
   }
 };

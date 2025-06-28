@@ -3,13 +3,46 @@ import { customElement, property } from 'lit/decorators.js';
 import { checkboxStyles } from './styles';
 
 /**
+ * A checkbox input component with support for checked, unchecked, and indeterminate states.
+ * 
  * @element ae-checkbox
- * @summary A checkbox input component with customizable styles
+ * 
+ * @property {boolean} checked - Whether the checkbox is checked
+ * @property {boolean} indeterminate - Whether the checkbox is in an indeterminate state
+ * @property {boolean} disabled - Whether the checkbox is disabled
+ * @property {boolean} required - Whether the checkbox is required
+ * @property {string} name - The name attribute for form submission
+ * @property {string} value - The value attribute for form submission
+ * 
+ * @fires {CustomEvent<{checked: boolean, indeterminate: boolean}>} ae-checkbox-change - Fired when the checkbox state changes
  * @fires {CustomEvent<{checked: boolean, indeterminate: boolean}>} ae-change - Fired when the checkbox state changes
+ * @deprecated The ae-change event is deprecated. Use ae-checkbox-change instead.
+ * 
+ * @slot - The checkbox label content
+ * 
+ * @csspart base - The component's base wrapper (label element)
+ * @csspart input - The native checkbox input element
+ * @csspart control - The custom checkbox control container
+ * @csspart icon - The checkmark icon
+ * @csspart indeterminate-icon - The indeterminate state icon
+ * @csspart label - The label text container
+ * 
+ * @cssproperty --ae-checkbox-size - The size of the checkbox control
+ * @cssproperty --ae-checkbox-radius - The border radius of the checkbox
+ * @cssproperty --ae-checkbox-border - The border style of the checkbox
+ * @cssproperty --ae-checkbox-bg - The background color of the checkbox
+ * @cssproperty --ae-checkbox-bg-checked - The background color when checked
+ * @cssproperty --ae-checkbox-bg-hover - The background color on hover
+ * @cssproperty --ae-checkbox-fg - The checkmark color
+ * @cssproperty --ae-checkbox-gap - The gap between checkbox and label
  * 
  * @example
  * ```html
  * <ae-checkbox>Accept terms and conditions</ae-checkbox>
+ * 
+ * <ae-checkbox checked>Checked by default</ae-checkbox>
+ * 
+ * <ae-checkbox indeterminate>Indeterminate state</ae-checkbox>
  * ```
  */
 @customElement('ae-checkbox')
@@ -40,6 +73,18 @@ export class AeCheckbox extends LitElement {
     const target = event.target as HTMLInputElement;
     this.checked = target.checked;
     this.indeterminate = false; // Clicking clears the indeterminate state
+    // Dispatch the new standard event
+    this.dispatchEvent(new CustomEvent('ae-checkbox-change', {
+      detail: { 
+        checked: this.checked,
+        indeterminate: this.indeterminate 
+      },
+      bubbles: true,
+      composed: true,
+    }));
+    
+    // Also dispatch the old event for backward compatibility
+    // @deprecated Use ae-checkbox-change instead
     this.dispatchEvent(new CustomEvent('ae-change', {
       detail: { 
         checked: this.checked,

@@ -3,18 +3,62 @@ import { customElement, property } from 'lit/decorators.js';
 import { modalStyles } from './styles';
 
 /**
+ * A modal dialog component with backdrop, focus management, and accessibility features.
+ * 
  * @element ae-modal
- * @summary A modal dialog component with backdrop and focus management
+ * 
+ * @property {boolean} open - Whether the modal is open
+ * @property {boolean} closable - Whether the modal can be closed by the user (shows close button, allows Escape key)
+ * @property {boolean} backdrop - Whether to show a backdrop behind the modal
+ * @property {'small' | 'medium' | 'large'} size - The size of the modal panel
+ * 
+ * @fires {CustomEvent} ae-modal-open - Fired when the modal opens
+ * @fires {CustomEvent} ae-modal-close - Fired when the modal closes
  * @fires {CustomEvent} ae-open - Fired when the modal opens
+ * @deprecated The ae-open event is deprecated. Use ae-modal-open instead.
  * @fires {CustomEvent} ae-close - Fired when the modal closes
+ * @deprecated The ae-close event is deprecated. Use ae-modal-close instead.
+ * 
+ * @slot header - The modal header content
+ * @slot body - The modal body content
+ * @slot footer - The modal footer content (typically action buttons)
+ * 
+ * @csspart backdrop - The backdrop overlay
+ * @csspart panel - The modal panel container
+ * @csspart header - The header section
+ * @csspart close-button - The close button in the header
+ * @csspart close-icon - The close icon SVG
+ * @csspart body - The body section
+ * @csspart footer - The footer section
+ * 
+ * @cssproperty --ae-modal-backdrop-bg - The backdrop background color
+ * @cssproperty --ae-modal-panel-bg - The panel background color
+ * @cssproperty --ae-modal-panel-shadow - The panel box shadow
+ * @cssproperty --ae-modal-panel-radius - The panel border radius
+ * @cssproperty --ae-modal-panel-padding - The panel padding
+ * @cssproperty --ae-modal-header-padding - The header padding
+ * @cssproperty --ae-modal-body-padding - The body padding
+ * @cssproperty --ae-modal-footer-padding - The footer padding
+ * @cssproperty --ae-modal-max-width-small - Maximum width for small size
+ * @cssproperty --ae-modal-max-width-medium - Maximum width for medium size
+ * @cssproperty --ae-modal-max-width-large - Maximum width for large size
  * 
  * @example
  * ```html
- * <ae-modal>
+ * <ae-modal open>
  *   <h2 slot="header">Modal Title</h2>
  *   <div slot="body">Modal content goes here</div>
  *   <div slot="footer">
  *     <button>Close</button>
+ *   </div>
+ * </ae-modal>
+ * 
+ * <ae-modal size="small" closable="false">
+ *   <span slot="header">Confirmation</span>
+ *   <p slot="body">Are you sure?</p>
+ *   <div slot="footer">
+ *     <button>Yes</button>
+ *     <button>No</button>
  *   </div>
  * </ae-modal>
  * ```
@@ -84,6 +128,14 @@ export class AeModal extends LitElement {
     // Prevent body scroll
     document.body.style.overflow = 'hidden';
 
+    // Dispatch the new standard event
+    this.dispatchEvent(new CustomEvent('ae-modal-open', {
+      bubbles: true,
+      composed: true,
+    }));
+    
+    // Also dispatch the old event for backward compatibility
+    // @deprecated Use ae-modal-open instead
     this.dispatchEvent(new CustomEvent('ae-open', {
       bubbles: true,
       composed: true,
@@ -100,6 +152,14 @@ export class AeModal extends LitElement {
     // Restore body scroll
     document.body.style.overflow = '';
 
+    // Dispatch the new standard event
+    this.dispatchEvent(new CustomEvent('ae-modal-close', {
+      bubbles: true,
+      composed: true,
+    }));
+    
+    // Also dispatch the old event for backward compatibility
+    // @deprecated Use ae-modal-close instead
     this.dispatchEvent(new CustomEvent('ae-close', {
       bubbles: true,
       composed: true,

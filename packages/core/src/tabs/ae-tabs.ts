@@ -3,17 +3,41 @@ import { customElement, property, query, state } from 'lit/decorators.js';
 import { tabStyles } from './styles';
 
 /**
+ * A tabbed interface component with keyboard navigation and ARIA compliant behavior.
+ * 
  * @element ae-tabs
- * @summary A tabbed interface component with keyboard navigation
+ * 
+ * @property {string} value - The ID of the currently active tab
+ * @property {'horizontal' | 'vertical'} orientation - The orientation of the tabs layout
+ * @property {'auto' | 'manual'} activation - How tab selection works with keyboard navigation (auto: selects on focus, manual: selects on Enter/Space)
+ * 
  * @fires {CustomEvent<{tab: string}>} ae-tab-change - Fired when the active tab changes
+ * 
+ * @slot tab - The tab elements (ae-tab)
+ * @slot panel - The panel elements (ae-tab-panel) 
+ * 
+ * @csspart base - The component's base wrapper
+ * @csspart tablist - The tab list container
+ * @csspart panels - The panels container
+ * 
+ * @cssproperty --ae-tabs-gap - The gap between tabs
+ * @cssproperty --ae-tabs-border - The border style for the tab list
+ * @cssproperty --ae-tabs-padding - The padding around the tab list
  * 
  * @example
  * ```html
- * <ae-tabs>
- *   <ae-tab slot="tab">Tab 1</ae-tab>
- *   <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
- *   <ae-tab slot="tab">Tab 2</ae-tab>
- *   <ae-tab-panel slot="panel">Panel 2</ae-tab-panel>
+ * <ae-tabs value="tab-1">
+ *   <ae-tab slot="tab" tab-id="tab-1">Tab 1</ae-tab>
+ *   <ae-tab-panel slot="panel" panel-id="tab-1">Panel 1 content</ae-tab-panel>
+ *   <ae-tab slot="tab" tab-id="tab-2">Tab 2</ae-tab>
+ *   <ae-tab-panel slot="panel" panel-id="tab-2">Panel 2 content</ae-tab-panel>
+ * </ae-tabs>
+ * 
+ * <ae-tabs orientation="vertical" activation="manual">
+ *   <ae-tab slot="tab">Settings</ae-tab>
+ *   <ae-tab-panel slot="panel">Settings content</ae-tab-panel>
+ *   <ae-tab slot="tab">Profile</ae-tab>
+ *   <ae-tab-panel slot="panel">Profile content</ae-tab-panel>
  * </ae-tabs>
  * ```
  */
