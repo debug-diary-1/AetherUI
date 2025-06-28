@@ -2,6 +2,11 @@
 import '../src/register-components.js';
 import { html } from 'lit-html';
 
+// Debug registration for autocomplete and combo
+import('../src/debug-registration.js')
+  .then(() => console.log('Debug registration complete'))
+  .catch(e => console.error('Debug registration failed:', e));
+
 // Try source components as a fallback if needed
 const useSourceImports = true; // Set to false to disable
 if (useSourceImports) {

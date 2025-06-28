@@ -1,8 +1,6 @@
 import { html, LitElement } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { live } from 'lit/directives/live.js';
-import { repeat } from 'lit/directives/repeat.js';
 import { AutocompleteController } from './controller';
 import type { AutocompleteOption, AutocompleteFilterFunction } from './types';
 import autocompleteStyles from './styles';
@@ -382,10 +380,7 @@ export class AeAutocomplete extends LitElement {
       // Render simple option list
       return html`
         <ul class="autocomplete-options" role="listbox" part="options">
-          ${repeat(
-            filteredOptions,
-            option => option.id,
-            (option, index) => html`
+          ${filteredOptions.map((option, index) => html`
               <li
                 class=${classMap({
                   'autocomplete-option': true,
@@ -414,10 +409,7 @@ export class AeAutocomplete extends LitElement {
               <li class="autocomplete-group-heading" part="group-heading">${group}</li>
             ` : ''}
             
-            ${repeat(
-              options,
-              option => option.id,
-              (option, _index) => {
+            ${options.map((option, _index) => {
                 // Calculate the overall index in the flat list
                 const flatIndex = filteredOptions.findIndex(o => o.id === option.id);
                 
@@ -491,7 +483,7 @@ export class AeAutocomplete extends LitElement {
           type="text"
           class="autocomplete-input"
           part="input"
-          .value=${live(this._controller.value)}
+          .value=${this._controller.value}
           .placeholder=${this.placeholder}
           ?disabled=${this.disabled}
           @input=${this._handleInput}

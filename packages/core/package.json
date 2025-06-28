@@ -125,7 +125,7 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.0",
-    "lit": "^3.0.0",
+    "lit": "^3.3.0",
     "lit-modal-portal": "^0.6.0"
   },
   "devDependencies": {
