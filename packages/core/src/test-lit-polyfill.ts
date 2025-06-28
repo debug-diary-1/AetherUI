@@ -19,12 +19,13 @@ if (typeof document !== 'undefined') {
       }
       
       // Add to internal children collection
-      if (!(this as unknown as Record<string, unknown>)._childNodes) {
-        (this as unknown as Record<string, unknown>)._childNodes = [];
+      const thisAsAny = this as any;
+      if (!thisAsAny._childNodes) {
+        thisAsAny._childNodes = [];
       }
       
-      (this as unknown as Record<string, unknown>)._childNodes.push(node);
-      (node as unknown as Record<string, unknown>).parentNode = this;
+      thisAsAny._childNodes.push(node);
+      (node as any).parentNode = this;
       
       return node;
     };
@@ -75,7 +76,7 @@ if (typeof window !== 'undefined') {
 
 // Add necessary NodeFilter constants
 if (typeof NodeFilter === 'undefined') {
-  (window as unknown as Record<string, unknown>).NodeFilter = {
+  (window as any).NodeFilter = {
     SHOW_ALL: -1,
     SHOW_ELEMENT: 1,
     FILTER_ACCEPT: 1,
@@ -89,15 +90,16 @@ if (typeof Element !== 'undefined') {
   if (!Element.prototype.attachShadow) {
     Element.prototype.attachShadow = function(init: ShadowRootInit): ShadowRoot {
       const shadowRoot = document.createElement('div') as unknown as ShadowRoot;
-      (shadowRoot as unknown as Record<string, unknown>).host = this;
-      (shadowRoot as unknown as Record<string, unknown>).mode = init.mode;
+      const shadowRootAsAny = shadowRoot as any;
+      shadowRootAsAny.host = this;
+      shadowRootAsAny.mode = init.mode;
       
       // Add methods to the shadowRoot
-      if (!(shadowRoot as unknown as Record<string, unknown>).querySelector) {
-        (shadowRoot as unknown as Record<string, unknown>).querySelector = (_selector: string) => null;
+      if (!shadowRootAsAny.querySelector) {
+        shadowRootAsAny.querySelector = (_selector: string) => null;
       }
       
-      (this as unknown as Record<string, unknown>).shadowRoot = init.mode === 'open' ? shadowRoot : null;
+      (this as any).shadowRoot = init.mode === 'open' ? shadowRoot : null;
       return shadowRoot;
     };
   }
