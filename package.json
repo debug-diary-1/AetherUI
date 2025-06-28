@@ -29,6 +29,8 @@
     "clean": "nx run-many -t clean --parallel=2",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
+    "storybook": "nx run @aetherui/storybook:storybook",
+    "build-storybook": "nx run @aetherui/storybook:build-storybook",
     "docs": "nx run-many -t docs --parallel=1",
     "docs:dev": "nx run @aetherui/docs:dev",
     "docs:build": "NODE_OPTIONS='--max-old-space-size=4096' nx run-many -t docs:build --parallel=1",

@@ -21,13 +21,13 @@ export class AeDatatableRow extends LitElement {
    * Whether the row is selected
    */
   @property({ type: Boolean, reflect: true })
-  accessor selected = false;
+  selected = false;
 
   /**
    * Whether the row is selectable
    */
   @property({ type: Boolean, reflect: true })
-  accessor selectable = false;
+  selectable = false;
 
   /**
    * Handle row click

@@ -10,7 +10,7 @@ export class SortManager<T> {
   /**
    * Apply the current sort configuration to data
    * @param data Data to sort
-   * @param columns Column definitions with accessor functions
+   * @param columns Column definitions with functions
    * @returns Sorted data
    */
   applySort(data: T[], columns: any[]): T[] {
@@ -52,7 +52,7 @@ export class SortManager<T> {
    * @returns Value to use for sorting
    */
   private getValueForSorting(row: T, column: any): any {
-    // Use accessor function if provided
+    // Use function if provided
     if (column.accessor && typeof column.accessor === 'function') {
       return column.accessor(row);
     }

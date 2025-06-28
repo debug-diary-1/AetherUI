@@ -67,67 +67,67 @@ export class AeDataTable<T extends Record<string, any>> extends LitElement {
    * The data to display in the table
    */
   @property({ type: Array })
-  accessor data: T[] = [];
+  data: T[] = [];
 
   /**
    * Column definitions
    */
   @property({ type: Array })
-  accessor columns: ColumnDef<T>[] = [];
+  columns: ColumnDef<T>[] = [];
 
   /**
    * Whether the table supports sorting
    */
   @property({ type: Boolean, reflect: true })
-  accessor sortable = true;
+  sortable = true;
 
   /**
    * Whether the table supports filtering
    */
   @property({ type: Boolean, reflect: true })
-  accessor filterable = true;
+  filterable = true;
 
   /**
    * Whether rows can be selected
    */
   @property({ type: Boolean, reflect: true })
-  accessor selectable = false;
+  selectable = false;
 
   /**
    * Selection mode ('single' or 'multiple')
    */
   @property({ type: String, reflect: true, attribute: 'selection-mode' })
-  accessor selectionMode: 'single' | 'multiple' = 'multiple';
+  selectionMode: 'single' | 'multiple' = 'multiple';
 
   /**
    * Whether to enable pagination
    */
   @property({ type: Boolean, reflect: true })
-  accessor paginated = false;
+  paginated = false;
 
   /**
    * Number of rows per page
    */
   @property({ type: Number, reflect: true, attribute: 'page-size' })
-  accessor pageSize = 10;
+  pageSize = 10;
 
   /**
    * Message to display when there is no data
    */
   @property({ type: String, reflect: true, attribute: 'empty-message' })
-  accessor emptyMessage = 'No data to display';
+  emptyMessage = 'No data to display';
 
   /**
    * Whether to use virtualized scrolling for large datasets
    */
   @property({ type: Boolean, reflect: true })
-  accessor virtualized = false;
+  virtualized = false;
 
   /**
    * Whether columns can be resized
    */
   @property({ type: Boolean, reflect: true })
-  accessor resizable = true;
+  resizable = true;
 
   /**
    * The controller managing all data operations
