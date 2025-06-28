@@ -58,16 +58,15 @@
       "dependsOn": ["^build"],
       "outputs": [
         "{projectRoot}/dist/**",
-        "{projectRoot}/.next/**",
-        "{projectRoot}/.vite/**"
+        "{projectRoot}/.next/**"
       ],
       "inputs": ["production", "^production", "env"],
-      "cache": true,
+      "executor": "nx:run-commands",
       "options": {
-        "outputPath": "{projectRoot}/dist",
-        "buildableProjectDepsInPackageJsonType": "dependencies",
-        "updateBuildableProjectDepsInPackageJson": true,
-        "incremental": true
+        "cwd": "{projectRoot}",
+        "commands": [
+          "NODE_OPTIONS='--max-old-space-size=4096' pnpm vite build"
+        ]
       }
     },
     "dev": {

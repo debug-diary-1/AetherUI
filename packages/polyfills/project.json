@@ -5,23 +5,13 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/vite:build",
+      "executor": "nx:run-commands",
       "outputs": [
         "{projectRoot}/dist"
       ],
       "options": {
-        "outputPath": "packages/polyfills/dist",
-        "configFile": "packages/polyfills/vite.config.ts"
-      },
-      "configurations": {
-        "production": {
-          "sourcemap": false,
-          "minify": true
-        },
-        "development": {
-          "sourcemap": true,
-          "minify": false
-        }
+        "command": "vite build",
+        "cwd": "packages/polyfills"
       }
     },
     "lint": {

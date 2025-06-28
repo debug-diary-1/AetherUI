@@ -5,23 +5,13 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/vite:build",
+      "executor": "nx:run-commands",
       "outputs": [
         "{projectRoot}/dist"
       ],
       "options": {
-        "outputPath": "packages/tokens/dist",
-        "configFile": "packages/tokens/vite.config.ts"
-      },
-      "configurations": {
-        "production": {
-          "sourcemap": false,
-          "minify": true
-        },
-        "development": {
-          "sourcemap": true,
-          "minify": false
-        }
+        "command": "vite build",
+        "cwd": "packages/tokens"
       }
     },
     "lint": {
