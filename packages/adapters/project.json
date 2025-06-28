@@ -5,31 +5,38 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "nx:run-commands",
-      "outputs": ["{projectRoot}/dist"],
+      "executor": "@nx/vite:build",
+      "outputs": [
+        "{projectRoot}/dist"
+      ],
       "options": {
-        "command": "vite build",
-        "cwd": "packages/adapters"
+        "outputPath": "packages/adapters/dist",
+        "configFile": "packages/adapters/vite.config.ts"
       },
-      "dependsOn": [
-        {
-          "projects": ["@aetherui/core"],
-          "target": "build"
+      "configurations": {
+        "production": {
+          "sourcemap": false,
+          "minify": true
+        },
+        "development": {
+          "sourcemap": true,
+          "minify": false
         }
-      ]
+      }
     },
     "lint": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/eslint:lint",
       "options": {
-        "command": "eslint src --ext .ts",
-        "cwd": "packages/adapters"
+        "lintFilePatterns": [
+          "packages/adapters/src/**/*.ts"
+        ]
       }
     },
     "test": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/vite:test",
       "options": {
-        "command": "vitest",
-        "cwd": "packages/adapters"
+        "configFile": "packages/adapters/vitest.config.ts",
+        "passWithNoTests": true
       }
     },
     "test:memory": {
@@ -47,6 +54,10 @@
       }
     }
   },
-  "tags": ["adapters"],
-  "implicitDependencies": ["@aetherui/core"]
+  "tags": [
+    "adapters"
+  ],
+  "implicitDependencies": [
+    "@aetherui/core"
+  ]
 }

@@ -5,25 +5,38 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "nx:run-commands",
-      "outputs": ["{projectRoot}/dist"],
+      "executor": "@nx/vite:build",
+      "outputs": [
+        "{projectRoot}/dist"
+      ],
       "options": {
-        "command": "vite build",
-        "cwd": "packages/accordion"
+        "outputPath": "packages/accordion/dist",
+        "configFile": "packages/accordion/vite.config.ts"
+      },
+      "configurations": {
+        "production": {
+          "sourcemap": false,
+          "minify": true
+        },
+        "development": {
+          "sourcemap": true,
+          "minify": false
+        }
       }
     },
     "lint": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/eslint:lint",
       "options": {
-        "command": "eslint src --ext .ts",
-        "cwd": "packages/accordion"
+        "lintFilePatterns": [
+          "packages/accordion/src/**/*.ts"
+        ]
       }
     },
     "test": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/vite:test",
       "options": {
-        "command": "vitest",
-        "cwd": "packages/accordion"
+        "configFile": "packages/accordion/vitest.config.ts",
+        "passWithNoTests": true
       }
     },
     "test:memory": {
@@ -41,5 +54,8 @@
       }
     }
   },
-  "tags": ["components", "accordion"]
+  "tags": [
+    "components",
+    "accordion"
+  ]
 }

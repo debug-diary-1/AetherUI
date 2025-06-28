@@ -10,17 +10,25 @@
         "command": "storybook dev -p 6006",
         "cwd": "packages/storybook"
       },
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "^build"
+      ]
     },
     "build-storybook": {
       "executor": "nx:run-commands",
-      "outputs": ["{projectRoot}/storybook-static"],
+      "outputs": [
+        "{projectRoot}/storybook-static"
+      ],
       "options": {
         "command": "storybook build",
         "cwd": "packages/storybook"
       },
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "^build"
+      ]
     }
   },
-  "tags": ["storybook"]
+  "tags": [
+    "storybook"
+  ]
 }

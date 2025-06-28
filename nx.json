@@ -1,44 +1,90 @@
 {
   "$schema": "https://nx.dev/schema",
-  "affected": { "defaultBase": "main" },
-  "parallel": 2,
+  "affected": {
+    "defaultBase": "main"
+  },
+  "parallel": 3,
   "cacheableOperations": ["build", "test", "lint", "typecheck"],
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nx/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "test", "lint", "typecheck"],
+        "parallel": 3,
+        "cacheDirectory": ".nx/cache",
+        "useDaemonProcess": true
+      }
+    }
+  },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*"],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": [
+      "{workspaceRoot}/babel.config.json",
+      "{workspaceRoot}/tsconfig.base.json",
+      "{workspaceRoot}/package.json"
+    ],
     "production": [
+      "default",
       "!{projectRoot}/**/*.spec.ts",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/src/test-setup.[jt]s"
+      "!{projectRoot}/src/test-setup.[jt]s",
+      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+      "!{projectRoot}/.storybook/**/*",
+      "!{projectRoot}/**/*.md"
+    ],
+    "linting": [
+      "default",
+      "{workspaceRoot}/.eslintrc.json",
+      "{workspaceRoot}/.eslintignore",
+      "{workspaceRoot}/eslint.config.js"
+    ],
+    "testing": [
+      "default",
+      "{workspaceRoot}/vitest.config.ts",
+      "{workspaceRoot}/vitest.workspace.ts",
+      "{projectRoot}/**/*.test.ts",
+      "{projectRoot}/**/*.spec.ts"
+    ],
+    "styles": [
+      "{projectRoot}/**/*.css",
+      "{projectRoot}/**/*.scss",
+      "{projectRoot}/src/**/styles.ts"
     ],
     "env": ["{workspaceRoot}/**/.env.*local"]
   },
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/dist/**", "{projectRoot}/.next/**"],
+      "outputs": [
+        "{projectRoot}/dist/**",
+        "{projectRoot}/.next/**",
+        "{projectRoot}/.vite/**"
+      ],
       "inputs": ["production", "^production", "env"],
-      "executor": "nx:run-commands",
+      "cache": true,
       "options": {
-        "cwd": "{projectRoot}",
-        "commands": ["NODE_OPTIONS='--max-old-space-size=4096' pnpm vite build"]
+        "outputPath": "{projectRoot}/dist",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "updateBuildableProjectDepsInPackageJson": true,
+        "incremental": true
       }
     },
-    "dev": { "cache": false, "persistent": true },
-    "lint": { "cache": true, "inputs": ["default"] },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "cache": true,
+      "inputs": ["linting"]
+    },
     "test": {
       "outputs": ["{projectRoot}/coverage/**"],
-      "inputs": [
-        "{projectRoot}/src/**/*.tsx",
-        "{projectRoot}/src/**/*.ts",
-        "{projectRoot}/test/**/*.ts",
-        "{projectRoot}/test/**/*.tsx"
-      ],
+      "inputs": ["testing"],
       "dependsOn": [],
-      "executor": "nx:run-commands",
+      "cache": true,
       "options": {
-        "cwd": "{projectRoot}",
-        "command": "NODE_OPTIONS='--max-old-space-size=2048' vitest"
+        "passWithNoTests": true
       }
     },
     "test:memory": {
@@ -81,8 +127,9 @@
     "docs": { "dependsOn": ["^build"], "cache": false, "persistent": true },
     "docs:build": { "dependsOn": ["^build"], "outputs": ["{projectRoot}/dist/**"] }
   },
-  "nxCloudAccessToken": "",
-  "nxCloud": { "organization": "MpAIVrTJI3", "accessToken": "" },
+  "nxCloud": {
+    "organization": "MpAIVrTJI3"
+  },
   "plugins": [
     {
       "plugin": "@nx/js/typescript",
