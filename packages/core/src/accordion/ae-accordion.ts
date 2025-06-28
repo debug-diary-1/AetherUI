@@ -114,7 +114,7 @@ export class AeAccordion extends LitElement {
         // Force close all other items by setting open=false
         items.slice(1).forEach(item => {
           item.removeAttribute('open');
-          (item as any).open = false;
+          (item as AeAccordionItem).open = false;
         });
       }
     } else if (this.multiselectable) {
@@ -184,7 +184,7 @@ export class AeAccordion extends LitElement {
     items.forEach(item => {
       const headerId = item.getAttribute('data-header-id');
       if (headerId) {
-        (item as any).open = this.openPanels.has(headerId);
+        (item as AeAccordionItem).open = this.openPanels.has(headerId);
       }
     });
   }
@@ -211,7 +211,7 @@ export class AeAccordion extends LitElement {
         items.forEach(item => {
           const itemId = item.getAttribute('data-header-id');
           if (itemId && itemId !== headerId) {
-            (item as any).open = false;
+            (item as AeAccordionItem).open = false;
           }
         });
         

@@ -15,7 +15,7 @@ export interface AutocompleteOption {
   disabled?: boolean;
   
   /** Any additional data associated with the option */
-  data?: Record<string, any>;
+  data?: Record<string, unknown>;
 }
 
 /**

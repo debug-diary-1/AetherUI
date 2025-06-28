@@ -19,12 +19,12 @@ if (typeof document !== 'undefined') {
       }
       
       // Add to internal children collection
-      if (!(this as any)._childNodes) {
-        (this as any)._childNodes = [];
+      if (!(this as Record<string, unknown>)._childNodes) {
+        (this as Record<string, unknown>)._childNodes = [];
       }
       
-      (this as any)._childNodes.push(node);
-      (node as any).parentNode = this;
+      (this as Record<string, unknown>)._childNodes.push(node);
+      (node as Record<string, unknown>).parentNode = this;
       
       return node;
     };
@@ -74,7 +74,7 @@ if (typeof window !== 'undefined') {
 
 // Add necessary NodeFilter constants
 if (typeof NodeFilter === 'undefined') {
-  (window as any).NodeFilter = {
+  (window as Record<string, unknown>).NodeFilter = {
     SHOW_ALL: -1,
     SHOW_ELEMENT: 1,
     FILTER_ACCEPT: 1,
@@ -87,16 +87,16 @@ if (typeof NodeFilter === 'undefined') {
 if (typeof Element !== 'undefined') {
   if (!Element.prototype.attachShadow) {
     Element.prototype.attachShadow = function(init: ShadowRootInit): ShadowRoot {
-      const shadowRoot = document.createElement('div') as any as ShadowRoot;
-      (shadowRoot as any).host = this;
-      (shadowRoot as any).mode = init.mode;
+      const shadowRoot = document.createElement('div') as unknown as ShadowRoot;
+      (shadowRoot as Record<string, unknown>).host = this;
+      (shadowRoot as Record<string, unknown>).mode = init.mode;
       
       // Add methods to the shadowRoot
-      if (!(shadowRoot as any).querySelector) {
-        (shadowRoot as any).querySelector = (_selector: string) => null;
+      if (!(shadowRoot as Record<string, unknown>).querySelector) {
+        (shadowRoot as Record<string, unknown>).querySelector = (_selector: string) => null;
       }
       
-      (this as any).shadowRoot = init.mode === 'open' ? shadowRoot : null;
+      (this as Record<string, unknown>).shadowRoot = init.mode === 'open' ? shadowRoot : null;
       return shadowRoot;
     };
   }
