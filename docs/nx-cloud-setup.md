@@ -2,13 +2,21 @@
 
 This guide explains how to enable Nx Cloud for distributed caching and task execution, which can reduce CI build times by 30-50%.
 
+## Current Status
+
+The repository is configured to use Nx Cloud when a valid access token is provided. Currently, the token in CI appears to be invalid or expired.
+
 ## Setup Steps
 
 ### 1. Get an Nx Cloud Access Token
 
 1. Visit [https://nx.app](https://nx.app) and create an account
-2. Create a new workspace or connect to existing organization `MpAIVrTJI3`
-3. Get your access token from the workspace settings
+2. Either:
+   - Create a new workspace for this project, or
+   - Request access to the existing organization `MpAIVrTJI3`
+3. Get your access token from the workspace settings:
+   - Go to Workspace Settings → Manage CI Access Tokens
+   - Create a new token or use an existing one
 
 ### 2. Add the Token to GitHub Secrets
 

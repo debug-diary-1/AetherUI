@@ -40,6 +40,9 @@ jobs:
         run: |
           if [ -n "${{ secrets.NX_CLOUD_ACCESS_TOKEN }}" ]; then
             echo "NX_CLOUD_ACCESS_TOKEN=${{ secrets.NX_CLOUD_ACCESS_TOKEN }}" >> $GITHUB_ENV
+            echo "Nx Cloud token configured"
+          else
+            echo "No Nx Cloud token found, using local cache only"
           fi
         
       # Cache Nx
@@ -55,7 +58,8 @@ jobs:
       # Optional: Start Nx Cloud agents for distributed execution
       - name: Start Nx Cloud CI Run (if token available)
         if: env.NX_CLOUD_ACCESS_TOKEN != ''
-        run: npx nx-cloud start-ci-run --stop-agents-after="build" --agent-count=3
+        run: |
+          npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build" || echo "Nx Cloud setup failed, continuing without distributed execution"
         
       - name: Run affected lint
         run: npx nx affected --target=lint --parallel=3 --base=origin/main --exclude=aetherui
@@ -72,4 +76,4 @@ jobs:
       # Stop Nx Cloud agents
       - name: Stop Nx Cloud agents
         if: always() && env.NX_CLOUD_ACCESS_TOKEN != ''
-        run: npx nx-cloud stop-all-agents
+        run: npx nx-cloud stop-all-agents || true
