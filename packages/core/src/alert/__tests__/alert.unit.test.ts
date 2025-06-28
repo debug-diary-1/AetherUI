@@ -9,7 +9,7 @@ class MockAeAlert {
   closable: boolean = false;
   open: boolean = true;
   
-  private _updateCallbacks: Function[] = [];
+  private _updateCallbacks: (() => void)[] = [];
   
   constructor(props?: Partial<MockAeAlert>) {
     if (props) {
@@ -18,13 +18,13 @@ class MockAeAlert {
   }
   
   // Simulate property updates
-  updateProperty(name: keyof MockAeAlert, value: any) {
-    (this as any)[name] = value;
+  updateProperty(name: keyof MockAeAlert, value: unknown) {
+    (this as Record<string, unknown>)[name] = value;
     this._updateCallbacks.forEach(cb => cb());
   }
   
   // Simulate updateComplete
-  onUpdate(callback: Function) {
+  onUpdate(callback: () => void) {
     this._updateCallbacks.push(callback);
   }
   

@@ -13,7 +13,7 @@ import '@aetherui/core';
   </ae-tooltip>
 </div>
 
-<script>
+<script dangerouslySetInnerHTML={{__html: `
   // Register tooltip component when page loads
   if (typeof window !== 'undefined') {
     import('@aetherui/core').then((core) => {
@@ -23,4 +23,4 @@ import '@aetherui/core';
       }
     });
   }
-</script>
+`}} />

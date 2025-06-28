@@ -8,11 +8,11 @@ vi.mock('../ae-toast');
 vi.mock('../styles');
 
 // Mock toast-manager implementation for testing
-const mockToastInstances: any[] = [];
+const mockToastInstances: Record<string, unknown>[] = [];
 
 class MockToastManager {
   static instance: MockToastManager | null = null;
-  static containers: any = {};
+  static containers: Record<string, unknown> = {};
 
   constructor() {
     // Mock constructor
@@ -25,8 +25,8 @@ class MockToastManager {
     return this.instance;
   }
 
-  show(options: any) {
-    const mockToast: any = {
+  show(options: Record<string, unknown>) {
+    const mockToast: Record<string, unknown> = {
       message: options.message,
       variant: options.variant || 'info',
       duration: options.duration ?? 5000,
@@ -40,7 +40,7 @@ class MockToastManager {
     mockToastInstances.push(mockToast);
     
     // Set up the mock implementation for addEventListener
-    mockToast.addEventListener.mockImplementation((event: string, callback: Function) => {
+    mockToast.addEventListener.mockImplementation((event: string, callback: (event: CustomEvent) => void) => {
       if (event === 'ae-close') {
         // Store callback for later invocation in tests
         mockToast.closeCallback = callback;
@@ -48,7 +48,7 @@ class MockToastManager {
     });
     
     // Simulate adding the close event listener (as the real toast would do)
-    mockToast.addEventListener('ae-close', (event: any) => {
+    mockToast.addEventListener('ae-close', (_event: CustomEvent) => {
       // Mock close handler
     });
     
@@ -56,7 +56,7 @@ class MockToastManager {
   }
 }
 
-const showToast = (options: any) => {
+const showToast = (options: Record<string, unknown>) => {
   return MockToastManager.getInstance().show(options);
 };
 
@@ -127,7 +127,7 @@ describe('ToastManager', () => {
     
     // Check if it was called with 'ae-close' event
     const aeCloseCalls = toast.addEventListener.mock.calls.filter(
-      (call: any[]) => call[0] === 'ae-close'
+      (call: unknown[]) => call[0] === 'ae-close'
     );
     
     // If no ae-close calls, the test should still pass as the mock implementation

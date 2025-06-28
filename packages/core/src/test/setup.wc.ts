@@ -9,7 +9,7 @@ const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>', {
 });
 
 // Set up global environment
-global.window = dom.window as any;
+global.window = dom.window as unknown as Window & typeof globalThis;
 global.document = dom.window.document;
 global.navigator = dom.window.navigator;
 global.HTMLElement = dom.window.HTMLElement;
@@ -29,8 +29,13 @@ if (!document.createTreeWalker) {
     return {
       root,
       whatToShow: whatToShow || NodeFilter.SHOW_ALL,
-      filter,
-      currentNode,
+      filter: filter || null,
+      get currentNode() {
+        return currentNode;
+      },
+      set currentNode(node: Node) {
+        currentNode = node;
+      },
       nextNode() {
         // Simple implementation - just return null
         return null;
@@ -53,12 +58,12 @@ if (!document.createTreeWalker) {
       nextSibling() {
         return null;
       }
-    };
+    } as TreeWalker;
   };
 }
 
 // Mock @open-wc/testing utilities for vitest
-const html = (strings: TemplateStringsArray, ...values: any[]) => {
+const html = (strings: TemplateStringsArray, ...values: unknown[]) => {
   // Simple template literal implementation
   let result = '';
   strings.forEach((str, i) => {
@@ -90,7 +95,7 @@ const fixture = async <T extends HTMLElement>(template: string): Promise<T> => {
   
   // Mock updateComplete for Lit elements
   if (element && 'updateComplete' in element) {
-    (element as any).updateComplete = Promise.resolve();
+    (element as Record<string, unknown>).updateComplete = Promise.resolve();
   }
   
   return element;
@@ -114,10 +119,10 @@ const waitUntil = async (
 };
 
 // Create a mock expect object that mimics Chai's API
-const expect = (actual: any) => {
+const expect = (actual: unknown) => {
   return {
     to: {
-      equal: (expected: any) => {
+      equal: (expected: unknown) => {
         if (actual !== expected) {
           throw new Error(`Expected ${actual} to equal ${expected}`);
         }
@@ -168,16 +173,16 @@ class LitElement extends HTMLElement {
     super();
     // Create a mock shadow root
     this.shadowRoot = {
-      querySelector: (selector: string) => {
+      querySelector: (_selector: string) => {
         // Return null or mock elements as needed
         return null;
       },
-      querySelectorAll: (selector: string) => {
+      querySelectorAll: (_selector: string) => {
         return [];
       },
       innerHTML: '',
       host: this
-    } as any;
+    } as unknown as ShadowRoot;
   }
   
   connectedCallback() {}
@@ -191,11 +196,11 @@ class LitElement extends HTMLElement {
 }
 
 // Make these available globally
-(global as any).html = html;
-(global as any).fixture = fixture;
-(global as any).expect = expect;
-(global as any).waitUntil = waitUntil;
-(global as any).LitElement = LitElement;
+(global as Record<string, unknown>).html = html;
+(global as Record<string, unknown>).fixture = fixture;
+(global as Record<string, unknown>).expect = expect;
+(global as Record<string, unknown>).waitUntil = waitUntil;
+(global as Record<string, unknown>).LitElement = LitElement;
 
 // Mock the import resolution for @open-wc/testing
 vi.mock('@open-wc/testing', () => ({
@@ -209,23 +214,23 @@ vi.mock('@open-wc/testing', () => ({
 vi.mock('lit', () => ({
   LitElement,
   html,
-  css: (strings: TemplateStringsArray, ...values: any[]) => {
+  css: (strings: TemplateStringsArray, ..._values: unknown[]) => {
     return strings.join('');
   }
 }));
 
 vi.mock('lit/decorators.js', () => ({
-  customElement: (name: string) => (target: any) => {
+  customElement: (name: string) => (target: CustomElementConstructor) => {
     customElements.define(name, target);
     return target;
   },
-  property: (options?: any) => (target: any, propertyKey: string) => {
+  property: (_options?: unknown) => (_target: unknown, _propertyKey: string) => {
     // Simple property decorator mock
   },
-  state: () => (target: any, propertyKey: string) => {
+  state: () => (_target: unknown, _propertyKey: string) => {
     // Simple state decorator mock
   },
-  query: (selector: string) => (target: any, propertyKey: string) => {
+  query: (_selector: string) => (_target: unknown, _propertyKey: string) => {
     // Simple query decorator mock
   }
 }));
