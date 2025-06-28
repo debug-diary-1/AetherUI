@@ -33,11 +33,6 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     },
-    "./auto-register": {
-      "import": "./dist/auto-register.js",
-      "require": "./dist/auto-register.js",
-      "types": "./dist/auto-register.d.ts"
-    },
     "./accordion": {
       "types": "./dist/accordion/index.d.ts",
       "import": "./dist/accordion/index.js",

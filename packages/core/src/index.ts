@@ -89,10 +89,3 @@ export { AeToast } from './toast/ae-toast';
 export { showToast, createToastHelpers } from './toast/api';
 export { AeTooltip } from './tooltip/ae-tooltip';
 
-// Auto-register components if in browser environment
-if (typeof window !== 'undefined') {
-  // Use defineAll to register all components at once
-  import('./define').then(({ defineAll }) => {
-    defineAll();
-  });
-}

@@ -1,15 +1,5 @@
-import { defineAeButton } from '@aetherui/core';
-import { SvelteComponentTyped } from 'svelte';
+// Svelte adapter is not yet implemented
+// TODO: Implement proper Svelte component wrapper for AetherUI web components
+// For now, you can use the web components directly in Svelte by importing from @aetherui/core
 
-// Define the custom element
-defineAeButton();
-
-interface AeButtonProps {
-  disabled?: boolean;
-}
-
-export class AeButton extends SvelteComponentTyped<AeButtonProps> {
-  constructor(options: { target: HTMLElement; props?: AeButtonProps }) {
-    super(options);
-  }
-} 
+export {};
