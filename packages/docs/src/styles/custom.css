@@ -1,36 +1,49 @@
-/* Theme variables */
+/* Font Face Definitions */
+@font-face {
+  font-family: 'Favorit Pro';
+  src: url('/fonts/FavoritPro-Light.woff2') format('woff2'),
+       url('/fonts/FavoritPro-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Favorit Pro';
+  src: url('/fonts/FavoritPro-Regular.woff2') format('woff2'),
+       url('/fonts/FavoritPro-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Favorit Pro';
+  src: url('/fonts/FavoritPro-Medium.woff2') format('woff2'),
+       url('/fonts/FavoritPro-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Essential Starlight theme overrides only */
 :root {
-  /* Font settings */
-  --sl-font-mono: 'JetBrains Mono', Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console',
-    'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono',
-    'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
-  
-  /* Primary theme colors */
+  /* Accent colors */
   --sl-color-accent-low: #e6f0ff;
   --sl-color-accent: #0055ff;
   --sl-color-accent-high: #0033cc;
   
-  /* RGB versions for gradients/opacity */
-  --sl-color-accent-rgb: 0, 85, 255;
+  /* Font stack with Favorit Pro Light as primary */
+  --sl-font: 'Favorit Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --sl-font-system: 'Favorit Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
   
-  /* Text colors */
-  --sl-color-text-accent: var(--sl-color-accent);
+  /* Monospace font */
+  --sl-font-mono: 'JetBrains Mono', 'Courier New', monospace;
   
-  /* Border radius */
-  --sl-border-radius: 0.5rem;
-  
-  /* Animation settings */
-  --ae-transition-fast: 150ms ease;
-  --ae-transition-normal: 250ms ease;
-  --ae-transition-slow: 350ms ease;
-  
-  /* Shadows */
-  --ae-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --ae-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --ae-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  
-  /* Logo styles */
-  --logo-size: 40px;
+  /* Set default font weight to light (300) */
+  --sl-font-weight-normal: 300;
+  --sl-font-weight-semibold: 400;
+  --sl-font-weight-bold: 500;
 }
 
 /* Dark mode overrides */
@@ -38,215 +51,26 @@
   --sl-color-accent-low: #002266;
   --sl-color-accent: #4d88ff;
   --sl-color-accent-high: #e6f0ff;
-  --sl-color-accent-rgb: 77, 136, 255;
-  
-  /* Dark mode shadows */
-  --ae-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --ae-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
-  --ae-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
 }
 
-/* Global styles */
-::selection {
-  background: var(--sl-color-accent);
-  color: white;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
+/* Global font weight override for Favorit Pro Light */
 body {
-  font-feature-settings: "liga" 1, "kern" 1;
-  text-rendering: optimizeLegibility;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Landing page background */
-[data-page-layout="splash"] {
-  --landing-bg-opacity: 0.07;
+/* Headings with slightly heavier weight */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
 }
 
-[data-page-layout="splash"][data-theme="dark"] {
-  --landing-bg-opacity: 0.1;
+/* Strong elements use medium weight */
+strong, b {
+  font-weight: 500;
 }
 
-[data-page-layout="splash"] main {
-  position: relative;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-[data-page-layout="splash"] main::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(circle at 15% 50%, rgba(var(--sl-color-accent-rgb), var(--landing-bg-opacity)) 0%, transparent 25%),
-    radial-gradient(circle at 85% 30%, rgba(var(--sl-color-accent-rgb), var(--landing-bg-opacity)) 0%, transparent 25%);
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Feature banner styles - enhanced */
-.feature-banner {
-  position: relative;
-  z-index: 1;
-}
-
-.feature-item {
-  position: relative;
-  transition: transform var(--ae-transition-normal), box-shadow var(--ae-transition-normal);
-}
-
-.feature-item:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--ae-shadow-md);
-}
-
-.feature-icon {
-  color: var(--sl-color-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Enhanced title styles */
-.intro-heading,
-.title {
-  position: relative;
-  display: inline-block;
-}
-
-.intro-heading::after,
-.title::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  width: 40%;
-  height: 3px;
-  background: var(--sl-color-accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s ease;
-}
-
-.intro-heading:hover::after,
-.title:hover::after {
-  transform: scaleX(1);
-}
-
-/* Enhanced hero image animation */
-.hero-image img {
-  transition: transform 0.5s ease, filter 0.5s ease;
-}
-
-.hero-image:hover img {
-  transform: translateY(-5px) rotate(2deg);
-  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.2));
-}
-
-/* Hero component styles */
-.hero {
-  position: relative;
-  background: transparent;
-  padding: 4rem 2rem;
-  border-radius: var(--sl-border-radius);
-  margin-bottom: 2rem;
-  text-align: center;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(var(--sl-color-accent-rgb), 0.1) 0%, transparent 70%);
-  z-index: -1;
-  opacity: 0.6;
-}
-
-.hero-title {
-  font-size: 3rem;
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-
-.hero-subtitle {
-  font-size: 1.5rem;
-  color: var(--sl-color-gray-2);
-  margin-bottom: 2rem;
-}
-
-/* Interactive example styles */
-.interactive-example {
-  border: 1px solid var(--sl-color-border);
-  border-radius: var(--sl-border-radius);
-  margin: 1rem 0;
-  overflow: hidden;
-  box-shadow: var(--ae-shadow-sm);
-  transition: box-shadow var(--ae-transition-normal);
-}
-
-.interactive-example:hover {
-  box-shadow: var(--ae-shadow-md);
-}
-
-.example-preview {
-  padding: 2rem;
-  border-bottom: 1px solid var(--sl-color-border);
-}
-
-.example-code {
-  background: var(--sl-color-bg-sidebar);
-  padding: 1rem;
-}
-
-/* Code block styles */
-.astro-code, pre {
-  padding: 1rem !important;
-  border-radius: var(--sl-border-radius) !important;
-  margin: 1rem 0 !important;
-  box-shadow: var(--ae-shadow-sm);
-}
-
-/* Table styles */
-table {
-  width: 100%;
-  margin: 1rem 0;
-  border-collapse: collapse;
-  border-radius: var(--sl-border-radius);
-  overflow: hidden;
-  box-shadow: var(--ae-shadow-sm);
-}
-
-th, td {
-  padding: 0.75rem;
-  border: 1px solid var(--sl-color-gray-5);
-}
-
-th {
-  background: var(--sl-color-gray-6);
-  font-weight: 600;
-}
-
-/* Props table specific styles */
-.props-table code {
-  color: var(--sl-color-text-accent);
-  background: var(--sl-color-gray-7);
-  padding: 0.2em 0.4em;
-  border-radius: 0.25rem;
-}
-
-/* Component demo layouts */
+/* Component demo containers */
 .button-demo,
 .button-container {
   display: flex;
@@ -260,156 +84,28 @@ th {
   margin: 1rem 0;
 }
 
-/* Card enhancements */
-[data-has-hero] .card {
-  border: 1px solid var(--sl-color-border);
-  box-shadow: var(--ae-shadow-sm);
-  transition: transform var(--ae-transition-normal), box-shadow var(--ae-transition-normal);
-}
-
-[data-has-hero] .card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--ae-shadow-md);
-}
-
-[data-has-hero] .card .title {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-[data-has-hero] .card .icon {
-  display: inline-flex;
-  padding: 0.5rem;
-  background: var(--sl-color-accent-low);
+/* Interactive example containers */
+.interactive-example {
+  border: 1px solid var(--sl-color-gray-5);
   border-radius: 0.5rem;
-  color: var(--sl-color-accent);
-}
-
-/* Code window on landing page */
-.code-window {
-  transition: transform var(--ae-transition-normal), box-shadow var(--ae-transition-normal);
-}
-
-.code-window:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--ae-shadow-lg);
-}
-
-/* CTA button enhancements */
-.cta-button {
-  position: relative;
+  margin: 1rem 0;
   overflow: hidden;
 }
 
-.cta-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg, 
-    rgba(255, 255, 255, 0) 0%, 
-    rgba(255, 255, 255, 0.2) 50%, 
-    rgba(255, 255, 255, 0) 100%
-  );
-  transition: left 0.7s ease;
+.example-preview {
+  padding: 2rem;
+  border-bottom: 1px solid var(--sl-color-gray-5);
 }
 
-.cta-button:hover::before {
-  left: 100%;
+.example-code {
+  background: var(--sl-color-gray-6);
+  padding: 1rem;
 }
 
-/* Responsive adjustments */
+/* Responsive tables */
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1.25rem;
-  }
-  
   table {
     display: block;
     overflow-x: auto;
-  }
-  
-  .feature-banner {
-    justify-content: center;
-  }
-}
-
-/* Simplified background for splash page */
-[data-page-layout="splash"] {
-  background-color: var(--sl-color-bg);
-}
-
-/* Mobile adjustments */
-@media (max-width: 640px) {
-  [data-page-layout="splash"] main {
-    padding: 0;
-  }
-  
-  .feature-item {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .feature-banner {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .code-window {
-    border-radius: 0;
-  }
-}
-
-/* Simplified code snippet styling */
-.code-snippet pre {
-  position: relative;
-  overflow: hidden;
-}
-
-/* Logo styles */
-.site-title {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.site-title svg {
-  width: var(--logo-size);
-  height: var(--logo-size);
-  transition: transform 0.3s ease;
-}
-
-.site-title:hover svg {
-  transform: rotate(10deg) scale(1.05);
-}
-
-/* Header styles - simplified */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background-color: rgba(var(--sl-color-gray-1, 255, 255, 255), 0.95);
-}
-
-[data-theme='dark'] .header {
-  background-color: rgba(var(--sl-color-gray-7, 0, 0, 0), 0.95);
-}
-
-/* Mobile optimizations */
-@media (max-width: 50rem) {
-  :root {
-    --logo-size: 32px;
-  }
-  
-  .site-title {
-    gap: 0.5rem;
   }
 }

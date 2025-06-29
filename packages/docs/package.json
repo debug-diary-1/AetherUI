@@ -9,7 +9,6 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test:playground": "tsx scripts/test-playground.ts",
     "docs": "astro dev",
     "docs:build": "astro build"
   },
