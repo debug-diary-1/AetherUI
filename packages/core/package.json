@@ -113,30 +113,20 @@
     "dev": "vite",
     "clean": "rimraf dist",
     "lint": "eslint src --ext .ts",
-    "test": "pnpm test:api && pnpm test:wc",
-    "test:wc": "web-test-runner",
-    "test:wc:watch": "web-test-runner --watch",
-    "test:wc:vitest": "vitest run --config vitest.wc.config.ts",
-    "test:wc:vitest:watch": "vitest watch --config vitest.wc.config.ts",
-    "test:api": "vitest run src/**/__tests__/api.test.ts",
-    "test:unit": "vitest run --exclude \"src/**/__tests__/*.test.ts\"",
-    "test:unit:watch": "vitest watch --exclude \"src/**/__tests__/*.test.ts\"",
-    "test:memory": "NODE_OPTIONS=--max-old-space-size=512 vitest run --exclude \"src/**/__tests__/*.test.ts\""
+    "test": "web-test-runner",
+    "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.0",
-    "lit": "^3.3.0",
-    "lit-modal-portal": "^0.6.0"
+    "lit": "^3.3.0"
   },
   "devDependencies": {
     "@open-wc/testing": "^3.2.0",
-    "@types/jest": "^29.5.0",
-    "@types/jsdom": "^21.1.6",
     "@types/node": "^20.0.0",
+    "playwright": "^1.53.1",
     "rimraf": "^5.0.0",
     "typescript": "^5.0.0",
     "vite": "^6.0.0",
-    "vite-plugin-dts": "^4.0.0",
-    "vitest": "^3.0.0"
+    "vite-plugin-dts": "^4.0.0"
   }
 }

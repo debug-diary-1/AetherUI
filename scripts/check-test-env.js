@@ -24,10 +24,7 @@ const testCommand = process.argv[2] || '';
 
 // Resource-intensive test commands
 const intensiveCommands = [
-  'test',
-  'test:fast',
-  'test:wc',
-  'test:changed'
+  'test'
 ];
 
 // Check if this is a resource-intensive command
@@ -42,8 +39,7 @@ if (!isCI && !forceRun && isIntensiveCommand) {
     console.error('\n❌ Insufficient memory for parallel test execution!');
     console.error(`   This command may crash your system.`);
     console.error('\n   Recommended alternatives:');
-    console.error('   • pnpm test:memory    (sequential, low memory)');
-    console.error('   • pnpm test:api       (API tests only, low memory)');
+    console.error('   • Run tests for individual packages');
     console.error('   • FORCE_TEST=true pnpm test  (override check)\n');
     process.exit(1);
   }

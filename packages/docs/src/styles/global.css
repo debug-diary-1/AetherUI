@@ -1,37 +1,78 @@
-/* AetherUI component tokens - minimal set */
+/* AetherUI component tokens - minimal monochrome set */
 :root {
-  /* Map to Starlight theme colors */
-  --ae-color-brand-600: var(--sl-color-accent);
-  --ae-color-text-primary: var(--sl-color-text);
-  --ae-color-base-200: var(--sl-color-gray-6);
-  --ae-color-base-300: var(--sl-color-gray-5);
+  /* Core colors - monochrome */
+  --ae-color-brand-600: #1a1a1a;
+  --ae-color-text-primary: #1a1a1a;
+  --ae-color-text-secondary: #666;
+  --ae-color-base-200: #f7f7f7;
+  --ae-color-base-300: #e5e5e5;
   
   /* Font tokens for components */
   --ae-font-family: var(--sl-font);
   --ae-font-weight: 300;
   
-  /* Button tokens */
-  --ae-button-bg-primary: var(--sl-color-accent);
-  --ae-button-fg-primary: white;
-  --ae-button-bg-secondary: var(--sl-color-gray-6);
-  --ae-button-fg-secondary: var(--sl-color-text);
-  --ae-button-radius: 0.375rem;
+  /* Button tokens - minimal */
+  --ae-button-bg-primary: #000;
+  --ae-button-fg-primary: #fff;
+  --ae-button-bg-secondary: transparent;
+  --ae-button-fg-secondary: #1a1a1a;
+  --ae-button-border-secondary: #e5e5e5;
+  --ae-button-radius: 6px;
   --ae-button-font-weight: 400;
   
   /* Modal tokens */
-  --ae-modal-background: var(--sl-color-bg-nav);
-  --ae-modal-border-radius: 0.5rem;
-  --ae-color-border: var(--sl-color-gray-5);
-  --ae-modal-text-color: var(--sl-color-text);
+  --ae-modal-background: #fff;
+  --ae-modal-border-radius: 8px;
+  --ae-color-border: #e5e5e5;
+  --ae-modal-text-color: #1a1a1a;
   
   /* Tooltip tokens */
-  --ae-tooltip-bg: var(--sl-color-gray-1);
-  --ae-tooltip-fg: var(--sl-color-white);
-  --ae-tooltip-radius: 0.25rem;
+  --ae-tooltip-bg: #1a1a1a;
+  --ae-tooltip-fg: #fff;
+  --ae-tooltip-radius: 4px;
   --ae-tooltip-font-weight: 300;
+  
+  /* Shadows - subtle */
+  --ae-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --ae-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --ae-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Dark mode adjustments */
 [data-theme="dark"] {
-  --ae-tooltip-bg: var(--sl-color-gray-2);
+  --ae-color-brand-600: #fff;
+  --ae-color-text-primary: #fff;
+  --ae-color-text-secondary: #999;
+  --ae-color-base-200: #1a1a1a;
+  --ae-color-base-300: #2a2a2a;
+  
+  --ae-button-bg-primary: #fff;
+  --ae-button-fg-primary: #000;
+  --ae-button-bg-secondary: transparent;
+  --ae-button-fg-secondary: #fff;
+  --ae-button-border-secondary: #2a2a2a;
+  
+  --ae-modal-background: #0a0a0a;
+  --ae-color-border: #2a2a2a;
+  --ae-modal-text-color: #fff;
+  
+  --ae-tooltip-bg: #fff;
+  --ae-tooltip-fg: #000;
+}
+
+/* Remove colorful focus states */
+*:focus {
+  outline: 2px solid var(--ae-color-text-primary);
+  outline-offset: 2px;
+}
+
+/* Simplify links */
+a {
+  color: var(--ae-color-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration: none;
 }
