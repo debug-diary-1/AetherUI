@@ -4,9 +4,10 @@ description: Primary action trigger with variants (primary, secondary, ghost, ic
 ---
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ButtonExample from '../../../components/ButtonExample.astro';
-import '@aetherui/core/auto-register';
+import { defineAll } from '@aetherui/core';
 
 {/* Register custom elements for MDX */}
+defineAll();
 export const components = {
   'ae-button': 'ae-button'
 };
