@@ -1,6 +1,6 @@
 import { ColumnDef } from '../models/column-model';
 import { ColumnFiltersState, defaultStringFilter } from '../models/filter-model';
-import { getCellValue } from './sort-utils';
+import { getCellValue } from './common-utils';
 
 /**
  * Filters data rows based on column filters and global filter

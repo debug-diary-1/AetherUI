@@ -9,7 +9,7 @@ export default defineConfig({
       fileName: 'index',
       formats: ['es']
     },
-    target: 'es2019',
+    target: 'es2022',
     outDir: 'dist',
     rollupOptions: {
       external: [/^lit/]

@@ -143,5 +143,3 @@ export const autocompleteStyles = css`
     height: 14px;
   }
 `;
-
-export default autocompleteStyles;

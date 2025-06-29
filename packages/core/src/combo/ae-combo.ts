@@ -2,7 +2,7 @@ import { html, LitElement } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import { ComboController } from './controller';
 import type { ComboFilterFunction, ComboItem } from './types';
-import comboStyles from './styles';
+import { comboStyles } from './styles';
 
 /**
  * Aether UI Combobox Component 
@@ -118,7 +118,7 @@ export class AeCombo extends LitElement {
   private handleInput(e: Event) {
     const input = e.target as HTMLInputElement;
     this.value = input.value;
-    this.controller.filterWithDebounce(input.value);
+    this.controller.filter(input.value);
     
     // Always open dropdown when typing unless disabled
     if (!this.disabled) {
@@ -241,12 +241,10 @@ export class AeCombo extends LitElement {
    * Scroll the listbox to show the highlighted option
    */
   private scrollToHighlighted() {
-    requestAnimationFrame(() => {
-      const highlighted = this.listboxElement?.querySelector('.option[data-highlighted]');
-      if (highlighted) {
-        highlighted.scrollIntoView({ block: 'nearest' });
-      }
-    });
+    const highlighted = this.listboxElement?.querySelector('.option[data-highlighted]');
+    if (highlighted) {
+      highlighted.scrollIntoView({ block: 'nearest' });
+    }
   }
 
   /**

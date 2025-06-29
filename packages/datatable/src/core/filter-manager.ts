@@ -1,12 +1,16 @@
 import { ColumnFiltersState } from '../models/filter-model';
+import { filterData } from '../utils/filter-utils';
 
 /**
  * The FilterManager class is responsible for handling filtering operations
  * @template T The type of data being filtered
  */
 export class FilterManager<T> {
-  // Add methods for applying filters to data
-
+  private _columnFilters: ColumnFiltersState = [];
+  private _globalFilter: string = '';
+  private _enableFiltering: boolean = true;
+  private _enableColumnFilters: boolean = true;
+  
   /**
    * Apply the current filter configuration to data
    * @param data Data to filter
@@ -14,129 +18,9 @@ export class FilterManager<T> {
    * @returns Filtered data
    */
   applyFilters(data: T[], columns: any[]): T[] {
-    const filteredData = [...data];
-
-    // No filters, return all data
-    if (this._columnFilters.length === 0 && this._globalFilter === '') {
-      return filteredData;
-    }
-
-    // Apply global filter first (across all filterable columns)
-    let result = filteredData;
-    if (this._globalFilter !== '') {
-      result = result.filter(row => {
-        // Check all filterable columns for a match
-        return columns.some(column => {
-          if (column.enableGlobalFilter === false) return false;
-
-          const value = this.getValueForFiltering(row, column);
-          return this.matchesFilter(value, this._globalFilter);
-        });
-      });
-    }
-
-    // Then apply column-specific filters
-    if (this._columnFilters.length > 0) {
-      result = result.filter(row => {
-        // Must pass all column filters
-        return this._columnFilters.every(filter => {
-          const column = columns.find(col => col.id === filter.id);
-          if (!column) return true; // Skip if column not found
-
-          const value = this.getValueForFiltering(row, column);
-          return this.matchesFilter(value, filter.value);
-        });
-      });
-    }
-
-    return result;
+    // Delegate to the utility function
+    return filterData(data, this._columnFilters, this._globalFilter, columns);
   }
-
-  /**
-   * Extract value for filtering from a row based on column definition
-   * @param row Row data
-   * @param column Column definition
-   * @returns Value to use for filtering
-   */
-  private getValueForFiltering(row: T, column: any): any {
-    // Use function if provided
-    if (column.accessor && typeof column.accessor === 'function') {
-      return column.accessor(row);
-    }
-
-    // Use accessorKey if it's a string
-    if (column.accessorKey && typeof column.accessorKey === 'string') {
-      return (row as any)[column.accessorKey];
-    }
-
-    // Fallback to using column id as property name
-    return (row as any)[column.id];
-  }
-
-  /**
-   * Check if a value matches a filter
-   * @param value Value to check
-   * @param filter Filter string
-   * @returns True if the value matches the filter
-   */
-  private matchesFilter(value: any, filter: string): boolean {
-    if (filter === '') return true;
-    if (value === null || value === undefined) return false;
-
-    // For numbers, try specific comparisons
-    if (typeof value === 'number') {
-      // Check for comparison operators
-      if (filter.startsWith('>=')) {
-        return value >= Number(filter.slice(2));
-      } else if (filter.startsWith('<=')) {
-        return value <= Number(filter.slice(2));
-      } else if (filter.startsWith('>')) {
-        return value > Number(filter.slice(1));
-      } else if (filter.startsWith('<')) {
-        return value < Number(filter.slice(1));
-      } else if (filter.startsWith('=')) {
-        return value === Number(filter.slice(1));
-      }
-    }
-
-    // For dates, try date comparisons
-    if (value instanceof Date) {
-      const dateValue = value;
-
-      if (filter.startsWith('>=')) {
-        const filterDate = new Date(filter.slice(2));
-        return !isNaN(filterDate.getTime()) && dateValue >= filterDate;
-      } else if (filter.startsWith('<=')) {
-        const filterDate = new Date(filter.slice(2));
-        return !isNaN(filterDate.getTime()) && dateValue <= filterDate;
-      } else if (filter.startsWith('>')) {
-        const filterDate = new Date(filter.slice(1));
-        return !isNaN(filterDate.getTime()) && dateValue > filterDate;
-      } else if (filter.startsWith('<')) {
-        const filterDate = new Date(filter.slice(1));
-        return !isNaN(filterDate.getTime()) && dateValue < filterDate;
-      }
-
-      // Try exact date match
-      const filterDate = new Date(filter);
-      if (!isNaN(filterDate.getTime())) {
-        return dateValue.toDateString() === filterDate.toDateString();
-      }
-
-      // Fallback to string contains for dates
-      return dateValue.toISOString().toLowerCase().includes(filter.toLowerCase());
-    }
-
-    // Default string contains check
-    const strValue = String(value).toLowerCase();
-    const strFilter = filter.toLowerCase();
-
-    return strValue.includes(strFilter);
-  }
-  private _columnFilters: ColumnFiltersState = [];
-  private _globalFilter: string = '';
-  private _enableFiltering: boolean = true;
-  private _enableColumnFilters: boolean = true;
   
   /**
    * Initialize filter state and options

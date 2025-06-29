@@ -2,7 +2,7 @@ import { html, LitElement } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import { AutocompleteController } from './controller';
 import type { AutocompleteOption, AutocompleteFilterFunction } from './types';
-import autocompleteStyles from './styles';
+import { autocompleteStyles } from './styles';
 
 /**
  * Aether UI Autocomplete Component
@@ -231,10 +231,12 @@ export class AeAutocomplete extends LitElement {
    */
   private _handleBlur() {
     this._hasFocus = false;
-    // Close after a short delay to allow click events to process
-    setTimeout(() => {
-      this._controller.close();
-    }, 150);
+    // Use requestAnimationFrame to ensure click events are processed first
+    requestAnimationFrame(() => {
+      if (!this._hasFocus) {
+        this._controller.close();
+      }
+    });
   }
 
   /**

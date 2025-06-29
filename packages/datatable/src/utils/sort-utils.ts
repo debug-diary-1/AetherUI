@@ -1,23 +1,7 @@
 import { ColumnDef } from '../models/column-model';
 import { SortingState, defaultSortCompare } from '../models/sort-model';
+import { getCellValue } from './common-utils';
 
-/**
- * Gets the value for a given column in a row
- * @param row The data row
- * @param column The column definition
- * @returns The value for the column in the row
- */
-export function getCellValue<T>(row: T, column: ColumnDef<T>): any {
-  if (column.accessor) {
-    return column.accessor(row);
-  }
-  
-  if (column.field !== undefined) {
-    return row[column.field];
-  }
-  
-  return undefined;
-}
 
 /**
  * Sorts data rows based on sort configuration

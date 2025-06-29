@@ -100,10 +100,8 @@ export class AeTreeView extends LitElement {
 
     if (changedProperties.has('data') || changedProperties.has('expanded')) {
       // Update keyboard controller with new nodes
-      requestAnimationFrame(() => {
-        const nodes = Array.from(this.renderRoot.querySelectorAll('.tree-node'));
-        this.keyboardController.setNodes(nodes as HTMLElement[]);
-      });
+      const nodes = Array.from(this.renderRoot.querySelectorAll('.tree-node'));
+      this.keyboardController.setNodes(nodes as HTMLElement[]);
     }
   }
 
