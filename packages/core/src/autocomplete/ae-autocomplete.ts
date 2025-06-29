@@ -1,6 +1,5 @@
 import { html, LitElement } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { AutocompleteController } from './controller';
 import type { AutocompleteOption, AutocompleteFilterFunction } from './types';
 import autocompleteStyles from './styles';
@@ -274,6 +273,16 @@ export class AeAutocomplete extends LitElement {
   }
 
   /**
+   * Helper to generate class string from conditions
+   */
+  private _getClasses(classes: Record<string, boolean>): string {
+    return Object.entries(classes)
+      .filter(([_, active]) => active)
+      .map(([className]) => className)
+      .join(' ');
+  }
+
+  /**
    * Dispatch change event
    */
   private _dispatchChangeEvent(value: string) {
@@ -382,7 +391,7 @@ export class AeAutocomplete extends LitElement {
         <ul class="autocomplete-options" role="listbox" part="options">
           ${filteredOptions.map((option, index) => html`
               <li
-                class=${classMap({
+                class=${this._getClasses({
                   'autocomplete-option': true,
                   'highlighted': index === highlightedIndex,
                   'disabled': !!option.disabled
@@ -415,7 +424,7 @@ export class AeAutocomplete extends LitElement {
                 
                 return html`
                   <li
-                    class=${classMap({
+                    class=${this._getClasses({
                       'autocomplete-option': true,
                       'highlighted': flatIndex === highlightedIndex,
                       'disabled': !!option.disabled
@@ -501,7 +510,7 @@ export class AeAutocomplete extends LitElement {
         ${this._renderArrow()}
         
         <div 
-          class=${classMap({
+          class=${this._getClasses({
             'autocomplete-dropdown': true,
             'open': this._controller.isOpen
           })}
