@@ -4,13 +4,8 @@ description: Primary action trigger with variants (primary, secondary, ghost, ic
 ---
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ButtonExample from '../../../components/ButtonExample.astro';
-import { defineAll } from '@aetherui/core';
 
-{/* Register custom elements for MDX */}
-defineAll();
-export const components = {
-  'ae-button': 'ae-button'
-};
+{/* Custom elements are registered in ButtonExample component */}
 
 # Button Component
 
@@ -59,14 +54,13 @@ The Button component is a clickable element that triggers an action with differe
 ## Import
 
 ```js
-// Option 1: Import the specific component definition (for minimal bundle size)
-import '@aetherui/core/button/define.js';
+// Option 1: Import and register specific component
+import { defineAeButton } from '@aetherui/core/button';
+defineAeButton();
 
-// Option 2: Import all components through auto-register (recommended)
-import '@aetherui/core/auto-register';
-
-// Option 3: Import all components at once (includes auto-registration)
-import '@aetherui/core';
+// Option 2: Import and register all components at once
+import { defineAll } from '@aetherui/core';
+defineAll();
 ```
 
 ## Basic Usage

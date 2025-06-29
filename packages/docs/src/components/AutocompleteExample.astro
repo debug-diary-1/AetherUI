@@ -28,8 +28,9 @@ const exampleId = `autocomplete-example-${Math.random().toString(36).slice(2, 10
 </div>
 
 <script>
-  // Import the auto-register module which registers all components
-  import '@aetherui/core/auto-register';
+  // Import and call defineAll to register all components
+  import { defineAll } from '@aetherui/core';
+  defineAll();
   
   // Set up event listeners for initializing the examples
   document.addEventListener('DOMContentLoaded', initializeExamples);
