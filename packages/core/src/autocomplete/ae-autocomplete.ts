@@ -2,7 +2,7 @@ import { html, LitElement } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import { AutocompleteController } from './controller';
 import type { AutocompleteOption, AutocompleteFilterFunction } from './types';
-import autocompleteStyles from './styles';
+import { autocompleteStyles } from './styles';
 
 /**
  * Aether UI Autocomplete Component

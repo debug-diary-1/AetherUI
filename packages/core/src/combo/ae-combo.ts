@@ -2,7 +2,7 @@ import { html, LitElement } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import { ComboController } from './controller';
 import type { ComboFilterFunction, ComboItem } from './types';
-import comboStyles from './styles';
+import { comboStyles } from './styles';
 
 /**
  * Aether UI Combobox Component 

@@ -146,5 +146,3 @@ export const comboStyles = css`
     margin: 0 -2px;
   }
 `;
-
-export default comboStyles;
