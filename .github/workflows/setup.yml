@@ -1,0 +1,77 @@
+name: Setup Environment
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'Node.js version'
+        required: false
+        type: string
+        default: '20'
+      pnpm-version:
+        description: 'pnpm version'
+        required: false
+        type: string
+        default: '10.10.0'
+      install-deps:
+        description: 'Install dependencies'
+        required: false
+        type: boolean
+        default: true
+      frozen-lockfile:
+        description: 'Use frozen lockfile'
+        required: false
+        type: boolean
+        default: true
+    outputs:
+      pnpm-store-path:
+        description: 'pnpm store path'
+        value: ${{ jobs.setup.outputs.pnpm-store-path }}
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      pnpm-store-path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ inputs.pnpm-version }}
+          run_install: false
+          
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
+        
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+            
+      - name: Cache Nx
+        uses: actions/cache@v4
+        with:
+          path: .nx/cache
+          key: nx-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('nx.json') }}
+          restore-keys: |
+            nx-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}-
+            nx-${{ runner.os }}-
+            
+      - name: Install dependencies
+        if: ${{ inputs.install-deps }}
+        run: |
+          if [ "${{ inputs.frozen-lockfile }}" = "true" ]; then
+            pnpm install --frozen-lockfile
+          else
+            pnpm install --no-frozen-lockfile
+          fi
