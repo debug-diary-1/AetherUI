@@ -35,10 +35,14 @@
       "options": {
         "command": "astro dev",
         "cwd": "packages/docs"
-      },
-      "dependsOn": [
-        "^build"
-      ]
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "astro dev",
+        "cwd": "packages/docs"
+      }
     }
   },
   "tags": [

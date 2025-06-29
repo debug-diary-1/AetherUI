@@ -1,122 +1,37 @@
-/* Global styles for AetherUI components */
-
-/* Import monospace font with display swap for better performance */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap&font-display=swap');
-
-/* Base color tokens */
+/* AetherUI component tokens - minimal set */
 :root {
-  /* Base colors */
+  /* Map to Starlight theme colors */
   --ae-color-brand-600: var(--sl-color-accent);
-  --ae-color-brand-700: var(--sl-color-accent-high);
-  --ae-color-text-primary: var(--sl-color-gray-9);
-  --ae-color-base-200: var(--sl-color-gray-2);
-  --ae-color-base-300: var(--sl-color-gray-3);
+  --ae-color-text-primary: var(--sl-color-text);
+  --ae-color-base-200: var(--sl-color-gray-6);
+  --ae-color-base-300: var(--sl-color-gray-5);
   
-  /* Button component tokens */
-  --ae-button-bg-primary: var(--ae-color-brand-600);
+  /* Font tokens for components */
+  --ae-font-family: var(--sl-font);
+  --ae-font-weight: 300;
+  
+  /* Button tokens */
+  --ae-button-bg-primary: var(--sl-color-accent);
   --ae-button-fg-primary: white;
-  --ae-button-bg-secondary: var(--ae-color-base-200);
-  --ae-button-fg-secondary: var(--ae-color-text-primary);
+  --ae-button-bg-secondary: var(--sl-color-gray-6);
+  --ae-button-fg-secondary: var(--sl-color-text);
   --ae-button-radius: 0.375rem;
-  --ae-button-padding-x: 1rem;
-  --ae-button-padding-y: 0.5rem;
-  --ae-button-gap: 0.5rem;
-  --ae-focus-ring-color: var(--ae-color-brand-600);
+  --ae-button-font-weight: 400;
   
-  /* Custom typography */
-  --ae-font-mono: 'JetBrains Mono', monospace;
-  --sl-font-mono: 'JetBrains Mono', monospace;
-}
-
-/* Dark mode tokens */
-[data-theme="dark"] {
-  --ae-color-brand-600: var(--sl-color-accent);
-  --ae-color-brand-700: var(--sl-color-accent-high);
-  --ae-color-text-primary: white;
-  --ae-color-base-200: var(--sl-color-gray-5);
-  --ae-color-base-300: var(--sl-color-gray-4);
-  
-  /* Button dark mode tokens */
-  --ae-button-bg-primary: var(--ae-color-brand-600);
-  --ae-button-fg-primary: white;
-  --ae-button-bg-secondary: var(--ae-color-base-200);
-  --ae-button-fg-secondary: white;
-}
-
-/* Modal styles */
-ae-modal {
-  --ae-modal-background: var(--sl-color-white);
+  /* Modal tokens */
+  --ae-modal-background: var(--sl-color-bg-nav);
   --ae-modal-border-radius: 0.5rem;
-  --ae-color-border: var(--sl-color-gray-3);
-  --ae-modal-text-color: var(--sl-color-black);
-  --ae-modal-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --ae-modal-backdrop-color: rgba(0, 0, 0, 0.4);
-  --ae-modal-backdrop-blur: 2px;
+  --ae-color-border: var(--sl-color-gray-5);
+  --ae-modal-text-color: var(--sl-color-text);
+  
+  /* Tooltip tokens */
+  --ae-tooltip-bg: var(--sl-color-gray-1);
+  --ae-tooltip-fg: var(--sl-color-white);
+  --ae-tooltip-radius: 0.25rem;
+  --ae-tooltip-font-weight: 300;
 }
 
-/* Dark mode modal styles */
-[data-theme="dark"] ae-modal {
-  --ae-modal-background: var(--sl-color-gray-6);
-  --ae-color-border: var(--sl-color-gray-4);
-  --ae-modal-text-color: var(--sl-color-white);
-  --ae-modal-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
-}
-
-/* No special fallback styles needed with auto-register approach */ 
-
-/* Apply monospace font to code elements - simplified */
-code, pre, .monospace {
-  font-family: var(--sl-font-mono);
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Enhanced code blocks with better spacing and sizing */
-pre {
-  line-height: 1.5;
-  font-size: 0.9rem;
-}
-
-/* Enhance inline code elements */
-:not(pre) > code {
-  font-size: 0.9em;
-  padding: 0.15em 0.3em;
-  border-radius: 0.3em;
-  background-color: var(--sl-color-gray-1);
-  font-weight: 500;
-}
-
-/* Dark mode inline code */
-[data-theme="dark"] :not(pre) > code {
-  background-color: var(--sl-color-gray-6);
-}
-
-/* Optional: Enhance copy button visibility for better UX */
-.copy-button {
-  opacity: 0.7;
-  transition: opacity 0.2s ease;
-}
-
-.copy-button:hover {
-  opacity: 1;
-}
-
-/* Adornments: light line numbers on code blocks */
-.code-block-container [class*="code-line-number"] {
-  color: var(--sl-color-gray-4);
-  font-size: 0.85em;
-}
-
-[data-theme="dark"] .code-block-container [class*="code-line-number"] {
-  color: var(--sl-color-gray-5);
-}
-
-/* Tooltip component variables */
-:root {
-  --ae-tooltip-bg: #111;
-  --ae-tooltip-fg: #fff;
-  --ae-tooltip-radius: 4px;
-  --ae-tooltip-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  --ae-tooltip-padding: 0.375rem 0.5rem;
-  --ae-tooltip-z-index: 1200;
-  --ae-tooltip-font-size: 0.8125rem;
+/* Dark mode adjustments */
+[data-theme="dark"] {
+  --ae-tooltip-bg: var(--sl-color-gray-2);
 }

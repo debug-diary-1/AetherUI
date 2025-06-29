@@ -31,34 +31,6 @@ export default defineConfig({
             content: 'A headless, framework-agnostic Web Component library built on Lit',
           },
         },
-        // Import the monospace fonts
-        {
-          tag: 'link',
-          attrs: {
-            rel: 'preconnect',
-            href: 'https://fonts.googleapis.com',
-          },
-        },
-        {
-          tag: 'link',
-          attrs: {
-            rel: 'preconnect',
-            href: 'https://fonts.gstatic.com',
-            crossorigin: 'anonymous',
-          },
-        },
-        {
-          tag: 'link',
-          attrs: {
-            rel: 'stylesheet',
-            href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap',
-          },
-        },
-        // Simple style for code elements
-        {
-          tag: 'style',
-          content: `:root { --sl-font-mono: 'JetBrains Mono', monospace; }`,
-        },
       ],
       logo: {
         src: './src/assets/logo.svg',
@@ -103,14 +75,7 @@ export default defineConfig({
         },
       ],
       components: {
-        PageTitle: './src/components/PageTitle.astro',
         Hero: './src/components/Hero.astro',
-        InteractiveExample: './src/components/InteractiveExample.astro',
-        DropdownExample: './src/components/DropdownExample.astro',
-        TreeViewExample: './src/components/TreeViewExample.astro',
-        AutocompleteExample: './src/components/AutocompleteExample.astro',
-        ToastExample: './src/components/ToastExample.astro',
-        TooltipExample: './src/components/TooltipExample.astro',
       },
       customCss: [
         './src/styles/custom.css', 
