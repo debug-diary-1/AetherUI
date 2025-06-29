@@ -104,10 +104,7 @@ export class AeTooltip extends LitElement {
   }
 
   protected firstUpdated() {
-    // Wait for the next tick to ensure slot content is ready
-    requestAnimationFrame(() => {
-      this._findAnchorElement();
-    });
+    this._findAnchorElement();
   }
 
   protected updated(changedProperties: PropertyValues) {

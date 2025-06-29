@@ -8,7 +8,7 @@ export * from './models/filter-model';
 export * from './models/pagination-model';
 export * from './utils/sort-utils';
 export * from './utils/filter-utils';
-export * from './utils/virtualization-utils';
+export * from './utils/common-utils';
 export * from './controllers/datatable-controller';
 
 // Export constants

@@ -25,7 +25,6 @@ import './ae-datatable-cell';
  * @property {boolean} paginated - Whether to enable pagination
  * @property {number} pageSize - Number of rows per page
  * @property {string} emptyMessage - Message to display when there is no data
- * @property {boolean} virtualized - Whether to use virtualized scrolling for large datasets
  * @property {boolean} resizable - Whether columns can be resized
  * 
  * @fires {CustomEvent} ae-datatable-sort - Fired when a column is sorted
@@ -117,11 +116,6 @@ export class AeDataTable<T extends Record<string, any>> extends LitElement {
   @property({ type: String, reflect: true, attribute: 'empty-message' })
   emptyMessage = 'No data to display';
 
-  /**
-   * Whether to use virtualized scrolling for large datasets
-   */
-  @property({ type: Boolean, reflect: true })
-  virtualized = false;
 
   /**
    * Whether columns can be resized
