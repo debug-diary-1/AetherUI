@@ -108,7 +108,7 @@ jobs:
         run: pnpm install --frozen-lockfile
       
       - name: Build dependencies
-        run: pnpm turbo run build --filter="@aetherui/core" --filter="@aetherui/tokens" --no-daemon
+        run: npx nx run-many --target=build --projects=@aetherui/core,@aetherui/tokens --parallel=2
         
       - name: Build Storybook
         id: build-storybook
