@@ -1,5 +1,4 @@
 import { ColumnFiltersState } from '../models/filter-model';
-import { getCellValue } from '../utils/common-utils';
 import { filterData } from '../utils/filter-utils';
 
 /**

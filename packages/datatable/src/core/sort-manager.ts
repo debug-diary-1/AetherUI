@@ -1,5 +1,4 @@
 import { SortingState, SortDirection } from '../models/sort-model';
-import { getCellValue } from '../utils/common-utils';
 import { sortData } from '../utils/sort-utils';
 
 /**
