@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test AetherUI Components</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .test-section {
+      margin-bottom: 3rem;
+    }
+    h2 {
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>AetherUI Components Test</h1>
+  
+  <div class="test-section">
+    <h2>Autocomplete Component</h2>
+    <ae-autocomplete 
+      placeholder="Search countries..."
+      id="autocomplete-test">
+    </ae-autocomplete>
+    <p>Status: <span id="autocomplete-status">Not loaded</span></p>
+  </div>
+
+  <div class="test-section">
+    <h2>Combo Component</h2>
+    <ae-combo 
+      placeholder="Select a fruit..."
+      id="combo-test">
+    </ae-combo>
+    <p>Status: <span id="combo-status">Not loaded</span></p>
+  </div>
+
+  <div class="test-section">
+    <h2>Alert Component (Control)</h2>
+    <ae-alert type="info">
+      This is a test alert to verify components are loading.
+    </ae-alert>
+    <p>Status: <span id="alert-status">Not loaded</span></p>
+  </div>
+
+  <script type="module">
+    // Import and register components
+    import { defineAll } from './packages/core/dist/index.js';
+    
+    console.log('Loading components...');
+    
+    try {
+      defineAll();
+      console.log('defineAll() called successfully');
+    } catch (error) {
+      console.error('Error calling defineAll():', error);
+    }
+    
+    // Check if components are registered
+    setTimeout(() => {
+      const checkComponent = (tagName, statusId) => {
+        const element = document.querySelector(tagName);
+        const status = document.getElementById(statusId);
+        const isDefined = customElements.get(tagName) !== undefined;
+        
+        if (isDefined && element) {
+          status.textContent = '✓ Loaded and rendered';
+          status.style.color = 'green';
+        } else if (isDefined) {
+          status.textContent = '✓ Defined but not rendered';
+          status.style.color = 'orange';
+        } else {
+          status.textContent = '✗ Not defined';
+          status.style.color = 'red';
+        }
+        
+        console.log(`${tagName}: defined=${isDefined}, element=${!!element}`);
+      };
+      
+      checkComponent('ae-autocomplete', 'autocomplete-status');
+      checkComponent('ae-combo', 'combo-status');
+      checkComponent('ae-alert', 'alert-status');
+      
+      // Set options for testing
+      const autocomplete = document.getElementById('autocomplete-test');
+      if (autocomplete) {
+        autocomplete.options = ['Apple', 'Banana', 'Cherry', 'Date'];
+      }
+      
+      const combo = document.getElementById('combo-test');
+      if (combo) {
+        combo.items = ['Apple', 'Banana', 'Cherry', 'Date'];
+      }
+    }, 500);
+  </script>
+</body>
+</html>

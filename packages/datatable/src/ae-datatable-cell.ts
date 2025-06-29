@@ -20,7 +20,7 @@ export class AeDatatableCell extends LitElement {
    * Text alignment
    */
   @property({ type: String, reflect: true })
-  accessor align: 'left' | 'center' | 'right' = 'left';
+  align: 'left' | 'center' | 'right' = 'left';
 
   render() {
     return html`

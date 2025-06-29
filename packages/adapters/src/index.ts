@@ -5,5 +5,7 @@
 
 export { AeButton as ReactAeButton } from './react';
 export { AeButton as VueAeButton } from './vue';
-export { AeButton as SvelteAeButton } from './svelte';
-export { AeButtonComponent as AngularAeButton } from './angular'; 
+export { AeButtonComponent as AngularAeButton } from './angular';
+
+// Note: Svelte adapter is not yet implemented
+// For Svelte, use the web components directly from @aetherui/core 

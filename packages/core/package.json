@@ -33,11 +33,6 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     },
-    "./auto-register": {
-      "import": "./dist/auto-register.js",
-      "require": "./dist/auto-register.js",
-      "types": "./dist/auto-register.d.ts"
-    },
     "./accordion": {
       "types": "./dist/accordion/index.d.ts",
       "import": "./dist/accordion/index.js",
@@ -130,7 +125,7 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.0",
-    "lit": "^3.0.0",
+    "lit": "^3.3.0",
     "lit-modal-portal": "^0.6.0"
   },
   "devDependencies": {

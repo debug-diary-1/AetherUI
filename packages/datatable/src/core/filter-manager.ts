@@ -10,7 +10,7 @@ export class FilterManager<T> {
   /**
    * Apply the current filter configuration to data
    * @param data Data to filter
-   * @param columns Column definitions with accessor functions
+   * @param columns Column definitions with functions
    * @returns Filtered data
    */
   applyFilters(data: T[], columns: any[]): T[] {
@@ -59,7 +59,7 @@ export class FilterManager<T> {
    * @returns Value to use for filtering
    */
   private getValueForFiltering(row: T, column: any): any {
-    // Use accessor function if provided
+    // Use function if provided
     if (column.accessor && typeof column.accessor === 'function') {
       return column.accessor(row);
     }
