@@ -1,9 +1,5 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
-
-// Remove server-side registration since it's causing issues
-// import { registerAetherComponents } from '../components/AetherComponents';
-// registerAetherComponents();
 ---
 
 <slot />
@@ -11,43 +7,18 @@ import { ViewTransitions } from 'astro:transitions';
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
 <script>
-  // Direct client-side component registration
-  document.addEventListener('DOMContentLoaded', async () => {
-    try {
-      // Import the core package
-      const core = await import('@aetherui/core');
-      
-      // Define all components
-      if (typeof core.defineAll === 'function') {
-        core.defineAll();
-        console.log('Aether UI components registered on client');
-      }
-      
-      // Explicitly define TreeView
-      if (typeof core.defineAeTreeView === 'function') {
-        core.defineAeTreeView();
-        console.log('TreeView component registered');
-      }
-      
-      // Initialize any TreeViews on the page
-      document.querySelectorAll('ae-treeview').forEach(treeview => {
-        if (treeview.hasAttribute('data')) {
-          try {
-            const dataValue = treeview.getAttribute('data');
-            if (dataValue) {
-              const data = JSON.parse(dataValue);
-              console.log('Setting TreeView data:', data);
-              // @ts-ignore: Property assignment
-              treeview.data = data;
-            }
-          } catch (e) {
-            console.error('Error parsing TreeView data:', e);
-          }
-        }
-      });
-      
-    } catch (error) {
-      console.error('Error registering components:', error);
-    }
+  // Register Aether UI components immediately
+  (async () => {
+    const { defineAll } = await import('@aetherui/core');
+    defineAll();
+    
+    // Dispatch event to signal components are ready
+    window.dispatchEvent(new CustomEvent('aetherui:ready'));
+  })();
+  
+  // Re-register on page navigation (for ViewTransitions)
+  document.addEventListener('astro:page-load', async () => {
+    const { defineAll } = await import('@aetherui/core');
+    defineAll();
   });
 </script>
