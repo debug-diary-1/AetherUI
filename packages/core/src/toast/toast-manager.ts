@@ -97,17 +97,6 @@ export class ToastManager {
     return container;
   }
 
-  /**
-   * Remove all toasts and containers
-   */
-  public clearAll(): void {
-    this.containers.forEach(container => {
-      if (container.parentNode) {
-        container.parentNode.removeChild(container);
-      }
-    });
-    this.containers.clear();
-  }
 }
 
 /**

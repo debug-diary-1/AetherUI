@@ -32,25 +32,17 @@ export const radioStyles = css`
     transition: all 0.2s ease;
   }
 
-  .control::after {
-    content: '';
+  .dot {
     width: calc(var(--ae-radio-size, 18px) * 0.5);
     height: calc(var(--ae-radio-size, 18px) * 0.5);
     border-radius: 50%;
     background: var(--ae-radio-checked-dot-color, white);
-    opacity: 0;
-    transform: scale(0);
     transition: transform 0.2s ease, opacity 0.2s ease;
   }
 
   input:checked + .control {
     border-color: var(--ae-radio-checked-border-color, #4f46e5);
     background: var(--ae-radio-checked-bg, #4f46e5);
-  }
-
-  input:checked + .control::after {
-    opacity: 1;
-    transform: scale(1);
   }
 
   input:focus-visible + .control {

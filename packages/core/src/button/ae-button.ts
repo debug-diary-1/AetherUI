@@ -144,7 +144,7 @@ export class AeButton extends LitElement {
         this.iconOnly = true;
         // Ensure accessibility
         if (!this.hasAttribute('aria-label') && !this.hasAttribute('aria-labelledby')) {
-          console.warn('Icon-only buttons should have an aria-label or aria-labelledby attribute for accessibility');
+          // Icon-only buttons should have an aria-label or aria-labelledby attribute for accessibility
         }
       }
     });

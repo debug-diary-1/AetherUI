@@ -3,13 +3,27 @@
 /* Essential Starlight theme overrides - minimal monochrome design */
 :root {
   /* Accent colors - muted */
-  --sl-color-accent-low: #f5f5f5;
-  --sl-color-accent: #333;
-  --sl-color-accent-high: #000;
+  --sl-color-accent-low: #f0f0f0;
+  --sl-color-accent: #0066cc;
+  --sl-color-accent-high: #0052a3;
+  --sl-color-text-accent: #0066cc;
   
   /* Text colors */
   --sl-color-text: #1a1a1a;
   --sl-color-text-light: #666;
+  --sl-color-text-heading: #000000;
+  
+  /* Base colors */
+  --sl-color-black: #000000;
+  --sl-color-white: #ffffff;
+  
+  /* Gray scale colors */
+  --sl-color-gray-1: #f5f5f5;
+  --sl-color-gray-2: #eaeaea;
+  --sl-color-gray-3: #d4d4d4;
+  --sl-color-gray-4: #a3a3a3;
+  --sl-color-gray-5: #737373;
+  --sl-color-gray-6: #525252;
   
   /* Background colors */
   --sl-color-bg: #fff;
@@ -34,12 +48,26 @@
 
 /* Dark mode overrides */
 :root[data-theme='dark'] {
-  --sl-color-accent-low: #1a1a1a;
-  --sl-color-accent: #ccc;
-  --sl-color-accent-high: #fff;
+  --sl-color-accent-low: #1a3a5c;
+  --sl-color-accent: #4da3ff;
+  --sl-color-accent-high: #80c0ff;
+  --sl-color-text-accent: #4da3ff;
   
   --sl-color-text: #fff;
   --sl-color-text-light: #999;
+  --sl-color-text-heading: #ffffff;
+  
+  /* Base colors for dark mode */
+  --sl-color-black: #000000;
+  --sl-color-white: #ffffff;
+  
+  /* Gray scale colors for dark mode */
+  --sl-color-gray-1: #1a1a1a;
+  --sl-color-gray-2: #262626;
+  --sl-color-gray-3: #333333;
+  --sl-color-gray-4: #4d4d4d;
+  --sl-color-gray-5: #737373;
+  --sl-color-gray-6: #0a0a0a;
   
   --sl-color-bg: #0a0a0a;
   --sl-color-bg-offset: #141414;
@@ -59,10 +87,20 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   letter-spacing: -0.02em;
+  color: var(--sl-color-text);
+  line-height: 1.2;
 }
 
 /* Strong elements use bold weight */
 strong, b {
+  font-weight: 600;
+}
+
+/* Sidebar navigation headings */
+.sl-sidebar-group-label,
+.sl-sidebar-group h2,
+.sl-sidebar-group h3 {
+  color: var(--sl-color-text-heading);
   font-weight: 600;
 }
 
@@ -96,6 +134,87 @@ strong, b {
 .example-code {
   background: var(--sl-color-gray-6);
   padding: 1rem;
+}
+
+/* Theme selector styling */
+.sl-theme-select,
+starlight-theme-select select,
+[data-theme-select],
+select[aria-label*="theme"],
+select[aria-label*="Theme"] {
+  color: var(--sl-color-text);
+  background-color: var(--sl-color-bg-offset);
+  border-color: var(--sl-color-border);
+}
+
+/* Theme selector option styling */
+.sl-theme-select option,
+starlight-theme-select option,
+[data-theme-select] option,
+select[aria-label*="theme"] option,
+select[aria-label*="Theme"] option {
+  color: var(--sl-color-text);
+  background-color: var(--sl-color-bg);
+}
+
+/* Layout adjustments for wider content area */
+:root {
+  /* Increase content width significantly */
+  --sl-content-width: 65rem; /* Default is usually around 45rem */
+  --sl-content-max-width: 90rem; /* Maximum width for very wide screens */
+  
+  /* Adjust sidebar widths if needed */
+  --sl-sidebar-width: 16rem; /* Left sidebar */
+  --sl-toc-width: 14rem; /* Right table of contents */
+}
+
+/* Main content container */
+.sl-container,
+.sl-layout > main,
+main[data-page] {
+  max-width: var(--sl-content-max-width);
+}
+
+/* Content area specific */
+.sl-content,
+.sl-markdown-content,
+article[data-page-content] {
+  max-width: var(--sl-content-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Ensure proper spacing between sidebars and content */
+@media (min-width: 1024px) {
+  .sl-layout {
+    gap: 2rem;
+  }
+  
+  main {
+    flex: 1 1 auto;
+    min-width: 0; /* Prevent overflow */
+  }
+}
+
+/* Responsive adjustments */
+@media (min-width: 1280px) {
+  :root {
+    --sl-content-width: 70rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    --sl-content-width: 80rem;
+    --sl-content-max-width: 100rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --sl-content-width: 90rem;
+    --sl-content-max-width: 110rem;
+  }
 }
 
 /* Responsive tables */

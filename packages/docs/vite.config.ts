@@ -2,15 +2,10 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   optimizeDeps: {
-    include: ['@aetherui/core'],
-    exclude: ['lit', '@floating-ui/dom'],
+    include: ['@aetherui/core', 'lit', '@lit/reactive-element'],
+    exclude: [],
   },
-  build: {
-    commonjsOptions: {
-      include: [/@aetherui\/core/],
-    },
-    rollupOptions: {
-      external: [/^@aetherui\/(?!core)/],
-    },
+  ssr: {
+    noExternal: ['@aetherui/core', 'lit', '@lit/reactive-element'],
   },
 }); 

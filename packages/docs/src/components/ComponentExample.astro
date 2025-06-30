@@ -1,0 +1,89 @@
+---
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+  code?: string;
+  preview?: string;
+  class?: string;
+}
+
+const { code, preview, class: className } = Astro.props;
+---
+
+<div class={`component-example ${className || ''}`}>
+  {preview ? (
+    <div class="preview" data-preview={preview}>
+      <!-- Preview will be injected by client-side script -->
+    </div>
+  ) : (
+    <div class="preview">
+      <slot />
+    </div>
+  )}
+  {code && (
+    <div class="code-preview">
+      <Code code={code} lang="html" />
+    </div>
+  )}
+</div>
+
+<script>
+  // Inject HTML after components are ready
+  function injectPreviews() {
+    const previews = document.querySelectorAll('[data-preview]');
+    previews.forEach(preview => {
+      const html = preview.getAttribute('data-preview');
+      if (html) {
+        preview.innerHTML = html;
+        preview.removeAttribute('data-preview');
+      }
+    });
+  }
+  
+  // Wait for components to be ready
+  const checkAndInject = () => {
+    // Check if at least one custom element is defined
+    const isDefined = ['ae-button', 'ae-checkbox', 'ae-radio', 'ae-treeview', 'ae-toast', 'ae-tooltip']
+      .some(tag => window.customElements.get(tag) !== undefined);
+    
+    if (isDefined) {
+      injectPreviews();
+    } else {
+      // Try again in a moment
+      setTimeout(checkAndInject, 50);
+    }
+  };
+  
+  checkAndInject();
+  
+  // Re-inject on page navigation
+  document.addEventListener('astro:page-load', () => {
+    setTimeout(injectPreviews, 50);
+  });
+</script>
+
+<style>
+  .component-example {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: var(--sl-color-gray-1);
+  }
+
+  .preview {
+    padding: 1.5rem;
+    border-radius: 0.25rem;
+    background: var(--sl-color-white);
+    position: relative;
+    min-height: 100px;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  /* Dark mode styles */
+  :global([data-theme="dark"] .preview) {
+    background: var(--sl-color-gray-6);
+  }
+</style>

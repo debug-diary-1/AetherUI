@@ -14,7 +14,7 @@ export const checkboxStyles = css`
     display: inline-block;
   }
 
-  .checkbox {
+  .checkbox-label {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -22,14 +22,14 @@ export const checkboxStyles = css`
     user-select: none;
   }
 
-  input {
+  .checkbox-input {
     position: absolute;
     opacity: 0;
     width: 0;
     height: 0;
   }
 
-  .control {
+  .checkbox-control {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -39,22 +39,23 @@ export const checkboxStyles = css`
     border-radius: var(--ae-checkbox-border-radius, 4px);
     background: var(--ae-checkbox-bg, white);
     transition: all 0.2s ease;
+    flex-shrink: 0;
   }
 
-  .icon, .indeterminate-icon {
-    width: 12px;
-    height: 12px;
+  .checkbox-icon, .indeterminate-icon {
+    width: calc(var(--ae-checkbox-size, 18px) - 6px);
+    height: calc(var(--ae-checkbox-size, 18px) - 6px);
     color: var(--ae-checkbox-checked-icon-color, white);
   }
 
   /* Checked state */
-  input:checked + .control {
+  .checkbox-input:checked + .checkbox-control {
     border-color: var(--ae-checkbox-checked-border-color, #4f46e5);
     background: var(--ae-checkbox-checked-bg, #4f46e5);
   }
 
   /* Indeterminate state - with higher specificity than checked state */
-  :host([indeterminate]) .control {
+  :host([indeterminate]) .checkbox-control {
     border-color: var(--ae-checkbox-indeterminate-border-color, #4f46e5);
     background: var(--ae-checkbox-indeterminate-bg, #4f46e5);
   }
@@ -65,41 +66,41 @@ export const checkboxStyles = css`
   }
 
   /* Focus state */
-  input:focus-visible + .control {
+  .checkbox-input:focus-visible + .checkbox-control {
     outline: 2px solid var(--ae-checkbox-focus-ring-color, #4f46e5);
     outline-offset: 2px;
   }
 
   /* Disabled state */
-  input:disabled + .control {
+  .checkbox-input:disabled + .checkbox-control {
     border-color: var(--ae-checkbox-disabled-border-color, #e5e7eb);
     background: var(--ae-checkbox-disabled-bg, #f3f4f6);
     cursor: not-allowed;
   }
 
   /* Disabled indeterminate state */
-  :host([disabled][indeterminate]) .control {
+  :host([disabled][indeterminate]) .checkbox-control {
     border-color: var(--ae-checkbox-disabled-border-color, #e5e7eb); 
     background: var(--ae-checkbox-disabled-bg, #f3f4f6);
   }
 
-  :host([disabled][indeterminate]) .control .indeterminate-icon {
+  :host([disabled][indeterminate]) .checkbox-control .indeterminate-icon {
     opacity: 0.6;
     color: var(--ae-checkbox-disabled-text-color, #9ca3af);
   }
 
   /* Disabled checked state */
-  :host([disabled][checked]) .control .icon {
+  :host([disabled][checked]) .checkbox-control .checkbox-icon {
     opacity: 0.6;
     color: var(--ae-checkbox-disabled-text-color, #9ca3af);
   }
 
-  input:disabled ~ .label {
+  .checkbox-input:disabled ~ .checkbox-label-text {
     color: var(--ae-checkbox-disabled-text-color, #9ca3af);
     cursor: not-allowed;
   }
 
-  .label {
+  .checkbox-label-text {
     color: var(--ae-checkbox-text-color, inherit);
     font-size: var(--ae-checkbox-font-size, inherit);
   }

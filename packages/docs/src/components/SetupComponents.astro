@@ -1,0 +1,39 @@
+---
+// This component handles client-side component registration
+---
+
+<script>
+  // This script runs in the browser
+  import { defineAll } from '@aetherui/core';
+  
+  // Function to register components
+  function registerComponents() {
+    try {
+      defineAll();
+      console.log('[SetupComponents] Components registered successfully');
+      
+      // Dispatch ready event
+      window.dispatchEvent(new CustomEvent('aetherui:ready'));
+      
+      // Mark as initialized
+      (window as any).__aetherui_initialized = true;
+    } catch (error) {
+      console.error('[SetupComponents] Error registering components:', error);
+    }
+  }
+  
+  // Register immediately
+  registerComponents();
+  
+  // Re-register on navigation
+  document.addEventListener('astro:page-load', () => {
+    console.log('[SetupComponents] Page navigation detected, re-registering');
+    registerComponents();
+  });
+  
+  // Also handle after swap for view transitions
+  document.addEventListener('astro:after-swap', () => {
+    console.log('[SetupComponents] After swap, re-registering');
+    registerComponents();
+  });
+</script>

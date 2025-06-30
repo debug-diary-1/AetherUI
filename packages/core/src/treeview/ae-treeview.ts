@@ -66,26 +66,38 @@ import { treeviewStyles } from './styles';
 export class AeTreeView extends LitElement {
   static styles = treeviewStyles;
 
-  @property({ type: Array })
-  data: TreeNode[] = [];
+  @property({ 
+    type: Array,
+    converter: {
+      fromAttribute: (value: string | null) => {
+        if (!value) return [];
+        try {
+          return JSON.parse(value);
+        } catch {
+          return [];
+        }
+      }
+    }
+  })
+  accessor data: TreeNode[] = [];
 
   @property({ type: Array })
-  expanded: string[] = [];
+  accessor expanded: string[] = [];
 
   @property({ type: Array })
-  selected: string[] = [];
+  accessor selected: string[] = [];
 
-  @property({ type: String })
-  selectionMode: 'single' | 'multiple' = 'single';
+  @property({ type: String, attribute: 'selection-mode' })
+  accessor selectionMode: 'single' | 'multiple' = 'single';
 
-  @property({ type: Number })
-  indentSize = 20;
+  @property({ type: Number, attribute: 'indent-size' })
+  accessor indentSize = 20;
 
   @property({ type: Boolean })
-  loading = false;
+  accessor loading = false;
 
-  @property({ type: String })
-  emptyMessage = 'No items';
+  @property({ type: String, attribute: 'empty-message' })
+  accessor emptyMessage = 'No items';
 
   @state()
   private keyboardController: TreeViewKeyboardController;

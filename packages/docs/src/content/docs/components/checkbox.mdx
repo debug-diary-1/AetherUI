@@ -237,11 +237,11 @@ The indeterminate state is commonly used for "Select All" checkboxes that contro
     
     // Add event listeners to child checkboxes
     childCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('ae-change', updateParentState);
+      checkbox.addEventListener('ae-checkbox-change', updateParentState);
     });
     
     // Add event listener to parent checkbox
-    parentCheckbox.addEventListener('ae-change', (e) => {
+    parentCheckbox.addEventListener('ae-checkbox-change', (e) => {
       const newCheckedState = e.detail.checked;
       childCheckboxes.forEach(checkbox => {
         checkbox.checked = newCheckedState;
@@ -303,11 +303,11 @@ The indeterminate state is commonly used for "Select All" checkboxes that contro
     
     // Add event listeners to child checkboxes
     childCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('ae-change', updateParentState);
+      checkbox.addEventListener('ae-checkbox-change', updateParentState);
     });
     
     // Add event listener to parent checkbox
-    parentCheckbox.addEventListener('ae-change', (e) => {
+    parentCheckbox.addEventListener('ae-checkbox-change', (e) => {
       const newCheckedState = e.detail.checked;
       childCheckboxes.forEach(checkbox => {
         checkbox.checked = newCheckedState;
@@ -343,7 +343,7 @@ The checkbox emits an `ae-change` event when its state changes.
     const setIndeterminateBtn = document.querySelector('#set-indeterminate');
     
     if (checkbox && status) {
-      checkbox.addEventListener('ae-change', (e) => {
+      checkbox.addEventListener('ae-checkbox-change', (e) => {
         status.textContent = \`Checkbox is now \${e.detail.indeterminate ? 'indeterminate' : e.detail.checked ? 'checked' : 'unchecked'}\`;
       });
       
@@ -368,7 +368,7 @@ The checkbox emits an `ae-change` event when its state changes.
     const setIndeterminateBtn = document.querySelector('#set-indeterminate');
     
     if (checkbox && status) {
-      checkbox.addEventListener('ae-change', (e) => {
+      checkbox.addEventListener('ae-checkbox-change', (e) => {
         status.textContent = \`Checkbox is now \${e.detail.indeterminate ? 'indeterminate' : e.detail.checked ? 'checked' : 'unchecked'}\`;
       });
       
@@ -401,7 +401,7 @@ The checkbox emits an `ae-change` event when its state changes.
 
 | Name | Detail | Description |
 |------|--------|-------------|
-| `ae-change` | `{ checked: boolean, indeterminate: boolean }` | Fired when the checkbox state changes |
+| `ae-checkbox-change` | `{ checked: boolean, indeterminate: boolean }` | Fired when the checkbox state changes |
 
 ## CSS Parts
 

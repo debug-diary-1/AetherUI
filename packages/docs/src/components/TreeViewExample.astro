@@ -60,7 +60,7 @@ const menuData = [
     <div class="example-card">
       <h3>Multi-Select</h3>
       <div class="example-preview">
-        <ae-treeview id="multi-select" multi-select="true"></ae-treeview>
+        <ae-treeview id="multi-select" selection-mode="multiple"></ae-treeview>
       </div>
     </div>
 
@@ -187,31 +187,37 @@ const menuData = [
       }
     ];
 
-    // Set data for each TreeView
+    // Set data for each TreeView by setting the data attribute
     const fileExplorer = document.getElementById('file-explorer');
-    if (fileExplorer) fileExplorer.data = fileExplorerData;
+    if (fileExplorer) fileExplorer.setAttribute('data', JSON.stringify(fileExplorerData));
 
     const multiSelect = document.getElementById('multi-select');
-    if (multiSelect) multiSelect.data = fileExplorerData;
+    if (multiSelect) multiSelect.setAttribute('data', JSON.stringify(fileExplorerData));
 
     const menuStructure = document.getElementById('menu-structure');
-    if (menuStructure) menuStructure.data = menuData;
+    if (menuStructure) menuStructure.setAttribute('data', JSON.stringify(menuData));
 
     const emptyState = document.getElementById('empty-state');
-    if (emptyState) emptyState.data = [];
+    if (emptyState) emptyState.setAttribute('data', JSON.stringify([]));
   }
 
   // Initialize when components are ready
-  if (window.customElements.get('ae-treeview')) {
-    initTreeViews();
-  } else {
-    window.addEventListener('aetherui:ready', initTreeViews, { once: true });
+  function waitAndInit() {
+    if (window.customElements.get('ae-treeview')) {
+      initTreeViews();
+    } else {
+      if (window.__aetherui_initialized) {
+        setTimeout(waitAndInit, 50);
+      } else {
+        window.addEventListener('aetherui:ready', initTreeViews, { once: true });
+      }
+    }
   }
+  
+  waitAndInit();
   
   // Re-initialize after page navigation
   document.addEventListener('astro:page-load', () => {
-    if (window.customElements.get('ae-treeview')) {
-      initTreeViews();
-    }
+    waitAndInit();
   });
 </script>

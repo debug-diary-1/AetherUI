@@ -2,8 +2,10 @@
  * Web component test for the ae-tooltip component using @open-wc/testing
  */
 import { html, fixture, expect, oneEvent, elementUpdated } from '@open-wc/testing';
-import '../ae-tooltip.js';
-import { AeTooltip } from '../ae-tooltip.js';
+import { defineAeTooltip, AeTooltip } from '../index.js';
+
+// Define the custom element before tests
+defineAeTooltip();
 
 describe('AeTooltip', () => {
   it('should render with default values', async () => {
@@ -134,8 +136,9 @@ describe('AeTooltip', () => {
       </ae-tooltip>
     `);
 
-    setTimeout(() => el.show());
-    const event = await oneEvent(el, 'ae-open-change');
+    const eventPromise = oneEvent(el, 'ae-open-change');
+    el.show();
+    const event = await eventPromise;
 
     expect(event).to.exist;
     expect(event.detail).to.deep.equal({ open: true });

@@ -49,6 +49,7 @@ export const autocompleteStyles = css`
     max-height: var(--ae-autocomplete-dropdown-max-height, 250px);
     overflow-y: auto;
     background-color: var(--ae-autocomplete-dropdown-background, white);
+    color: var(--ae-autocomplete-dropdown-text-color, #333);
     border: 1px solid var(--ae-autocomplete-dropdown-border-color, #ccc);
     border-radius: 0 0 var(--ae-autocomplete-border-radius, 4px) var(--ae-autocomplete-border-radius, 4px);
     box-shadow: var(--ae-autocomplete-dropdown-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
@@ -69,6 +70,7 @@ export const autocompleteStyles = css`
     padding: 0.5rem 1rem;
     cursor: pointer;
     transition: background-color var(--ae-autocomplete-transition);
+    color: var(--ae-autocomplete-option-text-color, var(--ae-autocomplete-dropdown-text-color, #333));
   }
 
   .autocomplete-option:hover,

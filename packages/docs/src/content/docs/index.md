@@ -1,5 +1,5 @@
 ---
-title: Aether UI
+title: AetherUI
 description: A lightweight collection of Web Components that work everywhere
 template: splash
 hero:
@@ -15,74 +15,97 @@ hero:
 ---
 
 <div class="hero-section">
+  <div class="logo-container">
+    <img src="/logo-large.svg" alt="AetherUI Logo" width="80" height="80" />
+  </div>
   <h1 class="hero-title">AetherUI</h1>
-  <p class="hero-subtitle">A lightweight collection of Web Components that work everywhere</p>
+  <p class="hero-subtitle">Lightweight Web Components that work everywhere</p>
 </div>
 
 <div class="install-section">
-  <div class="install-content">
-    <pre><code>npm install @aetherui/core</code></pre>
-  </div>
+  <pre><code>$ npm install @aetherui/core</code></pre>
 </div>
 
 <div class="example-section">
-  <div class="example-code">
-    <pre><code><span class="token comment">// Import and use any component</span>
-<span class="token keyword">import</span> <span class="token punctuation">{</span> defineAeButton <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@aetherui/core'</span><span class="token punctuation">;</span>
-<span class="token function">defineAeButton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <pre><code># Import and register components
+import { defineAeButton } from '@aetherui/core';
+defineAeButton();
 
-<span class="token comment">// Use it in your HTML</span>
-<span class="token tag">&lt;ae-button variant="primary"&gt;</span>Click me<span class="token tag">&lt;/ae-button&gt;</span></code></pre>
-  </div>
+# Use in your HTML
+&lt;ae-button variant="primary"&gt;Click me&lt;/ae-button&gt;</code></pre>
 </div>
 
-<div class="features-grid">
-  <div class="feature">
-    <h3>Framework Agnostic</h3>
-    <p>Works with React, Vue, Angular, or vanilla JavaScript. True web standards.</p>
+<div class="features-list">
+  <div class="feature-item">
+    <span class="feature-marker">[×]</span>
+    <div>
+      <strong>Framework Agnostic</strong>
+      <span>Works with React, Vue, Angular, or vanilla JS</span>
+    </div>
   </div>
   
-  <div class="feature">
-    <h3>Lightweight</h3>
-    <p>Each component is ≤15KB gzipped. Import only what you need.</p>
+  <div class="feature-item">
+    <span class="feature-marker">[×]</span>
+    <div>
+      <strong>Lightweight</strong>
+      <span>Each component ≤15KB gzipped</span>
+    </div>
   </div>
   
-  <div class="feature">
-    <h3>Accessible</h3>
-    <p>WAI-ARIA compliant with full keyboard navigation out of the box.</p>
+  <div class="feature-item">
+    <span class="feature-marker">[×]</span>
+    <div>
+      <strong>Accessible</strong>
+      <span>WAI-ARIA compliant with keyboard navigation</span>
+    </div>
   </div>
   
-  <div class="feature">
-    <h3>Customizable</h3>
-    <p>Style with CSS variables and shadow parts. Make it yours.</p>
+  <div class="feature-item">
+    <span class="feature-marker">[×]</span>
+    <div>
+      <strong>Customizable</strong>
+      <span>Style with CSS variables and shadow parts</span>
+    </div>
   </div>
 </div>
 
 <div class="cta-section">
-  <a href="/getting-started/installation/" class="primary-button">Documentation →</a>
-  <a href="/components/button/" class="secondary-button">Components</a>
+  <a href="/getting-started/installation/" class="primary-link">[Documentation →]</a>
+  <a href="/components/button/" class="secondary-link">[Components]</a>
 </div>
 
 <style>
-  /* Reset colorful theme - minimal monochrome design */
+  /* Monospace-first design with high contrast */
   :root {
-    --text-primary: #1a1a1a;
-    --text-secondary: #666;
-    --bg-primary: #fff;
-    --bg-secondary: #f7f7f7;
-    --border-color: #e5e5e5;
-    --accent: #000;
-    --code-bg: #f4f4f4;
+    /* Light mode - WCAG AAA compliant */
+    --text-primary: #000000;
+    --text-secondary: #595959;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f5;
+    --border-color: #d4d4d4;
+    --accent: #000000;
+    --code-bg: #f0f0f0;
+    --link-color: #0066cc;
+    --link-hover: #0052a3;
   }
 
-  [data-theme='dark'] {
-    --text-primary: #fff;
-    --text-secondary: #999;
-    --bg-primary: #0a0a0a;
+  :root[data-theme='dark'] {
+    /* Dark mode - WCAG AAA compliant */
+    --text-primary: #ffffff;
+    --text-secondary: #a6a6a6;
+    --bg-primary: #0d0d0d;
     --bg-secondary: #1a1a1a;
-    --border-color: #2a2a2a;
-    --accent: #fff;
-    --code-bg: #1e1e1e;
+    --border-color: #333333;
+    --accent: #ffffff;
+    --code-bg: #1f1f1f;
+    --link-color: #66b3ff;
+    --link-hover: #99ccff;
+  }
+
+  /* Force monospace everywhere */
+  * {
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
+                 'DejaVu Sans Mono', monospace !important;
   }
 
   /* Hide default Starlight hero */
@@ -90,25 +113,34 @@ hero:
     display: none;
   }
 
-  /* Clean hero section */
+  /* Hero section with logo */
   .hero-section {
     text-align: center;
-    padding: 4rem 0 2rem;
+    padding: 3rem 0 2rem;
   }
 
-  .hero-title {
-    font-size: 4rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin: 0 0 1rem;
+  .logo-container {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+
+  .logo-container svg {
     color: var(--text-primary);
   }
 
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
   .hero-subtitle {
-    font-size: 1.25rem;
+    font-size: 1rem;
     color: var(--text-secondary);
     margin: 0;
-    font-weight: 400;
+    letter-spacing: 0.05em;
   }
 
   /* Install section */
@@ -117,18 +149,16 @@ hero:
     padding: 2rem 0;
   }
 
-  .install-content pre {
+  .install-section pre {
     display: inline-block;
     background: var(--code-bg);
     border: 1px solid var(--border-color);
-    border-radius: 6px;
     padding: 1rem 2rem;
     margin: 0;
   }
 
-  .install-content code {
-    font-family: var(--sl-font-mono);
-    font-size: 1rem;
+  .install-section code {
+    font-size: 0.875rem;
     color: var(--text-primary);
     background: none;
     padding: 0;
@@ -140,74 +170,55 @@ hero:
     margin: 3rem auto;
   }
 
-  .example-code pre {
+  .example-section pre {
     background: var(--code-bg);
     border: 1px solid var(--border-color);
-    border-radius: 6px;
     padding: 1.5rem;
     overflow-x: auto;
     margin: 0;
   }
 
-  .example-code code {
-    font-family: var(--sl-font-mono);
-    font-size: 0.9rem;
-    line-height: 1.6;
+  .example-section code {
+    font-size: 0.875rem;
+    line-height: 1.5;
     color: var(--text-primary);
     background: none;
     padding: 0;
+    white-space: pre;
   }
 
-  .token.comment {
-    color: var(--text-secondary);
-  }
-
-  .token.keyword {
-    color: var(--text-primary);
-    font-weight: 500;
-  }
-
-  .token.string {
-    color: var(--text-primary);
-  }
-
-  .token.punctuation {
-    color: var(--text-secondary);
-  }
-
-  .token.function {
-    color: var(--text-primary);
-  }
-
-  .token.tag {
-    color: var(--text-primary);
-  }
-
-  /* Features grid */
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
+  /* Features list */
+  .features-list {
+    max-width: 600px;
     margin: 4rem auto;
-    max-width: 1000px;
+    padding: 0 1rem;
   }
 
-  .feature {
-    text-align: center;
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
   }
 
-  .feature h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 0 0 0.5rem;
-    color: var(--text-primary);
-  }
-
-  .feature p {
-    font-size: 1rem;
+  .feature-marker {
     color: var(--text-secondary);
-    margin: 0;
-    line-height: 1.6;
+    flex-shrink: 0;
+    font-size: 0.875rem;
+  }
+
+  .feature-item strong {
+    display: block;
+    color: var(--text-primary);
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+  }
+
+  .feature-item span {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.4;
   }
 
   /* CTA section */
@@ -216,71 +227,105 @@ hero:
     margin: 4rem 0 2rem;
   }
 
-  .primary-button,
-  .secondary-button {
+  .primary-link,
+  .secondary-link {
     display: inline-block;
     padding: 0.75rem 1.5rem;
     text-decoration: none;
-    border-radius: 6px;
-    font-weight: 400;
-    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    transition: opacity 0.2s ease;
     margin: 0 0.5rem;
   }
 
-  .primary-button {
-    background: var(--accent);
+  .primary-link {
     color: var(--bg-primary);
+    background: var(--accent);
     border: 1px solid var(--accent);
   }
 
-  .primary-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  .primary-link:hover {
+    opacity: 0.8;
   }
 
-  .secondary-button {
-    background: transparent;
+  .secondary-link {
     color: var(--text-primary);
+    background: transparent;
     border: 1px solid var(--border-color);
   }
 
-  .secondary-button:hover {
+  .secondary-link:hover {
     background: var(--bg-secondary);
   }
 
-  /* Remove all animations and colorful elements */
-  @keyframes none {}
-  
-  .logo-container,
-  .key-feature-card::before,
-  .intro-heading::after,
-  .feature-icon,
-  .key-feature-icon,
-  .window-dots,
-  .dot-red,
-  .dot-yellow,
-  .dot-green {
-    display: none !important;
+  /* Ensure all text meets WCAG AAA standards */
+  p, span, div {
+    line-height: 1.5;
+  }
+
+  /* Focus styles for accessibility */
+  a:focus,
+  button:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Print styles */
+  @media print {
+    .ascii-logo {
+      font-family: monospace !important;
+    }
   }
 
   /* Responsive */
   @media (max-width: 768px) {
-    .hero-title {
-      font-size: 3rem;
+    .ascii-logo {
+      font-size: 0.75rem;
     }
 
-    .hero-subtitle {
-      font-size: 1.1rem;
+    .install-section pre {
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
     }
 
-    .features-grid {
-      grid-template-columns: 1fr;
-      gap: 2rem;
+    .example-section pre {
+      padding: 1rem;
+      font-size: 0.75rem;
     }
 
-    .install-content pre {
-      padding: 0.75rem 1.5rem;
-      font-size: 0.9rem;
+    .primary-link,
+    .secondary-link {
+      display: block;
+      margin: 0.5rem auto;
+      max-width: 200px;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    :root {
+      --text-primary: #000000;
+      --text-secondary: #000000;
+      --bg-primary: #ffffff;
+      --bg-secondary: #ffffff;
+      --border-color: #000000;
+      --code-bg: #ffffff;
+    }
+
+    :root[data-theme='dark'] {
+      --text-primary: #ffffff;
+      --text-secondary: #ffffff;
+      --bg-primary: #000000;
+      --bg-secondary: #000000;
+      --border-color: #ffffff;
+      --code-bg: #000000;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
     }
   }
 </style>

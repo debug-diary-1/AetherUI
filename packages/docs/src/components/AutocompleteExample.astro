@@ -89,7 +89,7 @@ const exampleId = `autocomplete-example-${Math.random().toString(36).slice(2, 10
   
   .example-description {
     font-size: 0.9rem;
-    color: var(--sl-color-gray-7);
+    color: var(--sl-color-text-light);
     margin: 0 0 0.5rem 0;
   }
 
@@ -114,7 +114,7 @@ const exampleId = `autocomplete-example-${Math.random().toString(36).slice(2, 10
   }
   
   :global([data-theme="dark"] .example-description) {
-    color: var(--sl-color-gray-3);
+    color: var(--sl-color-text-light);
   }
 
   /* Autocomplete custom styling for examples */
@@ -122,6 +122,24 @@ const exampleId = `autocomplete-example-${Math.random().toString(36).slice(2, 10
     max-width: 400px;
     width: 100%;
     margin-bottom: 1rem;
+    --ae-autocomplete-dropdown-text-color: var(--sl-color-text);
+    --ae-autocomplete-option-text-color: var(--sl-color-text);
+  }
+  
+  /* Autocomplete dropdown styling */
+  :global(.preview ae-autocomplete) {
+    --ae-autocomplete-dropdown-background: var(--sl-color-white);
+    --ae-autocomplete-dropdown-border-color: var(--sl-color-gray-5);
+    --ae-autocomplete-highlight-background: var(--sl-color-gray-2);
+  }
+  
+  /* Dark mode autocomplete dropdown */
+  :global([data-theme="dark"] .preview ae-autocomplete) {
+    --ae-autocomplete-dropdown-background: var(--sl-color-gray-6);
+    --ae-autocomplete-dropdown-border-color: var(--sl-color-gray-4);
+    --ae-autocomplete-highlight-background: var(--sl-color-gray-5);
+    --ae-autocomplete-dropdown-text-color: var(--sl-color-white);
+    --ae-autocomplete-option-text-color: var(--sl-color-white);
   }
   
   :global(.label) {

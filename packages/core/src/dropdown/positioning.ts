@@ -48,7 +48,7 @@ export async function updatePosition(
       visibility: 'visible'
     });
   } catch (error) {
-    console.error('Error positioning dropdown:', error);
+    // Error handled silently
   }
 
   // Return cleanup function

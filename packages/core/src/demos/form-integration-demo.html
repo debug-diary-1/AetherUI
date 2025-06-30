@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AetherUI Form Integration Demo</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      border: 1px solid #e5e5e5;
+      padding: 2rem;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    
+    output {
+      font-family: monospace;
+      background: #f0f0f0;
+      padding: 1rem;
+      border-radius: 4px;
+      white-space: pre-wrap;
+    }
+    
+    /* Custom styles for our components */
+    ae-checkbox {
+      --ae-checkbox-size: 20px;
+      --ae-checkbox-bg-checked: #2563eb;
+    }
+    
+    ae-radio {
+      --ae-radio-size: 20px;
+      --ae-radio-bg-checked: #2563eb;
+    }
+    
+    /* Body scroll lock when modal is open */
+    body.ae-modal-open {
+      overflow: hidden;
+    }
+  </style>
+  
+  <!-- Import and define components -->
+  <script type="module">
+    import { defineAeCheckbox } from '../checkbox/index.js';
+    import { defineAeRadio } from '../radio/index.js';
+    import { defineAeModal } from '../modal/index.js';
+    import { defineAeButton } from '../button/index.js';
+    
+    // Define custom elements
+    defineAeCheckbox();
+    defineAeRadio();
+    defineAeModal();
+    defineAeButton();
+    
+    // Handle modal scroll lock
+    document.addEventListener('ae-modal-open', () => {
+      document.body.classList.add('ae-modal-open');
+    });
+    
+    document.addEventListener('ae-modal-close', () => {
+      document.body.classList.remove('ae-modal-open');
+    });
+  </script>
+</head>
+<body>
+  <h1>AetherUI Form Integration Demo</h1>
+  <p>This demo showcases native form integration using ElementInternals API.</p>
+  
+  <form id="demoForm">
+    <h2>User Preferences</h2>
+    
+    <div class="form-group">
+      <label>Notifications:</label>
+      <ae-checkbox name="notifications" value="email">
+        Email notifications
+      </ae-checkbox>
+      <ae-checkbox name="notifications" value="sms">
+        SMS notifications
+      </ae-checkbox>
+      <ae-checkbox name="notifications" value="push" checked>
+        Push notifications
+      </ae-checkbox>
+    </div>
+    
+    <div class="form-group">
+      <label>Theme preference:</label>
+      <ae-radio name="theme" value="light" checked>Light theme</ae-radio>
+      <ae-radio name="theme" value="dark">Dark theme</ae-radio>
+      <ae-radio name="theme" value="auto">Auto (system)</ae-radio>
+    </div>
+    
+    <div class="form-group">
+      <ae-checkbox name="terms" required>
+        I agree to the terms and conditions
+      </ae-checkbox>
+    </div>
+    
+    <div class="form-row">
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+      <ae-button type="button" variant="secondary" id="showModal">
+        Show Modal
+      </ae-button>
+    </div>
+  </form>
+  
+  <h3>Form Data Output:</h3>
+  <output id="output">Submit the form to see the data...</output>
+  
+  <!-- Modal Example -->
+  <ae-modal id="demoModal" size="small">
+    <h2 slot="header">Form Submitted!</h2>
+    <div slot="body">
+      <p>Your preferences have been saved successfully.</p>
+    </div>
+    <div slot="footer">
+      <ae-button variant="primary" id="closeModal">Close</ae-button>
+    </div>
+  </ae-modal>
+  
+  <script>
+    const form = document.getElementById('demoForm');
+    const output = document.getElementById('output');
+    const modal = document.getElementById('demoModal');
+    const showModalBtn = document.getElementById('showModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    
+    // Handle form submission
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Check form validity
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      
+      // Get form data
+      const formData = new FormData(form);
+      const data = {};
+      
+      // Process form data
+      for (const [key, value] of formData) {
+        if (data[key]) {
+          // Handle multiple values (checkboxes)
+          if (Array.isArray(data[key])) {
+            data[key].push(value);
+          } else {
+            data[key] = [data[key], value];
+          }
+        } else {
+          data[key] = value;
+        }
+      }
+      
+      // Display the data
+      output.textContent = JSON.stringify(data, null, 2);
+      
+      // Show success modal
+      modal.open = true;
+    });
+    
+    // Handle modal
+    showModalBtn.addEventListener('click', () => {
+      modal.open = true;
+    });
+    
+    closeModalBtn.addEventListener('click', () => {
+      modal.open = false;
+    });
+    
+    // Demonstrate programmatic interaction
+    form.addEventListener('reset', () => {
+      output.textContent = 'Form reset!';
+    });
+    
+    // Listen to component events
+    form.addEventListener('ae-checkbox-change', (e) => {
+      console.log('Checkbox changed:', e.detail);
+    });
+    
+    form.addEventListener('ae-radio-change', (e) => {
+      console.log('Radio changed:', e.detail);
+    });
+  </script>
+</body>
+</html>

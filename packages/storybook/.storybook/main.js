@@ -61,15 +61,7 @@ const config = {
           }),
         },
         resolve: {
-          alias: {
-            lit: path.resolve('../node_modules/lit'),
-            'lit/decorators.js': path.resolve('../node_modules/lit/decorators.js'),
-            'lit/directive-helpers.js': path.resolve('../node_modules/lit/directive-helpers.js'),
-          },
-        },
-        optimizeDeps: {
-          // Simplified include without shims
-          include: ['lit-html', 'lit-element', 'lit'],
+          dedupe: ['lit', 'lit-html', 'lit-element', '@lit/reactive-element']
         },
       };
     }

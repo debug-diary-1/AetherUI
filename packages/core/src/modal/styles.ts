@@ -7,6 +7,7 @@ export const modalStyles = css`
     --ae-modal-height: auto;
     --ae-modal-max-height: calc(100vh - 2rem);
     --ae-modal-background: var(--ae-color-surface, #ffffff);
+    --ae-modal-text-color: var(--ae-color-text, #000000);
     --ae-modal-border-radius: var(--ae-border-radius, 0.5rem);
     --ae-modal-padding: 1.5rem;
     --ae-modal-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -32,6 +33,7 @@ export const modalStyles = css`
     height: var(--ae-modal-height);
     max-height: var(--ae-modal-max-height);
     background: var(--ae-modal-background);
+    color: var(--ae-modal-text-color);
     border-radius: var(--ae-modal-border-radius);
     box-shadow: var(--ae-modal-shadow);
     overflow: auto;
@@ -42,10 +44,12 @@ export const modalStyles = css`
     padding-bottom: 0.75rem;
     border-bottom: 1px solid var(--ae-color-border, #eaeaea);
     position: relative;
+    color: var(--ae-modal-text-color);
   }
 
   .body {
     padding: var(--ae-modal-padding);
+    color: var(--ae-modal-text-color);
   }
 
   .footer {
@@ -55,6 +59,7 @@ export const modalStyles = css`
     display: flex;
     justify-content: flex-end;
     gap: 0.5rem;
+    color: var(--ae-modal-text-color);
   }
 
   .close-button {
@@ -65,7 +70,7 @@ export const modalStyles = css`
     background: transparent;
     border: none;
     cursor: pointer;
-    color: var(--ae-color-text, #000000);
+    color: var(--ae-modal-text-color);
     opacity: 0.5;
     transition: opacity 200ms ease;
   }
@@ -76,6 +81,11 @@ export const modalStyles = css`
 
   .close-icon {
     display: block;
+  }
+
+  /* Ensure slotted content inherits text color */
+  ::slotted(*) {
+    color: inherit;
   }
 
   /* Size variants */

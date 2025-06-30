@@ -79,17 +79,23 @@
   }
 
   // Initialize when components are ready
-  if (window.customElements.get('ae-toast')) {
-    initToast();
-  } else {
-    window.addEventListener('aetherui:ready', initToast, { once: true });
+  function waitAndInit() {
+    if (window.customElements.get('ae-toast')) {
+      initToast();
+    } else {
+      if (window.__aetherui_initialized) {
+        setTimeout(waitAndInit, 50);
+      } else {
+        window.addEventListener('aetherui:ready', initToast, { once: true });
+      }
+    }
   }
+  
+  waitAndInit();
   
   // Re-initialize after page navigation
   document.addEventListener('astro:page-load', () => {
-    if (window.customElements.get('ae-toast')) {
-      initToast();
-    }
+    waitAndInit();
   });
 </script>
 

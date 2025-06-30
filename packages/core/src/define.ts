@@ -1,7 +1,7 @@
 import { defineAeAccordion } from './accordion';
 import { defineAeButton } from './button';
 import { defineAeRadio, defineAeRadioGroup } from './radio';
-import { defineAeModal } from './modal/define';
+import { defineAeModal } from './modal';
 import { defineAeCheckbox } from './checkbox';
 import { defineAeTabs } from './tabs';
 import { defineAeAlert } from './alert';

@@ -1,31 +1,29 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Glowing circle (representing aether) -->
-  <circle cx="16" cy="16" r="14" fill="url(#aether-gradient)" />
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .logo-gradient-stop-1 { stop-color: #818cf8; }
+      .logo-gradient-stop-2 { stop-color: #a78bfa; }
+    }
+    @media (prefers-color-scheme: light) {
+      .logo-gradient-stop-1 { stop-color: #6366f1; }
+      .logo-gradient-stop-2 { stop-color: #8b5cf6; }
+    }
+  </style>
   
-  <!-- Orbital rings representing UI components -->
-  <circle cx="16" cy="16" r="10" stroke="white" stroke-width="0.7" stroke-opacity="0.6" fill="none" />
-  <ellipse cx="16" cy="16" rx="13" ry="7" stroke="white" stroke-width="0.7" stroke-opacity="0.4" fill="none" transform="rotate(30 16 16)" />
-  
-  <!-- Simple A shape -->
-  <path d="M12 11L16 21L20 11M12 19H20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-  
-  <!-- Gradient definitions -->
   <defs>
-    <linearGradient id="aether-gradient" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#4D88FF" />
-      <stop offset="100%" stop-color="#0033CC" />
+    <!-- Gradient for elegant effect -->
+    <linearGradient id="faviconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" class="logo-gradient-stop-1" />
+      <stop offset="100%" class="logo-gradient-stop-2" />
     </linearGradient>
   </defs>
   
-  <!-- Dark mode support -->
-  <style>
-    @media (prefers-color-scheme: dark) {
-      #aether-gradient stop:first-child { stop-color: #4D88FF; }
-      #aether-gradient stop:last-child { stop-color: #0033CC; }
-    }
-    @media (prefers-color-scheme: light) {
-      #aether-gradient stop:first-child { stop-color: #0055FF; }
-      #aether-gradient stop:last-child { stop-color: #0033CC; }
-    }
-  </style>
-</svg> 
+  <!-- Bold calligraphic AE for favicon -->
+  <g fill="url(#faviconGradient)">
+    <!-- Letter A with thick strokes for visibility -->
+    <path d="M 3 26 Q 2 26 2 25 Q 2 24 3 22 L 10 7 Q 11 5 12 5 Q 13 5 14 7 L 21 22 Q 22 24 22 25 Q 22 26 21 26 Q 20 26 19 25 L 17 19 L 7 19 L 5 25 Q 4 26 3 26 Z M 8.5 16 L 15.5 16 L 12 8 Z" />
+    
+    <!-- Letter E with clear strokes -->
+    <path d="M 17 10 Q 17 9 18 9 L 29 9 Q 30 9 30 10 Q 30 11 29 11 L 20 11 L 20 14.5 L 28 14.5 Q 29 14.5 29 15.5 Q 29 16.5 28 16.5 L 20 16.5 L 20 20 L 29 20 Q 30 20 30 21 Q 30 22 29 22 L 18 22 Q 17 22 17 21 Z" />
+  </g>
+</svg>

@@ -83,22 +83,22 @@ The Accordion component is a collapsible disclosure component that shows or hide
 ## Default Open
 
 <AccordionExample
-  code={`<ae-accordion defaultOpen='["section-1"]'>
-  <ae-accordion-item headerId="section-1">
+  code={`<ae-accordion default-value='["section-1"]'>
+  <ae-accordion-item data-header-id="section-1">
     <span slot="header">Section 1</span>
     <p>Content for section 1</p>
   </ae-accordion-item>
-  <ae-accordion-item headerId="section-2">
+  <ae-accordion-item data-header-id="section-2">
     <span slot="header">Section 2</span>
     <p>Content for section 2</p>
   </ae-accordion-item>
 </ae-accordion>`}
-  preview={`<ae-accordion defaultOpen='["section-1"]'>
-  <ae-accordion-item headerId="section-1">
+  preview={`<ae-accordion default-value='["section-1"]'>
+  <ae-accordion-item data-header-id="section-1">
     <span slot="header">Section 1</span>
     <p>Content for section 1</p>
   </ae-accordion-item>
-  <ae-accordion-item headerId="section-2">
+  <ae-accordion-item data-header-id="section-2">
     <span slot="header">Section 2</span>
     <p>Content for section 2</p>
   </ae-accordion-item>
@@ -112,13 +112,14 @@ The Accordion component is a collapsible disclosure component that shows or hide
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | `multiselectable` | `boolean` | `false` | Allow multiple panels to be open at once |
-| `defaultOpen` | `string[]` | `[]` | Array of header IDs to be open by default |
+| `default-value` | `string[]` | `[]` | Array of header IDs to be open by default |
+| `value` | `string[]` | `[]` | Array of header IDs that are currently open (controlled) |
 
 ### Accordion Item Props
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| `headerId` | `string` | auto-generated | Unique ID for the accordion header |
+| `data-header-id` | `string` | auto-generated | Unique ID for the accordion header |
 | `open` | `boolean` | `false` | Whether the panel is open |
 
 ## Events
