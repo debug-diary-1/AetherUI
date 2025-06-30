@@ -1,5 +1,37 @@
-import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { playwrightLauncher } from '@web/test-runner-playwright';
+
+// Custom plugin to handle TypeScript with accessor keyword
+const typeScriptPlugin = () => ({
+  name: 'typescript-transform',
+  async transform(context) {
+    if (context.response.is('ts')) {
+      const body = context.body;
+      
+      // Use dynamic import to load TypeScript
+      const { default: ts } = await import('typescript');
+      
+      // Create a TypeScript compiler
+      const result = ts.transpileModule(body, {
+        compilerOptions: {
+          target: ts.ScriptTarget.ES2020,
+          module: ts.ModuleKind.ESNext,
+          experimentalDecorators: true,
+          emitDecoratorMetadata: true,
+          useDefineForClassFields: false,
+          // This is key - it handles the accessor keyword properly
+          lib: ["ES2022", "DOM", "DOM.Iterable"],
+        }
+      });
+      
+      return {
+        body: result.outputText,
+        headers: {
+          'content-type': 'application/javascript',
+        },
+      };
+    }
+  },
+});
 
 export default {
   files: 'src/**/*.test.ts',
@@ -14,44 +46,11 @@ export default {
       }
     })
   ],
+  mimeTypes: {
+    '**/*.ts': 'ts',
+  },
   plugins: [
-    {
-      name: 'transform-accessor-decorators',
-      async transform(context) {
-        if (context.path.endsWith('.ts') && context.body.includes('accessor')) {
-          // Replace accessor keyword before decorators
-          let transformed = context.body.replace(
-            /@property\((.*?)\)\s*accessor\s+(\w+)/g,
-            '@property($1)\n  $2'
-          );
-          
-          // Also handle cases without decorator params
-          transformed = transformed.replace(
-            /@property\s*accessor\s+(\w+)/g,
-            '@property\n  $1'
-          );
-          
-          return { body: transformed };
-        }
-      }
-    },
-    esbuildPlugin({ 
-      ts: true,
-      target: 'ES2022',
-      tsconfig: './tsconfig.json',
-      loader: 'ts',
-      tsconfigRaw: {
-        compilerOptions: {
-          target: 'ES2022',
-          useDefineForClassFields: false,
-          experimentalDecorators: true,
-          emitDecoratorMetadata: true,
-        }
-      },
-      define: {
-        'process.env.NODE_ENV': '"test"'
-      }
-    }),
+    typeScriptPlugin(),
   ],
   testFramework: {
     config: {
