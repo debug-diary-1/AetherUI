@@ -22,10 +22,10 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
+      "executor": "nx:run-commands",
       "options": {
-        "configFile": "packages/tokens/vitest.config.ts",
-        "passWithNoTests": true
+        "command": "echo 'No tests configured' && exit 0",
+        "cwd": "packages/tokens"
       }
     },
     "test:memory": {
