@@ -1,25 +1,19 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { expect } from '@open-wc/testing';
 import { showToast, createToastHelpers } from '../api';
-import { ToastManager } from '../toast-manager';
 
-// Mock the ToastManager.getInstance
-const mockShow = vi.fn();
-vi.mock('../toast-manager', () => {
-  return {
-    ToastManager: {
-      getInstance: () => ({
-        show: mockShow
-      })
-    },
-    showToast: (options: any) => {
-      ToastManager.getInstance().show(options);
-    }
-  };
-});
+// Simple mock for ToastManager
+let mockShowCalls: any[] = [];
+
+// Override the toast manager for testing
+(window as any).__mockToastManager = {
+  show: (options: any) => {
+    mockShowCalls.push(options);
+  }
+};
 
 describe('Toast API', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    mockShowCalls = [];
   });
 
   it('showToast calls the manager show method', () => {
@@ -29,7 +23,8 @@ describe('Toast API', () => {
       duration: 3000
     });
 
-    expect(mockShow).toHaveBeenCalledWith({
+    expect(mockShowCalls.length).to.equal(1);
+    expect(mockShowCalls[0]).to.deep.equal({
       message: 'Test message',
       variant: 'success',
       duration: 3000
@@ -41,26 +36,26 @@ describe('Toast API', () => {
 
     // Test each helper
     helpers.info('Info message', { duration: 3000 });
-    expect(mockShow).toHaveBeenNthCalledWith(1, {
+    expect(mockShowCalls[0]).to.deep.equal({
       message: 'Info message',
       variant: 'info',
       duration: 3000
     });
 
     helpers.success('Success message');
-    expect(mockShow).toHaveBeenNthCalledWith(2, {
+    expect(mockShowCalls[1]).to.deep.equal({
       message: 'Success message',
       variant: 'success'
     });
 
     helpers.warning('Warning message');
-    expect(mockShow).toHaveBeenNthCalledWith(3, {
+    expect(mockShowCalls[2]).to.deep.equal({
       message: 'Warning message',
       variant: 'warning'
     });
 
     helpers.error('Error message');
-    expect(mockShow).toHaveBeenNthCalledWith(4, {
+    expect(mockShowCalls[3]).to.deep.equal({
       message: 'Error message',
       variant: 'error'
     });
@@ -75,7 +70,7 @@ describe('Toast API', () => {
       pauseOnHover: false
     });
 
-    expect(mockShow).toHaveBeenCalledWith({
+    expect(mockShowCalls[0]).to.deep.equal({
       message: 'Success message',
       variant: 'success',
       duration: 10000,

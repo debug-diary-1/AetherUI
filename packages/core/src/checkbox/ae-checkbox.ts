@@ -1,13 +1,15 @@
 import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { checkboxStyles } from './styles';
 
 /**
  * A checkbox input component with support for checked, unchecked, and indeterminate states.
+ * Participates in native form submission via ElementInternals API.
  * 
  * @element ae-checkbox
  * 
  * @property {boolean} checked - Whether the checkbox is checked
+ * @property {boolean} defaultChecked - Initial checked state for uncontrolled usage
  * @property {boolean} indeterminate - Whether the checkbox is in an indeterminate state
  * @property {boolean} disabled - Whether the checkbox is disabled
  * @property {boolean} required - Whether the checkbox is required
@@ -15,8 +17,6 @@ import { checkboxStyles } from './styles';
  * @property {string} value - The value attribute for form submission
  * 
  * @fires {CustomEvent<{checked: boolean, indeterminate: boolean}>} ae-checkbox-change - Fired when the checkbox state changes
- * @fires {CustomEvent<{checked: boolean, indeterminate: boolean}>} ae-change - Fired when the checkbox state changes
- * @deprecated The ae-change event is deprecated. Use ae-checkbox-change instead.
  * 
  * @slot - The checkbox label content
  * 
@@ -38,19 +38,23 @@ import { checkboxStyles } from './styles';
  * 
  * @example
  * ```html
- * <ae-checkbox>Accept terms and conditions</ae-checkbox>
+ * <ae-checkbox name="terms">Accept terms and conditions</ae-checkbox>
  * 
- * <ae-checkbox checked>Checked by default</ae-checkbox>
+ * <ae-checkbox checked name="subscribe" value="yes">Subscribe to newsletter</ae-checkbox>
  * 
- * <ae-checkbox indeterminate>Indeterminate state</ae-checkbox>
+ * <ae-checkbox indeterminate>Select all</ae-checkbox>
  * ```
  */
 @customElement('ae-checkbox')
 export class AeCheckbox extends LitElement {
   static styles = checkboxStyles;
+  static formAssociated = true;
 
   @property({ type: Boolean, reflect: true })
   accessor checked = false;
+
+  @property({ type: Boolean, attribute: 'default-checked' })
+  accessor defaultChecked = false;
 
   @property({ type: Boolean, reflect: true })
   accessor indeterminate = false;
@@ -65,15 +69,90 @@ export class AeCheckbox extends LitElement {
   accessor name = '';
 
   @property({ type: String })
-  accessor value = '';
+  accessor value = 'on';
 
-  private _inputElement?: HTMLInputElement;
+  @state()
+  private accessor pristine = true;
+
+  private _internals: ElementInternals;
+  private _defaultChecked = false;
+
+  constructor() {
+    super();
+    this._internals = this.attachInternals();
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    
+    // Store the initial checked state for form reset
+    this._defaultChecked = this.checked || this.defaultChecked || this.hasAttribute('checked');
+    if (this._defaultChecked && !this.checked) {
+      this.checked = true;
+    }
+
+    // Set initial form value
+    this._updateFormValue();
+    
+    // Set ARIA role
+    this._internals.role = 'checkbox';
+    this._internals.ariaChecked = String(this.checked);
+  }
+
+  updated(changedProperties: Map<string, unknown>) {
+    super.updated(changedProperties);
+    
+    if (changedProperties.has('checked') || changedProperties.has('indeterminate')) {
+      this._updateFormValue();
+      this._updateValidity();
+      this._internals.ariaChecked = this.indeterminate ? 'mixed' : String(this.checked);
+    }
+
+    if (changedProperties.has('disabled')) {
+      this._internals.ariaDisabled = String(this.disabled);
+    }
+
+    if (changedProperties.has('required')) {
+      this._internals.ariaRequired = String(this.required);
+      this._updateValidity();
+    }
+  }
+
+  private _updateFormValue() {
+    if (this.checked) {
+      this._internals.setFormValue(this.value);
+    } else {
+      this._internals.setFormValue(null);
+    }
+  }
+
+  private _updateValidity() {
+    // Reset validity first
+    this._internals.setValidity({});
+
+    // Check required validation
+    if (this.required && !this.checked) {
+      this._internals.setValidity(
+        { valueMissing: true },
+        'Please check this box if you want to proceed.',
+        this
+      );
+    }
+  }
 
   private handleChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.checked = target.checked;
+    event.preventDefault(); // Prevent native checkbox behavior
+    
+    if (this.disabled) return;
+
+    // Mark as no longer pristine
+    this.pristine = false;
+
+    // Toggle checked state
+    this.checked = !this.checked;
     this.indeterminate = false; // Clicking clears the indeterminate state
-    // Dispatch the new standard event
+    
+    // Dispatch change event
     this.dispatchEvent(new CustomEvent('ae-checkbox-change', {
       detail: { 
         checked: this.checked,
@@ -82,100 +161,89 @@ export class AeCheckbox extends LitElement {
       bubbles: true,
       composed: true,
     }));
-    
-    // Also dispatch the old event for backward compatibility
-    // @deprecated Use ae-checkbox-change instead
-    this.dispatchEvent(new CustomEvent('ae-change', {
-      detail: { 
-        checked: this.checked,
-        indeterminate: this.indeterminate 
-      },
-      bubbles: true,
-      composed: true,
-    }));
   }
 
-  updated(changedProperties: Map<string, unknown>) {
-    super.updated(changedProperties);
-    
-    // Sync the indeterminate property to the input element
-    if (this._inputElement && (changedProperties.has('indeterminate') || changedProperties.has('checked'))) {
-      this._inputElement.indeterminate = this.indeterminate;
-      
-      // When indeterminate is true, the checked property has no visual effect,
-      // but we maintain its value for when indeterminate becomes false
-      if (!this.indeterminate) {
-        this._inputElement.checked = this.checked;
-      }
+  private handleKeyDown(event: KeyboardEvent) {
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      this.handleChange(event);
     }
+  }
+
+  // Form-associated callbacks
+  formDisabledCallback(disabled: boolean) {
+    this.disabled = disabled;
+  }
+
+  formResetCallback() {
+    this.checked = this._defaultChecked;
+    this.indeterminate = false;
+    this.pristine = true;
+    this._updateFormValue();
+    this._updateValidity();
+  }
+
+  formStateRestoreCallback(state: string | null, _mode: 'restore' | 'autocomplete') {
+    this.checked = state === this.value;
+    this._updateFormValue();
+    this._updateValidity();
+  }
+
+  // Public method to check validity
+  checkValidity(): boolean {
+    return this._internals.checkValidity();
+  }
+
+  // Public method to report validity
+  reportValidity(): boolean {
+    return this._internals.reportValidity();
   }
 
   render() {
     return html`
-      <label
-        part="base"
-        class="checkbox"
+      <label 
+        part="base" 
+        class="checkbox-label"
+        ?aria-disabled="${this.disabled}"
       >
         <input
-          type="checkbox"
           part="input"
+          type="checkbox"
+          class="checkbox-input"
           .checked="${this.checked}"
-          .disabled="${this.disabled}"
-          .required="${this.required}"
-          .name="${this.name}"
-          .value="${this.value}"
-          aria-checked="${this.indeterminate ? 'mixed' : this.checked}"
+          .indeterminate="${this.indeterminate}"
+          ?disabled="${this.disabled}"
+          ?required="${this.required}"
           @change="${this.handleChange}"
-          ${this._setInputRef}
+          @keydown="${this.handleKeyDown}"
+          tabindex="${this.disabled ? '-1' : '0'}"
+          aria-hidden="true"
         />
-        <span part="control" class="control">
-          <svg
-            part="icon"
-            class="icon"
-            viewBox="0 0 16 16"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            style="${this.indeterminate ? 'display: none;' : 'display: block;'}"
-          >
-            <polyline points="3 8 7 12 13 4"></polyline>
-          </svg>
-          <svg
-            part="indeterminate-icon"
-            class="indeterminate-icon"
-            viewBox="0 0 16 16"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            style="${this.indeterminate ? 'display: block;' : 'display: none;'}"
-          >
-            <line x1="3" y1="8" x2="13" y2="8"></line>
-          </svg>
+        
+        <span part="control" class="checkbox-control">
+          ${this.indeterminate ? html`
+            <svg part="indeterminate-icon" class="indeterminate-icon" viewBox="0 0 16 16">
+              <rect x="3" y="7" width="10" height="2" fill="currentColor"/>
+            </svg>
+          ` : this.checked ? html`
+            <svg part="icon" class="checkbox-icon" viewBox="0 0 16 16">
+              <polyline 
+                points="3,8 6,11 13,4" 
+                stroke="currentColor" 
+                stroke-width="2" 
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          ` : null}
         </span>
-        <span part="label" class="label">
+        
+        <span part="label" class="checkbox-label-text">
           <slot></slot>
         </span>
       </label>
     `;
-  }
-
-  private _setInputRef = (el: HTMLInputElement) => {
-    this._inputElement = el;
-    if (el) {
-      // Always set the indeterminate state explicitly
-      el.indeterminate = this.indeterminate;
-    }
-  }
-  
-  // Override firstUpdated to set the initial indeterminate state
-  firstUpdated() {
-    if (this._inputElement) {
-      this._inputElement.indeterminate = this.indeterminate;
-    }
   }
 }
 

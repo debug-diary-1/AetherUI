@@ -13,8 +13,9 @@ const sanitizedPreview = preview?.replace(/\${/g, '\\${');
 ---
 
 <div class="radio-example">
-  {sanitizedPreview && <div class="preview" set:html={sanitizedPreview} />}
-  {!sanitizedPreview && <slot />}
+  <div class="preview">
+    {sanitizedPreview ? <div set:html={sanitizedPreview} /> : <slot />}
+  </div>
   {code && (
     <div class="code-preview">
       <Code code={code} lang="html" />
@@ -22,13 +23,6 @@ const sanitizedPreview = preview?.replace(/\${/g, '\\${');
   )}
 </div>
 
-<script>
-  import { defineAeRadio, defineAeRadioGroup } from '@aetherui/core';
-  
-  // Register radio components
-  defineAeRadio();
-  defineAeRadioGroup();
-</script>
 
 <style>
   .radio-example {
@@ -57,7 +51,7 @@ const sanitizedPreview = preview?.replace(/\${/g, '\\${');
     --ae-color-border: var(--sl-color-gray-4);
     --ae-color-surface: var(--sl-color-white);
     --ae-color-primary: var(--sl-color-accent);
-    --ae-color-text: var(--sl-color-black);
+    --ae-color-text: var(--sl-color-text);
     --ae-font-size-sm: 1rem;
     display: flex;
     gap: 1rem;
@@ -74,6 +68,7 @@ const sanitizedPreview = preview?.replace(/\${/g, '\\${');
 
   /* Custom radio styling using parts */
   :global(.preview ae-radio) {
+    --ae-radio-text-color: var(--sl-color-text);
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
@@ -97,6 +92,7 @@ const sanitizedPreview = preview?.replace(/\${/g, '\\${');
     font-weight: 500;
     letter-spacing: 0.01em;
     white-space: nowrap;
+    color: var(--sl-color-text);
   }
 
   :global(.preview ae-radio:hover::part(control)) {

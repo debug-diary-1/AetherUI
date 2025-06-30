@@ -1,7 +1,7 @@
 /**
  * Unit test for ae-alert component logic (no browser required)
  */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { expect } from '@open-wc/testing';
 
 // Mock the AeAlert class for unit testing
 class MockAeAlert {
@@ -61,9 +61,9 @@ describe('AeAlert Unit Tests', () => {
   });
   
   it('should have correct default properties', () => {
-    expect(alert.variant).toBe('info');
-    expect(alert.closable).toBe(false);
-    expect(alert.open).toBe(true);
+    expect(alert.variant).to.equal('info');
+    expect(alert.closable).to.equal(false);
+    expect(alert.open).to.equal(true);
   });
   
   it('should accept initial properties', () => {
@@ -73,59 +73,61 @@ describe('AeAlert Unit Tests', () => {
       open: false
     });
     
-    expect(customAlert.variant).toBe('error');
-    expect(customAlert.closable).toBe(true);
-    expect(customAlert.open).toBe(false);
+    expect(customAlert.variant).to.equal('error');
+    expect(customAlert.closable).to.equal(true);
+    expect(customAlert.open).to.equal(false);
   });
   
   it('should return correct role based on variant', () => {
-    expect(alert.getRole()).toBe('status'); // default info
+    expect(alert.getRole()).to.equal('status'); // default info
     
     alert.variant = 'success';
-    expect(alert.getRole()).toBe('status');
+    expect(alert.getRole()).to.equal('status');
     
     alert.variant = 'warning';
-    expect(alert.getRole()).toBe('alert');
+    expect(alert.getRole()).to.equal('alert');
     
     alert.variant = 'error';
-    expect(alert.getRole()).toBe('alert');
+    expect(alert.getRole()).to.equal('alert');
   });
   
   it('should return correct icon based on variant', () => {
-    expect(alert.getIcon()).toBe('info-circle');
+    expect(alert.getIcon()).to.equal('info-circle');
     
     alert.variant = 'success';
-    expect(alert.getIcon()).toBe('check-circle');
+    expect(alert.getIcon()).to.equal('check-circle');
     
     alert.variant = 'warning';
-    expect(alert.getIcon()).toBe('exclamation-triangle');
+    expect(alert.getIcon()).to.equal('exclamation-triangle');
     
     alert.variant = 'error';
-    expect(alert.getIcon()).toBe('exclamation-circle');
+    expect(alert.getIcon()).to.equal('exclamation-circle');
   });
   
   it('should handle close action when closable', () => {
     alert.closable = true;
-    expect(alert.open).toBe(true);
+    expect(alert.open).to.equal(true);
     
     alert.handleClose();
-    expect(alert.open).toBe(false);
+    expect(alert.open).to.equal(false);
   });
   
   it('should not close when not closable', () => {
     alert.closable = false;
-    expect(alert.open).toBe(true);
+    expect(alert.open).to.equal(true);
     
     alert.handleClose();
-    expect(alert.open).toBe(true); // Should remain open
+    expect(alert.open).to.equal(true); // Should remain open
   });
   
   it('should trigger update callbacks when properties change', () => {
-    const updateSpy = vi.fn();
-    alert.onUpdate(updateSpy);
+    let updateCalled = false;
+    alert.onUpdate(() => {
+      updateCalled = true;
+    });
     
     alert.updateProperty('variant', 'error');
-    expect(updateSpy).toHaveBeenCalled();
-    expect(alert.variant).toBe('error');
+    expect(updateCalled).to.equal(true);
+    expect(alert.variant).to.equal('error');
   });
 });

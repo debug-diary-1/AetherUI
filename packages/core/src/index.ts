@@ -60,7 +60,7 @@ export const comboDefaultFilter = ComboExports.defaultFilter;
 
 // Export define all function
 export { defineAll } from './define';
-export { defineAeModal } from './define';
+export { defineAeModal } from './modal';
 
 // Export all define functions
 export { defineAeButton } from './button';

@@ -1,5 +1,5 @@
-import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { LitElement, html, css } from 'lit';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { modalStyles } from './styles';
 
 /**
@@ -14,10 +14,6 @@ import { modalStyles } from './styles';
  * 
  * @fires {CustomEvent} ae-modal-open - Fired when the modal opens
  * @fires {CustomEvent} ae-modal-close - Fired when the modal closes
- * @fires {CustomEvent} ae-open - Fired when the modal opens
- * @deprecated The ae-open event is deprecated. Use ae-modal-open instead.
- * @fires {CustomEvent} ae-close - Fired when the modal closes
- * @deprecated The ae-close event is deprecated. Use ae-modal-close instead.
  * 
  * @slot header - The modal header content
  * @slot body - The modal body content
@@ -31,17 +27,17 @@ import { modalStyles } from './styles';
  * @csspart body - The body section
  * @csspart footer - The footer section
  * 
- * @cssproperty --ae-modal-backdrop-bg - The backdrop background color
- * @cssproperty --ae-modal-panel-bg - The panel background color
- * @cssproperty --ae-modal-panel-shadow - The panel box shadow
- * @cssproperty --ae-modal-panel-radius - The panel border radius
- * @cssproperty --ae-modal-panel-padding - The panel padding
- * @cssproperty --ae-modal-header-padding - The header padding
- * @cssproperty --ae-modal-body-padding - The body padding
- * @cssproperty --ae-modal-footer-padding - The footer padding
- * @cssproperty --ae-modal-max-width-small - Maximum width for small size
- * @cssproperty --ae-modal-max-width-medium - Maximum width for medium size
- * @cssproperty --ae-modal-max-width-large - Maximum width for large size
+ * @cssproperty --ae-modal-width - The modal width (default: 32rem)
+ * @cssproperty --ae-modal-max-width - Maximum width (default: calc(100vw - 2rem))
+ * @cssproperty --ae-modal-height - The modal height (default: auto)
+ * @cssproperty --ae-modal-max-height - Maximum height (default: calc(100vh - 2rem))
+ * @cssproperty --ae-modal-background - The panel background color
+ * @cssproperty --ae-modal-text-color - The text color
+ * @cssproperty --ae-modal-border-radius - The panel border radius
+ * @cssproperty --ae-modal-padding - The panel padding
+ * @cssproperty --ae-modal-shadow - The panel box shadow
+ * @cssproperty --ae-modal-backdrop-color - The backdrop background color
+ * @cssproperty --ae-modal-backdrop-blur - The backdrop blur amount
  * 
  * @example
  * ```html
@@ -52,20 +48,20 @@ import { modalStyles } from './styles';
  *     <button>Close</button>
  *   </div>
  * </ae-modal>
- * 
- * <ae-modal size="small" closable="false">
- *   <span slot="header">Confirmation</span>
- *   <p slot="body">Are you sure?</p>
- *   <div slot="footer">
- *     <button>Yes</button>
- *     <button>No</button>
- *   </div>
- * </ae-modal>
  * ```
  */
 @customElement('ae-modal')
 export class AeModal extends LitElement {
-  static styles = modalStyles;
+  static styles = [
+    modalStyles,
+    css`
+      /* Additional styles for body scroll lock */
+      :host([open]) {
+        /* Signal to consuming app that modal is open */
+        --ae-modal-is-open: 1;
+      }
+    `
+  ];
 
   @property({ type: Boolean, reflect: true })
   accessor open = false;
@@ -79,99 +75,98 @@ export class AeModal extends LitElement {
   @property({ type: String })
   accessor size: 'small' | 'medium' | 'large' = 'medium';
 
+  @query('[part="panel"]')
   private accessor panel!: HTMLElement;
-  private previousActiveElement: HTMLElement | null = null;
-  private focusableElements: HTMLElement[] = [];
+
+  @state()
+  private accessor previousActiveElement: HTMLElement | null = null;
+
+  @state()
+  private accessor focusableElements: HTMLElement[] = [];
+
+  // Bind event handlers to preserve context
+  private _handleKeyDown = this.handleKeyDown.bind(this);
+  private _handleBackdropClick = this.handleBackdropClick.bind(this);
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('keydown', this.handleKeyDown);
+    // Only add listener to this element, not document
+    this.addEventListener('keydown', this._handleKeyDown);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('keydown', this.handleKeyDown);
+    this.removeEventListener('keydown', this._handleKeyDown);
+    
+    // Clean up if modal is still open
+    if (this.open) {
+      this.restoreFocus();
+      this.emitCloseEvent();
+    }
   }
 
   updated(changedProperties: Map<string, unknown>) {
+    super.updated(changedProperties);
+    
     if (changedProperties.has('open')) {
       if (this.open) {
-        this.openModal();
+        this.handleOpen();
       } else {
-        this.closeModal();
+        this.handleClose();
       }
     }
   }
 
-  private openModal() {
+  private handleOpen() {
     // Save current focus
     this.previousActiveElement = document.activeElement as HTMLElement;
 
-    // Set up focus trap
-    requestAnimationFrame(() => {
-      this.panel = this.renderRoot.querySelector('[part="panel"]') as HTMLElement;
-      this.focusableElements = Array.from(
-        this.panel.querySelectorAll(
-          'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        )
-      ) as HTMLElement[];
-
-      // Focus first focusable element or panel itself
-      const firstFocusable = this.focusableElements[0];
-      if (firstFocusable) {
-        firstFocusable.focus();
-      } else {
-        this.panel.focus();
-      }
+    // Set up focus trap after render
+    this.updateComplete.then(() => {
+      this.setupFocusTrap();
+      this.emitOpenEvent();
     });
-
-    // Prevent body scroll
-    document.body.style.overflow = 'hidden';
-
-    // Dispatch the new standard event
-    this.dispatchEvent(new CustomEvent('ae-modal-open', {
-      bubbles: true,
-      composed: true,
-    }));
-    
-    // Also dispatch the old event for backward compatibility
-    // @deprecated Use ae-modal-open instead
-    this.dispatchEvent(new CustomEvent('ae-open', {
-      bubbles: true,
-      composed: true,
-    }));
   }
 
-  private closeModal() {
-    // Restore focus
-    if (this.previousActiveElement) {
+  private handleClose() {
+    this.restoreFocus();
+    this.emitCloseEvent();
+  }
+
+  private setupFocusTrap() {
+    if (!this.panel) return;
+
+    // Find all focusable elements
+    this.focusableElements = Array.from(
+      this.panel.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )
+    ) as HTMLElement[];
+
+    // Focus first focusable element or panel itself
+    const firstFocusable = this.focusableElements[0];
+    if (firstFocusable) {
+      firstFocusable.focus();
+    } else {
+      this.panel.focus();
+    }
+  }
+
+  private restoreFocus() {
+    if (this.previousActiveElement && this.previousActiveElement.focus) {
       this.previousActiveElement.focus();
       this.previousActiveElement = null;
     }
-
-    // Restore body scroll
-    document.body.style.overflow = '';
-
-    // Dispatch the new standard event
-    this.dispatchEvent(new CustomEvent('ae-modal-close', {
-      bubbles: true,
-      composed: true,
-    }));
-    
-    // Also dispatch the old event for backward compatibility
-    // @deprecated Use ae-modal-close instead
-    this.dispatchEvent(new CustomEvent('ae-close', {
-      bubbles: true,
-      composed: true,
-    }));
   }
 
-  private handleKeyDown = (event: KeyboardEvent) => {
+  private handleKeyDown(event: KeyboardEvent) {
     if (!this.open) return;
 
     switch (event.key) {
       case 'Escape':
         if (this.closable) {
+          event.preventDefault();
+          event.stopPropagation();
           this.open = false;
         }
         break;
@@ -192,13 +187,33 @@ export class AeModal extends LitElement {
         break;
       }
     }
-  };
+  }
 
-  private handleBackdropClick = (event: MouseEvent) => {
+  private handleBackdropClick(event: MouseEvent) {
     if (this.closable && event.target === event.currentTarget) {
       this.open = false;
     }
-  };
+  }
+
+  private handleCloseClick() {
+    if (this.closable) {
+      this.open = false;
+    }
+  }
+
+  private emitOpenEvent() {
+    this.dispatchEvent(new CustomEvent('ae-modal-open', {
+      bubbles: true,
+      composed: true,
+    }));
+  }
+
+  private emitCloseEvent() {
+    this.dispatchEvent(new CustomEvent('ae-modal-close', {
+      bubbles: true,
+      composed: true,
+    }));
+  }
 
   render() {
     if (!this.open) return null;
@@ -207,8 +222,8 @@ export class AeModal extends LitElement {
       <div
         part="backdrop"
         class="backdrop"
-        ?backdrop="${this.backdrop}"
-        @click="${this.handleBackdropClick}"
+        ?hidden="${!this.backdrop}"
+        @click="${this._handleBackdropClick}"
       >
         <div
           part="panel"
@@ -225,7 +240,7 @@ export class AeModal extends LitElement {
                 part="close-button"
                 class="close-button"
                 aria-label="Close dialog"
-                @click="${() => this.open = false}"
+                @click="${this.handleCloseClick}"
               >
                 <svg
                   part="close-icon"
@@ -263,4 +278,4 @@ declare global {
   interface HTMLElementTagNameMap {
     'ae-modal': AeModal;
   }
-} 
+}

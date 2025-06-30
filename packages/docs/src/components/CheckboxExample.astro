@@ -10,7 +10,9 @@ const { code, preview } = Astro.props;
 ---
 
 <div class="checkbox-example">
-  {preview ? <div class="preview" set:html={preview} /> : <slot />}
+  <div class="preview">
+    {preview ? <div set:html={preview} /> : <slot />}
+  </div>
   {code && (
     <div class="code-preview">
       <Code code={code} lang="html" />
@@ -18,10 +20,6 @@ const { code, preview } = Astro.props;
   )}
 </div>
 
-<script>
-  import { defineAll } from '@aetherui/core';
-  defineAll();
-</script>
 
 <style>
   .checkbox-example {
@@ -45,7 +43,7 @@ const { code, preview } = Astro.props;
 
   /* Light mode styles */
   :global(.preview ae-checkbox) {
-    --ae-checkbox-size: 1rem;
+    --ae-checkbox-size: 1.125rem;
     --ae-checkbox-border-color: var(--sl-color-gray-4);
     --ae-checkbox-bg: var(--sl-color-white);
     --ae-checkbox-checked-border-color: var(--sl-color-accent);
@@ -55,10 +53,15 @@ const { code, preview } = Astro.props;
     --ae-checkbox-indeterminate-bg: var(--sl-color-accent);
     --ae-checkbox-indeterminate-icon-color: var(--sl-color-white);
     --ae-checkbox-focus-ring-color: var(--sl-color-accent);
+    --ae-checkbox-text-color: var(--sl-color-text);
   }
 
   :global(.preview ae-checkbox::part(control)) {
     border-radius: 0.25rem;
+  }
+
+  :global(.preview ae-checkbox::part(label)) {
+    color: var(--sl-color-text);
   }
 
   /* Dark mode styles */

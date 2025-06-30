@@ -1,73 +1,107 @@
-/* Font Face Definitions */
-@font-face {
-  font-family: 'Favorit Pro';
-  src: url('/fonts/FavoritPro-Light.woff2') format('woff2'),
-       url('/fonts/FavoritPro-Light.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
+/* Use system fonts for minimal design */
 
-@font-face {
-  font-family: 'Favorit Pro';
-  src: url('/fonts/FavoritPro-Regular.woff2') format('woff2'),
-       url('/fonts/FavoritPro-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Favorit Pro';
-  src: url('/fonts/FavoritPro-Medium.woff2') format('woff2'),
-       url('/fonts/FavoritPro-Medium.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Essential Starlight theme overrides only */
+/* Essential Starlight theme overrides - minimal monochrome design */
 :root {
-  /* Accent colors */
-  --sl-color-accent-low: #e6f0ff;
-  --sl-color-accent: #0055ff;
-  --sl-color-accent-high: #0033cc;
+  /* Accent colors - muted */
+  --sl-color-accent-low: #f0f0f0;
+  --sl-color-accent: #0066cc;
+  --sl-color-accent-high: #0052a3;
+  --sl-color-text-accent: #0066cc;
   
-  /* Font stack with Favorit Pro Light as primary */
-  --sl-font: 'Favorit Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-  --sl-font-system: 'Favorit Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  /* Text colors */
+  --sl-color-text: #1a1a1a;
+  --sl-color-text-light: #666;
+  --sl-color-text-heading: #000000;
+  
+  /* Base colors */
+  --sl-color-black: #000000;
+  --sl-color-white: #ffffff;
+  
+  /* Gray scale colors */
+  --sl-color-gray-1: #f5f5f5;
+  --sl-color-gray-2: #eaeaea;
+  --sl-color-gray-3: #d4d4d4;
+  --sl-color-gray-4: #a3a3a3;
+  --sl-color-gray-5: #737373;
+  --sl-color-gray-6: #525252;
+  
+  /* Background colors */
+  --sl-color-bg: #fff;
+  --sl-color-bg-offset: #fafafa;
+  --sl-color-bg-inline-code: #f4f4f4;
+  
+  /* Border colors */
+  --sl-color-border: #e5e5e5;
+  
+  /* System font stack for clean, minimal design */
+  --sl-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --sl-font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   
   /* Monospace font */
-  --sl-font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --sl-font-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
   
-  /* Set default font weight to light (300) */
-  --sl-font-weight-normal: 300;
-  --sl-font-weight-semibold: 400;
-  --sl-font-weight-bold: 500;
+  /* Set font weights for system fonts */
+  --sl-font-weight-normal: 400;
+  --sl-font-weight-semibold: 500;
+  --sl-font-weight-bold: 600;
 }
 
 /* Dark mode overrides */
 :root[data-theme='dark'] {
-  --sl-color-accent-low: #002266;
-  --sl-color-accent: #4d88ff;
-  --sl-color-accent-high: #e6f0ff;
+  --sl-color-accent-low: #1a3a5c;
+  --sl-color-accent: #4da3ff;
+  --sl-color-accent-high: #80c0ff;
+  --sl-color-text-accent: #4da3ff;
+  
+  --sl-color-text: #fff;
+  --sl-color-text-light: #999;
+  --sl-color-text-heading: #ffffff;
+  
+  /* Base colors for dark mode */
+  --sl-color-black: #000000;
+  --sl-color-white: #ffffff;
+  
+  /* Gray scale colors for dark mode */
+  --sl-color-gray-1: #1a1a1a;
+  --sl-color-gray-2: #262626;
+  --sl-color-gray-3: #333333;
+  --sl-color-gray-4: #4d4d4d;
+  --sl-color-gray-5: #737373;
+  --sl-color-gray-6: #0a0a0a;
+  
+  --sl-color-bg: #0a0a0a;
+  --sl-color-bg-offset: #141414;
+  --sl-color-bg-inline-code: #1e1e1e;
+  
+  --sl-color-border: #2a2a2a;
 }
 
-/* Global font weight override for Favorit Pro Light */
+/* Global font settings */
 body {
-  font-weight: 300;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* Headings with slightly heavier weight */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 400;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--sl-color-text);
+  line-height: 1.2;
 }
 
-/* Strong elements use medium weight */
+/* Strong elements use bold weight */
 strong, b {
-  font-weight: 500;
+  font-weight: 600;
+}
+
+/* Sidebar navigation headings */
+.sl-sidebar-group-label,
+.sl-sidebar-group h2,
+.sl-sidebar-group h3 {
+  color: var(--sl-color-text-heading);
+  font-weight: 600;
 }
 
 /* Component demo containers */
@@ -100,6 +134,87 @@ strong, b {
 .example-code {
   background: var(--sl-color-gray-6);
   padding: 1rem;
+}
+
+/* Theme selector styling */
+.sl-theme-select,
+starlight-theme-select select,
+[data-theme-select],
+select[aria-label*="theme"],
+select[aria-label*="Theme"] {
+  color: var(--sl-color-text);
+  background-color: var(--sl-color-bg-offset);
+  border-color: var(--sl-color-border);
+}
+
+/* Theme selector option styling */
+.sl-theme-select option,
+starlight-theme-select option,
+[data-theme-select] option,
+select[aria-label*="theme"] option,
+select[aria-label*="Theme"] option {
+  color: var(--sl-color-text);
+  background-color: var(--sl-color-bg);
+}
+
+/* Layout adjustments for wider content area */
+:root {
+  /* Increase content width significantly */
+  --sl-content-width: 65rem; /* Default is usually around 45rem */
+  --sl-content-max-width: 90rem; /* Maximum width for very wide screens */
+  
+  /* Adjust sidebar widths if needed */
+  --sl-sidebar-width: 16rem; /* Left sidebar */
+  --sl-toc-width: 14rem; /* Right table of contents */
+}
+
+/* Main content container */
+.sl-container,
+.sl-layout > main,
+main[data-page] {
+  max-width: var(--sl-content-max-width);
+}
+
+/* Content area specific */
+.sl-content,
+.sl-markdown-content,
+article[data-page-content] {
+  max-width: var(--sl-content-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Ensure proper spacing between sidebars and content */
+@media (min-width: 1024px) {
+  .sl-layout {
+    gap: 2rem;
+  }
+  
+  main {
+    flex: 1 1 auto;
+    min-width: 0; /* Prevent overflow */
+  }
+}
+
+/* Responsive adjustments */
+@media (min-width: 1280px) {
+  :root {
+    --sl-content-width: 70rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    --sl-content-width: 80rem;
+    --sl-content-max-width: 100rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --sl-content-width: 90rem;
+    --sl-content-max-width: 110rem;
+  }
 }
 
 /* Responsive tables */

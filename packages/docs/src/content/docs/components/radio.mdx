@@ -33,12 +33,12 @@ The Radio component provides a set of mutually exclusive options for selection.
 ## Basic Usage
 
 <RadioExample
-  code="<ae-radio-group>
+  code="<ae-radio-group name='options'>
   <ae-radio value='option1'>Option 1</ae-radio>
   <ae-radio value='option2'>Option 2</ae-radio>
   <ae-radio value='option3'>Option 3</ae-radio>
 </ae-radio-group>"
-  preview="<ae-radio-group>
+  preview="<ae-radio-group name='options'>
   <ae-radio value='option1'>Option 1</ae-radio>
   <ae-radio value='option2'>Option 2</ae-radio>
   <ae-radio value='option3'>Option 3</ae-radio>
@@ -48,12 +48,12 @@ The Radio component provides a set of mutually exclusive options for selection.
 ## Horizontal Orientation
 
 <RadioExample
-  code="<ae-radio-group orientation='horizontal'>
+  code="<ae-radio-group name='horizontal-options' style='--ae-radio-group-direction: row'>
   <ae-radio value='option1'>Option 1</ae-radio>
   <ae-radio value='option2'>Option 2</ae-radio>
   <ae-radio value='option3'>Option 3</ae-radio>
 </ae-radio-group>"
-  preview="<ae-radio-group orientation='horizontal'>
+  preview="<ae-radio-group name='horizontal-options' style='--ae-radio-group-direction: row'>
   <ae-radio value='option1'>Option 1</ae-radio>
   <ae-radio value='option2'>Option 2</ae-radio>
   <ae-radio value='option3'>Option 3</ae-radio>
@@ -63,12 +63,12 @@ The Radio component provides a set of mutually exclusive options for selection.
 ## Disabled State
 
 <RadioExample
-  code="<ae-radio-group>
+  code="<ae-radio-group name='disabled-example'>
   <ae-radio value='option1'>Option 1</ae-radio>
   <ae-radio value='option2' disabled>Option 2 (Disabled)</ae-radio>
   <ae-radio value='option3'>Option 3</ae-radio>
 </ae-radio-group>"
-  preview="<ae-radio-group>
+  preview="<ae-radio-group name='disabled-example'>
   <ae-radio value='option1'>Option 1</ae-radio>
   <ae-radio value='option2' disabled>Option 2 (Disabled)</ae-radio>
   <ae-radio value='option3'>Option 3</ae-radio>
@@ -81,8 +81,9 @@ The Radio component provides a set of mutually exclusive options for selection.
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
+| `name` | `string` | `''` | Name attribute for all radio buttons in the group |
 | `value` | `string` | `''` | Selected value |
-| `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | Layout direction of radio buttons |
+| `disabled` | `boolean` | `false` | Whether all radio buttons in the group are disabled |
 
 ### Radio Props
 
@@ -94,9 +95,17 @@ The Radio component provides a set of mutually exclusive options for selection.
 
 ## Events
 
+### RadioGroup Events
+
 | Event | Payload | Description |
 |-------|---------|-------------|
-| `ae-change` | `{ value: string }` | Fired when the selected value changes |
+| `ae-radio-group-change` | `{ value: string }` | Fired when the selected value changes |
+
+### Radio Events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `ae-radio-change` | `{ checked: boolean, value: string }` | Fired when a radio button is selected |
 
 ## Accessibility
 
@@ -122,11 +131,11 @@ The Radio component can be styled using CSS custom properties and shadow parts.
   }
 </style>
 
-<ae-radio-group>
+<ae-radio-group name='custom-color'>
   <ae-radio value="option1">Custom Color Option 1</ae-radio>
   <ae-radio value="option2">Custom Color Option 2</ae-radio>
 </ae-radio-group>`}
-  preview={`<ae-radio-group>
+  preview={`<ae-radio-group name='custom-color'>
   <ae-radio value="option1">Custom Color Option 1</ae-radio>
   <ae-radio value="option2">Custom Color Option 2</ae-radio>
 </ae-radio-group>`}
@@ -142,11 +151,11 @@ The Radio component can be styled using CSS custom properties and shadow parts.
   }
 </style>
 
-<ae-radio-group class="large">
+<ae-radio-group name='large-size' class="large">
   <ae-radio value="option1">Large Option 1</ae-radio>
   <ae-radio value="option2">Large Option 2</ae-radio>
 </ae-radio-group>`}
-  preview={`<ae-radio-group class="large">
+  preview={`<ae-radio-group name='large-size' class="large">
   <ae-radio value="option1">Large Option 1</ae-radio>
   <ae-radio value="option2">Large Option 2</ae-radio>
 </ae-radio-group>`}

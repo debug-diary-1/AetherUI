@@ -18,7 +18,6 @@ import { accordionItemStyles } from './styles';
  * @slot header - Content for the accordion header/button
  * 
  * @csspart base - The container element
- * @csspart item - @deprecated Use 'base' instead
  * @csspart header - The clickable header button
  * @csspart icon - The expand/collapse icon
  * @csspart panel - The content panel
@@ -122,7 +121,7 @@ export class AeAccordionItem extends LitElement {
 
   render() {
     return html`
-      <div class="accordion-item" part="base item">
+      <div class="accordion-item" part="base">
         <button
           class="header"
           part="header"

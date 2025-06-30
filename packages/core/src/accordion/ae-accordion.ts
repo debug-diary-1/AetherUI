@@ -57,12 +57,6 @@ export class AeAccordion extends LitElement {
   @property({ type: Array, attribute: 'default-value' })
   accessor defaultValue: string[] = [];
 
-  /**
-   * @deprecated Use value instead
-   * @internal Maintained for backward compatibility
-   */
-  @property({ type: Array })
-  accessor expanded: string[] = [];
 
   @state()
   private accessor openPanels = new Set<string>();
@@ -72,10 +66,8 @@ export class AeAccordion extends LitElement {
     this.setupMutationObserver();
     this.setAttribute('role', 'accordion');
     
-    // Initialize from value/expanded property
-    const initialValue = this.value.length > 0 ? this.value : 
-                         this.expanded.length > 0 ? this.expanded :
-                         this.defaultValue;
+    // Initialize from value property
+    const initialValue = this.value.length > 0 ? this.value : this.defaultValue;
                         
     if (initialValue.length) {
       if (this.multiselectable) {
@@ -128,9 +120,8 @@ export class AeAccordion extends LitElement {
       });
     }
     
-    // Update value and expanded property to match
+    // Update value property to match
     this.value = Array.from(this.openPanels);
-    this.expanded = this.value; // Keep expanded in sync for backward compatibility
     
     // Force the update on all items to ensure consistency
     this.updateItems();
@@ -153,12 +144,6 @@ export class AeAccordion extends LitElement {
   updated(changedProperties: Map<string, unknown>) {
     if (changedProperties.has('value')) {
       this.openPanels = new Set(this.value);
-      this.expanded = this.value; // Keep expanded in sync for backward compatibility
-      this.updateItems();
-    } else if (changedProperties.has('expanded')) {
-      // Support legacy expanded property
-      this.openPanels = new Set(this.expanded);
-      this.value = this.expanded; // Keep value in sync for backward compatibility
       this.updateItems();
     }
   }
@@ -177,7 +162,6 @@ export class AeAccordion extends LitElement {
         this.openPanels.add(firstPanelId);
         // Update the value property to match
         this.value = [firstPanelId];
-        this.expanded = this.value; // Keep expanded in sync
       }
     }
     
@@ -230,18 +214,10 @@ export class AeAccordion extends LitElement {
     
     // Update the value property
     this.value = Array.from(this.openPanels);
-    this.expanded = this.value; // Keep expanded in sync for backward compatibility
     
     // Dispatch standardized event
     this.dispatchEvent(new CustomEvent('ae-accordion-change', {
       detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
-    
-    // Also dispatch legacy event for backward compatibility
-    this.dispatchEvent(new CustomEvent('ae-expand-change', {
-      detail: { expanded: this.expanded },
       bubbles: true,
       composed: true,
     }));

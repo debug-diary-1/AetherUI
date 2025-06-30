@@ -18,27 +18,23 @@
   "author": "AetherUI Team",
   "license": "MIT",
   "dependencies": {
-    "@aetherui/core": "workspace:*",
-    "@lit/reactive-element": "^2.1.0"
+    "@aetherui/core": "workspace:*"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^9.0.14",
     "@storybook/addon-docs": "^9.0.14",
     "@storybook/addon-links": "^9.0.14",
     "@storybook/web-components-vite": "^9.0.14",
-    "chromatic": "^10.0.0",
+    "@lit/reactive-element": "^2.1.0",
     "eslint-plugin-storybook": "9.0.14",
     "lit": "^3.3.0",
     "lit-element": "^4.2.0",
     "lit-html": "^3.3.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "storybook": "^9.0.14",
     "vite": "^6.0.0"
   },
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
-  },
-  "packageManager": "pnpm@8.10.0"
+  }
 }

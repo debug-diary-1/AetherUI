@@ -13,8 +13,6 @@ import { AeRadio } from './ae-radio';
  * @property {boolean} disabled - Whether all radio buttons in the group are disabled
  * 
  * @fires {CustomEvent<{value: string}>} ae-radio-group-change - Fired when the selected radio changes
- * @fires {CustomEvent<{value: string}>} ae-change - Fired when the selected radio changes
- * @deprecated The ae-change event is deprecated. Use ae-radio-group-change instead.
  * 
  * @slot - The radio buttons (ae-radio elements) to be grouped
  * 
@@ -58,7 +56,7 @@ export class AeRadioGroup extends LitElement {
       radio.name = this.name;
       radio.disabled = this.disabled;
       radio.checked = radio.value === this.value;
-      radio.addEventListener('ae-change', this.handleRadioChange.bind(this));
+      radio.addEventListener('ae-radio-change', this.handleRadioChange.bind(this));
     });
   }
 
@@ -67,16 +65,8 @@ export class AeRadioGroup extends LitElement {
     this.value = radio.value;
     this.updateRadios();
     
-    // Dispatch the new standard event
+    // Dispatch the standard event
     this.dispatchEvent(new CustomEvent('ae-radio-group-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
-    
-    // Also dispatch the old event for backward compatibility
-    // @deprecated Use ae-radio-group-change instead
-    this.dispatchEvent(new CustomEvent('ae-change', {
       detail: { value: this.value },
       bubbles: true,
       composed: true,

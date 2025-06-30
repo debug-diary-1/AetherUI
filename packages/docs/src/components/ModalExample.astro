@@ -162,26 +162,82 @@ const exampleId = `modal-example-${Math.random().toString(36).slice(2, 10)}`;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
   }
 
+  /* Modal styling */
+  :global(.preview ae-modal) {
+    --ae-modal-background: var(--sl-color-white);
+    --ae-modal-text-color: var(--sl-color-text);
+    --ae-color-text: var(--sl-color-text);
+    --ae-color-surface: var(--sl-color-white);
+    --ae-color-border: var(--sl-color-gray-5);
+  }
+
+  /* Dark mode modal styling */
+  :global([data-theme="dark"] .preview ae-modal) {
+    --ae-modal-background: var(--sl-color-gray-6);
+    --ae-modal-text-color: var(--sl-color-white);
+    --ae-color-text: var(--sl-color-white);
+    --ae-color-surface: var(--sl-color-gray-6);
+    --ae-color-border: var(--sl-color-gray-4);
+  }
+
   /* Modal backdrop styling */
   :global(.preview ae-modal::part(backdrop)) {
-    background-color: rgba(0, 0, 0, 0.4) !important;
+    background-color: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(2px);
   }
 
-  /* Content styling */
-  :global(.preview ae-modal h2) {
-    color: var(--ae-modal-text-color, inherit);
-    margin: 0;
+  /* Modal panel styling to ensure text color inheritance */
+  :global(.preview ae-modal::part(panel)) {
+    background: var(--ae-modal-background);
+    color: var(--ae-modal-text-color);
+  }
+
+  /* Modal header, body, footer parts */
+  :global(.preview ae-modal::part(header)),
+  :global(.preview ae-modal::part(body)),
+  :global(.preview ae-modal::part(footer)) {
+    color: var(--ae-modal-text-color);
+  }
+
+  /* Style content through inheritance from parts */
+  :global(.preview ae-modal h2),
+  :global(.preview ae-modal h3),
+  :global(.preview ae-modal h4) {
+    margin: 0 0 0.5rem 0;
     font-size: 1.25rem;
     font-weight: 600;
     line-height: 1.4;
   }
 
   :global(.preview ae-modal p) {
-    color: var(--ae-modal-text-color, inherit);
     margin: 0.75rem 0;
     line-height: 1.6;
-    opacity: 0.9;
+  }
+
+  /* Close button specific styling */
+  :global(.preview ae-modal button[data-close-modal]) {
+    background: var(--sl-color-gray-5);
+    color: var(--sl-color-text);
+    border: none;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  :global(.preview ae-modal button[data-close-modal]:hover) {
+    background: var(--sl-color-gray-4);
+  }
+
+  /* Dark mode close button */
+  :global([data-theme="dark"] .preview ae-modal button[data-close-modal]) {
+    background: var(--sl-color-gray-4);
+    color: var(--sl-color-white);
+  }
+
+  :global([data-theme="dark"] .preview ae-modal button[data-close-modal]:hover) {
+    background: var(--sl-color-gray-3);
   }
 </style>
 

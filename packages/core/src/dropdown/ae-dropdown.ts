@@ -190,7 +190,7 @@ export class AeDropdown extends LitElement {
       // Store the cleanup function
       this.positionCleanup = cleanup;
     } catch (error) {
-      console.error('Error positioning dropdown menu:', error);
+      // Error handled silently
     }
   }
 

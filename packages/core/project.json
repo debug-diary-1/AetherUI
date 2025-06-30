@@ -22,10 +22,10 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
+      "executor": "nx:run-commands",
       "options": {
-        "configFile": "packages/core/vitest.config.ts",
-        "passWithNoTests": true
+        "command": "web-test-runner",
+        "cwd": "packages/core"
       }
     },
     "test:memory": {

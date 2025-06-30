@@ -1,0 +1,12 @@
+---
+// Override Starlight's Head component to add our setup script
+import Default from '@astrojs/starlight/components/Head.astro';
+
+const props = Astro.props;
+---
+
+<Default {...props} />
+<script>
+  // Import and setup components
+  import('../scripts/setup-components.ts');
+</script>

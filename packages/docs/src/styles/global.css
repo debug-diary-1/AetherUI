@@ -1,37 +1,342 @@
-/* AetherUI component tokens - minimal set */
+/* Monospace-first design system */
 :root {
-  /* Map to Starlight theme colors */
-  --ae-color-brand-600: var(--sl-color-accent);
-  --ae-color-text-primary: var(--sl-color-text);
-  --ae-color-base-200: var(--sl-color-gray-6);
-  --ae-color-base-300: var(--sl-color-gray-5);
+  /* Override Starlight fonts with monospace */
+  --sl-font: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
+             'DejaVu Sans Mono', monospace;
+  --sl-font-system-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, 
+                         Consolas, 'DejaVu Sans Mono', monospace;
+  
+  /* Core colors - high contrast monochrome */
+  --ae-color-brand-600: #000000;
+  --ae-color-text-primary: #000000;
+  --ae-color-text-secondary: #595959;
+  --ae-color-base-200: #f5f5f5;
+  --ae-color-base-300: #d4d4d4;
+  
+  /* Component color tokens */
+  --ae-color-text: #000000;
+  --ae-color-surface: #ffffff;
   
   /* Font tokens for components */
-  --ae-font-family: var(--sl-font);
-  --ae-font-weight: 300;
+  --ae-font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
+                    'DejaVu Sans Mono', monospace;
+  --ae-font-weight: 400;
   
-  /* Button tokens */
-  --ae-button-bg-primary: var(--sl-color-accent);
-  --ae-button-fg-primary: white;
-  --ae-button-bg-secondary: var(--sl-color-gray-6);
-  --ae-button-fg-secondary: var(--sl-color-text);
-  --ae-button-radius: 0.375rem;
+  /* Button tokens - minimal */
+  --ae-button-bg-primary: #000;
+  --ae-button-fg-primary: #fff;
+  --ae-button-bg-secondary: transparent;
+  --ae-button-fg-secondary: #1a1a1a;
+  --ae-button-border-secondary: #e5e5e5;
+  --ae-button-radius: 6px;
   --ae-button-font-weight: 400;
   
   /* Modal tokens */
-  --ae-modal-background: var(--sl-color-bg-nav);
-  --ae-modal-border-radius: 0.5rem;
-  --ae-color-border: var(--sl-color-gray-5);
-  --ae-modal-text-color: var(--sl-color-text);
+  --ae-modal-background: #fff;
+  --ae-modal-border-radius: 8px;
+  --ae-color-border: #e5e5e5;
+  --ae-modal-text-color: #000000;
   
   /* Tooltip tokens */
-  --ae-tooltip-bg: var(--sl-color-gray-1);
-  --ae-tooltip-fg: var(--sl-color-white);
-  --ae-tooltip-radius: 0.25rem;
+  --ae-tooltip-bg: #1a1a1a;
+  --ae-tooltip-fg: #fff;
+  --ae-tooltip-radius: 4px;
   --ae-tooltip-font-weight: 300;
+  
+  /* Shadows - subtle */
+  --ae-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --ae-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --ae-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Dark mode adjustments */
+/* Dark mode - high contrast adjustments */
 [data-theme="dark"] {
-  --ae-tooltip-bg: var(--sl-color-gray-2);
+  --ae-color-brand-600: #ffffff;
+  --ae-color-text-primary: #ffffff;
+  --ae-color-text-secondary: #a6a6a6;
+  --ae-color-base-200: #1a1a1a;
+  --ae-color-base-300: #333333;
+  
+  /* Component color tokens */
+  --ae-color-text: #ffffff;
+  --ae-color-surface: #0a0a0a;
+  
+  --ae-button-bg-primary: #fff;
+  --ae-button-fg-primary: #000;
+  --ae-button-bg-secondary: transparent;
+  --ae-button-fg-secondary: #fff;
+  --ae-button-border-secondary: #2a2a2a;
+  
+  --ae-modal-background: #0a0a0a;
+  --ae-color-border: #2a2a2a;
+  --ae-modal-text-color: #fff;
+  
+  --ae-tooltip-bg: #fff;
+  --ae-tooltip-fg: #000;
+}
+
+/* Force monospace fonts globally */
+* {
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
+               'DejaVu Sans Mono', monospace !important;
+}
+
+/* Ensure proper font rendering */
+body {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
+/* Code blocks should use the same monospace */
+pre, code, kbd, samp {
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
+               'DejaVu Sans Mono', monospace !important;
+}
+
+/* Remove colorful focus states */
+*:focus {
+  outline: 2px solid var(--ae-color-text-primary);
+  outline-offset: 2px;
+}
+
+/* Simplify links - high contrast */
+a {
+  color: var(--ae-color-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* Ensure WCAG AAA contrast ratios */
+.sl-markdown-content {
+  color: var(--ae-color-text-primary);
+}
+
+/* High contrast for dark mode */
+[data-theme="dark"] .sl-markdown-content {
+  color: #ffffff;
+}
+
+/* Improve readability with proper line height */
+p, li, td {
+  line-height: 1.6;
+}
+
+/* Ensure headings in content areas have proper colors */
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.sl-markdown-content h4,
+.sl-markdown-content h5,
+.sl-markdown-content h6 {
+  color: var(--sl-color-text);
+}
+
+/* Headings inside component examples */
+.preview h1,
+.preview h2,
+.preview h3,
+.preview h4,
+.preview h5,
+.preview h6,
+.example-preview h1,
+.example-preview h2,
+.example-preview h3,
+.example-preview h4,
+.example-preview h5,
+.example-preview h6 {
+  color: inherit;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+/* Ensure all component examples have proper text colors and backgrounds */
+.preview,
+.example-preview,
+.component-example,
+.interactive-example {
+  color: var(--ae-color-text-primary);
+  background-color: #ffffff;
+}
+
+/* Dark mode backgrounds for component examples */
+[data-theme="dark"] .preview,
+[data-theme="dark"] .example-preview,
+[data-theme="dark"] .component-example,
+[data-theme="dark"] .interactive-example {
+  background-color: #0a0a0a;
+  color: #ffffff;
+}
+
+/* Component example containers */
+.modal-example,
+.checkbox-example,
+.radio-example,
+.button-example,
+.autocomplete-example,
+.component-example-wrapper {
+  background: #f5f5f5;
+}
+
+[data-theme="dark"] .modal-example,
+[data-theme="dark"] .checkbox-example,
+[data-theme="dark"] .radio-example,
+[data-theme="dark"] .button-example,
+[data-theme="dark"] .autocomplete-example,
+[data-theme="dark"] .component-example-wrapper {
+  background: #1a1a1a;
+}
+
+/* Ensure all AetherUI components inherit proper text colors */
+ae-modal,
+ae-tooltip,
+ae-dropdown,
+ae-accordion,
+ae-tabs,
+ae-alert,
+ae-checkbox,
+ae-radio,
+ae-radio-group,
+ae-button,
+ae-treeview,
+ae-autocomplete {
+  color: inherit;
+}
+
+/* Set component surface colors */
+.preview ae-dropdown,
+.preview ae-tooltip,
+.preview ae-accordion,
+.preview ae-tabs,
+.preview ae-alert {
+  --ae-color-surface: #ffffff;
+  --ae-color-text: #000000;
+}
+
+[data-theme="dark"] .preview ae-dropdown,
+[data-theme="dark"] .preview ae-tooltip,
+[data-theme="dark"] .preview ae-accordion,
+[data-theme="dark"] .preview ae-tabs,
+[data-theme="dark"] .preview ae-alert {
+  --ae-color-surface: #1a1a1a;
+  --ae-color-text: #ffffff;
+}
+
+/* Ensure content inside components has proper colors */
+ae-modal *,
+ae-tooltip *,
+ae-dropdown *,
+ae-accordion *,
+ae-tabs *,
+ae-alert * {
+  color: inherit;
+}
+
+/* Use CSS parts API for component styling */
+/* Modal parts */
+ae-modal::part(panel) {
+  color: var(--ae-modal-text-color, var(--ae-color-text));
+}
+
+ae-modal::part(header),
+ae-modal::part(body),
+ae-modal::part(footer) {
+  color: inherit;
+}
+
+/* Force modal text color in light mode */
+:root:not([data-theme="dark"]) ae-modal::part(panel),
+:root:not([data-theme="dark"]) ae-modal::part(header),
+:root:not([data-theme="dark"]) ae-modal::part(body),
+:root:not([data-theme="dark"]) ae-modal::part(footer) {
+  color: #000000;
+}
+
+/* Ensure slotted content in modal inherits text color */
+:root:not([data-theme="dark"]) ae-modal [slot="header"],
+:root:not([data-theme="dark"]) ae-modal [slot="body"],
+:root:not([data-theme="dark"]) ae-modal [slot="footer"],
+:root:not([data-theme="dark"]) ae-modal [slot="header"] *,
+:root:not([data-theme="dark"]) ae-modal [slot="body"] *,
+:root:not([data-theme="dark"]) ae-modal [slot="footer"] * {
+  color: #000000;
+}
+
+/* Accordion parts */
+ae-accordion::part(header),
+ae-accordion::part(content) {
+  color: var(--ae-color-text);
+}
+
+/* Button parts */
+ae-button::part(label) {
+  color: inherit;
+}
+
+/* Checkbox and Radio parts */
+ae-checkbox::part(label),
+ae-radio::part(label) {
+  color: var(--ae-color-text);
+}
+
+/* Toast parts */
+ae-toast::part(message) {
+  color: inherit;
+}
+
+/* Tabs parts */
+ae-tabs::part(tab),
+ae-tabs::part(panel) {
+  color: var(--ae-color-text);
+}
+
+/* Dark mode adjustments for component examples */
+[data-theme="dark"] .preview,
+[data-theme="dark"] .example-preview,
+[data-theme="dark"] .component-example,
+[data-theme="dark"] .interactive-example {
+  color: var(--ae-color-text-primary);
+}
+
+/* Starlight theme selector fix */
+starlight-theme-select,
+.sl-theme-select-container,
+.theme-select {
+  color: var(--sl-color-text);
+}
+
+starlight-theme-select select,
+.sl-theme-select-container select,
+.theme-select select {
+  color: var(--sl-color-text);
+  background-color: var(--sl-color-bg-offset);
+  border: 1px solid var(--sl-color-border);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+starlight-theme-select select option,
+.sl-theme-select-container select option,
+.theme-select select option {
+  color: var(--sl-color-text);
+  background-color: var(--sl-color-bg);
+}
+
+/* Theme selector hover and focus states */
+starlight-theme-select select:hover,
+.sl-theme-select-container select:hover,
+.theme-select select:hover {
+  border-color: var(--sl-color-accent);
+}
+
+starlight-theme-select select:focus,
+.sl-theme-select-container select:focus,
+.theme-select select:focus {
+  outline: 2px solid var(--sl-color-accent);
+  outline-offset: 2px;
+  border-color: var(--sl-color-accent);
 }

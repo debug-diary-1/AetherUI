@@ -1,0 +1,43 @@
+/**
+ * Optional CSS for applications to handle scroll lock when modal is open.
+ * Include this in your application's global styles.
+ * 
+ * Usage:
+ * 1. Import this CSS in your app
+ * 2. Add a listener for ae-modal-open/close events
+ * 3. Toggle 'ae-modal-open' class on body
+ * 
+ * Example:
+ * ```js
+ * document.addEventListener('ae-modal-open', () => {
+ *   document.body.classList.add('ae-modal-open');
+ * });
+ * 
+ * document.addEventListener('ae-modal-close', () => {
+ *   document.body.classList.remove('ae-modal-open');
+ * });
+ * ```
+ */
+
+/* Prevent body scroll when modal is open */
+body.ae-modal-open {
+  overflow: hidden;
+  
+  /* Prevent layout shift from scrollbar */
+  padding-right: var(--ae-scrollbar-width, 0);
+}
+
+/* Calculate scrollbar width */
+@supports (scrollbar-gutter: stable) {
+  body.ae-modal-open {
+    padding-right: 0;
+    scrollbar-gutter: stable;
+  }
+}
+
+/* Alternative: Use CSS has() when widely supported */
+@supports selector(:has(*)) {
+  body:has(ae-modal[open]) {
+    overflow: hidden;
+  }
+}
