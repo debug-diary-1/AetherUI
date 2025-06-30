@@ -28,7 +28,7 @@ class MockToastManager {
       duration: options.duration ?? 5000,
       placement: options.placement || 'bottom-right',
       pauseOnHover: options.pauseOnHover ?? true,
-      addEventListener: (event: string, callback: Function) => {
+      addEventListener: (event: string, callback: () => void) => {
         if (event === 'ae-close') {
           mockToast.closeCallback = callback;
         }
