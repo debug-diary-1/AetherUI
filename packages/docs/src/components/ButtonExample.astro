@@ -28,9 +28,10 @@ const exampleId = `button-example-${Math.random().toString(36).slice(2, 10)}`;
 </div>
 
 <script>
-  // Import and call defineAll to register all components
-  import { defineAll } from '@aetherui/core';
-  defineAll();
+  // Register only the button element
+  import('@aetherui/core/button').then((m) => {
+    if (m.defineAeButton) m.defineAeButton();
+  });
   
   // Set up event listeners for initializing the layout
   document.addEventListener('DOMContentLoaded', applyLayoutStyles);

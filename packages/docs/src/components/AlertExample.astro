@@ -71,12 +71,10 @@ const { code, preview, title, description } = Astro.props;
   }
 </style>
 
-<!-- Register custom elements client-side -->
+<!-- Register only the alert element -->
 <script>
-  // Note: Import happens at runtime in the browser
-  import { defineAll } from '@aetherui/core';
-  
-  // Initialize all components
-  defineAll();
+  import('@aetherui/core/alert').then((m) => {
+    if (m.defineAeAlert) m.defineAeAlert();
+  });
 </script>
  

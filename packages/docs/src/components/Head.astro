@@ -7,6 +7,11 @@ const props = Astro.props;
 
 <Default {...props} />
 <script>
-  // Import and setup components
+  // On-demand component registration script
   import('../scripts/setup-components.ts');
+  
+  // Preload commonly used submodules to speed up first interaction
+  // Note: kept tiny; these are separate chunks
+  import('@aetherui/core/button');
+  import('@aetherui/core/checkbox');
 </script>

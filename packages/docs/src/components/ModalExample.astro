@@ -18,9 +18,10 @@ const exampleId = `modal-example-${Math.random().toString(36).slice(2, 10)}`;
 </div>
 
 <script>
-  // Import and call defineAll to register all components
-  import { defineAll } from '@aetherui/core';
-  defineAll();
+  // Import and register only the modal element
+  import('@aetherui/core/modal').then((m) => {
+    if (m.defineAeModal) m.defineAeModal();
+  });
   
   // Wait for DOM to be loaded and hydrated
   document.addEventListener('DOMContentLoaded', initDocument);

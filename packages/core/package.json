@@ -30,79 +30,64 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js"
     },
     "./accordion": {
       "types": "./dist/accordion/index.d.ts",
-      "import": "./dist/accordion/index.js",
-      "require": "./dist/accordion/index.js"
+      "import": "./dist/accordion/index.js"
     },
     "./button": {
       "types": "./dist/button/index.d.ts",
-      "import": "./dist/button/index.js",
-      "require": "./dist/button/index.js"
+      "import": "./dist/button/index.js"
     },
     "./checkbox": {
       "types": "./dist/checkbox/index.d.ts",
-      "import": "./dist/checkbox/index.js",
-      "require": "./dist/checkbox/index.js"
+      "import": "./dist/checkbox/index.js"
     },
     "./dropdown": {
       "types": "./dist/dropdown/index.d.ts",
-      "import": "./dist/dropdown/index.js",
-      "require": "./dist/dropdown/index.js"
+      "import": "./dist/dropdown/index.js"
     },
     "./modal": {
       "types": "./dist/modal/index.d.ts",
-      "import": "./dist/modal/index.js",
-      "require": "./dist/modal/index.js"
+      "import": "./dist/modal/index.js"
     },
     "./radio": {
       "types": "./dist/radio/index.d.ts",
-      "import": "./dist/radio/index.js",
-      "require": "./dist/radio/index.js"
+      "import": "./dist/radio/index.js"
     },
     "./tabs": {
       "types": "./dist/tabs/index.d.ts",
-      "import": "./dist/tabs/index.js",
-      "require": "./dist/tabs/index.js"
+      "import": "./dist/tabs/index.js"
     },
     "./treeview": {
       "types": "./dist/treeview/index.d.ts",
-      "import": "./dist/treeview/index.js",
-      "require": "./dist/treeview/index.js"
+      "import": "./dist/treeview/index.js"
     },
     "./alert": {
       "types": "./dist/alert/index.d.ts",
-      "import": "./dist/alert/index.js",
-      "require": "./dist/alert/index.js"
+      "import": "./dist/alert/index.js"
     },
     "./combo": {
       "types": "./dist/combo/index.d.ts",
-      "import": "./dist/combo/index.js",
-      "require": "./dist/combo/index.js"
+      "import": "./dist/combo/index.js"
     },
     "./autocomplete": {
       "types": "./dist/autocomplete/index.d.ts",
-      "import": "./dist/autocomplete/index.js",
-      "require": "./dist/autocomplete/index.js"
+      "import": "./dist/autocomplete/index.js"
     },
     "./toast": {
       "types": "./dist/toast/index.d.ts",
-      "import": "./dist/toast/index.js",
-      "require": "./dist/toast/index.js"
+      "import": "./dist/toast/index.js"
     },
     "./tooltip": {
       "types": "./dist/tooltip/index.d.ts",
-      "import": "./dist/tooltip/index.js",
-      "require": "./dist/tooltip/index.js"
+      "import": "./dist/tooltip/index.js"
     },
     "./package.json": "./package.json",
     "./*": {
       "types": "./dist/*/index.d.ts",
-      "import": "./dist/*/index.js",
-      "require": "./dist/*/index.js"
+      "import": "./dist/*/index.js"
     }
   },
   "files": [

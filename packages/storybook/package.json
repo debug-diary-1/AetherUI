@@ -20,6 +20,7 @@
   "dependencies": {
     "@aetherui/core": "workspace:*"
   },
+  "sideEffects": false,
   "devDependencies": {
     "@storybook/addon-a11y": "^9.0.14",
     "@storybook/addon-docs": "^9.0.14",

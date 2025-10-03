@@ -112,32 +112,12 @@ const { code, preview, title, description } = Astro.props;
 <!-- Load and register AetherUI components -->
 <script>
   async function loadAetherUI() {
-    if (window.AetherUI) return;
-
     try {
-      // Try to import the main package
-      const module = await import('@aetherui/core');
-      window.AetherUI = module;
-      
-      // Register all components if possible
-      if (module.defineAll) {
-        module.defineAll();
-      } else {
-        // Fallback to individual registrations if needed
-        [
-          'defineAeDropdown',
-          'defineAeMenuItem',
-          'defineAeMenuSeparator'
-        ].forEach(def => {
-          if (typeof module[def] === 'function') {
-            module[def]();
-          }
-        });
-      }
-      
-      console.log('Successfully loaded AetherUI components');
+      const module = await import('@aetherui/core/dropdown');
+      if (module.defineAeDropdown) module.defineAeDropdown();
+      console.log('Loaded AetherUI dropdown components');
     } catch (error) {
-      console.warn('Failed to load AetherUI library:', error);
+      console.warn('Failed to load dropdown components:', error);
     }
   }
 

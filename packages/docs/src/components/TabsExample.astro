@@ -81,13 +81,12 @@ const { code, preview, title, description } = Astro.props;
   }
 </style>
 
-<!-- Register custom elements client-side -->
+<!-- Register Tabs elements only -->
 <script>
-  // Import happens at runtime in the browser
-  import { defineAll } from '@aetherui/core';
-  
-  // Initialize all components
-  defineAll();
+  // Lazy-load just the tabs module and register elements
+  import('@aetherui/core/tabs').then((m) => {
+    if (m.defineAeTabs) m.defineAeTabs();
+  });
   
   // Make sure orientation attributes are correctly set
   document.addEventListener('DOMContentLoaded', () => {

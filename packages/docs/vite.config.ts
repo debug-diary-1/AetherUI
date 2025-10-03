@@ -2,10 +2,28 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   optimizeDeps: {
-    include: ['@aetherui/core', 'lit', '@lit/reactive-element'],
-    exclude: [],
+    // Do not prebundle the entire core library; allow on-demand chunks
+    exclude: ['@aetherui/core'],
+    include: ['lit', '@lit/reactive-element'],
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('/@aetherui/core/')) {
+            // Create per-component chunks for better code-splitting
+            const match = id.match(/@aetherui\/core\/(.*?)(\/|\\)/);
+            if (match && match[1]) return `aetherui-${match[1]}`;
+            return 'aetherui-core';
+          }
+          if (id.includes('/lit/')) return 'lit';
+        }
+      }
+    }
   },
   ssr: {
-    noExternal: ['@aetherui/core', 'lit', '@lit/reactive-element'],
+    // Let Vite bundle core for SSR to avoid external resolution issues
+    // We dynamically import subpaths in the browser only
+    noExternal: ['lit', '@lit/reactive-element'],
   },
 }); 
