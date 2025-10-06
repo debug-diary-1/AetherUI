@@ -15,6 +15,13 @@
         "command": "echo 'No linting for root project' && exit 0",
         "cwd": "."
       }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "echo 'No build needed for root project' && exit 0",
+        "cwd": "."
+      }
     }
   }
 }

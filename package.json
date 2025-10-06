@@ -13,13 +13,13 @@
   "bugs": {
     "url": "https://github.com/pallavL01/AetherUI/issues"
   },
-  "packageManager": "pnpm@10.10.0",
+  "packageManager": "pnpm@10.18.0",
   "engines": {
     "node": ">=20.19.0",
-    "pnpm": "10.10.0"
+    "pnpm": "10.18.0"
   },
   "scripts": {
-    "build": "NODE_OPTIONS='--max-old-space-size=4096' nx run-many -t build --parallel=2",
+    "build": "NODE_OPTIONS='--max-old-space-size=4096' nx run-many -t build --parallel=2 --exclude=@aetherui/storybook",
     "build:affected": "NODE_OPTIONS='--max-old-space-size=4096' nx affected -t build --parallel=2",
     "dev": "nx run-many -t dev --parallel=2",
     "lint": "nx run-many -t lint --parallel=2",
