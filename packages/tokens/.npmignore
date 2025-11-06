@@ -7,8 +7,6 @@ __tests__/
 # Build configuration
 vite.config.ts
 tsconfig.json
-web-test-runner.config.js
-vitest.config.js
 
 # Development files
 .DS_Store
