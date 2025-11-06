@@ -1,102 +1,332 @@
-# Aether UI
+<div align="center">
 
-A headless, framework-agnostic Web Component library built on Lit and distributed under the `@aetherui` npm scope.
+# AetherUI
 
-## Features
+**A headless, framework-agnostic Web Component library built with Lit**
 
-- 🚀 Framework-agnostic Web Components
-- 🎨 Design token-driven theming
-- ♿️ Built-in accessibility
-- 📦 Tree-shakeable components
-- 🧪 Comprehensive testing
-- 📚 Beautiful documentation
+[![CI](https://github.com/pallavL01/AetherUI/actions/workflows/ci.yml/badge.svg)](https://github.com/pallavL01/AetherUI/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/@aetherui/core?label=%40aetherui%2Fcore)](https://www.npmjs.com/package/@aetherui/core)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-## Getting Started
+[Documentation](https://pallavL01.github.io/AetherUI/) · [Storybook](https://pallavL01.github.io/AetherUI/storybook/) · [Examples](#examples) · [Contributing](CONTRIBUTING.md)
+
+</div>
+
+---
+
+## ✨ Features
+
+- 🌐 **Framework-Agnostic** - Works with React, Vue, Angular, Svelte, or vanilla JavaScript
+- 🎨 **Themeable** - Design token-driven theming with CSS custom properties
+- ♿️ **Accessible** - WCAG 2.1 Level AA compliant with full keyboard navigation
+- 📦 **Tree-Shakeable** - Import only what you need for optimal bundle sizes
+- 🎯 **TypeScript** - Fully typed with excellent IntelliSense support
+- 🧪 **Well-Tested** - Comprehensive test coverage with Vitest and Web Test Runner
+- 📚 **Well-Documented** - Extensive documentation with interactive examples
+- 🚀 **Modern** - Built on Web Standards (Custom Elements, Shadow DOM)
+
+## 📦 Installation
 
 ```bash
+npm install @aetherui/core @aetherui/tokens
+```
+
+Or with pnpm:
+
+```bash
+pnpm add @aetherui/core @aetherui/tokens
+```
+
+Or with yarn:
+
+```bash
+yarn add @aetherui/core @aetherui/tokens
+```
+
+## 🚀 Quick Start
+
+### Import and Register Components
+
+```typescript
+import { defineAeButton, defineAeModal } from '@aetherui/core';
+import '@aetherui/tokens/light.css'; // Import theme
+
+// Register only the components you need
+defineAeButton();
+defineAeModal();
+```
+
+Or register all components at once:
+
+```typescript
+import { defineAll } from '@aetherui/core';
+import '@aetherui/tokens/light.css';
+
+defineAll();
+```
+
+### Use in HTML
+
+```html
+<ae-button variant="primary">Click me</ae-button>
+
+<ae-modal open>
+  <h2 slot="header">Welcome to AetherUI</h2>
+  <div slot="body">
+    <p>Build beautiful UIs with framework-agnostic web components!</p>
+  </div>
+  <div slot="footer">
+    <ae-button variant="secondary">Close</ae-button>
+  </div>
+</ae-modal>
+```
+
+### Tree-Shakeable Imports
+
+Import individual components for optimal bundle sizes:
+
+```typescript
+import { AeButton } from '@aetherui/core/button';
+import { AeModal } from '@aetherui/core/modal';
+```
+
+## 🧩 Available Components
+
+| Component | Description |
+|-----------|-------------|
+| **Button** | Primary action trigger with variants and sizes |
+| **Modal** | Dialog overlay with focus management |
+| **Dropdown** | Context menus with positioning |
+| **Accordion** | Expandable sections |
+| **Tabs** | Tab navigation with horizontal/vertical modes |
+| **Checkbox** | Boolean input with indeterminate state |
+| **Radio** | Mutually exclusive selection |
+| **Alert** | Status messages with variants |
+| **Tooltip** | Information overlays |
+| **Toast** | Temporary notifications |
+| **TreeView** | Hierarchical data display |
+| **Combo** | Combo box with filtering |
+| **Autocomplete** | Auto-completing input |
+
+## 💡 Examples
+
+### Using with React
+
+```tsx
+import { defineAeButton } from '@aetherui/core';
+import '@aetherui/tokens/light.css';
+
+defineAeButton();
+
+function App() {
+  const handleClick = (e: CustomEvent) => {
+    console.log('Button clicked!', e.detail);
+  };
+
+  return (
+    <ae-button
+      variant="primary"
+      onAeButtonClick={handleClick}
+    >
+      Click me
+    </ae-button>
+  );
+}
+```
+
+### Using with Vue
+
+```vue
+<template>
+  <ae-button
+    variant="primary"
+    @ae-button-click="handleClick"
+  >
+    Click me
+  </ae-button>
+</template>
+
+<script setup>
+import { defineAeButton } from '@aetherui/core';
+import '@aetherui/tokens/light.css';
+
+defineAeButton();
+
+const handleClick = (e) => {
+  console.log('Button clicked!', e.detail);
+};
+</script>
+```
+
+### Using with Vanilla JavaScript
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="node_modules/@aetherui/tokens/dist/light.css">
+</head>
+<body>
+  <ae-button variant="primary">Click me</ae-button>
+
+  <script type="module">
+    import { defineAeButton } from '@aetherui/core';
+
+    defineAeButton();
+
+    document.querySelector('ae-button').addEventListener('ae-button-click', (e) => {
+      console.log('Button clicked!', e.detail);
+    });
+  </script>
+</body>
+</html>
+```
+
+## 🎨 Theming
+
+AetherUI uses CSS custom properties for theming:
+
+```css
+/* Import base theme */
+@import '@aetherui/tokens/light.css';
+
+/* Customize tokens */
+:root {
+  --ae-button-bg-primary: #0066cc;
+  --ae-button-fg-primary: white;
+  --ae-button-radius: 8px;
+  --ae-button-padding-x: 1.5rem;
+}
+```
+
+Or use the dark theme:
+
+```typescript
+import '@aetherui/tokens/dark.css';
+```
+
+## 📚 Documentation
+
+- **[Getting Started Guide](https://pallavL01.github.io/AetherUI/)**
+- **[Component API Documentation](https://pallavL01.github.io/AetherUI/components/)**
+- **[Theming Guide](https://pallavL01.github.io/AetherUI/theming/)**
+- **[Accessibility Guide](https://pallavL01.github.io/AetherUI/accessibility/)**
+- **[Migration Guide](https://pallavL01.github.io/AetherUI/migration/)**
+
+## 🛠️ Development
+
+### Prerequisites
+
+- Node.js >= 20.19.0
+- pnpm 10.18.0
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/pallavL01/AetherUI.git
+cd AetherUI
+
 # Install dependencies
 pnpm install
 
-# Start development
+# Start development servers
 pnpm dev
+
+# Run tests
+pnpm test
 
 # Build all packages
 pnpm build
 
-# Run tests
-pnpm test
+# Run Storybook
+pnpm storybook
 ```
 
-## Packages
+### Project Structure
 
-- `@aetherui/core` - Core component library
-- `@aetherui/tokens` - Design tokens
-- `@aetherui/docs` - Documentation site
+```
+AetherUI/
+├── packages/
+│   ├── core/          # Core component library
+│   ├── tokens/        # Design tokens
+│   ├── docs/          # Documentation site
+│   └── storybook/     # Component showcase
+├── .github/           # GitHub Actions workflows
+├── CONTRIBUTING.md    # Contribution guidelines
+├── CODE_OF_CONDUCT.md # Community guidelines
+└── STANDARDS.md       # Development standards
+```
 
-## Testing
+## 🧪 Testing
 
-The project uses Vitest for testing and provides several test commands:
+We use a dual testing strategy:
 
 ```bash
-# Run all tests sequentially (default)
+# Run all tests
 pnpm test
 
-# Run tests with memory optimization (for machines with limited RAM)
-pnpm test:memory
-
-# Run only API tests (avoids DOM-related tests)
+# Run only unit/API tests (fast, memory-efficient)
 pnpm test:api
 
-# Run web component tests specifically
+# Run web component tests (browser-based)
 pnpm test:wc
-```
 
-### Memory-Optimized Testing
-
-If you encounter memory issues or terminal crashes during testing, use these commands:
-
-```bash
-# Run only API tests (most reliable)
-pnpm test:core-api
-
-# Run tests with memory constraints (512MB per package)
+# Run tests with memory optimization
 pnpm test:memory
 ```
 
-> **Note:** Currently, Web Component tests that depend on @open-wc/testing may fail due to issues with JSDOM in the test environment. For reliable testing, use the API-focused test commands above.
+## 🤝 Contributing
 
-These commands use several optimizations:
-- Limit Node.js memory with `--max-old-space-size=512`
-- Run tests sequentially to prevent parallel memory consumption
-- Use process isolation for test files
-- Disable coverage reports to save memory
-- Focus on API tests that don't require full DOM implementation
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
-### Testing Web Components
+### Quick Contribution Steps
 
-Web components tests use [@open-wc/testing](https://open-wc.org/docs/testing/testing-package/) for proper shadow DOM testing. When writing tests for components:
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-1. Import required testing utilities:
-   ```ts
-   import { html, fixture, expect } from '@open-wc/testing';
-   ```
+Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
 
-2. Create component fixtures:
-   ```ts
-   const element = await fixture(html`<ae-button>Click me</ae-button>`);
-   ```
+## 📄 License
 
-3. Test the shadow DOM and component behavior:
-   ```ts
-   expect(element.shadowRoot.querySelector('button')).to.exist;
-   ```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-See existing component tests in the repository for examples.
+## 🔒 Security
 
-## Contributing
+Found a security vulnerability? Please refer to our [Security Policy](SECURITY.md) for responsible disclosure.
 
-Please read our [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+## 💬 Community
 
-## License
+- 🐛 [Report a Bug](https://github.com/pallavL01/AetherUI/issues/new?template=bug_report.yml)
+- 💡 [Request a Feature](https://github.com/pallavL01/AetherUI/issues/new?template=feature_request.yml)
+- 📖 [Documentation](https://pallavL01.github.io/AetherUI/)
+- 💬 [Discussions](https://github.com/pallavL01/AetherUI/discussions)
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
+## 🙏 Acknowledgements
+
+- Built with [Lit](https://lit.dev)
+- Positioned with [Floating UI](https://floating-ui.com)
+- Tested with [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/)
+- Documentation powered by [Astro](https://astro.build) and [Starlight](https://starlight.astro.build)
+- Monorepo managed with [Nx](https://nx.dev)
+
+## 📊 Project Stats
+
+![GitHub stars](https://img.shields.io/github/stars/pallavL01/AetherUI?style=social)
+![GitHub forks](https://img.shields.io/github/forks/pallavL01/AetherUI?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/pallavL01/AetherUI?style=social)
+
+---
+
+<div align="center">
+
+Made with ❤️ by the AetherUI Contributors
+
+[⬆ back to top](#aetherui)
+
+</div>
