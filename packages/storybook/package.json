@@ -26,12 +26,12 @@
     "@storybook/addon-links": "^9.0.14",
     "@storybook/web-components-vite": "^9.0.14",
     "@lit/reactive-element": "^2.1.0",
-    "eslint-plugin-storybook": "9.0.14",
+    "eslint-plugin-storybook": "10.0.5",
     "lit": "^3.3.0",
     "lit-element": "^4.2.0",
     "lit-html": "^3.3.0",
     "storybook": "^9.0.14",
-    "vite": "^6.3.6"
+    "vite": "^7.2.1"
   },
   "engines": {
     "node": ">=18.0.0",

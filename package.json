@@ -43,24 +43,24 @@
     "build:parallel": "NODE_OPTIONS='--max-old-space-size=4096' nx run-many -t build --parallel=3"
   },
   "devDependencies": {
-    "@nx/js": "^21.0.3",
-    "@nx/vite": "^21.0.3",
-    "@nx/web": "^21.0.3",
+    "@nx/js": "^22.0.2",
+    "@nx/vite": "^22.0.2",
+    "@nx/web": "^22.0.2",
     "@open-wc/testing": "^4.0.0",
     "@types/node": "^20.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
     "@web/dev-server-esbuild": "^1.0.4",
     "@web/test-runner": "^0.20.1",
     "@web/test-runner-playwright": "^0.11.0",
-    "eslint": "^8.0.0",
-    "eslint-config-prettier": "^9.0.0",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
     "husky": "^8.0.0",
     "nx": "^21.0.3",
     "playwright": "^1.53.1",
     "prettier": "^3.0.0",
     "typescript": "~5.7.2",
-    "vite": "^6.3.6"
+    "vite": "^7.2.1"
   },
   "pnpm": {
     "overrides": {
