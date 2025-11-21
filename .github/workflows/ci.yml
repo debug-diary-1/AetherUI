@@ -41,15 +41,15 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-            
-      - name: Cache Nx
+
+      - name: Cache Turbo
         uses: actions/cache@v4
         with:
-          path: .nx/cache
-          key: nx-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('nx.json') }}
+          path: .turbo
+          key: turbo-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('turbo.json') }}
           restore-keys: |
-            nx-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}-
-            nx-${{ runner.os }}-
+            turbo-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}-
+            turbo-${{ runner.os }}-
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -67,22 +67,13 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
       
-      # Configure Nx Cloud if token is available
-      - name: Configure Nx Cloud
-        if: ${{ env.NX_CLOUD_ACCESS_TOKEN != '' }}
-        run: echo "Nx Cloud configured"
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
-        
-      - name: Run affected lint
-        run: npx nx affected --target=lint --parallel=3 --base=origin/main --exclude=aetherui
+      - name: Run lint
+        run: pnpm lint
         timeout-minutes: 5
-        
-      - name: Run affected tests
-        run: NODE_OPTIONS='--max-old-space-size=2048' npx nx affected --target=test --parallel=3 --ci --base=origin/main --exclude=aetherui
+
+      - name: Run tests
+        run: NODE_OPTIONS='--max-old-space-size=2048' pnpm test
         timeout-minutes: 15
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
@@ -94,8 +85,6 @@ jobs:
           name: codecov-aetherui
           fail_ci_if_error: false
 
-      - name: Run affected build
-        run: NODE_OPTIONS='--max-old-space-size=4096' npx nx affected --target=build --parallel=3 --base=origin/main --exclude=aetherui
+      - name: Run build
+        run: NODE_OPTIONS='--max-old-space-size=4096' pnpm build
         timeout-minutes: 15
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}

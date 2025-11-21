@@ -1,0 +1,56 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/dist/**", "{projectRoot}/.next/**"],
+      "cache": true
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "cache": true,
+      "outputs": []
+    },
+    "format": {
+      "cache": true,
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": [],
+      "outputs": ["{projectRoot}/coverage/**"],
+      "cache": true
+    },
+    "test:memory": {
+      "dependsOn": [],
+      "outputs": ["{projectRoot}/coverage/**"],
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    },
+    "storybook": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
+    "build-storybook": {
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/storybook-static/**"],
+      "cache": true
+    },
+    "docs": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
+    "docs:build": {
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/dist/**"],
+      "cache": true
+    }
+  }
+}

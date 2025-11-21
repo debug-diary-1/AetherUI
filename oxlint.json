@@ -1,0 +1,15 @@
+{
+  "rules": {
+    "typescript": {
+      "explicit-function-return-type": "off",
+      "no-explicit-any": "error",
+      "no-unused-vars": "error"
+    }
+  },
+  "ignorePatterns": [
+    "dist/**",
+    "node_modules/**",
+    "**/dist/**",
+    "**/node_modules/**"
+  ]
+}
