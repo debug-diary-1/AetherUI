@@ -1,5 +1,4 @@
 import { html } from 'lit';
-import { AeAlert } from '@aetherui/core';
 
 export default {
   title: 'Components/Alert',

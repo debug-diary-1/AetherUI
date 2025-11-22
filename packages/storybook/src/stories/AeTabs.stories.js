@@ -1,5 +1,4 @@
 import { html } from 'lit';
-import { AeTabs } from '@aetherui/core';
 
 export default {
   title: 'Components/Tabs',

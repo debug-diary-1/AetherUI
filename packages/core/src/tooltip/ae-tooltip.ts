@@ -170,7 +170,11 @@ export class AeTooltip extends LitElement {
 
   /** Toggle the tooltip visibility */
   toggle() {
-    this.open ? this.hide() : this.show();
+    if (this.open) {
+      this.hide();
+    } else {
+      this.show();
+    }
   }
 
   private _findAnchorElement() {
@@ -340,7 +344,7 @@ export class AeTooltip extends LitElement {
             [staticSide]: '-4px'
           };
         }
-      } catch (error) {
+      } catch (_error) {
         // Silently handle positioning errors
       }
     };

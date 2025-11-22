@@ -1,0 +1,21 @@
+{
+  "rules": {
+    "typescript": {
+      "explicit-function-return-type": "off",
+      "no-explicit-any": "error",
+      "no-unused-vars": "error"
+    },
+    "eslint": {
+      "no-unused-expressions": "off"
+    }
+  },
+  "ignorePatterns": [
+    "dist/**",
+    "node_modules/**",
+    "**/dist/**",
+    "**/node_modules/**",
+    "**/__tests__/**",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
+}
