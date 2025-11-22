@@ -96,6 +96,12 @@ export class AeButton extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'icon-only' })
   accessor iconOnly = false;
 
+  /**
+   * Whether to use unstyled/headless mode (no default styles)
+   */
+  @property({ type: Boolean, reflect: true })
+  accessor unstyled = false;
+
   render() {
     return html`
       <button
