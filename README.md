@@ -19,12 +19,14 @@
 ## ✨ Features
 
 - 🌐 **Framework-Agnostic** - Works with React, Vue, Angular, Svelte, or vanilla JavaScript
-- 🎨 **Themeable** - Design token-driven theming with CSS custom properties
+- 🎨 **Truly Headless** - Complete styling control with unstyled mode or pre-built themes
+- 🎭 **Three Theming Options** - Use pre-built (light/dark), minimal foundation, or fully custom
 - ♿️ **Accessible** - WCAG 2.1 Level AA compliant with full keyboard navigation
 - 📦 **Tree-Shakeable** - Import only what you need for optimal bundle sizes
 - 🎯 **TypeScript** - Fully typed with excellent IntelliSense support
 - 🧪 **Well-Tested** - Comprehensive test coverage with Vitest and Web Test Runner
 - 📚 **Well-Documented** - Extensive documentation with interactive examples
+- 🔍 **PR Preview Deployments** - Automatic Storybook preview for every pull request
 - 🚀 **Modern** - Built on Web Standards (Custom Elements, Shadow DOM)
 
 ## 📦 Installation
@@ -211,7 +213,10 @@ import '@aetherui/tokens/dark.css';
 
 - **[Getting Started Guide](https://pallavL01.github.io/AetherUI/)**
 - **[Component API Documentation](https://pallavL01.github.io/AetherUI/components/)**
-- **[Theming Guide](https://pallavL01.github.io/AetherUI/theming/)**
+- **[Theming Guide](./docs/THEMING.md)** - Complete theming strategies and examples
+- **[CSS Properties Reference](./docs/CSS_PROPERTIES.md)** - All CSS custom properties
+- **[Headless Mode Guide](./docs/HEADLESS.md)** - Unstyled mode and complete customization
+- **[Preview Deployments](./docs/PREVIEW_DEPLOYMENTS.md)** - Automatic PR previews setup
 - **[Accessibility Guide](https://pallavL01.github.io/AetherUI/accessibility/)**
 - **[Migration Guide](https://pallavL01.github.io/AetherUI/migration/)**
 
@@ -244,6 +249,17 @@ pnpm build
 # Run Storybook
 pnpm storybook
 ```
+
+### Preview Deployments
+
+Every PR automatically gets a **live Storybook preview** deployed to Vercel or Netlify:
+
+- 🔍 Review components visually before merging
+- 🎨 Test with different themes (light/dark/minimal)
+- ♿️ Check accessibility
+- 📱 Test responsive behavior
+
+**[Setup Guide](./docs/QUICK_SETUP_VERCEL.md)** - 5-minute Vercel integration
 
 ### Project Structure
 

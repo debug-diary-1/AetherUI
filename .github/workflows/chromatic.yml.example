@@ -1,0 +1,105 @@
+# Optional: Chromatic Visual Testing Workflow
+#
+# To enable:
+# 1. Rename this file to chromatic.yml (remove .example)
+# 2. Sign up at https://www.chromatic.com/
+# 3. Add CHROMATIC_PROJECT_TOKEN to GitHub Secrets
+#
+# Chromatic provides:
+# - Visual regression testing
+# - Automatic visual diffs on PRs
+# - Component history and collaboration
+# - Storybook hosting
+
+name: Chromatic
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  NODE_VERSION: '20'
+  PNPM_VERSION: '10.18.0'
+
+jobs:
+  chromatic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for Chromatic
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: NODE_OPTIONS='--max-old-space-size=4096' pnpm build
+        env:
+          NODE_OPTIONS: '--max-old-space-size=4096'
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@latest
+        with:
+          # Required: Chromatic project token (add to GitHub Secrets)
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+          # Build Storybook
+          buildScriptName: build-storybook
+
+          # Auto-accept changes on main branch
+          autoAcceptChanges: main
+
+          # Exit with 0 if visual changes detected (don't fail CI)
+          exitZeroOnChanges: true
+
+          # Exit with 0 if build has errors (don't fail CI)
+          exitOnceUploaded: true
+
+          # Skip if only certain files changed
+          skip: 'dependabot/**'
+
+      - name: Comment PR with Chromatic link
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const output = `### 🎨 Chromatic Visual Testing
+
+            View visual changes and component library:
+            👉 [Open Chromatic Build](https://www.chromatic.com/build?appId=${{ secrets.CHROMATIC_APP_ID }})
+
+            📸 Visual regression tests will detect any unintended UI changes.`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            });
