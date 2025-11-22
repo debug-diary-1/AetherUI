@@ -16,7 +16,7 @@ concurrency:
 
 env:
   NODE_VERSION: '20'
-  PNPM_VERSION: '10.10.0'
+  PNPM_VERSION: '10.18.0'
 
 jobs:
   build-docs:
