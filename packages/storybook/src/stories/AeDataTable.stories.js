@@ -191,7 +191,7 @@ export const CustomCellRendering = () => {
     {
       id: 'actions',
       header: 'Actions',
-      renderer: (_, row) => html`
+      renderer: (_, _row) => html`
         <div style="display: flex; gap: 8px;">
           <button style="padding: 4px 8px;">Edit</button>
           <button style="padding: 4px 8px;">Delete</button>

@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
-import path, { dirname, join } from 'path';
+import { dirname, join } from 'path';
 
 const require = createRequire(import.meta.url);
 

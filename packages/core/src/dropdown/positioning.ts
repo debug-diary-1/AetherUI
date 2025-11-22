@@ -47,7 +47,7 @@ export async function updatePosition(
       margin: '0',
       visibility: 'visible'
     });
-  } catch (error) {
+  } catch (_error) {
     // Error handled silently
   }
 
