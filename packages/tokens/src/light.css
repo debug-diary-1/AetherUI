@@ -1,0 +1,264 @@
+/**
+ * AetherUI Light Theme
+ *
+ * Complete light theme with all component-specific styling tokens.
+ * This provides a professional, production-ready appearance.
+ */
+
+/* Import semantic tokens */
+@import './minimal.css';
+
+:root {
+  /* ===== Global Component Tokens ===== */
+
+  /* Text Colors */
+  --ae-text-primary: #111827;
+  --ae-text-secondary: #4b5563;
+  --ae-text-tertiary: #9ca3af;
+  --ae-text-inverse: #ffffff;
+
+  /* Background Colors */
+  --ae-bg-primary: #ffffff;
+  --ae-bg-secondary: #f9fafb;
+  --ae-bg-tertiary: #f3f4f6;
+
+  /* Border Colors */
+  --ae-border-primary: #e5e7eb;
+  --ae-border-secondary: #d1d5db;
+  --ae-border-focus: var(--ae-color-primary);
+
+  /* ===== Button Component ===== */
+
+  /* Layout */
+  --ae-button-padding-x: 1rem;
+  --ae-button-padding-y: 0.5rem;
+  --ae-button-gap: 0.5rem;
+  --ae-button-radius: 0.375rem;
+  --ae-button-padding-icon-only: 0.5rem;
+
+  /* Primary Variant */
+  --ae-button-bg-primary: var(--ae-color-primary);
+  --ae-button-fg-primary: white;
+  --ae-button-border-primary: var(--ae-button-bg-primary);
+  --ae-button-bg-primary-hover: #0052a3;
+  --ae-button-border-primary-hover: var(--ae-button-bg-primary-hover);
+
+  /* Secondary Variant */
+  --ae-button-bg-secondary: #f3f4f6;
+  --ae-button-fg-secondary: #333333;
+  --ae-button-border-secondary: #d4d4d4;
+  --ae-button-bg-secondary-hover: #e5e7eb;
+
+  /* Ghost Variant */
+  --ae-button-bg-ghost: transparent;
+  --ae-button-fg-ghost: var(--ae-color-primary);
+  --ae-button-border-ghost: transparent;
+  --ae-button-bg-ghost-hover: rgba(0, 102, 204, 0.1);
+
+  /* Sizes */
+  --ae-button-font-sm: 0.875rem;
+  --ae-button-font-md: 1rem;
+  --ae-button-font-lg: 1.125rem;
+
+  /* States */
+  --ae-button-transition-duration: 200ms;
+  --ae-button-transition-timing: ease;
+  --ae-button-disabled-opacity: 0.6;
+
+  /* ===== Accordion Component ===== */
+
+  /* Container */
+  --ae-accordion-bg: white;
+  --ae-accordion-radius: 0.375rem;
+  --ae-accordion-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --ae-accordion-border: 1px solid #e5e7eb;
+  --ae-accordion-divider: 1px solid #e5e7eb;
+
+  /* Header */
+  --ae-accordion-header-bg: transparent;
+  --ae-accordion-header-padding: 0.875rem 1rem;
+  --ae-accordion-header-color: #111827;
+  --ae-accordion-header-font-weight: 500;
+  --ae-accordion-header-font-size: 0.875rem;
+  --ae-accordion-header-hover-bg: #f9fafb;
+  --ae-accordion-header-active-bg: #f3f4f6;
+  --ae-accordion-header-active-color: var(--ae-color-primary);
+  --ae-accordion-header-disabled-color: #9ca3af;
+
+  /* Icon */
+  --ae-accordion-icon-color: #4b5563;
+  --ae-accordion-icon-active-color: var(--ae-color-primary);
+  --ae-accordion-icon-disabled-color: #9ca3af;
+
+  /* Panel */
+  --ae-accordion-panel-padding: 1rem;
+  --ae-accordion-panel-bg: white;
+  --ae-accordion-panel-color: #374151;
+  --ae-accordion-panel-font-size: 0.875rem;
+
+  /* ===== Checkbox Component ===== */
+
+  --ae-checkbox-size: 18px;
+  --ae-checkbox-border-radius: 4px;
+  --ae-checkbox-bg: white;
+  --ae-checkbox-border-color: #d1d5db;
+  --ae-checkbox-checked-bg: var(--ae-color-primary);
+  --ae-checkbox-checked-border-color: var(--ae-color-primary);
+  --ae-checkbox-checked-icon-color: white;
+  --ae-checkbox-indeterminate-bg: var(--ae-color-primary);
+  --ae-checkbox-indeterminate-border-color: var(--ae-color-primary);
+  --ae-checkbox-indeterminate-icon-color: white;
+  --ae-checkbox-focus-ring-color: var(--ae-color-primary);
+  --ae-checkbox-disabled-bg: #f3f4f6;
+  --ae-checkbox-disabled-border-color: #e5e7eb;
+  --ae-checkbox-disabled-text-color: #9ca3af;
+  --ae-checkbox-text-color: inherit;
+  --ae-checkbox-font-size: inherit;
+
+  /* ===== Radio Component ===== */
+
+  --ae-radio-size: 18px;
+  --ae-radio-bg: white;
+  --ae-radio-border-color: #d1d5db;
+  --ae-radio-checked-bg: var(--ae-color-primary);
+  --ae-radio-checked-border-color: var(--ae-color-primary);
+  --ae-radio-checked-dot-color: white;
+  --ae-radio-focus-ring-color: var(--ae-color-primary);
+  --ae-radio-disabled-bg: #f3f4f6;
+  --ae-radio-disabled-border-color: #e5e7eb;
+  --ae-radio-disabled-text-color: #9ca3af;
+  --ae-radio-text-color: inherit;
+  --ae-radio-font-size: inherit;
+
+  /* ===== Dropdown Component ===== */
+
+  --ae-dropdown-bg: #ffffff;
+  --ae-dropdown-fg: #111827;
+  --ae-dropdown-radius: 8px;
+  --ae-dropdown-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  --ae-dropdown-border: 1px solid #e5e7eb;
+  --ae-dropdown-max-height: 400px;
+  --ae-dropdown-header-bg: #f9fafb;
+  --ae-dropdown-header-fg: #111827;
+  --ae-dropdown-header-border: 1px solid #e5e7eb;
+  --ae-dropdown-item-font-size: 0.9rem;
+  --ae-dropdown-item-hover-bg: #f3f4f6;
+  --ae-dropdown-item-active-bg: #e5e7eb;
+  --ae-dropdown-separator-color: #e5e7eb;
+  --ae-dropdown-section-border: 1px solid #e5e7eb;
+  --ae-dropdown-hint-color: #6b7280;
+  --ae-dropdown-hint-bg: transparent;
+  --ae-dropdown-hint-padding: 2px 4px;
+  --ae-dropdown-hint-radius: 3px;
+
+  /* ===== Modal Component ===== */
+
+  --ae-modal-overlay-bg: rgba(0, 0, 0, 0.5);
+  --ae-modal-bg: #ffffff;
+  --ae-modal-max-width: 500px;
+  --ae-modal-padding: 1.5rem;
+  --ae-modal-radius: 8px;
+  --ae-modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --ae-modal-header-border: 1px solid #e5e7eb;
+  --ae-modal-footer-border: 1px solid #e5e7eb;
+
+  /* ===== Alert Component ===== */
+
+  --ae-alert-padding: 1rem;
+  --ae-alert-radius: 0.375rem;
+  --ae-alert-border-width: 1px;
+
+  /* Info Variant */
+  --ae-alert-bg-info: #e0f2fe;
+  --ae-alert-fg-info: #075985;
+  --ae-alert-border-info: #7dd3fc;
+  --ae-alert-icon-info: #0284c7;
+
+  /* Success Variant */
+  --ae-alert-bg-success: #d1fae5;
+  --ae-alert-fg-success: #065f46;
+  --ae-alert-border-success: #6ee7b7;
+  --ae-alert-icon-success: #059669;
+
+  /* Warning Variant */
+  --ae-alert-bg-warning: #fef3c7;
+  --ae-alert-fg-warning: #92400e;
+  --ae-alert-border-warning: #fcd34d;
+  --ae-alert-icon-warning: #f59e0b;
+
+  /* Error Variant */
+  --ae-alert-bg-error: #fee2e2;
+  --ae-alert-fg-error: #991b1b;
+  --ae-alert-border-error: #fca5a5;
+  --ae-alert-icon-error: #dc2626;
+
+  /* ===== Toast Component ===== */
+
+  --ae-toast-offset: 1rem;
+  --ae-toast-gap: 0.5rem;
+  --ae-toast-padding: 1rem;
+  --ae-toast-radius: 0.5rem;
+  --ae-toast-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  /* Uses same variant colors as Alert */
+  --ae-toast-bg-info: var(--ae-alert-bg-info);
+  --ae-toast-fg-info: var(--ae-alert-fg-info);
+  --ae-toast-bg-success: var(--ae-alert-bg-success);
+  --ae-toast-fg-success: var(--ae-alert-fg-success);
+  --ae-toast-bg-warning: var(--ae-alert-bg-warning);
+  --ae-toast-fg-warning: var(--ae-alert-fg-warning);
+  --ae-toast-bg-error: var(--ae-alert-bg-error);
+  --ae-toast-fg-error: var(--ae-alert-fg-error);
+
+  /* ===== Tabs Component ===== */
+
+  --ae-tabs-border-color: #e5e7eb;
+  --ae-tabs-active-color: var(--ae-color-primary);
+  --ae-tabs-active-border-width: 2px;
+  --ae-tabs-padding: 0.75rem 1rem;
+  --ae-tabs-hover-bg: #f9fafb;
+  --ae-tabs-inactive-color: #6b7280;
+
+  /* ===== Tooltip Component ===== */
+
+  --ae-tooltip-bg: #1f2937;
+  --ae-tooltip-fg: white;
+  --ae-tooltip-padding: 0.5rem 0.75rem;
+  --ae-tooltip-radius: 0.375rem;
+  --ae-tooltip-font-size: 0.875rem;
+  --ae-tooltip-max-width: 200px;
+  --ae-tooltip-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+  /* ===== TreeView Component ===== */
+
+  --ae-treeview-indent: 1.5rem;
+  --ae-treeview-node-padding: 0.5rem;
+  --ae-treeview-selected-bg: #eff6ff;
+  --ae-treeview-selected-color: var(--ae-color-primary);
+  --ae-treeview-hover-bg: #f9fafb;
+  --ae-treeview-focus-color: var(--ae-color-primary);
+  --ae-treeview-icon-color: #6b7280;
+  --ae-treeview-caret-color: #6b7280;
+  --ae-treeview-checkbox-border-color: #d1d5db;
+  --ae-treeview-checkbox-checked-bg: var(--ae-color-primary);
+  --ae-treeview-checkbox-checked-border-color: var(--ae-color-primary);
+  --ae-treeview-empty-color: #6b7280;
+  --ae-treeview-loading-color: #6b7280;
+  --ae-treeview-spinner-color: var(--ae-color-primary);
+
+  /* ===== Combo & Autocomplete Components ===== */
+
+  --ae-combo-input-padding: 0.5rem 0.75rem;
+  --ae-combo-input-border: 1px solid #d1d5db;
+  --ae-combo-input-radius: 0.375rem;
+  --ae-combo-input-focus-border: var(--ae-color-primary);
+  --ae-combo-list-bg: white;
+  --ae-combo-list-border: 1px solid #e5e7eb;
+  --ae-combo-list-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --ae-combo-list-max-height: 300px;
+  --ae-combo-item-padding: 0.5rem 0.75rem;
+  --ae-combo-item-hover-bg: #f3f4f6;
+  --ae-combo-item-selected-bg: #eff6ff;
+  --ae-combo-item-selected-color: var(--ae-color-primary);
+  --ae-combo-item-active-bg: #e0f2fe;
+}

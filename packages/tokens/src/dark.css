@@ -1,0 +1,274 @@
+/**
+ * AetherUI Dark Theme
+ *
+ * Complete dark theme optimized for low-light environments.
+ * Provides excellent contrast and eye comfort.
+ */
+
+/* Import semantic tokens */
+@import './minimal.css';
+
+:root {
+  /* ===== Override Base Colors for Dark Mode ===== */
+  --ae-color-primary: #3b82f6;
+  --ae-color-secondary: #8b5cf6;
+  --ae-color-success: #10b981;
+  --ae-color-warning: #f59e0b;
+  --ae-color-error: #ef4444;
+  --ae-color-info: #06b6d4;
+
+  /* ===== Global Component Tokens ===== */
+
+  /* Text Colors */
+  --ae-text-primary: #f9fafb;
+  --ae-text-secondary: #d1d5db;
+  --ae-text-tertiary: #9ca3af;
+  --ae-text-inverse: #111827;
+
+  /* Background Colors */
+  --ae-bg-primary: #111827;
+  --ae-bg-secondary: #1f2937;
+  --ae-bg-tertiary: #374151;
+
+  /* Border Colors */
+  --ae-border-primary: #374151;
+  --ae-border-secondary: #4b5563;
+  --ae-border-focus: var(--ae-color-primary);
+
+  /* ===== Button Component ===== */
+
+  /* Layout */
+  --ae-button-padding-x: 1rem;
+  --ae-button-padding-y: 0.5rem;
+  --ae-button-gap: 0.5rem;
+  --ae-button-radius: 0.375rem;
+  --ae-button-padding-icon-only: 0.5rem;
+
+  /* Primary Variant */
+  --ae-button-bg-primary: var(--ae-color-primary);
+  --ae-button-fg-primary: white;
+  --ae-button-border-primary: var(--ae-button-bg-primary);
+  --ae-button-bg-primary-hover: #2563eb;
+  --ae-button-border-primary-hover: var(--ae-button-bg-primary-hover);
+
+  /* Secondary Variant */
+  --ae-button-bg-secondary: #374151;
+  --ae-button-fg-secondary: #f9fafb;
+  --ae-button-border-secondary: #4b5563;
+  --ae-button-bg-secondary-hover: #4b5563;
+
+  /* Ghost Variant */
+  --ae-button-bg-ghost: transparent;
+  --ae-button-fg-ghost: var(--ae-color-primary);
+  --ae-button-border-ghost: transparent;
+  --ae-button-bg-ghost-hover: rgba(59, 130, 246, 0.1);
+
+  /* Sizes */
+  --ae-button-font-sm: 0.875rem;
+  --ae-button-font-md: 1rem;
+  --ae-button-font-lg: 1.125rem;
+
+  /* States */
+  --ae-button-transition-duration: 200ms;
+  --ae-button-transition-timing: ease;
+  --ae-button-disabled-opacity: 0.5;
+
+  /* ===== Accordion Component ===== */
+
+  /* Container */
+  --ae-accordion-bg: #1f2937;
+  --ae-accordion-radius: 0.375rem;
+  --ae-accordion-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --ae-accordion-border: 1px solid #374151;
+  --ae-accordion-divider: 1px solid #374151;
+
+  /* Header */
+  --ae-accordion-header-bg: transparent;
+  --ae-accordion-header-padding: 0.875rem 1rem;
+  --ae-accordion-header-color: #f9fafb;
+  --ae-accordion-header-font-weight: 500;
+  --ae-accordion-header-font-size: 0.875rem;
+  --ae-accordion-header-hover-bg: #374151;
+  --ae-accordion-header-active-bg: #4b5563;
+  --ae-accordion-header-active-color: var(--ae-color-primary);
+  --ae-accordion-header-disabled-color: #6b7280;
+
+  /* Icon */
+  --ae-accordion-icon-color: #9ca3af;
+  --ae-accordion-icon-active-color: var(--ae-color-primary);
+  --ae-accordion-icon-disabled-color: #6b7280;
+
+  /* Panel */
+  --ae-accordion-panel-padding: 1rem;
+  --ae-accordion-panel-bg: #1f2937;
+  --ae-accordion-panel-color: #d1d5db;
+  --ae-accordion-panel-font-size: 0.875rem;
+
+  /* ===== Checkbox Component ===== */
+
+  --ae-checkbox-size: 18px;
+  --ae-checkbox-border-radius: 4px;
+  --ae-checkbox-bg: #374151;
+  --ae-checkbox-border-color: #4b5563;
+  --ae-checkbox-checked-bg: var(--ae-color-primary);
+  --ae-checkbox-checked-border-color: var(--ae-color-primary);
+  --ae-checkbox-checked-icon-color: white;
+  --ae-checkbox-indeterminate-bg: var(--ae-color-primary);
+  --ae-checkbox-indeterminate-border-color: var(--ae-color-primary);
+  --ae-checkbox-indeterminate-icon-color: white;
+  --ae-checkbox-focus-ring-color: var(--ae-color-primary);
+  --ae-checkbox-disabled-bg: #1f2937;
+  --ae-checkbox-disabled-border-color: #374151;
+  --ae-checkbox-disabled-text-color: #6b7280;
+  --ae-checkbox-text-color: #f9fafb;
+  --ae-checkbox-font-size: inherit;
+
+  /* ===== Radio Component ===== */
+
+  --ae-radio-size: 18px;
+  --ae-radio-bg: #374151;
+  --ae-radio-border-color: #4b5563;
+  --ae-radio-checked-bg: var(--ae-color-primary);
+  --ae-radio-checked-border-color: var(--ae-color-primary);
+  --ae-radio-checked-dot-color: white;
+  --ae-radio-focus-ring-color: var(--ae-color-primary);
+  --ae-radio-disabled-bg: #1f2937;
+  --ae-radio-disabled-border-color: #374151;
+  --ae-radio-disabled-text-color: #6b7280;
+  --ae-radio-text-color: #f9fafb;
+  --ae-radio-font-size: inherit;
+
+  /* ===== Dropdown Component ===== */
+
+  --ae-dropdown-bg: #1f2937;
+  --ae-dropdown-fg: #f9fafb;
+  --ae-dropdown-radius: 8px;
+  --ae-dropdown-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  --ae-dropdown-border: 1px solid #374151;
+  --ae-dropdown-max-height: 400px;
+  --ae-dropdown-header-bg: #374151;
+  --ae-dropdown-header-fg: #f9fafb;
+  --ae-dropdown-header-border: 1px solid #4b5563;
+  --ae-dropdown-item-font-size: 0.9rem;
+  --ae-dropdown-item-hover-bg: #374151;
+  --ae-dropdown-item-active-bg: #4b5563;
+  --ae-dropdown-separator-color: #374151;
+  --ae-dropdown-section-border: 1px solid #374151;
+  --ae-dropdown-hint-color: #9ca3af;
+  --ae-dropdown-hint-bg: transparent;
+  --ae-dropdown-hint-padding: 2px 4px;
+  --ae-dropdown-hint-radius: 3px;
+
+  /* ===== Modal Component ===== */
+
+  --ae-modal-overlay-bg: rgba(0, 0, 0, 0.75);
+  --ae-modal-bg: #1f2937;
+  --ae-modal-max-width: 500px;
+  --ae-modal-padding: 1.5rem;
+  --ae-modal-radius: 8px;
+  --ae-modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --ae-modal-header-border: 1px solid #374151;
+  --ae-modal-footer-border: 1px solid #374151;
+
+  /* ===== Alert Component ===== */
+
+  --ae-alert-padding: 1rem;
+  --ae-alert-radius: 0.375rem;
+  --ae-alert-border-width: 1px;
+
+  /* Info Variant */
+  --ae-alert-bg-info: #1e3a5f;
+  --ae-alert-fg-info: #93c5fd;
+  --ae-alert-border-info: #3b82f6;
+  --ae-alert-icon-info: #60a5fa;
+
+  /* Success Variant */
+  --ae-alert-bg-success: #1e4620;
+  --ae-alert-fg-success: #86efac;
+  --ae-alert-border-success: #10b981;
+  --ae-alert-icon-success: #34d399;
+
+  /* Warning Variant */
+  --ae-alert-bg-warning: #4a3410;
+  --ae-alert-fg-warning: #fcd34d;
+  --ae-alert-border-warning: #f59e0b;
+  --ae-alert-icon-warning: #fbbf24;
+
+  /* Error Variant */
+  --ae-alert-bg-error: #4a1616;
+  --ae-alert-fg-error: #fca5a5;
+  --ae-alert-border-error: #ef4444;
+  --ae-alert-icon-error: #f87171;
+
+  /* ===== Toast Component ===== */
+
+  --ae-toast-offset: 1rem;
+  --ae-toast-gap: 0.5rem;
+  --ae-toast-padding: 1rem;
+  --ae-toast-radius: 0.5rem;
+  --ae-toast-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+
+  /* Uses same variant colors as Alert */
+  --ae-toast-bg-info: var(--ae-alert-bg-info);
+  --ae-toast-fg-info: var(--ae-alert-fg-info);
+  --ae-toast-bg-success: var(--ae-alert-bg-success);
+  --ae-toast-fg-success: var(--ae-alert-fg-success);
+  --ae-toast-bg-warning: var(--ae-alert-bg-warning);
+  --ae-toast-fg-warning: var(--ae-alert-fg-warning);
+  --ae-toast-bg-error: var(--ae-alert-bg-error);
+  --ae-toast-fg-error: var(--ae-alert-fg-error);
+
+  /* ===== Tabs Component ===== */
+
+  --ae-tabs-border-color: #374151;
+  --ae-tabs-active-color: var(--ae-color-primary);
+  --ae-tabs-active-border-width: 2px;
+  --ae-tabs-padding: 0.75rem 1rem;
+  --ae-tabs-hover-bg: #374151;
+  --ae-tabs-inactive-color: #9ca3af;
+
+  /* ===== Tooltip Component ===== */
+
+  --ae-tooltip-bg: #374151;
+  --ae-tooltip-fg: #f9fafb;
+  --ae-tooltip-padding: 0.5rem 0.75rem;
+  --ae-tooltip-radius: 0.375rem;
+  --ae-tooltip-font-size: 0.875rem;
+  --ae-tooltip-max-width: 200px;
+  --ae-tooltip-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+
+  /* ===== TreeView Component ===== */
+
+  --ae-treeview-indent: 1.5rem;
+  --ae-treeview-node-padding: 0.5rem;
+  --ae-treeview-selected-bg: #1e3a5f;
+  --ae-treeview-selected-color: var(--ae-color-primary);
+  --ae-treeview-hover-bg: #374151;
+  --ae-treeview-focus-color: var(--ae-color-primary);
+  --ae-treeview-icon-color: #9ca3af;
+  --ae-treeview-caret-color: #9ca3af;
+  --ae-treeview-checkbox-border-color: #4b5563;
+  --ae-treeview-checkbox-checked-bg: var(--ae-color-primary);
+  --ae-treeview-checkbox-checked-border-color: var(--ae-color-primary);
+  --ae-treeview-empty-color: #9ca3af;
+  --ae-treeview-loading-color: #9ca3af;
+  --ae-treeview-spinner-color: var(--ae-color-primary);
+
+  /* ===== Combo & Autocomplete Components ===== */
+
+  --ae-combo-input-padding: 0.5rem 0.75rem;
+  --ae-combo-input-border: 1px solid #4b5563;
+  --ae-combo-input-radius: 0.375rem;
+  --ae-combo-input-focus-border: var(--ae-color-primary);
+  --ae-combo-input-bg: #374151;
+  --ae-combo-input-color: #f9fafb;
+  --ae-combo-list-bg: #1f2937;
+  --ae-combo-list-border: 1px solid #374151;
+  --ae-combo-list-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --ae-combo-list-max-height: 300px;
+  --ae-combo-item-padding: 0.5rem 0.75rem;
+  --ae-combo-item-hover-bg: #374151;
+  --ae-combo-item-selected-bg: #1e3a5f;
+  --ae-combo-item-selected-color: var(--ae-color-primary);
+  --ae-combo-item-active-bg: #1e40af;
+}

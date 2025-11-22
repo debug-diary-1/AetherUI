@@ -1,0 +1,107 @@
+/**
+ * AetherUI Minimal Theme
+ *
+ * Provides only semantic design tokens without component-specific styling.
+ * Use this as a foundation for building completely custom themes.
+ */
+
+:root {
+  /* ===== Color Tokens ===== */
+  --ae-color-primary: #0066cc;
+  --ae-color-secondary: #666666;
+  --ae-color-success: #28a745;
+  --ae-color-warning: #ffc107;
+  --ae-color-error: #dc3545;
+  --ae-color-info: #17a2b8;
+
+  /* Neutral Colors */
+  --ae-color-white: #ffffff;
+  --ae-color-black: #000000;
+  --ae-color-gray-50: #f9fafb;
+  --ae-color-gray-100: #f3f4f6;
+  --ae-color-gray-200: #e5e7eb;
+  --ae-color-gray-300: #d1d5db;
+  --ae-color-gray-400: #9ca3af;
+  --ae-color-gray-500: #6b7280;
+  --ae-color-gray-600: #4b5563;
+  --ae-color-gray-700: #374151;
+  --ae-color-gray-800: #1f2937;
+  --ae-color-gray-900: #111827;
+
+  /* ===== Spacing Scale ===== */
+  --ae-spacing-xs: 0.25rem;    /* 4px */
+  --ae-spacing-sm: 0.5rem;     /* 8px */
+  --ae-spacing-md: 1rem;       /* 16px */
+  --ae-spacing-lg: 1.5rem;     /* 24px */
+  --ae-spacing-xl: 2rem;       /* 32px */
+  --ae-spacing-2xl: 3rem;      /* 48px */
+  --ae-spacing-3xl: 4rem;      /* 64px */
+
+  /* ===== Typography ===== */
+  --ae-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --ae-font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+
+  /* Font Sizes */
+  --ae-font-size-xs: 0.75rem;     /* 12px */
+  --ae-font-size-sm: 0.875rem;    /* 14px */
+  --ae-font-size-md: 1rem;        /* 16px */
+  --ae-font-size-lg: 1.125rem;    /* 18px */
+  --ae-font-size-xl: 1.25rem;     /* 20px */
+  --ae-font-size-2xl: 1.5rem;     /* 24px */
+  --ae-font-size-3xl: 1.875rem;   /* 30px */
+  --ae-font-size-4xl: 2.25rem;    /* 36px */
+
+  /* Font Weights */
+  --ae-font-weight-light: 300;
+  --ae-font-weight-normal: 400;
+  --ae-font-weight-medium: 500;
+  --ae-font-weight-semibold: 600;
+  --ae-font-weight-bold: 700;
+
+  /* Line Heights */
+  --ae-line-height-tight: 1.25;
+  --ae-line-height-normal: 1.5;
+  --ae-line-height-relaxed: 1.75;
+
+  /* ===== Border Radius ===== */
+  --ae-border-radius-none: 0;
+  --ae-border-radius-sm: 0.25rem;    /* 4px */
+  --ae-border-radius-md: 0.5rem;     /* 8px */
+  --ae-border-radius-lg: 1rem;       /* 16px */
+  --ae-border-radius-xl: 1.5rem;     /* 24px */
+  --ae-border-radius-full: 9999px;   /* Fully rounded */
+
+  /* ===== Shadows ===== */
+  --ae-shadow-none: none;
+  --ae-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --ae-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --ae-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --ae-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --ae-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* ===== Transitions ===== */
+  --ae-transition-fast: 150ms;
+  --ae-transition-normal: 250ms;
+  --ae-transition-slow: 350ms;
+  --ae-transition-timing: ease;
+
+  /* ===== Z-Index Scale ===== */
+  --ae-z-index-dropdown: 1000;
+  --ae-z-index-sticky: 1020;
+  --ae-z-index-fixed: 1030;
+  --ae-z-index-modal-backdrop: 1040;
+  --ae-z-index-modal: 1050;
+  --ae-z-index-popover: 1060;
+  --ae-z-index-tooltip: 1070;
+  --ae-z-index-toast: 1080;
+
+  /* ===== Focus Ring ===== */
+  --ae-focus-ring-color: #2563eb;
+  --ae-focus-ring-offset: 2px;
+  --ae-focus-ring-width: 2px;
+
+  /* ===== Border Widths ===== */
+  --ae-border-width-thin: 1px;
+  --ae-border-width-medium: 2px;
+  --ae-border-width-thick: 4px;
+}

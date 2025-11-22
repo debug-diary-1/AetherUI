@@ -141,26 +141,4 @@ export const dropdownStyles = css`
     align-items: center;
     margin-left: 8px;
   }
-
-  /* Default dark theme to match example */
-  :host {
-    --ae-dropdown-bg: #111;
-    --ae-dropdown-fg: #fff;
-    --ae-dropdown-item-hover-bg: rgba(255,255,255,0.1);
-    --ae-dropdown-item-active-bg: rgba(255,255,255,0.2);
-    --ae-dropdown-separator-color: rgba(255,255,255,0.1);
-    --ae-dropdown-header-border: 1px solid rgba(255,255,255,0.1);
-    --ae-dropdown-section-border: 1px solid rgba(255,255,255,0.1);
-  }
-
-  /* Light theme override */
-  :host([theme="light"]) {
-    --ae-dropdown-bg: #fff;
-    --ae-dropdown-fg: #111;
-    --ae-dropdown-item-hover-bg: rgba(0,0,0,0.05);
-    --ae-dropdown-item-active-bg: rgba(0,0,0,0.1);
-    --ae-dropdown-separator-color: rgba(0,0,0,0.1);
-    --ae-dropdown-header-border: 1px solid rgba(0,0,0,0.1);
-    --ae-dropdown-section-border: 1px solid rgba(0,0,0,0.1);
-  }
 `; 

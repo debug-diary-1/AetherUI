@@ -3,6 +3,9 @@ import { css } from 'lit';
 /**
  * Button component styles following standardized pattern
  * CSS Variables follow: --ae-button-{property}-{variant?}
+ *
+ * Note: This component requires a theme (light.css, dark.css, or custom) to be imported.
+ * Alternatively, use the `unstyled` attribute for complete custom styling.
  */
 export const buttonStyles = css`
   :host {
@@ -10,75 +13,87 @@ export const buttonStyles = css`
   }
 
   /* Base button styles for all variants */
-  button {
+  :host(:not([unstyled])) button {
     display: inline-flex;
     align-items: center;
-    gap: var(--ae-button-gap, 0.5rem);
-    padding: var(--ae-button-padding-y, 0.5rem) var(--ae-button-padding-x, 1rem);
-    border-radius: var(--ae-button-radius, 0.375rem);
+    gap: var(--ae-button-gap);
+    padding: var(--ae-button-padding-y) var(--ae-button-padding-x);
+    border-radius: var(--ae-button-radius);
     cursor: pointer;
     font: inherit;
     transition-property: background-color, box-shadow, border-color, transform;
-    transition-duration: var(--ae-button-transition-duration, 200ms);
-    transition-timing-function: var(--ae-button-transition-timing, ease);
+    transition-duration: var(--ae-button-transition-duration);
+    transition-timing-function: var(--ae-button-transition-timing);
     border: 1px solid;
   }
-  
+
+  /* Unstyled mode: minimal structural styles only */
+  :host([unstyled]) button {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
   /* Primary variant */
-  :host([variant="primary"]) button, 
-  :host(:not([variant])) button {
-    background-color: var(--ae-button-bg-primary, #5e7ce2);
-    color: var(--ae-button-fg-primary, white);
-    border-color: var(--ae-button-border-primary, var(--ae-button-bg-primary, #5e7ce2));
+  :host(:not([unstyled])[variant="primary"]) button,
+  :host(:not([unstyled]):not([variant])) button {
+    background-color: var(--ae-button-bg-primary);
+    color: var(--ae-button-fg-primary);
+    border-color: var(--ae-button-border-primary);
   }
-  
-  :host([variant="primary"]) button:hover, 
-  :host(:not([variant])) button:hover {
-    background-color: var(--ae-button-bg-primary-hover, #4b69c8);
-    border-color: var(--ae-button-border-primary-hover, var(--ae-button-bg-primary-hover, #4b69c8));
+
+  :host(:not([unstyled])[variant="primary"]) button:hover,
+  :host(:not([unstyled]):not([variant])) button:hover {
+    background-color: var(--ae-button-bg-primary-hover);
+    border-color: var(--ae-button-border-primary-hover);
   }
-  
+
   /* Secondary variant */
-  :host([variant="secondary"]) button {
-    background-color: var(--ae-button-bg-secondary, #f3f4f6);
-    color: var(--ae-button-fg-secondary, #333333);
-    border-color: var(--ae-button-border-secondary, #d4d4d4);
+  :host(:not([unstyled])[variant="secondary"]) button {
+    background-color: var(--ae-button-bg-secondary);
+    color: var(--ae-button-fg-secondary);
+    border-color: var(--ae-button-border-secondary);
   }
-  
-  :host([variant="secondary"]) button:hover {
-    background-color: var(--ae-button-bg-secondary-hover, #e5e7eb);
+
+  :host(:not([unstyled])[variant="secondary"]) button:hover {
+    background-color: var(--ae-button-bg-secondary-hover);
   }
-  
+
   /* Ghost variant */
-  :host([variant="ghost"]) button {
-    background-color: var(--ae-button-bg-ghost, transparent);
-    color: var(--ae-button-fg-ghost, #5e7ce2);
-    border-color: var(--ae-button-border-ghost, transparent);
+  :host(:not([unstyled])[variant="ghost"]) button {
+    background-color: var(--ae-button-bg-ghost);
+    color: var(--ae-button-fg-ghost);
+    border-color: var(--ae-button-border-ghost);
   }
-  
-  :host([variant="ghost"]) button:hover {
-    background-color: var(--ae-button-bg-ghost-hover, rgba(94, 124, 226, 0.1));
+
+  :host(:not([unstyled])[variant="ghost"]) button:hover {
+    background-color: var(--ae-button-bg-ghost-hover);
   }
-  
+
   /* Active state for all variants */
-  button:active {
+  :host(:not([unstyled])) button:active {
     transform: translateY(1px);
   }
 
   /* Sizes */
-  :host([size='sm']) button {
-    padding: calc(var(--ae-button-padding-y, 0.5rem) * 0.75) calc(var(--ae-button-padding-x, 1rem) * 0.75);
-    font-size: var(--ae-button-font-sm, 0.875rem);
+  :host(:not([unstyled])[size='sm']) button {
+    padding: calc(var(--ae-button-padding-y) * 0.75) calc(var(--ae-button-padding-x) * 0.75);
+    font-size: var(--ae-button-font-sm);
   }
 
-  :host([size='md']) button {
+  :host(:not([unstyled])[size='md']) button {
     /* Default size, already set */
-    font-size: var(--ae-button-font-md, 1rem);
+    font-size: var(--ae-button-font-md);
   }
 
-  :host([size='lg']) button {
-    padding: calc(var(--ae-button-padding-y, 0.5rem) * 1.25) calc(var(--ae-button-padding-x, 1rem) * 1.25);
-    font-size: var(--ae-button-font-lg, 1.125rem);
+  :host(:not([unstyled])[size='lg']) button {
+    padding: calc(var(--ae-button-padding-y) * 1.25) calc(var(--ae-button-padding-x) * 1.25);
+    font-size: var(--ae-button-font-lg);
   }
 
   /* Icon positioning */
@@ -95,9 +110,9 @@ export const buttonStyles = css`
   }
 
   /* Icon-only state */
-  :host([icon-only]) button {
+  :host(:not([unstyled])[icon-only]) button {
     aspect-ratio: 1;
-    padding: var(--ae-button-padding-icon-only, 0.5rem);
+    padding: var(--ae-button-padding-icon-only);
   }
 
   /* Hide label in icon-only mode */
@@ -106,14 +121,18 @@ export const buttonStyles = css`
   }
 
   /* Disabled state */
-  button:disabled {
-    opacity: var(--ae-button-disabled-opacity, 0.6);
+  :host(:not([unstyled])) button:disabled {
+    opacity: var(--ae-button-disabled-opacity);
+    cursor: not-allowed;
+  }
+
+  :host([unstyled]) button:disabled {
     cursor: not-allowed;
   }
 
   /* Focus state */
-  button:focus-visible {
-    outline: 2px solid var(--ae-focus-ring-color, var(--ae-color-brand-600, #2563eb));
-    outline-offset: var(--ae-focus-ring-offset, 2px);
+  :host(:not([unstyled])) button:focus-visible {
+    outline: 2px solid var(--ae-focus-ring-color);
+    outline-offset: var(--ae-focus-ring-offset);
   }
-`; 
+`;

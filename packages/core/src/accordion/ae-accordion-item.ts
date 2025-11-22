@@ -132,7 +132,7 @@ export class AeAccordionItem extends LitElement {
           @click=${this.handleHeaderClick}
           @keydown=${this.handleKeydown}
         >
-          <span class="header-content">
+          <span class="header-content" part="header-content">
             <slot name="header"></slot>
           </span>
           <svg
@@ -154,7 +154,7 @@ export class AeAccordionItem extends LitElement {
           part="panel"
           id="panel-${this.headerId}"
         >
-          <div class="panel-content">
+          <div class="panel-content" part="panel-content">
             <slot></slot>
           </div>
         </div>
