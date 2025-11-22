@@ -1,7 +1,7 @@
 export { AeAutocomplete, defineAeAutocomplete } from './ae-autocomplete';
 export type { AutocompleteOption, AutocompleteFilterFunction } from './types';
 export { defaultFilter } from './types';
-export { autocompleteStyles as autocompleteStyles } from './styles';
+export { autocompleteStyles } from './styles';
 export { AutocompleteController } from './controller';
 
 // Import needed for local use in type definition

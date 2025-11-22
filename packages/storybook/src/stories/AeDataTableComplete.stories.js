@@ -2,7 +2,7 @@ import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 // Import just the constant
-const DATATABLE_ELEMENT_NAME = 'ae-datatable';
+const _DATATABLE_ELEMENT_NAME = 'ae-datatable';
 
 // Dynamic imports to ensure components are registered
 const ensureComponentsRegistered = async () => {
