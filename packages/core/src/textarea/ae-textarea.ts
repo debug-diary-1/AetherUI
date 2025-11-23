@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { textareaStyles } from './styles';
 
 /**
@@ -286,8 +287,8 @@ export class AeTextarea extends LitElement {
             ?disabled="${this.disabled}"
             ?required="${this.required}"
             ?readonly="${this.readonly}"
-            minlength="${this.minlength ?? ''}"
-            maxlength="${this.maxlength ?? ''}"
+            minlength="${ifDefined(this.minlength)}"
+            maxlength="${ifDefined(this.maxlength)}"
             rows="${this.rows}"
             @input="${this.handleInput}"
             @change="${this.handleChange}"

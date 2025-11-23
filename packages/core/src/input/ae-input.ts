@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { inputStyles } from './styles';
 
 /**
@@ -322,13 +323,13 @@ export class AeInput extends LitElement {
             ?disabled="${this.disabled}"
             ?required="${this.required}"
             ?readonly="${this.readonly}"
-            minlength="${this.minlength ?? ''}"
-            maxlength="${this.maxlength ?? ''}"
-            pattern="${this.pattern ?? ''}"
-            min="${this.min ?? ''}"
-            max="${this.max ?? ''}"
-            step="${this.step ?? ''}"
-            autocomplete="${this.autocomplete ?? ''}"
+            minlength="${ifDefined(this.minlength)}"
+            maxlength="${ifDefined(this.maxlength)}"
+            pattern="${ifDefined(this.pattern)}"
+            min="${ifDefined(this.min)}"
+            max="${ifDefined(this.max)}"
+            step="${ifDefined(this.step)}"
+            autocomplete="${ifDefined(this.autocomplete)}"
             @input="${this.handleInput}"
             @change="${this.handleChange}"
             @focus="${this.handleFocus}"
