@@ -5,7 +5,7 @@
   "installCommand": "pnpm install --frozen-lockfile",
   "framework": null,
   "outputDirectory": "storybook-static",
-  "ignoreCommand": "bash -c 'exit 1'",
+  "ignoreCommand": "bash -c 'if [[ \"$VERCEL_GIT_COMMIT_REF\" == \"main\" ]] ; then exit 1; else git diff HEAD^ HEAD --quiet packages/core packages/storybook .storybook vercel.json turbo.json package.json pnpm-lock.yaml; fi'",
   "github": {
     "enabled": true,
     "autoAlias": true,
