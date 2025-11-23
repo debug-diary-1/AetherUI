@@ -39,7 +39,7 @@
     },
     "build-storybook": {
       "dependsOn": ["^build"],
-      "outputs": [],
+      "outputs": ["{workspaceRoot}/storybook-static/**"],
       "cache": false
     },
     "docs": {
