@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm -w run build-storybook && cp -r packages/storybook/storybook-static storybook-static",
+  "buildCommand": "pnpm -w run build-storybook",
   "devCommand": "pnpm storybook",
   "installCommand": "pnpm install --frozen-lockfile",
   "framework": null,
