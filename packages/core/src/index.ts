@@ -100,7 +100,7 @@ export { defineAeMenu } from './menu';
 
 // Export component classes explicitly for Storybook
 export { AeButton } from './button/ae-button';
-export { AeDropdown, AeMenuItem, AeMenuSeparator, AeMenuSection } from './dropdown/ae-dropdown';
+export { AeDropdown, AeDropdownItem, AeMenuSeparator, AeMenuSection } from './dropdown/ae-dropdown';
 export { AeAlert } from './alert/ae-alert';
 export { AeTabs } from './tabs/ae-tabs';
 export { AeCheckbox } from './checkbox/ae-checkbox';

@@ -314,9 +314,9 @@ export class AeDropdown extends LitElement {
   }
 }
 
-// Define ae-menu-item component for dropdown items
-@customElement('ae-menu-item')
-export class AeMenuItem extends LitElement {
+// Define ae-dropdown-item component for dropdown items
+@customElement('ae-dropdown-item')
+export class AeDropdownItem extends LitElement {
   static styles = css`
     :host {
       display: contents;
@@ -409,7 +409,7 @@ export class AeMenuSection extends LitElement {
 declare global {
   interface HTMLElementTagNameMap {
     'ae-dropdown': AeDropdown;
-    'ae-menu-item': AeMenuItem;
+    'ae-dropdown-item': AeDropdownItem;
     'ae-menu-separator': AeMenuSeparator;
     'ae-menu-section': AeMenuSection;
   }
