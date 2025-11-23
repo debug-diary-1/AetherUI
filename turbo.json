@@ -39,8 +39,8 @@
     },
     "build-storybook": {
       "dependsOn": ["^build"],
-      "outputs": ["storybook-static/**"],
-      "cache": true
+      "outputs": [],
+      "cache": false
     },
     "docs": {
       "dependsOn": ["^build"],
