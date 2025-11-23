@@ -1,0 +1,94 @@
+import { html } from 'lit';
+
+export default {
+  title: 'Components/Pagination',
+  tags: ['autodocs'],
+  argTypes: {
+    currentPage: {
+      control: { type: 'number', min: 1, max: 20 },
+      description: 'Current page number',
+    },
+    totalPages: {
+      control: { type: 'number', min: 1, max: 100 },
+      description: 'Total number of pages',
+    },
+    siblingCount: {
+      control: { type: 'number', min: 0, max: 5 },
+      description: 'Siblings on each side',
+    },
+    showFirstLast: {
+      control: 'boolean',
+      description: 'Show first/last buttons',
+    },
+    showPrevNext: {
+      control: 'boolean',
+      description: 'Show prev/next buttons',
+    },
+    size: {
+      control: { type: 'select' },
+      options: ['sm', 'md', 'lg'],
+      description: 'Pagination size',
+    },
+  },
+};
+
+export const Default = {
+  args: {
+    currentPage: 5,
+    totalPages: 10,
+    siblingCount: 1,
+    showFirstLast: false,
+    showPrevNext: true,
+    size: 'md',
+  },
+  render: (args) => html`
+    <ae-pagination
+      current-page="${args.currentPage}"
+      total-pages="${args.totalPages}"
+      sibling-count="${args.siblingCount}"
+      ?show-first-last="${args.showFirstLast}"
+      ?show-prev-next="${args.showPrevNext}"
+      size="${args.size}"
+      @ae-page-change="${(e) => console.log('Page changed to:', e.detail.page)}"
+    ></ae-pagination>
+  `,
+};
+
+export const WithFirstLast = {
+  args: {
+    ...Default.args,
+    totalPages: 20,
+    showFirstLast: true,
+  },
+  render: Default.render,
+};
+
+export const ManyPages = {
+  args: {
+    ...Default.args,
+    currentPage: 25,
+    totalPages: 50,
+    siblingCount: 2,
+    showFirstLast: true,
+  },
+  render: Default.render,
+};
+
+export const AllSizes = {
+  render: () => html`
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      <div>
+        <h4>Small</h4>
+        <ae-pagination current-page="3" total-pages="10" size="sm"></ae-pagination>
+      </div>
+      <div>
+        <h4>Medium</h4>
+        <ae-pagination current-page="3" total-pages="10" size="md"></ae-pagination>
+      </div>
+      <div>
+        <h4>Large</h4>
+        <ae-pagination current-page="3" total-pages="10" size="lg"></ae-pagination>
+      </div>
+    </div>
+  `,
+};
