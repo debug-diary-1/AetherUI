@@ -4,6 +4,7 @@ import { badgeStyles } from './styles';
 
 /**
  * A badge component for displaying small labels, tags, counts, or status indicators.
+ * Supports multiple variants, sizes, closable option, dot indicators, and outline styles.
  *
  * @element ae-badge
  *
