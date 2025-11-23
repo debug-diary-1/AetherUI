@@ -1,0 +1,284 @@
+import { LitElement, html } from 'lit';
+import { customElement, property, query, state } from 'lit/decorators.js';
+import { selectStyles } from './styles';
+
+/**
+ * A select dropdown component with support for single/multiple selection and form participation.
+ * Participates in native form submission via ElementInternals API.
+ *
+ * @element ae-select
+ *
+ * @property {string} value - The current selected value (single select)
+ * @property {string[]} values - The current selected values (multiple select)
+ * @property {string} defaultValue - Initial value for uncontrolled usage
+ * @property {string} placeholder - Placeholder text when no option is selected
+ * @property {string} label - Label text for the select
+ * @property {string} name - The name attribute for form submission
+ * @property {boolean} disabled - Whether the select is disabled
+ * @property {boolean} required - Whether the select is required
+ * @property {boolean} multiple - Whether multiple selection is allowed
+ * @property {string} error - Error message to display
+ * @property {string} helpText - Helper text to display below the select
+ *
+ * @fires {CustomEvent<{value: string | string[]}>} ae-select-change - Fired when the selection changes
+ *
+ * @slot - The select options (ae-option elements)
+ *
+ * @csspart base - The component's base wrapper
+ * @csspart label - The label element
+ * @csspart select-wrapper - The wrapper around the select
+ * @csspart select - The native select element
+ * @csspart help-text - The help text element
+ * @csspart error-text - The error text element
+ *
+ * @example
+ * ```html
+ * <ae-select label="Country" name="country" required>
+ *   <option value="">Select a country</option>
+ *   <option value="us">United States</option>
+ *   <option value="uk">United Kingdom</option>
+ *   <option value="ca">Canada</option>
+ * </ae-select>
+ *
+ * <ae-select label="Tags" name="tags" multiple>
+ *   <option value="javascript">JavaScript</option>
+ *   <option value="typescript">TypeScript</option>
+ *   <option value="python">Python</option>
+ * </ae-select>
+ * ```
+ */
+@customElement('ae-select')
+export class AeSelect extends LitElement {
+  static styles = selectStyles;
+  static formAssociated = true;
+
+  @property({ type: String })
+  accessor value = '';
+
+  @property({ type: Array })
+  accessor values: string[] = [];
+
+  @property({ type: String, attribute: 'default-value' })
+  accessor defaultValue = '';
+
+  @property({ type: String })
+  accessor placeholder = '';
+
+  @property({ type: String })
+  accessor label = '';
+
+  @property({ type: String })
+  accessor name = '';
+
+  @property({ type: Boolean, reflect: true })
+  accessor disabled = false;
+
+  @property({ type: Boolean, reflect: true })
+  accessor required = false;
+
+  @property({ type: Boolean, reflect: true })
+  accessor multiple = false;
+
+  @property({ type: String })
+  accessor error = '';
+
+  @property({ type: String, attribute: 'help-text' })
+  accessor helpText = '';
+
+  @state()
+  private accessor focused = false;
+
+  @query('select')
+  private accessor selectElement!: HTMLSelectElement;
+
+  private _internals: ElementInternals;
+  private _defaultValue = '';
+
+  constructor() {
+    super();
+    this._internals = this.attachInternals();
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    // Store the initial value for form reset
+    this._defaultValue = this.value || this.defaultValue;
+    if (this._defaultValue && !this.value) {
+      this.value = this._defaultValue;
+    }
+
+    // Set initial form value
+    this._updateFormValue();
+  }
+
+  updated(changedProperties: Map<string, unknown>) {
+    super.updated(changedProperties);
+
+    if (changedProperties.has('value') || changedProperties.has('values')) {
+      this._updateFormValue();
+      this._updateValidity();
+    }
+
+    if (changedProperties.has('required')) {
+      this._updateValidity();
+    }
+  }
+
+  private _updateFormValue() {
+    if (this.multiple) {
+      const formData = new FormData();
+      this.values.forEach(val => formData.append(this.name, val));
+      this._internals.setFormValue(formData);
+    } else {
+      this._internals.setFormValue(this.value || null);
+    }
+  }
+
+  private _updateValidity() {
+    if (!this.selectElement) return;
+
+    // Reset validity
+    this._internals.setValidity({});
+
+    const validity = this.selectElement.validity;
+
+    if (!validity.valid) {
+      this._internals.setValidity(
+        {
+          valueMissing: validity.valueMissing,
+        },
+        this.selectElement.validationMessage,
+        this.selectElement
+      );
+    }
+  }
+
+  private handleChange(event: Event) {
+    const select = event.target as HTMLSelectElement;
+
+    if (this.multiple) {
+      this.values = Array.from(select.selectedOptions).map(opt => opt.value);
+      this.dispatchEvent(new CustomEvent('ae-select-change', {
+        detail: { value: this.values },
+        bubbles: true,
+        composed: true,
+      }));
+    } else {
+      this.value = select.value;
+      this.dispatchEvent(new CustomEvent('ae-select-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }));
+    }
+  }
+
+  private handleFocus() {
+    this.focused = true;
+  }
+
+  private handleBlur() {
+    this.focused = false;
+  }
+
+  // Form-associated callbacks
+  formDisabledCallback(disabled: boolean) {
+    this.disabled = disabled;
+  }
+
+  formResetCallback() {
+    this.value = this._defaultValue;
+    this.values = [];
+    this._updateFormValue();
+    this._updateValidity();
+  }
+
+  formStateRestoreCallback(state: string | FormData | null, _mode: 'restore' | 'autocomplete') {
+    if (state instanceof FormData) {
+      this.values = state.getAll(this.name) as string[];
+    } else {
+      this.value = state || '';
+    }
+    this._updateFormValue();
+    this._updateValidity();
+  }
+
+  // Public methods
+  public focus(options?: FocusOptions) {
+    this.selectElement?.focus(options);
+  }
+
+  public blur() {
+    this.selectElement?.blur();
+  }
+
+  public checkValidity(): boolean {
+    return this._internals.checkValidity();
+  }
+
+  public reportValidity(): boolean {
+    return this._internals.reportValidity();
+  }
+
+  render() {
+    const hasError = !!this.error;
+    const showHelpText = this.helpText && !hasError;
+
+    return html`
+      <div part="base" class="select-base">
+        ${this.label ? html`
+          <label part="label" class="select-label" for="select">
+            ${this.label}
+            ${this.required ? html`<span class="required-indicator">*</span>` : ''}
+          </label>
+        ` : ''}
+
+        <div
+          part="select-wrapper"
+          class="select-wrapper ${this.focused ? 'focused' : ''} ${hasError ? 'error' : ''} ${this.disabled ? 'disabled' : ''}"
+        >
+          <select
+            part="select"
+            id="select"
+            class="select-control"
+            .value="${this.value}"
+            ?disabled="${this.disabled}"
+            ?required="${this.required}"
+            ?multiple="${this.multiple}"
+            @change="${this.handleChange}"
+            @focus="${this.handleFocus}"
+            @blur="${this.handleBlur}"
+          >
+            ${this.placeholder && !this.multiple ? html`
+              <option value="" disabled ?selected="${!this.value}">
+                ${this.placeholder}
+              </option>
+            ` : ''}
+            <slot></slot>
+          </select>
+
+          ${!this.multiple ? html`
+            <svg part="icon" class="select-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7 8.5L10 11.5L13 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          ` : ''}
+        </div>
+
+        ${showHelpText ? html`
+          <div part="help-text" class="help-text">${this.helpText}</div>
+        ` : ''}
+
+        ${hasError ? html`
+          <div part="error-text" class="error-text">${this.error}</div>
+        ` : ''}
+      </div>
+    `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'ae-select': AeSelect;
+  }
+}
