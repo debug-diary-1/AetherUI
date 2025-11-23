@@ -157,7 +157,7 @@ export class AePopover extends LitElement {
 
   private handleTriggerClick(event: Event) {
     event.stopPropagation();
-    if (this.trigger === 'click' || this.trigger === 'manual') {
+    if (this.trigger === 'click') {
       this.toggle();
     }
   }

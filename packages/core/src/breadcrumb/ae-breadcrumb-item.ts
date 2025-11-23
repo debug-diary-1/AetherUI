@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { breadcrumbItemStyles } from './item-styles';
 
@@ -47,7 +47,7 @@ export class AeBreadcrumbItem extends LitElement {
       : '/';
 
     return html`
-      <li part="base" class="breadcrumb-item" ?aria-current="${this.current}">
+      <li part="base" class="breadcrumb-item" aria-current="${this.current ? 'page' : nothing}">
         ${this.href && !this.current ? html`
           <a part="link" class="breadcrumb-link" href="${this.href}">
             <slot></slot>
