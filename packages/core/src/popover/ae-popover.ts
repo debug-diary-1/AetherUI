@@ -85,7 +85,10 @@ export class AePopover extends LitElement {
     super.updated(changedProperties);
 
     if (changedProperties.has('open') && this.open) {
-      this.updatePosition();
+      // Defer positioning to ensure DOM is fully rendered
+      requestAnimationFrame(() => {
+        this.updatePosition();
+      });
     }
   }
 
