@@ -118,6 +118,11 @@ export class AeSelect extends LitElement {
     if (changedProperties.has('value') || changedProperties.has('values')) {
       this._updateFormValue();
       this._updateValidity();
+
+      // Update option selection state in multiple mode
+      if (this.multiple && changedProperties.has('values')) {
+        this._syncOptionSelection();
+      }
     }
 
     if (changedProperties.has('required')) {
@@ -152,6 +157,18 @@ export class AeSelect extends LitElement {
         this.selectElement
       );
     }
+  }
+
+  private _syncOptionSelection() {
+    if (!this.selectElement) {
+      return;
+    }
+
+    // Update the selected state of all options to match this.values
+    const options = this.selectElement.querySelectorAll('option');
+    options.forEach((option) => {
+      option.selected = this.values.includes(option.value);
+    });
   }
 
   private handleChange(event: Event) {

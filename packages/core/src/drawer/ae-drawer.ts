@@ -129,9 +129,16 @@ export class AeDrawer extends LitElement {
       '[tabindex]:not([tabindex="-1"])',
     ];
 
-    this.focusableElements = Array.from(
+    // Collect focusable elements from both light DOM (slotted content) and shadow DOM (close button)
+    const lightDomElements = Array.from(
       this.querySelectorAll(focusableSelectors.join(','))
     ) as HTMLElement[];
+
+    const shadowDomElements = Array.from(
+      this.shadowRoot!.querySelectorAll(focusableSelectors.join(','))
+    ) as HTMLElement[];
+
+    this.focusableElements = [...shadowDomElements, ...lightDomElements];
   }
 
   private focusFirstElement() {
