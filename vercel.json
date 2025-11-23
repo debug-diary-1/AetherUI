@@ -5,7 +5,7 @@
   "installCommand": "pnpm install --frozen-lockfile",
   "framework": null,
   "outputDirectory": "packages/storybook/storybook-static",
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- packages/storybook packages/core packages/accordion packages/datatable packages/tokens || exit 1",
   "github": {
     "enabled": true,
     "autoAlias": true,
