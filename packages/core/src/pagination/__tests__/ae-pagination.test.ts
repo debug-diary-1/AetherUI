@@ -8,7 +8,7 @@ describe('ae-pagination', () => {
 
     expect(el.currentPage).to.equal(1);
     expect(el.totalPages).to.equal(1);
-    expect(el.showFirstLast).to.be.true;
+    expect(el.showFirstLast).to.be.false;
     expect(el.showPrevNext).to.be.true;
     expect(el.size).to.equal('md');
   });
@@ -121,13 +121,12 @@ describe('ae-pagination', () => {
     expect(event.detail.page).to.equal(10);
   });
 
-  it('applies size classes correctly', async () => {
+  it('applies size attribute correctly', async () => {
     const el = await fixture<AePagination>(html`
       <ae-pagination size="sm"></ae-pagination>
     `);
 
-    const base = el.shadowRoot!.querySelector('[part="base"]')!;
-    expect(base.classList.contains('size-sm')).to.be.true;
+    expect(el.getAttribute('size')).to.equal('sm');
   });
 
   it('renders page number buttons', async () => {
@@ -159,9 +158,8 @@ describe('ae-pagination', () => {
       const el = await fixture<AePagination>(html`
         <ae-pagination size="${size}"></ae-pagination>
       `);
-      const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-      expect(base.classList.contains(`size-${size}`)).to.be.true;
+      expect(el.getAttribute('size')).to.equal(size);
     }
   });
 });

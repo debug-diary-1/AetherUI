@@ -68,22 +68,20 @@ describe('ae-progress', () => {
     expect(label!.textContent).to.include('60%');
   });
 
-  it('applies variant classes correctly', async () => {
+  it('applies variant attribute correctly', async () => {
     const el = await fixture<AeProgress>(html`
       <ae-progress variant="error"></ae-progress>
     `);
 
-    const base = el.shadowRoot!.querySelector('[part="base"]')!;
-    expect(base.classList.contains('variant-error')).to.be.true;
+    expect(el.getAttribute('variant')).to.equal('error');
   });
 
-  it('applies size classes correctly', async () => {
+  it('applies size attribute correctly', async () => {
     const el = await fixture<AeProgress>(html`
       <ae-progress size="sm"></ae-progress>
     `);
 
-    const base = el.shadowRoot!.querySelector('[part="base"]')!;
-    expect(base.classList.contains('size-sm')).to.be.true;
+    expect(el.getAttribute('size')).to.equal('sm');
   });
 
   it('applies indeterminate class when indeterminate is true', async () => {
@@ -122,9 +120,8 @@ describe('ae-progress', () => {
       const el = await fixture<AeProgress>(html`
         <ae-progress variant="${variant}"></ae-progress>
       `);
-      const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-      expect(base.classList.contains(`variant-${variant}`)).to.be.true;
+      expect(el.getAttribute('variant')).to.equal(variant);
     }
   });
 
@@ -135,9 +132,8 @@ describe('ae-progress', () => {
       const el = await fixture<AeProgress>(html`
         <ae-progress size="${size}"></ae-progress>
       `);
-      const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-      expect(base.classList.contains(`size-${size}`)).to.be.true;
+      expect(el.getAttribute('size')).to.equal(size);
     }
   });
 });

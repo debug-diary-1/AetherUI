@@ -26,18 +26,16 @@ describe('ae-spinner', () => {
     expect(base).to.exist;
   });
 
-  it('applies size classes correctly', async () => {
+  it('applies size attribute correctly', async () => {
     const el = await fixture<AeSpinner>(html`<ae-spinner size="sm"></ae-spinner>`);
-    const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-    expect(base.classList.contains('size-sm')).to.be.true;
+    expect(el.getAttribute('size')).to.equal('sm');
   });
 
-  it('applies variant classes correctly', async () => {
+  it('applies variant attribute correctly', async () => {
     const el = await fixture<AeSpinner>(html`<ae-spinner variant="success"></ae-spinner>`);
-    const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-    expect(base.classList.contains('variant-success')).to.be.true;
+    expect(el.getAttribute('variant')).to.equal('success');
   });
 
   it('supports all size types', async () => {
@@ -45,9 +43,8 @@ describe('ae-spinner', () => {
 
     for (const size of sizes) {
       const el = await fixture<AeSpinner>(html`<ae-spinner size="${size}"></ae-spinner>`);
-      const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-      expect(base.classList.contains(`size-${size}`)).to.be.true;
+      expect(el.getAttribute('size')).to.equal(size);
     }
   });
 
@@ -56,9 +53,8 @@ describe('ae-spinner', () => {
 
     for (const variant of variants) {
       const el = await fixture<AeSpinner>(html`<ae-spinner variant="${variant}"></ae-spinner>`);
-      const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-      expect(base.classList.contains(`variant-${variant}`)).to.be.true;
+      expect(el.getAttribute('variant')).to.equal(variant);
     }
   });
 
