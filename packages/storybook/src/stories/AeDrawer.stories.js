@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { ref, createRef } from 'lit/directives/ref.js';
 
 export default {
   title: 'Components/Drawer',
@@ -26,10 +27,10 @@ export default {
 };
 
 const createDrawerExample = (args) => {
-  let drawer;
+  const drawerRef = createRef();
 
   const openDrawer = () => {
-    if (drawer) drawer.open = true;
+    if (drawerRef.value) drawerRef.value.open = true;
   };
 
   return html`
@@ -37,7 +38,7 @@ const createDrawerExample = (args) => {
       <button @click="${openDrawer}">Open Drawer</button>
 
       <ae-drawer
-        ${(el) => (drawer = el)}
+        ${ref(drawerRef)}
         placement="${args.placement}"
         size="${args.size}"
         ?closable="${args.closable}"
@@ -52,8 +53,8 @@ const createDrawerExample = (args) => {
         </div>
 
         <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-          <button @click="${() => drawer && (drawer.open = false)}">Cancel</button>
-          <button @click="${() => drawer && (drawer.open = false)}">Save</button>
+          <button @click="${() => drawerRef.value && (drawerRef.value.open = false)}">Cancel</button>
+          <button @click="${() => drawerRef.value && (drawerRef.value.open = false)}">Save</button>
         </div>
       </ae-drawer>
     </div>
