@@ -41,43 +41,21 @@ const config = {
 
   // Simplified Vite configuration
   async viteFinal(config) {
-    // Import external Vite config for simpler setup
-    try {
-      // Using dynamic import for ESM compatibility
-      const overrideConfig = await import('./vite.config.override.js')
-        .then((module) => module.default || module)
-        .catch((err) => {
-          console.error('Failed to import vite.config.override.js:', err);
-          return {};
-        });
-
-      console.log('Using vite.config.override.js');
-      return {
-        ...config,
-        ...overrideConfig,
-        define: {
-          'process.env': JSON.stringify({
-            NODE_ENV: 'development',
-            STORYBOOK_DESCRIPTION: 'AetherUI Component Library',
-          }),
-        },
-      };
-    } catch (error) {
-      console.error('Failed to load vite.config.override.js, using fallback config', error);
-      // Fallback to basic configuration
-      return {
-        ...config,
-        define: {
-          'process.env': JSON.stringify({
-            NODE_ENV: 'development',
-            STORYBOOK_DESCRIPTION: 'AetherUI Component Library',
-          }),
-        },
-        resolve: {
-          dedupe: ['lit', 'lit-html', 'lit-element', '@lit/reactive-element']
-        },
-      };
-    }
+    return {
+      ...config,
+      resolve: {
+        ...config.resolve,
+        dedupe: ['lit', 'lit-html', 'lit-element', '@lit/reactive-element']
+      },
+      build: {
+        ...config.build,
+        commonjsOptions: {
+          ...config.build?.commonjsOptions,
+          include: [/node_modules/],
+          extensions: ['.js', '.cjs'],
+        }
+      }
+    };
   }
 };
 
