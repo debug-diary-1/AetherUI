@@ -1,6 +1,7 @@
-export { AeMenu } from './ae-menu';
-export { AeMenuItem } from './ae-menu-item';
-export { AeMenuDivider } from './ae-menu-divider';
+import { AeMenu } from './ae-menu';
+import { AeMenuItem } from './ae-menu-item';
+import { AeMenuDivider } from './ae-menu-divider';
+export { AeMenu, AeMenuItem, AeMenuDivider };
 
 export function defineAeMenu() {
   if (!customElements.get('ae-menu')) {

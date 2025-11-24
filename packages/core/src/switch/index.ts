@@ -1,4 +1,5 @@
-export { AeSwitch } from './ae-switch';
+import { AeSwitch } from './ae-switch';
+export { AeSwitch };
 
 export function defineAeSwitch() {
   if (!customElements.get('ae-switch')) {

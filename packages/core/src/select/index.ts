@@ -1,4 +1,5 @@
-export { AeSelect } from './ae-select';
+import { AeSelect } from './ae-select';
+export { AeSelect };
 
 export function defineAeSelect() {
   if (!customElements.get('ae-select')) {

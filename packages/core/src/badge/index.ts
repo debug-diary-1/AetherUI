@@ -1,4 +1,5 @@
-export { AeBadge } from './ae-badge';
+import { AeBadge } from './ae-badge';
+export { AeBadge };
 
 export function defineAeBadge() {
   if (!customElements.get('ae-badge')) {

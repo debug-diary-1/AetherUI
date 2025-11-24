@@ -1,4 +1,5 @@
-export { AeSpinner } from './ae-spinner';
+import { AeSpinner } from './ae-spinner';
+export { AeSpinner };
 
 export function defineAeSpinner() {
   if (!customElements.get('ae-spinner')) {

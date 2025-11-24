@@ -1,5 +1,6 @@
-export { AeBreadcrumb } from './ae-breadcrumb';
-export { AeBreadcrumbItem } from './ae-breadcrumb-item';
+import { AeBreadcrumb } from './ae-breadcrumb';
+import { AeBreadcrumbItem } from './ae-breadcrumb-item';
+export { AeBreadcrumb, AeBreadcrumbItem };
 
 export function defineAeBreadcrumb() {
   if (!customElements.get('ae-breadcrumb')) {

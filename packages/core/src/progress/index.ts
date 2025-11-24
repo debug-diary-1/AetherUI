@@ -1,4 +1,5 @@
-export { AeProgress } from './ae-progress';
+import { AeProgress } from './ae-progress';
+export { AeProgress };
 
 export function defineAeProgress() {
   if (!customElements.get('ae-progress')) {

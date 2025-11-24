@@ -1,4 +1,5 @@
-export { AePagination } from './ae-pagination';
+import { AePagination } from './ae-pagination';
+export { AePagination };
 
 export function defineAePagination() {
   if (!customElements.get('ae-pagination')) {

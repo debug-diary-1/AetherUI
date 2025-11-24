@@ -1,4 +1,5 @@
-export { AeInput } from './ae-input';
+import { AeInput } from './ae-input';
+export { AeInput };
 
 export function defineAeInput() {
   if (!customElements.get('ae-input')) {

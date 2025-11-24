@@ -1,4 +1,5 @@
-export { AeDrawer } from './ae-drawer';
+import { AeDrawer } from './ae-drawer';
+export { AeDrawer };
 
 export function defineAeDrawer() {
   if (!customElements.get('ae-drawer')) {

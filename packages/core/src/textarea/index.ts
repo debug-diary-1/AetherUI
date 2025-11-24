@@ -1,4 +1,5 @@
-export { AeTextarea } from './ae-textarea';
+import { AeTextarea } from './ae-textarea';
+export { AeTextarea };
 
 export function defineAeTextarea() {
   if (!customElements.get('ae-textarea')) {
