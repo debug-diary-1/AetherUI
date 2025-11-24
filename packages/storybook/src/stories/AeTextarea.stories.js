@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { expect, within, userEvent } from '@storybook/test';
 
 export default {
   title: 'Components/Textarea',
@@ -75,6 +76,26 @@ export const Default = {
       @ae-textarea-change="${(e) => console.log('Textarea changed:', e.detail)}"
     ></ae-textarea>
   `,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Get the ae-textarea element and access its shadow DOM
+    const aeTextarea = canvasElement.querySelector('ae-textarea');
+    expect(aeTextarea).toBeInTheDocument();
+
+    // Get the textarea element from shadow DOM
+    const textarea = aeTextarea.shadowRoot.querySelector('textarea');
+    expect(textarea).toBeTruthy();
+
+    // Type into the textarea
+    await userEvent.type(textarea, 'This is a test description', { delay: 20 });
+    expect(textarea.value).toContain('This is a test description');
+
+    // Verify label is present
+    const label = aeTextarea.shadowRoot.querySelector('label');
+    expect(label).toBeTruthy();
+    expect(label.textContent).toContain('Description');
+  },
 };
 
 export const WithCharacterCount = {

@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { expect, within, userEvent } from '@storybook/test';
 
 export default {
   title: 'Components/Switch',
@@ -47,6 +48,28 @@ export const Default = {
       ${args.label}
     </ae-switch>
   `,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Get the ae-switch element and access its shadow DOM
+    const aeSwitch = canvasElement.querySelector('ae-switch');
+    expect(aeSwitch).toBeInTheDocument();
+
+    // Get the input element from shadow DOM
+    const input = aeSwitch.shadowRoot.querySelector('input[type="checkbox"]');
+    expect(input).toBeTruthy();
+
+    // Initially unchecked
+    expect(input.checked).toBe(false);
+
+    // Click to toggle
+    await userEvent.click(input);
+    expect(input.checked).toBe(true);
+
+    // Click again to toggle back
+    await userEvent.click(input);
+    expect(input.checked).toBe(false);
+  },
 };
 
 export const AllSizes = {

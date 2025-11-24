@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { expect, within, userEvent } from '@storybook/test';
 
 export default {
   title: 'Components/Pagination',
@@ -52,6 +53,29 @@ export const Default = {
       @ae-page-change="${(e) => console.log('Page changed to:', e.detail.page)}"
     ></ae-pagination>
   `,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Get the ae-pagination element and access its shadow DOM
+    const aePagination = canvasElement.querySelector('ae-pagination');
+    expect(aePagination).toBeInTheDocument();
+
+    // Find all buttons in shadow DOM
+    const buttons = aePagination.shadowRoot.querySelectorAll('button');
+    expect(buttons.length).toBeGreaterThan(0);
+
+    // Find the next button
+    const nextButton = Array.from(buttons).find(btn =>
+      btn.textContent.includes('Next') || btn.getAttribute('aria-label') === 'Next page'
+    );
+    expect(nextButton).toBeTruthy();
+
+    // Click next button
+    await userEvent.click(nextButton);
+
+    // Verify current page updated
+    expect(aePagination.currentPage).toBe(6);
+  },
 };
 
 export const WithFirstLast = {

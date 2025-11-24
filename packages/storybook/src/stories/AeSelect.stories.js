@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { expect, within, userEvent, waitFor } from '@storybook/test';
 
 export default {
   title: 'Components/Select',
@@ -65,6 +66,40 @@ export const Default = {
       <option value="fr">France</option>
     </ae-select>
   `,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Get the ae-select element and access its shadow DOM
+    const aeSelect = canvasElement.querySelector('ae-select');
+    expect(aeSelect).toBeInTheDocument();
+
+    // Get the select element from shadow DOM
+    const select = aeSelect.shadowRoot.querySelector('select');
+    expect(select).toBeTruthy();
+
+    // Verify label is present
+    const label = aeSelect.shadowRoot.querySelector('label');
+    expect(label).toBeTruthy();
+    expect(label.textContent).toContain('Select Country');
+
+    // Verify options are present
+    const options = select.querySelectorAll('option');
+    expect(options.length).toBeGreaterThan(1);
+
+    // Select a value
+    select.value = 'us';
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+    await aeSelect.updateComplete;
+
+    expect(select.value).toBe('us');
+
+    // Change selection
+    select.value = 'uk';
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+    await aeSelect.updateComplete;
+
+    expect(select.value).toBe('uk');
+  },
 };
 
 export const Multiple = {
