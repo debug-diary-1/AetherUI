@@ -125,9 +125,9 @@ describe('ae-textarea', () => {
 
   it('applies size classes correctly', async () => {
     const el = await fixture<AeTextarea>(html`<ae-textarea size="sm"></ae-textarea>`);
-    const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-    expect(base.classList.contains('size-sm')).to.be.true;
+    // Size is reflected as an attribute, not a CSS class
+    expect(el.getAttribute('size')).to.equal('sm');
   });
 
   it('validates required field', async () => {

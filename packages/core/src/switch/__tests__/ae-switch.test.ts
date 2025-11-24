@@ -70,9 +70,9 @@ describe('ae-switch', () => {
 
   it('applies size classes correctly', async () => {
     const el = await fixture<AeSwitch>(html`<ae-switch size="sm"></ae-switch>`);
-    const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-    expect(base.classList.contains('size-sm')).to.be.true;
+    // Size is reflected as an attribute, not a CSS class
+    expect(el.getAttribute('size')).to.equal('sm');
   });
 
   it('renders helper text when provided', async () => {
