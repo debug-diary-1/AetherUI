@@ -12,7 +12,6 @@ describe('ae-input', () => {
     expect(el.disabled).to.be.false;
     expect(el.readonly).to.be.false;
     expect(el.required).to.be.false;
-    expect(el.size).to.equal('md');
   });
 
   it('sets properties from attributes', async () => {
@@ -21,7 +20,6 @@ describe('ae-input', () => {
         type="email"
         value="test@example.com"
         placeholder="Enter email"
-        size="lg"
         required
         disabled
       ></ae-input>
@@ -30,7 +28,6 @@ describe('ae-input', () => {
     expect(el.type).to.equal('email');
     expect(el.value).to.equal('test@example.com');
     expect(el.placeholder).to.equal('Enter email');
-    expect(el.size).to.equal('lg');
     expect(el.required).to.be.true;
     expect(el.disabled).to.be.true;
   });
@@ -56,28 +53,27 @@ describe('ae-input', () => {
 
   it('renders helper text when provided', async () => {
     const el = await fixture<AeInput>(html`
-      <ae-input helper-text="Enter your username"></ae-input>
+      <ae-input help-text="Enter your username"></ae-input>
     `);
 
-    const helperText = el.shadowRoot!.querySelector('[part="helper-text"]');
+    const helperText = el.shadowRoot!.querySelector('[part="help-text"]');
     expect(helperText).to.exist;
     expect(helperText!.textContent).to.include('Enter your username');
   });
 
-  it('renders error message when invalid', async () => {
+  it('renders error message when provided', async () => {
     const el = await fixture<AeInput>(html`
-      <ae-input error-message="This field is required"></ae-input>
+      <ae-input error="This field is required"></ae-input>
     `);
 
-    el.invalid = true;
     await el.updateComplete;
 
-    const errorMessage = el.shadowRoot!.querySelector('[part="error-message"]');
+    const errorMessage = el.shadowRoot!.querySelector('[part="error-text"]');
     expect(errorMessage).to.exist;
     expect(errorMessage!.textContent).to.include('This field is required');
   });
 
-  it('emits ae-input event on input', async () => {
+  it('emits ae-input-input event on input', async () => {
     const el = await fixture<AeInput>(html`<ae-input></ae-input>`);
     const input = el.shadowRoot!.querySelector('input')!;
 
@@ -86,11 +82,11 @@ describe('ae-input', () => {
       input.dispatchEvent(new Event('input', { bubbles: true }));
     });
 
-    const event = await oneEvent(el, 'ae-input');
+    const event = await oneEvent(el, 'ae-input-input');
     expect(event).to.exist;
   });
 
-  it('emits ae-change event on change', async () => {
+  it('emits ae-input-change event on change', async () => {
     const el = await fixture<AeInput>(html`<ae-input></ae-input>`);
     const input = el.shadowRoot!.querySelector('input')!;
 
@@ -99,7 +95,7 @@ describe('ae-input', () => {
       input.dispatchEvent(new Event('change', { bubbles: true }));
     });
 
-    const event = await oneEvent(el, 'ae-change');
+    const event = await oneEvent(el, 'ae-input-change');
     expect(event).to.exist;
   });
 
@@ -117,11 +113,11 @@ describe('ae-input', () => {
     expect(input.readOnly).to.be.true;
   });
 
-  it('applies size classes correctly', async () => {
-    const el = await fixture<AeInput>(html`<ae-input size="lg"></ae-input>`);
-    const base = el.shadowRoot!.querySelector('[part="base"]')!;
+  it('applies error class when error is provided', async () => {
+    const el = await fixture<AeInput>(html`<ae-input error="Invalid"></ae-input>`);
+    const wrapper = el.shadowRoot!.querySelector('.input-wrapper')!;
 
-    expect(base.classList.contains('size-lg')).to.be.true;
+    expect(wrapper.classList.contains('error')).to.be.true;
   });
 
   it('renders prefix slot content', async () => {

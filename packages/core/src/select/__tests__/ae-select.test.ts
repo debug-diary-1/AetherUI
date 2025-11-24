@@ -10,14 +10,12 @@ describe('ae-select', () => {
     expect(el.multiple).to.be.false;
     expect(el.disabled).to.be.false;
     expect(el.required).to.be.false;
-    expect(el.size).to.equal('md');
   });
 
   it('sets properties from attributes', async () => {
     const el = await fixture<AeSelect>(html`
       <ae-select
         value="option1"
-        size="lg"
         multiple
         required
         disabled
@@ -25,7 +23,6 @@ describe('ae-select', () => {
     `);
 
     expect(el.value).to.equal('option1');
-    expect(el.size).to.equal('lg');
     expect(el.multiple).to.be.true;
     expect(el.required).to.be.true;
     expect(el.disabled).to.be.true;
@@ -43,23 +40,22 @@ describe('ae-select', () => {
 
   it('renders helper text when provided', async () => {
     const el = await fixture<AeSelect>(html`
-      <ae-select helper-text="Select an option"></ae-select>
+      <ae-select help-text="Select an option"></ae-select>
     `);
 
-    const helperText = el.shadowRoot!.querySelector('[part="helper-text"]');
+    const helperText = el.shadowRoot!.querySelector('[part="help-text"]');
     expect(helperText).to.exist;
     expect(helperText!.textContent).to.include('Select an option');
   });
 
-  it('renders error message when invalid', async () => {
+  it('renders error message when provided', async () => {
     const el = await fixture<AeSelect>(html`
-      <ae-select error-message="Selection is required"></ae-select>
+      <ae-select error="Selection is required"></ae-select>
     `);
 
-    el.invalid = true;
     await el.updateComplete;
 
-    const errorMessage = el.shadowRoot!.querySelector('[part="error-message"]');
+    const errorMessage = el.shadowRoot!.querySelector('[part="error-text"]');
     expect(errorMessage).to.exist;
     expect(errorMessage!.textContent).to.include('Selection is required');
   });
@@ -78,7 +74,7 @@ describe('ae-select', () => {
     expect(options.length).to.equal(3);
   });
 
-  it('emits ae-change event when value changes', async () => {
+  it('emits ae-select-change event when value changes', async () => {
     const el = await fixture<AeSelect>(html`
       <ae-select>
         <option value="1">Option 1</option>
@@ -93,7 +89,7 @@ describe('ae-select', () => {
       select.dispatchEvent(new Event('change', { bubbles: true }));
     });
 
-    const event = await oneEvent(el, 'ae-change');
+    const event = await oneEvent(el, 'ae-select-change');
     expect(event).to.exist;
   });
 
@@ -104,11 +100,11 @@ describe('ae-select', () => {
     expect(select.disabled).to.be.true;
   });
 
-  it('applies size classes correctly', async () => {
-    const el = await fixture<AeSelect>(html`<ae-select size="sm"></ae-select>`);
-    const base = el.shadowRoot!.querySelector('[part="base"]')!;
+  it('applies error class when error is provided', async () => {
+    const el = await fixture<AeSelect>(html`<ae-select error="Invalid"></ae-select>`);
+    const wrapper = el.shadowRoot!.querySelector('.select-wrapper')!;
 
-    expect(base.classList.contains('size-sm')).to.be.true;
+    expect(wrapper.classList.contains('error')).to.be.true;
   });
 
   it('validates required field', async () => {

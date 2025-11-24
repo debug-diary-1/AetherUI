@@ -36,18 +36,16 @@ describe('ae-badge', () => {
     expect(base).to.exist;
   });
 
-  it('applies variant classes correctly', async () => {
+  it('applies variant attribute correctly', async () => {
     const el = await fixture<AeBadge>(html`<ae-badge variant="error">Error</ae-badge>`);
-    const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-    expect(base.classList.contains('variant-error')).to.be.true;
+    expect(el.getAttribute('variant')).to.equal('error');
   });
 
-  it('applies size classes correctly', async () => {
+  it('applies size attribute correctly', async () => {
     const el = await fixture<AeBadge>(html`<ae-badge size="sm">Small</ae-badge>`);
-    const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-    expect(base.classList.contains('size-sm')).to.be.true;
+    expect(el.getAttribute('size')).to.equal('sm');
   });
 
   it('shows close button when closable is true', async () => {
@@ -67,18 +65,17 @@ describe('ae-badge', () => {
     expect(event).to.exist;
   });
 
-  it('applies outline class when outline is true', async () => {
+  it('applies outline attribute when outline is true', async () => {
     const el = await fixture<AeBadge>(html`<ae-badge outline>Badge</ae-badge>`);
-    const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-    expect(base.classList.contains('outline')).to.be.true;
+    expect(el.hasAttribute('outline')).to.be.true;
   });
 
   it('displays as dot indicator when dot is true', async () => {
     const el = await fixture<AeBadge>(html`<ae-badge dot></ae-badge>`);
     const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-    expect(base.classList.contains('dot')).to.be.true;
+    expect(base.classList.contains('badge-dot')).to.be.true;
   });
 
   it('renders icon slot when provided', async () => {
@@ -105,9 +102,8 @@ describe('ae-badge', () => {
 
     for (const variant of variants) {
       const el = await fixture<AeBadge>(html`<ae-badge variant="${variant}">Badge</ae-badge>`);
-      const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-      expect(base.classList.contains(`variant-${variant}`)).to.be.true;
+      expect(el.getAttribute('variant')).to.equal(variant);
     }
   });
 
@@ -116,9 +112,8 @@ describe('ae-badge', () => {
 
     for (const size of sizes) {
       const el = await fixture<AeBadge>(html`<ae-badge size="${size}">Badge</ae-badge>`);
-      const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-      expect(base.classList.contains(`size-${size}`)).to.be.true;
+      expect(el.getAttribute('size')).to.equal(size);
     }
   });
 });

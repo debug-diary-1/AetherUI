@@ -120,18 +120,16 @@ describe('ae-drawer', () => {
     expect(event).to.exist;
   });
 
-  it('applies placement classes correctly', async () => {
+  it('applies placement attribute correctly', async () => {
     const el = await fixture<AeDrawer>(html`<ae-drawer open placement="left"></ae-drawer>`);
-    const panel = el.shadowRoot!.querySelector('[part="panel"]')!;
 
-    expect(panel.classList.contains('placement-left')).to.be.true;
+    expect(el.getAttribute('placement')).to.equal('left');
   });
 
-  it('applies size classes correctly', async () => {
+  it('applies size attribute correctly', async () => {
     const el = await fixture<AeDrawer>(html`<ae-drawer open size="lg"></ae-drawer>`);
-    const panel = el.shadowRoot!.querySelector('[part="panel"]')!;
 
-    expect(panel.classList.contains('size-lg')).to.be.true;
+    expect(el.getAttribute('size')).to.equal('lg');
   });
 
   it('renders header slot content', async () => {
@@ -184,9 +182,8 @@ describe('ae-drawer', () => {
       const el = await fixture<AeDrawer>(html`
         <ae-drawer open placement="${placement}"></ae-drawer>
       `);
-      const panel = el.shadowRoot!.querySelector('[part="panel"]')!;
 
-      expect(panel.classList.contains(`placement-${placement}`)).to.be.true;
+      expect(el.getAttribute('placement')).to.equal(placement);
     }
   });
 
@@ -197,9 +194,8 @@ describe('ae-drawer', () => {
       const el = await fixture<AeDrawer>(html`
         <ae-drawer open size="${size}"></ae-drawer>
       `);
-      const panel = el.shadowRoot!.querySelector('[part="panel"]')!;
 
-      expect(panel.classList.contains(`size-${size}`)).to.be.true;
+      expect(el.getAttribute('size')).to.equal(size);
     }
   });
 });

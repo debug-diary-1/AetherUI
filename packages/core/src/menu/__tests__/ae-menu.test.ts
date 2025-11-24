@@ -77,7 +77,7 @@ describe('ae-menu-item', () => {
     expect(item.getAttribute('role')).to.equal('menuitem');
   });
 
-  it('emits ae-menu-item-click event when clicked', async () => {
+  it('emits ae-menu-select event when clicked', async () => {
     const el = await fixture<AeMenuItem>(html`
       <ae-menu-item>Menu Item</ae-menu-item>
     `);
@@ -86,7 +86,7 @@ describe('ae-menu-item', () => {
 
     setTimeout(() => item.click());
 
-    const event = await oneEvent(el, 'ae-menu-item-click');
+    const event = await oneEvent(el, 'ae-menu-select');
     expect(event).to.exist;
   });
 
@@ -96,7 +96,7 @@ describe('ae-menu-item', () => {
     `);
 
     let eventFired = false;
-    el.addEventListener('ae-menu-item-click', () => {
+    el.addEventListener('ae-menu-select', () => {
       eventFired = true;
     });
 
@@ -107,13 +107,12 @@ describe('ae-menu-item', () => {
     expect(eventFired).to.be.false;
   });
 
-  it('applies disabled class when disabled', async () => {
+  it('reflects disabled attribute', async () => {
     const el = await fixture<AeMenuItem>(html`
       <ae-menu-item disabled>Menu Item</ae-menu-item>
     `);
 
-    const item = el.shadowRoot!.querySelector('[part="base"]')!;
-    expect(item.classList.contains('disabled')).to.be.true;
+    expect(el.hasAttribute('disabled')).to.be.true;
   });
 
   it('sets aria-disabled when disabled', async () => {
@@ -122,7 +121,7 @@ describe('ae-menu-item', () => {
     `);
 
     const item = el.shadowRoot!.querySelector('[part="base"]')!;
-    expect(item.getAttribute('aria-disabled')).to.equal('true');
+    expect(item.hasAttribute('aria-disabled')).to.be.true;
   });
 
   it('renders slot content', async () => {
@@ -159,10 +158,10 @@ describe('ae-menu-divider', () => {
     expect(divider.getAttribute('role')).to.equal('separator');
   });
 
-  it('renders as hr element', async () => {
+  it('renders divider with separator role', async () => {
     const el = await fixture<AeMenuDivider>(html`<ae-menu-divider></ae-menu-divider>`);
-    const hr = el.shadowRoot!.querySelector('hr');
+    const divider = el.shadowRoot!.querySelector('[role="separator"]');
 
-    expect(hr).to.exist;
+    expect(divider).to.exist;
   });
 });

@@ -39,7 +39,7 @@ describe('ae-breadcrumb', () => {
     expect(nav.getAttribute('aria-label')).to.equal('Breadcrumb');
   });
 
-  it('renders separator between items', async () => {
+  it('passes separator to child items', async () => {
     const el = await fixture<AeBreadcrumb>(html`
       <ae-breadcrumb separator="-">
         <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
@@ -47,18 +47,21 @@ describe('ae-breadcrumb', () => {
       </ae-breadcrumb>
     `);
 
-    const separators = el.shadowRoot!.querySelectorAll('[part="separator"]');
-    expect(separators.length).to.be.greaterThan(0);
+    const items = el.querySelectorAll('ae-breadcrumb-item');
+    const firstItem = items[0] as AeBreadcrumbItem;
+    const separator = firstItem.shadowRoot!.querySelector('[part="separator"]');
+    expect(separator).to.exist;
+    expect(separator!.textContent).to.equal('-');
   });
 });
 
 describe('ae-breadcrumb-item', () => {
   it('has correct default properties', async () => {
     const el = await fixture<AeBreadcrumbItem>(html`
-      <ae-breadcrumb-item>Home</ae-breadcrumb-item>
+      <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
     `);
 
-    expect(el.href).to.be.undefined;
+    expect(el.href).to.equal('/');
     expect(el.current).to.be.false;
   });
 
