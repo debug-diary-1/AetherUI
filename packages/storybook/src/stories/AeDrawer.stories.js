@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { ref, createRef } from 'lit/directives/ref.js';
+import { expect, within, userEvent, waitFor } from '@storybook/test';
 
 export default {
   title: 'Components/Drawer',
@@ -69,6 +70,39 @@ export const Right = {
     backdrop: true,
   },
   render: createDrawerExample,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Find the open button
+    const openButton = canvas.getByText('Open Drawer');
+    expect(openButton).toBeInTheDocument();
+
+    // Click to open drawer
+    await userEvent.click(openButton);
+
+    // Get the drawer element
+    const aeDrawer = canvasElement.querySelector('ae-drawer');
+    expect(aeDrawer).toBeInTheDocument();
+
+    // Wait for drawer to open
+    await waitFor(() => {
+      expect(aeDrawer.open).toBe(true);
+    });
+
+    // Verify drawer content is visible
+    const header = aeDrawer.shadowRoot.querySelector('[part="header"]');
+    expect(header).toBeTruthy();
+
+    // Find and click close button
+    const closeButton = aeDrawer.shadowRoot.querySelector('[part="close-button"]');
+    expect(closeButton).toBeTruthy();
+    await userEvent.click(closeButton);
+
+    // Wait for drawer to close
+    await waitFor(() => {
+      expect(aeDrawer.open).toBe(false);
+    });
+  },
 };
 
 export const Left = {

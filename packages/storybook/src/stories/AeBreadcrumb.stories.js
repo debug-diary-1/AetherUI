@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { expect, within } from '@storybook/test';
 
 export default {
   title: 'Components/Breadcrumb',
@@ -23,6 +24,37 @@ export const Default = {
       <ae-breadcrumb-item current>Laptops</ae-breadcrumb-item>
     </ae-breadcrumb>
   `,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Get the breadcrumb element
+    const aeBreadcrumb = canvasElement.querySelector('ae-breadcrumb');
+    expect(aeBreadcrumb).toBeInTheDocument();
+
+    // Verify separator attribute
+    expect(aeBreadcrumb.getAttribute('separator')).toBe('/');
+
+    // Get breadcrumb items
+    const items = canvasElement.querySelectorAll('ae-breadcrumb-item');
+    expect(items.length).toBe(4);
+
+    // Verify first item has link
+    const firstItem = items[0];
+    const firstLink = firstItem.shadowRoot.querySelector('a');
+    expect(firstLink).toBeTruthy();
+    expect(firstLink.getAttribute('href')).toBe('/');
+
+    // Verify last item is current and has no link
+    const lastItem = items[3];
+    expect(lastItem.hasAttribute('current')).toBe(true);
+    const lastLink = lastItem.shadowRoot.querySelector('a');
+    expect(lastLink).toBeFalsy();
+
+    // Verify separator exists in non-current items
+    const separator = firstItem.shadowRoot.querySelector('[part="separator"]');
+    expect(separator).toBeTruthy();
+    expect(separator.textContent).toBe('/');
+  },
 };
 
 export const CustomSeparator = {

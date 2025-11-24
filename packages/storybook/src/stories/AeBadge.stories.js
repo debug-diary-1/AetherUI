@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { expect, within, userEvent, waitFor } from '@storybook/test';
 
 export default {
   title: 'Components/Badge',
@@ -37,7 +38,7 @@ export const Default = {
   args: {
     variant: 'primary',
     size: 'md',
-    closable: false,
+    closable: true,
     dot: false,
     outline: false,
     content: 'Badge',
@@ -54,6 +55,28 @@ export const Default = {
       ${args.content}
     </ae-badge>
   `,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Get the badge element
+    const aeBadge = canvasElement.querySelector('ae-badge');
+    expect(aeBadge).toBeInTheDocument();
+
+    // Verify badge content is visible
+    const base = aeBadge.shadowRoot.querySelector('[part="base"]');
+    expect(base).toBeTruthy();
+
+    // Verify variant attribute is set
+    expect(aeBadge.getAttribute('variant')).toBe('primary');
+
+    // Find and click close button
+    const closeButton = aeBadge.shadowRoot.querySelector('[part="close-button"]');
+    expect(closeButton).toBeTruthy();
+
+    await userEvent.click(closeButton);
+
+    // Badge should emit close event (verified by console.log in template)
+  },
 };
 
 export const AllVariants = {

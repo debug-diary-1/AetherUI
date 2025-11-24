@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { expect, within, userEvent } from '@storybook/test';
 
 export default {
   title: 'Components/Menu',
@@ -15,6 +16,30 @@ export const Default = {
       <ae-menu-item value="delete">Delete</ae-menu-item>
     </ae-menu>
   `,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Get menu items
+    const menuItems = canvasElement.querySelectorAll('ae-menu-item');
+    expect(menuItems.length).toBeGreaterThan(0);
+
+    // Get the first menu item and click it
+    const firstItem = menuItems[0];
+    const itemButton = firstItem.shadowRoot.querySelector('[part="base"]');
+    expect(itemButton).toBeTruthy();
+
+    await userEvent.click(itemButton);
+
+    // Verify menu item has proper role
+    expect(itemButton.getAttribute('role')).toBe('menuitem');
+
+    // Verify divider exists
+    const divider = canvasElement.querySelector('ae-menu-divider');
+    expect(divider).toBeInTheDocument();
+
+    const dividerElement = divider.shadowRoot.querySelector('[role="separator"]');
+    expect(dividerElement).toBeTruthy();
+  },
 };
 
 export const WithIcons = {

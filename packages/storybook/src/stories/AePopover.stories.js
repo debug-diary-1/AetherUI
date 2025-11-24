@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { expect, within, userEvent, waitFor } from '@storybook/test';
 
 export default {
   title: 'Components/Popover',
@@ -45,6 +46,37 @@ export const ClickTrigger = {
       </div>
     </ae-popover>
   `,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Get the popover element
+    const aePopover = canvasElement.querySelector('ae-popover');
+    expect(aePopover).toBeInTheDocument();
+
+    // Initially closed
+    expect(aePopover.open).toBe(false);
+
+    // Find and click the trigger button in shadow DOM
+    const trigger = aePopover.shadowRoot.querySelector('[part="trigger"]');
+    expect(trigger).toBeTruthy();
+    await userEvent.click(trigger);
+
+    // Wait for popover to open
+    await waitFor(() => {
+      expect(aePopover.open).toBe(true);
+    });
+
+    // Verify popover content is visible
+    const popoverContent = aePopover.shadowRoot.querySelector('[part="popover"]');
+    expect(popoverContent).toBeTruthy();
+
+    // Click again to close
+    await userEvent.click(trigger);
+
+    await waitFor(() => {
+      expect(aePopover.open).toBe(false);
+    });
+  },
 };
 
 export const HoverTrigger = {
