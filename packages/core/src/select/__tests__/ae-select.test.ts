@@ -172,6 +172,9 @@ describe('ae-select', () => {
       </form>
     `);
 
+    const el = form.querySelector('ae-select') as AeSelect;
+    await el.updateComplete;
+
     const formData = new FormData(form);
     expect(formData.get('choice')).to.equal('b');
   });

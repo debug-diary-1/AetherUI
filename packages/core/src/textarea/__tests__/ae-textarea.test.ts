@@ -148,6 +148,9 @@ describe('ae-textarea', () => {
       </form>
     `);
 
+    const el = form.querySelector('ae-textarea') as AeTextarea;
+    await el.updateComplete;
+
     const formData = new FormData(form);
     expect(formData.get('comments')).to.equal('Great product!');
   });

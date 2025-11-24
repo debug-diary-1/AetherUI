@@ -92,6 +92,9 @@ describe('ae-switch', () => {
       </form>
     `);
 
+    const el = form.querySelector('ae-switch') as AeSwitch;
+    await el.updateComplete;
+
     const formData = new FormData(form);
     expect(formData.get('notifications')).to.equal('on');
   });
@@ -125,9 +128,9 @@ describe('ae-switch', () => {
 
     for (const size of sizes) {
       const el = await fixture<AeSwitch>(html`<ae-switch size="${size}"></ae-switch>`);
-      const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
-      expect(base.classList.contains(`size-${size}`)).to.be.true;
+      // Size is reflected as an attribute, not a CSS class
+      expect(el.getAttribute('size')).to.equal(size);
     }
   });
 });

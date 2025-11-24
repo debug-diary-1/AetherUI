@@ -160,6 +160,9 @@ describe('ae-input', () => {
       </form>
     `);
 
+    const el = form.querySelector('ae-input') as AeInput;
+    await el.updateComplete;
+
     const formData = new FormData(form);
     expect(formData.get('username')).to.equal('john');
   });
