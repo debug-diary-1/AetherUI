@@ -1,6 +1,7 @@
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { action } from 'storybook/actions';
+import { expect, within, userEvent, waitFor } from '@storybook/test';
 
 export default {
   title: 'Components/Autocomplete',
@@ -71,6 +72,39 @@ Basic.args = {
     'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria',
     'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados'
   ]
+};
+Basic.play = async ({ canvasElement }) => {
+  // Get the ae-autocomplete element and access its shadow DOM
+  const aeAutocomplete = canvasElement.querySelector('ae-autocomplete');
+  expect(aeAutocomplete).toBeInTheDocument();
+
+  // Get the input element from shadow DOM
+  const input = aeAutocomplete.shadowRoot.querySelector('input');
+  expect(input).toBeTruthy();
+
+  // Type into the input to trigger filtering
+  await userEvent.type(input, 'Aus', { delay: 50 });
+  expect(input.value).toBe('Aus');
+
+  // Wait for the dropdown to appear with filtered options
+  await waitFor(() => {
+    const dropdown = aeAutocomplete.shadowRoot.querySelector('[role="listbox"]');
+    expect(dropdown).toBeTruthy();
+  });
+
+  // Find options that match the search
+  const options = aeAutocomplete.shadowRoot.querySelectorAll('[role="option"]');
+  expect(options.length).toBeGreaterThan(0);
+
+  // Verify Austria is in the filtered results
+  const austriaOption = Array.from(options).find(opt => opt.textContent.includes('Austria'));
+  expect(austriaOption).toBeTruthy();
+
+  // Click on Austria option
+  await userEvent.click(austriaOption);
+
+  // Verify the value was updated
+  expect(aeAutocomplete.value).toBe('Austria');
 };
 
 export const WithMinChars = Template.bind({});
