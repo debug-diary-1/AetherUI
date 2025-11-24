@@ -114,6 +114,7 @@ describe('ae-select', () => {
         <option value="1">Option 1</option>
       </ae-select>
     `);
+    await el.updateComplete;
 
     expect(el.checkValidity()).to.be.false;
 

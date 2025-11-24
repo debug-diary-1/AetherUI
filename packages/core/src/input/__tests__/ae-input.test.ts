@@ -144,6 +144,7 @@ describe('ae-input', () => {
 
   it('validates required field', async () => {
     const el = await fixture<AeInput>(html`<ae-input required></ae-input>`);
+    await el.updateComplete;
 
     expect(el.checkValidity()).to.be.false;
 

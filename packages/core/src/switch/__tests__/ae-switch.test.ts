@@ -101,6 +101,7 @@ describe('ae-switch', () => {
 
   it('validates required field', async () => {
     const el = await fixture<AeSwitch>(html`<ae-switch required></ae-switch>`);
+    await el.updateComplete;
 
     expect(el.checkValidity()).to.be.false;
 

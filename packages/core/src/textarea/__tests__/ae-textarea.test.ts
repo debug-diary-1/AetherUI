@@ -132,6 +132,7 @@ describe('ae-textarea', () => {
 
   it('validates required field', async () => {
     const el = await fixture<AeTextarea>(html`<ae-textarea required></ae-textarea>`);
+    await el.updateComplete;
 
     expect(el.checkValidity()).to.be.false;
 
