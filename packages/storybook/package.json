@@ -24,7 +24,7 @@
     "@storybook/addon-a11y": "^9.0.14",
     "@storybook/addon-docs": "^9.0.14",
     "@storybook/addon-links": "^9.0.14",
-    "@storybook/web-components-vite": "^9.0.14",
+    "@storybook/web-components-vite": "^10.0.8",
     "@lit/reactive-element": "^2.1.0",
     "eslint-plugin-storybook": "9.0.14",
     "lit": "^3.3.0",
