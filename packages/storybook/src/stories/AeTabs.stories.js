@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { expect, within, userEvent } from '@storybook/test';
 
 export default {
   title: 'Components/Tabs',
@@ -142,6 +143,33 @@ export const Default = {
         </ae-tabs>
       </div>
     `;
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Get the tabs element
+    const aeTabs = canvasElement.querySelector('ae-tabs');
+    expect(aeTabs).toBeInTheDocument();
+
+    // Verify initial value
+    expect(aeTabs.value).toBe('tab1');
+
+    // Get all tab elements
+    const tabs = canvasElement.querySelectorAll('ae-tab');
+    expect(tabs.length).toBe(3);
+
+    // Click on the second tab
+    const secondTab = tabs[1];
+    const secondTabButton = secondTab.shadowRoot.querySelector('[role="tab"]');
+    expect(secondTabButton).toBeTruthy();
+
+    await userEvent.click(secondTabButton);
+
+    // Verify active tab changed
+    expect(aeTabs.value).toBe('tab2');
+
+    // Verify aria-selected attributes
+    expect(secondTabButton.getAttribute('aria-selected')).toBe('true');
   },
 };
 

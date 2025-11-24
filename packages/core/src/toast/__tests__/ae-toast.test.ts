@@ -22,6 +22,7 @@ describe('ae-toast', () => {
   it('should render with default properties', () => {
     // Test default property values
     expect(toast.variant).to.equal('info');
+    expect(toast.size).to.equal('md');
     expect(toast.duration).to.equal(5000);
     expect(toast.textContent?.trim()).to.equal('Test toast message');
   });
@@ -104,8 +105,35 @@ describe('ae-toast', () => {
         Toast with custom icon
       </ae-toast>
     `);
-    
+
     const iconSlot = toastWithIcon.shadowRoot?.querySelector('slot[name="icon"]');
     expect(iconSlot).to.exist;
+  });
+
+  it('should support different size variants', async () => {
+    const smToast = await fixture<AeToast>(html`<ae-toast size="sm">Small toast</ae-toast>`);
+    const mdToast = await fixture<AeToast>(html`<ae-toast size="md">Medium toast</ae-toast>`);
+    const lgToast = await fixture<AeToast>(html`<ae-toast size="lg">Large toast</ae-toast>`);
+
+    expect(smToast.size).to.equal('sm');
+    expect(smToast.getAttribute('size')).to.equal('sm');
+
+    expect(mdToast.size).to.equal('md');
+    expect(mdToast.getAttribute('size')).to.equal('md');
+
+    expect(lgToast.size).to.equal('lg');
+    expect(lgToast.getAttribute('size')).to.equal('lg');
+  });
+
+  it('should reflect size property to attribute', async () => {
+    const el = await fixture<AeToast>(html`<ae-toast>Toast content</ae-toast>`);
+
+    expect(el.size).to.equal('md');
+    expect(el.getAttribute('size')).to.equal('md');
+
+    el.size = 'lg';
+    await elementUpdated(el);
+
+    expect(el.getAttribute('size')).to.equal('lg');
   });
 });

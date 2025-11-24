@@ -63,6 +63,27 @@ Basic.args = {
   pauseOnHover: true
 };
 
+Basic.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Find the button
+  const button = canvas.getByText('Show Toast');
+  expect(button).toBeInTheDocument();
+
+  // Click to show toast
+  await userEvent.click(button);
+
+  // Wait for toast to appear in the DOM
+  await waitFor(() => {
+    const toast = document.querySelector('ae-toast');
+    expect(toast).toBeTruthy();
+  }, { timeout: 2000 });
+
+  // Verify toast content
+  const toast = document.querySelector('ae-toast');
+  expect(toast.getAttribute('variant')).toBe('info');
+};
+
 // Toast variants 
 export const Variants = () => {
   return html`

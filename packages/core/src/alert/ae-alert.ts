@@ -23,6 +23,12 @@ export class AeAlert extends LitElement {
   accessor variant: 'info' | 'success' | 'warning' | 'error' = 'info';
 
   /**
+   * Size of the alert
+   */
+  @property({ type: String, reflect: true })
+  accessor size: 'sm' | 'md' | 'lg' = 'md';
+
+  /**
    * Whether the alert can be closed
    */
   @property({ type: Boolean, reflect: true })

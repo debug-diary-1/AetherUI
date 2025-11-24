@@ -51,6 +51,41 @@ export const toastStyles = css`
     pointer-events: auto;
     position: relative;
     z-index: var(--ae-toast-z-index);
+    font-size: 0.875rem;
+  }
+
+  /* Size variants */
+  :host([size='sm']) [part="toast"] {
+    padding: 0.625rem 0.75rem;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+  }
+
+  :host([size='sm']) [part="icon"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  :host([size='md']) [part="toast"] {
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  :host([size='md']) [part="icon"] {
+    width: 20px;
+    height: 20px;
+  }
+
+  :host([size='lg']) [part="toast"] {
+    padding: 1rem 1.25rem;
+    gap: 0.625rem;
+    font-size: 1rem;
+  }
+
+  :host([size='lg']) [part="icon"] {
+    width: 24px;
+    height: 24px;
   }
 
   :host([exiting]) [part="toast"] {

@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { expect, within, userEvent } from '@storybook/test';
 
 // Import directly from the main package
 import { AeTreeView } from '@aetherui/core';
@@ -138,6 +139,27 @@ export const Basic = {
         @ae-treeview-expand=${action('ae-treeview-expand')}
       ></ae-treeview>
     `;
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Get the treeview element
+    const aeTreeView = canvasElement.querySelector('ae-treeview');
+    expect(aeTreeView).toBeInTheDocument();
+
+    // Wait for tree to render
+    await aeTreeView.updateComplete;
+
+    // Find expand buttons in shadow DOM
+    const expandButtons = aeTreeView.shadowRoot.querySelectorAll('button[aria-label*="Expand"]');
+    expect(expandButtons.length).toBeGreaterThan(0);
+
+    // Click first expand button to expand a node
+    await userEvent.click(expandButtons[0]);
+
+    // Verify expansion occurred
+    const collapseButtons = aeTreeView.shadowRoot.querySelectorAll('button[aria-label*="Collapse"]');
+    expect(collapseButtons.length).toBeGreaterThan(0);
   },
 };
 

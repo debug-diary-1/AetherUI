@@ -18,6 +18,41 @@ export const alertStyles = css`
     border-radius: var(--ae-alert-radius, 0.375rem);
     background: var(--ae-alert-bg-info, #e8f4fd);
     color: var(--ae-alert-fg-info, #055160);
+    font-size: var(--ae-alert-font-size, 0.875rem);
+  }
+
+  /* Size variants */
+  :host([size='sm']) ::part(base) {
+    padding: var(--ae-alert-padding-sm, 0.75rem);
+    gap: var(--ae-alert-gap-sm, 0.5rem);
+    font-size: var(--ae-alert-font-size-sm, 0.8125rem);
+  }
+
+  :host([size='sm']) ::part(icon) {
+    width: 18px;
+    height: 18px;
+  }
+
+  :host([size='md']) ::part(base) {
+    padding: var(--ae-alert-padding-md, 1rem);
+    gap: var(--ae-alert-gap-md, 0.75rem);
+    font-size: var(--ae-alert-font-size-md, 0.875rem);
+  }
+
+  :host([size='md']) ::part(icon) {
+    width: 24px;
+    height: 24px;
+  }
+
+  :host([size='lg']) ::part(base) {
+    padding: var(--ae-alert-padding-lg, 1.25rem);
+    gap: var(--ae-alert-gap-lg, 1rem);
+    font-size: var(--ae-alert-font-size-lg, 1rem);
+  }
+
+  :host([size='lg']) ::part(icon) {
+    width: 28px;
+    height: 28px;
   }
 
   /* Variant styles */
