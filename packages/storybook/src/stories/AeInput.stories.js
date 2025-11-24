@@ -80,24 +80,29 @@ export const Default = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // Get the input element
-    const input = canvas.getByRole('textbox');
-    expect(input).toBeInTheDocument();
+    // Get the ae-input element and access its shadow DOM
+    const aeInput = canvasElement.querySelector('ae-input');
+    expect(aeInput).toBeInTheDocument();
+
+    // Get the input element from shadow DOM
+    const input = aeInput.shadowRoot.querySelector('input');
+    expect(input).toBeTruthy();
 
     // Type into the input
     await userEvent.type(input, 'test@example.com', { delay: 50 });
-    expect(input).toHaveValue('test@example.com');
+    expect(input.value).toBe('test@example.com');
 
     // Clear the input
     await userEvent.clear(input);
-    expect(input).toHaveValue('');
+    expect(input.value).toBe('');
 
-    // Verify label is present
-    const label = canvas.getByText('Email Address');
-    expect(label).toBeInTheDocument();
+    // Verify label is present in shadow DOM
+    const label = aeInput.shadowRoot.querySelector('label');
+    expect(label).toBeTruthy();
+    expect(label.textContent).toContain('Email Address');
 
     // Verify placeholder
-    expect(input).toHaveAttribute('placeholder', 'Enter your email');
+    expect(input.getAttribute('placeholder')).toBe('Enter your email');
   },
 };
 

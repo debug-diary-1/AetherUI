@@ -60,29 +60,34 @@ Basic.args = {
 Basic.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
-  // Get the combo input
-  const input = canvas.getByRole('combobox');
+  // Get the combo element and access its shadow DOM
+  const combo = canvasElement.querySelector('ae-combo');
+  expect(combo).toBeInTheDocument();
+
+  const input = combo.shadowRoot.querySelector('input[role="combobox"]');
+  expect(input).toBeTruthy();
 
   // Type to trigger filtering and highlighting
   await userEvent.type(input, 'app', { delay: 100 });
 
   // Wait for the dropdown to appear
-  await waitFor(async () => {
-    const options = canvas.queryAllByRole('option');
-    expect(options.length).toBeGreaterThan(0);
+  await waitFor(() => {
+    const listbox = combo.shadowRoot.querySelector('[role="listbox"]');
+    expect(listbox).toBeTruthy();
   });
 
-  // Find the option with "Apple"
-  const option = canvas.getByRole('option', { name: /Apple/i });
-  expect(option).toBeInTheDocument();
+  // Find the option with "Apple" in shadow DOM
+  const options = combo.shadowRoot.querySelectorAll('[role="option"]');
+  const appleOption = Array.from(options).find(opt => opt.textContent.includes('Apple'));
+  expect(appleOption).toBeTruthy();
 
   // CRITICAL: Verify highlight is rendered as HTML, not escaped text
-  const highlight = option.querySelector('.highlight');
-  expect(highlight).toBeInTheDocument();
+  const highlight = appleOption.querySelector('.highlight');
+  expect(highlight).toBeTruthy();
   expect(highlight.textContent).toBe('App');
 
   // Verify it's not showing escaped HTML
-  const innerHTML = option.innerHTML;
+  const innerHTML = appleOption.innerHTML;
   expect(innerHTML).not.toContain('&lt;span');
   expect(innerHTML).not.toContain('&gt;');
   expect(innerHTML).toContain('<span class="highlight"');
