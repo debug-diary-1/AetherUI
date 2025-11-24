@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { expect, within, userEvent } from '@storybook/test';
 
 export default {
   title: 'Components/Input',
@@ -76,6 +77,28 @@ export const Default = {
       @ae-input-change="${(e) => console.log('Input changed:', e.detail)}"
     ></ae-input>
   `,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Get the input element
+    const input = canvas.getByRole('textbox');
+    expect(input).toBeInTheDocument();
+
+    // Type into the input
+    await userEvent.type(input, 'test@example.com', { delay: 50 });
+    expect(input).toHaveValue('test@example.com');
+
+    // Clear the input
+    await userEvent.clear(input);
+    expect(input).toHaveValue('');
+
+    // Verify label is present
+    const label = canvas.getByText('Email Address');
+    expect(label).toBeInTheDocument();
+
+    // Verify placeholder
+    expect(input).toHaveAttribute('placeholder', 'Enter your email');
+  },
 };
 
 export const WithError = {

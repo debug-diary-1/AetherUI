@@ -1,6 +1,7 @@
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { action } from 'storybook/actions';
+import { expect, within, userEvent, waitFor } from '@storybook/test';
 
 export default {
   title: 'Components/Combo',
@@ -55,6 +56,36 @@ export const Basic = Template.bind({});
 Basic.args = {
   placeholder: 'Select a fruit...',
   items: ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape']
+};
+Basic.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Get the combo input
+  const input = canvas.getByRole('combobox');
+
+  // Type to trigger filtering and highlighting
+  await userEvent.type(input, 'app', { delay: 100 });
+
+  // Wait for the dropdown to appear
+  await waitFor(async () => {
+    const options = canvas.queryAllByRole('option');
+    expect(options.length).toBeGreaterThan(0);
+  });
+
+  // Find the option with "Apple"
+  const option = canvas.getByRole('option', { name: /Apple/i });
+  expect(option).toBeInTheDocument();
+
+  // CRITICAL: Verify highlight is rendered as HTML, not escaped text
+  const highlight = option.querySelector('.highlight');
+  expect(highlight).toBeInTheDocument();
+  expect(highlight.textContent).toBe('App');
+
+  // Verify it's not showing escaped HTML
+  const innerHTML = option.innerHTML;
+  expect(innerHTML).not.toContain('&lt;span');
+  expect(innerHTML).not.toContain('&gt;');
+  expect(innerHTML).toContain('<span class="highlight"');
 };
 
 export const WithObjectItems = Template.bind({});

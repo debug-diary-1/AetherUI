@@ -32,7 +32,12 @@ const config = {
     // '../src/stories/AeDataTableComplete.stories.js',
   ],
 
-  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-a11y"), getAbsolutePath("@storybook/addon-docs")],
+  addons: [
+    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath("@storybook/addon-a11y"),
+    getAbsolutePath("@storybook/addon-docs"),
+    getAbsolutePath("@storybook/addon-interactions")
+  ],
 
   framework: {
     name: getAbsolutePath("@storybook/web-components-vite"),
