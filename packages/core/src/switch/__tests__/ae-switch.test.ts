@@ -51,7 +51,7 @@ describe('ae-switch', () => {
 
     setTimeout(() => input.click());
 
-    const event = await oneEvent(el, 'ae-change');
+    const event = await oneEvent(el, 'ae-switch-change');
     expect(event).to.exist;
     expect(event.detail.checked).to.be.true;
   });
@@ -77,10 +77,10 @@ describe('ae-switch', () => {
 
   it('renders helper text when provided', async () => {
     const el = await fixture<AeSwitch>(html`
-      <ae-switch helper-text="Enable to receive updates"></ae-switch>
+      <ae-switch help-text="Enable to receive updates"></ae-switch>
     `);
 
-    const helperText = el.shadowRoot!.querySelector('[part="helper-text"]');
+    const helperText = el.shadowRoot!.querySelector('[part="help-text"]');
     expect(helperText).to.exist;
     expect(helperText!.textContent).to.include('Enable to receive updates');
   });

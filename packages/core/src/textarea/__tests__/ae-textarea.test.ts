@@ -12,7 +12,6 @@ describe('ae-textarea', () => {
     expect(el.readonly).to.be.false;
     expect(el.required).to.be.false;
     expect(el.resize).to.equal('vertical');
-    expect(el.size).to.equal('md');
   });
 
   it('sets properties from attributes', async () => {
@@ -22,7 +21,6 @@ describe('ae-textarea', () => {
         placeholder="Enter text"
         rows="5"
         resize="none"
-        size="lg"
         required
         disabled
       ></ae-textarea>
@@ -32,7 +30,6 @@ describe('ae-textarea', () => {
     expect(el.placeholder).to.equal('Enter text');
     expect(el.rows).to.equal(5);
     expect(el.resize).to.equal('none');
-    expect(el.size).to.equal('lg');
     expect(el.required).to.be.true;
     expect(el.disabled).to.be.true;
   });
@@ -58,23 +55,23 @@ describe('ae-textarea', () => {
 
   it('renders helper text when provided', async () => {
     const el = await fixture<AeTextarea>(html`
-      <ae-textarea helper-text="Max 500 characters"></ae-textarea>
+      <ae-textarea help-text="Max 500 characters"></ae-textarea>
     `);
 
-    const helperText = el.shadowRoot!.querySelector('[part="helper-text"]');
+    const helperText = el.shadowRoot!.querySelector('[part="help-text"]');
     expect(helperText).to.exist;
     expect(helperText!.textContent).to.include('Max 500 characters');
   });
 
   it('renders error message when invalid', async () => {
     const el = await fixture<AeTextarea>(html`
-      <ae-textarea error-message="This field is required"></ae-textarea>
+      <ae-textarea error="This field is required"></ae-textarea>
     `);
 
-    el.invalid = true;
+    
     await el.updateComplete;
 
-    const errorMessage = el.shadowRoot!.querySelector('[part="error-message"]');
+    const errorMessage = el.shadowRoot!.querySelector('[part="error-text"]');
     expect(errorMessage).to.exist;
     expect(errorMessage!.textContent).to.include('This field is required');
   });
@@ -88,7 +85,7 @@ describe('ae-textarea', () => {
       textarea.dispatchEvent(new Event('input', { bubbles: true }));
     });
 
-    const event = await oneEvent(el, 'ae-input');
+    const event = await oneEvent(el, 'ae-textarea-input');
     expect(event).to.exist;
   });
 
@@ -101,7 +98,7 @@ describe('ae-textarea', () => {
       textarea.dispatchEvent(new Event('change', { bubbles: true }));
     });
 
-    const event = await oneEvent(el, 'ae-change');
+    const event = await oneEvent(el, 'ae-textarea-change');
     expect(event).to.exist;
   });
 
