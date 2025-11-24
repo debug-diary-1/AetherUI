@@ -11,6 +11,18 @@ import { defineAeAutocomplete } from './autocomplete';
 import { defineAeCombo } from './combo';
 import { defineAeToast } from './toast';
 import { defineAeTooltip } from './tooltip';
+import { defineAeInput } from './input';
+import { defineAeSelect } from './select';
+import { defineAeTextarea } from './textarea';
+import { defineAeBadge } from './badge';
+import { defineAeSpinner } from './spinner';
+import { defineAeSwitch } from './switch';
+import { defineAeProgress } from './progress';
+import { defineAeBreadcrumb } from './breadcrumb';
+import { defineAePagination } from './pagination';
+import { defineAeDrawer } from './drawer';
+import { defineAePopover } from './popover';
+import { defineAeMenu } from './menu';
 
 export {
   defineAeAccordion,
@@ -27,6 +39,18 @@ export {
   defineAeCombo,
   defineAeToast,
   defineAeTooltip,
+  defineAeInput,
+  defineAeSelect,
+  defineAeTextarea,
+  defineAeBadge,
+  defineAeSpinner,
+  defineAeSwitch,
+  defineAeProgress,
+  defineAeBreadcrumb,
+  defineAePagination,
+  defineAeDrawer,
+  defineAePopover,
+  defineAeMenu,
 };
 
 export function defineAll() {
@@ -44,4 +68,16 @@ export function defineAll() {
   defineAeCombo();
   defineAeToast();
   defineAeTooltip();
+  defineAeInput();
+  defineAeSelect();
+  defineAeTextarea();
+  defineAeBadge();
+  defineAeSpinner();
+  defineAeSwitch();
+  defineAeProgress();
+  defineAeBreadcrumb();
+  defineAePagination();
+  defineAeDrawer();
+  defineAePopover();
+  defineAeMenu();
 }

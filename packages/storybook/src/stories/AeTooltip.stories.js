@@ -1,4 +1,5 @@
 import { html } from 'lit-html';
+import { expect, within, userEvent, waitFor } from '@storybook/test';
 
 export default {
   title: 'Components/Tooltip',
@@ -112,7 +113,7 @@ export const Default = {
   },
   render: (args) => html`
     <div style="padding: 100px; text-align: center;">
-      <ae-tooltip 
+      <ae-tooltip
         text="${args.text}"
         hover-delay="${args.hoverDelay}"
         hide-delay="${args.hideDelay}"
@@ -129,6 +130,47 @@ export const Default = {
       </ae-tooltip>
     </div>
   `,
+  play: async ({ canvasElement }) => {
+    // Get the ae-tooltip element and access its shadow DOM
+    const aeTooltip = canvasElement.querySelector('ae-tooltip');
+    expect(aeTooltip).toBeInTheDocument();
+
+    // Find the button that should trigger the tooltip
+    const button = aeTooltip.querySelector('button');
+    expect(button).toBeTruthy();
+
+    // Initially tooltip should not be open
+    expect(aeTooltip.open).toBe(false);
+
+    // Hover over the button
+    await userEvent.hover(button);
+
+    // Wait for the tooltip to appear (accounting for hover delay)
+    await waitFor(() => {
+      expect(aeTooltip.open).toBe(true);
+    }, { timeout: 500 });
+
+    // Verify tooltip overlay is rendered
+    const overlay = aeTooltip.shadowRoot.querySelector('[part="overlay"]');
+    expect(overlay).toBeTruthy();
+    expect(overlay.getAttribute('role')).toBe('tooltip');
+
+    // Verify tooltip content is correct
+    const content = overlay.querySelector('[part="content"]');
+    expect(content.textContent).toBe('This is a tooltip');
+
+    // Verify arrow is present
+    const arrow = aeTooltip.shadowRoot.querySelector('[part="arrow"]');
+    expect(arrow).toBeTruthy();
+
+    // Unhover to close tooltip
+    await userEvent.unhover(button);
+
+    // Wait for tooltip to close (accounting for hide delay)
+    await waitFor(() => {
+      expect(aeTooltip.open).toBe(false);
+    }, { timeout: 500 });
+  },
 };
 
 // Playground with all interactive controls

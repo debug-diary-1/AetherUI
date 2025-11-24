@@ -72,9 +72,6 @@ export class AeTabs extends LitElement {
   private tabs: HTMLElement[] = [];
   private panels: HTMLElement[] = [];
 
-  @state()
-  private _selectedTab = '';
-
   constructor() {
     super();
     this.addEventListener('keydown', this._handleKeyDown);
@@ -190,14 +187,14 @@ export class AeTabs extends LitElement {
 
   private _handleKeyDown = (e: KeyboardEvent) => {
     if (this.tabs.length === 0) return;
-    
+
     // Find current tab index
     const currentIndex = this.tabs.findIndex(tab => tab.id === this.value);
     if (currentIndex === -1) return;
-    
+
     const isHorizontal = this.orientation !== 'vertical';
     let nextIndex: number | null = null;
-    
+
     // Handle navigation based on orientation
     switch (e.key) {
       case isHorizontal ? 'ArrowRight' : 'ArrowDown':
@@ -215,30 +212,19 @@ export class AeTabs extends LitElement {
       default:
         return;  // Not a key we handle
     }
-    
+
     if (nextIndex !== null) {
       e.preventDefault();
       const nextTab = this.tabs[nextIndex];
-      
+
       // Focus the tab
       nextTab.focus();
-      
+
       // Auto-activate if in auto mode
       if (this.activation === 'auto') {
         this._activateTab(nextTab.id);
       }
     }
-  }
-
-  private _handleTabSelect(event: CustomEvent) {
-    const tab = event.target as HTMLElement;
-    const tabId = tab.id;
-    this._selectedTab = tabId;
-    this.dispatchEvent(new CustomEvent('ae-tab-select', {
-      detail: { tabId },
-      bubbles: true,
-      composed: true,
-    }));
   }
 
   render() {

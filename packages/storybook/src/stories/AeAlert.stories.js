@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { expect, within, userEvent, waitFor } from '@storybook/test';
 
 export default {
   title: 'Components/Alert',
@@ -31,7 +32,7 @@ export default {
 export const Default = {
   args: {
     variant: 'info',
-    closable: false,
+    closable: true,
     open: true,
     customStyles: false,
     slotContent: 'This is an informational alert message.',
@@ -96,6 +97,34 @@ export const Default = {
         </ae-alert>
       </div>
     `;
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Get the alert element
+    const aeAlert = canvasElement.querySelector('ae-alert');
+    expect(aeAlert).toBeInTheDocument();
+
+    // Initially open
+    expect(aeAlert.open).toBe(true);
+
+    // Verify variant attribute
+    expect(aeAlert.getAttribute('variant')).toBe('info');
+
+    // Verify content is visible
+    const base = aeAlert.shadowRoot.querySelector('[part="base"]');
+    expect(base).toBeTruthy();
+
+    // Find and click close button
+    const closeButton = aeAlert.shadowRoot.querySelector('[part="close"]');
+    expect(closeButton).toBeTruthy();
+
+    await userEvent.click(closeButton);
+
+    // Wait for alert to close
+    await waitFor(() => {
+      expect(aeAlert.open).toBe(false);
+    });
   },
 };
 

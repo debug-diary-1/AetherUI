@@ -13,7 +13,8 @@ import type { Placement, Strategy } from '@floating-ui/dom';
  * A lightweight tooltip component that shows contextual information on hover/focus
  *
  * @element ae-tooltip
- * @fires ae-open-change - Fired when tooltip opens or closes
+ * @fires ae-tooltip-show - Fired when tooltip opens
+ * @fires ae-tooltip-hide - Fired when tooltip closes
  *
  * @slot - Default slot for the anchor element that triggers the tooltip
  * @part overlay - The tooltip container
@@ -129,7 +130,6 @@ export class AeTooltip extends LitElement {
         this._cleanupPositioning();
         this._updateAriaDescribedBy(false);
       }
-      
       this._emitOpenChange();
     }
 
@@ -401,7 +401,8 @@ export class AeTooltip extends LitElement {
   }
 
   private _emitOpenChange() {
-    this.dispatchEvent(new CustomEvent('ae-open-change', {
+    const eventName = this.open ? 'ae-tooltip-show' : 'ae-tooltip-hide';
+    this.dispatchEvent(new CustomEvent(eventName, {
       detail: { open: this.open },
       bubbles: true,
       composed: true
