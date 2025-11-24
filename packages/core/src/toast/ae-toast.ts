@@ -54,6 +54,12 @@ export class AeToast extends LitElement {
   accessor variant: ToastVariant = 'info';
 
   /**
+   * Size of the toast
+   */
+  @property({ type: String, reflect: true })
+  accessor size: 'sm' | 'md' | 'lg' = 'md';
+
+  /**
    * Whether the toast is visible
    */
   @property({ type: Boolean, reflect: true })

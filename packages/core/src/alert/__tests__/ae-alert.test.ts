@@ -7,6 +7,7 @@ describe('ae-alert', () => {
     const el = await fixture<AeAlert>(html`<ae-alert>Alert content</ae-alert>`);
 
     expect(el.variant).to.equal('info');
+    expect(el.size).to.equal('md');
     expect(el.closable).to.be.false;
     expect(el.open).to.be.true;
   });
@@ -75,7 +76,7 @@ describe('ae-alert', () => {
 
   it('emits ae-close event when closed', async () => {
     const el = await fixture<AeAlert>(html`<ae-alert closable>Alert content</ae-alert>`);
-    
+
     let eventFired = false;
     el.addEventListener('ae-close', () => {
       eventFired = true;
@@ -83,13 +84,40 @@ describe('ae-alert', () => {
 
     const closeButton = el.shadowRoot!.querySelector('[part="close"]') as HTMLButtonElement;
     expect(closeButton).to.exist;
-    
+
     closeButton.click();
 
     // Wait for event to propagate
     await waitUntil(() => eventFired, 'Close event was not fired');
-    
+
     expect(eventFired).to.be.true;
     expect(el.open).to.be.false;
+  });
+
+  it('supports different size variants', async () => {
+    const smEl = await fixture<AeAlert>(html`<ae-alert size="sm">Small alert</ae-alert>`);
+    const mdEl = await fixture<AeAlert>(html`<ae-alert size="md">Medium alert</ae-alert>`);
+    const lgEl = await fixture<AeAlert>(html`<ae-alert size="lg">Large alert</ae-alert>`);
+
+    expect(smEl.size).to.equal('sm');
+    expect(smEl.getAttribute('size')).to.equal('sm');
+
+    expect(mdEl.size).to.equal('md');
+    expect(mdEl.getAttribute('size')).to.equal('md');
+
+    expect(lgEl.size).to.equal('lg');
+    expect(lgEl.getAttribute('size')).to.equal('lg');
+  });
+
+  it('reflects size property to attribute', async () => {
+    const el = await fixture<AeAlert>(html`<ae-alert>Alert content</ae-alert>`);
+
+    expect(el.size).to.equal('md');
+    expect(el.getAttribute('size')).to.equal('md');
+
+    el.size = 'lg';
+    await el.updateComplete;
+
+    expect(el.getAttribute('size')).to.equal('lg');
   });
 });
