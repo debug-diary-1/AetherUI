@@ -120,10 +120,11 @@ export class AeSwitch extends LitElement {
 
     // Check required validation
     if (this.required && !this.checked) {
+      const input = this.shadowRoot?.querySelector('input');
       this._internals.setValidity(
         { valueMissing: true },
         'Please toggle this switch if you want to proceed.',
-        this
+        input || undefined
       );
     }
   }

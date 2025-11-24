@@ -63,7 +63,11 @@ describe('ae-spinner', () => {
     const base = el.shadowRoot!.querySelector('[part="base"]')!;
 
     expect(base.getAttribute('role')).to.equal('status');
-    expect(base.getAttribute('aria-label')).to.exist;
+
+    // The label is rendered as a visually hidden span, not as aria-label
+    const label = el.shadowRoot!.querySelector('[part="label"]');
+    expect(label).to.exist;
+    expect(label!.textContent).to.equal('Loading...');
   });
 
   it('renders SVG spinner', async () => {

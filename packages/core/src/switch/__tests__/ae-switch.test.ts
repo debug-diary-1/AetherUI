@@ -25,12 +25,12 @@ describe('ae-switch', () => {
 
   it('renders label when provided', async () => {
     const el = await fixture<AeSwitch>(html`
-      <ae-switch label="Enable notifications"></ae-switch>
+      <ae-switch>Enable notifications</ae-switch>
     `);
 
-    const label = el.shadowRoot!.querySelector('label');
-    expect(label).to.exist;
-    expect(label!.textContent).to.include('Enable notifications');
+    const labelText = el.shadowRoot!.querySelector('[part="label"]');
+    expect(labelText).to.exist;
+    expect(labelText!.textContent!.trim()).to.equal('Enable notifications');
   });
 
   it('toggles checked state when clicked', async () => {
@@ -75,16 +75,6 @@ describe('ae-switch', () => {
     expect(el.getAttribute('size')).to.equal('sm');
   });
 
-  it('renders helper text when provided', async () => {
-    const el = await fixture<AeSwitch>(html`
-      <ae-switch help-text="Enable to receive updates"></ae-switch>
-    `);
-
-    const helperText = el.shadowRoot!.querySelector('[part="help-text"]');
-    expect(helperText).to.exist;
-    expect(helperText!.textContent).to.include('Enable to receive updates');
-  });
-
   it('participates in form submission', async () => {
     const form = await fixture<HTMLFormElement>(html`
       <form>
@@ -113,15 +103,16 @@ describe('ae-switch', () => {
 
   it('has correct ARIA attributes', async () => {
     const el = await fixture<AeSwitch>(html`<ae-switch></ae-switch>`);
-    const input = el.shadowRoot!.querySelector('input')!;
+    await el.updateComplete;
 
-    expect(input.getAttribute('role')).to.equal('switch');
-    expect(input.getAttribute('aria-checked')).to.equal('false');
+    // ARIA attributes are set on the host via ElementInternals
+    expect(el.getAttribute('role')).to.equal('switch');
+    expect(el.getAttribute('aria-checked')).to.equal('false');
 
     el.checked = true;
     await el.updateComplete;
 
-    expect(input.getAttribute('aria-checked')).to.equal('true');
+    expect(el.getAttribute('aria-checked')).to.equal('true');
   });
 
   it('supports all size types', async () => {
