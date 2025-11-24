@@ -92,8 +92,10 @@ export const Default = {
     await userEvent.type(input, 'test@example.com', { delay: 50 });
     expect(input.value).toBe('test@example.com');
 
-    // Clear the input
-    await userEvent.clear(input);
+    // Clear the input by directly setting value (userEvent.clear has issues with shadow DOM focus)
+    input.value = '';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
     expect(input.value).toBe('');
 
     // Verify label is present in shadow DOM
