@@ -14,11 +14,11 @@ function TabsShowcase() {
         <h2 className="section-title">Basic Tabs</h2>
         <div className="component-demo">
           <ae-tabs>
-            <ae-tab id="tab1" active>Profile</ae-tab>
-            <ae-tab id="tab2">Settings</ae-tab>
-            <ae-tab id="tab3">Messages</ae-tab>
+            <ae-tab slot="tab" id="tab1">Profile</ae-tab>
+            <ae-tab slot="tab" id="tab2">Settings</ae-tab>
+            <ae-tab slot="tab" id="tab3">Messages</ae-tab>
 
-            <ae-tab-panel tab-id="tab1">
+            <ae-tab-panel slot="panel" panel-id="tab1">
               <div style={{ padding: '1.5rem' }}>
                 <h3>Profile Information</h3>
                 <p style={{ color: '#666', marginTop: '0.5rem' }}>
@@ -27,7 +27,7 @@ function TabsShowcase() {
               </div>
             </ae-tab-panel>
 
-            <ae-tab-panel tab-id="tab2">
+            <ae-tab-panel slot="panel" panel-id="tab2">
               <div style={{ padding: '1.5rem' }}>
                 <h3>Settings</h3>
                 <p style={{ color: '#666', marginTop: '0.5rem' }}>
@@ -36,7 +36,7 @@ function TabsShowcase() {
               </div>
             </ae-tab-panel>
 
-            <ae-tab-panel tab-id="tab3">
+            <ae-tab-panel slot="panel" panel-id="tab3">
               <div style={{ padding: '1.5rem' }}>
                 <h3>Messages</h3>
                 <p style={{ color: '#666', marginTop: '0.5rem' }}>
@@ -47,19 +47,19 @@ function TabsShowcase() {
           </ae-tabs>
           <CodeExample
             code={`<ae-tabs>
-  <ae-tab id="tab1" active>Profile</ae-tab>
-  <ae-tab id="tab2">Settings</ae-tab>
-  <ae-tab id="tab3">Messages</ae-tab>
+  <ae-tab slot="tab" id="tab1">Profile</ae-tab>
+  <ae-tab slot="tab" id="tab2">Settings</ae-tab>
+  <ae-tab slot="tab" id="tab3">Messages</ae-tab>
 
-  <ae-tab-panel tab-id="tab1">
+  <ae-tab-panel slot="panel" panel-id="tab1">
     <div>Profile content...</div>
   </ae-tab-panel>
 
-  <ae-tab-panel tab-id="tab2">
+  <ae-tab-panel slot="panel" panel-id="tab2">
     <div>Settings content...</div>
   </ae-tab-panel>
 
-  <ae-tab-panel tab-id="tab3">
+  <ae-tab-panel slot="panel" panel-id="tab3">
     <div>Messages content...</div>
   </ae-tab-panel>
 </ae-tabs>`}
