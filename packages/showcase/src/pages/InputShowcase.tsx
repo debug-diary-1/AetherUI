@@ -71,9 +71,6 @@ function InputShowcase() {
             maxlength="500"
             show-count
           />
-          <p style={{ marginTop: '1rem', color: '#666' }}>
-            Character count: {textareaValue.length}
-          </p>
           <CodeExample
             code={`const [value, setValue] = useState('');
 
