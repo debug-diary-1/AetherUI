@@ -54,7 +54,7 @@ function Navigation() {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/showcase">
       <div className="app">
         <Navigation />
         <main className="content">
