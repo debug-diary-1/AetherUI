@@ -360,17 +360,25 @@ ae-accordion {
   --ae-accordion-header-font-weight: 600;
   --ae-accordion-header-color: #111827;
   --ae-accordion-header-padding: 1rem 1.25rem;
-  --ae-accordion-content-padding: 0 1.25rem 1rem;
+  --ae-accordion-header-hover-bg: #f9fafb;
+  --ae-accordion-header-active-bg: #f3f4f6;
+  --ae-accordion-panel-padding: 0 1.25rem 1rem;
   display: block;
 }
 
 ae-accordion-item {
   display: block;
-  border-bottom: 1px solid #e5e7eb;
 }
 
 ae-accordion-item:last-child {
   border-bottom: none;
+}
+
+/* Ensure slotted header content is visible */
+ae-accordion-item [slot="header"] {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #111827;
 }
 
 ae-breadcrumb {
