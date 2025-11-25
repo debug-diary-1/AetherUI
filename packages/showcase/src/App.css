@@ -291,6 +291,28 @@ ae-tabs {
   --ae-tabs-active-color: #111827;
   --ae-tabs-active-border: 2px solid #111827;
   --ae-tabs-font-size: 0.875rem;
+  display: block;
+}
+
+ae-tab {
+  display: inline-block;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+ae-tab[active] {
+  color: #111827;
+  border-bottom-color: #111827;
+}
+
+ae-tab-panel {
+  display: block;
+  padding: 1.5rem 0;
 }
 
 ae-progress {
@@ -324,6 +346,16 @@ ae-tooltip {
 ae-accordion {
   --ae-accordion-border: 1px solid #e5e7eb;
   --ae-accordion-border-radius: 0.5rem;
+  display: block;
+}
+
+ae-accordion-item {
+  display: block;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+ae-accordion-item:last-child {
+  border-bottom: none;
 }
 
 ae-breadcrumb {
