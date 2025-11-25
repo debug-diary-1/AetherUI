@@ -56,13 +56,20 @@ function DataShowcase() {
           <div className="demo-label">Search with Suggestions</div>
           <ae-autocomplete
             placeholder="Search programming languages..."
-            suggestions='["JavaScript", "TypeScript", "Python", "Java", "C++", "Ruby", "Go", "Rust"]'
+            options='["JavaScript", "TypeScript", "Python", "Java", "C++", "Ruby", "Go", "Rust"]'
           ></ae-autocomplete>
           <CodeExample
-            code={`<ae-autocomplete
+            code={`<!-- As HTML attribute -->
+<ae-autocomplete
   placeholder="Search programming languages..."
-  suggestions='["JavaScript", "TypeScript", "Python", "Java", "C++", "Ruby", "Go", "Rust"]'
-></ae-autocomplete>`}
+  options='["JavaScript", "TypeScript", "Python", "Java", "C++", "Ruby", "Go", "Rust"]'
+></ae-autocomplete>
+
+<!-- Or in React with array prop -->
+<ae-autocomplete
+  placeholder="Search programming languages..."
+  options={["JavaScript", "TypeScript", "Python", "Java", "C++", "Ruby", "Go", "Rust"]}
+/>`}
           />
         </div>
       </div>

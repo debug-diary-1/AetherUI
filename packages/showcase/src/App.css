@@ -264,6 +264,9 @@
   flex: 1;
   padding: 2rem 2.5rem;
   transition: margin-left 0.3s ease-in-out;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: auto;
 }
 
 /* Desktop: content shifts with sidebar */
@@ -274,6 +277,18 @@
 
   .app.sidebar-closed-app .content {
     margin-left: 60px; /* Collapsed sidebar width */
+  }
+
+  /* Center content when sidebar is open or collapsed */
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .content > * {
+    width: 100%;
+    max-width: 1400px;
   }
 }
 
@@ -484,6 +499,32 @@ ae-modal {
   --ae-modal-bg: white;
   --ae-modal-border-radius: 0.5rem;
   --ae-modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Dark theme modal */
+.theme-dark ae-modal {
+  --ae-modal-bg: #2d2d2d;
+  --ae-modal-color: #e5e5e5;
+}
+
+ae-drawer {
+  --ae-drawer-bg: white;
+  --ae-drawer-color: #111827;
+  --ae-drawer-border-color: #e5e7eb;
+  --ae-drawer-width: 380px;
+  --ae-drawer-header-bg: #fafafa;
+  --ae-drawer-footer-bg: #fafafa;
+  --ae-drawer-footer-border: 1px solid #e5e7eb;
+}
+
+/* Dark theme drawer */
+.theme-dark ae-drawer {
+  --ae-drawer-bg: #2d2d2d;
+  --ae-drawer-color: #e5e5e5;
+  --ae-drawer-border-color: #1a1a1a;
+  --ae-drawer-header-bg: #1f1f1f;
+  --ae-drawer-footer-bg: #1f1f1f;
+  --ae-drawer-footer-border: 1px solid #3d3d3d;
 }
 
 ae-tabs {
