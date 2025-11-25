@@ -30,12 +30,12 @@ export const treeItemStyles = css`
   }
 
   .tree-item:hover:not(.disabled) {
-    background-color: var(--ae-treeview-row-hover-bg, #f3f4f6);
+    background-color: var(--ae-treeview-row-hover-bg);
   }
 
   .tree-item.selected {
-    background-color: var(--ae-treeview-row-selected-bg, #e0e7ff);
-    color: var(--ae-treeview-row-selected-fg, #3730a3);
+    background-color: var(--ae-treeview-row-selected-bg);
+    color: var(--ae-treeview-row-selected-fg);
   }
 
   .tree-item.disabled {
@@ -53,18 +53,18 @@ export const treeItemStyles = css`
     border: none;
     background: transparent;
     cursor: pointer;
-    color: var(--ae-treeview-caret-color, #9ca3af);
+    color: var(--ae-treeview-caret-color);
     transition: transform 0.2s ease-in-out, color 0.15s ease-in-out;
     flex-shrink: 0;
   }
 
   .expand-button:hover {
-    color: var(--ae-treeview-caret-open, #4b5563);
+    color: var(--ae-treeview-caret-open);
   }
 
   .expand-button.expanded {
     transform: rotate(90deg);
-    color: var(--ae-treeview-caret-open, #4b5563);
+    color: var(--ae-treeview-caret-open);
   }
 
   .expand-button svg {
@@ -95,7 +95,7 @@ export const treeItemStyles = css`
 
   /* Focus styles */
   .tree-item:focus-visible {
-    outline: 2px solid var(--ae-treeview-focus-color, #4f46e5);
+    outline: 2px solid var(--ae-treeview-focus-color);
     outline-offset: -2px;
   }
 `;
