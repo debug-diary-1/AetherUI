@@ -20,8 +20,8 @@ export const dropdownStyles = css`
 
   /* Overlay styling */
   ::part(overlay) {
-    background: var(--ae-dropdown-bg, #fff);
-    color: var(--ae-dropdown-fg, #111);
+    background: var(--ae-dropdown-bg);
+    color: var(--ae-dropdown-fg);
     border-radius: var(--ae-dropdown-radius, 8px);
     box-shadow: var(--ae-dropdown-shadow, 0 6px 16px rgba(0,0,0,.3));
     padding: 0;
@@ -89,11 +89,11 @@ export const dropdownStyles = css`
   }
 
   ::part(item):hover {
-    background: var(--ae-dropdown-item-hover-bg, rgba(255,255,255,0.1));
+    background: var(--ae-dropdown-item-hover-bg);
   }
 
   ::part(item)[data-active] {
-    background: var(--ae-dropdown-item-active-bg, rgba(255,255,255,0.2));
+    background: var(--ae-dropdown-item-active-bg);
   }
 
   ::part(item)[disabled] {
@@ -108,7 +108,7 @@ export const dropdownStyles = css`
   /* Separator styling */
   ::part(separator) {
     height: 1px;
-    background-color: var(--ae-dropdown-separator-color, rgba(255,255,255,0.1));
+    background-color: var(--ae-dropdown-separator-color);
     margin: 8px 0;
     border: none;
   }
@@ -129,7 +129,7 @@ export const dropdownStyles = css`
     font-size: 0.8em;
     opacity: 0.7;
     flex-shrink: 0;
-    color: var(--ae-dropdown-hint-color, rgba(255,255,255,0.7));
+    color: var(--ae-dropdown-hint-color);
     background: var(--ae-dropdown-hint-bg, transparent);
     padding: var(--ae-dropdown-hint-padding, 2px 4px);
     border-radius: var(--ae-dropdown-hint-radius, 3px);

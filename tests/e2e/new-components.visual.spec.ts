@@ -169,3 +169,135 @@ test.describe('Menu Component', () => {
     await expect(page).toHaveScreenshot('menu-default.png');
   });
 });
+
+test.describe('Tabs Component', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/tabs');
+    await page.waitForSelector('ae-tabs');
+  });
+
+  test('renders tabs in light mode', async ({ page }) => {
+    // Ensure light mode is active
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'light');
+    });
+    await page.waitForTimeout(100); // Wait for theme to apply
+    await expect(page).toHaveScreenshot('tabs-light-mode.png');
+  });
+
+  test('renders tabs in dark mode', async ({ page }) => {
+    // Switch to dark mode
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100); // Wait for theme to apply
+    await expect(page).toHaveScreenshot('tabs-dark-mode.png');
+  });
+
+  test('renders selected tab with correct styling in light mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'light');
+    });
+
+    // First tab should be selected by default
+    const firstTab = page.locator('ae-tab').first();
+    await expect(firstTab).toHaveAttribute('aria-selected', 'true');
+
+    await expect(page).toHaveScreenshot('tabs-selected-light.png');
+  });
+
+  test('renders selected tab with correct styling in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+
+    // First tab should be selected by default
+    const firstTab = page.locator('ae-tab').first();
+    await expect(firstTab).toHaveAttribute('aria-selected', 'true');
+
+    await expect(page).toHaveScreenshot('tabs-selected-dark.png');
+  });
+
+  test('renders tab hover state in light mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'light');
+    });
+
+    // Hover over second tab
+    const secondTab = page.locator('ae-tab').nth(1);
+    await secondTab.hover();
+    await page.waitForTimeout(100); // Wait for hover transition
+
+    await expect(page).toHaveScreenshot('tabs-hover-light.png');
+  });
+
+  test('renders tab hover state in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+
+    // Hover over second tab
+    const secondTab = page.locator('ae-tab').nth(1);
+    await secondTab.hover();
+    await page.waitForTimeout(100); // Wait for hover transition
+
+    await expect(page).toHaveScreenshot('tabs-hover-dark.png');
+  });
+
+  test('theme switching updates tab colors correctly', async ({ page }) => {
+    // Start with light mode
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'light');
+    });
+    await page.waitForTimeout(100);
+
+    const firstTab = page.locator('ae-tab').first();
+    const lightColor = await firstTab.evaluate((el) => {
+      const button = el.shadowRoot?.querySelector('button');
+      return window.getComputedStyle(button!).color;
+    });
+
+    // Switch to dark mode
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+
+    const darkColor = await firstTab.evaluate((el) => {
+      const button = el.shadowRoot?.querySelector('button');
+      return window.getComputedStyle(button!).color;
+    });
+
+    // Colors should be different between light and dark mode
+    expect(lightColor).not.toBe(darkColor);
+  });
+
+  test('indicator color changes with theme', async ({ page }) => {
+    const firstTab = page.locator('ae-tab').first();
+
+    // Get indicator color in light mode
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'light');
+    });
+    await page.waitForTimeout(100);
+
+    const lightIndicatorColor = await firstTab.evaluate((el) => {
+      const indicator = el.shadowRoot?.querySelector('.indicator');
+      return window.getComputedStyle(indicator!).backgroundColor;
+    });
+
+    // Get indicator color in dark mode
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+
+    const darkIndicatorColor = await firstTab.evaluate((el) => {
+      const indicator = el.shadowRoot?.querySelector('.indicator');
+      return window.getComputedStyle(indicator!).backgroundColor;
+    });
+
+    // Indicator colors should adapt to theme
+    expect(lightIndicatorColor).not.toBe(darkIndicatorColor);
+  });
+});

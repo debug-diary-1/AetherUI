@@ -1,7 +1,7 @@
 # Netlify Configuration
 [build]
-  command = "pnpm build-storybook"
-  publish = "packages/storybook/storybook-static"
+  command = "pnpm build-preview"
+  publish = "preview-build"
 
 [build.environment]
   NODE_VERSION = "20"

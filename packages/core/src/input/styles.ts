@@ -26,12 +26,12 @@ export const inputStyles = css`
     display: block;
     font-size: var(--ae-input-label-font-size, 0.875rem);
     font-weight: var(--ae-input-label-font-weight, 500);
-    color: var(--ae-input-label-color, #374151);
+    color: var(--ae-input-label-color);
     line-height: 1.25rem;
   }
 
   .required-indicator {
-    color: var(--ae-input-required-color, #ef4444);
+    color: var(--ae-input-required-color);
     margin-left: 0.125rem;
   }
 
@@ -42,32 +42,32 @@ export const inputStyles = css`
     padding: var(--ae-input-padding, 0.5rem 0.75rem);
     border: var(--ae-input-border, 1px solid #d1d5db);
     border-radius: var(--ae-input-border-radius, 0.375rem);
-    background: var(--ae-input-bg, white);
+    background: var(--ae-input-bg);
     transition: all 0.2s ease;
   }
 
   .input-wrapper:hover:not(.disabled) {
-    border-color: var(--ae-input-border-hover, #9ca3af);
+    border-color: var(--ae-input-border-hover);
   }
 
   .input-wrapper.focused {
-    outline: 2px solid var(--ae-input-focus-ring, #4f46e5);
+    outline: 2px solid var(--ae-input-focus-ring);
     outline-offset: 0;
-    border-color: var(--ae-input-border-focus, #4f46e5);
+    border-color: var(--ae-input-border-focus);
   }
 
   .input-wrapper.error {
-    border-color: var(--ae-input-border-error, #ef4444);
+    border-color: var(--ae-input-border-error);
   }
 
   .input-wrapper.error.focused {
-    outline-color: var(--ae-input-focus-ring-error, #ef4444);
-    border-color: var(--ae-input-border-error, #ef4444);
+    outline-color: var(--ae-input-focus-ring-error);
+    border-color: var(--ae-input-border-error);
   }
 
   .input-wrapper.disabled {
-    background: var(--ae-input-bg-disabled, #f3f4f6);
-    border-color: var(--ae-input-border-disabled, #e5e7eb);
+    background: var(--ae-input-bg-disabled);
+    border-color: var(--ae-input-border-disabled);
     cursor: not-allowed;
   }
 
@@ -77,17 +77,17 @@ export const inputStyles = css`
     outline: none;
     background: transparent;
     font-size: var(--ae-input-font-size, 1rem);
-    color: var(--ae-input-color, #111827);
+    color: var(--ae-input-color);
     line-height: 1.5;
     font-family: inherit;
   }
 
   .input-control::placeholder {
-    color: var(--ae-input-placeholder-color, #9ca3af);
+    color: var(--ae-input-placeholder-color);
   }
 
   .input-control:disabled {
-    color: var(--ae-input-color-disabled, #9ca3af);
+    color: var(--ae-input-color-disabled);
     cursor: not-allowed;
   }
 
@@ -118,7 +118,7 @@ export const inputStyles = css`
     padding: 0.25rem;
     border: none;
     background: transparent;
-    color: var(--ae-input-clear-button-color, #6b7280);
+    color: var(--ae-input-clear-button-color);
     cursor: pointer;
     border-radius: 0.25rem;
     transition: all 0.2s ease;
@@ -126,12 +126,12 @@ export const inputStyles = css`
   }
 
   .clear-button:hover {
-    color: var(--ae-input-clear-button-hover, #374151);
-    background: var(--ae-input-clear-button-bg-hover, #f3f4f6);
+    color: var(--ae-input-clear-button-hover);
+    background: var(--ae-input-clear-button-bg-hover);
   }
 
   .clear-button:focus-visible {
-    outline: 2px solid var(--ae-input-focus-ring, #4f46e5);
+    outline: 2px solid var(--ae-input-focus-ring);
     outline-offset: 0;
   }
 
@@ -140,18 +140,18 @@ export const inputStyles = css`
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;
-    color: var(--ae-input-affix-color, #6b7280);
+    color: var(--ae-input-affix-color);
   }
 
   .help-text {
     font-size: var(--ae-input-help-text-font-size, 0.875rem);
-    color: var(--ae-input-help-text-color, #6b7280);
+    color: var(--ae-input-help-text-color);
     line-height: 1.25rem;
   }
 
   .error-text {
     font-size: var(--ae-input-error-text-font-size, 0.875rem);
-    color: var(--ae-input-error-text-color, #ef4444);
+    color: var(--ae-input-error-text-color);
     line-height: 1.25rem;
   }
 `;

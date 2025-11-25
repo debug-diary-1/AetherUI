@@ -45,12 +45,12 @@ export const spinnerStyles = css`
   }
 
   .spinner-track {
-    stroke: var(--ae-spinner-track-color, #e5e7eb);
+    stroke: var(--ae-spinner-track-color);
     opacity: 0.25;
   }
 
   .spinner-indicator {
-    stroke: var(--ae-spinner-color, #4f46e5);
+    stroke: var(--ae-spinner-color);
     stroke-linecap: round;
     stroke-dasharray: 90, 150;
     stroke-dashoffset: 0;
@@ -59,27 +59,27 @@ export const spinnerStyles = css`
 
   /* Variant colors */
   :host([variant="primary"]) .spinner-indicator {
-    stroke: var(--ae-spinner-color-primary, #4f46e5);
+    stroke: var(--ae-spinner-color-primary);
   }
 
   :host([variant="secondary"]) .spinner-indicator {
-    stroke: var(--ae-spinner-color-secondary, #6b7280);
+    stroke: var(--ae-spinner-color-secondary);
   }
 
   :host([variant="success"]) .spinner-indicator {
-    stroke: var(--ae-spinner-color-success, #10b981);
+    stroke: var(--ae-spinner-color-success);
   }
 
   :host([variant="warning"]) .spinner-indicator {
-    stroke: var(--ae-spinner-color-warning, #f59e0b);
+    stroke: var(--ae-spinner-color-warning);
   }
 
   :host([variant="error"]) .spinner-indicator {
-    stroke: var(--ae-spinner-color-error, #ef4444);
+    stroke: var(--ae-spinner-color-error);
   }
 
   :host([variant="info"]) .spinner-indicator {
-    stroke: var(--ae-spinner-color-info, #3b82f6);
+    stroke: var(--ae-spinner-color-info);
   }
 
   /* Animations */

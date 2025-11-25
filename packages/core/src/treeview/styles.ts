@@ -31,16 +31,16 @@ export const treeviewStyles = css`
   }
 
   .tree-node:hover {
-    background-color: var(--ae-treeview-hover-bg, rgba(0, 0, 0, 0.05));
+    background-color: var(--ae-treeview-hover-bg);
   }
 
   .tree-node[aria-selected="true"] {
-    background-color: var(--ae-treeview-selected-bg, rgba(79, 70, 229, 0.1));
-    color: var(--ae-treeview-selected-color, #4f46e5);
+    background-color: var(--ae-treeview-selected-bg);
+    color: var(--ae-treeview-selected-color);
   }
 
   .tree-node:focus-visible {
-    outline: 2px solid var(--ae-treeview-focus-color, #4f46e5);
+    outline: 2px solid var(--ae-treeview-focus-color);
     outline-offset: -2px;
   }
 
@@ -59,7 +59,7 @@ export const treeviewStyles = css`
     height: 18px;
     margin-right: 4px;
     transition: transform 150ms ease;
-    color: var(--ae-treeview-caret-color, #6b7280);
+    color: var(--ae-treeview-caret-color);
   }
 
   .tree-caret[aria-expanded="true"] {
@@ -82,7 +82,7 @@ export const treeviewStyles = css`
     min-width: 18px;
     height: 18px;
     margin-right: 4px;
-    color: var(--ae-treeview-icon-color, #6b7280);
+    color: var(--ae-treeview-icon-color);
   }
 
   /* Checkbox styling */
@@ -94,21 +94,21 @@ export const treeviewStyles = css`
     min-width: 16px;
     height: 16px;
     margin-right: 6px;
-    border: 2px solid var(--ae-treeview-checkbox-border-color, #d1d5db);
+    border: 2px solid var(--ae-treeview-checkbox-border-color);
     border-radius: 3px;
     background-color: var(--ae-treeview-checkbox-bg, transparent);
   }
 
   .tree-checkbox[aria-checked="true"] {
-    background-color: var(--ae-treeview-checkbox-checked-bg, #4f46e5);
-    border-color: var(--ae-treeview-checkbox-checked-border-color, #4f46e5);
+    background-color: var(--ae-treeview-checkbox-checked-bg);
+    border-color: var(--ae-treeview-checkbox-checked-border-color);
   }
 
   .tree-checkbox[aria-checked="true"]::after {
     content: '';
     width: 8px;
     height: 8px;
-    background-color: var(--ae-treeview-checkbox-checked-icon-color, white);
+    background-color: var(--ae-treeview-checkbox-checked-icon-color);
     clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
   }
 
@@ -132,7 +132,7 @@ export const treeviewStyles = css`
   .tree-empty {
     padding: 16px;
     text-align: center;
-    color: var(--ae-treeview-empty-color, #6b7280);
+    color: var(--ae-treeview-empty-color);
     font-style: italic;
   }
 
@@ -140,7 +140,7 @@ export const treeviewStyles = css`
   .tree-loading {
     padding: 16px;
     text-align: center;
-    color: var(--ae-treeview-loading-color, #6b7280);
+    color: var(--ae-treeview-loading-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -150,7 +150,7 @@ export const treeviewStyles = css`
   .tree-spinner {
     width: 16px;
     height: 16px;
-    border: 2px solid var(--ae-treeview-spinner-color, #4f46e5);
+    border: 2px solid var(--ae-treeview-spinner-color);
     border-right-color: transparent;
     border-radius: 50%;
     animation: tree-spin 1s linear infinite;

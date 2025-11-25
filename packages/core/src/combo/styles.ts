@@ -12,10 +12,10 @@ export const comboStyles = css`
   input {
     width: 100%;
     padding: 0.65rem 0.85rem;
-    border: 1px solid var(--ae-combo-border, #d1d5db);
+    border: 1px solid var(--ae-combo-border);
     border-radius: var(--ae-combo-radius, 0.375rem);
-    background: var(--ae-combo-bg, #fff);
-    color: var(--ae-combo-fg, #111);
+    background: var(--ae-combo-bg);
+    color: var(--ae-combo-fg);
     font: inherit;
     transition: border-color var(--ae-combo-transition), 
                 box-shadow var(--ae-combo-transition),
@@ -23,19 +23,19 @@ export const comboStyles = css`
   }
 
   input:hover:not(:disabled) {
-    border-color: var(--ae-combo-border-hover, #bbc1cc);
+    border-color: var(--ae-combo-border-hover);
   }
 
   input:focus {
     outline: none;
-    border-color: var(--ae-focus-border, #5e7ce2);
+    border-color: var(--ae-focus-border);
     box-shadow: var(--ae-focus-shadow, 0 0 0 3px rgba(94, 124, 226, 0.2));
   }
 
   input[disabled] {
     opacity: 0.65;
     cursor: not-allowed;
-    background-color: var(--ae-color-base-50, #f9fafb);
+    background-color: var(--ae-color-base-50);
   }
 
   .caret {
@@ -50,13 +50,13 @@ export const comboStyles = css`
     align-items: center;
     justify-content: center;
     transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1);
-    color: var(--ae-combo-caret-color, #6b7280);
+    color: var(--ae-combo-caret-color);
     opacity: 0.8;
   }
 
   input:focus + .caret,
   .caret[data-expanded] {
-    color: var(--ae-focus-border, #5e7ce2);
+    color: var(--ae-focus-border);
     opacity: 1;
   }
 
@@ -70,8 +70,8 @@ export const comboStyles = css`
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: var(--ae-combo-bg, #fff);
-    border: 1px solid var(--ae-combo-border-hover, #bbc1cc);
+    background: var(--ae-combo-bg);
+    border: 1px solid var(--ae-combo-border-hover);
     border-radius: var(--ae-combo-radius, 0.375rem);
     box-shadow: var(--ae-combo-shadow, 
                  0 4px 6px -1px rgba(0, 0, 0, 0.1),
@@ -99,7 +99,7 @@ export const comboStyles = css`
 
   .empty-message {
     padding: 0.75rem 1rem;
-    color: var(--ae-color-text-muted, #6b7280);
+    color: var(--ae-color-text-muted);
     font-style: italic;
     text-align: center;
     font-size: 0.9em;
@@ -115,22 +115,22 @@ export const comboStyles = css`
   }
 
   .option:hover {
-    background: var(--ae-combo-option-hover-bg, #f3f4f6);
+    background: var(--ae-combo-option-hover-bg);
   }
 
   .option[data-highlighted] {
-    background: var(--ae-combo-option-hover-bg, #f3f4f6);
+    background: var(--ae-combo-option-hover-bg);
   }
 
   .option[data-selected] {
-    background: var(--ae-combo-option-selected-bg, #ebeffd);
-    color: var(--ae-combo-option-selected-fg, #3730a3);
+    background: var(--ae-combo-option-selected-bg);
+    color: var(--ae-combo-option-selected-fg);
     font-weight: 500;
   }
 
   .option[data-selected]:hover,
   .option[data-selected][data-highlighted] {
-    background: var(--ae-combo-option-selected-hover-bg, #dce1fb);
+    background: var(--ae-combo-option-selected-hover-bg);
   }
 
   .option[aria-disabled="true"] {
@@ -139,7 +139,7 @@ export const comboStyles = css`
   }
 
   .highlight {
-    background-color: var(--ae-combo-highlight-bg, rgba(94, 124, 226, 0.15));
+    background-color: var(--ae-combo-highlight-bg);
     font-weight: var(--ae-combo-highlight-weight, 600);
     border-radius: 2px;
     padding: 0 2px;

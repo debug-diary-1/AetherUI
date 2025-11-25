@@ -10,7 +10,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-[Documentation](https://pallavL01.github.io/AetherUI/) · [Storybook](https://pallavL01.github.io/AetherUI/storybook/) · [Examples](#examples) · [Contributing](CONTRIBUTING.md)
+[Documentation](https://pallavL01.github.io/AetherUI/) · [Storybook](https://pallavL01.github.io/AetherUI/storybook/) · [Kitchen Sink](#-kitchen-sink-showcase) · [Examples](#examples) · [Contributing](CONTRIBUTING.md)
 
 </div>
 
@@ -111,6 +111,34 @@ import { AeModal } from '@aetherui/core/modal';
 | **TreeView** | Hierarchical data display |
 | **Combo** | Combo box with filtering |
 | **Autocomplete** | Auto-completing input |
+
+## 🍽️ Kitchen Sink Showcase
+
+Want to see **all components in action** with custom styling? Check out our comprehensive Kitchen Sink showcase - a beautiful React app demonstrating every component with custom gradient themes!
+
+```bash
+# Run the showcase locally
+pnpm showcase
+
+# Or build it
+pnpm showcase:build
+```
+
+The showcase will be available at **`http://localhost:3000`**
+
+**What's included:**
+- 🎨 All 28+ components with custom styling
+- 🌈 Beautiful gradient UI proving headless architecture
+- 📱 Responsive design
+- 🔄 Live interactive demos with state management
+- 💻 React integration patterns
+- ⚡ TypeScript examples
+
+Perfect for:
+- Seeing what's possible with AetherUI's headless components
+- Learning React integration patterns
+- Understanding CSS custom property customization
+- Getting inspiration for your own designs
 
 ## 💡 Examples
 
@@ -248,6 +276,9 @@ pnpm build
 
 # Run Storybook
 pnpm storybook
+
+# Run Kitchen Sink showcase
+pnpm showcase
 ```
 
 ### Preview Deployments
@@ -269,7 +300,8 @@ AetherUI/
 │   ├── core/          # Core component library
 │   ├── tokens/        # Design tokens
 │   ├── docs/          # Documentation site
-│   └── storybook/     # Component showcase
+│   ├── storybook/     # Component showcase
+│   └── showcase/      # Kitchen Sink React app
 ├── .github/           # GitHub Actions workflows
 ├── CONTRIBUTING.md    # Contribution guidelines
 ├── CODE_OF_CONDUCT.md # Community guidelines
