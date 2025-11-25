@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state, query } from 'lit/decorators.js';
 import { TreeNode, renderTreeNode, renderEmptyState, renderLoadingState } from './node';
 import { TreeViewKeyboardController } from './keyboard';
 import { treeviewStyles } from './styles';
@@ -8,17 +8,23 @@ import { treeviewStyles } from './styles';
  * @element ae-treeview
  * @summary Hierarchical navigation component with expand/collapse and selection capabilities
  *
- * @property {TreeNode[]} data - Nodes to display in the tree view
+ * Supports two modes:
+ * 1. Slot-based: Use nested ae-tree-item elements (declarative HTML)
+ * 2. Data-driven: Pass TreeNode[] array via .data property (dynamic data)
+ *
+ * @slot - Default slot for ae-tree-item elements (slot-based mode)
+ *
+ * @property {TreeNode[]} data - Nodes to display in the tree view (data-driven mode)
  * @property {string[]} expanded - List of node IDs that should be expanded
  * @property {string[]} selected - List of node IDs that should be selected
- * @property {'single'|'multiple'} selectionMode - Whether to allow single or multiple selection
+ * @property {'single'|'multiple'|'none'} selectionMode - Selection behavior
  * @property {number} indentSize - Pixels to indent each depth level
  * @property {boolean} loading - Shows a loading state when true
  * @property {string} emptyMessage - Message to display when there are no items
- * 
+ *
  * @fires {CustomEvent<{selected: string[]}>} ae-treeview-select - Fired when selection changes
  * @fires {CustomEvent<{expanded: string[]}>} ae-treeview-expand - Fired when expansion state changes
- * 
+ *
  * @csspart node - Focusable row for each item
  * @csspart caret - Toggle icon wrapper
  * @csspart caret-spacer - Placeholder for caret on leaf nodes
@@ -28,7 +34,7 @@ import { treeviewStyles } from './styles';
  * @csspart empty - Empty state container
  * @csspart loading - Loading state container
  * @csspart spinner - Loading spinner
- * 
+ *
  * @cssproperty --ae-treeview-indent - Pixel indent per depth (default: 16px)
  * @cssproperty --ae-treeview-caret-size - Caret icon size (default: 12px)
  * @cssproperty --ae-treeview-row-hover-bg - Hover background color
@@ -37,18 +43,32 @@ import { treeviewStyles } from './styles';
  * @cssproperty --ae-treeview-caret-color - Caret icon color
  * @cssproperty --ae-treeview-caret-open - Expanded caret icon color
  * @cssproperty --ae-treeview-focus-color - Focus outline color
- * 
- * @example
+ *
+ * @example Slot-based (declarative HTML)
  * ```html
- * <ae-treeview 
- *   .data="${myTreeData}" 
+ * <ae-treeview>
+ *   <ae-tree-item label="Documents" expanded>
+ *     <ae-tree-item label="Work">
+ *       <ae-tree-item label="Project A.docx"></ae-tree-item>
+ *       <ae-tree-item label="Project B.pdf"></ae-tree-item>
+ *     </ae-tree-item>
+ *     <ae-tree-item label="Personal"></ae-tree-item>
+ *   </ae-tree-item>
+ *   <ae-tree-item label="Pictures"></ae-tree-item>
+ * </ae-treeview>
+ * ```
+ *
+ * @example Data-driven (dynamic data)
+ * ```html
+ * <ae-treeview
+ *   .data="${myTreeData}"
  *   .expanded="${['node1', 'node3']}"
  *   .selected="${['node2']}"
  *   selection-mode="multiple"
  *   @ae-treeview-select="${handleSelection}"
  * ></ae-treeview>
  * ```
- * 
+ *
  * @example TypeScript data structure
  * ```typescript
  * const treeData: TreeNode[] = [
@@ -66,7 +86,7 @@ import { treeviewStyles } from './styles';
 export class AeTreeView extends LitElement {
   static styles = treeviewStyles;
 
-  @property({ 
+  @property({
     type: Array,
     converter: {
       fromAttribute: (value: string | null) => {
@@ -88,7 +108,7 @@ export class AeTreeView extends LitElement {
   accessor selected: string[] = [];
 
   @property({ type: String, attribute: 'selection-mode' })
-  accessor selectionMode: 'single' | 'multiple' = 'single';
+  accessor selectionMode: 'single' | 'multiple' | 'none' = 'single';
 
   @property({ type: Number, attribute: 'indent-size' })
   accessor indentSize = 20;
@@ -99,12 +119,27 @@ export class AeTreeView extends LitElement {
   @property({ type: String, attribute: 'empty-message' })
   accessor emptyMessage = 'No items';
 
+  @query('slot:not([name])')
+  private defaultSlot!: HTMLSlotElement;
+
   @state()
   private keyboardController: TreeViewKeyboardController;
+
+  @state()
+  private isSlotMode = false;
 
   constructor() {
     super();
     this.keyboardController = new TreeViewKeyboardController(this);
+  }
+
+  private handleSlotChange() {
+    if (!this.defaultSlot) return;
+
+    const assignedElements = this.defaultSlot.assignedElements({ flatten: true });
+    this.isSlotMode = assignedElements.some(
+      el => el.tagName.toLowerCase() === 'ae-tree-item'
+    );
   }
 
   updated(changedProperties: Map<string, unknown>) {
@@ -178,8 +213,28 @@ export class AeTreeView extends LitElement {
       return renderLoadingState();
     }
 
+    // Slot-based mode: use slotted ae-tree-item elements
+    if (this.isSlotMode) {
+      return html`
+        <div
+          role="tree"
+          tabindex="0"
+          aria-multiselectable="${this.selectionMode === 'multiple'}"
+          class="tree-slot-mode"
+        >
+          <slot @slotchange="${this.handleSlotChange}"></slot>
+        </div>
+      `;
+    }
+
+    // Data-driven mode: render from data property
     if (!this.data.length) {
-      return renderEmptyState(this.emptyMessage);
+      return html`
+        <div role="tree" class="tree-data-mode">
+          <slot @slotchange="${this.handleSlotChange}"></slot>
+          ${renderEmptyState(this.emptyMessage)}
+        </div>
+      `;
     }
 
     return html`
@@ -188,8 +243,10 @@ export class AeTreeView extends LitElement {
         tabindex="0"
         aria-multiselectable="${this.selectionMode === 'multiple'}"
         style="--ae-treeview-indent: ${this.indentSize}px;"
+        class="tree-data-mode"
         @click="${this.handleNodeClick}"
       >
+        <slot @slotchange="${this.handleSlotChange}" style="display: none;"></slot>
         ${this.renderNodes(this.data)}
       </div>
     `;

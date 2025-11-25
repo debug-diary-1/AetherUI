@@ -57,12 +57,67 @@ function DataShowcase() {
       </div>
 
       <div className="showcase-section">
-        <h2 className="section-title">Tree View</h2>
+        <h2 className="section-title">Tree View - Slot-Based (Recommended)</h2>
+        <p style={{ marginBottom: '1rem', color: '#6b7280', fontSize: '0.875rem' }}>
+          Declarative HTML approach - perfect for static or template-based trees. Write natural, nested HTML that's framework-agnostic.
+        </p>
         <div className="component-demo">
-          <div className="demo-label">File System Explorer</div>
+          <div className="demo-label">Declarative HTML Tree</div>
+          <ae-treeview>
+            <ae-tree-item label="📁 Documents" expanded>
+              <ae-tree-item label="📁 Work" expanded>
+                <ae-tree-item label="📄 Project A.docx"></ae-tree-item>
+                <ae-tree-item label="📄 Project B.pdf"></ae-tree-item>
+                <ae-tree-item label="📝 Meeting Notes.txt"></ae-tree-item>
+              </ae-tree-item>
+              <ae-tree-item label="📁 Personal">
+                <ae-tree-item label="📄 Resume.pdf"></ae-tree-item>
+                <ae-tree-item label="🖼️ Vacation Photos"></ae-tree-item>
+              </ae-tree-item>
+            </ae-tree-item>
+            <ae-tree-item label="📁 Pictures">
+              <ae-tree-item label="🖼️ Vacation 2024"></ae-tree-item>
+              <ae-tree-item label="🖼️ Family Photos"></ae-tree-item>
+            </ae-tree-item>
+            <ae-tree-item label="📁 Videos"></ae-tree-item>
+          </ae-treeview>
+          <CodeExample
+            code={`<!-- Pure HTML - works anywhere! -->
+<ae-treeview>
+  <ae-tree-item label="📁 Documents" expanded>
+    <ae-tree-item label="📁 Work" expanded>
+      <ae-tree-item label="📄 Project A.docx"></ae-tree-item>
+      <ae-tree-item label="📄 Project B.pdf"></ae-tree-item>
+      <ae-tree-item label="📝 Meeting Notes.txt"></ae-tree-item>
+    </ae-tree-item>
+    <ae-tree-item label="📁 Personal">
+      <ae-tree-item label="📄 Resume.pdf"></ae-tree-item>
+      <ae-tree-item label="🖼️ Vacation Photos"></ae-tree-item>
+    </ae-tree-item>
+  </ae-tree-item>
+  <ae-tree-item label="📁 Pictures">
+    <ae-tree-item label="🖼️ Vacation 2024"></ae-tree-item>
+    <ae-tree-item label="🖼️ Family Photos"></ae-tree-item>
+  </ae-tree-item>
+  <ae-tree-item label="📁 Videos"></ae-tree-item>
+</ae-treeview>
+
+<!-- Works in React, Vue, Angular, or vanilla JS -->
+<!-- No framework-specific code needed! -->`}
+          />
+        </div>
+      </div>
+
+      <div className="showcase-section">
+        <h2 className="section-title">Tree View - Data-Driven</h2>
+        <p style={{ marginBottom: '1rem', color: '#6b7280', fontSize: '0.875rem' }}>
+          Property-based approach - ideal for dynamic data from APIs or state management.
+        </p>
+        <div className="component-demo">
+          <div className="demo-label">Dynamic Data Tree (API/State)</div>
           <ae-treeview ref={treeRef}></ae-treeview>
           <CodeExample
-            code={`// For React, use useRef and useEffect for complex data
+            code={`// For dynamic data (API, state, etc.)
 import { useEffect, useRef } from 'react';
 
 function MyComponent() {
@@ -98,12 +153,17 @@ function MyComponent() {
     if (treeRef.current) {
       // Set data and expanded nodes via property assignment
       treeRef.current.data = treeData;
-      treeRef.current.expanded = ['root', 'docs'];
+      treeRef.current.expanded = ['root', 'docs', 'work'];
     }
   }, []);
 
   return <ae-treeview ref={treeRef}></ae-treeview>;
-}`}
+}
+
+// Or in vanilla JS:
+const tree = document.querySelector('ae-treeview');
+tree.data = treeData;
+tree.expanded = ['root', 'docs'];`}
           />
         </div>
       </div>
