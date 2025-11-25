@@ -289,9 +289,14 @@ ae-modal {
 ae-tabs {
   --ae-tabs-border-color: #e5e7eb;
   --ae-tabs-active-color: #111827;
+  --ae-tabs-inactive-color: #6b7280;
   --ae-tabs-active-border: 2px solid #111827;
   --ae-tabs-font-size: 0.875rem;
+  --ae-tabs-font-weight: 500;
+  --ae-tabs-padding: 0.75rem 1rem;
+  --ae-tabs-border-bottom: 1px solid #e5e7eb;
   display: block;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 ae-tab {
@@ -303,6 +308,11 @@ ae-tab {
   font-size: 0.875rem;
   font-weight: 500;
   transition: all 0.15s;
+  margin-bottom: -1px;
+}
+
+ae-tab:hover {
+  color: #111827;
 }
 
 ae-tab[active] {
@@ -346,6 +356,11 @@ ae-tooltip {
 ae-accordion {
   --ae-accordion-border: 1px solid #e5e7eb;
   --ae-accordion-border-radius: 0.5rem;
+  --ae-accordion-header-font-size: 0.9375rem;
+  --ae-accordion-header-font-weight: 600;
+  --ae-accordion-header-color: #111827;
+  --ae-accordion-header-padding: 1rem 1.25rem;
+  --ae-accordion-content-padding: 0 1.25rem 1rem;
   display: block;
 }
 
