@@ -18,12 +18,12 @@ export const textareaStyles = css`
     display: block;
     font-size: var(--ae-textarea-label-font-size, 0.875rem);
     font-weight: var(--ae-textarea-label-font-weight, 500);
-    color: var(--ae-textarea-label-color, #374151);
+    color: var(--ae-textarea-label-color);
     line-height: 1.25rem;
   }
 
   .required-indicator {
-    color: var(--ae-textarea-required-color, #ef4444);
+    color: var(--ae-textarea-required-color);
     margin-left: 0.125rem;
   }
 
@@ -31,32 +31,32 @@ export const textareaStyles = css`
     display: flex;
     border: var(--ae-textarea-border, 1px solid #d1d5db);
     border-radius: var(--ae-textarea-border-radius, 0.375rem);
-    background: var(--ae-textarea-bg, white);
+    background: var(--ae-textarea-bg);
     transition: all 0.2s ease;
   }
 
   .textarea-wrapper:hover:not(.disabled) {
-    border-color: var(--ae-textarea-border-hover, #9ca3af);
+    border-color: var(--ae-textarea-border-hover);
   }
 
   .textarea-wrapper.focused {
-    outline: 2px solid var(--ae-textarea-focus-ring, #4f46e5);
+    outline: 2px solid var(--ae-textarea-focus-ring);
     outline-offset: 0;
-    border-color: var(--ae-textarea-border-focus, #4f46e5);
+    border-color: var(--ae-textarea-border-focus);
   }
 
   .textarea-wrapper.error {
-    border-color: var(--ae-textarea-border-error, #ef4444);
+    border-color: var(--ae-textarea-border-error);
   }
 
   .textarea-wrapper.error.focused {
-    outline-color: var(--ae-textarea-focus-ring-error, #ef4444);
-    border-color: var(--ae-textarea-border-error, #ef4444);
+    outline-color: var(--ae-textarea-focus-ring-error);
+    border-color: var(--ae-textarea-border-error);
   }
 
   .textarea-wrapper.disabled {
-    background: var(--ae-textarea-bg-disabled, #f3f4f6);
-    border-color: var(--ae-textarea-border-disabled, #e5e7eb);
+    background: var(--ae-textarea-bg-disabled);
+    border-color: var(--ae-textarea-border-disabled);
     cursor: not-allowed;
   }
 
@@ -68,17 +68,17 @@ export const textareaStyles = css`
     outline: none;
     background: transparent;
     font-size: var(--ae-textarea-font-size, 1rem);
-    color: var(--ae-textarea-color, #111827);
+    color: var(--ae-textarea-color);
     line-height: 1.5;
     font-family: inherit;
   }
 
   .textarea-control::placeholder {
-    color: var(--ae-textarea-placeholder-color, #9ca3af);
+    color: var(--ae-textarea-placeholder-color);
   }
 
   .textarea-control:disabled {
-    color: var(--ae-textarea-color-disabled, #9ca3af);
+    color: var(--ae-textarea-color-disabled);
     cursor: not-allowed;
   }
 
@@ -117,20 +117,20 @@ export const textareaStyles = css`
   .help-text {
     flex: 1;
     font-size: var(--ae-textarea-help-text-font-size, 0.875rem);
-    color: var(--ae-textarea-help-text-color, #6b7280);
+    color: var(--ae-textarea-help-text-color);
     line-height: 1.25rem;
   }
 
   .char-count {
     font-size: var(--ae-textarea-char-count-font-size, 0.875rem);
-    color: var(--ae-textarea-char-count-color, #6b7280);
+    color: var(--ae-textarea-char-count-color);
     line-height: 1.25rem;
     white-space: nowrap;
   }
 
   .error-text {
     font-size: var(--ae-textarea-error-text-font-size, 0.875rem);
-    color: var(--ae-textarea-error-text-color, #ef4444);
+    color: var(--ae-textarea-error-text-color);
     line-height: 1.25rem;
   }
 `;
