@@ -50,9 +50,11 @@ const components = navigationSections.flatMap(section => section.items);
 interface NavigationProps {
   isOpen: boolean;
   onToggle: () => void;
+  theme: 'light' | 'dark';
+  onThemeToggle: () => void;
 }
 
-function Navigation({ isOpen, onToggle }: NavigationProps) {
+function Navigation({ isOpen, onToggle, theme, onThemeToggle }: NavigationProps) {
   const location = useLocation();
 
   return (
@@ -64,19 +66,35 @@ function Navigation({ isOpen, onToggle }: NavigationProps) {
         <div className="sidebar-header">
           {isOpen && (
             <>
-              <h1>AetherUI</h1>
-              <p className="subtitle">Kitchen Sink</p>
+              <div>
+                <h1>AetherUI</h1>
+                <p className="subtitle">Kitchen Sink</p>
+              </div>
+              <div className="header-actions">
+                <button className="theme-toggle" onClick={onThemeToggle} aria-label="Toggle theme">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    {theme === 'light' ? (
+                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    ) : (
+                      <circle cx="12" cy="12" r="5" />
+                    )}
+                  </svg>
+                </button>
+                <button className="collapse-btn" onClick={onToggle} aria-label="Toggle sidebar">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                </button>
+              </div>
             </>
           )}
-          <button className="collapse-btn" onClick={onToggle} aria-label="Toggle sidebar">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              {isOpen ? (
-                <path d="M15 18l-6-6 6-6" />
-              ) : (
+          {!isOpen && (
+            <button className="collapse-btn" onClick={onToggle} aria-label="Toggle sidebar">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M9 18l6-6-6-6" />
-              )}
-            </svg>
-          </button>
+              </svg>
+            </button>
+          )}
         </div>
 
         <div className="nav-sections">
@@ -109,9 +127,27 @@ function App() {
     return true;
   });
 
+  // Initialize theme from localStorage or default to light
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('theme');
+      return (saved as 'light' | 'dark') || 'light';
+    }
+    return 'light';
+  });
+
+  // Save theme to localStorage when it changes
+  const handleThemeToggle = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', newTheme);
+    }
+  };
+
   return (
     <Router basename="/showcase">
-      <div className={`app ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed-app'}`}>
+      <div className={`app ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed-app'} theme-${theme}`}>
         {/* Mobile menu toggle */}
         <button
           className="mobile-menu-toggle"
@@ -123,7 +159,12 @@ function App() {
           </svg>
         </button>
 
-        <Navigation isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
+        <Navigation
+          isOpen={sidebarOpen}
+          onToggle={() => setSidebarOpen(!sidebarOpen)}
+          theme={theme}
+          onThemeToggle={handleThemeToggle}
+        />
 
         <main className={`content ${!sidebarOpen ? 'sidebar-collapsed' : ''}`}>
           <Routes>
