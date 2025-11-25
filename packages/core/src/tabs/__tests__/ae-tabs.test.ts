@@ -253,11 +253,12 @@ describe('ae-tabs', () => {
       await el.updateComplete;
 
       const tab = el.querySelector('ae-tab') as AeTab;
-      const styles = tab.shadowRoot?.querySelector('style');
+      // Access static styles directly - Lit uses constructible stylesheets, not <style> elements
+      const stylesText = (tab.constructor as typeof AeTab).styles?.toString() || '';
 
       // Check that styles contain the CSS variable, not hardcoded colors
-      expect(styles?.textContent).to.include('--ae-tabs-active-color');
-      expect(styles?.textContent).to.not.include('#4f46e5'); // Old hardcoded value
+      expect(stylesText).to.include('--ae-tabs-active-color');
+      expect(stylesText).to.not.include('#4f46e5'); // Old hardcoded value
     });
 
     it('uses CSS variables for inactive tab color', async () => {
@@ -273,10 +274,11 @@ describe('ae-tabs', () => {
       await el.updateComplete;
 
       const tab = el.querySelector('ae-tab') as AeTab;
-      const styles = tab.shadowRoot?.querySelector('style');
+      // Access static styles directly - Lit uses constructible stylesheets, not <style> elements
+      const stylesText = (tab.constructor as typeof AeTab).styles?.toString() || '';
 
       // Check for inactive color variable
-      expect(styles?.textContent).to.include('--ae-tabs-inactive-color');
+      expect(stylesText).to.include('--ae-tabs-inactive-color');
     });
 
     it('uses CSS variables for border color', async () => {
@@ -289,11 +291,12 @@ describe('ae-tabs', () => {
 
       await el.updateComplete;
 
-      const styles = el.shadowRoot?.querySelector('style');
+      // Access static styles directly - Lit uses constructible stylesheets, not <style> elements
+      const stylesText = (el.constructor as typeof AeTabs).styles?.toString() || '';
 
       // Check that styles use the border color variable
-      expect(styles?.textContent).to.include('--ae-tabs-border-color');
-      expect(styles?.textContent).to.not.include('#e5e7eb'); // Old hardcoded value
+      expect(stylesText).to.include('--ae-tabs-border-color');
+      expect(stylesText).to.not.include('#e5e7eb'); // Old hardcoded value
     });
 
     it('uses CSS variables for hover background', async () => {
@@ -307,11 +310,12 @@ describe('ae-tabs', () => {
       await el.updateComplete;
 
       const tab = el.querySelector('ae-tab') as AeTab;
-      const styles = tab.shadowRoot?.querySelector('style');
+      // Access static styles directly - Lit uses constructible stylesheets, not <style> elements
+      const stylesText = (tab.constructor as typeof AeTab).styles?.toString() || '';
 
       // Check for hover background variable
-      expect(styles?.textContent).to.include('--ae-tabs-hover-bg');
-      expect(styles?.textContent).to.not.include('rgba(0, 0, 0, 0.04)'); // Old hardcoded value
+      expect(stylesText).to.include('--ae-tabs-hover-bg');
+      expect(stylesText).to.not.include('rgba(0, 0, 0, 0.04)'); // Old hardcoded value
     });
 
     it('does not have hardcoded color fallbacks in active state', async () => {
