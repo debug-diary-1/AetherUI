@@ -24,18 +24,24 @@ export class AeTab extends LitElement {
       background: transparent;
       border: none;
       font: inherit;
-      color: var(--ae-tabs-color, inherit);
+      color: var(--ae-tabs-inactive-color, inherit);
       cursor: pointer;
-      transition: color 0.2s ease;
+      transition: color 0.2s ease, background-color 0.2s ease;
     }
-    
+
     button:hover {
-      background-color: var(--ae-tabs-hover-bg, rgba(0, 0, 0, 0.04));
+      background-color: var(--ae-tabs-hover-bg, transparent);
     }
-    
+
     :host([aria-selected="true"]) button {
-      color: var(--ae-tabs-active-color, #4f46e5);
+      color: var(--ae-tabs-active-color);
       font-weight: var(--ae-tabs-selected-weight, 500);
+      background-color: transparent;
+    }
+
+    /* Remove hover background from selected tabs */
+    :host([aria-selected="true"]) button:hover {
+      background-color: transparent;
     }
     
     /* The indicator for selected tab - horizontal (default) */
@@ -61,11 +67,11 @@ export class AeTab extends LitElement {
     
     /* Indicator color when selected */
     :host([aria-selected="true"]) .indicator {
-      background-color: var(--ae-tabs-active-color, #4f46e5);
+      background-color: var(--ae-tabs-active-color);
     }
-    
+
     button:focus-visible {
-      outline: 2px solid var(--ae-tabs-focus-color, #4f46e5);
+      outline: 2px solid var(--ae-tabs-active-color);
       outline-offset: -2px;
     }
   `;

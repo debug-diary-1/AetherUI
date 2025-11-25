@@ -18,12 +18,12 @@ export const selectStyles = css`
     display: block;
     font-size: var(--ae-select-label-font-size, 0.875rem);
     font-weight: var(--ae-select-label-font-weight, 500);
-    color: var(--ae-select-label-color, #374151);
+    color: var(--ae-select-label-color);
     line-height: 1.25rem;
   }
 
   .required-indicator {
-    color: var(--ae-select-required-color, #ef4444);
+    color: var(--ae-select-required-color);
     margin-left: 0.125rem;
   }
 
@@ -33,32 +33,32 @@ export const selectStyles = css`
     align-items: center;
     border: var(--ae-select-border, 1px solid #d1d5db);
     border-radius: var(--ae-select-border-radius, 0.375rem);
-    background: var(--ae-select-bg, white);
+    background: var(--ae-select-bg);
     transition: all 0.2s ease;
   }
 
   .select-wrapper:hover:not(.disabled) {
-    border-color: var(--ae-select-border-hover, #9ca3af);
+    border-color: var(--ae-select-border-hover);
   }
 
   .select-wrapper.focused {
-    outline: 2px solid var(--ae-select-focus-ring, #4f46e5);
+    outline: 2px solid var(--ae-select-focus-ring);
     outline-offset: 0;
-    border-color: var(--ae-select-border-focus, #4f46e5);
+    border-color: var(--ae-select-border-focus);
   }
 
   .select-wrapper.error {
-    border-color: var(--ae-select-border-error, #ef4444);
+    border-color: var(--ae-select-border-error);
   }
 
   .select-wrapper.error.focused {
-    outline-color: var(--ae-select-focus-ring-error, #ef4444);
-    border-color: var(--ae-select-border-error, #ef4444);
+    outline-color: var(--ae-select-focus-ring-error);
+    border-color: var(--ae-select-border-error);
   }
 
   .select-wrapper.disabled {
-    background: var(--ae-select-bg-disabled, #f3f4f6);
-    border-color: var(--ae-select-border-disabled, #e5e7eb);
+    background: var(--ae-select-bg-disabled);
+    border-color: var(--ae-select-border-disabled);
     cursor: not-allowed;
   }
 
@@ -70,7 +70,7 @@ export const selectStyles = css`
     outline: none;
     background: transparent;
     font-size: var(--ae-select-font-size, 1rem);
-    color: var(--ae-select-color, #111827);
+    color: var(--ae-select-color);
     line-height: 1.5;
     font-family: inherit;
     cursor: pointer;
@@ -78,7 +78,7 @@ export const selectStyles = css`
   }
 
   .select-control:disabled {
-    color: var(--ae-select-color-disabled, #9ca3af);
+    color: var(--ae-select-color-disabled);
     cursor: not-allowed;
   }
 
@@ -95,22 +95,22 @@ export const selectStyles = css`
     position: absolute;
     right: 0.75rem;
     pointer-events: none;
-    color: var(--ae-select-icon-color, #6b7280);
+    color: var(--ae-select-icon-color);
   }
 
   .disabled .select-icon {
-    color: var(--ae-select-icon-color-disabled, #9ca3af);
+    color: var(--ae-select-icon-color-disabled);
   }
 
   .help-text {
     font-size: var(--ae-select-help-text-font-size, 0.875rem);
-    color: var(--ae-select-help-text-color, #6b7280);
+    color: var(--ae-select-help-text-color);
     line-height: 1.25rem;
   }
 
   .error-text {
     font-size: var(--ae-select-error-text-font-size, 0.875rem);
-    color: var(--ae-select-error-text-color, #ef4444);
+    color: var(--ae-select-error-text-color);
     line-height: 1.25rem;
   }
 `;

@@ -217,6 +217,7 @@
   --ae-toast-fg-warning: var(--ae-alert-fg-warning);
   --ae-toast-bg-error: var(--ae-alert-bg-error);
   --ae-toast-fg-error: var(--ae-alert-fg-error);
+  --ae-toast-close-hover-bg: rgba(255, 255, 255, 0.1);
 
   /* ===== Tabs Component ===== */
 
@@ -271,4 +272,229 @@
   --ae-combo-item-selected-bg: #1e3a5f;
   --ae-combo-item-selected-color: var(--ae-color-primary);
   --ae-combo-item-active-bg: #1e40af;
+
+  /* Variables used by ae-combo component styles */
+  --ae-combo-bg: #1f2937;
+  --ae-combo-fg: #f9fafb;
+  --ae-combo-border: 1px solid #4b5563;
+  --ae-combo-border-hover: 1px solid #6b7280;
+  --ae-combo-radius: 0.375rem;
+  --ae-combo-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --ae-combo-caret-color: #9ca3af;
+  --ae-combo-option-hover-bg: #374151;
+  --ae-combo-option-selected-bg: #1e3a5f;
+  --ae-combo-option-selected-fg: #a5b4fc;
+  --ae-combo-option-selected-hover-bg: #2d4a7c;
+  --ae-combo-highlight-bg: #92400e;
+  --ae-combo-highlight-weight: 600;
+
+  /* ===== Switch Component ===== */
+
+  --ae-switch-bg: #4b5563;
+  --ae-switch-bg-checked: #818cf8;
+  --ae-switch-bg-disabled: #374151;
+  --ae-switch-bg-checked-disabled: #6b7280;
+  --ae-switch-thumb-bg: #1f2937;
+  --ae-switch-focus-ring: #818cf8;
+  --ae-switch-text-disabled: #6b7280;
+  --ae-switch-gap: 0.5rem;
+  --ae-switch-border-radius: 9999px;
+  --ae-switch-width-sm: 32px;
+  --ae-switch-height-sm: 18px;
+  --ae-switch-width-md: 44px;
+  --ae-switch-height-md: 24px;
+  --ae-switch-width-lg: 56px;
+  --ae-switch-height-lg: 30px;
+  --ae-switch-text-color: inherit;
+  --ae-switch-font-size: inherit;
+
+  /* ===== Input, Select, Textarea Components ===== */
+
+  --ae-input-bg: #1f2937;
+  --ae-input-border: 1px solid #4b5563;
+  --ae-input-border-radius: 0.375rem;
+  --ae-input-color: #f9fafb;
+  --ae-input-placeholder-color: #6b7280;
+  --ae-input-padding: 0.5rem 0.75rem;
+  --ae-input-focus-border: #818cf8;
+  --ae-input-focus-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+  --ae-input-disabled-bg: #374151;
+  --ae-input-disabled-color: #6b7280;
+  --ae-input-disabled-border: #4b5563;
+  --ae-input-error-border: #f87171;
+  --ae-input-error-color: #f87171;
+  --ae-input-required-color: #f87171;
+  --ae-input-font-size: 0.875rem;
+
+  /* Select-specific variables */
+  --ae-select-bg: #1f2937;
+  --ae-select-border: 1px solid #4b5563;
+  --ae-select-border-radius: 0.375rem;
+  --ae-select-color: #f9fafb;
+  --ae-select-padding: 0.5rem 2.5rem 0.5rem 0.75rem;
+  --ae-select-font-size: 0.875rem;
+  --ae-select-line-height: 1.5;
+  --ae-select-bg-disabled: #111827;
+  --ae-select-border-disabled: #374151;
+  --ae-select-color-disabled: #6b7280;
+  --ae-select-focus-border: #818cf8;
+  --ae-select-focus-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+  --ae-select-error-border: #f87171;
+  --ae-select-error-color: #f87171;
+  --ae-select-icon-color: #9ca3af;
+  --ae-select-icon-size: 20px;
+  --ae-select-label-color: #e5e7eb;
+  --ae-select-label-font-size: 0.875rem;
+  --ae-select-label-font-weight: 500;
+  --ae-select-label-margin-bottom: 0.5rem;
+  --ae-select-required-color: #f87171;
+  --ae-select-option-bg: #1f2937;
+  --ae-select-option-color: #f9fafb;
+  --ae-select-option-padding: 0.5rem 0.75rem;
+  --ae-select-option-bg-hover: #374151;
+  --ae-select-option-bg-selected: #312e81;
+  --ae-select-option-color-selected: #a5b4fc;
+  --ae-select-help-text-color: #9ca3af;
+  --ae-select-help-text-font-size: 0.75rem;
+  --ae-select-help-text-margin-top: 0.25rem;
+
+  /* ===== Badge Component ===== */
+
+  --ae-badge-padding: 0.125rem 0.5rem;
+  --ae-badge-font-size: 0.75rem;
+  --ae-badge-font-weight: 500;
+  --ae-badge-border-radius: 0.25rem;
+  --ae-badge-bg-primary: #6366f1;
+  --ae-badge-color-primary: white;
+  --ae-badge-bg-secondary: #6b7280;
+  --ae-badge-color-secondary: white;
+  --ae-badge-bg-success: #10b981;
+  --ae-badge-color-success: white;
+  --ae-badge-bg-danger: #ef4444;
+  --ae-badge-color-danger: white;
+  --ae-badge-bg-error: #ef4444;  /* Alias for danger */
+  --ae-badge-color-error: white;
+  --ae-badge-bg-warning: #f59e0b;
+  --ae-badge-color-warning: white;
+  --ae-badge-bg-info: #3b82f6;
+  --ae-badge-color-info: white;
+
+  /* Badge outline variants */
+  --ae-badge-color-primary-outline: #a5b4fc;
+  --ae-badge-border-primary-outline: #a5b4fc;
+  --ae-badge-color-secondary-outline: #9ca3af;
+  --ae-badge-border-secondary-outline: #9ca3af;
+  --ae-badge-color-success-outline: #34d399;
+  --ae-badge-border-success-outline: #34d399;
+  --ae-badge-color-error-outline: #f87171;
+  --ae-badge-border-error-outline: #f87171;
+  --ae-badge-color-warning-outline: #fbbf24;
+  --ae-badge-border-warning-outline: #fbbf24;
+  --ae-badge-color-info-outline: #60a5fa;
+  --ae-badge-border-info-outline: #60a5fa;
+
+  /* ===== Breadcrumb Component ===== */
+
+  --ae-breadcrumb-gap: 0.5rem;
+  --ae-breadcrumb-separator-color: #6b7280;
+  --ae-breadcrumb-link-color: var(--ae-color-primary);
+  --ae-breadcrumb-link-hover-color: #a5b4fc;
+  --ae-breadcrumb-current-color: #9ca3af;
+  --ae-breadcrumb-font-size: 0.875rem;
+
+  /* ===== Spinner Component ===== */
+
+  --ae-spinner-color: var(--ae-color-primary);
+  --ae-spinner-size-sm: 1rem;
+  --ae-spinner-size-md: 1.5rem;
+  --ae-spinner-size-lg: 2rem;
+  --ae-spinner-border-width: 2px;
+
+  /* Spinner variant colors */
+  --ae-spinner-color-primary: #818cf8;
+  --ae-spinner-color-secondary: #9ca3af;
+  --ae-spinner-color-success: #34d399;
+  --ae-spinner-color-error: #f87171;
+  --ae-spinner-color-warning: #fbbf24;
+  --ae-spinner-color-info: #60a5fa;
+
+  /* ===== Progress Component ===== */
+
+  --ae-progress-bg: #374151;
+  --ae-progress-bar-bg: var(--ae-color-primary);
+  --ae-progress-height: 0.5rem;
+  --ae-progress-border-radius: 9999px;
+  --ae-progress-transition: width 0.3s ease;
+
+  /* Progress variant colors */
+  --ae-progress-bg-primary: #818cf8;
+  --ae-progress-bg-secondary: #9ca3af;
+  --ae-progress-bg-success: #34d399;
+  --ae-progress-bg-error: #f87171;
+  --ae-progress-bg-warning: #fbbf24;
+  --ae-progress-bg-info: #60a5fa;
+
+  /* ===== Pagination Component ===== */
+
+  --ae-pagination-gap: 0.25rem;
+  --ae-pagination-item-padding: 0.5rem 0.75rem;
+  --ae-pagination-item-bg: #1f2937;
+  --ae-pagination-item-border: 1px solid #4b5563;
+  --ae-pagination-item-color: #d1d5db;
+  --ae-pagination-item-hover-bg: #374151;
+  --ae-pagination-item-active-bg: var(--ae-color-primary);
+  --ae-pagination-item-active-color: white;
+  --ae-pagination-item-active-border: var(--ae-color-primary);
+  --ae-pagination-item-disabled-color: #6b7280;
+  --ae-pagination-item-disabled-bg: #374151;
+  --ae-pagination-border-radius: 0.375rem;
+
+  /* ===== Menu Component ===== */
+
+  --ae-menu-bg: #1f2937;
+  --ae-menu-border: 1px solid #374151;
+  --ae-menu-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --ae-menu-border-radius: 0.375rem;
+  --ae-menu-padding: 0.25rem;
+  --ae-menu-item-padding: 0.5rem 0.75rem;
+  --ae-menu-item-color: #d1d5db;
+  --ae-menu-item-hover-bg: #374151;
+  --ae-menu-item-active-bg: #1e3a5f;
+  --ae-menu-item-active-color: var(--ae-color-primary);
+  --ae-menu-item-disabled-color: #6b7280;
+  --ae-menu-divider-color: #374151;
+
+  /* ===== Drawer Component ===== */
+
+  --ae-drawer-bg: #1f2937;
+  --ae-drawer-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  --ae-drawer-backdrop-bg: rgba(0, 0, 0, 0.7);
+  --ae-drawer-header-padding: 1rem 1.5rem;
+  --ae-drawer-header-border: 1px solid #374151;
+  --ae-drawer-header-color: #f9fafb;
+  --ae-drawer-header-font-size: 1.25rem;
+  --ae-drawer-header-font-weight: 600;
+  --ae-drawer-body-padding: 1.5rem;
+  --ae-drawer-footer-padding: 1rem 1.5rem;
+  --ae-drawer-footer-border: 1px solid #374151;
+  --ae-drawer-close-color: #9ca3af;
+  --ae-drawer-close-hover-color: #f9fafb;
+  --ae-drawer-close-bg-hover: rgba(255, 255, 255, 0.1);
+  --ae-drawer-focus-ring: #818cf8;
+  --ae-drawer-width-sm: 300px;
+  --ae-drawer-width-md: 400px;
+  --ae-drawer-width-lg: 600px;
+  --ae-drawer-height-sm: 200px;
+  --ae-drawer-height-md: 300px;
+  --ae-drawer-height-lg: 500px;
+
+  /* ===== Popover Component ===== */
+
+  --ae-popover-bg: #1f2937;
+  --ae-popover-border: 1px solid #374151;
+  --ae-popover-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --ae-popover-border-radius: 0.375rem;
+  --ae-popover-padding: 0.75rem 1rem;
+  --ae-popover-max-width: 300px;
+  --ae-popover-arrow-size: 8px;
 }

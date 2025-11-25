@@ -31,8 +31,8 @@ export const paginationStyles = css`
     align-items: center;
     justify-content: center;
     border: var(--ae-pagination-border, 1px solid #d1d5db);
-    background: var(--ae-pagination-bg, white);
-    color: var(--ae-pagination-color, #374151);
+    background: var(--ae-pagination-bg);
+    color: var(--ae-pagination-color);
     font-size: var(--ae-pagination-font-size, 0.875rem);
     font-weight: var(--ae-pagination-font-weight, 500);
     line-height: 1;
@@ -64,19 +64,19 @@ export const paginationStyles = css`
   }
 
   .pagination-button:hover:not(:disabled):not(.active) {
-    background: var(--ae-pagination-bg-hover, #f3f4f6);
-    border-color: var(--ae-pagination-border-hover, #9ca3af);
+    background: var(--ae-pagination-bg-hover);
+    border-color: var(--ae-pagination-border-hover);
   }
 
   .pagination-button:focus-visible {
-    outline: 2px solid var(--ae-pagination-focus-ring, #4f46e5);
+    outline: 2px solid var(--ae-pagination-focus-ring);
     outline-offset: 0;
   }
 
   .pagination-button.active {
-    background: var(--ae-pagination-bg-active, #4f46e5);
-    color: var(--ae-pagination-color-active, white);
-    border-color: var(--ae-pagination-border-active, #4f46e5);
+    background: var(--ae-pagination-bg-active);
+    color: var(--ae-pagination-color-active);
+    border-color: var(--ae-pagination-border-active);
   }
 
   .pagination-button:disabled {
@@ -90,7 +90,7 @@ export const paginationStyles = css`
     justify-content: center;
     min-width: var(--ae-pagination-button-size-md, 40px);
     height: var(--ae-pagination-button-size-md, 40px);
-    color: var(--ae-pagination-ellipsis-color, #9ca3af);
+    color: var(--ae-pagination-ellipsis-color);
     font-weight: 500;
   }
 

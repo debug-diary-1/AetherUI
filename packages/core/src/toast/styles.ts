@@ -6,16 +6,8 @@ import { css } from 'lit';
 export const toastStyles = css`
   :host {
     display: block;
-    --ae-toast-bg-info: #e8f4fd;
-    --ae-toast-bg-success: #edf7ed;
-    --ae-toast-bg-warning: #fff8e1;
-    --ae-toast-bg-error: #fdecea;
-    --ae-toast-fg-info: #055160;
-    --ae-toast-fg-success: #065f46;
-    --ae-toast-fg-warning: #7a4d00;
-    --ae-toast-fg-error: #b71c1c;
     --ae-toast-radius: var(--ae-border-radius-lg, 0.5rem);
-    --ae-toast-shadow: var(--ae-elevation-4, 0 6px 20px rgba(0,0,0,.12));
+    --ae-toast-shadow: var(--ae-elevation-4);
     --ae-toast-progress-height: 3px;
     --ae-toast-z-index: 1100;
     box-sizing: border-box;
@@ -143,11 +135,11 @@ export const toastStyles = css`
 
   [part="close"]:hover {
     opacity: 1;
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--ae-toast-close-hover-bg);
   }
 
   [part="close"]:focus-visible {
-    outline: 2px solid var(--ae-focus-ring-color, rgba(0, 0, 0, 0.2));
+    outline: 2px solid var(--ae-focus-ring-color);
     outline-offset: 2px;
   }
 

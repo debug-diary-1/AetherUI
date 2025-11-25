@@ -1,11 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm -w run build-storybook",
+  "buildCommand": "pnpm -w run build-preview",
   "devCommand": "pnpm storybook",
   "installCommand": "pnpm install --frozen-lockfile",
   "framework": null,
-  "outputDirectory": "storybook-static",
-  "ignoreCommand": "bash -c 'if [[ \"$VERCEL_GIT_COMMIT_REF\" == \"main\" ]] ; then exit 1; else git diff HEAD^ HEAD --quiet packages/core packages/storybook vercel.json turbo.json package.json pnpm-lock.yaml; fi'",
+  "outputDirectory": "preview-build",
+  "ignoreCommand": "bash -c 'if [[ \"$VERCEL_GIT_COMMIT_REF\" == \"main\" ]] ; then exit 1; else git diff HEAD^ HEAD --quiet packages/core packages/storybook packages/showcase vercel.json turbo.json package.json pnpm-lock.yaml; fi'",
   "github": {
     "enabled": true,
     "autoAlias": true,

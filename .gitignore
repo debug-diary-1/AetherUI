@@ -68,6 +68,9 @@ coverage
 # Storybook
 storybook-static/
 **/storybook-static/
+
+# Preview builds
+preview-build/
 **/.claude/settings.local.json
 claude.md
 

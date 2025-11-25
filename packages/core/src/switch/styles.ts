@@ -29,7 +29,7 @@ export const switchStyles = css`
     align-items: center;
     flex-shrink: 0;
     border-radius: var(--ae-switch-border-radius, 9999px);
-    background: var(--ae-switch-bg, #d1d5db);
+    background: var(--ae-switch-bg);
     transition: background-color 0.2s ease;
   }
 
@@ -81,35 +81,35 @@ export const switchStyles = css`
 
   .switch-thumb {
     border-radius: 50%;
-    background: var(--ae-switch-thumb-bg, white);
+    background: var(--ae-switch-thumb-bg);
     transition: transform 0.2s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   /* Checked state */
   .switch-input:checked + .switch-control {
-    background: var(--ae-switch-bg-checked, #4f46e5);
+    background: var(--ae-switch-bg-checked);
   }
 
   /* Focus state */
   .switch-input:focus-visible + .switch-control {
-    outline: 2px solid var(--ae-switch-focus-ring, #4f46e5);
+    outline: 2px solid var(--ae-switch-focus-ring);
     outline-offset: 2px;
   }
 
   /* Disabled state */
   .switch-input:disabled + .switch-control {
-    background: var(--ae-switch-bg-disabled, #e5e7eb);
+    background: var(--ae-switch-bg-disabled);
     cursor: not-allowed;
     opacity: 0.6;
   }
 
   .switch-input:disabled:checked + .switch-control {
-    background: var(--ae-switch-bg-checked-disabled, #9ca3af);
+    background: var(--ae-switch-bg-checked-disabled);
   }
 
   .switch-input:disabled ~ .switch-label-text {
-    color: var(--ae-switch-text-disabled, #9ca3af);
+    color: var(--ae-switch-text-disabled);
     cursor: not-allowed;
   }
 

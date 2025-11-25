@@ -17,24 +17,24 @@ export const breadcrumbItemStyles = css`
   }
 
   .breadcrumb-link {
-    color: var(--ae-breadcrumb-link-color, #4f46e5);
+    color: var(--ae-breadcrumb-link-color);
     text-decoration: none;
     transition: color 0.2s ease;
   }
 
   .breadcrumb-link:hover {
-    color: var(--ae-breadcrumb-link-hover, #4338ca);
+    color: var(--ae-breadcrumb-link-hover);
     text-decoration: underline;
   }
 
   .breadcrumb-link:focus-visible {
-    outline: 2px solid var(--ae-breadcrumb-focus-ring, #4f46e5);
+    outline: 2px solid var(--ae-breadcrumb-focus-ring);
     outline-offset: 2px;
     border-radius: 0.125rem;
   }
 
   .breadcrumb-text {
-    color: var(--ae-breadcrumb-current-color, #6b7280);
+    color: var(--ae-breadcrumb-current-color);
   }
 
   :host([current]) .breadcrumb-text {
@@ -42,7 +42,7 @@ export const breadcrumbItemStyles = css`
   }
 
   .breadcrumb-separator {
-    color: var(--ae-breadcrumb-separator-color, #9ca3af);
+    color: var(--ae-breadcrumb-separator-color);
     user-select: none;
   }
 `;

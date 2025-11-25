@@ -24,7 +24,7 @@ export const drawerStyles = css`
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--ae-drawer-backdrop-bg, rgba(0, 0, 0, 0.5));
+    background: var(--ae-drawer-backdrop-bg);
     backdrop-filter: var(--ae-drawer-backdrop-blur, blur(4px));
     animation: fadeIn 0.2s ease;
   }
@@ -33,7 +33,7 @@ export const drawerStyles = css`
     position: fixed;
     display: flex;
     flex-direction: column;
-    background: var(--ae-drawer-bg, white);
+    background: var(--ae-drawer-bg);
     box-shadow: var(--ae-drawer-shadow, 0 0 20px rgba(0, 0, 0, 0.1));
     overflow: hidden;
   }
@@ -144,7 +144,7 @@ export const drawerStyles = css`
     padding: 0.5rem;
     border: none;
     background: transparent;
-    color: var(--ae-drawer-close-color, #6b7280);
+    color: var(--ae-drawer-close-color);
     cursor: pointer;
     border-radius: 0.375rem;
     transition: all 0.2s ease;
@@ -152,12 +152,12 @@ export const drawerStyles = css`
   }
 
   .drawer-close:hover {
-    background: var(--ae-drawer-close-bg-hover, #f3f4f6);
-    color: var(--ae-drawer-close-color-hover, #111827);
+    background: var(--ae-drawer-close-bg-hover);
+    color: var(--ae-drawer-close-color-hover);
   }
 
   .drawer-close:focus-visible {
-    outline: 2px solid var(--ae-drawer-focus-ring, #4f46e5);
+    outline: 2px solid var(--ae-drawer-focus-ring);
     outline-offset: 2px;
   }
 
@@ -166,7 +166,7 @@ export const drawerStyles = css`
     border-bottom: var(--ae-drawer-header-border, 1px solid #e5e7eb);
     font-size: var(--ae-drawer-header-font-size, 1.25rem);
     font-weight: var(--ae-drawer-header-font-weight, 600);
-    color: var(--ae-drawer-header-color, #111827);
+    color: var(--ae-drawer-header-color);
   }
 
   .drawer-body {

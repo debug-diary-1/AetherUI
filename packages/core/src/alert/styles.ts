@@ -16,8 +16,9 @@ export const alertStyles = css`
     gap: var(--ae-space-3, 0.75rem);
     padding: var(--ae-alert-padding, 1rem);
     border-radius: var(--ae-alert-radius, 0.375rem);
-    background: var(--ae-alert-bg-info, #e8f4fd);
-    color: var(--ae-alert-fg-info, #055160);
+    border: var(--ae-alert-border-width, 1px) solid var(--ae-alert-border-info);
+    background: var(--ae-alert-bg-info);
+    color: var(--ae-alert-fg-info);
     font-size: var(--ae-alert-font-size, 0.875rem);
   }
 
@@ -57,18 +58,21 @@ export const alertStyles = css`
 
   /* Variant styles */
   :host([variant='success']) ::part(base) {
-    background: var(--ae-alert-bg-success, #edf7ed);
-    color: var(--ae-alert-fg-success, #065f46);
+    border-color: var(--ae-alert-border-success);
+    background: var(--ae-alert-bg-success);
+    color: var(--ae-alert-fg-success);
   }
 
   :host([variant='warning']) ::part(base) {
-    background: var(--ae-alert-bg-warning, #fff8e1);
-    color: var(--ae-alert-fg-warning, #7a4d00);
+    border-color: var(--ae-alert-border-warning);
+    background: var(--ae-alert-bg-warning);
+    color: var(--ae-alert-fg-warning);
   }
 
   :host([variant='error']) ::part(base) {
-    background: var(--ae-alert-bg-error, #fdecea);
-    color: var(--ae-alert-fg-error, #b71c1c);
+    border-color: var(--ae-alert-border-error);
+    background: var(--ae-alert-bg-error);
+    color: var(--ae-alert-fg-error);
   }
 
   /* Icon styling */
@@ -76,6 +80,19 @@ export const alertStyles = css`
     flex-shrink: 0;
     width: 24px;
     height: 24px;
+    color: var(--ae-alert-icon-info);
+  }
+
+  :host([variant='success']) ::part(icon) {
+    color: var(--ae-alert-icon-success);
+  }
+
+  :host([variant='warning']) ::part(icon) {
+    color: var(--ae-alert-icon-warning);
+  }
+
+  :host([variant='error']) ::part(icon) {
+    color: var(--ae-alert-icon-error);
   }
 
   /* Content area */
@@ -104,7 +121,7 @@ export const alertStyles = css`
   }
 
   ::part(close):focus {
-    outline: 2px solid var(--ae-focus-ring-color, rgba(0, 0, 0, 0.2));
+    outline: 2px solid var(--ae-focus-ring-color);
     outline-offset: 2px;
   }
 `; 
