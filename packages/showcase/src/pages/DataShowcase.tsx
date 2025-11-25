@@ -1,38 +1,51 @@
 import { CodeExample } from '../components/CodeExample';
+import { useEffect, useRef } from 'react';
 
 function DataShowcase() {
+  const treeRef = useRef<any>(null);
+
   const treeData = [
     {
       id: 'root',
-      label: 'Root Folder',
+      label: '📁 Root',
       children: [
         {
           id: 'docs',
-          label: 'Documents',
+          label: '📁 Documents',
           children: [
             {
               id: 'work',
-              label: 'Work',
+              label: '📁 Work',
               children: [
-                { id: 'project-a', label: 'Project A' },
-                { id: 'project-b', label: 'Project B' },
+                { id: 'project-a', label: '📄 Project A.docx' },
+                { id: 'project-b', label: '📄 Project B.pdf' },
+                { id: 'notes', label: '📝 Meeting Notes.txt' },
               ],
             },
-            { id: 'personal', label: 'Personal' },
+            { id: 'personal', label: '📁 Personal' },
+            { id: 'resume', label: '📄 Resume.pdf' },
           ],
         },
         {
           id: 'pictures',
-          label: 'Pictures',
+          label: '📁 Pictures',
           children: [
-            { id: 'vacation', label: 'Vacation' },
-            { id: 'family', label: 'Family' },
+            { id: 'vacation', label: '🖼️ Vacation 2024' },
+            { id: 'family', label: '🖼️ Family Photos' },
           ],
         },
-        { id: 'videos', label: 'Videos' },
+        { id: 'videos', label: '📁 Videos' },
+        { id: 'downloads', label: '📁 Downloads' },
       ],
     },
   ];
+
+  useEffect(() => {
+    if (treeRef.current) {
+      treeRef.current.data = treeData;
+      treeRef.current.expanded = ['root', 'docs', 'work'];
+    }
+  }, []);
 
   return (
     <div className="showcase-page">
@@ -46,56 +59,51 @@ function DataShowcase() {
       <div className="showcase-section">
         <h2 className="section-title">Tree View</h2>
         <div className="component-demo">
-          <div className="demo-label">Hierarchical Data</div>
-          <ae-treeview
-            data={JSON.stringify(treeData)}
-            expanded={JSON.stringify(['root', 'docs'])}
-          ></ae-treeview>
+          <div className="demo-label">File System Explorer</div>
+          <ae-treeview ref={treeRef}></ae-treeview>
           <CodeExample
-            code={`// Define your tree structure
-const treeData = [
-  {
-    id: 'root',
-    label: 'Root Folder',
-    children: [
-      {
-        id: 'docs',
-        label: 'Documents',
-        children: [
-          {
-            id: 'work',
-            label: 'Work',
-            children: [
-              { id: 'project-a', label: 'Project A' },
-              { id: 'project-b', label: 'Project B' }
-            ]
-          },
-          { id: 'personal', label: 'Personal' }
-        ]
-      },
-      {
-        id: 'pictures',
-        label: 'Pictures',
-        children: [
-          { id: 'vacation', label: 'Vacation' },
-          { id: 'family', label: 'Family' }
-        ]
-      },
-      { id: 'videos', label: 'Videos' }
-    ]
-  }
-];
+            code={`// For React, use useRef and useEffect for complex data
+import { useEffect, useRef } from 'react';
 
-// In React, pass as JSON string for HTML attribute
-<ae-treeview
-  data={JSON.stringify(treeData)}
-  expanded={JSON.stringify(['root', 'docs'])}
-></ae-treeview>
+function MyComponent() {
+  const treeRef = useRef(null);
 
-// Or use property assignment in vanilla JS
-const tree = document.querySelector('ae-treeview');
-tree.data = treeData;
-tree.expanded = ['root', 'docs'];`}
+  const treeData = [
+    {
+      id: 'root',
+      label: '📁 Root',
+      children: [
+        {
+          id: 'docs',
+          label: '📁 Documents',
+          children: [
+            {
+              id: 'work',
+              label: '📁 Work',
+              children: [
+                { id: 'project-a', label: '📄 Project A.docx' },
+                { id: 'project-b', label: '📄 Project B.pdf' }
+              ]
+            },
+            { id: 'resume', label: '📄 Resume.pdf' }
+          ]
+        },
+        { id: 'pictures', label: '📁 Pictures' },
+        { id: 'videos', label: '📁 Videos' }
+      ]
+    }
+  ];
+
+  useEffect(() => {
+    if (treeRef.current) {
+      // Set data and expanded nodes via property assignment
+      treeRef.current.data = treeData;
+      treeRef.current.expanded = ['root', 'docs'];
+    }
+  }, []);
+
+  return <ae-treeview ref={treeRef}></ae-treeview>;
+}`}
           />
         </div>
       </div>

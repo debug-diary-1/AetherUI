@@ -635,6 +635,41 @@ ae-pagination {
   --ae-pagination-hover-bg: #f3f4f6;
 }
 
+/* TreeView styling */
+ae-treeview {
+  --ae-treeview-indent: 24px;
+  --ae-treeview-caret-size: 14px;
+  --ae-treeview-row-hover-bg: #f3f4f6;
+  --ae-treeview-row-selected-bg: #e0e7ff;
+  --ae-treeview-row-selected-fg: #3730a3;
+  --ae-treeview-caret-color: #9ca3af;
+  --ae-treeview-caret-open: #4b5563;
+  --ae-treeview-focus-color: #4f46e5;
+  --ae-treeview-font-size: 0.875rem;
+  --ae-treeview-line-height: 1.5;
+  --ae-treeview-padding: 0.5rem 0.75rem;
+  display: block;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: white;
+  min-height: 300px;
+  max-height: 500px;
+  overflow: auto;
+}
+
+.theme-dark ae-treeview {
+  --ae-treeview-row-hover-bg: #374151;
+  --ae-treeview-row-selected-bg: #4c1d95;
+  --ae-treeview-row-selected-fg: #c4b5fd;
+  --ae-treeview-caret-color: #6b7280;
+  --ae-treeview-caret-open: #9ca3af;
+  --ae-treeview-focus-color: #818cf8;
+  background: #1f1f1f;
+  border-color: #404040;
+  color: #e5e5e5;
+}
+
 /* Tablet and below - sidebar becomes overlay */
 @media (max-width: 1024px) {
   .mobile-menu-toggle {

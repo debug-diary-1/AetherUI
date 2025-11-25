@@ -16,6 +16,10 @@
   letter-spacing: -0.025em;
 }
 
+.theme-dark .hero-title {
+  color: #f3f4f6;
+}
+
 .hero-subtitle {
   font-size: 1.25rem;
   color: #6b7280;
@@ -24,6 +28,10 @@
   margin-left: auto;
   margin-right: auto;
   line-height: 1.6;
+}
+
+.theme-dark .hero-subtitle {
+  color: #9ca3af;
 }
 
 .hero-features {
@@ -41,9 +49,19 @@
   transition: all 0.2s;
 }
 
+.theme-dark .feature-card {
+  background: #2d2d2d;
+  border-color: #404040;
+}
+
 .feature-card:hover {
   border-color: #d1d5db;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.theme-dark .feature-card:hover {
+  border-color: #525252;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
 
 .feature-icon {
@@ -58,10 +76,18 @@
   margin-bottom: 0.5rem;
 }
 
+.theme-dark .feature-card h3 {
+  color: #f3f4f6;
+}
+
 .feature-card p {
   color: #6b7280;
   line-height: 1.6;
   font-size: 0.9375rem;
+}
+
+.theme-dark .feature-card p {
+  color: #9ca3af;
 }
 
 .component-overview {
@@ -75,6 +101,10 @@
   text-align: center;
   margin-bottom: 2.5rem;
   letter-spacing: -0.025em;
+}
+
+.theme-dark .overview-title {
+  color: #f3f4f6;
 }
 
 .category-grid {
@@ -91,9 +121,19 @@
   transition: all 0.2s;
 }
 
+.theme-dark .category-card {
+  background: #2d2d2d;
+  border-color: #404040;
+}
+
 .category-card:hover {
   border-color: #d1d5db;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.theme-dark .category-card:hover {
+  border-color: #525252;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
 
 .category-card h3 {
@@ -103,11 +143,19 @@
   margin-bottom: 0.5rem;
 }
 
+.theme-dark .category-card h3 {
+  color: #f3f4f6;
+}
+
 .category-card p {
   color: #6b7280;
   margin-bottom: 1rem;
   line-height: 1.5;
   font-size: 0.9375rem;
+}
+
+.theme-dark .category-card p {
+  color: #9ca3af;
 }
 
 .component-count {
@@ -120,6 +168,11 @@
   font-weight: 500;
 }
 
+.theme-dark .component-count {
+  background: #404040;
+  color: #d1d5db;
+}
+
 .quick-demo {
   margin-top: 4rem;
   background: white;
@@ -128,12 +181,21 @@
   border: 1px solid #e5e7eb;
 }
 
+.theme-dark .quick-demo {
+  background: #2d2d2d;
+  border-color: #404040;
+}
+
 .demo-title {
   font-size: 1.5rem;
   font-weight: 600;
   color: #111827;
   text-align: center;
   margin-bottom: 2rem;
+}
+
+.theme-dark .demo-title {
+  color: #f3f4f6;
 }
 
 .demo-container {
@@ -146,4 +208,9 @@
   background: #f9fafb;
   border-radius: 0.5rem;
   border: 1px solid #e5e7eb;
+}
+
+.theme-dark .demo-container {
+  background: #1a1a1a;
+  border-color: #404040;
 }
