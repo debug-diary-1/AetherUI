@@ -26,9 +26,9 @@ export const radioStyles = css`
     justify-content: center;
     width: var(--ae-radio-size, 18px);
     height: var(--ae-radio-size, 18px);
-    border: 2px solid var(--ae-radio-border-color, #d1d5db);
+    border: 2px solid var(--ae-radio-border-color);
     border-radius: 50%;
-    background: var(--ae-radio-bg, white);
+    background: var(--ae-radio-bg);
     transition: all 0.2s ease;
   }
 
@@ -36,28 +36,28 @@ export const radioStyles = css`
     width: calc(var(--ae-radio-size, 18px) * 0.5);
     height: calc(var(--ae-radio-size, 18px) * 0.5);
     border-radius: 50%;
-    background: var(--ae-radio-checked-dot-color, white);
+    background: var(--ae-radio-checked-dot-color);
     transition: transform 0.2s ease, opacity 0.2s ease;
   }
 
   input:checked + .control {
-    border-color: var(--ae-radio-checked-border-color, #4f46e5);
-    background: var(--ae-radio-checked-bg, #4f46e5);
+    border-color: var(--ae-radio-checked-border-color);
+    background: var(--ae-radio-checked-bg);
   }
 
   input:focus-visible + .control {
-    outline: 2px solid var(--ae-radio-focus-ring-color, #4f46e5);
+    outline: 2px solid var(--ae-radio-focus-ring-color);
     outline-offset: 2px;
   }
 
   input:disabled + .control {
-    border-color: var(--ae-radio-disabled-border-color, #e5e7eb);
-    background: var(--ae-radio-disabled-bg, #f3f4f6);
+    border-color: var(--ae-radio-disabled-border-color);
+    background: var(--ae-radio-disabled-bg);
     cursor: not-allowed;
   }
 
   input:disabled ~ .label {
-    color: var(--ae-radio-disabled-text-color, #9ca3af);
+    color: var(--ae-radio-disabled-text-color);
     cursor: not-allowed;
   }
 
