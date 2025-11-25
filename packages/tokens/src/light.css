@@ -209,6 +209,7 @@
   --ae-toast-fg-warning: var(--ae-alert-fg-warning);
   --ae-toast-bg-error: var(--ae-alert-bg-error);
   --ae-toast-fg-error: var(--ae-alert-fg-error);
+  --ae-toast-close-hover-bg: rgba(0, 0, 0, 0.1);
 
   /* ===== Tabs Component ===== */
 
