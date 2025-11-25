@@ -23,16 +23,16 @@ export const tabStyles = css`
     display: flex;
     flex-direction: row;
     gap: var(--ae-tabs-gap, 0.5rem);
-    border-bottom: var(--ae-tabs-border, 1px solid #e5e7eb);
+    border-bottom: var(--ae-tabs-active-border-width, 2px) solid var(--ae-tabs-border-color);
     margin-bottom: var(--ae-tabs-margin, 1rem);
     width: 100%;
   }
-  
+
   /* Tab list container - vertical */
   :host([orientation="vertical"]) .tablist {
     flex-direction: column;
     border-bottom: none;
-    border-right: var(--ae-tabs-border, 1px solid #e5e7eb);
+    border-right: var(--ae-tabs-active-border-width, 2px) solid var(--ae-tabs-border-color);
     margin-bottom: 0;
     margin-right: var(--ae-tabs-margin, 1rem);
     min-width: 150px;
@@ -55,36 +55,36 @@ export const tabStyles = css`
   }
   
   :host(:not([orientation="vertical"])) ::slotted(ae-tab[aria-selected="true"]) {
-    color: var(--ae-tabs-active-color, #4f46e5);
+    color: var(--ae-tabs-active-color);
   }
-  
+
   :host(:not([orientation="vertical"])) ::slotted(ae-tab[aria-selected="true"])::after {
     content: '';
     position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 2px;
-    background-color: var(--ae-tabs-active-color, #4f46e5);
+    height: var(--ae-tabs-active-border-width, 2px);
+    background-color: var(--ae-tabs-active-color);
   }
-  
+
   /* Vertical tab indicator */
   :host([orientation="vertical"]) ::slotted(ae-tab) {
     position: relative;
   }
-  
+
   :host([orientation="vertical"]) ::slotted(ae-tab[aria-selected="true"]) {
-    color: var(--ae-tabs-active-color, #4f46e5);
+    color: var(--ae-tabs-active-color);
   }
-  
+
   :host([orientation="vertical"]) ::slotted(ae-tab[aria-selected="true"])::after {
     content: '';
     position: absolute;
     top: 0;
     right: 0;
-    width: 2px;
+    width: var(--ae-tabs-active-border-width, 2px);
     height: 100%;
-    background-color: var(--ae-tabs-active-color, #4f46e5);
+    background-color: var(--ae-tabs-active-color);
   }
   
   /* Panel styling */
