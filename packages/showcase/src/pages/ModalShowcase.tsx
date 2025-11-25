@@ -26,28 +26,25 @@ function ModalShowcase() {
             open={modalOpen}
             onAeModalClose={() => setModalOpen(false)}
           >
-            <div style={{ padding: '2rem' }}>
-              <h2 style={{ marginBottom: '1rem' }}>Modal Title</h2>
-              <p style={{ marginBottom: '1.5rem', color: '#666' }}>
+            <h2 slot="header">Modal Title</h2>
+            <div slot="body">
+              <p style={{ marginBottom: '1rem', color: '#666' }}>
                 This is a modal dialog with custom styling. It can contain any content.
               </p>
-              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
-                <ae-button variant="secondary" onClick={() => setModalOpen(false)}>
-                  Cancel
-                </ae-button>
-                <ae-button onClick={() => setModalOpen(false)}>
-                  Confirm
-                </ae-button>
-              </div>
+            </div>
+            <div slot="footer" style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
+              <ae-button variant="secondary" onClick={() => setModalOpen(false)}>
+                Cancel
+              </ae-button>
+              <ae-button onClick={() => setModalOpen(false)}>
+                Confirm
+              </ae-button>
             </div>
           </ae-modal>
 
           <CodeExample
             title="React Example"
             code={`import { useState } from 'react';
-import { defineAeModal } from '@aetherui/core';
-
-defineAeModal();
 
 function MyComponent() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -62,9 +59,11 @@ function MyComponent() {
         open={modalOpen}
         onAeModalClose={() => setModalOpen(false)}
       >
-        <div style={{ padding: '2rem' }}>
-          <h2>Modal Title</h2>
+        <h2 slot="header">Modal Title</h2>
+        <div slot="body">
           <p>Modal content goes here...</p>
+        </div>
+        <div slot="footer">
           <ae-button onClick={() => setModalOpen(false)}>
             Close
           </ae-button>
@@ -87,14 +86,16 @@ function MyComponent() {
 
           <ae-drawer
             open={drawerOpen}
-            position="right"
+            placement="right"
             onAeDrawerClose={() => setDrawerOpen(false)}
           >
-            <div style={{ padding: '2rem' }}>
-              <h2 style={{ marginBottom: '1rem' }}>Drawer Content</h2>
+            <h2 slot="header">Drawer Content</h2>
+            <div>
               <p style={{ marginBottom: '1.5rem', color: '#666' }}>
                 Drawers slide in from the side and are great for navigation or additional content.
               </p>
+            </div>
+            <div slot="footer">
               <ae-button onClick={() => setDrawerOpen(false)}>
                 Close
               </ae-button>
@@ -104,12 +105,15 @@ function MyComponent() {
           <CodeExample
             code={`<ae-drawer
   open={drawerOpen}
-  position="right"
+  placement="right"
   onAeDrawerClose={() => setDrawerOpen(false)}
 >
-  <div style={{ padding: '2rem' }}>
-    <h2>Drawer Title</h2>
+  <h2 slot="header">Drawer Title</h2>
+  <div>
     <p>Drawer content...</p>
+  </div>
+  <div slot="footer">
+    <ae-button onClick={() => setDrawerOpen(false)}>Close</ae-button>
   </div>
 </ae-drawer>`}
           />
