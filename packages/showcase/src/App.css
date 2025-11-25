@@ -21,8 +21,15 @@
   justify-content: center;
   cursor: pointer;
   color: #111827;
-  transition: all 0.2s;
+  transition: all 0.3s ease-in-out;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Move toggle button when sidebar is open on desktop */
+@media (min-width: 1025px) {
+  .app.sidebar-open .menu-toggle {
+    left: 276px; /* 260px sidebar + 16px spacing */
+  }
 }
 
 .menu-toggle:hover {
@@ -149,22 +156,33 @@
 
 .content {
   flex: 1;
-  margin-left: 260px;
   padding: 2rem 2.5rem;
   max-width: 1400px;
-  transition: margin-left 0.3s ease-in-out;
+  transition: margin-left 0.3s ease-in-out, max-width 0.3s ease-in-out;
 }
 
+/* Desktop: content shifts with sidebar */
+@media (min-width: 1025px) {
+  .app.sidebar-open .content {
+    margin-left: 260px;
+  }
+
+  .app.sidebar-closed-app .content {
+    margin-left: 0;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .app.sidebar-closed-app .content > * {
+    max-width: 1200px;
+    width: 100%;
+  }
+}
+
+/* Mobile: content always full width */
 .content.sidebar-closed {
   margin-left: 0;
-  max-width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.content.sidebar-closed > * {
-  max-width: 1200px;
-  width: 100%;
 }
 
 /* Showcase page styles */
@@ -520,17 +538,18 @@ ae-pagination {
   }
 }
 
-/* Desktop - sidebar always open by default */
+/* Desktop - different behavior */
 @media (min-width: 1025px) {
-  .sidebar {
-    transform: translateX(0) !important;
-  }
-
+  /* On desktop, sidebar slides out to the left normally, not off-screen */
   .sidebar-overlay {
     display: none !important;
   }
 
   .menu-toggle {
     display: flex;
+  }
+
+  .close-btn {
+    display: none;
   }
 }

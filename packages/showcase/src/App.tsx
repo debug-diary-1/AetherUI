@@ -81,7 +81,7 @@ function App() {
 
   return (
     <Router basename="/showcase">
-      <div className="app">
+      <div className={`app ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed-app'}`}>
         <button
           className="menu-toggle"
           onClick={() => setSidebarOpen(!sidebarOpen)}
