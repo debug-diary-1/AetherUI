@@ -43,7 +43,7 @@ cat > preview-build/index.html << 'EOF'
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #fafafa;
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -58,61 +58,62 @@ cat > preview-build/index.html << 'EOF'
 
     .header {
       text-align: center;
-      color: white;
       margin-bottom: 3rem;
     }
 
     .header h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #111827;
+      letter-spacing: -0.025em;
     }
 
     .header p {
-      font-size: 1.25rem;
-      opacity: 0.95;
+      font-size: 1rem;
+      color: #6b7280;
+      line-height: 1.6;
     }
 
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
-      padding: 2.5rem;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s, box-shadow 0.3s;
+      background: white;
+      border-radius: 0.75rem;
+      border: 1px solid #e5e7eb;
+      padding: 2rem;
+      transition: all 0.2s;
       text-decoration: none;
       color: inherit;
       display: block;
     }
 
     .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+      border-color: #d1d5db;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     }
 
     .card-icon {
-      font-size: 4rem;
-      margin-bottom: 1.5rem;
+      font-size: 2.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .card-title {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: #333;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #111827;
     }
 
     .card-description {
-      color: #666;
-      font-size: 1.125rem;
+      color: #6b7280;
+      font-size: 0.9375rem;
       line-height: 1.6;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .card-features {
@@ -122,55 +123,61 @@ cat > preview-build/index.html << 'EOF'
 
     .card-features li {
       padding: 0.5rem 0;
-      color: #555;
-      font-size: 0.95rem;
+      color: #4b5563;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
     }
 
     .card-features li:before {
-      content: "✓ ";
-      color: #667eea;
-      font-weight: bold;
-      margin-right: 0.5rem;
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background: #111827;
+      border-radius: 50%;
+      margin-right: 0.75rem;
     }
 
     .card-button {
-      display: inline-block;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: inline-flex;
+      align-items: center;
+      background: #111827;
       color: white;
-      padding: 1rem 2rem;
-      border-radius: 10px;
-      font-weight: 600;
+      padding: 0.625rem 1.25rem;
+      border-radius: 0.375rem;
+      font-weight: 500;
+      font-size: 0.875rem;
       text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: all 0.15s;
     }
 
     .card-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+      background: #1f2937;
     }
 
     .footer {
       text-align: center;
       margin-top: 3rem;
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 0.95rem;
+      color: #6b7280;
+      font-size: 0.875rem;
     }
 
     .footer a {
-      color: white;
+      color: #111827;
       text-decoration: none;
-      font-weight: 600;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-      transition: border-color 0.2s;
+      font-weight: 500;
+      border-bottom: 1px solid #d1d5db;
+      transition: border-color 0.15s;
     }
 
     .footer a:hover {
-      border-bottom-color: white;
+      border-bottom-color: #111827;
     }
 
     @media (max-width: 768px) {
       .header h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
       }
 
       .cards {
@@ -210,7 +217,7 @@ cat > preview-build/index.html << 'EOF'
         </p>
         <ul class="card-features">
           <li>All 28+ components in action</li>
-          <li>Custom gradient styling</li>
+          <li>Custom styling examples</li>
           <li>React integration patterns</li>
           <li>Real-world examples</li>
         </ul>
@@ -220,7 +227,7 @@ cat > preview-build/index.html << 'EOF'
 
     <div class="footer">
       <p>
-        Built with ❤️ by the AetherUI Contributors ·
+        Built by the AetherUI Contributors ·
         <a href="https://github.com/pallavL01/AetherUI" target="_blank">GitHub</a>
       </p>
     </div>
