@@ -227,6 +227,27 @@ ae-switch {
   --ae-checkbox-border: 1px solid #d1d5db;
 }
 
+/* Radio group layout */
+ae-radio {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+ae-radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Checkbox and switch layout */
+ae-checkbox,
+ae-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 ae-alert {
   --ae-alert-border-radius: 0.5rem;
   --ae-alert-padding: 1rem;
