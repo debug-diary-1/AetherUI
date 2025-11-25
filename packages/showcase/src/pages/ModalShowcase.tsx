@@ -146,12 +146,12 @@ function MyComponent() {
         <h2 className="section-title">Tooltip</h2>
         <div className="component-demo">
           <div className="demo-label">Hover for tooltip</div>
-          <ae-tooltip content="This is a helpful tooltip">
+          <ae-tooltip text="This is a helpful tooltip">
             <ae-button>Hover me</ae-button>
           </ae-tooltip>
 
           <CodeExample
-            code={`<ae-tooltip content="This is a helpful tooltip">
+            code={`<ae-tooltip text="This is a helpful tooltip">
   <ae-button>Hover me</ae-button>
 </ae-tooltip>`}
           />
