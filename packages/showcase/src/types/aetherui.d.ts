@@ -31,11 +31,6 @@ declare global {
       }, HTMLElement>;
 
       'ae-combo': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & Partial<AeCombo>, HTMLElement>;
-      'ae-combo-option': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
-        value?: string;
-        disabled?: boolean;
-        selected?: boolean;
-      }, HTMLElement>;
 
       'ae-drawer': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & Partial<AeDrawer> & {
         onAeDrawerClose?: (e: CustomEvent) => void;

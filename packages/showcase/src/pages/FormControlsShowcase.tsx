@@ -127,13 +127,29 @@ function FormControlsShowcase() {
         <h2 className="section-title">Combo Box</h2>
         <div className="component-demo">
           <div className="demo-label">Combo Box with Search</div>
-          <ae-combo placeholder="Search countries...">
-            <ae-combo-option value="us">United States</ae-combo-option>
-            <ae-combo-option value="uk">United Kingdom</ae-combo-option>
-            <ae-combo-option value="ca">Canada</ae-combo-option>
-            <ae-combo-option value="au">Australia</ae-combo-option>
-            <ae-combo-option value="de">Germany</ae-combo-option>
-          </ae-combo>
+          <ae-combo
+            placeholder="Search countries..."
+            items='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"},{"value":"ca","label":"Canada"},{"value":"au","label":"Australia"},{"value":"de","label":"Germany"}]'
+          ></ae-combo>
+          <CodeExample
+            code={`<!-- As HTML attribute with JSON -->
+<ae-combo
+  placeholder="Search countries..."
+  items='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'
+></ae-combo>
+
+<!-- Or in React with array prop -->
+<ae-combo
+  placeholder="Search countries..."
+  items={[
+    { value: 'us', label: 'United States' },
+    { value: 'uk', label: 'United Kingdom' },
+    { value: 'ca', label: 'Canada' },
+    { value: 'au', label: 'Australia' },
+    { value: 'de', label: 'Germany' }
+  ]}
+/>`}
+          />
         </div>
       </div>
 
