@@ -1,4 +1,4 @@
-import type { AeAccordion, AeAlert, AeAutocomplete, AeBadge, AeBreadcrumb, AeButton, AeCheckbox, AeCombo, AeDrawer, AeDropdown, AeInput, AeMenu, AeModal, AePagination, AePopover, AeProgress, AeRadio, AeSelect, AeSpinner, AeSwitch, AeTabs, AeTextarea, AeToast, AeTooltip, AeTreeview } from '@aetherui/core';
+import type { AeAccordion, AeAlert, AeAutocomplete, AeBadge, AeBreadcrumb, AeButton, AeCheckbox, AeCombo, AeDrawer, AeDropdown, AeInput, AeMenu, AeModal, AePagination, AePopover, AeProgress, AeRadio, AeSelect, AeSpinner, AeSwitch, AeTabs, AeTextarea, AeToast, AeTooltip, AeTreeView, AeTreeItem } from '@aetherui/core';
 
 declare global {
   namespace JSX {
@@ -120,13 +120,9 @@ declare global {
 
       'ae-tooltip': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & Partial<AeTooltip>, HTMLElement>;
 
-      'ae-treeview': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & Partial<AeTreeview>, HTMLElement>;
-      'ae-treeview-item': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
-        label?: string;
-        expanded?: boolean;
-        selected?: boolean;
-        disabled?: boolean;
-      }, HTMLElement>;
+      'ae-treeview': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & Partial<AeTreeView>, HTMLElement>;
+
+      'ae-tree-item': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & Partial<AeTreeItem>, HTMLElement>;
     }
   }
 }

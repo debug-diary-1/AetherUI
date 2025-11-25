@@ -33,6 +33,7 @@ import {
   defineAeToast,
   defineAeTooltip,
   defineAeTreeView,
+  defineAeTreeItem,
 } from '@aetherui/core';
 
 // Define all components
@@ -61,6 +62,7 @@ defineAeTextarea();
 defineAeToast();
 defineAeTooltip();
 defineAeTreeView();
+defineAeTreeItem();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
