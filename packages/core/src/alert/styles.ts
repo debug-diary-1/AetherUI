@@ -16,8 +16,8 @@ export const alertStyles = css`
     gap: var(--ae-space-3, 0.75rem);
     padding: var(--ae-alert-padding, 1rem);
     border-radius: var(--ae-alert-radius, 0.375rem);
-    background: var(--ae-alert-bg-info, #e8f4fd);
-    color: var(--ae-alert-fg-info, #055160);
+    background: var(--ae-alert-bg-info);
+    color: var(--ae-alert-fg-info);
     font-size: var(--ae-alert-font-size, 0.875rem);
   }
 
@@ -57,18 +57,18 @@ export const alertStyles = css`
 
   /* Variant styles */
   :host([variant='success']) ::part(base) {
-    background: var(--ae-alert-bg-success, #edf7ed);
-    color: var(--ae-alert-fg-success, #065f46);
+    background: var(--ae-alert-bg-success);
+    color: var(--ae-alert-fg-success);
   }
 
   :host([variant='warning']) ::part(base) {
-    background: var(--ae-alert-bg-warning, #fff8e1);
-    color: var(--ae-alert-fg-warning, #7a4d00);
+    background: var(--ae-alert-bg-warning);
+    color: var(--ae-alert-fg-warning);
   }
 
   :host([variant='error']) ::part(base) {
-    background: var(--ae-alert-bg-error, #fdecea);
-    color: var(--ae-alert-fg-error, #b71c1c);
+    background: var(--ae-alert-bg-error);
+    color: var(--ae-alert-fg-error);
   }
 
   /* Icon styling */
@@ -104,7 +104,7 @@ export const alertStyles = css`
   }
 
   ::part(close):focus {
-    outline: 2px solid var(--ae-focus-ring-color, rgba(0, 0, 0, 0.2));
+    outline: 2px solid var(--ae-focus-ring-color);
     outline-offset: 2px;
   }
 `; 
