@@ -392,11 +392,22 @@
   --ae-drawer-backdrop-bg: rgba(0, 0, 0, 0.7);
   --ae-drawer-header-padding: 1rem 1.5rem;
   --ae-drawer-header-border: 1px solid #374151;
+  --ae-drawer-header-color: #f9fafb;
+  --ae-drawer-header-font-size: 1.25rem;
+  --ae-drawer-header-font-weight: 600;
   --ae-drawer-body-padding: 1.5rem;
   --ae-drawer-footer-padding: 1rem 1.5rem;
   --ae-drawer-footer-border: 1px solid #374151;
   --ae-drawer-close-color: #9ca3af;
   --ae-drawer-close-hover-color: #f9fafb;
+  --ae-drawer-close-bg-hover: rgba(255, 255, 255, 0.1);
+  --ae-drawer-focus-ring: #818cf8;
+  --ae-drawer-width-sm: 300px;
+  --ae-drawer-width-md: 400px;
+  --ae-drawer-width-lg: 600px;
+  --ae-drawer-height-sm: 200px;
+  --ae-drawer-height-md: 300px;
+  --ae-drawer-height-lg: 500px;
 
   /* ===== Popover Component ===== */
 
