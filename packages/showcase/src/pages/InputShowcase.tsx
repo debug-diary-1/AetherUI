@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CodeExample } from '../components/CodeExample';
 
 function InputShowcase() {
   const [inputValue, setInputValue] = useState('');
@@ -23,6 +24,15 @@ function InputShowcase() {
             onAeInputInput={(e: any) => setInputValue(e.target.value)}
           />
           <p style={{ marginTop: '1rem', color: '#666' }}>Current value: {inputValue}</p>
+          <CodeExample
+            code={`const [value, setValue] = useState('');
+
+<ae-input
+  placeholder="Enter your name..."
+  value={value}
+  onAeInputInput={(e) => setValue(e.target.value)}
+/>`}
+          />
         </div>
       </div>
 
@@ -42,6 +52,11 @@ function InputShowcase() {
             <ae-input type="number" placeholder="Enter amount" />
           </div>
         </div>
+        <CodeExample
+          code={`<ae-input type="email" placeholder="email@example.com" />
+<ae-input type="password" placeholder="Enter password" />
+<ae-input type="number" placeholder="Enter amount" />`}
+        />
       </div>
 
       <div className="showcase-section">
@@ -57,6 +72,16 @@ function InputShowcase() {
           <p style={{ marginTop: '1rem', color: '#666' }}>
             Character count: {textareaValue.length}
           </p>
+          <CodeExample
+            code={`const [value, setValue] = useState('');
+
+<ae-textarea
+  placeholder="Enter your message..."
+  rows="5"
+  value={value}
+  onAeTextareaInput={(e) => setValue(e.target.value)}
+/>`}
+          />
         </div>
       </div>
 
@@ -72,6 +97,10 @@ function InputShowcase() {
             <ae-input required placeholder="Required field" />
           </div>
         </div>
+        <CodeExample
+          code={`<ae-input disabled placeholder="Disabled input" value="Cannot edit" />
+<ae-input required placeholder="Required field" />`}
+        />
       </div>
     </div>
   );

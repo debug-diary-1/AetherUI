@@ -1,3 +1,5 @@
+import { CodeExample } from '../components/CodeExample';
+
 function AccordionShowcase() {
   return (
     <div className="showcase-page">
@@ -39,6 +41,25 @@ function AccordionShowcase() {
               </div>
             </ae-accordion-item>
           </ae-accordion>
+          <CodeExample
+            code={`<ae-accordion>
+  <ae-accordion-item header="What is AetherUI?" expanded>
+    <div>Content for the first item...</div>
+  </ae-accordion-item>
+
+  <ae-accordion-item header="How do I customize components?">
+    <div>Content for the second item...</div>
+  </ae-accordion-item>
+
+  <ae-accordion-item header="Is it accessible?">
+    <div>Content for the third item...</div>
+  </ae-accordion-item>
+
+  <ae-accordion-item header="Disabled item" disabled>
+    <div>This item is disabled...</div>
+  </ae-accordion-item>
+</ae-accordion>`}
+          />
         </div>
       </div>
     </div>

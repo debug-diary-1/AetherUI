@@ -1,3 +1,5 @@
+import { CodeExample } from '../components/CodeExample';
+
 function TabsShowcase() {
   return (
     <div className="showcase-page">
@@ -43,6 +45,25 @@ function TabsShowcase() {
               </div>
             </ae-tab-panel>
           </ae-tabs>
+          <CodeExample
+            code={`<ae-tabs>
+  <ae-tab id="tab1" active>Profile</ae-tab>
+  <ae-tab id="tab2">Settings</ae-tab>
+  <ae-tab id="tab3">Messages</ae-tab>
+
+  <ae-tab-panel tab-id="tab1">
+    <div>Profile content...</div>
+  </ae-tab-panel>
+
+  <ae-tab-panel tab-id="tab2">
+    <div>Settings content...</div>
+  </ae-tab-panel>
+
+  <ae-tab-panel tab-id="tab3">
+    <div>Messages content...</div>
+  </ae-tab-panel>
+</ae-tabs>`}
+          />
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { CodeExample } from '../components/CodeExample';
+
 function NavigationShowcase() {
   return (
     <div className="showcase-page">
@@ -18,6 +20,14 @@ function NavigationShowcase() {
             <ae-breadcrumb-item href="/products/electronics">Electronics</ae-breadcrumb-item>
             <ae-breadcrumb-item current>Laptops</ae-breadcrumb-item>
           </ae-breadcrumb>
+          <CodeExample
+            code={`<ae-breadcrumb>
+  <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
+  <ae-breadcrumb-item href="/products">Products</ae-breadcrumb-item>
+  <ae-breadcrumb-item href="/products/electronics">Electronics</ae-breadcrumb-item>
+  <ae-breadcrumb-item current>Laptops</ae-breadcrumb-item>
+</ae-breadcrumb>`}
+          />
         </div>
       </div>
 
@@ -34,6 +44,17 @@ function NavigationShowcase() {
             <ae-menu-divider></ae-menu-divider>
             <ae-menu-item value="exit">Exit</ae-menu-item>
           </ae-menu>
+          <CodeExample
+            code={`<ae-menu>
+  <ae-menu-item value="new">New File</ae-menu-item>
+  <ae-menu-item value="open">Open File</ae-menu-item>
+  <ae-menu-divider></ae-menu-divider>
+  <ae-menu-item value="save">Save</ae-menu-item>
+  <ae-menu-item value="saveas">Save As...</ae-menu-item>
+  <ae-menu-divider></ae-menu-divider>
+  <ae-menu-item value="exit">Exit</ae-menu-item>
+</ae-menu>`}
+          />
         </div>
       </div>
 
@@ -48,6 +69,15 @@ function NavigationShowcase() {
             <ae-dropdown-separator></ae-dropdown-separator>
             <ae-dropdown-item value="delete">Delete</ae-dropdown-item>
           </ae-dropdown>
+          <CodeExample
+            code={`<ae-dropdown>
+  <ae-button slot="trigger">Actions</ae-button>
+  <ae-dropdown-item value="edit">Edit</ae-dropdown-item>
+  <ae-dropdown-item value="duplicate">Duplicate</ae-dropdown-item>
+  <ae-dropdown-separator></ae-dropdown-separator>
+  <ae-dropdown-item value="delete">Delete</ae-dropdown-item>
+</ae-dropdown>`}
+          />
         </div>
       </div>
 
@@ -60,6 +90,13 @@ function NavigationShowcase() {
             page="1"
             pageSize="10"
           ></ae-pagination>
+          <CodeExample
+            code={`<ae-pagination
+  total="100"
+  page="1"
+  pageSize="10"
+></ae-pagination>`}
+          />
         </div>
       </div>
     </div>

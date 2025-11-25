@@ -1,3 +1,5 @@
+import { CodeExample } from '../components/CodeExample';
+
 function AlertShowcase() {
   return (
     <div className="showcase-page">
@@ -25,6 +27,23 @@ function AlertShowcase() {
               Error: Something went wrong
             </ae-alert>
           </div>
+          <CodeExample
+            code={`<ae-alert variant="info">
+  This is an informational alert message
+</ae-alert>
+
+<ae-alert variant="success">
+  Success! Your changes have been saved
+</ae-alert>
+
+<ae-alert variant="warning">
+  Warning: Please review your input
+</ae-alert>
+
+<ae-alert variant="error">
+  Error: Something went wrong
+</ae-alert>`}
+          />
         </div>
       </div>
 
@@ -40,6 +59,13 @@ function AlertShowcase() {
           <p style={{ color: '#666', marginTop: '1rem' }}>
             Toast notifications appear temporarily with custom positioning
           </p>
+          <CodeExample
+            code={`<ae-toast-container position="top-right">
+  <ae-toast variant="success">
+    Item added to cart!
+  </ae-toast>
+</ae-toast-container>`}
+          />
         </div>
       </div>
     </div>

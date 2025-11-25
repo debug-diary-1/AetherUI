@@ -1,3 +1,5 @@
+import { CodeExample } from '../components/CodeExample';
+
 function FeedbackShowcase() {
   return (
     <div className="showcase-page">
@@ -29,6 +31,12 @@ function FeedbackShowcase() {
               <ae-progress value="100" max="100"></ae-progress>
             </div>
           </div>
+          <CodeExample
+            code={`<ae-progress value="25" max="100"></ae-progress>
+<ae-progress value="50" max="100"></ae-progress>
+<ae-progress value="75" max="100"></ae-progress>
+<ae-progress value="100" max="100"></ae-progress>`}
+          />
         </div>
       </div>
 
@@ -41,6 +49,11 @@ function FeedbackShowcase() {
             <ae-spinner size="medium"></ae-spinner>
             <ae-spinner size="large"></ae-spinner>
           </div>
+          <CodeExample
+            code={`<ae-spinner size="small"></ae-spinner>
+<ae-spinner size="medium"></ae-spinner>
+<ae-spinner size="large"></ae-spinner>`}
+          />
         </div>
       </div>
     </div>

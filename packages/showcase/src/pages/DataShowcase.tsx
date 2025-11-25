@@ -1,3 +1,5 @@
+import { CodeExample } from '../components/CodeExample';
+
 function DataShowcase() {
   return (
     <div className="showcase-page">
@@ -28,6 +30,23 @@ function DataShowcase() {
               <ae-treeview-item label="Videos"></ae-treeview-item>
             </ae-treeview-item>
           </ae-treeview>
+          <CodeExample
+            code={`<ae-treeview>
+  <ae-treeview-item label="Root Folder" expanded>
+    <ae-treeview-item label="Documents" expanded>
+      <ae-treeview-item label="Work">
+        <ae-treeview-item label="Project A"></ae-treeview-item>
+        <ae-treeview-item label="Project B"></ae-treeview-item>
+      </ae-treeview-item>
+      <ae-treeview-item label="Personal"></ae-treeview-item>
+    </ae-treeview-item>
+    <ae-treeview-item label="Pictures">
+      <ae-treeview-item label="Vacation"></ae-treeview-item>
+      <ae-treeview-item label="Family"></ae-treeview-item>
+    </ae-treeview-item>
+  </ae-treeview-item>
+</ae-treeview>`}
+          />
         </div>
       </div>
 
@@ -39,6 +58,12 @@ function DataShowcase() {
             placeholder="Search programming languages..."
             suggestions='["JavaScript", "TypeScript", "Python", "Java", "C++", "Ruby", "Go", "Rust"]'
           ></ae-autocomplete>
+          <CodeExample
+            code={`<ae-autocomplete
+  placeholder="Search programming languages..."
+  suggestions='["JavaScript", "TypeScript", "Python", "Java", "C++", "Ruby", "Go", "Rust"]'
+></ae-autocomplete>`}
+          />
         </div>
       </div>
     </div>
