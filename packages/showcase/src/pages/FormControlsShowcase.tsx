@@ -97,10 +97,10 @@ function FormControlsShowcase() {
             value={selectValue}
             onAeSelectChange={(e: any) => setSelectValue(e.target.value)}
           >
-            <ae-select-option value="react">React</ae-select-option>
-            <ae-select-option value="vue">Vue</ae-select-option>
-            <ae-select-option value="angular">Angular</ae-select-option>
-            <ae-select-option value="svelte">Svelte</ae-select-option>
+            <option value="react">React</option>
+            <option value="vue">Vue</option>
+            <option value="angular">Angular</option>
+            <option value="svelte">Svelte</option>
           </ae-select>
           <p style={{ marginTop: '1rem', color: '#666' }}>
             Selected framework: {selectValue || 'None'}
@@ -113,9 +113,9 @@ function FormControlsShowcase() {
   value={value}
   onAeSelectChange={(e) => setValue(e.target.value)}
 >
-  <ae-select-option value="react">React</ae-select-option>
-  <ae-select-option value="vue">Vue</ae-select-option>
-  <ae-select-option value="angular">Angular</ae-select-option>
+  <option value="react">React</option>
+  <option value="vue">Vue</option>
+  <option value="angular">Angular</option>
 </ae-select>`}
           />
         </div>
@@ -183,8 +183,8 @@ function MyForm() {
         value={framework}
         onAeSelectChange={(e) => setFramework(e.target.value)}
       >
-        <ae-select-option value="react">React</ae-select-option>
-        <ae-select-option value="vue">Vue</ae-select-option>
+        <option value="react">React</option>
+        <option value="vue">Vue</option>
       </ae-select>
 
       <button type="submit">Submit</button>

@@ -87,11 +87,6 @@ declare global {
       'ae-select': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & Partial<AeSelect> & {
         onAeSelectChange?: (e: CustomEvent) => void;
       }, HTMLElement>;
-      'ae-select-option': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
-        value?: string;
-        disabled?: boolean;
-        selected?: boolean;
-      }, HTMLElement>;
 
       'ae-spinner': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & Partial<AeSpinner>, HTMLElement>;
 
