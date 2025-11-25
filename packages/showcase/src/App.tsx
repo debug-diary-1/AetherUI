@@ -15,19 +15,37 @@ import FeedbackShowcase from './pages/FeedbackShowcase';
 import DataShowcase from './pages/DataShowcase';
 import Home from './pages/Home';
 
-const components = [
-  { path: '/', name: 'Home', component: Home },
-  { path: '/buttons', name: 'Buttons & Badges', component: ButtonShowcase },
-  { path: '/inputs', name: 'Text Inputs', component: InputShowcase },
-  { path: '/forms', name: 'Form Controls', component: FormControlsShowcase },
-  { path: '/alerts', name: 'Alerts & Messages', component: AlertShowcase },
-  { path: '/modals', name: 'Modals & Drawers', component: ModalShowcase },
-  { path: '/tabs', name: 'Tabs', component: TabsShowcase },
-  { path: '/accordion', name: 'Accordion', component: AccordionShowcase },
-  { path: '/navigation', name: 'Navigation', component: NavigationShowcase },
-  { path: '/feedback', name: 'Feedback & Progress', component: FeedbackShowcase },
-  { path: '/data', name: 'Data Display', component: DataShowcase },
+const navigationSections = [
+  {
+    title: 'SHOWCASE',
+    items: [
+      { path: '/', name: 'Home', component: Home },
+    ]
+  },
+  {
+    title: 'COMPONENTS',
+    items: [
+      { path: '/buttons', name: 'Buttons & Badges', component: ButtonShowcase },
+      { path: '/inputs', name: 'Text Inputs', component: InputShowcase },
+      { path: '/forms', name: 'Form Controls', component: FormControlsShowcase },
+      { path: '/alerts', name: 'Alerts & Messages', component: AlertShowcase },
+      { path: '/modals', name: 'Modals & Drawers', component: ModalShowcase },
+    ]
+  },
+  {
+    title: 'ADVANCED',
+    items: [
+      { path: '/tabs', name: 'Tabs', component: TabsShowcase },
+      { path: '/accordion', name: 'Accordion', component: AccordionShowcase },
+      { path: '/navigation', name: 'Navigation', component: NavigationShowcase },
+      { path: '/feedback', name: 'Feedback & Progress', component: FeedbackShowcase },
+      { path: '/data', name: 'Data Display', component: DataShowcase },
+    ]
+  }
 ];
+
+// Flatten for routes
+const components = navigationSections.flatMap(section => section.items);
 
 interface NavigationProps {
   isOpen: boolean;
@@ -42,28 +60,40 @@ function Navigation({ isOpen, onToggle }: NavigationProps) {
       {/* Mobile overlay */}
       {isOpen && <div className="sidebar-overlay" onClick={onToggle} />}
 
-      <nav className={`sidebar ${isOpen ? 'open' : ''}`}>
-        <div className="logo">
-          <h1>AetherUI</h1>
-          <p className="subtitle">Kitchen Sink</p>
-          <button className="close-btn" onClick={onToggle} aria-label="Close sidebar">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M6 18L18 6M6 6l12 12" />
+      <nav className={`sidebar ${isOpen ? 'open' : 'collapsed'}`}>
+        <div className="sidebar-header">
+          {isOpen && (
+            <>
+              <h1>AetherUI</h1>
+              <p className="subtitle">Kitchen Sink</p>
+            </>
+          )}
+          <button className="collapse-btn" onClick={onToggle} aria-label="Toggle sidebar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              {isOpen ? (
+                <path d="M15 18l-6-6 6-6" />
+              ) : (
+                <path d="M9 18l6-6-6-6" />
+              )}
             </svg>
           </button>
         </div>
-        <ul className="nav-list">
-          {components.map((comp) => (
-            <li key={comp.path} className={location.pathname === comp.path ? 'active' : ''}>
-              <Link to={comp.path} onClick={() => window.innerWidth < 1024 && onToggle()}>
-                {comp.name}
-              </Link>
-            </li>
+
+        <div className="nav-sections">
+          {navigationSections.map((section) => (
+            <div key={section.title} className="nav-section">
+              {isOpen && <div className="section-title">{section.title}</div>}
+              <ul className="nav-list">
+                {section.items.map((item) => (
+                  <li key={item.path} className={location.pathname === item.path ? 'active' : ''}>
+                    <Link to={item.path} onClick={() => window.innerWidth < 1024 && onToggle()}>
+                      {isOpen ? item.name : item.name.charAt(0)}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
-        <div className="footer">
-          <p>Headless Web Components</p>
-          <p className="version">v0.1.0</p>
         </div>
       </nav>
     </>
@@ -82,10 +112,11 @@ function App() {
   return (
     <Router basename="/showcase">
       <div className={`app ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed-app'}`}>
+        {/* Mobile menu toggle */}
         <button
-          className="menu-toggle"
+          className="mobile-menu-toggle"
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          aria-label="Toggle sidebar"
+          aria-label="Toggle menu"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M3 12h18M3 6h18M3 18h18" />
@@ -94,7 +125,7 @@ function App() {
 
         <Navigation isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
 
-        <main className={`content ${!sidebarOpen ? 'sidebar-closed' : ''}`}>
+        <main className={`content ${!sidebarOpen ? 'sidebar-collapsed' : ''}`}>
           <Routes>
             {components.map((comp) => (
               <Route key={comp.path} path={comp.path} element={<comp.component />} />
