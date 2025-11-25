@@ -70,6 +70,45 @@ function AccordionShowcase() {
           />
         </div>
       </div>
+
+      <div className="showcase-section">
+        <h2 className="section-title">CSS Customization</h2>
+        <div className="component-demo">
+          <div className="demo-label">Customize with CSS custom properties</div>
+          <CodeExample
+            title="CSS"
+            code={`/* Global styles or in your CSS file */
+ae-accordion {
+  --ae-accordion-border: 1px solid #e5e7eb;
+  --ae-accordion-border-radius: 0.5rem;
+  --ae-accordion-header-font-size: 0.9375rem;
+  --ae-accordion-header-font-weight: 600;
+  --ae-accordion-header-color: #111827;
+  --ae-accordion-header-padding: 1rem 1.25rem;
+  --ae-accordion-header-hover-bg: #f9fafb;
+  --ae-accordion-header-active-bg: #f3f4f6;
+  --ae-accordion-panel-padding: 0 1.25rem 1rem;
+}
+
+/* Customize header content styling */
+ae-accordion-item [slot="header"] {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Or inline with style attribute */
+<ae-accordion
+  style={{
+    '--ae-accordion-header-active-bg': '#e0e7ff',
+    '--ae-accordion-header-color': '#4f46e5'
+  }}
+>
+  {/* accordion items */}
+</ae-accordion>`}
+          />
+        </div>
+      </div>
     </div>
   );
 }

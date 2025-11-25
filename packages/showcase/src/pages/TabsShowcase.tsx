@@ -66,6 +66,37 @@ function TabsShowcase() {
           />
         </div>
       </div>
+
+      <div className="showcase-section">
+        <h2 className="section-title">CSS Customization</h2>
+        <div className="component-demo">
+          <div className="demo-label">Customize with CSS custom properties</div>
+          <CodeExample
+            title="CSS"
+            code={`/* Global styles or in your CSS file */
+ae-tabs {
+  --ae-tabs-border-color: #e5e7eb;
+  --ae-tabs-active-color: #111827;
+  --ae-tabs-inactive-color: #6b7280;
+  --ae-tabs-active-border: 2px solid #111827;
+  --ae-tabs-font-size: 0.875rem;
+  --ae-tabs-font-weight: 500;
+  --ae-tabs-padding: 0.75rem 1rem;
+  --ae-tabs-border-bottom: 1px solid #e5e7eb;
+}
+
+/* Or inline with style attribute in React */
+<ae-tabs
+  style={{
+    '--ae-tabs-active-color': '#5e7ce2',
+    '--ae-tabs-active-border': '2px solid #5e7ce2'
+  }}
+>
+  {/* tabs content */}
+</ae-tabs>`}
+          />
+        </div>
+      </div>
     </div>
   );
 }

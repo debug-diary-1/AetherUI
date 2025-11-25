@@ -157,6 +157,48 @@ function MyComponent() {
           />
         </div>
       </div>
+
+      <div className="showcase-section">
+        <h2 className="section-title">CSS Customization</h2>
+        <div className="component-demo">
+          <div className="demo-label">Customize with CSS custom properties</div>
+          <CodeExample
+            title="CSS"
+            code={`/* Modal styling */
+ae-modal {
+  --ae-modal-bg: white;
+  --ae-modal-border-radius: 0.5rem;
+  --ae-modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --ae-modal-max-width: 500px;
+  --ae-modal-padding: 1.5rem;
+}
+
+/* Drawer styling */
+ae-drawer {
+  --ae-drawer-bg: white;
+  --ae-drawer-width: 320px;
+  --ae-drawer-shadow: -4px 0 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Tooltip styling */
+ae-tooltip {
+  --ae-tooltip-bg: #111827;
+  --ae-tooltip-fg: white;
+  --ae-tooltip-border-radius: 0.375rem;
+  --ae-tooltip-padding: 0.5rem 0.75rem;
+  --ae-tooltip-font-size: 0.8125rem;
+}
+
+/* Popover styling */
+ae-popover {
+  --ae-popover-bg: white;
+  --ae-popover-border: 1px solid #e5e7eb;
+  --ae-popover-border-radius: 0.5rem;
+  --ae-popover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}`}
+          />
+        </div>
+      </div>
     </div>
   );
 }
