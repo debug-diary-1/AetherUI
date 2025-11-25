@@ -16,10 +16,10 @@ export const popoverStyles = css`
   .popover-content {
     position: fixed;
     z-index: var(--ae-popover-z-index, 1000);
-    background: var(--ae-popover-bg, white);
-    border: var(--ae-popover-border, 1px solid #e5e7eb);
+    background: var(--ae-popover-bg);
+    border: var(--ae-popover-border);
     border-radius: var(--ae-popover-border-radius, 0.5rem);
-    box-shadow: var(--ae-popover-shadow, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05));
+    box-shadow: var(--ae-popover-shadow);
     padding: var(--ae-popover-padding, 0.75rem 1rem);
     max-width: var(--ae-popover-max-width, 300px);
     animation: popoverFadeIn 0.2s ease;
@@ -29,8 +29,8 @@ export const popoverStyles = css`
     position: absolute;
     width: 10px;
     height: 10px;
-    background: var(--ae-popover-bg, white);
-    border: var(--ae-popover-border, 1px solid #e5e7eb);
+    background: var(--ae-popover-bg);
+    border: var(--ae-popover-border);
     transform: rotate(45deg);
   }
 
