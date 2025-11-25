@@ -18,7 +18,7 @@ export const progressStyles = css`
   .progress-track {
     flex: 1;
     overflow: hidden;
-    background: var(--ae-progress-track-bg, #e5e7eb);
+    background: var(--ae-progress-track-bg);
     border-radius: var(--ae-progress-border-radius, 9999px);
   }
 
@@ -43,27 +43,27 @@ export const progressStyles = css`
 
   /* Variants */
   :host([variant="primary"]) .progress-bar {
-    background: var(--ae-progress-bg-primary, #4f46e5);
+    background: var(--ae-progress-bg-primary);
   }
 
   :host([variant="secondary"]) .progress-bar {
-    background: var(--ae-progress-bg-secondary, #6b7280);
+    background: var(--ae-progress-bg-secondary);
   }
 
   :host([variant="success"]) .progress-bar {
-    background: var(--ae-progress-bg-success, #10b981);
+    background: var(--ae-progress-bg-success);
   }
 
   :host([variant="warning"]) .progress-bar {
-    background: var(--ae-progress-bg-warning, #f59e0b);
+    background: var(--ae-progress-bg-warning);
   }
 
   :host([variant="error"]) .progress-bar {
-    background: var(--ae-progress-bg-error, #ef4444);
+    background: var(--ae-progress-bg-error);
   }
 
   :host([variant="info"]) .progress-bar {
-    background: var(--ae-progress-bg-info, #3b82f6);
+    background: var(--ae-progress-bg-info);
   }
 
   /* Indeterminate */
@@ -119,7 +119,7 @@ export const progressStyles = css`
   .progress-label {
     font-size: var(--ae-progress-label-font-size, 0.875rem);
     font-weight: var(--ae-progress-label-font-weight, 500);
-    color: var(--ae-progress-label-color, #374151);
+    color: var(--ae-progress-label-color);
     white-space: nowrap;
     min-width: 3rem;
     text-align: right;
