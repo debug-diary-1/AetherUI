@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CodeExample } from '../components/CodeExample';
 
 function FormControlsShowcase() {
   const [checkboxChecked, setCheckboxChecked] = useState(false);
@@ -28,6 +29,16 @@ function FormControlsShowcase() {
           <p style={{ marginTop: '1rem', color: '#666' }}>
             Checked: {checkboxChecked ? 'Yes' : 'No'}
           </p>
+          <CodeExample
+            code={`const [checked, setChecked] = useState(false);
+
+<ae-checkbox
+  checked={checked}
+  onAeCheckboxChange={(e) => setChecked(e.target.checked)}
+>
+  I agree to the terms
+</ae-checkbox>`}
+          />
         </div>
       </div>
 
@@ -62,6 +73,18 @@ function FormControlsShowcase() {
           <p style={{ marginTop: '1rem', color: '#666' }}>
             Selected: {radioValue}
           </p>
+          <CodeExample
+            code={`const [value, setValue] = useState('option1');
+
+<ae-radio
+  value={value}
+  onAeRadioChange={(e) => setValue(e.target.value)}
+>
+  <ae-radio-option value="option1">Option 1</ae-radio-option>
+  <ae-radio-option value="option2">Option 2</ae-radio-option>
+  <ae-radio-option value="option3">Option 3</ae-radio-option>
+</ae-radio>`}
+          />
         </div>
       </div>
 
@@ -82,6 +105,19 @@ function FormControlsShowcase() {
           <p style={{ marginTop: '1rem', color: '#666' }}>
             Selected framework: {selectValue || 'None'}
           </p>
+          <CodeExample
+            code={`const [value, setValue] = useState('');
+
+<ae-select
+  placeholder="Choose an option..."
+  value={value}
+  onAeSelectChange={(e) => setValue(e.target.value)}
+>
+  <ae-select-option value="react">React</ae-select-option>
+  <ae-select-option value="vue">Vue</ae-select-option>
+  <ae-select-option value="angular">Angular</ae-select-option>
+</ae-select>`}
+          />
         </div>
       </div>
 

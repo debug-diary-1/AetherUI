@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CodeExample } from '../components/CodeExample';
 
 function ModalShowcase() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -40,6 +41,39 @@ function ModalShowcase() {
               </div>
             </div>
           </ae-modal>
+
+          <CodeExample
+            title="React Example"
+            code={`import { useState } from 'react';
+import { defineAeModal } from '@aetherui/core';
+
+defineAeModal();
+
+function MyComponent() {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  return (
+    <>
+      <ae-button onClick={() => setModalOpen(true)}>
+        Open Modal
+      </ae-button>
+
+      <ae-modal
+        open={modalOpen}
+        onAeModalClose={() => setModalOpen(false)}
+      >
+        <div style={{ padding: '2rem' }}>
+          <h2>Modal Title</h2>
+          <p>Modal content goes here...</p>
+          <ae-button onClick={() => setModalOpen(false)}>
+            Close
+          </ae-button>
+        </div>
+      </ae-modal>
+    </>
+  );
+}`}
+          />
         </div>
       </div>
 
@@ -66,6 +100,19 @@ function ModalShowcase() {
               </ae-button>
             </div>
           </ae-drawer>
+
+          <CodeExample
+            code={`<ae-drawer
+  open={drawerOpen}
+  position="right"
+  onAeDrawerClose={() => setDrawerOpen(false)}
+>
+  <div style={{ padding: '2rem' }}>
+    <h2>Drawer Title</h2>
+    <p>Drawer content...</p>
+  </div>
+</ae-drawer>`}
+          />
         </div>
       </div>
 
@@ -79,6 +126,15 @@ function ModalShowcase() {
               <p>This is popover content</p>
             </div>
           </ae-popover>
+
+          <CodeExample
+            code={`<ae-popover>
+  <ae-button slot="trigger">Trigger Popover</ae-button>
+  <div style={{ padding: '1rem' }}>
+    <p>This is popover content</p>
+  </div>
+</ae-popover>`}
+          />
         </div>
       </div>
 
@@ -89,6 +145,12 @@ function ModalShowcase() {
           <ae-tooltip content="This is a helpful tooltip">
             <ae-button>Hover me</ae-button>
           </ae-tooltip>
+
+          <CodeExample
+            code={`<ae-tooltip content="This is a helpful tooltip">
+  <ae-button>Hover me</ae-button>
+</ae-tooltip>`}
+          />
         </div>
       </div>
     </div>
