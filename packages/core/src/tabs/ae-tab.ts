@@ -36,6 +36,12 @@ export class AeTab extends LitElement {
     :host([aria-selected="true"]) button {
       color: var(--ae-tabs-active-color);
       font-weight: var(--ae-tabs-selected-weight, 500);
+      background-color: transparent;
+    }
+
+    /* Remove hover background from selected tabs */
+    :host([aria-selected="true"]) button:hover {
+      background-color: transparent;
     }
     
     /* The indicator for selected tab - horizontal (default) */
