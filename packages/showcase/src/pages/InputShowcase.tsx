@@ -68,6 +68,8 @@ function InputShowcase() {
             rows="5"
             value={textareaValue}
             onAeTextareaInput={(e: any) => setTextareaValue(e.target.value)}
+            maxlength="500"
+            show-count
           />
           <p style={{ marginTop: '1rem', color: '#666' }}>
             Character count: {textareaValue.length}
@@ -80,6 +82,8 @@ function InputShowcase() {
   rows="5"
   value={value}
   onAeTextareaInput={(e) => setValue(e.target.value)}
+  maxlength="500"
+  show-count
 />`}
           />
         </div>
@@ -94,12 +98,12 @@ function InputShowcase() {
           </div>
           <div className="component-demo">
             <div className="demo-label">Required Input</div>
-            <ae-input required placeholder="Required field" />
+            <ae-input label="Email Address" required placeholder="Required field" />
           </div>
         </div>
         <CodeExample
           code={`<ae-input disabled placeholder="Disabled input" value="Cannot edit" />
-<ae-input required placeholder="Required field" />`}
+<ae-input label="Email Address" required placeholder="Required field" />`}
         />
       </div>
 

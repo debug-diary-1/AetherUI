@@ -298,6 +298,7 @@
   --ae-input-disabled-border: #e5e7eb;
   --ae-input-error-border: #dc2626;
   --ae-input-error-color: #dc2626;
+  --ae-input-required-color: #dc2626;
   --ae-input-font-size: 0.875rem;
 
   /* ===== Badge Component ===== */
