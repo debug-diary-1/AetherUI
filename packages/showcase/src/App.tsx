@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import './App.css';
 
 // Component pages
@@ -28,36 +29,72 @@ const components = [
   { path: '/data', name: 'Data Display', component: DataShowcase },
 ];
 
-function Navigation() {
+interface NavigationProps {
+  isOpen: boolean;
+  onToggle: () => void;
+}
+
+function Navigation({ isOpen, onToggle }: NavigationProps) {
   const location = useLocation();
 
   return (
-    <nav className="sidebar">
-      <div className="logo">
-        <h1>AetherUI</h1>
-        <p className="subtitle">Kitchen Sink</p>
-      </div>
-      <ul className="nav-list">
-        {components.map((comp) => (
-          <li key={comp.path} className={location.pathname === comp.path ? 'active' : ''}>
-            <Link to={comp.path}>{comp.name}</Link>
-          </li>
-        ))}
-      </ul>
-      <div className="footer">
-        <p>Headless Web Components</p>
-        <p className="version">v0.1.0</p>
-      </div>
-    </nav>
+    <>
+      {/* Mobile overlay */}
+      {isOpen && <div className="sidebar-overlay" onClick={onToggle} />}
+
+      <nav className={`sidebar ${isOpen ? 'open' : ''}`}>
+        <div className="logo">
+          <h1>AetherUI</h1>
+          <p className="subtitle">Kitchen Sink</p>
+          <button className="close-btn" onClick={onToggle} aria-label="Close sidebar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <ul className="nav-list">
+          {components.map((comp) => (
+            <li key={comp.path} className={location.pathname === comp.path ? 'active' : ''}>
+              <Link to={comp.path} onClick={() => window.innerWidth < 1024 && onToggle()}>
+                {comp.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="footer">
+          <p>Headless Web Components</p>
+          <p className="version">v0.1.0</p>
+        </div>
+      </nav>
+    </>
   );
 }
 
 function App() {
+  // Initialize sidebar state based on screen size
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 1025;
+    }
+    return true;
+  });
+
   return (
     <Router basename="/showcase">
       <div className="app">
-        <Navigation />
-        <main className="content">
+        <button
+          className="menu-toggle"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          aria-label="Toggle sidebar"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M3 12h18M3 6h18M3 18h18" />
+          </svg>
+        </button>
+
+        <Navigation isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
+
+        <main className={`content ${!sidebarOpen ? 'sidebar-closed' : ''}`}>
           <Routes>
             {components.map((comp) => (
               <Route key={comp.path} path={comp.path} element={<comp.component />} />
