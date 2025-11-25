@@ -63,10 +63,13 @@ export class AeTreeItem extends LitElement {
   @query('slot:not([name])')
   private defaultSlot!: HTMLSlotElement;
 
-  private get hasChildren(): boolean {
-    if (!this.defaultSlot) return false;
+  @state()
+  private accessor hasChildren = false;
+
+  private handleSlotChange() {
+    if (!this.defaultSlot) return;
     const nodes = this.defaultSlot.assignedElements({ flatten: true });
-    return nodes.some(node => node.tagName.toLowerCase() === 'ae-tree-item');
+    this.hasChildren = nodes.some(node => node.tagName.toLowerCase() === 'ae-tree-item');
   }
 
   private get indentLevel(): number {
@@ -131,7 +134,6 @@ export class AeTreeItem extends LitElement {
   }
 
   render() {
-    const hasChildren = this.hasChildren;
     const indent = this.indentLevel;
 
     return html`
@@ -139,7 +141,7 @@ export class AeTreeItem extends LitElement {
         part="base"
         class="tree-item-base"
         role="treeitem"
-        aria-expanded="${hasChildren ? this.expanded : 'false'}"
+        aria-expanded="${this.hasChildren ? this.expanded : 'false'}"
         aria-selected="${this.selected}"
         aria-disabled="${this.disabled}"
         aria-level="${indent + 1}"
@@ -150,7 +152,7 @@ export class AeTreeItem extends LitElement {
           @click="${this.handleItemClick}"
           style="padding-left: calc(${indent} * var(--indent-size, 1.5rem))"
         >
-          ${hasChildren
+          ${this.hasChildren
             ? html`
                 <button
                   part="expand-button"
@@ -185,17 +187,13 @@ export class AeTreeItem extends LitElement {
           </span>
         </div>
 
-        ${hasChildren
-          ? html`
-              <div
-                part="children"
-                class="children ${this.expanded ? 'expanded' : ''}"
-                role="group"
-              >
-                <slot></slot>
-              </div>
-            `
-          : ''}
+        <div
+          part="children"
+          class="children ${this.expanded ? 'expanded' : ''}"
+          role="group"
+        >
+          <slot @slotchange="${this.handleSlotChange}"></slot>
+        </div>
       </div>
     `;
   }
