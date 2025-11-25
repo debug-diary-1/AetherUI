@@ -362,10 +362,26 @@
   --ae-badge-color-success: white;
   --ae-badge-bg-danger: #ef4444;
   --ae-badge-color-danger: white;
+  --ae-badge-bg-error: #ef4444;  /* Alias for danger */
+  --ae-badge-color-error: white;
   --ae-badge-bg-warning: #f59e0b;
   --ae-badge-color-warning: white;
   --ae-badge-bg-info: #3b82f6;
   --ae-badge-color-info: white;
+
+  /* Badge outline variants */
+  --ae-badge-color-primary-outline: #4f46e5;
+  --ae-badge-border-primary-outline: #4f46e5;
+  --ae-badge-color-secondary-outline: #6b7280;
+  --ae-badge-border-secondary-outline: #6b7280;
+  --ae-badge-color-success-outline: #10b981;
+  --ae-badge-border-success-outline: #10b981;
+  --ae-badge-color-error-outline: #ef4444;
+  --ae-badge-border-error-outline: #ef4444;
+  --ae-badge-color-warning-outline: #f59e0b;
+  --ae-badge-border-warning-outline: #f59e0b;
+  --ae-badge-color-info-outline: #3b82f6;
+  --ae-badge-border-info-outline: #3b82f6;
 
   /* ===== Breadcrumb Component ===== */
 
@@ -384,6 +400,14 @@
   --ae-spinner-size-lg: 2rem;
   --ae-spinner-border-width: 2px;
 
+  /* Spinner variant colors */
+  --ae-spinner-color-primary: #4f46e5;
+  --ae-spinner-color-secondary: #6b7280;
+  --ae-spinner-color-success: #10b981;
+  --ae-spinner-color-error: #ef4444;
+  --ae-spinner-color-warning: #f59e0b;
+  --ae-spinner-color-info: #3b82f6;
+
   /* ===== Progress Component ===== */
 
   --ae-progress-bg: #e5e7eb;
@@ -391,6 +415,14 @@
   --ae-progress-height: 0.5rem;
   --ae-progress-border-radius: 9999px;
   --ae-progress-transition: width 0.3s ease;
+
+  /* Progress variant colors */
+  --ae-progress-bg-primary: #4f46e5;
+  --ae-progress-bg-secondary: #6b7280;
+  --ae-progress-bg-success: #10b981;
+  --ae-progress-bg-error: #ef4444;
+  --ae-progress-bg-warning: #f59e0b;
+  --ae-progress-bg-info: #3b82f6;
 
   /* ===== Pagination Component ===== */
 
