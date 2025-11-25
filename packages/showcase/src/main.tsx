@@ -25,6 +25,7 @@ import {
   defineAePopover,
   defineAeProgress,
   defineAeRadio,
+  defineAeRadioGroup,
   defineAeSelect,
   defineAeSpinner,
   defineAeSwitch,
@@ -54,6 +55,7 @@ defineAePagination();
 defineAePopover();
 defineAeProgress();
 defineAeRadio();
+defineAeRadioGroup();
 defineAeSelect();
 defineAeSpinner();
 defineAeSwitch();

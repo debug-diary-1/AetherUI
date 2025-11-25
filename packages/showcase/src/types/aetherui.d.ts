@@ -1,4 +1,4 @@
-import type { AeAccordion, AeAlert, AeAutocomplete, AeBadge, AeBreadcrumb, AeButton, AeCheckbox, AeCombo, AeDrawer, AeDropdown, AeInput, AeMenu, AeModal, AePagination, AePopover, AeProgress, AeRadio, AeSelect, AeSpinner, AeSwitch, AeTabs, AeTextarea, AeToast, AeTooltip, AeTreeView, AeTreeItem } from '@aetherui/core';
+import type { AeAccordion, AeAlert, AeAutocomplete, AeBadge, AeBreadcrumb, AeButton, AeCheckbox, AeCombo, AeDrawer, AeDropdown, AeInput, AeMenu, AeModal, AePagination, AePopover, AeProgress, AeRadio, AeRadioGroup, AeSelect, AeSpinner, AeSwitch, AeTabs, AeTextarea, AeToast, AeTooltip, AeTreeView, AeTreeItem } from '@aetherui/core';
 
 declare global {
   namespace JSX {
@@ -78,10 +78,8 @@ declare global {
       'ae-radio': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & Partial<AeRadio> & {
         onAeRadioChange?: (e: CustomEvent) => void;
       }, HTMLElement>;
-      'ae-radio-option': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
-        value?: string;
-        disabled?: boolean;
-        checked?: boolean;
+      'ae-radio-group': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & Partial<AeRadioGroup> & {
+        onAeRadioGroupChange?: (e: CustomEvent) => void;
       }, HTMLElement>;
 
       'ae-select': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & Partial<AeSelect> & {

@@ -62,28 +62,30 @@ function FormControlsShowcase() {
         <h2 className="section-title">Radio Group</h2>
         <div className="component-demo">
           <div className="demo-label">Radio Button Group</div>
-          <ae-radio
+          <ae-radio-group
+            name="showcase-radio"
             value={radioValue}
-            onAeRadioChange={(e: any) => setRadioValue(e.target.value)}
+            onAeRadioGroupChange={(e: any) => setRadioValue(e.detail.value)}
           >
-            <ae-radio-option value="option1">Option 1</ae-radio-option>
-            <ae-radio-option value="option2">Option 2</ae-radio-option>
-            <ae-radio-option value="option3">Option 3</ae-radio-option>
-          </ae-radio>
+            <ae-radio value="option1">Option 1</ae-radio>
+            <ae-radio value="option2">Option 2</ae-radio>
+            <ae-radio value="option3">Option 3</ae-radio>
+          </ae-radio-group>
           <p style={{ marginTop: '1rem', color: '#666' }}>
             Selected: {radioValue}
           </p>
           <CodeExample
             code={`const [value, setValue] = useState('option1');
 
-<ae-radio
+<ae-radio-group
+  name="my-radio-group"
   value={value}
-  onAeRadioChange={(e) => setValue(e.target.value)}
+  onAeRadioGroupChange={(e) => setValue(e.detail.value)}
 >
-  <ae-radio-option value="option1">Option 1</ae-radio-option>
-  <ae-radio-option value="option2">Option 2</ae-radio-option>
-  <ae-radio-option value="option3">Option 3</ae-radio-option>
-</ae-radio>`}
+  <ae-radio value="option1">Option 1</ae-radio>
+  <ae-radio value="option2">Option 2</ae-radio>
+  <ae-radio value="option3">Option 3</ae-radio>
+</ae-radio-group>`}
           />
         </div>
       </div>
@@ -170,14 +172,15 @@ function MyForm() {
         Enable notifications
       </ae-switch>
 
-      <ae-radio
+      <ae-radio-group
+        name="plan"
         value={plan}
-        onAeRadioChange={(e) => setPlan(e.target.value)}
+        onAeRadioGroupChange={(e) => setPlan(e.detail.value)}
       >
-        <ae-radio-option value="basic">Basic</ae-radio-option>
-        <ae-radio-option value="pro">Pro</ae-radio-option>
-        <ae-radio-option value="enterprise">Enterprise</ae-radio-option>
-      </ae-radio>
+        <ae-radio value="basic">Basic</ae-radio>
+        <ae-radio value="pro">Pro</ae-radio>
+        <ae-radio value="enterprise">Enterprise</ae-radio>
+      </ae-radio-group>
 
       <ae-select
         value={framework}
