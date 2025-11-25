@@ -44,80 +44,80 @@ export const badgeStyles = css`
 
   /* Variant: Primary (Solid) */
   :host([variant="primary"]:not([outline])) .badge-base {
-    background: var(--ae-badge-bg-primary, #4f46e5);
-    color: var(--ae-badge-color-primary, white);
+    background: var(--ae-badge-bg-primary);
+    color: var(--ae-badge-color-primary);
   }
 
   /* Variant: Primary (Outline) */
   :host([variant="primary"][outline]) .badge-base {
     background: transparent;
-    color: var(--ae-badge-color-primary-outline, #4f46e5);
-    border-color: var(--ae-badge-border-primary-outline, #4f46e5);
+    color: var(--ae-badge-color-primary-outline);
+    border-color: var(--ae-badge-border-primary-outline);
   }
 
   /* Variant: Secondary (Solid) */
   :host([variant="secondary"]:not([outline])) .badge-base {
-    background: var(--ae-badge-bg-secondary, #6b7280);
-    color: var(--ae-badge-color-secondary, white);
+    background: var(--ae-badge-bg-secondary);
+    color: var(--ae-badge-color-secondary);
   }
 
   /* Variant: Secondary (Outline) */
   :host([variant="secondary"][outline]) .badge-base {
     background: transparent;
-    color: var(--ae-badge-color-secondary-outline, #6b7280);
-    border-color: var(--ae-badge-border-secondary-outline, #6b7280);
+    color: var(--ae-badge-color-secondary-outline);
+    border-color: var(--ae-badge-border-secondary-outline);
   }
 
   /* Variant: Success (Solid) */
   :host([variant="success"]:not([outline])) .badge-base {
-    background: var(--ae-badge-bg-success, #10b981);
-    color: var(--ae-badge-color-success, white);
+    background: var(--ae-badge-bg-success);
+    color: var(--ae-badge-color-success);
   }
 
   /* Variant: Success (Outline) */
   :host([variant="success"][outline]) .badge-base {
     background: transparent;
-    color: var(--ae-badge-color-success-outline, #10b981);
-    border-color: var(--ae-badge-border-success-outline, #10b981);
+    color: var(--ae-badge-color-success-outline);
+    border-color: var(--ae-badge-border-success-outline);
   }
 
   /* Variant: Warning (Solid) */
   :host([variant="warning"]:not([outline])) .badge-base {
-    background: var(--ae-badge-bg-warning, #f59e0b);
-    color: var(--ae-badge-color-warning, white);
+    background: var(--ae-badge-bg-warning);
+    color: var(--ae-badge-color-warning);
   }
 
   /* Variant: Warning (Outline) */
   :host([variant="warning"][outline]) .badge-base {
     background: transparent;
-    color: var(--ae-badge-color-warning-outline, #f59e0b);
-    border-color: var(--ae-badge-border-warning-outline, #f59e0b);
+    color: var(--ae-badge-color-warning-outline);
+    border-color: var(--ae-badge-border-warning-outline);
   }
 
   /* Variant: Error (Solid) */
   :host([variant="error"]:not([outline])) .badge-base {
-    background: var(--ae-badge-bg-error, #ef4444);
-    color: var(--ae-badge-color-error, white);
+    background: var(--ae-badge-bg-error);
+    color: var(--ae-badge-color-error);
   }
 
   /* Variant: Error (Outline) */
   :host([variant="error"][outline]) .badge-base {
     background: transparent;
-    color: var(--ae-badge-color-error-outline, #ef4444);
-    border-color: var(--ae-badge-border-error-outline, #ef4444);
+    color: var(--ae-badge-color-error-outline);
+    border-color: var(--ae-badge-border-error-outline);
   }
 
   /* Variant: Info (Solid) */
   :host([variant="info"]:not([outline])) .badge-base {
-    background: var(--ae-badge-bg-info, #3b82f6);
-    color: var(--ae-badge-color-info, white);
+    background: var(--ae-badge-bg-info);
+    color: var(--ae-badge-color-info);
   }
 
   /* Variant: Info (Outline) */
   :host([variant="info"][outline]) .badge-base {
     background: transparent;
-    color: var(--ae-badge-color-info-outline, #3b82f6);
-    border-color: var(--ae-badge-border-info-outline, #3b82f6);
+    color: var(--ae-badge-color-info-outline);
+    border-color: var(--ae-badge-border-info-outline);
   }
 
   /* Close button */
@@ -157,26 +157,26 @@ export const badgeStyles = css`
   }
 
   :host([variant="primary"][dot]) .dot-indicator {
-    background: var(--ae-badge-bg-primary, #4f46e5);
+    background: var(--ae-badge-bg-primary);
   }
 
   :host([variant="secondary"][dot]) .dot-indicator {
-    background: var(--ae-badge-bg-secondary, #6b7280);
+    background: var(--ae-badge-bg-secondary);
   }
 
   :host([variant="success"][dot]) .dot-indicator {
-    background: var(--ae-badge-bg-success, #10b981);
+    background: var(--ae-badge-bg-success);
   }
 
   :host([variant="warning"][dot]) .dot-indicator {
-    background: var(--ae-badge-bg-warning, #f59e0b);
+    background: var(--ae-badge-bg-warning);
   }
 
   :host([variant="error"][dot]) .dot-indicator {
-    background: var(--ae-badge-bg-error, #ef4444);
+    background: var(--ae-badge-bg-error);
   }
 
   :host([variant="info"][dot]) .dot-indicator {
-    background: var(--ae-badge-bg-info, #3b82f6);
+    background: var(--ae-badge-bg-info);
   }
 `;
