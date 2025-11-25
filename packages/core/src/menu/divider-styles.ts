@@ -11,6 +11,6 @@ export const menuDividerStyles = css`
   .menu-divider {
     height: 1px;
     margin: var(--ae-menu-divider-margin, 0.5rem 0);
-    background: var(--ae-menu-divider-color, #e5e7eb);
+    background: var(--ae-menu-divider-color);
   }
 `;
