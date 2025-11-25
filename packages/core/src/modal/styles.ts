@@ -6,8 +6,8 @@ export const modalStyles = css`
     --ae-modal-max-width: calc(100vw - 2rem);
     --ae-modal-height: auto;
     --ae-modal-max-height: calc(100vh - 2rem);
-    --ae-modal-background: var(--ae-color-surface, #ffffff);
-    --ae-modal-text-color: var(--ae-color-text, #000000);
+    --ae-modal-background: var(--ae-color-surface);
+    --ae-modal-text-color: var(--ae-color-text);
     --ae-modal-border-radius: var(--ae-border-radius, 0.5rem);
     --ae-modal-padding: 1.5rem;
     --ae-modal-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -42,7 +42,7 @@ export const modalStyles = css`
   .header {
     padding: var(--ae-modal-padding);
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--ae-color-border, #eaeaea);
+    border-bottom: 1px solid var(--ae-color-border);
     position: relative;
     color: var(--ae-modal-text-color);
   }
@@ -55,7 +55,7 @@ export const modalStyles = css`
   .footer {
     padding: var(--ae-modal-padding);
     padding-top: 0.75rem;
-    border-top: 1px solid var(--ae-color-border, #eaeaea);
+    border-top: 1px solid var(--ae-color-border);
     display: flex;
     justify-content: flex-end;
     gap: 0.5rem;
