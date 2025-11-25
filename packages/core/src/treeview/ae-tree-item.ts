@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { treeItemStyles } from './tree-item-styles';
 
 /**
@@ -64,7 +64,7 @@ export class AeTreeItem extends LitElement {
   private defaultSlot!: HTMLSlotElement;
 
   @state()
-  private accessor hasChildren = false;
+  private hasChildren = false;
 
   private handleSlotChange() {
     if (!this.defaultSlot) return;
