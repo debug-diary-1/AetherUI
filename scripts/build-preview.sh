@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 set -e
 
-echo "🏗️  Building AetherUI Preview (Storybook + Kitchen Sink)"
+echo "🏗️  Building AetherUI Preview (Storybook + Documentation)"
 
 # Build Storybook
 echo "📚 Building Storybook..."
 pnpm build-storybook
 
-# Build Kitchen Sink Showcase
-echo "🍽️  Building Kitchen Sink Showcase..."
-pnpm showcase:build
+# Build Documentation
+echo "📖 Building Documentation..."
+pnpm docs:build
 
 # Create preview directory structure
 echo "📦 Creating preview directory..."
@@ -20,9 +20,9 @@ mkdir -p preview-build
 echo "📋 Copying Storybook..."
 cp -r storybook-static preview-build/storybook
 
-# Copy Showcase build
-echo "📋 Copying Showcase..."
-cp -r packages/showcase/dist preview-build/showcase
+# Copy Documentation build
+echo "📋 Copying Documentation..."
+cp -r packages/docs/dist preview-build/docs
 
 # Create landing page
 echo "🎨 Creating landing page..."
@@ -32,7 +32,7 @@ cat > preview-build/index.html << 'EOF'
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AetherUI Preview - Storybook & Kitchen Sink</title>
+  <title>AetherUI Preview - Storybook & Documentation</title>
   <style>
     * {
       margin: 0;
@@ -190,7 +190,7 @@ cat > preview-build/index.html << 'EOF'
   <div class="container">
     <div class="header">
       <h1>AetherUI Preview</h1>
-      <p>Choose your experience: Interactive components or comprehensive showcase</p>
+      <p>Choose your experience: Interactive playground or comprehensive documentation</p>
     </div>
 
     <div class="cards">
@@ -209,19 +209,19 @@ cat > preview-build/index.html << 'EOF'
         <span class="card-button">Open Storybook →</span>
       </a>
 
-      <a href="/showcase/" class="card">
-        <div class="card-icon">🍽️</div>
-        <h2 class="card-title">Kitchen Sink</h2>
+      <a href="/docs/" class="card">
+        <div class="card-icon">📖</div>
+        <h2 class="card-title">Documentation</h2>
         <p class="card-description">
-          Complete showcase demonstrating all components with custom React integration
+          Complete documentation with interactive examples, guides, and API references
         </p>
         <ul class="card-features">
-          <li>All 28+ components in action</li>
-          <li>Custom styling examples</li>
-          <li>React integration patterns</li>
-          <li>Real-world examples</li>
+          <li>Interactive component examples</li>
+          <li>Installation & setup guides</li>
+          <li>Theme customization</li>
+          <li>Accessibility best practices</li>
         </ul>
-        <span class="card-button">View Showcase →</span>
+        <span class="card-button">View Documentation →</span>
       </a>
     </div>
 
@@ -240,4 +240,4 @@ echo "✅ Preview build complete!"
 echo "📁 Output: preview-build/"
 echo "   - preview-build/index.html (landing page)"
 echo "   - preview-build/storybook/ (Storybook)"
-echo "   - preview-build/showcase/ (Kitchen Sink)"
+echo "   - preview-build/docs/ (Documentation)"
