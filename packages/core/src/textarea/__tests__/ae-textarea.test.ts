@@ -1,6 +1,7 @@
 import { html, fixture, expect, oneEvent } from '@open-wc/testing';
 import { AeTextarea } from '../ae-textarea.js';
 import '../ae-textarea.js';
+import { getComponentStyles, assertNoHardcodedColors, assertCSSVariablesUsed } from '../../test-utils/theme-test-helpers.js';
 
 describe('ae-textarea', () => {
   it('has correct default properties', async () => {
@@ -163,5 +164,39 @@ describe('ae-textarea', () => {
     // These attributes should not exist when undefined
     expect(textarea.hasAttribute('minlength')).to.be.false;
     expect(textarea.hasAttribute('maxlength')).to.be.false;
+  });
+
+  describe('Theme Integration', () => {
+    it('uses CSS variables for textarea styling', async () => {
+      const el = await fixture<AeTextarea>(html`<ae-textarea></ae-textarea>`);
+      const stylesText = getComponentStyles(el);
+
+      // Check that theme variables are used
+      assertCSSVariablesUsed(stylesText, [
+        '--ae-textarea-border',
+        '--ae-textarea-bg',
+        '--ae-textarea-color',
+        '--ae-textarea-focus-ring',
+      ], 'Textarea');
+    });
+
+    it('does not have hardcoded color fallbacks', async () => {
+      const el = await fixture<AeTextarea>(html`<ae-textarea></ae-textarea>`);
+      const stylesText = getComponentStyles(el);
+
+      // Ensure no hardcoded colors in styles
+      assertNoHardcodedColors(stylesText, { componentName: 'Textarea' });
+    });
+
+    it('computed styles exist at runtime', async () => {
+      const el = await fixture<AeTextarea>(html`<ae-textarea></ae-textarea>`);
+      await el.updateComplete;
+
+      const wrapper = el.shadowRoot!.querySelector('.textarea-wrapper');
+      expect(wrapper).to.exist;
+
+      const styles = window.getComputedStyle(wrapper!);
+      expect(styles.borderColor).to.exist;
+    });
   });
 });

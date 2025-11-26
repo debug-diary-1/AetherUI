@@ -348,6 +348,27 @@
   --ae-select-help-text-font-size: 0.75rem;
   --ae-select-help-text-margin-top: 0.25rem;
 
+  /* Textarea-specific variables (shares most with Input) */
+  --ae-textarea-bg: white;
+  --ae-textarea-border: 1px solid #d1d5db;
+  --ae-textarea-border-radius: 0.375rem;
+  --ae-textarea-color: #111827;
+  --ae-textarea-placeholder-color: #9ca3af;
+  --ae-textarea-padding: 0.5rem 0.75rem;
+  --ae-textarea-border-hover: #9ca3af;
+  --ae-textarea-border-focus: #4f46e5;
+  --ae-textarea-focus-ring: rgba(79, 70, 229, 0.3);
+  --ae-textarea-border-error: #dc2626;
+  --ae-textarea-focus-ring-error: rgba(220, 38, 38, 0.3);
+  --ae-textarea-bg-disabled: #f3f4f6;
+  --ae-textarea-border-disabled: #e5e7eb;
+  --ae-textarea-color-disabled: #9ca3af;
+  --ae-textarea-label-color: #374151;
+  --ae-textarea-required-color: #dc2626;
+  --ae-textarea-help-text-color: #6b7280;
+  --ae-textarea-error-text-color: #dc2626;
+  --ae-textarea-char-count-color: #6b7280;
+
   /* ===== Badge Component ===== */
 
   --ae-badge-padding: 0.125rem 0.5rem;
@@ -438,6 +459,17 @@
   --ae-pagination-item-disabled-color: #9ca3af;
   --ae-pagination-item-disabled-bg: #f3f4f6;
   --ae-pagination-border-radius: 0.375rem;
+  /* Aliases for component style compatibility */
+  --ae-pagination-border: var(--ae-pagination-item-border);
+  --ae-pagination-bg: var(--ae-pagination-item-bg);
+  --ae-pagination-color: var(--ae-pagination-item-color);
+  --ae-pagination-bg-hover: var(--ae-pagination-item-hover-bg);
+  --ae-pagination-border-hover: var(--ae-color-primary);
+  --ae-pagination-focus-ring: rgba(79, 70, 229, 0.3);
+  --ae-pagination-bg-active: var(--ae-pagination-item-active-bg);
+  --ae-pagination-color-active: var(--ae-pagination-item-active-color);
+  --ae-pagination-border-active: var(--ae-pagination-item-active-border);
+  --ae-pagination-ellipsis-color: var(--ae-pagination-item-color);
 
   /* ===== Menu Component ===== */
 

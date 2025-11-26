@@ -12,13 +12,9 @@ export const accordionStyles = css`
     overflow: hidden;
     background: var(--ae-accordion-bg);
     /* Add subtle shadow for depth */
-    box-shadow: var(
-      --ae-accordion-shadow, 
-      0 1px 3px rgba(0, 0, 0, 0.05),
-      0 1px 2px rgba(0, 0, 0, 0.03)
-    );
+    box-shadow: var(--ae-accordion-shadow);
     /* Optional border */
-    border: var(--ae-accordion-border, 1px solid #e5e7eb);
+    border: var(--ae-accordion-border);
   }
 
   .accordion {
@@ -28,7 +24,7 @@ export const accordionStyles = css`
   }
 
   ::slotted(ae-accordion-item:not(:last-child)) {
-    border-bottom: var(--ae-accordion-divider, 1px solid #e5e7eb);
+    border-bottom: var(--ae-accordion-divider);
   }
 `;
 

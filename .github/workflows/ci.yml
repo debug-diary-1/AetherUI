@@ -71,6 +71,28 @@ jobs:
         run: pnpm lint
         timeout-minutes: 5
 
+      - name: Validate theme integration (no hardcoded colors)
+        run: |
+          echo "Checking for hardcoded colors in component styles..."
+          FOUND_ISSUES=false
+
+          # Check for hardcoded hex colors in styles.ts files
+          if grep -rn --include="styles.ts" "#[0-9a-fA-F]\{3,6\}" packages/core/src/ | grep -v "@cssproperty\|//.*#\|/\*.*#"; then
+            echo ""
+            echo "ERROR: Hardcoded hex colors found in component styles!"
+            echo "Please use CSS variables from the theme system instead."
+            FOUND_ISSUES=true
+          fi
+
+          if [ "$FOUND_ISSUES" = true ]; then
+            echo ""
+            echo "See packages/tokens/src/light.css and dark.css for available variables."
+            exit 1
+          fi
+
+          echo "Theme validation passed - no hardcoded colors found!"
+        timeout-minutes: 2
+
       - name: Run tests
         run: NODE_OPTIONS='--max-old-space-size=2048' pnpm test
         timeout-minutes: 15

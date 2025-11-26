@@ -31,7 +31,7 @@ export const selectStyles = css`
     position: relative;
     display: flex;
     align-items: center;
-    border: var(--ae-select-border, 1px solid #d1d5db);
+    border: var(--ae-select-border);
     border-radius: var(--ae-select-border-radius, 0.375rem);
     background: var(--ae-select-bg);
     transition: all 0.2s ease;
