@@ -3,13 +3,17 @@ set -e
 
 echo "🏗️  Building AetherUI Preview (Storybook + Documentation + Playground)"
 
+# Build core first (dependency for all)
+echo "🔧 Building Core..."
+pnpm --filter @aetherui/core build
+
 # Build Storybook
 echo "📚 Building Storybook..."
 pnpm build-storybook
 
-# Build Documentation
+# Build Documentation (force to ensure output exists)
 echo "📖 Building Documentation..."
-pnpm docs:build
+pnpm --filter @aetherui/docs run docs:build
 
 # Build Playground
 echo "🎨 Building Playground..."
