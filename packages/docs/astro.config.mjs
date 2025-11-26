@@ -40,12 +40,12 @@ export default defineConfig({
       social: [
         {
           label: 'GitHub',
-          href: 'https://github.com/your-org/aetherui',
+          href: 'https://github.com/pallavL01/AetherUI',
           icon: 'github',
         },
       ],
       editLink: {
-        baseUrl: 'https://github.com/your-org/aetherui/edit/main/packages/docs/',
+        baseUrl: 'https://github.com/pallavL01/AetherUI/edit/main/packages/docs/',
       },
       sidebar: [
         {
