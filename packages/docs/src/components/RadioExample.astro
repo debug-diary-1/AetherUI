@@ -23,6 +23,12 @@ const sanitizedPreview = preview?.replace(/\${/g, '\\${');
   )}
 </div>
 
+<script>
+  // Import and call defineAll to register all components
+  import { defineAll } from '@aetherui/core';
+  defineAll();
+</script>
+
 
 <style>
   .radio-example {

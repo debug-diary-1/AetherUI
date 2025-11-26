@@ -32,6 +32,9 @@ const { code, preview, title, description, class: className } = Astro.props;
 </div>
 
 <script>
+  import { defineAll } from '@aetherui/core';
+  defineAll();
+
   // Inject HTML after components are ready
   function injectPreviews() {
     const previews = document.querySelectorAll('[data-preview]');
