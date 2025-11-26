@@ -13,6 +13,9 @@ let cssValues: Record<string, string> = {};
 let generatedCode: GeneratedCode;
 let activeCodeTab: 'html' | 'css' | 'full' = 'css';
 let activeControlTab: 'style' | 'variants' = 'style';
+let isDarkMode = true;
+let sidebarWidth = 220;
+let controlsWidth = 320;
 
 // Initialize CSS values from defaults
 function initializeCSSValues() {
@@ -83,6 +86,87 @@ function exportAsFile() {
   a.click();
   URL.revokeObjectURL(url);
   showToast('File downloaded!');
+}
+
+// Toggle theme
+function toggleTheme() {
+  isDarkMode = !isDarkMode;
+  document.documentElement.classList.toggle('light', !isDarkMode);
+  updateThemeIcon();
+  showToast(isDarkMode ? 'Dark mode' : 'Light mode');
+}
+
+function updateThemeIcon() {
+  const btn = document.getElementById('btn-theme');
+  if (btn) {
+    btn.innerHTML = isDarkMode
+      ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+           <circle cx="12" cy="12" r="5"/>
+           <line x1="12" y1="1" x2="12" y2="3"/>
+           <line x1="12" y1="21" x2="12" y2="23"/>
+           <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+           <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+           <line x1="1" y1="12" x2="3" y2="12"/>
+           <line x1="21" y1="12" x2="23" y2="12"/>
+           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+         </svg>`
+      : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+         </svg>`;
+  }
+}
+
+// Resize panel functionality
+function setupResizeHandles() {
+  const sidebarHandle = document.getElementById('sidebar-resize');
+  const controlsHandle = document.getElementById('controls-resize');
+
+  if (sidebarHandle) {
+    setupResize(sidebarHandle, 'sidebar');
+  }
+  if (controlsHandle) {
+    setupResize(controlsHandle, 'controls');
+  }
+}
+
+function setupResize(handle: HTMLElement, panel: 'sidebar' | 'controls') {
+  let startX: number;
+  let startWidth: number;
+
+  const onMouseDown = (e: MouseEvent) => {
+    e.preventDefault();
+    startX = e.clientX;
+    startWidth = panel === 'sidebar' ? sidebarWidth : controlsWidth;
+    document.body.classList.add('resizing');
+    handle.classList.add('active');
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
+
+  const onMouseMove = (e: MouseEvent) => {
+    const diff = e.clientX - startX;
+    let newWidth: number;
+
+    if (panel === 'sidebar') {
+      newWidth = Math.min(400, Math.max(180, startWidth + diff));
+      sidebarWidth = newWidth;
+      document.documentElement.style.setProperty('--pg-sidebar-width', `${newWidth}px`);
+    } else {
+      newWidth = Math.min(500, Math.max(250, startWidth - diff));
+      controlsWidth = newWidth;
+      document.documentElement.style.setProperty('--pg-controls-width', `${newWidth}px`);
+    }
+  };
+
+  const onMouseUp = () => {
+    document.body.classList.remove('resizing');
+    handle.classList.remove('active');
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  handle.addEventListener('mousedown', onMouseDown);
 }
 
 // Render component list
@@ -280,6 +364,19 @@ function render() {
         <span>AetherUI Playground</span>
       </div>
       <div class="pg-header-actions">
+        <button class="pg-theme-toggle" id="btn-theme" title="Toggle theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
         <button class="pg-btn pg-btn-secondary" id="btn-reset">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
@@ -308,6 +405,7 @@ function render() {
     <!-- Sidebar -->
     <aside class="pg-sidebar">
       ${renderComponentList()}
+      <div class="pg-resize-handle pg-resize-handle-right" id="sidebar-resize"></div>
     </aside>
 
     <!-- Preview -->
@@ -345,6 +443,7 @@ function render() {
 
     <!-- Controls -->
     <aside class="pg-controls">
+      <div class="pg-resize-handle pg-resize-handle-left" id="controls-resize"></div>
       <div class="pg-controls-tabs">
         <button class="pg-controls-tab ${activeControlTab === 'style' ? 'active' : ''}" data-control-tab="style">
           Style
@@ -507,6 +606,12 @@ function attachEventListeners() {
   });
 
   document.getElementById('btn-export')?.addEventListener('click', exportAsFile);
+
+  // Theme toggle
+  document.getElementById('btn-theme')?.addEventListener('click', toggleTheme);
+
+  // Setup resize handles
+  setupResizeHandles();
 }
 
 // Initialize
