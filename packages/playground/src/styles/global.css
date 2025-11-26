@@ -20,6 +20,7 @@
   --pg-preview-pattern: #333;
   --pg-sidebar-width: 220px;
   --pg-controls-width: 320px;
+  --pg-code-panel-height: 200px;
 }
 
 /* Light theme */
@@ -116,6 +117,14 @@ body {
   width: 4px;
   height: 100%;
   cursor: ew-resize;
+}
+
+.pg-resize-handle-top {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  cursor: ns-resize;
 }
 
 .pg-sidebar-title {
@@ -348,9 +357,12 @@ body {
 
 /* Code Panel */
 .pg-code-panel {
+  position: relative;
   background: #0d0d0d;
   border-top: 1px solid var(--pg-border);
-  max-height: 300px;
+  height: var(--pg-code-panel-height);
+  min-height: 100px;
+  max-height: 500px;
   overflow: auto;
 }
 
@@ -495,11 +507,22 @@ body {
 
 /* Resizing state - prevent text selection */
 body.resizing {
-  cursor: ew-resize;
   user-select: none;
 }
 
-body.resizing * {
+body.resizing.resizing-vertical {
+  cursor: ns-resize;
+}
+
+body.resizing.resizing-vertical * {
+  cursor: ns-resize !important;
+}
+
+body.resizing:not(.resizing-vertical) {
+  cursor: ew-resize;
+}
+
+body.resizing:not(.resizing-vertical) * {
   cursor: ew-resize !important;
 }
 

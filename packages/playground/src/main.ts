@@ -16,6 +16,7 @@ let activeControlTab: 'style' | 'variants' = 'style';
 let isDarkMode = true;
 let sidebarWidth = 220;
 let controlsWidth = 320;
+let codePanelHeight = 200;
 
 // Initialize CSS values from defaults
 function initializeCSSValues() {
@@ -121,12 +122,16 @@ function updateThemeIcon() {
 function setupResizeHandles() {
   const sidebarHandle = document.getElementById('sidebar-resize');
   const controlsHandle = document.getElementById('controls-resize');
+  const codeHandle = document.getElementById('code-resize');
 
   if (sidebarHandle) {
     setupResize(sidebarHandle, 'sidebar');
   }
   if (controlsHandle) {
     setupResize(controlsHandle, 'controls');
+  }
+  if (codeHandle) {
+    setupVerticalResize(codeHandle);
   }
 }
 
@@ -161,6 +166,37 @@ function setupResize(handle: HTMLElement, panel: 'sidebar' | 'controls') {
 
   const onMouseUp = () => {
     document.body.classList.remove('resizing');
+    handle.classList.remove('active');
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  handle.addEventListener('mousedown', onMouseDown);
+}
+
+function setupVerticalResize(handle: HTMLElement) {
+  let startY: number;
+  let startHeight: number;
+
+  const onMouseDown = (e: MouseEvent) => {
+    e.preventDefault();
+    startY = e.clientY;
+    startHeight = codePanelHeight;
+    document.body.classList.add('resizing', 'resizing-vertical');
+    handle.classList.add('active');
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
+
+  const onMouseMove = (e: MouseEvent) => {
+    const diff = startY - e.clientY;
+    const newHeight = Math.min(500, Math.max(100, startHeight + diff));
+    codePanelHeight = newHeight;
+    document.documentElement.style.setProperty('--pg-code-panel-height', `${newHeight}px`);
+  };
+
+  const onMouseUp = () => {
+    document.body.classList.remove('resizing', 'resizing-vertical');
     handle.classList.remove('active');
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
@@ -424,6 +460,7 @@ function render() {
 
       <!-- Code Panel -->
       <div class="pg-code-panel">
+        <div class="pg-resize-handle pg-resize-handle-top" id="code-resize"></div>
         <div class="pg-code-header">
           <div class="pg-code-tabs">
             <button class="pg-code-tab ${activeCodeTab === 'css' ? 'active' : ''}" data-tab="css">CSS</button>
