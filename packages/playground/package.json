@@ -1,0 +1,21 @@
+{
+  "name": "@aetherui/playground",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@aetherui/core": "workspace:*",
+    "@aetherui/tokens": "workspace:*",
+    "lit": "^3.2.1",
+    "prismjs": "^1.29.0"
+  },
+  "devDependencies": {
+    "@types/prismjs": "^1.26.3",
+    "typescript": "^5.7.3",
+    "vite": "^6.3.6"
+  }
+}
