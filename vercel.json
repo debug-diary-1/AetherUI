@@ -20,6 +20,16 @@
   },
   "regions": ["iad1"],
   "public": true,
+  "rewrites": [
+    {
+      "source": "/docs/:path*",
+      "destination": "/docs/:path*"
+    },
+    {
+      "source": "/storybook/:path*",
+      "destination": "/storybook/:path*"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
