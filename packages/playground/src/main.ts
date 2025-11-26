@@ -24,13 +24,23 @@ function initializeCSSValues() {
 
 // Apply CSS variables to preview
 function applyCSS() {
-  const previewComponent = document.querySelector('.pg-preview-component');
-  if (!previewComponent) return;
+  const previewWrapper = document.querySelector('.pg-preview-component');
+  if (!previewWrapper) return;
 
   selectedComponent.cssVariables.forEach((variable) => {
     const value = cssValues[variable.name] || variable.default;
     const finalValue = formatVariableValue(variable, value);
-    (previewComponent as HTMLElement).style.setProperty(variable.name, finalValue);
+
+    // Apply to the wrapper for CSS inheritance
+    (previewWrapper as HTMLElement).style.setProperty(variable.name, finalValue);
+
+    // Also apply directly to all AetherUI web components inside
+    // This ensures Shadow DOM components receive the CSS variables
+    previewWrapper.querySelectorAll('*').forEach(el => {
+      if (el.tagName.toLowerCase().startsWith('ae-')) {
+        (el as HTMLElement).style.setProperty(variable.name, finalValue);
+      }
+    });
   });
 }
 
@@ -253,10 +263,19 @@ function render() {
     <!-- Header -->
     <header class="pg-header">
       <div class="pg-logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-          <path d="M2 17l10 5 10-5"/>
-          <path d="M2 12l10 5 10-5"/>
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="aeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <g fill="url(#aeGradient)">
+            <path d="M 4 25 Q 3 25 3 24 Q 3 23.5 3.5 22.5 L 11 7 Q 11.5 6 12.5 6 Q 13.5 6 14 7 L 21.5 22.5 Q 22 23.5 22 24 Q 22 25 21 25 Q 20 25 19.5 24 L 17.5 19 L 7.5 19 L 5.5 24 Q 5 25 4 25 Z M 9 16 L 16 16 L 12.5 8 Z" />
+            <path d="M 18 11 Q 18 10 19 10 L 28 10 Q 29 10 29 11 Q 29 12 28 12 L 20.5 12 L 20.5 15 L 27 15 Q 28 15 28 16 Q 28 17 27 17 L 20.5 17 L 20.5 20 L 28 20 Q 29 20 29 21 Q 29 22 28 22 L 19 22 Q 18 22 18 21 Z" />
+            <path d="M 18 8 Q 18 7 19 7 L 27 7 Q 28 7 28.5 7.5 Q 29 8 29 8.5 Q 29 9 28.5 9 Q 28 9 27 9 L 19.5 9 Q 18.5 9 18 8.5 Q 18 8 18 8 Z" />
+            <path d="M 3 26 Q 3 25.5 3.5 25.5 Q 4 25.5 5 25.5 L 27 25.5 Q 28 25.5 28.5 25.5 Q 29 25.5 29 26 Q 29 26.5 28.5 26.5 Q 28 26.5 27 26.5 L 5 26.5 Q 4 26.5 3.5 26.5 Q 3 26.5 3 26 Z" opacity="0.3" />
+          </g>
         </svg>
         <span>AetherUI Playground</span>
       </div>
