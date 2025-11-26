@@ -32,8 +32,8 @@ const { code, preview, title, description, class: className } = Astro.props;
 </div>
 
 <script>
-  import { defineAll } from '@aetherui/core';
-  defineAll();
+  // Components are registered globally via Head.astro
+  // This script handles preview injection after components are ready
 
   // Inject HTML after components are ready
   function injectPreviews() {

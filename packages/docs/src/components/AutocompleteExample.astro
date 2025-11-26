@@ -28,10 +28,7 @@ const exampleId = `autocomplete-example-${Math.random().toString(36).slice(2, 10
 </div>
 
 <script>
-  // Import and call defineAll to register all components
-  import { defineAll } from '@aetherui/core';
-  defineAll();
-  
+  // Components are registered globally via Head.astro
   // Set up event listeners for initializing the examples
   document.addEventListener('DOMContentLoaded', initializeExamples);
   document.addEventListener('astro:page-load', initializeExamples);
