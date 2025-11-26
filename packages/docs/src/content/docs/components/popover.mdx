@@ -1,0 +1,144 @@
+---
+title: Popover
+description: Floating content panel that appears next to a trigger element for additional information or actions.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import ComponentExample from '../../../components/ComponentExample.astro';
+
+# Popover
+
+A floating content panel that appears next to a trigger element.
+
+## Basic Usage
+
+<ComponentExample
+  title="Default Popover"
+  description="Click to toggle the popover."
+  code={`<ae-popover>
+  <ae-button slot="trigger">Click me</ae-button>
+  <div>
+    <p style="margin: 0 0 0.5rem 0; font-weight: 600;">Popover Title</p>
+    <p style="margin: 0; color: #666;">This is the popover content.</p>
+  </div>
+</ae-popover>`}
+/>
+
+## Trigger Options
+
+<ComponentExample
+  title="Trigger Types"
+  description="Open on click or hover."
+  code={`<div class="demo-row">
+  <ae-popover trigger="click">
+    <ae-button slot="trigger">Click</ae-button>
+    <p style="margin: 0;">Opened by click</p>
+  </ae-popover>
+  <ae-popover trigger="hover">
+    <ae-button slot="trigger">Hover</ae-button>
+    <p style="margin: 0;">Opened by hover</p>
+  </ae-popover>
+</div>`}
+/>
+
+## Placement
+
+<ComponentExample
+  title="Placement Options"
+  description="Position the popover on different sides."
+  code={`<div class="demo-row" style="flex-wrap: wrap; gap: 1rem;">
+  <ae-popover placement="top">
+    <ae-button slot="trigger">Top</ae-button>
+    <p style="margin: 0;">Top placement</p>
+  </ae-popover>
+  <ae-popover placement="bottom">
+    <ae-button slot="trigger">Bottom</ae-button>
+    <p style="margin: 0;">Bottom placement</p>
+  </ae-popover>
+  <ae-popover placement="left">
+    <ae-button slot="trigger">Left</ae-button>
+    <p style="margin: 0;">Left placement</p>
+  </ae-popover>
+  <ae-popover placement="right">
+    <ae-button slot="trigger">Right</ae-button>
+    <p style="margin: 0;">Right placement</p>
+  </ae-popover>
+</div>`}
+/>
+
+## With Arrow
+
+<ComponentExample
+  title="Arrow Indicator"
+  description="Show or hide the arrow."
+  code={`<div class="demo-row">
+  <ae-popover arrow>
+    <ae-button slot="trigger">With Arrow</ae-button>
+    <p style="margin: 0;">Has an arrow pointer</p>
+  </ae-popover>
+  <ae-popover>
+    <ae-button slot="trigger">No Arrow</ae-button>
+    <p style="margin: 0;">No arrow pointer</p>
+  </ae-popover>
+</div>`}
+/>
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Import
+
+```js
+import { defineAePopover } from '@aetherui/core/popover';
+defineAePopover();
+```
+
+## Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `open` | `boolean` | `false` | Open state |
+| `trigger` | `'click' \| 'hover'` | `'click'` | How to trigger |
+| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` | Position |
+| `arrow` | `boolean` | `true` | Show arrow |
+| `offset` | `number` | `8` | Distance from trigger |
+| `close-on-click-outside` | `boolean` | `true` | Close when clicking outside |
+
+## Slots
+
+| Name | Description |
+|------|-------------|
+| `trigger` | Trigger element |
+| default | Popover content |
+
+## Events
+
+| Name | Description |
+|------|-------------|
+| `ae-popover-open` | Fired when opened |
+| `ae-popover-close` | Fired when closed |
+
+## CSS Parts
+
+| Name | Description |
+|------|-------------|
+| `trigger` | Trigger container |
+| `popover` | Popover panel |
+| `arrow` | Arrow element |
+
+## Accessibility
+
+- Associates trigger and content
+- Keyboard navigable
+- Escape key closes popover

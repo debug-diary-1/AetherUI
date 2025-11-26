@@ -1,0 +1,134 @@
+---
+title: Menu
+description: Dropdown menu component for displaying a list of actions or options.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import ComponentExample from '../../../components/ComponentExample.astro';
+
+# Menu
+
+A dropdown menu component for displaying a list of actions or options.
+
+## Basic Usage
+
+<ComponentExample
+  title="Default Menu"
+  description="Basic menu with items."
+  code={`<ae-menu>
+  <ae-menu-item>Edit</ae-menu-item>
+  <ae-menu-item>Duplicate</ae-menu-item>
+  <ae-menu-item>Delete</ae-menu-item>
+</ae-menu>`}
+/>
+
+## With Icons
+
+<ComponentExample
+  title="Menu with Icons"
+  description="Add icons to menu items."
+  code={`<ae-menu>
+  <ae-menu-item>
+    <svg slot="prefix" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+      <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+    </svg>
+    Edit
+  </ae-menu-item>
+  <ae-menu-item>
+    <svg slot="prefix" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+    </svg>
+    Duplicate
+  </ae-menu-item>
+  <ae-menu-divider></ae-menu-divider>
+  <ae-menu-item variant="danger">
+    <svg slot="prefix" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+    </svg>
+    Delete
+  </ae-menu-item>
+</ae-menu>`}
+/>
+
+## Disabled Items
+
+<ComponentExample
+  title="Disabled Items"
+  description="Disable specific menu items."
+  code={`<ae-menu>
+  <ae-menu-item>Available</ae-menu-item>
+  <ae-menu-item disabled>Unavailable</ae-menu-item>
+  <ae-menu-item>Also Available</ae-menu-item>
+</ae-menu>`}
+/>
+
+## With Dividers
+
+<ComponentExample
+  title="Menu Sections"
+  description="Use dividers to group related items."
+  code={`<ae-menu>
+  <ae-menu-item>New File</ae-menu-item>
+  <ae-menu-item>Open</ae-menu-item>
+  <ae-menu-item>Save</ae-menu-item>
+  <ae-menu-divider></ae-menu-divider>
+  <ae-menu-item>Print</ae-menu-item>
+  <ae-menu-item>Export</ae-menu-item>
+  <ae-menu-divider></ae-menu-divider>
+  <ae-menu-item>Close</ae-menu-item>
+</ae-menu>`}
+/>
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Import
+
+```js
+import { defineAeMenu, defineAeMenuItem, defineAeMenuDivider } from '@aetherui/core/menu';
+defineAeMenu();
+defineAeMenuItem();
+defineAeMenuDivider();
+```
+
+## Menu Item Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `disabled` | `boolean` | `false` | Disabled state |
+| `variant` | `'default' \| 'danger'` | `'default'` | Visual variant |
+
+## Menu Item Slots
+
+| Name | Description |
+|------|-------------|
+| default | Item label |
+| `prefix` | Content before label (icon) |
+| `suffix` | Content after label |
+
+## Events
+
+| Name | Detail | Description |
+|------|--------|-------------|
+| `ae-menu-select` | `{ value: string }` | Fired when item selected |
+
+## CSS Parts
+
+| Name | Description |
+|------|-------------|
+| `base` | Menu container |
+| `item` | Menu item |
+| `divider` | Divider line |

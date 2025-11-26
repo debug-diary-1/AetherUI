@@ -4,13 +4,17 @@ import { Code } from '@astrojs/starlight/components';
 interface Props {
   code?: string;
   preview?: string;
+  title?: string;
+  description?: string;
   class?: string;
 }
 
-const { code, preview, class: className } = Astro.props;
+const { code, preview, title, description, class: className } = Astro.props;
 ---
 
 <div class={`component-example ${className || ''}`}>
+  {title && <h3 class="example-title">{title}</h3>}
+  {description && <p class="example-description">{description}</p>}
   {preview ? (
     <div class="preview" data-preview={preview}>
       <!-- Preview will be injected by client-side script -->
@@ -68,8 +72,22 @@ const { code, preview, class: className } = Astro.props;
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
+    margin-bottom: 2rem;
     border-radius: 0.5rem;
     background: var(--sl-color-gray-1);
+  }
+
+  .example-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--sl-color-gray-9);
+  }
+
+  .example-description {
+    font-size: 0.9rem;
+    color: var(--sl-color-text-light);
+    margin: 0 0 0.5rem 0;
   }
 
   .preview {
@@ -77,13 +95,34 @@ const { code, preview, class: className } = Astro.props;
     border-radius: 0.25rem;
     background: var(--sl-color-white);
     position: relative;
-    min-height: 100px;
+    min-height: 60px;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
   /* Dark mode styles */
-  :global([data-theme="dark"] .preview) {
+  :global([data-theme="dark"]) .preview {
     background: var(--sl-color-gray-6);
+  }
+
+  :global([data-theme="dark"]) .example-title {
+    color: var(--sl-color-gray-1);
+  }
+
+  /* Common layout helpers */
+  :global(.preview .demo-row) {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  :global(.preview .demo-column) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
   }
 </style>

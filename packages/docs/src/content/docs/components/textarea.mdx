@@ -1,0 +1,121 @@
+---
+title: Textarea
+description: Multi-line text input component with auto-resize, validation, and form participation.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import ComponentExample from '../../../components/ComponentExample.astro';
+
+# Textarea
+
+A multi-line text input component with validation and native form participation.
+
+## Basic Usage
+
+<ComponentExample
+  title="Default Textarea"
+  description="Basic textarea with label."
+  code={`<ae-textarea label="Description" placeholder="Enter description..."></ae-textarea>`}
+/>
+
+## Rows
+
+<ComponentExample
+  title="Custom Rows"
+  description="Control the initial height with rows attribute."
+  code={`<div class="demo-column">
+  <ae-textarea label="Short" rows="2" placeholder="2 rows"></ae-textarea>
+  <ae-textarea label="Medium" rows="4" placeholder="4 rows (default)"></ae-textarea>
+  <ae-textarea label="Tall" rows="6" placeholder="6 rows"></ae-textarea>
+</div>`}
+/>
+
+## States
+
+<ComponentExample
+  title="Textarea States"
+  description="Disabled, readonly, and error states."
+  code={`<div class="demo-column">
+  <ae-textarea label="Disabled" value="Cannot edit this content" disabled></ae-textarea>
+  <ae-textarea label="Readonly" value="Read only content" readonly></ae-textarea>
+  <ae-textarea label="With Error" error="This field is required"></ae-textarea>
+</div>`}
+/>
+
+## Validation
+
+<ComponentExample
+  title="Required & Length Validation"
+  description="Built-in validation support."
+  code={`<div class="demo-column">
+  <ae-textarea label="Required" required placeholder="This field is required"></ae-textarea>
+  <ae-textarea label="Min/Max Length" minlength="10" maxlength="200" help-text="10-200 characters"></ae-textarea>
+</div>`}
+/>
+
+## Resize Control
+
+<ComponentExample
+  title="Resize Options"
+  description="Control how users can resize the textarea."
+  code={`<div class="demo-column">
+  <ae-textarea label="Vertical Only" resize="vertical" placeholder="Can resize vertically"></ae-textarea>
+  <ae-textarea label="No Resize" resize="none" placeholder="Cannot resize"></ae-textarea>
+</div>`}
+/>
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Import
+
+```js
+import { defineAeTextarea } from '@aetherui/core/textarea';
+defineAeTextarea();
+```
+
+## Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | `''` | Current value |
+| `placeholder` | `string` | `''` | Placeholder text |
+| `label` | `string` | `''` | Label text |
+| `name` | `string` | `''` | Form field name |
+| `rows` | `number` | `4` | Number of visible rows |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `required` | `boolean` | `false` | Required field |
+| `readonly` | `boolean` | `false` | Read-only state |
+| `error` | `string` | `''` | Error message |
+| `help-text` | `string` | `''` | Helper text |
+| `minlength` | `number` | - | Minimum length |
+| `maxlength` | `number` | - | Maximum length |
+| `resize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `'vertical'` | Resize behavior |
+
+## Events
+
+| Name | Detail | Description |
+|------|--------|-------------|
+| `ae-textarea-input` | `{ value: string }` | Fired on input |
+| `ae-textarea-change` | `{ value: string }` | Fired on change |
+
+## CSS Parts
+
+| Name | Description |
+|------|-------------|
+| `base` | Base wrapper |
+| `label` | Label element |
+| `textarea` | Native textarea |
+| `help-text` | Help text |
+| `error-text` | Error message |

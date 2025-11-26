@@ -1,0 +1,135 @@
+---
+title: Spinner
+description: Loading indicator component with multiple sizes and color variants for indicating loading or processing states.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import ComponentExample from '../../../components/ComponentExample.astro';
+
+# Spinner
+
+A loading spinner component for indicating loading or processing states.
+
+## Basic Usage
+
+<ComponentExample
+  title="Default Spinner"
+  description="The default spinner uses medium size with primary color."
+  code={`<ae-spinner></ae-spinner>`}
+/>
+
+## Sizes
+
+The spinner supports five sizes: `xs`, `sm`, `md` (default), `lg`, and `xl`.
+
+<ComponentExample
+  title="Spinner Sizes"
+  description="Choose from extra-small to extra-large sizes."
+  code={`<div class="demo-row">
+  <ae-spinner size="xs"></ae-spinner>
+  <ae-spinner size="sm"></ae-spinner>
+  <ae-spinner size="md"></ae-spinner>
+  <ae-spinner size="lg"></ae-spinner>
+  <ae-spinner size="xl"></ae-spinner>
+</div>`}
+/>
+
+## Variants
+
+Color variants help communicate different states or match your UI theme.
+
+<ComponentExample
+  title="Color Variants"
+  description="Primary, secondary, success, warning, error, and info variants."
+  code={`<div class="demo-row">
+  <ae-spinner variant="primary"></ae-spinner>
+  <ae-spinner variant="secondary"></ae-spinner>
+  <ae-spinner variant="success"></ae-spinner>
+  <ae-spinner variant="warning"></ae-spinner>
+  <ae-spinner variant="error"></ae-spinner>
+  <ae-spinner variant="info"></ae-spinner>
+</div>`}
+/>
+
+## With Text
+
+Combine spinners with loading text for better UX.
+
+<ComponentExample
+  title="Spinner with Text"
+  description="Use alongside text to provide context."
+  code={`<div class="demo-row" style="gap: 1rem;">
+  <div style="display: flex; align-items: center; gap: 0.5rem;">
+    <ae-spinner size="sm"></ae-spinner>
+    <span>Loading...</span>
+  </div>
+  <ae-button disabled>
+    <ae-spinner size="xs" style="margin-right: 0.5rem;"></ae-spinner>
+    Processing
+  </ae-button>
+</div>`}
+/>
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Import
+
+```js
+import { defineAeSpinner } from '@aetherui/core/spinner';
+defineAeSpinner();
+
+// Or register all components
+import { defineAll } from '@aetherui/core';
+defineAll();
+```
+
+## Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Size of the spinner |
+| `variant` | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'error' \| 'info'` | `'primary'` | Color variant |
+| `label` | `string` | `'Loading...'` | Accessible label for screen readers |
+
+## CSS Parts
+
+| Name | Description |
+|------|-------------|
+| `base` | The component's base wrapper |
+| `spinner` | The spinner SVG element |
+| `label` | The label element (visually hidden) |
+
+## CSS Custom Properties
+
+| Name | Description |
+|------|-------------|
+| `--ae-spinner-size-xs` | Size for xs variant (16px) |
+| `--ae-spinner-size-sm` | Size for sm variant (20px) |
+| `--ae-spinner-size-md` | Size for md variant (24px) |
+| `--ae-spinner-size-lg` | Size for lg variant (32px) |
+| `--ae-spinner-size-xl` | Size for xl variant (48px) |
+| `--ae-spinner-color-primary` | Primary variant color |
+| `--ae-spinner-color-secondary` | Secondary variant color |
+| `--ae-spinner-color-success` | Success variant color |
+| `--ae-spinner-color-warning` | Warning variant color |
+| `--ae-spinner-color-error` | Error variant color |
+| `--ae-spinner-color-info` | Info variant color |
+| `--ae-spinner-track-color` | Track (background) color |
+
+## Accessibility
+
+- Uses `role="status"` for ARIA live region
+- Includes visually hidden label for screen readers
+- Custom label can be provided via `label` prop

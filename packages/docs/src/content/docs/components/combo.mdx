@@ -1,0 +1,124 @@
+---
+title: Combobox
+description: Autocomplete input component combining text input with a dropdown list for filtering and selecting options.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import ComponentExample from '../../../components/ComponentExample.astro';
+
+# Combobox
+
+An autocomplete input combining text input with a filterable dropdown list.
+
+## Basic Usage
+
+<ComponentExample
+  title="Default Combobox"
+  description="Type to filter options."
+  code={`<ae-combo placeholder="Select a fruit">
+  <ae-combo-option value="apple">Apple</ae-combo-option>
+  <ae-combo-option value="banana">Banana</ae-combo-option>
+  <ae-combo-option value="cherry">Cherry</ae-combo-option>
+  <ae-combo-option value="grape">Grape</ae-combo-option>
+  <ae-combo-option value="orange">Orange</ae-combo-option>
+</ae-combo>`}
+/>
+
+## With Label
+
+<ComponentExample
+  title="Labeled Combobox"
+  description="Add a label for better UX."
+  code={`<ae-combo label="Country" placeholder="Search countries">
+  <ae-combo-option value="us">United States</ae-combo-option>
+  <ae-combo-option value="uk">United Kingdom</ae-combo-option>
+  <ae-combo-option value="ca">Canada</ae-combo-option>
+  <ae-combo-option value="au">Australia</ae-combo-option>
+  <ae-combo-option value="de">Germany</ae-combo-option>
+  <ae-combo-option value="fr">France</ae-combo-option>
+</ae-combo>`}
+/>
+
+## Free Input
+
+<ComponentExample
+  title="Allow Free Input"
+  description="Accept values not in the list."
+  code={`<ae-combo label="Tag" placeholder="Enter or select a tag" free-input>
+  <ae-combo-option value="bug">Bug</ae-combo-option>
+  <ae-combo-option value="feature">Feature</ae-combo-option>
+  <ae-combo-option value="docs">Documentation</ae-combo-option>
+</ae-combo>`}
+/>
+
+## Disabled
+
+<ComponentExample
+  title="Disabled State"
+  description="Disabled combobox."
+  code={`<ae-combo label="Category" placeholder="Select..." disabled>
+  <ae-combo-option value="1">Option 1</ae-combo-option>
+  <ae-combo-option value="2">Option 2</ae-combo-option>
+</ae-combo>`}
+/>
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Import
+
+```js
+import { defineAeCombo, defineAeComboOption } from '@aetherui/core/combo';
+defineAeCombo();
+defineAeComboOption();
+```
+
+## Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | `''` | Current value |
+| `placeholder` | `string` | `'Select an option'` | Placeholder text |
+| `label` | `string` | `''` | Label text |
+| `name` | `string` | `''` | Form field name |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `free-input` | `boolean` | `true` | Allow custom values |
+
+## Events
+
+| Name | Detail | Description |
+|------|--------|-------------|
+| `ae-combo-change` | `{ value: string }` | Fired when value changes |
+| `ae-combo-input` | `{ value: string }` | Fired on input |
+
+## Slots
+
+| Name | Description |
+|------|-------------|
+| default | Combo options (`ae-combo-option`) |
+
+## CSS Parts
+
+| Name | Description |
+|------|-------------|
+| `base` | Container |
+| `input` | Text input |
+| `listbox` | Options container |
+| `option` | Individual option |
+
+## Accessibility
+
+- Uses `role="combobox"` pattern
+- Keyboard navigation (Arrow keys, Enter, Escape)
+- Screen reader announcements

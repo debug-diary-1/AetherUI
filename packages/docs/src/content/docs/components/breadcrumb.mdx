@@ -1,0 +1,117 @@
+---
+title: Breadcrumb
+description: Navigation breadcrumb component showing the current page location within a hierarchy.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import ComponentExample from '../../../components/ComponentExample.astro';
+
+# Breadcrumb
+
+A navigation component showing the current page location within a hierarchy.
+
+## Basic Usage
+
+<ComponentExample
+  title="Default Breadcrumb"
+  description="Basic breadcrumb navigation."
+  code={`<ae-breadcrumb>
+  <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
+  <ae-breadcrumb-item href="/products">Products</ae-breadcrumb-item>
+  <ae-breadcrumb-item current>Details</ae-breadcrumb-item>
+</ae-breadcrumb>`}
+/>
+
+## Custom Separator
+
+<ComponentExample
+  title="Custom Separator"
+  description="Use different separator characters."
+  code={`<div class="demo-column">
+  <ae-breadcrumb separator="/">
+    <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
+    <ae-breadcrumb-item href="/docs">Docs</ae-breadcrumb-item>
+    <ae-breadcrumb-item current>Guide</ae-breadcrumb-item>
+  </ae-breadcrumb>
+  <ae-breadcrumb separator=">">
+    <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
+    <ae-breadcrumb-item href="/docs">Docs</ae-breadcrumb-item>
+    <ae-breadcrumb-item current>Guide</ae-breadcrumb-item>
+  </ae-breadcrumb>
+  <ae-breadcrumb separator="•">
+    <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
+    <ae-breadcrumb-item href="/docs">Docs</ae-breadcrumb-item>
+    <ae-breadcrumb-item current>Guide</ae-breadcrumb-item>
+  </ae-breadcrumb>
+</div>`}
+/>
+
+## Long Path
+
+<ComponentExample
+  title="Deep Navigation"
+  description="Breadcrumbs for deeply nested pages."
+  code={`<ae-breadcrumb>
+  <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
+  <ae-breadcrumb-item href="/category">Category</ae-breadcrumb-item>
+  <ae-breadcrumb-item href="/category/sub">Subcategory</ae-breadcrumb-item>
+  <ae-breadcrumb-item href="/category/sub/item">Item</ae-breadcrumb-item>
+  <ae-breadcrumb-item current>Details</ae-breadcrumb-item>
+</ae-breadcrumb>`}
+/>
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Import
+
+```js
+import { defineAeBreadcrumb, defineAeBreadcrumbItem } from '@aetherui/core/breadcrumb';
+defineAeBreadcrumb();
+defineAeBreadcrumbItem();
+```
+
+## Breadcrumb Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `separator` | `string` | `'/'` | Separator character |
+
+## Breadcrumb Item Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `href` | `string` | - | Link URL |
+| `current` | `boolean` | `false` | Current page indicator |
+
+## CSS Parts
+
+### ae-breadcrumb
+| Name | Description |
+|------|-------------|
+| `base` | Container element |
+| `list` | The `<ol>` list |
+
+### ae-breadcrumb-item
+| Name | Description |
+|------|-------------|
+| `base` | List item |
+| `link` | Anchor element |
+| `separator` | Separator element |
+
+## Accessibility
+
+- Uses `<nav>` with `aria-label="Breadcrumb"`
+- Current page marked with `aria-current="page"`
+- Uses semantic `<ol>` list structure

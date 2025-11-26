@@ -1,0 +1,141 @@
+---
+title: Switch
+description: Toggle switch component for binary on/off states as an alternative to checkboxes.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import ComponentExample from '../../../components/ComponentExample.astro';
+
+# Switch
+
+A toggle switch component for binary on/off states.
+
+## Basic Usage
+
+<ComponentExample
+  title="Default Switch"
+  description="Basic toggle switch."
+  code={`<ae-switch>Enable notifications</ae-switch>`}
+/>
+
+## Checked State
+
+<ComponentExample
+  title="Checked Switch"
+  description="Switch in checked state."
+  code={`<div class="demo-column">
+  <ae-switch>Unchecked</ae-switch>
+  <ae-switch checked>Checked</ae-switch>
+</div>`}
+/>
+
+## Disabled State
+
+<ComponentExample
+  title="Disabled Switch"
+  description="Disabled switches cannot be toggled."
+  code={`<div class="demo-column">
+  <ae-switch disabled>Disabled unchecked</ae-switch>
+  <ae-switch checked disabled>Disabled checked</ae-switch>
+</div>`}
+/>
+
+## Sizes
+
+<ComponentExample
+  title="Switch Sizes"
+  description="Small, medium, and large sizes."
+  code={`<div class="demo-column">
+  <ae-switch size="sm">Small</ae-switch>
+  <ae-switch size="md">Medium</ae-switch>
+  <ae-switch size="lg">Large</ae-switch>
+</div>`}
+/>
+
+## Use Cases
+
+<ComponentExample
+  title="Settings Example"
+  description="Common settings pattern."
+  code={`<div class="demo-column" style="max-width: 400px;">
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid #eee;">
+    <div>
+      <div style="font-weight: 500;">Dark Mode</div>
+      <div style="font-size: 0.875rem; color: #666;">Use dark theme</div>
+    </div>
+    <ae-switch></ae-switch>
+  </div>
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid #eee;">
+    <div>
+      <div style="font-weight: 500;">Notifications</div>
+      <div style="font-size: 0.875rem; color: #666;">Receive email updates</div>
+    </div>
+    <ae-switch checked></ae-switch>
+  </div>
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;">
+    <div>
+      <div style="font-weight: 500;">Auto-save</div>
+      <div style="font-size: 0.875rem; color: #666;">Save changes automatically</div>
+    </div>
+    <ae-switch checked></ae-switch>
+  </div>
+</div>`}
+/>
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Import
+
+```js
+import { defineAeSwitch } from '@aetherui/core/switch';
+defineAeSwitch();
+```
+
+## Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `checked` | `boolean` | `false` | Checked state |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `name` | `string` | `''` | Form field name |
+| `value` | `string` | `'on'` | Value when checked |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size variant |
+
+## Events
+
+| Name | Detail | Description |
+|------|--------|-------------|
+| `ae-switch-change` | `{ checked: boolean }` | Fired when toggled |
+
+## Slots
+
+| Name | Description |
+|------|-------------|
+| default | Label text |
+
+## CSS Parts
+
+| Name | Description |
+|------|-------------|
+| `base` | Container |
+| `control` | Switch track |
+| `thumb` | Switch thumb |
+| `label` | Label text |
+
+## Accessibility
+
+- Uses `role="switch"` with `aria-checked`
+- Keyboard toggling with Space/Enter
+- Associated label for screen readers
