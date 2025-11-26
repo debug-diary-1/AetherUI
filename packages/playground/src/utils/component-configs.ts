@@ -209,12 +209,12 @@ export const componentConfigs: ComponentConfig[] = [
       { name: '--ae-tabs-gap', label: 'Tab Gap', type: 'size', default: '8', unit: 'px', min: 0, max: 24 },
     ],
     defaultHtml: `<ae-tabs>
-  <ae-tab slot="tabs" panel="tab1">Tab 1</ae-tab>
-  <ae-tab slot="tabs" panel="tab2">Tab 2</ae-tab>
-  <ae-tab slot="tabs" panel="tab3">Tab 3</ae-tab>
-  <ae-tab-panel name="tab1">Content for Tab 1</ae-tab-panel>
-  <ae-tab-panel name="tab2">Content for Tab 2</ae-tab-panel>
-  <ae-tab-panel name="tab3">Content for Tab 3</ae-tab-panel>
+  <ae-tab slot="tab">Tab 1</ae-tab>
+  <ae-tab slot="tab">Tab 2</ae-tab>
+  <ae-tab slot="tab">Tab 3</ae-tab>
+  <ae-tab-panel slot="panel">Content for Tab 1</ae-tab-panel>
+  <ae-tab-panel slot="panel">Content for Tab 2</ae-tab-panel>
+  <ae-tab-panel slot="panel">Content for Tab 3</ae-tab-panel>
 </ae-tabs>`,
   },
   {
