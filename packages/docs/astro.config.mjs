@@ -44,9 +44,6 @@ export default defineConfig({
           icon: 'github',
         },
       ],
-      editLink: {
-        baseUrl: 'https://github.com/pallavL01/AetherUI/edit/main/packages/docs/',
-      },
       sidebar: [
         {
           label: 'Getting Started',
@@ -92,10 +89,9 @@ export default defineConfig({
         Head: './src/components/Head.astro',
       },
       customCss: [
-        './src/styles/custom.css', 
+        './src/styles/custom.css',
         './src/styles/global.css'
       ],
-      lastUpdated: true,
       pagination: true,
     }),
   ],
