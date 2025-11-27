@@ -1,0 +1,159 @@
+---
+title: Select
+description: Dropdown select component with single and multiple selection support, form participation, and validation.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import ComponentExample from '../../../components/ComponentExample.astro';
+
+# Select
+
+A select dropdown component with support for single/multiple selection and native form participation.
+
+## Basic Usage
+
+<ComponentExample
+  title="Default Select"
+  description="Basic select with options."
+  code={`<ae-select label="Country" placeholder="Select a country">
+  <option value="us">United States</option>
+  <option value="uk">United Kingdom</option>
+  <option value="ca">Canada</option>
+  <option value="au">Australia</option>
+</ae-select>`}
+/>
+
+## With Placeholder
+
+<ComponentExample
+  title="Placeholder"
+  description="Show placeholder text when no option is selected."
+  code={`<ae-select label="Category" placeholder="Choose a category">
+  <option value="electronics">Electronics</option>
+  <option value="clothing">Clothing</option>
+  <option value="books">Books</option>
+</ae-select>`}
+/>
+
+## States
+
+<ComponentExample
+  title="Select States"
+  description="Disabled and error states."
+  code={`<div class="demo-column">
+  <ae-select label="Disabled" disabled>
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+  </ae-select>
+  <ae-select label="With Error" error="Please select an option">
+    <option value="">Select...</option>
+    <option value="1">Option 1</option>
+  </ae-select>
+</div>`}
+/>
+
+## Required
+
+<ComponentExample
+  title="Required Select"
+  description="Mark select as required for form validation."
+  code={`<ae-select label="Priority" required placeholder="Select priority">
+  <option value="low">Low</option>
+  <option value="medium">Medium</option>
+  <option value="high">High</option>
+</ae-select>`}
+/>
+
+## Multiple Selection
+
+<ComponentExample
+  title="Multiple Select"
+  description="Allow selecting multiple options."
+  code={`<ae-select label="Skills" multiple help-text="Hold Ctrl/Cmd to select multiple">
+  <option value="js">JavaScript</option>
+  <option value="ts">TypeScript</option>
+  <option value="py">Python</option>
+  <option value="go">Go</option>
+  <option value="rust">Rust</option>
+</ae-select>`}
+/>
+
+## With Help Text
+
+<ComponentExample
+  title="Help Text"
+  description="Provide additional context."
+  code={`<ae-select label="Timezone" help-text="Select your local timezone">
+  <option value="utc">UTC</option>
+  <option value="est">Eastern Time</option>
+  <option value="pst">Pacific Time</option>
+  <option value="gmt">GMT</option>
+</ae-select>`}
+/>
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Import
+
+```js
+import { defineAeSelect } from '@aetherui/core/select';
+defineAeSelect();
+```
+
+## Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | `''` | Selected value (single) |
+| `values` | `string[]` | `[]` | Selected values (multiple) |
+| `placeholder` | `string` | `''` | Placeholder text |
+| `label` | `string` | `''` | Label text |
+| `name` | `string` | `''` | Form field name |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `required` | `boolean` | `false` | Required field |
+| `multiple` | `boolean` | `false` | Allow multiple selection |
+| `error` | `string` | `''` | Error message |
+| `help-text` | `string` | `''` | Helper text |
+
+## Events
+
+| Name | Detail | Description |
+|------|--------|-------------|
+| `ae-select-change` | `{ value: string \| string[] }` | Fired when selection changes |
+
+## Slots
+
+| Name | Description |
+|------|-------------|
+| default | Select options (`<option>` elements) |
+
+## CSS Parts
+
+| Name | Description |
+|------|-------------|
+| `base` | Base wrapper |
+| `label` | Label element |
+| `select-wrapper` | Select container |
+| `select` | Native select |
+| `icon` | Dropdown icon |
+| `help-text` | Help text |
+| `error-text` | Error message |
+
+## Accessibility
+
+- Uses native `<select>` element
+- Label properly associated
+- Keyboard navigation supported
+- Screen reader friendly

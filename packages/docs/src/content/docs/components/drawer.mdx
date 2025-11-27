@@ -1,0 +1,137 @@
+---
+title: Drawer
+description: Sliding panel component that appears from the edge of the screen for secondary content or navigation.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import ComponentExample from '../../../components/ComponentExample.astro';
+
+# Drawer
+
+A sliding panel component that appears from the edge of the screen.
+
+## Basic Usage
+
+<ComponentExample
+  title="Default Drawer"
+  description="Click the button to open the drawer."
+  code={`<ae-button onclick="document.querySelector('#demo-drawer').show()">Open Drawer</ae-button>
+<ae-drawer id="demo-drawer" label="Drawer Title">
+  <p>This is the drawer content. Click outside or press Escape to close.</p>
+</ae-drawer>`}
+/>
+
+## Placement
+
+<ComponentExample
+  title="Drawer Positions"
+  description="Drawer can slide in from different edges."
+  code={`<div class="demo-row">
+  <ae-button onclick="document.querySelector('#drawer-left').show()">Left</ae-button>
+  <ae-button onclick="document.querySelector('#drawer-right').show()">Right</ae-button>
+  <ae-button onclick="document.querySelector('#drawer-top').show()">Top</ae-button>
+  <ae-button onclick="document.querySelector('#drawer-bottom').show()">Bottom</ae-button>
+</div>
+<ae-drawer id="drawer-left" placement="left" label="Left Drawer">
+  <p>Slides in from the left</p>
+</ae-drawer>
+<ae-drawer id="drawer-right" placement="right" label="Right Drawer">
+  <p>Slides in from the right</p>
+</ae-drawer>
+<ae-drawer id="drawer-top" placement="top" label="Top Drawer">
+  <p>Slides in from the top</p>
+</ae-drawer>
+<ae-drawer id="drawer-bottom" placement="bottom" label="Bottom Drawer">
+  <p>Slides in from the bottom</p>
+</ae-drawer>`}
+/>
+
+## With Header and Footer
+
+<ComponentExample
+  title="Header & Footer Slots"
+  description="Customize drawer header and footer."
+  code={`<ae-button onclick="document.querySelector('#drawer-slots').show()">Open</ae-button>
+<ae-drawer id="drawer-slots" label="Settings">
+  <div slot="header">
+    <h3 style="margin: 0;">Custom Header</h3>
+  </div>
+  <p>Main drawer content goes here.</p>
+  <p>You can add forms, lists, or any content.</p>
+  <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+    <ae-button variant="secondary" onclick="document.querySelector('#drawer-slots').hide()">Cancel</ae-button>
+    <ae-button>Save</ae-button>
+  </div>
+</ae-drawer>`}
+/>
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Import
+
+```js
+import { defineAeDrawer } from '@aetherui/core/drawer';
+defineAeDrawer();
+```
+
+## Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `open` | `boolean` | `false` | Open state |
+| `label` | `string` | `''` | Accessible label |
+| `placement` | `'left' \| 'right' \| 'top' \| 'bottom'` | `'right'` | Slide-in direction |
+| `contained` | `boolean` | `false` | Contained within parent |
+
+## Methods
+
+| Name | Description |
+|------|-------------|
+| `show()` | Open the drawer |
+| `hide()` | Close the drawer |
+
+## Events
+
+| Name | Description |
+|------|-------------|
+| `ae-drawer-show` | Fired when drawer opens |
+| `ae-drawer-hide` | Fired when drawer closes |
+
+## Slots
+
+| Name | Description |
+|------|-------------|
+| default | Main content |
+| `header` | Header content |
+| `footer` | Footer content |
+
+## CSS Parts
+
+| Name | Description |
+|------|-------------|
+| `base` | Container |
+| `overlay` | Background overlay |
+| `panel` | Drawer panel |
+| `header` | Header area |
+| `body` | Content area |
+| `footer` | Footer area |
+| `close-button` | Close button |
+
+## Accessibility
+
+- Uses `role="dialog"` with `aria-modal`
+- Focus trapped within drawer
+- Escape key closes drawer
+- Returns focus on close

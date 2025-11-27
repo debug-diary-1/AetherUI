@@ -109,53 +109,15 @@ const { code, preview, title, description } = Astro.props;
   }
 </style>
 
-<!-- Load and register AetherUI components -->
+<!-- Components are registered globally via Head.astro -->
 <script>
-  async function loadAetherUI() {
-    if (window.AetherUI) return;
-
-    try {
-      // Try to import the main package
-      const module = await import('@aetherui/core');
-      window.AetherUI = module;
-      
-      // Register all components if possible
-      if (module.defineAll) {
-        module.defineAll();
-      } else {
-        // Fallback to individual registrations if needed
-        [
-          'defineAeDropdown',
-          'defineAeMenuItem',
-          'defineAeMenuSeparator'
-        ].forEach(def => {
-          if (typeof module[def] === 'function') {
-            module[def]();
-          }
-        });
-      }
-      
-      console.log('Successfully loaded AetherUI components');
-    } catch (error) {
-      console.warn('Failed to load AetherUI library:', error);
-    }
-  }
-
-  // Wait for everything to be fully loaded
-  window.addEventListener('load', async () => {
-    try {
-      // Try to load the library
-      await loadAetherUI();
-      
-      // Initialize open dropdowns after a short delay
-      setTimeout(() => {
-        document.querySelectorAll('ae-dropdown[default-open], ae-dropdown[open]').forEach(dropdown => {
-          dropdown.setAttribute('open', '');
-        });
-      }, 500);
-    } catch (error) {
-      console.warn('Failed to initialize dropdown components:', error);
-    }
+  // Initialize open dropdowns after components are ready
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelectorAll('ae-dropdown[default-open], ae-dropdown[open]').forEach(dropdown => {
+        dropdown.setAttribute('open', '');
+      });
+    }, 100);
   });
 </script>
 

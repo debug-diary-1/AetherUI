@@ -34,7 +34,7 @@ export const drawerStyles = css`
     display: flex;
     flex-direction: column;
     background: var(--ae-drawer-bg);
-    box-shadow: var(--ae-drawer-shadow, 0 0 20px rgba(0, 0, 0, 0.1));
+    box-shadow: var(--ae-drawer-shadow);
     overflow: hidden;
   }
 
@@ -163,7 +163,7 @@ export const drawerStyles = css`
 
   ::slotted([slot="header"]) {
     padding: var(--ae-drawer-header-padding, 1.5rem);
-    border-bottom: var(--ae-drawer-header-border, 1px solid #e5e7eb);
+    border-bottom: var(--ae-drawer-header-border);
     font-size: var(--ae-drawer-header-font-size, 1.25rem);
     font-weight: var(--ae-drawer-header-font-weight, 600);
     color: var(--ae-drawer-header-color);
@@ -177,7 +177,7 @@ export const drawerStyles = css`
 
   ::slotted([slot="footer"]) {
     padding: var(--ae-drawer-footer-padding, 1rem 1.5rem);
-    border-top: var(--ae-drawer-footer-border, 1px solid #e5e7eb);
+    border-top: var(--ae-drawer-footer-border);
     display: flex;
     gap: 0.5rem;
     justify-content: flex-end;

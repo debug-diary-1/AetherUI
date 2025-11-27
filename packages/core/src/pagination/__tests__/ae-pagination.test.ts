@@ -1,6 +1,7 @@
 import { html, fixture, expect, oneEvent } from '@open-wc/testing';
 import { AePagination } from '../ae-pagination.js';
 import '../ae-pagination.js';
+import { getComponentStyles, assertNoHardcodedColors, assertCSSVariablesUsed } from '../../test-utils/theme-test-helpers.js';
 
 describe('ae-pagination', () => {
   it('has correct default properties', async () => {
@@ -161,5 +162,38 @@ describe('ae-pagination', () => {
 
       expect(el.getAttribute('size')).to.equal(size);
     }
+  });
+
+  describe('Theme Integration', () => {
+    it('uses CSS variables for pagination styling', async () => {
+      const el = await fixture<AePagination>(html`<ae-pagination></ae-pagination>`);
+      const stylesText = getComponentStyles(el);
+
+      // Check that theme variables are used
+      assertCSSVariablesUsed(stylesText, [
+        '--ae-pagination-border',
+        '--ae-pagination-bg',
+        '--ae-pagination-color',
+      ], 'Pagination');
+    });
+
+    it('does not have hardcoded color fallbacks', async () => {
+      const el = await fixture<AePagination>(html`<ae-pagination></ae-pagination>`);
+      const stylesText = getComponentStyles(el);
+
+      // Ensure no hardcoded colors in styles
+      assertNoHardcodedColors(stylesText, { componentName: 'Pagination' });
+    });
+
+    it('computed styles exist at runtime', async () => {
+      const el = await fixture<AePagination>(html`<ae-pagination></ae-pagination>`);
+      await el.updateComplete;
+
+      const base = el.shadowRoot!.querySelector('[part="base"]');
+      expect(base).to.exist;
+
+      const styles = window.getComputedStyle(base!);
+      expect(styles).to.exist;
+    });
   });
 });

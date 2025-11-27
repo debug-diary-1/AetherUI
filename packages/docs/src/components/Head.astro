@@ -7,6 +7,6 @@ const props = Astro.props;
 
 <Default {...props} />
 <script>
-  // Import and setup components
-  import('../scripts/setup-components.ts');
+  // Static import ensures synchronous execution before component scripts
+  import '../scripts/setup-components.ts';
 </script>

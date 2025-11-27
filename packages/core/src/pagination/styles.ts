@@ -30,7 +30,7 @@ export const paginationStyles = css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: var(--ae-pagination-border, 1px solid #d1d5db);
+    border: var(--ae-pagination-border);
     background: var(--ae-pagination-bg);
     color: var(--ae-pagination-color);
     font-size: var(--ae-pagination-font-size, 0.875rem);

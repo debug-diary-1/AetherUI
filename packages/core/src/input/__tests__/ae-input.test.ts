@@ -1,6 +1,7 @@
 import { html, fixture, expect, oneEvent } from '@open-wc/testing';
 import { AeInput } from '../ae-input.js';
 import '../ae-input.js';
+import { getComponentStyles, assertNoHardcodedColors, assertCSSVariablesUsed } from '../../test-utils/theme-test-helpers.js';
 
 describe('ae-input', () => {
   it('has correct default properties', async () => {
@@ -176,5 +177,39 @@ describe('ae-input', () => {
     expect(input.hasAttribute('minlength')).to.be.false;
     expect(input.hasAttribute('maxlength')).to.be.false;
     expect(input.hasAttribute('pattern')).to.be.false;
+  });
+
+  describe('Theme Integration', () => {
+    it('uses CSS variables for input styling', async () => {
+      const el = await fixture<AeInput>(html`<ae-input></ae-input>`);
+      const stylesText = getComponentStyles(el);
+
+      // Check that theme variables are used
+      assertCSSVariablesUsed(stylesText, [
+        '--ae-input-border',
+        '--ae-input-bg',
+        '--ae-input-color',
+        '--ae-input-focus-ring',
+      ], 'Input');
+    });
+
+    it('does not have hardcoded color fallbacks', async () => {
+      const el = await fixture<AeInput>(html`<ae-input></ae-input>`);
+      const stylesText = getComponentStyles(el);
+
+      // Ensure no hardcoded colors in styles
+      assertNoHardcodedColors(stylesText, { componentName: 'Input' });
+    });
+
+    it('computed styles exist at runtime', async () => {
+      const el = await fixture<AeInput>(html`<ae-input></ae-input>`);
+      await el.updateComplete;
+
+      const wrapper = el.shadowRoot!.querySelector('.input-wrapper');
+      expect(wrapper).to.exist;
+
+      const styles = window.getComputedStyle(wrapper!);
+      expect(styles.borderColor).to.exist;
+    });
   });
 });

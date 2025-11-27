@@ -1,0 +1,174 @@
+---
+title: Input
+description: Text input component with validation, form participation, and support for various input types.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import ComponentExample from '../../../components/ComponentExample.astro';
+
+# Input
+
+A text input component with support for various input types, validation, and native form participation.
+
+## Basic Usage
+
+<ComponentExample
+  title="Default Input"
+  description="Basic text input with label."
+  code={`<ae-input label="Username" placeholder="Enter username"></ae-input>`}
+/>
+
+## Input Types
+
+The input supports various HTML5 input types.
+
+<ComponentExample
+  title="Input Types"
+  description="Text, email, password, number, and search types."
+  code={`<div class="demo-column">
+  <ae-input label="Text" type="text" placeholder="Enter text"></ae-input>
+  <ae-input label="Email" type="email" placeholder="email@example.com"></ae-input>
+  <ae-input label="Password" type="password" placeholder="••••••••"></ae-input>
+  <ae-input label="Number" type="number" placeholder="0" min="0" max="100"></ae-input>
+  <ae-input label="Search" type="search" placeholder="Search..." clearable></ae-input>
+</div>`}
+/>
+
+## States
+
+<ComponentExample
+  title="Input States"
+  description="Disabled, readonly, and error states."
+  code={`<div class="demo-column">
+  <ae-input label="Disabled" value="Cannot edit" disabled></ae-input>
+  <ae-input label="Readonly" value="Read only value" readonly></ae-input>
+  <ae-input label="With Error" value="Invalid input" error="This field has an error"></ae-input>
+</div>`}
+/>
+
+## Validation
+
+<ComponentExample
+  title="Required & Validation"
+  description="Built-in validation with required, minlength, and pattern."
+  code={`<div class="demo-column">
+  <ae-input label="Required Field" required placeholder="This field is required"></ae-input>
+  <ae-input label="Min Length" minlength="5" help-text="Minimum 5 characters"></ae-input>
+  <ae-input label="Pattern" pattern="[A-Za-z]+" help-text="Letters only"></ae-input>
+</div>`}
+/>
+
+## Helper Text
+
+<ComponentExample
+  title="Help Text & Errors"
+  description="Provide additional context with help text."
+  code={`<div class="demo-column">
+  <ae-input label="Password" type="password" help-text="Must be at least 8 characters"></ae-input>
+  <ae-input label="Email" type="email" error="Please enter a valid email address"></ae-input>
+</div>`}
+/>
+
+## Prefix & Suffix Slots
+
+<ComponentExample
+  title="With Icons"
+  description="Add icons or text as prefix/suffix."
+  code={`<div class="demo-column">
+  <ae-input label="Price" type="number" placeholder="0.00">
+    <span slot="prefix">$</span>
+  </ae-input>
+  <ae-input label="Website" type="url" placeholder="example">
+    <span slot="prefix">https://</span>
+    <span slot="suffix">.com</span>
+  </ae-input>
+</div>`}
+/>
+
+## Clearable
+
+<ComponentExample
+  title="Clearable Input"
+  description="Show a clear button when input has value."
+  code={`<ae-input label="Search" type="search" clearable placeholder="Type to search..."></ae-input>`}
+/>
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Import
+
+```js
+import { defineAeInput } from '@aetherui/core/input';
+defineAeInput();
+```
+
+## Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `type` | `'text' \| 'email' \| 'password' \| 'number' \| 'tel' \| 'url' \| 'search'` | `'text'` | Input type |
+| `value` | `string` | `''` | Current value |
+| `placeholder` | `string` | `''` | Placeholder text |
+| `label` | `string` | `''` | Label text |
+| `name` | `string` | `''` | Form field name |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `required` | `boolean` | `false` | Required field |
+| `readonly` | `boolean` | `false` | Read-only state |
+| `error` | `string` | `''` | Error message |
+| `help-text` | `string` | `''` | Helper text |
+| `minlength` | `number` | - | Minimum length |
+| `maxlength` | `number` | - | Maximum length |
+| `pattern` | `string` | - | Validation pattern |
+| `min` | `number` | - | Minimum value (number) |
+| `max` | `number` | - | Maximum value (number) |
+| `clearable` | `boolean` | `false` | Show clear button |
+
+## Events
+
+| Name | Detail | Description |
+|------|--------|-------------|
+| `ae-input-input` | `{ value: string }` | Fired on input |
+| `ae-input-change` | `{ value: string }` | Fired on change |
+| `ae-input-focus` | - | Fired on focus |
+| `ae-input-blur` | - | Fired on blur |
+| `ae-input-clear` | - | Fired when cleared |
+
+## Slots
+
+| Name | Description |
+|------|-------------|
+| `prefix` | Content before input |
+| `suffix` | Content after input |
+
+## CSS Parts
+
+| Name | Description |
+|------|-------------|
+| `base` | Base wrapper |
+| `label` | Label element |
+| `input-wrapper` | Input container |
+| `input` | Native input |
+| `prefix` | Prefix container |
+| `suffix` | Suffix container |
+| `clear-button` | Clear button |
+| `help-text` | Help text |
+| `error-text` | Error message |
+
+## Accessibility
+
+- Uses native `<input>` element semantics
+- Label properly associated with input
+- Error states announced to screen readers
+- Supports form validation API

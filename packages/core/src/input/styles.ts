@@ -40,7 +40,7 @@ export const inputStyles = css`
     align-items: center;
     gap: var(--ae-input-wrapper-gap, 0.5rem);
     padding: var(--ae-input-padding, 0.5rem 0.75rem);
-    border: var(--ae-input-border, 1px solid #d1d5db);
+    border: var(--ae-input-border);
     border-radius: var(--ae-input-border-radius, 0.375rem);
     background: var(--ae-input-bg);
     transition: all 0.2s ease;

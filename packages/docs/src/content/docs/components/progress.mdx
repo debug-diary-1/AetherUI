@@ -1,0 +1,110 @@
+---
+title: Progress
+description: Progress bar component for displaying completion status with determinate and indeterminate modes.
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import ComponentExample from '../../../components/ComponentExample.astro';
+
+# Progress
+
+A progress bar component for displaying completion status.
+
+## Basic Usage
+
+<ComponentExample
+  title="Default Progress"
+  description="Basic progress bar with value."
+  code={`<ae-progress value="60"></ae-progress>`}
+/>
+
+## Different Values
+
+<ComponentExample
+  title="Progress Values"
+  description="Show various completion states."
+  code={`<div class="demo-column">
+  <ae-progress value="0"></ae-progress>
+  <ae-progress value="25"></ae-progress>
+  <ae-progress value="50"></ae-progress>
+  <ae-progress value="75"></ae-progress>
+  <ae-progress value="100"></ae-progress>
+</div>`}
+/>
+
+## With Label
+
+<ComponentExample
+  title="Show Label"
+  description="Display percentage label."
+  code={`<div class="demo-column">
+  <ae-progress value="45" show-label></ae-progress>
+  <ae-progress value="80" show-label></ae-progress>
+</div>`}
+/>
+
+## Sizes
+
+<ComponentExample
+  title="Progress Sizes"
+  description="Small, medium, and large sizes."
+  code={`<div class="demo-column">
+  <ae-progress value="60" size="sm"></ae-progress>
+  <ae-progress value="60" size="md"></ae-progress>
+  <ae-progress value="60" size="lg"></ae-progress>
+</div>`}
+/>
+
+## Indeterminate
+
+<ComponentExample
+  title="Indeterminate Progress"
+  description="Use for unknown duration operations."
+  code={`<ae-progress indeterminate></ae-progress>`}
+/>
+
+## Installation
+
+<Tabs>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+</Tabs>
+
+## Import
+
+```js
+import { defineAeProgress } from '@aetherui/core/progress';
+defineAeProgress();
+```
+
+## Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `number` | `0` | Progress value (0-100) |
+| `max` | `number` | `100` | Maximum value |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size variant |
+| `show-label` | `boolean` | `false` | Show percentage label |
+| `indeterminate` | `boolean` | `false` | Indeterminate mode |
+
+## CSS Parts
+
+| Name | Description |
+|------|-------------|
+| `base` | Base wrapper |
+| `track` | Background track |
+| `bar` | Progress bar |
+| `label` | Percentage label |
+
+## Accessibility
+
+- Uses `role="progressbar"` 
+- Sets `aria-valuenow`, `aria-valuemin`, `aria-valuemax`
+- Screen reader announces progress updates
