@@ -204,10 +204,20 @@
 
   /* ===== Progress Component ===== */
   --ae-progress-bg: #e5e7eb;
+  --ae-progress-track-bg: #e5e7eb;
   --ae-progress-bar-bg: #000000;
   --ae-progress-height: 0.5rem;
+  --ae-progress-height-sm: 4px;
+  --ae-progress-height-md: 8px;
+  --ae-progress-height-lg: 12px;
   --ae-progress-border-radius: 9999px;
   --ae-progress-transition: width 0.3s ease;
+  --ae-progress-bg-primary: #000000;
+  --ae-progress-bg-secondary: #6b7280;
+  --ae-progress-bg-success: #10b981;
+  --ae-progress-bg-error: #ef4444;
+  --ae-progress-bg-warning: #f59e0b;
+  --ae-progress-bg-info: #3b82f6;
 
   /* ===== Tooltip Component ===== */
   --ae-tooltip-bg: #1f2937;
@@ -413,7 +423,14 @@
 
   /* Progress */
   --ae-progress-bg: #333333;
+  --ae-progress-track-bg: #333333;
   --ae-progress-bar-bg: #ffffff;
+  --ae-progress-bg-primary: #ffffff;
+  --ae-progress-bg-secondary: #a6a6a6;
+  --ae-progress-bg-success: #34d399;
+  --ae-progress-bg-error: #f87171;
+  --ae-progress-bg-warning: #fbbf24;
+  --ae-progress-bg-info: #60a5fa;
 
   /* Modal */
   --ae-modal-bg: #1a1a1a;
