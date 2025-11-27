@@ -53,7 +53,6 @@ export default defineConfig({
           items: [
             { label: 'Introduction', slug: 'getting-started/introduction' },
             { label: 'Installation', slug: 'getting-started/installation' },
-            { label: 'Framework Integration', slug: 'getting-started/framework-integration' },
           ],
         },
         {
