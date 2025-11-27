@@ -1,110 +1,207 @@
-/* Use system fonts for minimal design */
+/* Modern, clean design system */
 
-/* Essential Starlight theme overrides - minimal monochrome design */
 :root {
-  /* Accent colors - muted */
-  --sl-color-accent-low: #f0f0f0;
-  --sl-color-accent: #0066cc;
-  --sl-color-accent-high: #0052a3;
-  --sl-color-text-accent: #0066cc;
-  
+  /* Modern color palette */
+  --sl-color-accent-low: #f0f7ff;
+  --sl-color-accent: #2563eb;
+  --sl-color-accent-high: #1d4ed8;
+  --sl-color-text-accent: #2563eb;
+
   /* Text colors */
-  --sl-color-text: #1a1a1a;
-  --sl-color-text-light: #666;
-  --sl-color-text-heading: #000000;
-  
-  /* Base colors */
-  --sl-color-black: #000000;
-  --sl-color-white: #ffffff;
-  
-  /* Gray scale colors */
-  --sl-color-gray-1: #f5f5f5;
-  --sl-color-gray-2: #eaeaea;
-  --sl-color-gray-3: #d4d4d4;
-  --sl-color-gray-4: #a3a3a3;
-  --sl-color-gray-5: #737373;
-  --sl-color-gray-6: #525252;
-  
-  /* Background colors */
-  --sl-color-bg: #fff;
-  --sl-color-bg-offset: #fafafa;
-  --sl-color-bg-inline-code: #f4f4f4;
-  
-  /* Border colors */
-  --sl-color-border: #e5e5e5;
-  
-  /* System font stack for clean, minimal design */
-  --sl-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  --sl-font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  
-  /* Monospace font */
-  --sl-font-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
-  
-  /* Set font weights for system fonts */
+  --sl-color-text: #0f172a;
+  --sl-color-text-light: #64748b;
+  --sl-color-text-heading: #0f172a;
+
+  /* Gray scale */
+  --sl-color-gray-1: #f8fafc;
+  --sl-color-gray-2: #f1f5f9;
+  --sl-color-gray-3: #e2e8f0;
+  --sl-color-gray-4: #94a3b8;
+  --sl-color-gray-5: #64748b;
+  --sl-color-gray-6: #475569;
+
+  /* Background */
+  --sl-color-bg: #ffffff;
+  --sl-color-bg-offset: #f8fafc;
+  --sl-color-bg-inline-code: #f1f5f9;
+
+  /* Border */
+  --sl-color-border: #e2e8f0;
+
+  /* Modern font stack */
+  --sl-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
+  --sl-font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
+  --sl-font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+
+  /* Font weights */
   --sl-font-weight-normal: 400;
   --sl-font-weight-semibold: 500;
   --sl-font-weight-bold: 600;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* Border radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* Layout */
+  --sl-content-width: 65rem;
+  --sl-content-max-width: 90rem;
+  --sl-sidebar-width: 16rem;
+  --sl-toc-width: 14rem;
 }
 
-/* Dark mode overrides */
+/* Dark mode */
 :root[data-theme='dark'] {
-  --sl-color-accent-low: #1a3a5c;
-  --sl-color-accent: #4da3ff;
-  --sl-color-accent-high: #80c0ff;
-  --sl-color-text-accent: #4da3ff;
-  
-  --sl-color-text: #fff;
-  --sl-color-text-light: #999;
-  --sl-color-text-heading: #ffffff;
-  
-  /* Base colors for dark mode */
-  --sl-color-black: #000000;
-  --sl-color-white: #ffffff;
-  
-  /* Gray scale colors for dark mode */
-  --sl-color-gray-1: #1a1a1a;
-  --sl-color-gray-2: #262626;
-  --sl-color-gray-3: #333333;
-  --sl-color-gray-4: #4d4d4d;
-  --sl-color-gray-5: #737373;
-  --sl-color-gray-6: #0a0a0a;
-  
-  --sl-color-bg: #0a0a0a;
-  --sl-color-bg-offset: #141414;
-  --sl-color-bg-inline-code: #1e1e1e;
-  
-  --sl-color-border: #2a2a2a;
+  --sl-color-accent-low: #1e3a5f;
+  --sl-color-accent: #3b82f6;
+  --sl-color-accent-high: #60a5fa;
+  --sl-color-text-accent: #60a5fa;
+
+  --sl-color-text: #f1f5f9;
+  --sl-color-text-light: #94a3b8;
+  --sl-color-text-heading: #f8fafc;
+
+  --sl-color-gray-1: #0f172a;
+  --sl-color-gray-2: #1e293b;
+  --sl-color-gray-3: #334155;
+  --sl-color-gray-4: #475569;
+  --sl-color-gray-5: #64748b;
+  --sl-color-gray-6: #94a3b8;
+
+  --sl-color-bg: #0f172a;
+  --sl-color-bg-offset: #1e293b;
+  --sl-color-bg-inline-code: #1e293b;
+
+  --sl-color-border: #334155;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
 }
 
-/* Global font settings */
+/* Global styles */
 body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
 }
 
-/* Headings with slightly heavier weight */
+/* Headings */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--sl-color-text);
-  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--sl-color-text-heading);
+  line-height: 1.25;
 }
 
-/* Strong elements use bold weight */
-strong, b {
-  font-weight: 600;
+/* Links */
+a {
+  transition: color 0.15s ease, opacity 0.15s ease;
 }
 
-/* Sidebar navigation headings */
+/* Sidebar styling */
 .sl-sidebar-group-label,
 .sl-sidebar-group h2,
 .sl-sidebar-group h3 {
   color: var(--sl-color-text-heading);
   font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-/* Component demo containers */
+/* Navigation links */
+nav a {
+  border-radius: var(--radius-sm);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+nav a:hover {
+  background: var(--sl-color-gray-2);
+}
+
+/* Code blocks */
+pre {
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--sl-color-border) !important;
+}
+
+code {
+  font-family: var(--sl-font-mono);
+  font-size: 0.875em;
+}
+
+/* Inline code */
+:not(pre) > code {
+  background: var(--sl-color-bg-inline-code);
+  padding: 0.2em 0.4em;
+  border-radius: var(--radius-sm);
+  font-size: 0.875em;
+}
+
+/* Tables */
+table {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--sl-color-border);
+}
+
+th {
+  background: var(--sl-color-bg-offset);
+  font-weight: 600;
+}
+
+td, th {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--sl-color-border);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* Cards and containers */
+.sl-card,
+.card {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--sl-color-border);
+  background: var(--sl-color-bg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.sl-card:hover,
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Buttons */
+.sl-button,
+button,
+.action {
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+/* Content area */
+.sl-content,
+.sl-markdown-content,
+article[data-page-content] {
+  max-width: var(--sl-content-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Demo containers */
 .button-demo,
 .button-container {
   display: flex;
@@ -118,85 +215,81 @@ strong, b {
   margin: 1rem 0;
 }
 
-/* Interactive example containers */
+/* Interactive examples */
 .interactive-example {
-  border: 1px solid var(--sl-color-gray-5);
-  border-radius: 0.5rem;
-  margin: 1rem 0;
+  border: 1px solid var(--sl-color-border);
+  border-radius: var(--radius-lg);
+  margin: 1.5rem 0;
   overflow: hidden;
+  background: var(--sl-color-bg);
+  box-shadow: var(--shadow-sm);
 }
 
 .example-preview {
   padding: 2rem;
-  border-bottom: 1px solid var(--sl-color-gray-5);
+  border-bottom: 1px solid var(--sl-color-border);
+  background: var(--sl-color-bg-offset);
 }
 
 .example-code {
-  background: var(--sl-color-gray-6);
   padding: 1rem;
 }
 
-/* Theme selector styling */
-.sl-theme-select,
-starlight-theme-select select,
-[data-theme-select],
-select[aria-label*="theme"],
-select[aria-label*="Theme"] {
+/* Theme selector */
+starlight-theme-select select {
+  background: var(--sl-color-bg-offset);
+  border: 1px solid var(--sl-color-border);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
   color: var(--sl-color-text);
-  background-color: var(--sl-color-bg-offset);
-  border-color: var(--sl-color-border);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
 }
 
-/* Theme selector option styling */
-.sl-theme-select option,
-starlight-theme-select option,
-[data-theme-select] option,
-select[aria-label*="theme"] option,
-select[aria-label*="Theme"] option {
-  color: var(--sl-color-text);
-  background-color: var(--sl-color-bg);
+starlight-theme-select select:hover {
+  border-color: var(--sl-color-accent);
 }
 
-/* Layout adjustments for wider content area */
-:root {
-  /* Increase content width significantly */
-  --sl-content-width: 65rem; /* Default is usually around 45rem */
-  --sl-content-max-width: 90rem; /* Maximum width for very wide screens */
-  
-  /* Adjust sidebar widths if needed */
-  --sl-sidebar-width: 16rem; /* Left sidebar */
-  --sl-toc-width: 14rem; /* Right table of contents */
+/* Search */
+.sl-search-box,
+[data-pagefind-ui] input {
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--sl-color-border) !important;
+  background: var(--sl-color-bg-offset) !important;
 }
 
-/* Main content container */
-.sl-container,
-.sl-layout > main,
-main[data-page] {
-  max-width: var(--sl-content-max-width);
+/* Header */
+header.header {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid var(--sl-color-border);
 }
 
-/* Content area specific */
-.sl-content,
-.sl-markdown-content,
-article[data-page-content] {
-  max-width: var(--sl-content-width);
-  margin-left: auto;
-  margin-right: auto;
+:root[data-theme='dark'] header.header {
+  background: rgba(15, 23, 42, 0.8);
 }
 
-/* Ensure proper spacing between sidebars and content */
-@media (min-width: 1024px) {
-  .sl-layout {
-    gap: 2rem;
-  }
-  
-  main {
-    flex: 1 1 auto;
-    min-width: 0; /* Prevent overflow */
-  }
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-/* Responsive adjustments */
+::-webkit-scrollbar-track {
+  background: var(--sl-color-bg-offset);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sl-color-gray-4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sl-color-gray-5);
+}
+
+/* Responsive */
 @media (min-width: 1280px) {
   :root {
     --sl-content-width: 70rem;
@@ -206,21 +299,22 @@ article[data-page-content] {
 @media (min-width: 1536px) {
   :root {
     --sl-content-width: 80rem;
-    --sl-content-max-width: 100rem;
   }
 }
 
-@media (min-width: 1920px) {
-  :root {
-    --sl-content-width: 90rem;
-    --sl-content-max-width: 110rem;
-  }
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--sl-color-accent);
+  outline-offset: 2px;
 }
 
-/* Responsive tables */
-@media (max-width: 768px) {
-  table {
-    display: block;
-    overflow-x: auto;
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
