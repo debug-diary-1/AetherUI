@@ -18,10 +18,7 @@ const exampleId = `modal-example-${Math.random().toString(36).slice(2, 10)}`;
 </div>
 
 <script>
-  // Import and call defineAll to register all components
-  import { defineAll } from '@aetherui/core';
-  defineAll();
-  
+  // Components are registered globally via Head.astro
   // Wait for DOM to be loaded and hydrated
   document.addEventListener('DOMContentLoaded', initDocument);
   document.addEventListener('astro:page-load', initDocument);

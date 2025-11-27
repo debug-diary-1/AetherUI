@@ -5,6 +5,7 @@ import { AeMenuDivider } from '../ae-menu-divider.js';
 import '../ae-menu.js';
 import '../ae-menu-item.js';
 import '../ae-menu-divider.js';
+import { getComponentStyles, assertNoHardcodedColors, assertCSSVariablesUsed } from '../../test-utils/theme-test-helpers.js';
 
 describe('ae-menu', () => {
   it('renders menu element', async () => {
@@ -163,5 +164,38 @@ describe('ae-menu-divider', () => {
     const divider = el.shadowRoot!.querySelector('[role="separator"]');
 
     expect(divider).to.exist;
+  });
+});
+
+describe('Menu Theme Integration', () => {
+  it('uses CSS variables for menu styling', async () => {
+    const el = await fixture<AeMenu>(html`<ae-menu></ae-menu>`);
+    const stylesText = getComponentStyles(el);
+
+    // Check that theme variables are used
+    assertCSSVariablesUsed(stylesText, [
+      '--ae-menu-border',
+      '--ae-menu-bg',
+      '--ae-menu-shadow',
+    ], 'Menu');
+  });
+
+  it('does not have hardcoded color fallbacks', async () => {
+    const el = await fixture<AeMenu>(html`<ae-menu></ae-menu>`);
+    const stylesText = getComponentStyles(el);
+
+    // Ensure no hardcoded colors in styles
+    assertNoHardcodedColors(stylesText, { componentName: 'Menu' });
+  });
+
+  it('computed styles exist at runtime', async () => {
+    const el = await fixture<AeMenu>(html`<ae-menu></ae-menu>`);
+    await el.updateComplete;
+
+    const menu = el.shadowRoot!.querySelector('[part="base"]');
+    expect(menu).to.exist;
+
+    const styles = window.getComputedStyle(menu!);
+    expect(styles.borderColor).to.exist;
   });
 });

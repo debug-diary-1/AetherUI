@@ -29,7 +29,7 @@ export const textareaStyles = css`
 
   .textarea-wrapper {
     display: flex;
-    border: var(--ae-textarea-border, 1px solid #d1d5db);
+    border: var(--ae-textarea-border);
     border-radius: var(--ae-textarea-border-radius, 0.375rem);
     background: var(--ae-textarea-bg);
     transition: all 0.2s ease;

@@ -20,6 +20,40 @@ test.describe('Input Component', () => {
     await input.fill('test@example.com');
     await expect(page).toHaveScreenshot('input-filled.png');
   });
+
+  test('renders in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+    await expect(page).toHaveScreenshot('input-dark-mode.png');
+  });
+
+  test('theme colors change between modes', async ({ page }) => {
+    // Get light mode border color
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'light');
+    });
+    await page.waitForTimeout(100);
+
+    const lightBorder = await page.locator('ae-input').evaluate((el) => {
+      const wrapper = el.shadowRoot?.querySelector('.input-wrapper');
+      return wrapper ? window.getComputedStyle(wrapper).borderColor : '';
+    });
+
+    // Switch to dark mode
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+
+    const darkBorder = await page.locator('ae-input').evaluate((el) => {
+      const wrapper = el.shadowRoot?.querySelector('.input-wrapper');
+      return wrapper ? window.getComputedStyle(wrapper).borderColor : '';
+    });
+
+    expect(lightBorder).not.toBe(darkBorder);
+  });
 });
 
 test.describe('Select Component', () => {
@@ -30,6 +64,14 @@ test.describe('Select Component', () => {
 
   test('renders default state', async ({ page }) => {
     await expect(page).toHaveScreenshot('select-default.png');
+  });
+
+  test('renders in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+    await expect(page).toHaveScreenshot('select-dark-mode.png');
   });
 });
 
@@ -42,6 +84,14 @@ test.describe('Textarea Component', () => {
   test('renders default state', async ({ page }) => {
     await expect(page).toHaveScreenshot('textarea-default.png');
   });
+
+  test('renders in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+    await expect(page).toHaveScreenshot('textarea-dark-mode.png');
+  });
 });
 
 test.describe('Badge Component', () => {
@@ -53,6 +103,14 @@ test.describe('Badge Component', () => {
   test('renders all variants', async ({ page }) => {
     await expect(page).toHaveScreenshot('badge-variants.png');
   });
+
+  test('renders in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+    await expect(page).toHaveScreenshot('badge-dark-mode.png');
+  });
 });
 
 test.describe('Spinner Component', () => {
@@ -63,6 +121,40 @@ test.describe('Spinner Component', () => {
 
   test('renders spinner', async ({ page }) => {
     await expect(page).toHaveScreenshot('spinner-primary.png');
+  });
+
+  test('renders in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+    await expect(page).toHaveScreenshot('spinner-dark-mode.png');
+  });
+
+  test('spinner color changes between themes', async ({ page }) => {
+    // Get light mode stroke color
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'light');
+    });
+    await page.waitForTimeout(100);
+
+    const lightStroke = await page.locator('ae-spinner').evaluate((el) => {
+      const indicator = el.shadowRoot?.querySelector('.spinner-indicator');
+      return indicator ? window.getComputedStyle(indicator).stroke : '';
+    });
+
+    // Switch to dark mode
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+
+    const darkStroke = await page.locator('ae-spinner').evaluate((el) => {
+      const indicator = el.shadowRoot?.querySelector('.spinner-indicator');
+      return indicator ? window.getComputedStyle(indicator).stroke : '';
+    });
+
+    expect(lightStroke).not.toBe(darkStroke);
   });
 });
 
@@ -82,6 +174,14 @@ test.describe('Switch Component', () => {
     await page.waitForTimeout(200);
     await expect(page).toHaveScreenshot('switch-checked.png');
   });
+
+  test('renders in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+    await expect(page).toHaveScreenshot('switch-dark-mode.png');
+  });
 });
 
 test.describe('Progress Component', () => {
@@ -92,6 +192,14 @@ test.describe('Progress Component', () => {
 
   test('renders progress bar', async ({ page }) => {
     await expect(page).toHaveScreenshot('progress-default.png');
+  });
+
+  test('renders in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+    await expect(page).toHaveScreenshot('progress-dark-mode.png');
   });
 });
 
@@ -110,6 +218,14 @@ test.describe('Breadcrumb Component', () => {
     const li = currentItem.locator('li').first();
     await expect(li).toHaveAttribute('aria-current', 'page');
   });
+
+  test('renders in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+    await expect(page).toHaveScreenshot('breadcrumb-dark-mode.png');
+  });
 });
 
 test.describe('Pagination Component', () => {
@@ -120,6 +236,14 @@ test.describe('Pagination Component', () => {
 
   test('renders pagination controls', async ({ page }) => {
     await expect(page).toHaveScreenshot('pagination-default.png');
+  });
+
+  test('renders in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+    await expect(page).toHaveScreenshot('pagination-dark-mode.png');
   });
 });
 
@@ -139,6 +263,18 @@ test.describe('Drawer Component', () => {
     await page.waitForTimeout(300); // Wait for animation
     await expect(page).toHaveScreenshot('drawer-open.png');
   });
+
+  test('renders open drawer in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+
+    const openButton = page.getByRole('button', { name: /open drawer/i });
+    await openButton.click();
+    await page.waitForTimeout(300);
+    await expect(page).toHaveScreenshot('drawer-open-dark-mode.png');
+  });
 });
 
 test.describe('Popover Component', () => {
@@ -157,6 +293,18 @@ test.describe('Popover Component', () => {
     await page.waitForTimeout(200);
     await expect(page).toHaveScreenshot('popover-open.png');
   });
+
+  test('renders popover in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+
+    const trigger = page.locator('ae-popover').getByRole('button');
+    await trigger.click();
+    await page.waitForTimeout(200);
+    await expect(page).toHaveScreenshot('popover-open-dark-mode.png');
+  });
 });
 
 test.describe('Menu Component', () => {
@@ -167,6 +315,14 @@ test.describe('Menu Component', () => {
 
   test('renders menu', async ({ page }) => {
     await expect(page).toHaveScreenshot('menu-default.png');
+  });
+
+  test('renders in dark mode', async ({ page }) => {
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    });
+    await page.waitForTimeout(100);
+    await expect(page).toHaveScreenshot('menu-dark-mode.png');
   });
 });
 

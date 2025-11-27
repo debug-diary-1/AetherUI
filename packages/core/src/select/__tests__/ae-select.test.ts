@@ -1,6 +1,7 @@
 import { html, fixture, expect, oneEvent } from '@open-wc/testing';
 import { AeSelect } from '../ae-select.js';
 import '../ae-select.js';
+import { getComponentStyles, assertNoHardcodedColors, assertCSSVariablesUsed } from '../../test-utils/theme-test-helpers.js';
 
 describe('ae-select', () => {
   it('has correct default properties', async () => {
@@ -187,5 +188,39 @@ describe('ae-select', () => {
 
     const requiredIndicator = el.shadowRoot!.querySelector('.required-indicator');
     expect(requiredIndicator).to.exist;
+  });
+
+  describe('Theme Integration', () => {
+    it('uses CSS variables for select styling', async () => {
+      const el = await fixture<AeSelect>(html`<ae-select></ae-select>`);
+      const stylesText = getComponentStyles(el);
+
+      // Check that theme variables are used
+      assertCSSVariablesUsed(stylesText, [
+        '--ae-select-border',
+        '--ae-select-bg',
+        '--ae-select-color',
+        '--ae-select-focus-ring',
+      ], 'Select');
+    });
+
+    it('does not have hardcoded color fallbacks', async () => {
+      const el = await fixture<AeSelect>(html`<ae-select></ae-select>`);
+      const stylesText = getComponentStyles(el);
+
+      // Ensure no hardcoded colors in styles
+      assertNoHardcodedColors(stylesText, { componentName: 'Select' });
+    });
+
+    it('computed styles exist at runtime', async () => {
+      const el = await fixture<AeSelect>(html`<ae-select></ae-select>`);
+      await el.updateComplete;
+
+      const wrapper = el.shadowRoot!.querySelector('.select-wrapper');
+      expect(wrapper).to.exist;
+
+      const styles = window.getComputedStyle(wrapper!);
+      expect(styles.borderColor).to.exist;
+    });
   });
 });

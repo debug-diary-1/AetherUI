@@ -71,12 +71,5 @@ const { code, preview, title, description } = Astro.props;
   }
 </style>
 
-<!-- Register custom elements client-side -->
-<script>
-  // Note: Import happens at runtime in the browser
-  import { defineAll } from '@aetherui/core';
-  
-  // Initialize all components
-  defineAll();
-</script>
+<!-- Components are registered globally via Head.astro -->
  

@@ -1,6 +1,7 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import { AeSpinner } from '../ae-spinner.js';
 import '../ae-spinner.js';
+import { getComponentStyles, assertNoHardcodedColors, assertCSSVariablesUsed } from '../../test-utils/theme-test-helpers.js';
 
 describe('ae-spinner', () => {
   it('has correct default properties', async () => {
@@ -75,5 +76,39 @@ describe('ae-spinner', () => {
     const svg = el.shadowRoot!.querySelector('svg');
 
     expect(svg).to.exist;
+  });
+
+  describe('Theme Integration', () => {
+    it('uses CSS variables for spinner colors', async () => {
+      const el = await fixture<AeSpinner>(html`<ae-spinner></ae-spinner>`);
+      const stylesText = getComponentStyles(el);
+
+      // Check that theme variables are used
+      assertCSSVariablesUsed(stylesText, [
+        '--ae-spinner-color-primary',
+        '--ae-spinner-color-secondary',
+        '--ae-spinner-color-success',
+        '--ae-spinner-track-color',
+      ], 'Spinner');
+    });
+
+    it('does not have hardcoded color fallbacks', async () => {
+      const el = await fixture<AeSpinner>(html`<ae-spinner></ae-spinner>`);
+      const stylesText = getComponentStyles(el);
+
+      // Ensure no hardcoded colors in styles
+      assertNoHardcodedColors(stylesText, { componentName: 'Spinner' });
+    });
+
+    it('computed styles exist at runtime', async () => {
+      const el = await fixture<AeSpinner>(html`<ae-spinner></ae-spinner>`);
+      await el.updateComplete;
+
+      const svg = el.shadowRoot!.querySelector('svg');
+      expect(svg).to.exist;
+
+      const styles = window.getComputedStyle(svg!);
+      expect(styles).to.exist;
+    });
   });
 });
