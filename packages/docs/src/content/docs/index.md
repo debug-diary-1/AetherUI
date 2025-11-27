@@ -6,17 +6,17 @@ hero:
   tagline: Headless, accessible Web Components built with Lit. Works with any framework.
   actions:
     - text: Get Started
-      link: /getting-started/installation/
+      link: /docs/getting-started/installation/
       icon: right-arrow
       variant: primary
     - text: View on GitHub
-      link: https://github.com/your-org/aetherui
+      link: https://github.com/pallavL01/AetherUI
       icon: external
 ---
 
 <div class="hero-section">
   <div class="logo-container">
-    <img src="/logo-large.svg" alt="AetherUI Logo" width="80" height="80" />
+    <img src="/docs/logo-large.svg" alt="AetherUI Logo" width="80" height="80" />
   </div>
   <h1 class="hero-title">AetherUI</h1>
   <p class="hero-subtitle">Lightweight Web Components that work everywhere</p>
@@ -70,8 +70,8 @@ defineAeButton();
 </div>
 
 <div class="cta-section">
-  <a href="/getting-started/installation/" class="primary-link">[Documentation →]</a>
-  <a href="/components/button/" class="secondary-link">[Components]</a>
+  <a href="/docs/getting-started/installation/" class="primary-link">[Documentation →]</a>
+  <a href="/docs/components/button/" class="secondary-link">[Components]</a>
 </div>
 
 <style>

@@ -50,7 +50,7 @@ const { code, preview, title, description, class: className } = Astro.props;
   // Wait for components to be ready
   const checkAndInject = () => {
     // Check if at least one custom element is defined
-    const isDefined = ['ae-button', 'ae-checkbox', 'ae-radio', 'ae-treeview', 'ae-toast', 'ae-tooltip']
+    const isDefined = ['ae-accordion', 'ae-button', 'ae-checkbox', 'ae-radio', 'ae-treeview', 'ae-toast', 'ae-tooltip']
       .some(tag => window.customElements.get(tag) !== undefined);
     
     if (isDefined) {

@@ -1,0 +1,89 @@
+---
+title: Introduction
+description: A lightweight, accessible Web Component library built with Lit
+---
+
+# AetherUI
+
+AetherUI is a headless, framework-agnostic Web Component library built on [Lit](https://lit.dev). It provides a collection of accessible, customizable UI components that work with any JavaScript framework or vanilla HTML.
+
+## Why AetherUI?
+
+### Framework Agnostic
+Web Components are native browser technology. AetherUI components work seamlessly with React, Vue, Angular, Svelte, or plain HTML - no framework-specific wrappers needed.
+
+### Lightweight
+Each component is designed to be small and efficient. Components are individually importable, so you only ship what you use.
+
+### Accessible
+Built with accessibility as a priority. All components follow WAI-ARIA guidelines and include proper keyboard navigation, focus management, and screen reader support.
+
+### Customizable
+Style components using CSS custom properties (CSS variables) and shadow parts. No complex theming APIs - just standard CSS.
+
+## Quick Start
+
+Install the package:
+
+```bash
+npm install @aetherui/core
+```
+
+Import and use a component:
+
+```js
+import { defineAeButton } from '@aetherui/core';
+
+// Register the component
+defineAeButton();
+```
+
+```html
+<ae-button variant="primary">Click me</ae-button>
+```
+
+## Core Concepts
+
+### Component Registration
+
+Before using a component, you must register it with the browser's custom element registry:
+
+```js
+// Register individual components
+import { defineAeButton, defineAeAccordion } from '@aetherui/core';
+defineAeButton();
+defineAeAccordion();
+
+// Or register all components at once
+import { defineAll } from '@aetherui/core';
+defineAll();
+```
+
+### Styling with CSS Variables
+
+All components expose CSS custom properties for styling:
+
+```css
+ae-button {
+  --ae-button-bg: #0066cc;
+  --ae-button-color: white;
+  --ae-button-radius: 4px;
+}
+```
+
+### Using Slots
+
+Components use the standard Web Component slot API for content projection:
+
+```html
+<ae-accordion-item>
+  <span slot="header">Click to expand</span>
+  <p>This content is shown when expanded</p>
+</ae-accordion-item>
+```
+
+## Next Steps
+
+- [Installation](/docs/getting-started/installation/) - Detailed installation instructions
+- [Framework Integration](/docs/getting-started/framework-integration/) - Using AetherUI with React, Vue, and more
+- [Components](/docs/components/accordion/) - Browse all available components
