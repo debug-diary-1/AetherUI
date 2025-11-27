@@ -1,48 +1,329 @@
 /* Monospace-first design system */
 :root {
   /* Override Starlight fonts with monospace */
-  --sl-font: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
+  --sl-font: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
              'DejaVu Sans Mono', monospace;
-  --sl-font-system-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, 
+  --sl-font-system-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo,
                          Consolas, 'DejaVu Sans Mono', monospace;
-  
-  /* Core colors - high contrast monochrome */
+
+  /* Core colors */
+  --ae-color-primary: #0066cc;
   --ae-color-brand-600: #000000;
   --ae-color-text-primary: #000000;
   --ae-color-text-secondary: #595959;
   --ae-color-base-200: #f5f5f5;
   --ae-color-base-300: #d4d4d4;
-  
+
   /* Component color tokens */
   --ae-color-text: #000000;
   --ae-color-surface: #ffffff;
-  
+
   /* Font tokens for components */
-  --ae-font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
+  --ae-font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
                     'DejaVu Sans Mono', monospace;
   --ae-font-weight: 400;
-  
-  /* Button tokens - minimal */
-  --ae-button-bg-primary: #000;
-  --ae-button-fg-primary: #fff;
-  --ae-button-bg-secondary: transparent;
-  --ae-button-fg-secondary: #1a1a1a;
-  --ae-button-border-secondary: #e5e5e5;
-  --ae-button-radius: 6px;
-  --ae-button-font-weight: 400;
-  
-  /* Modal tokens */
+
+  /* Focus ring */
+  --ae-focus-ring-color: #0066cc;
+  --ae-focus-ring-offset: 2px;
+
+  /* ===== Button Component ===== */
+  --ae-button-padding-x: 1rem;
+  --ae-button-padding-y: 0.5rem;
+  --ae-button-gap: 0.5rem;
+  --ae-button-radius: 0.375rem;
+  --ae-button-padding-icon-only: 0.5rem;
+  --ae-button-font-weight: 500;
+
+  /* Primary Variant */
+  --ae-button-bg-primary: #000000;
+  --ae-button-fg-primary: #ffffff;
+  --ae-button-border-primary: #000000;
+  --ae-button-bg-primary-hover: #333333;
+  --ae-button-border-primary-hover: #333333;
+
+  /* Secondary Variant */
+  --ae-button-bg-secondary: #f3f4f6;
+  --ae-button-fg-secondary: #333333;
+  --ae-button-border-secondary: #d4d4d4;
+  --ae-button-bg-secondary-hover: #e5e7eb;
+
+  /* Ghost Variant */
+  --ae-button-bg-ghost: transparent;
+  --ae-button-fg-ghost: #000000;
+  --ae-button-border-ghost: transparent;
+  --ae-button-bg-ghost-hover: rgba(0, 0, 0, 0.05);
+
+  /* Button Sizes */
+  --ae-button-font-sm: 0.875rem;
+  --ae-button-font-md: 1rem;
+  --ae-button-font-lg: 1.125rem;
+
+  /* Button States */
+  --ae-button-transition-duration: 200ms;
+  --ae-button-transition-timing: ease;
+  --ae-button-disabled-opacity: 0.5;
+
+  /* ===== Accordion Component ===== */
+  --ae-accordion-bg: white;
+  --ae-accordion-radius: 0.375rem;
+  --ae-accordion-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --ae-accordion-border: 1px solid #e5e7eb;
+  --ae-accordion-divider: 1px solid #e5e7eb;
+  --ae-accordion-header-bg: transparent;
+  --ae-accordion-header-padding: 0.875rem 1rem;
+  --ae-accordion-header-color: #111827;
+  --ae-accordion-header-font-weight: 500;
+  --ae-accordion-header-font-size: 0.875rem;
+  --ae-accordion-header-hover-bg: #f9fafb;
+  --ae-accordion-header-active-bg: #f3f4f6;
+  --ae-accordion-header-active-color: #000000;
+  --ae-accordion-icon-color: #4b5563;
+  --ae-accordion-icon-active-color: #000000;
+  --ae-accordion-panel-padding: 1rem;
+  --ae-accordion-panel-bg: white;
+  --ae-accordion-panel-color: #374151;
+  --ae-accordion-panel-font-size: 0.875rem;
+
+  /* ===== Checkbox Component ===== */
+  --ae-checkbox-size: 18px;
+  --ae-checkbox-border-radius: 4px;
+  --ae-checkbox-bg: white;
+  --ae-checkbox-border-color: #d1d5db;
+  --ae-checkbox-checked-bg: #000000;
+  --ae-checkbox-checked-border-color: #000000;
+  --ae-checkbox-checked-icon-color: white;
+  --ae-checkbox-focus-ring-color: #0066cc;
+  --ae-checkbox-disabled-bg: #f3f4f6;
+  --ae-checkbox-disabled-border-color: #e5e7eb;
+  --ae-checkbox-disabled-text-color: #9ca3af;
+  --ae-checkbox-text-color: inherit;
+  --ae-checkbox-font-size: inherit;
+
+  /* ===== Radio Component ===== */
+  --ae-radio-size: 18px;
+  --ae-radio-bg: white;
+  --ae-radio-border-color: #d1d5db;
+  --ae-radio-checked-bg: #000000;
+  --ae-radio-checked-border-color: #000000;
+  --ae-radio-checked-dot-color: white;
+  --ae-radio-focus-ring-color: #0066cc;
+  --ae-radio-disabled-bg: #f3f4f6;
+  --ae-radio-disabled-border-color: #e5e7eb;
+  --ae-radio-disabled-text-color: #9ca3af;
+  --ae-radio-text-color: inherit;
+  --ae-radio-font-size: inherit;
+
+  /* ===== Switch Component ===== */
+  --ae-switch-bg: #d1d5db;
+  --ae-switch-bg-checked: #000000;
+  --ae-switch-bg-disabled: #e5e7eb;
+  --ae-switch-bg-checked-disabled: #9ca3af;
+  --ae-switch-thumb-bg: white;
+  --ae-switch-focus-ring: #0066cc;
+  --ae-switch-text-disabled: #9ca3af;
+  --ae-switch-gap: 0.5rem;
+  --ae-switch-border-radius: 9999px;
+  --ae-switch-width-sm: 32px;
+  --ae-switch-height-sm: 18px;
+  --ae-switch-width-md: 44px;
+  --ae-switch-height-md: 24px;
+  --ae-switch-width-lg: 56px;
+  --ae-switch-height-lg: 30px;
+  --ae-switch-text-color: inherit;
+  --ae-switch-font-size: inherit;
+
+  /* ===== Alert Component ===== */
+  --ae-alert-padding: 1rem;
+  --ae-alert-radius: 0.375rem;
+  --ae-alert-border-width: 1px;
+  --ae-alert-bg-info: #e0f2fe;
+  --ae-alert-fg-info: #075985;
+  --ae-alert-border-info: #7dd3fc;
+  --ae-alert-icon-info: #0284c7;
+  --ae-alert-bg-success: #d1fae5;
+  --ae-alert-fg-success: #065f46;
+  --ae-alert-border-success: #6ee7b7;
+  --ae-alert-icon-success: #059669;
+  --ae-alert-bg-warning: #fef3c7;
+  --ae-alert-fg-warning: #92400e;
+  --ae-alert-border-warning: #fcd34d;
+  --ae-alert-icon-warning: #f59e0b;
+  --ae-alert-bg-error: #fee2e2;
+  --ae-alert-fg-error: #991b1b;
+  --ae-alert-border-error: #fca5a5;
+  --ae-alert-icon-error: #dc2626;
+
+  /* ===== Tabs Component ===== */
+  --ae-tabs-border-color: #e5e7eb;
+  --ae-tabs-active-color: #000000;
+  --ae-tabs-active-border-width: 2px;
+  --ae-tabs-padding: 0.75rem 1rem;
+  --ae-tabs-hover-bg: #f9fafb;
+  --ae-tabs-inactive-color: #6b7280;
+
+  /* ===== Input/Select/Textarea Components ===== */
+  --ae-input-bg: white;
+  --ae-input-border: 1px solid #d1d5db;
+  --ae-input-border-radius: 0.375rem;
+  --ae-input-color: #111827;
+  --ae-input-placeholder-color: #9ca3af;
+  --ae-input-padding: 0.5rem 0.75rem;
+  --ae-input-focus-border: #000000;
+  --ae-input-focus-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  --ae-input-disabled-bg: #f3f4f6;
+  --ae-input-disabled-color: #9ca3af;
+  --ae-input-error-border: #dc2626;
+  --ae-input-error-color: #dc2626;
+  --ae-input-font-size: 0.875rem;
+
+  /* ===== Badge Component ===== */
+  --ae-badge-padding: 0.125rem 0.5rem;
+  --ae-badge-font-size: 0.75rem;
+  --ae-badge-font-weight: 500;
+  --ae-badge-border-radius: 0.25rem;
+  --ae-badge-bg-primary: #000000;
+  --ae-badge-color-primary: white;
+  --ae-badge-bg-secondary: #6b7280;
+  --ae-badge-color-secondary: white;
+  --ae-badge-bg-success: #10b981;
+  --ae-badge-color-success: white;
+  --ae-badge-bg-error: #ef4444;
+  --ae-badge-color-error: white;
+  --ae-badge-bg-warning: #f59e0b;
+  --ae-badge-color-warning: white;
+  --ae-badge-bg-info: #3b82f6;
+  --ae-badge-color-info: white;
+
+  /* ===== Spinner Component ===== */
+  --ae-spinner-color: #000000;
+  --ae-spinner-size-sm: 1rem;
+  --ae-spinner-size-md: 1.5rem;
+  --ae-spinner-size-lg: 2rem;
+  --ae-spinner-border-width: 2px;
+
+  /* ===== Progress Component ===== */
+  --ae-progress-bg: #e5e7eb;
+  --ae-progress-bar-bg: #000000;
+  --ae-progress-height: 0.5rem;
+  --ae-progress-border-radius: 9999px;
+  --ae-progress-transition: width 0.3s ease;
+
+  /* ===== Tooltip Component ===== */
+  --ae-tooltip-bg: #1f2937;
+  --ae-tooltip-fg: white;
+  --ae-tooltip-padding: 0.5rem 0.75rem;
+  --ae-tooltip-radius: 0.375rem;
+  --ae-tooltip-font-size: 0.875rem;
+  --ae-tooltip-max-width: 200px;
+  --ae-tooltip-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+  /* ===== Modal Component ===== */
+  --ae-modal-overlay-bg: rgba(0, 0, 0, 0.5);
+  --ae-modal-bg: #ffffff;
+  --ae-modal-max-width: 500px;
+  --ae-modal-padding: 1.5rem;
+  --ae-modal-radius: 8px;
+  --ae-modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --ae-modal-header-border: 1px solid #e5e7eb;
+  --ae-modal-footer-border: 1px solid #e5e7eb;
   --ae-modal-background: #fff;
   --ae-modal-border-radius: 8px;
   --ae-color-border: #e5e5e5;
   --ae-modal-text-color: #000000;
-  
-  /* Tooltip tokens */
-  --ae-tooltip-bg: #1a1a1a;
-  --ae-tooltip-fg: #fff;
-  --ae-tooltip-radius: 4px;
-  --ae-tooltip-font-weight: 300;
-  
+
+  /* ===== Dropdown Component ===== */
+  --ae-dropdown-bg: #ffffff;
+  --ae-dropdown-fg: #111827;
+  --ae-dropdown-radius: 8px;
+  --ae-dropdown-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  --ae-dropdown-border: 1px solid #e5e7eb;
+  --ae-dropdown-item-hover-bg: #f3f4f6;
+  --ae-dropdown-item-active-bg: #e5e7eb;
+
+  /* ===== Pagination Component ===== */
+  --ae-pagination-gap: 0.25rem;
+  --ae-pagination-item-padding: 0.5rem 0.75rem;
+  --ae-pagination-item-bg: white;
+  --ae-pagination-item-border: 1px solid #d1d5db;
+  --ae-pagination-item-color: #374151;
+  --ae-pagination-item-hover-bg: #f3f4f6;
+  --ae-pagination-item-active-bg: #000000;
+  --ae-pagination-item-active-color: white;
+  --ae-pagination-item-active-border: #000000;
+  --ae-pagination-item-disabled-color: #9ca3af;
+  --ae-pagination-border-radius: 0.375rem;
+
+  /* ===== Menu Component ===== */
+  --ae-menu-bg: white;
+  --ae-menu-border: 1px solid #e5e7eb;
+  --ae-menu-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --ae-menu-border-radius: 0.375rem;
+  --ae-menu-item-padding: 0.5rem 0.75rem;
+  --ae-menu-item-color: #374151;
+  --ae-menu-item-hover-bg: #f3f4f6;
+  --ae-menu-item-active-bg: #f3f4f6;
+  --ae-menu-item-active-color: #000000;
+  --ae-menu-divider-color: #e5e7eb;
+
+  /* ===== Drawer Component ===== */
+  --ae-drawer-bg: white;
+  --ae-drawer-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --ae-drawer-backdrop-bg: rgba(0, 0, 0, 0.5);
+  --ae-drawer-header-border: 1px solid #e5e7eb;
+  --ae-drawer-footer-border: 1px solid #e5e7eb;
+
+  /* ===== Popover Component ===== */
+  --ae-popover-bg: white;
+  --ae-popover-border: 1px solid #e5e7eb;
+  --ae-popover-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --ae-popover-border-radius: 0.375rem;
+  --ae-popover-padding: 0.75rem 1rem;
+
+  /* ===== Breadcrumb Component ===== */
+  --ae-breadcrumb-gap: 0.5rem;
+  --ae-breadcrumb-separator-color: #9ca3af;
+  --ae-breadcrumb-link-color: #000000;
+  --ae-breadcrumb-link-hover-color: #333333;
+  --ae-breadcrumb-current-color: #6b7280;
+  --ae-breadcrumb-font-size: 0.875rem;
+
+  /* ===== TreeView Component ===== */
+  --ae-treeview-indent: 1.5rem;
+  --ae-treeview-node-padding: 0.5rem;
+  --ae-treeview-selected-bg: #f3f4f6;
+  --ae-treeview-selected-color: #000000;
+  --ae-treeview-hover-bg: #f9fafb;
+  --ae-treeview-focus-color: #000000;
+  --ae-treeview-icon-color: #6b7280;
+  --ae-treeview-caret-color: #6b7280;
+
+  /* ===== Toast Component ===== */
+  --ae-toast-offset: 1rem;
+  --ae-toast-gap: 0.5rem;
+  --ae-toast-padding: 1rem;
+  --ae-toast-radius: 0.5rem;
+  --ae-toast-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --ae-toast-bg-info: #e0f2fe;
+  --ae-toast-fg-info: #075985;
+  --ae-toast-bg-success: #d1fae5;
+  --ae-toast-fg-success: #065f46;
+  --ae-toast-bg-warning: #fef3c7;
+  --ae-toast-fg-warning: #92400e;
+  --ae-toast-bg-error: #fee2e2;
+  --ae-toast-fg-error: #991b1b;
+
+  /* ===== Combo/Autocomplete Components ===== */
+  --ae-combo-bg: white;
+  --ae-combo-fg: #111827;
+  --ae-combo-border: 1px solid #d1d5db;
+  --ae-combo-border-hover: 1px solid #9ca3af;
+  --ae-combo-radius: 0.375rem;
+  --ae-combo-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --ae-combo-option-hover-bg: #f3f4f6;
+  --ae-combo-option-selected-bg: #f3f4f6;
+  --ae-combo-option-selected-fg: #000000;
+
   /* Shadows - subtle */
   --ae-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --ae-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
@@ -51,28 +332,153 @@
 
 /* Dark mode - high contrast adjustments */
 [data-theme="dark"] {
+  --ae-color-primary: #66b3ff;
   --ae-color-brand-600: #ffffff;
   --ae-color-text-primary: #ffffff;
   --ae-color-text-secondary: #a6a6a6;
   --ae-color-base-200: #1a1a1a;
   --ae-color-base-300: #333333;
-  
+
   /* Component color tokens */
   --ae-color-text: #ffffff;
   --ae-color-surface: #0a0a0a;
-  
-  --ae-button-bg-primary: #fff;
-  --ae-button-fg-primary: #000;
-  --ae-button-bg-secondary: transparent;
-  --ae-button-fg-secondary: #fff;
-  --ae-button-border-secondary: #2a2a2a;
-  
-  --ae-modal-background: #0a0a0a;
-  --ae-color-border: #2a2a2a;
-  --ae-modal-text-color: #fff;
-  
-  --ae-tooltip-bg: #fff;
-  --ae-tooltip-fg: #000;
+
+  /* Focus ring */
+  --ae-focus-ring-color: #66b3ff;
+
+  /* Button */
+  --ae-button-bg-primary: #ffffff;
+  --ae-button-fg-primary: #000000;
+  --ae-button-border-primary: #ffffff;
+  --ae-button-bg-primary-hover: #e5e5e5;
+  --ae-button-border-primary-hover: #e5e5e5;
+  --ae-button-bg-secondary: #2a2a2a;
+  --ae-button-fg-secondary: #ffffff;
+  --ae-button-border-secondary: #404040;
+  --ae-button-bg-secondary-hover: #3a3a3a;
+  --ae-button-bg-ghost: transparent;
+  --ae-button-fg-ghost: #ffffff;
+  --ae-button-border-ghost: transparent;
+  --ae-button-bg-ghost-hover: rgba(255, 255, 255, 0.1);
+
+  /* Accordion */
+  --ae-accordion-bg: #1a1a1a;
+  --ae-accordion-border: 1px solid #333333;
+  --ae-accordion-divider: 1px solid #333333;
+  --ae-accordion-header-color: #ffffff;
+  --ae-accordion-header-hover-bg: #2a2a2a;
+  --ae-accordion-header-active-bg: #333333;
+  --ae-accordion-header-active-color: #ffffff;
+  --ae-accordion-icon-color: #a6a6a6;
+  --ae-accordion-icon-active-color: #ffffff;
+  --ae-accordion-panel-bg: #1a1a1a;
+  --ae-accordion-panel-color: #d4d4d4;
+
+  /* Checkbox */
+  --ae-checkbox-bg: #1a1a1a;
+  --ae-checkbox-border-color: #404040;
+  --ae-checkbox-checked-bg: #ffffff;
+  --ae-checkbox-checked-border-color: #ffffff;
+  --ae-checkbox-checked-icon-color: #000000;
+  --ae-checkbox-disabled-bg: #2a2a2a;
+  --ae-checkbox-disabled-border-color: #333333;
+
+  /* Radio */
+  --ae-radio-bg: #1a1a1a;
+  --ae-radio-border-color: #404040;
+  --ae-radio-checked-bg: #ffffff;
+  --ae-radio-checked-border-color: #ffffff;
+  --ae-radio-checked-dot-color: #000000;
+  --ae-radio-disabled-bg: #2a2a2a;
+
+  /* Switch */
+  --ae-switch-bg: #404040;
+  --ae-switch-bg-checked: #ffffff;
+  --ae-switch-thumb-bg: #0a0a0a;
+
+  /* Input */
+  --ae-input-bg: #1a1a1a;
+  --ae-input-border: 1px solid #404040;
+  --ae-input-color: #ffffff;
+  --ae-input-focus-border: #ffffff;
+  --ae-input-focus-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+  --ae-input-disabled-bg: #2a2a2a;
+
+  /* Badge */
+  --ae-badge-bg-primary: #ffffff;
+  --ae-badge-color-primary: #000000;
+
+  /* Spinner */
+  --ae-spinner-color: #ffffff;
+
+  /* Progress */
+  --ae-progress-bg: #333333;
+  --ae-progress-bar-bg: #ffffff;
+
+  /* Modal */
+  --ae-modal-bg: #1a1a1a;
+  --ae-modal-background: #1a1a1a;
+  --ae-modal-header-border: 1px solid #333333;
+  --ae-modal-footer-border: 1px solid #333333;
+  --ae-color-border: #333333;
+  --ae-modal-text-color: #ffffff;
+
+  /* Dropdown */
+  --ae-dropdown-bg: #1a1a1a;
+  --ae-dropdown-fg: #ffffff;
+  --ae-dropdown-border: 1px solid #333333;
+  --ae-dropdown-item-hover-bg: #2a2a2a;
+
+  /* Tooltip */
+  --ae-tooltip-bg: #ffffff;
+  --ae-tooltip-fg: #000000;
+
+  /* Menu */
+  --ae-menu-bg: #1a1a1a;
+  --ae-menu-border: 1px solid #333333;
+  --ae-menu-item-color: #d4d4d4;
+  --ae-menu-item-hover-bg: #2a2a2a;
+  --ae-menu-item-active-bg: #333333;
+  --ae-menu-item-active-color: #ffffff;
+  --ae-menu-divider-color: #333333;
+
+  /* Pagination */
+  --ae-pagination-item-bg: #1a1a1a;
+  --ae-pagination-item-border: 1px solid #404040;
+  --ae-pagination-item-color: #d4d4d4;
+  --ae-pagination-item-hover-bg: #2a2a2a;
+  --ae-pagination-item-active-bg: #ffffff;
+  --ae-pagination-item-active-color: #000000;
+
+  /* Tabs */
+  --ae-tabs-border-color: #333333;
+  --ae-tabs-active-color: #ffffff;
+  --ae-tabs-hover-bg: #2a2a2a;
+  --ae-tabs-inactive-color: #a6a6a6;
+
+  /* Drawer */
+  --ae-drawer-bg: #1a1a1a;
+  --ae-drawer-header-border: 1px solid #333333;
+  --ae-drawer-footer-border: 1px solid #333333;
+
+  /* Popover */
+  --ae-popover-bg: #1a1a1a;
+  --ae-popover-border: 1px solid #333333;
+
+  /* TreeView */
+  --ae-treeview-selected-bg: #2a2a2a;
+  --ae-treeview-selected-color: #ffffff;
+  --ae-treeview-hover-bg: #2a2a2a;
+  --ae-treeview-focus-color: #ffffff;
+  --ae-treeview-icon-color: #a6a6a6;
+
+  /* Combo/Autocomplete */
+  --ae-combo-bg: #1a1a1a;
+  --ae-combo-fg: #ffffff;
+  --ae-combo-border: 1px solid #404040;
+  --ae-combo-option-hover-bg: #2a2a2a;
+  --ae-combo-option-selected-bg: #333333;
+  --ae-combo-option-selected-fg: #ffffff;
 }
 
 /* Force monospace fonts globally */
