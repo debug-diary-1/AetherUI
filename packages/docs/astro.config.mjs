@@ -63,7 +63,6 @@ export default defineConfig({
             { label: 'Button', slug: 'components/button' },
             { label: 'Checkbox', slug: 'components/checkbox' },
             { label: 'Combo', slug: 'components/combo' },
-            { label: 'DataTable', slug: 'components/datatable' },
             { label: 'Drawer', slug: 'components/drawer' },
             { label: 'Dropdown', slug: 'components/dropdown' },
             { label: 'Input', slug: 'components/input' },
