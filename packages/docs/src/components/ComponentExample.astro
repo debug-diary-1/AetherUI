@@ -10,13 +10,15 @@ interface Props {
 }
 
 const { code, preview, title, description, class: className } = Astro.props;
+// Use code as preview if preview is not explicitly provided
+const previewContent = preview || code;
 ---
 
 <div class={`component-example ${className || ''}`}>
   {title && <h3 class="example-title">{title}</h3>}
   {description && <p class="example-description">{description}</p>}
-  {preview ? (
-    <div class="preview" data-preview={preview}>
+  {previewContent ? (
+    <div class="preview" data-preview={previewContent}>
       <!-- Preview will be injected by client-side script -->
     </div>
   ) : (
@@ -50,7 +52,7 @@ const { code, preview, title, description, class: className } = Astro.props;
   // Wait for components to be ready
   const checkAndInject = () => {
     // Check if at least one custom element is defined
-    const isDefined = ['ae-accordion', 'ae-button', 'ae-checkbox', 'ae-radio', 'ae-treeview', 'ae-toast', 'ae-tooltip']
+    const isDefined = ['ae-accordion', 'ae-button', 'ae-checkbox', 'ae-radio', 'ae-treeview', 'ae-toast', 'ae-tooltip', 'ae-combo', 'ae-autocomplete', 'ae-input', 'ae-select', 'ae-textarea', 'ae-switch', 'ae-spinner', 'ae-progress', 'ae-badge', 'ae-alert', 'ae-tabs', 'ae-modal', 'ae-dropdown', 'ae-menu', 'ae-drawer', 'ae-popover', 'ae-breadcrumb', 'ae-pagination']
       .some(tag => window.customElements.get(tag) !== undefined);
     
     if (isDefined) {
