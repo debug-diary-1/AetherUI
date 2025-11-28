@@ -167,14 +167,14 @@ export class AePopover extends LitElement {
       if (this._hoverTimeout) {
         clearTimeout(this._hoverTimeout);
       }
-      this.open = true;
+      this.show();
     }
   }
 
   private handleTriggerMouseLeave() {
     if (this.trigger === 'hover') {
       this._hoverTimeout = window.setTimeout(() => {
-        this.open = false;
+        this.hide();
       }, 200);
     }
   }
@@ -188,7 +188,7 @@ export class AePopover extends LitElement {
   private handlePopoverMouseLeave() {
     if (this.trigger === 'hover') {
       this._hoverTimeout = window.setTimeout(() => {
-        this.open = false;
+        this.hide();
       }, 200);
     }
   }
@@ -198,20 +198,30 @@ export class AePopover extends LitElement {
 
     const path = event.composedPath();
     if (!path.includes(this)) {
-      this.open = false;
+      this.hide();
     }
   }
 
   public toggle() {
-    this.open = !this.open;
+    if (this.open) {
+      this.hide();
+    } else {
+      this.show();
+    }
   }
 
   public show() {
-    this.open = true;
+    if (!this.open) {
+      this.open = true;
+      this.dispatchEvent(new CustomEvent('ae-popover-open', { bubbles: true, composed: true }));
+    }
   }
 
   public hide() {
-    this.open = false;
+    if (this.open) {
+      this.open = false;
+      this.dispatchEvent(new CustomEvent('ae-popover-close', { bubbles: true, composed: true }));
+    }
   }
 
   render() {

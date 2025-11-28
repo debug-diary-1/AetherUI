@@ -1,197 +1,525 @@
-/* Monospace-first design system */
+/* AetherUI Component Tokens - Modern Design */
+
 :root {
-  /* Override Starlight fonts with monospace */
-  --sl-font: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
-             'DejaVu Sans Mono', monospace;
-  --sl-font-system-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, 
-                         Consolas, 'DejaVu Sans Mono', monospace;
-  
-  /* Core colors - high contrast monochrome */
-  --ae-color-brand-600: #000000;
-  --ae-color-text-primary: #000000;
-  --ae-color-text-secondary: #595959;
-  --ae-color-base-200: #f5f5f5;
-  --ae-color-base-300: #d4d4d4;
-  
+  /* Core colors */
+  --ae-color-primary: #2563eb;
+  --ae-color-brand-600: #1d4ed8;
+  --ae-color-text-primary: #0f172a;
+  --ae-color-text-secondary: #64748b;
+  --ae-color-base-200: #f1f5f9;
+  --ae-color-base-300: #e2e8f0;
+
   /* Component color tokens */
-  --ae-color-text: #000000;
+  --ae-color-text: #0f172a;
   --ae-color-surface: #ffffff;
-  
-  /* Font tokens for components */
-  --ae-font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
-                    'DejaVu Sans Mono', monospace;
+
+  /* Font tokens */
+  --ae-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
   --ae-font-weight: 400;
-  
-  /* Button tokens - minimal */
-  --ae-button-bg-primary: #000;
-  --ae-button-fg-primary: #fff;
-  --ae-button-bg-secondary: transparent;
-  --ae-button-fg-secondary: #1a1a1a;
-  --ae-button-border-secondary: #e5e5e5;
-  --ae-button-radius: 6px;
-  --ae-button-font-weight: 400;
-  
-  /* Modal tokens */
-  --ae-modal-background: #fff;
-  --ae-modal-border-radius: 8px;
-  --ae-color-border: #e5e5e5;
-  --ae-modal-text-color: #000000;
-  
-  /* Tooltip tokens */
-  --ae-tooltip-bg: #1a1a1a;
-  --ae-tooltip-fg: #fff;
-  --ae-tooltip-radius: 4px;
-  --ae-tooltip-font-weight: 300;
-  
-  /* Shadows - subtle */
+
+  /* Focus ring */
+  --ae-focus-ring-color: #2563eb;
+  --ae-focus-ring-offset: 2px;
+
+  /* ===== Button Component ===== */
+  --ae-button-padding-x: 1rem;
+  --ae-button-padding-y: 0.5rem;
+  --ae-button-gap: 0.5rem;
+  --ae-button-radius: 0.5rem;
+  --ae-button-padding-icon-only: 0.5rem;
+  --ae-button-font-weight: 500;
+
+  /* Primary Variant */
+  --ae-button-bg-primary: #2563eb;
+  --ae-button-fg-primary: #ffffff;
+  --ae-button-border-primary: #2563eb;
+  --ae-button-bg-primary-hover: #1d4ed8;
+  --ae-button-border-primary-hover: #1d4ed8;
+
+  /* Secondary Variant */
+  --ae-button-bg-secondary: #f1f5f9;
+  --ae-button-fg-secondary: #0f172a;
+  --ae-button-border-secondary: #e2e8f0;
+  --ae-button-bg-secondary-hover: #e2e8f0;
+
+  /* Ghost Variant */
+  --ae-button-bg-ghost: transparent;
+  --ae-button-fg-ghost: #0f172a;
+  --ae-button-border-ghost: transparent;
+  --ae-button-bg-ghost-hover: #f1f5f9;
+
+  /* Button Sizes */
+  --ae-button-font-sm: 0.875rem;
+  --ae-button-font-md: 1rem;
+  --ae-button-font-lg: 1.125rem;
+
+  /* Button States */
+  --ae-button-transition-duration: 150ms;
+  --ae-button-transition-timing: ease;
+  --ae-button-disabled-opacity: 0.5;
+
+  /* ===== Accordion Component ===== */
+  --ae-accordion-bg: #ffffff;
+  --ae-accordion-radius: 0.75rem;
+  --ae-accordion-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --ae-accordion-border: 1px solid #e2e8f0;
+  --ae-accordion-divider: 1px solid #e2e8f0;
+  --ae-accordion-header-bg: transparent;
+  --ae-accordion-header-padding: 1rem 1.25rem;
+  --ae-accordion-header-color: #0f172a;
+  --ae-accordion-header-font-weight: 500;
+  --ae-accordion-header-font-size: 0.9375rem;
+  --ae-accordion-header-hover-bg: #f8fafc;
+  --ae-accordion-header-active-bg: #f1f5f9;
+  --ae-accordion-header-active-color: #0f172a;
+  --ae-accordion-icon-color: #64748b;
+  --ae-accordion-icon-active-color: #2563eb;
+  --ae-accordion-panel-padding: 1rem 1.25rem;
+  --ae-accordion-panel-bg: #ffffff;
+  --ae-accordion-panel-color: #475569;
+  --ae-accordion-panel-font-size: 0.9375rem;
+
+  /* ===== Checkbox Component ===== */
+  --ae-checkbox-size: 18px;
+  --ae-checkbox-border-radius: 4px;
+  --ae-checkbox-bg: #ffffff;
+  --ae-checkbox-border-color: #cbd5e1;
+  --ae-checkbox-checked-bg: #2563eb;
+  --ae-checkbox-checked-border-color: #2563eb;
+  --ae-checkbox-checked-icon-color: #ffffff;
+  --ae-checkbox-focus-ring-color: #2563eb;
+  --ae-checkbox-disabled-bg: #f1f5f9;
+  --ae-checkbox-disabled-border-color: #e2e8f0;
+  --ae-checkbox-disabled-text-color: #94a3b8;
+  --ae-checkbox-text-color: inherit;
+  --ae-checkbox-font-size: inherit;
+
+  /* ===== Radio Component ===== */
+  --ae-radio-size: 18px;
+  --ae-radio-bg: #ffffff;
+  --ae-radio-border-color: #cbd5e1;
+  --ae-radio-checked-bg: #2563eb;
+  --ae-radio-checked-border-color: #2563eb;
+  --ae-radio-checked-dot-color: #ffffff;
+  --ae-radio-focus-ring-color: #2563eb;
+  --ae-radio-disabled-bg: #f1f5f9;
+  --ae-radio-disabled-border-color: #e2e8f0;
+  --ae-radio-disabled-text-color: #94a3b8;
+  --ae-radio-text-color: inherit;
+  --ae-radio-font-size: inherit;
+
+  /* ===== Switch Component ===== */
+  --ae-switch-bg: #cbd5e1;
+  --ae-switch-bg-checked: #2563eb;
+  --ae-switch-bg-disabled: #e2e8f0;
+  --ae-switch-bg-checked-disabled: #94a3b8;
+  --ae-switch-thumb-bg: #ffffff;
+  --ae-switch-focus-ring: #2563eb;
+  --ae-switch-text-disabled: #94a3b8;
+  --ae-switch-gap: 0.5rem;
+  --ae-switch-border-radius: 9999px;
+  --ae-switch-width-sm: 36px;
+  --ae-switch-height-sm: 20px;
+  --ae-switch-width-md: 44px;
+  --ae-switch-height-md: 24px;
+  --ae-switch-width-lg: 56px;
+  --ae-switch-height-lg: 30px;
+  --ae-switch-text-color: inherit;
+  --ae-switch-font-size: inherit;
+
+  /* ===== Alert Component ===== */
+  --ae-alert-padding: 1rem;
+  --ae-alert-radius: 0.75rem;
+  --ae-alert-border-width: 1px;
+  --ae-alert-bg-info: #eff6ff;
+  --ae-alert-fg-info: #1e40af;
+  --ae-alert-border-info: #bfdbfe;
+  --ae-alert-icon-info: #2563eb;
+  --ae-alert-bg-success: #f0fdf4;
+  --ae-alert-fg-success: #166534;
+  --ae-alert-border-success: #bbf7d0;
+  --ae-alert-icon-success: #22c55e;
+  --ae-alert-bg-warning: #fffbeb;
+  --ae-alert-fg-warning: #92400e;
+  --ae-alert-border-warning: #fde68a;
+  --ae-alert-icon-warning: #f59e0b;
+  --ae-alert-bg-error: #fef2f2;
+  --ae-alert-fg-error: #991b1b;
+  --ae-alert-border-error: #fecaca;
+  --ae-alert-icon-error: #ef4444;
+
+  /* ===== Tabs Component ===== */
+  --ae-tabs-border-color: #e2e8f0;
+  --ae-tabs-active-color: #2563eb;
+  --ae-tabs-active-border-width: 2px;
+  --ae-tabs-padding: 0.75rem 1rem;
+  --ae-tabs-hover-bg: #f8fafc;
+  --ae-tabs-inactive-color: #64748b;
+
+  /* ===== Input/Select/Textarea Components ===== */
+  --ae-input-bg: #ffffff;
+  --ae-input-border: 1px solid #cbd5e1;
+  --ae-input-border-radius: 0.5rem;
+  --ae-input-color: #0f172a;
+  --ae-input-placeholder-color: #94a3b8;
+  --ae-input-padding: 0.625rem 0.875rem;
+  --ae-input-focus-border: #2563eb;
+  --ae-input-focus-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  --ae-input-disabled-bg: #f1f5f9;
+  --ae-input-disabled-color: #94a3b8;
+  --ae-input-error-border: #ef4444;
+  --ae-input-error-color: #ef4444;
+  --ae-input-font-size: 0.9375rem;
+
+  /* ===== Badge Component ===== */
+  --ae-badge-padding: 0.25rem 0.625rem;
+  --ae-badge-font-size: 0.75rem;
+  --ae-badge-font-weight: 500;
+  --ae-badge-border-radius: 9999px;
+  --ae-badge-bg-primary: #2563eb;
+  --ae-badge-color-primary: #ffffff;
+  --ae-badge-bg-secondary: #64748b;
+  --ae-badge-color-secondary: #ffffff;
+  --ae-badge-bg-success: #22c55e;
+  --ae-badge-color-success: #ffffff;
+  --ae-badge-bg-error: #ef4444;
+  --ae-badge-color-error: #ffffff;
+  --ae-badge-bg-warning: #f59e0b;
+  --ae-badge-color-warning: #ffffff;
+  --ae-badge-bg-info: #3b82f6;
+  --ae-badge-color-info: #ffffff;
+
+  /* ===== Spinner Component ===== */
+  --ae-spinner-color: #2563eb;
+  --ae-spinner-size-sm: 1rem;
+  --ae-spinner-size-md: 1.5rem;
+  --ae-spinner-size-lg: 2rem;
+  --ae-spinner-border-width: 2px;
+
+  /* ===== Progress Component ===== */
+  --ae-progress-bg: #e2e8f0;
+  --ae-progress-track-bg: #e2e8f0;
+  --ae-progress-bar-bg: #2563eb;
+  --ae-progress-height: 0.5rem;
+  --ae-progress-height-sm: 4px;
+  --ae-progress-height-md: 8px;
+  --ae-progress-height-lg: 12px;
+  --ae-progress-border-radius: 9999px;
+  --ae-progress-transition: width 0.3s ease;
+  --ae-progress-bg-primary: #2563eb;
+  --ae-progress-bg-secondary: #64748b;
+  --ae-progress-bg-success: #22c55e;
+  --ae-progress-bg-error: #ef4444;
+  --ae-progress-bg-warning: #f59e0b;
+  --ae-progress-bg-info: #3b82f6;
+
+  /* ===== Tooltip Component ===== */
+  --ae-tooltip-bg: #0f172a;
+  --ae-tooltip-fg: #ffffff;
+  --ae-tooltip-padding: 0.5rem 0.75rem;
+  --ae-tooltip-radius: 0.5rem;
+  --ae-tooltip-font-size: 0.875rem;
+  --ae-tooltip-max-width: 240px;
+  --ae-tooltip-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  /* ===== Modal Component ===== */
+  --ae-modal-overlay-bg: rgba(15, 23, 42, 0.5);
+  --ae-modal-bg: #ffffff;
+  --ae-modal-max-width: 500px;
+  --ae-modal-padding: 1.5rem;
+  --ae-modal-radius: 0.75rem;
+  --ae-modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --ae-modal-header-border: 1px solid #e2e8f0;
+  --ae-modal-footer-border: 1px solid #e2e8f0;
+  --ae-modal-background: #ffffff;
+  --ae-modal-border-radius: 0.75rem;
+  --ae-color-border: #e2e8f0;
+  --ae-modal-text-color: #0f172a;
+
+  /* ===== Dropdown Component ===== */
+  --ae-dropdown-bg: #ffffff;
+  --ae-dropdown-fg: #0f172a;
+  --ae-dropdown-radius: 0.75rem;
+  --ae-dropdown-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+  --ae-dropdown-border: 1px solid #e2e8f0;
+  --ae-dropdown-item-hover-bg: #f1f5f9;
+  --ae-dropdown-item-active-bg: #e2e8f0;
+
+  /* ===== Pagination Component ===== */
+  --ae-pagination-gap: 0.25rem;
+  --ae-pagination-item-padding: 0.5rem 0.875rem;
+  --ae-pagination-item-bg: #ffffff;
+  --ae-pagination-item-border: 1px solid #e2e8f0;
+  --ae-pagination-item-color: #475569;
+  --ae-pagination-item-hover-bg: #f1f5f9;
+  --ae-pagination-item-active-bg: #2563eb;
+  --ae-pagination-item-active-color: #ffffff;
+  --ae-pagination-item-active-border: #2563eb;
+  --ae-pagination-item-disabled-color: #94a3b8;
+  --ae-pagination-border-radius: 0.5rem;
+
+  /* ===== Menu Component ===== */
+  --ae-menu-bg: #ffffff;
+  --ae-menu-border: 1px solid #e2e8f0;
+  --ae-menu-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --ae-menu-border-radius: 0.5rem;
+  --ae-menu-item-padding: 0.625rem 1rem;
+  --ae-menu-item-color: #475569;
+  --ae-menu-item-hover-bg: #f1f5f9;
+  --ae-menu-item-active-bg: #f1f5f9;
+  --ae-menu-item-active-color: #2563eb;
+  --ae-menu-divider-color: #e2e8f0;
+
+  /* ===== Drawer Component ===== */
+  --ae-drawer-bg: #ffffff;
+  --ae-drawer-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --ae-drawer-backdrop-bg: rgba(15, 23, 42, 0.5);
+  --ae-drawer-header-border: 1px solid #e2e8f0;
+  --ae-drawer-footer-border: 1px solid #e2e8f0;
+
+  /* ===== Popover Component ===== */
+  --ae-popover-bg: #ffffff;
+  --ae-popover-border: 1px solid #e2e8f0;
+  --ae-popover-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+  --ae-popover-border-radius: 0.75rem;
+  --ae-popover-padding: 1rem;
+
+  /* ===== Breadcrumb Component ===== */
+  --ae-breadcrumb-gap: 0.5rem;
+  --ae-breadcrumb-separator-color: #94a3b8;
+  --ae-breadcrumb-link-color: #2563eb;
+  --ae-breadcrumb-link-hover-color: #1d4ed8;
+  --ae-breadcrumb-current-color: #64748b;
+  --ae-breadcrumb-font-size: 0.875rem;
+
+  /* ===== TreeView Component ===== */
+  --ae-treeview-indent: 1.5rem;
+  --ae-treeview-node-padding: 0.5rem;
+  --ae-treeview-selected-bg: #eff6ff;
+  --ae-treeview-selected-color: #2563eb;
+  --ae-treeview-hover-bg: #f8fafc;
+  --ae-treeview-focus-color: #2563eb;
+  --ae-treeview-icon-color: #64748b;
+  --ae-treeview-caret-color: #64748b;
+
+  /* ===== Toast Component ===== */
+  --ae-toast-offset: 1rem;
+  --ae-toast-gap: 0.75rem;
+  --ae-toast-padding: 1rem 1.25rem;
+  --ae-toast-radius: 0.75rem;
+  --ae-toast-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+  --ae-toast-bg-info: #eff6ff;
+  --ae-toast-fg-info: #1e40af;
+  --ae-toast-bg-success: #f0fdf4;
+  --ae-toast-fg-success: #166534;
+  --ae-toast-bg-warning: #fffbeb;
+  --ae-toast-fg-warning: #92400e;
+  --ae-toast-bg-error: #fef2f2;
+  --ae-toast-fg-error: #991b1b;
+
+  /* ===== Combo/Autocomplete Components ===== */
+  --ae-combo-bg: #ffffff;
+  --ae-combo-fg: #0f172a;
+  --ae-combo-border: 1px solid #cbd5e1;
+  --ae-combo-border-hover: 1px solid #94a3b8;
+  --ae-combo-radius: 0.5rem;
+  --ae-combo-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+  --ae-combo-option-hover-bg: #f1f5f9;
+  --ae-combo-option-selected-bg: #eff6ff;
+  --ae-combo-option-selected-fg: #2563eb;
+
+  /* Shadows */
   --ae-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --ae-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
   --ae-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Dark mode - high contrast adjustments */
+/* Dark mode */
 [data-theme="dark"] {
-  --ae-color-brand-600: #ffffff;
-  --ae-color-text-primary: #ffffff;
-  --ae-color-text-secondary: #a6a6a6;
-  --ae-color-base-200: #1a1a1a;
-  --ae-color-base-300: #333333;
-  
-  /* Component color tokens */
-  --ae-color-text: #ffffff;
-  --ae-color-surface: #0a0a0a;
-  
-  --ae-button-bg-primary: #fff;
-  --ae-button-fg-primary: #000;
-  --ae-button-bg-secondary: transparent;
-  --ae-button-fg-secondary: #fff;
-  --ae-button-border-secondary: #2a2a2a;
-  
-  --ae-modal-background: #0a0a0a;
-  --ae-color-border: #2a2a2a;
-  --ae-modal-text-color: #fff;
-  
-  --ae-tooltip-bg: #fff;
-  --ae-tooltip-fg: #000;
+  --ae-color-primary: #3b82f6;
+  --ae-color-brand-600: #60a5fa;
+  --ae-color-text-primary: #f1f5f9;
+  --ae-color-text-secondary: #94a3b8;
+  --ae-color-base-200: #1e293b;
+  --ae-color-base-300: #334155;
+
+  --ae-color-text: #f1f5f9;
+  --ae-color-surface: #0f172a;
+
+  --ae-focus-ring-color: #3b82f6;
+
+  /* Button */
+  --ae-button-bg-primary: #3b82f6;
+  --ae-button-fg-primary: #ffffff;
+  --ae-button-border-primary: #3b82f6;
+  --ae-button-bg-primary-hover: #2563eb;
+  --ae-button-border-primary-hover: #2563eb;
+  --ae-button-bg-secondary: #334155;
+  --ae-button-fg-secondary: #f1f5f9;
+  --ae-button-border-secondary: #475569;
+  --ae-button-bg-secondary-hover: #475569;
+  --ae-button-bg-ghost: transparent;
+  --ae-button-fg-ghost: #f1f5f9;
+  --ae-button-border-ghost: transparent;
+  --ae-button-bg-ghost-hover: #334155;
+
+  /* Accordion */
+  --ae-accordion-bg: #1e293b;
+  --ae-accordion-border: 1px solid #334155;
+  --ae-accordion-divider: 1px solid #334155;
+  --ae-accordion-header-color: #f1f5f9;
+  --ae-accordion-header-hover-bg: #334155;
+  --ae-accordion-header-active-bg: #334155;
+  --ae-accordion-header-active-color: #f1f5f9;
+  --ae-accordion-icon-color: #94a3b8;
+  --ae-accordion-icon-active-color: #60a5fa;
+  --ae-accordion-panel-bg: #1e293b;
+  --ae-accordion-panel-color: #cbd5e1;
+
+  /* Checkbox */
+  --ae-checkbox-bg: #1e293b;
+  --ae-checkbox-border-color: #475569;
+  --ae-checkbox-checked-bg: #3b82f6;
+  --ae-checkbox-checked-border-color: #3b82f6;
+  --ae-checkbox-checked-icon-color: #ffffff;
+  --ae-checkbox-disabled-bg: #334155;
+  --ae-checkbox-disabled-border-color: #475569;
+
+  /* Radio */
+  --ae-radio-bg: #1e293b;
+  --ae-radio-border-color: #475569;
+  --ae-radio-checked-bg: #3b82f6;
+  --ae-radio-checked-border-color: #3b82f6;
+  --ae-radio-checked-dot-color: #ffffff;
+  --ae-radio-disabled-bg: #334155;
+
+  /* Switch */
+  --ae-switch-bg: #475569;
+  --ae-switch-bg-checked: #3b82f6;
+  --ae-switch-thumb-bg: #0f172a;
+
+  /* Input */
+  --ae-input-bg: #1e293b;
+  --ae-input-border: 1px solid #475569;
+  --ae-input-color: #f1f5f9;
+  --ae-input-focus-border: #3b82f6;
+  --ae-input-focus-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  --ae-input-disabled-bg: #334155;
+
+  /* Badge */
+  --ae-badge-bg-primary: #3b82f6;
+  --ae-badge-color-primary: #ffffff;
+
+  /* Spinner */
+  --ae-spinner-color: #3b82f6;
+
+  /* Progress */
+  --ae-progress-bg: #334155;
+  --ae-progress-track-bg: #334155;
+  --ae-progress-bar-bg: #3b82f6;
+  --ae-progress-bg-primary: #3b82f6;
+  --ae-progress-bg-secondary: #94a3b8;
+  --ae-progress-bg-success: #22c55e;
+  --ae-progress-bg-error: #ef4444;
+  --ae-progress-bg-warning: #f59e0b;
+  --ae-progress-bg-info: #3b82f6;
+
+  /* Modal */
+  --ae-modal-bg: #1e293b;
+  --ae-modal-background: #1e293b;
+  --ae-modal-header-border: 1px solid #334155;
+  --ae-modal-footer-border: 1px solid #334155;
+  --ae-color-border: #334155;
+  --ae-modal-text-color: #f1f5f9;
+
+  /* Dropdown */
+  --ae-dropdown-bg: #1e293b;
+  --ae-dropdown-fg: #f1f5f9;
+  --ae-dropdown-border: 1px solid #334155;
+  --ae-dropdown-item-hover-bg: #334155;
+
+  /* Tooltip */
+  --ae-tooltip-bg: #f1f5f9;
+  --ae-tooltip-fg: #0f172a;
+
+  /* Menu */
+  --ae-menu-bg: #1e293b;
+  --ae-menu-border: 1px solid #334155;
+  --ae-menu-item-color: #cbd5e1;
+  --ae-menu-item-hover-bg: #334155;
+  --ae-menu-item-active-bg: #334155;
+  --ae-menu-item-active-color: #60a5fa;
+  --ae-menu-divider-color: #334155;
+
+  /* Pagination */
+  --ae-pagination-item-bg: #1e293b;
+  --ae-pagination-item-border: 1px solid #475569;
+  --ae-pagination-item-color: #cbd5e1;
+  --ae-pagination-item-hover-bg: #334155;
+  --ae-pagination-item-active-bg: #3b82f6;
+  --ae-pagination-item-active-color: #ffffff;
+
+  /* Tabs */
+  --ae-tabs-border-color: #334155;
+  --ae-tabs-active-color: #60a5fa;
+  --ae-tabs-hover-bg: #334155;
+  --ae-tabs-inactive-color: #94a3b8;
+
+  /* Drawer */
+  --ae-drawer-bg: #1e293b;
+  --ae-drawer-header-border: 1px solid #334155;
+  --ae-drawer-footer-border: 1px solid #334155;
+
+  /* Popover */
+  --ae-popover-bg: #1e293b;
+  --ae-popover-border: 1px solid #334155;
+
+  /* TreeView */
+  --ae-treeview-selected-bg: #1e3a5f;
+  --ae-treeview-selected-color: #60a5fa;
+  --ae-treeview-hover-bg: #334155;
+  --ae-treeview-focus-color: #60a5fa;
+  --ae-treeview-icon-color: #94a3b8;
+
+  /* Combo/Autocomplete */
+  --ae-combo-bg: #1e293b;
+  --ae-combo-fg: #f1f5f9;
+  --ae-combo-border: 1px solid #475569;
+  --ae-combo-option-hover-bg: #334155;
+  --ae-combo-option-selected-bg: #1e3a5f;
+  --ae-combo-option-selected-fg: #60a5fa;
 }
 
-/* Force monospace fonts globally */
-* {
-  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
-               'DejaVu Sans Mono', monospace !important;
-}
-
-/* Ensure proper font rendering */
+/* Global font smoothing */
 body {
-  -webkit-font-smoothing: auto;
-  -moz-osx-font-smoothing: auto;
-  font-feature-settings: "liga" 0, "calt" 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Code blocks should use the same monospace */
-pre, code, kbd, samp {
-  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
-               'DejaVu Sans Mono', monospace !important;
-}
-
-/* Remove colorful focus states */
-*:focus {
-  outline: 2px solid var(--ae-color-text-primary);
-  outline-offset: 2px;
-}
-
-/* Simplify links - high contrast */
-a {
-  color: var(--ae-color-text-primary);
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-}
-
-a:hover {
-  text-decoration: none;
-}
-
-/* Ensure WCAG AAA contrast ratios */
-.sl-markdown-content {
-  color: var(--ae-color-text-primary);
-}
-
-/* High contrast for dark mode */
-[data-theme="dark"] .sl-markdown-content {
-  color: #ffffff;
-}
-
-/* Improve readability with proper line height */
+/* Improved readability */
 p, li, td {
   line-height: 1.6;
 }
 
-/* Ensure headings in content areas have proper colors */
-.sl-markdown-content h1,
-.sl-markdown-content h2,
-.sl-markdown-content h3,
-.sl-markdown-content h4,
-.sl-markdown-content h5,
-.sl-markdown-content h6 {
-  color: var(--sl-color-text);
-}
-
-/* Headings inside component examples */
-.preview h1,
-.preview h2,
-.preview h3,
-.preview h4,
-.preview h5,
-.preview h6,
-.example-preview h1,
-.example-preview h2,
-.example-preview h3,
-.example-preview h4,
-.example-preview h5,
-.example-preview h6 {
-  color: inherit;
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-}
-
-/* Ensure all component examples have proper text colors and backgrounds */
+/* Component example containers */
 .preview,
 .example-preview,
 .component-example,
 .interactive-example {
   color: var(--ae-color-text-primary);
-  background-color: #ffffff;
+  background-color: var(--sl-color-bg-offset, #f8fafc);
+  border-radius: 0.75rem;
 }
 
-/* Dark mode backgrounds for component examples */
 [data-theme="dark"] .preview,
 [data-theme="dark"] .example-preview,
 [data-theme="dark"] .component-example,
 [data-theme="dark"] .interactive-example {
-  background-color: #0a0a0a;
-  color: #ffffff;
+  background-color: #1e293b;
+  color: #f1f5f9;
 }
 
-/* Component example containers */
-.modal-example,
-.checkbox-example,
-.radio-example,
-.button-example,
-.autocomplete-example,
-.component-example-wrapper {
-  background: #f5f5f5;
-}
-
-[data-theme="dark"] .modal-example,
-[data-theme="dark"] .checkbox-example,
-[data-theme="dark"] .radio-example,
-[data-theme="dark"] .button-example,
-[data-theme="dark"] .autocomplete-example,
-[data-theme="dark"] .component-example-wrapper {
-  background: #1a1a1a;
-}
-
-/* Ensure all AetherUI components inherit proper text colors */
+/* Ensure components inherit proper text colors */
 ae-modal,
 ae-tooltip,
 ae-dropdown,
@@ -207,37 +535,7 @@ ae-autocomplete {
   color: inherit;
 }
 
-/* Set component surface colors */
-.preview ae-dropdown,
-.preview ae-tooltip,
-.preview ae-accordion,
-.preview ae-tabs,
-.preview ae-alert {
-  --ae-color-surface: #ffffff;
-  --ae-color-text: #000000;
-}
-
-[data-theme="dark"] .preview ae-dropdown,
-[data-theme="dark"] .preview ae-tooltip,
-[data-theme="dark"] .preview ae-accordion,
-[data-theme="dark"] .preview ae-tabs,
-[data-theme="dark"] .preview ae-alert {
-  --ae-color-surface: #1a1a1a;
-  --ae-color-text: #ffffff;
-}
-
-/* Ensure content inside components has proper colors */
-ae-modal *,
-ae-tooltip *,
-ae-dropdown *,
-ae-accordion *,
-ae-tabs *,
-ae-alert * {
-  color: inherit;
-}
-
-/* Use CSS parts API for component styling */
-/* Modal parts */
+/* Modal parts styling */
 ae-modal::part(panel) {
   color: var(--ae-modal-text-color, var(--ae-color-text));
 }
@@ -246,24 +544,6 @@ ae-modal::part(header),
 ae-modal::part(body),
 ae-modal::part(footer) {
   color: inherit;
-}
-
-/* Force modal text color in light mode */
-:root:not([data-theme="dark"]) ae-modal::part(panel),
-:root:not([data-theme="dark"]) ae-modal::part(header),
-:root:not([data-theme="dark"]) ae-modal::part(body),
-:root:not([data-theme="dark"]) ae-modal::part(footer) {
-  color: #000000;
-}
-
-/* Ensure slotted content in modal inherits text color */
-:root:not([data-theme="dark"]) ae-modal [slot="header"],
-:root:not([data-theme="dark"]) ae-modal [slot="body"],
-:root:not([data-theme="dark"]) ae-modal [slot="footer"],
-:root:not([data-theme="dark"]) ae-modal [slot="header"] *,
-:root:not([data-theme="dark"]) ae-modal [slot="body"] *,
-:root:not([data-theme="dark"]) ae-modal [slot="footer"] * {
-  color: #000000;
 }
 
 /* Accordion parts */
@@ -283,60 +563,22 @@ ae-radio::part(label) {
   color: var(--ae-color-text);
 }
 
-/* Toast parts */
-ae-toast::part(message) {
-  color: inherit;
-}
-
 /* Tabs parts */
 ae-tabs::part(tab),
 ae-tabs::part(panel) {
   color: var(--ae-color-text);
 }
 
-/* Dark mode adjustments for component examples */
-[data-theme="dark"] .preview,
-[data-theme="dark"] .example-preview,
-[data-theme="dark"] .component-example,
-[data-theme="dark"] .interactive-example {
-  color: var(--ae-color-text-primary);
-}
-
-/* Starlight theme selector fix */
-starlight-theme-select,
-.sl-theme-select-container,
-.theme-select {
-  color: var(--sl-color-text);
-}
-
-starlight-theme-select select,
-.sl-theme-select-container select,
-.theme-select select {
-  color: var(--sl-color-text);
-  background-color: var(--sl-color-bg-offset);
-  border: 1px solid var(--sl-color-border);
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-}
-
-starlight-theme-select select option,
-.sl-theme-select-container select option,
-.theme-select select option {
-  color: var(--sl-color-text);
-  background-color: var(--sl-color-bg);
-}
-
-/* Theme selector hover and focus states */
-starlight-theme-select select:hover,
-.sl-theme-select-container select:hover,
-.theme-select select:hover {
-  border-color: var(--sl-color-accent);
-}
-
-starlight-theme-select select:focus,
-.sl-theme-select-container select:focus,
-.theme-select select:focus {
-  outline: 2px solid var(--sl-color-accent);
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--ae-focus-ring-color);
   outline-offset: 2px;
-  border-color: var(--sl-color-accent);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
 }

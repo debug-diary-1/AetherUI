@@ -11,24 +11,26 @@ describe('ae-tabs', () => {
     it('has correct default properties', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
         </ae-tabs>
       `);
 
       expect(el.orientation).to.equal('horizontal');
-      expect(el.selectedIndex).to.equal(0);
+      // Value should be set to the first tab's id after initialization
+      await el.updateComplete;
+      expect(el.value).to.not.be.empty;
     });
 
     it('renders with multiple tabs and panels', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab slot="nav">Tab 2</ae-tab>
-          <ae-tab slot="nav">Tab 3</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
-          <ae-tab-panel>Panel 2</ae-tab-panel>
-          <ae-tab-panel>Panel 3</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab slot="tab">Tab 2</ae-tab>
+          <ae-tab slot="tab">Tab 3</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
+          <ae-tab-panel slot="panel">Panel 2</ae-tab-panel>
+          <ae-tab-panel slot="panel">Panel 3</ae-tab-panel>
         </ae-tabs>
       `);
 
@@ -42,10 +44,10 @@ describe('ae-tabs', () => {
     it('selects first tab by default', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab slot="nav">Tab 2</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
-          <ae-tab-panel>Panel 2</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab slot="tab">Tab 2</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
+          <ae-tab-panel slot="panel">Panel 2</ae-tab-panel>
         </ae-tabs>
       `);
 
@@ -61,10 +63,10 @@ describe('ae-tabs', () => {
     it('changes selected tab on click', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab slot="nav">Tab 2</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
-          <ae-tab-panel>Panel 2</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab slot="tab">Tab 2</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
+          <ae-tab-panel slot="panel">Panel 2</ae-tab-panel>
         </ae-tabs>
       `);
 
@@ -80,16 +82,16 @@ describe('ae-tabs', () => {
       await el.updateComplete;
 
       expect(secondTab.ariaSelected).to.equal('true');
-      expect(el.selectedIndex).to.equal(1);
+      expect(el.value).to.equal(secondTab.id);
     });
 
     it('emits ae-tab-change event when tab changes', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab slot="nav">Tab 2</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
-          <ae-tab-panel>Panel 2</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab slot="tab">Tab 2</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
+          <ae-tab-panel slot="panel">Panel 2</ae-tab-panel>
         </ae-tabs>
       `);
 
@@ -112,16 +114,16 @@ describe('ae-tabs', () => {
       await waitUntil(() => eventFired, 'Tab change event was not fired');
 
       expect(eventFired).to.be.true;
-      expect(eventDetail.selectedIndex).to.equal(1);
+      expect(eventDetail.tab).to.equal(secondTab.id);
     });
 
     it('supports vertical orientation', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs orientation="vertical">
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab slot="nav">Tab 2</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
-          <ae-tab-panel>Panel 2</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab slot="tab">Tab 2</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
+          <ae-tab-panel slot="panel">Panel 2</ae-tab-panel>
         </ae-tabs>
       `);
 
@@ -134,10 +136,10 @@ describe('ae-tabs', () => {
     it('sets correct ARIA attributes on tabs', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab slot="nav">Tab 2</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
-          <ae-tab-panel>Panel 2</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab slot="tab">Tab 2</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
+          <ae-tab-panel slot="panel">Panel 2</ae-tab-panel>
         </ae-tabs>
       `);
 
@@ -154,8 +156,8 @@ describe('ae-tabs', () => {
     it('sets correct ARIA controls relationship', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
         </ae-tabs>
       `);
 
@@ -171,10 +173,10 @@ describe('ae-tabs', () => {
     it('manages tabindex for keyboard navigation', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab slot="nav">Tab 2</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
-          <ae-tab-panel>Panel 2</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab slot="tab">Tab 2</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
+          <ae-tab-panel slot="panel">Panel 2</ae-tab-panel>
         </ae-tabs>
       `);
 
@@ -194,50 +196,51 @@ describe('ae-tabs', () => {
     it('navigates to next tab with ArrowRight', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab slot="nav">Tab 2</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
-          <ae-tab-panel>Panel 2</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab slot="tab">Tab 2</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
+          <ae-tab-panel slot="panel">Panel 2</ae-tab-panel>
         </ae-tabs>
       `);
 
       await el.updateComplete;
 
       const tabs = el.querySelectorAll('ae-tab');
-      const firstTab = tabs[0] as AeTab;
+      const secondTab = tabs[1] as HTMLElement;
 
-      // Focus first tab and press ArrowRight
-      const firstTabButton = firstTab.shadowRoot?.querySelector('button');
-      firstTabButton!.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, composed: true }));
+      // Dispatch keyboard event on the tabs component
+      el.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
 
       await el.updateComplete;
 
-      expect(el.selectedIndex).to.equal(1);
+      expect(el.value).to.equal(secondTab.id);
     });
 
     it('navigates to previous tab with ArrowLeft', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab slot="nav">Tab 2</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
-          <ae-tab-panel>Panel 2</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab slot="tab">Tab 2</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
+          <ae-tab-panel slot="panel">Panel 2</ae-tab-panel>
         </ae-tabs>
       `);
 
-      // Select second tab first
-      el.selectedIndex = 1;
       await el.updateComplete;
 
       const tabs = el.querySelectorAll('ae-tab');
-      const secondTab = tabs[1] as AeTab;
+      const firstTab = tabs[0] as HTMLElement;
+      const secondTab = tabs[1] as HTMLElement;
 
-      const secondTabButton = secondTab.shadowRoot?.querySelector('button');
-      secondTabButton!.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, composed: true }));
+      // Select second tab first
+      el.value = secondTab.id;
+      await el.updateComplete;
+
+      el.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
 
       await el.updateComplete;
 
-      expect(el.selectedIndex).to.equal(0);
+      expect(el.value).to.equal(firstTab.id);
     });
   });
 
@@ -245,8 +248,8 @@ describe('ae-tabs', () => {
     it('uses CSS variables for active tab color', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
         </ae-tabs>
       `);
 
@@ -264,10 +267,10 @@ describe('ae-tabs', () => {
     it('uses CSS variables for inactive tab color', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab slot="nav">Tab 2</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
-          <ae-tab-panel>Panel 2</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab slot="tab">Tab 2</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
+          <ae-tab-panel slot="panel">Panel 2</ae-tab-panel>
         </ae-tabs>
       `);
 
@@ -284,8 +287,8 @@ describe('ae-tabs', () => {
     it('uses CSS variables for border color', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
         </ae-tabs>
       `);
 
@@ -302,8 +305,8 @@ describe('ae-tabs', () => {
     it('uses CSS variables for hover background', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
         </ae-tabs>
       `);
 
@@ -321,8 +324,8 @@ describe('ae-tabs', () => {
     it('does not have hardcoded color fallbacks in active state', async () => {
       const el = await fixture<AeTabs>(html`
         <ae-tabs>
-          <ae-tab slot="nav">Tab 1</ae-tab>
-          <ae-tab-panel>Panel 1</ae-tab-panel>
+          <ae-tab slot="tab">Tab 1</ae-tab>
+          <ae-tab-panel slot="panel">Panel 1</ae-tab-panel>
         </ae-tabs>
       `);
 

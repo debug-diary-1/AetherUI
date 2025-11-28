@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, PropertyValues } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { selectStyles } from './styles';
 
@@ -91,8 +91,12 @@ export class AeSelect extends LitElement {
   @query('select')
   private accessor selectElement!: HTMLSelectElement;
 
+  @query('slot')
+  private accessor slotElement!: HTMLSlotElement;
+
   private _internals: ElementInternals;
   private _defaultValue = '';
+  private _optionObserver: MutationObserver | null = null;
 
   constructor() {
     super();
@@ -110,6 +114,21 @@ export class AeSelect extends LitElement {
 
     // Set initial form value
     this._updateFormValue();
+
+    // Observe changes to light DOM options
+    this._optionObserver = new MutationObserver(() => this._syncOptionsFromLightDOM());
+    this._optionObserver.observe(this, { childList: true, subtree: true });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._optionObserver?.disconnect();
+  }
+
+  firstUpdated(changedProperties: PropertyValues) {
+    super.firstUpdated(changedProperties);
+    // Initial sync of options from light DOM
+    this._syncOptionsFromLightDOM();
   }
 
   updated(changedProperties: Map<string, unknown>) {
@@ -149,11 +168,15 @@ export class AeSelect extends LitElement {
     const validity = this.selectElement.validity;
 
     if (!validity.valid) {
+      // Provide a default message if the browser's validationMessage is empty
+      const message = this.selectElement.validationMessage ||
+        (validity.valueMissing ? 'Please select an option.' : 'Invalid selection.');
+
       this._internals.setValidity(
         {
           valueMissing: validity.valueMissing,
         },
-        this.selectElement.validationMessage,
+        message,
         this.selectElement
       );
     }
@@ -169,6 +192,37 @@ export class AeSelect extends LitElement {
     options.forEach((option) => {
       option.selected = this.values.includes(option.value);
     });
+  }
+
+  private _syncOptionsFromLightDOM() {
+    if (!this.selectElement) return;
+
+    // Get options from light DOM
+    const lightDOMOptions = Array.from(this.querySelectorAll('option'));
+
+    // Remove existing cloned options (keep placeholder if any)
+    const existingOptions = Array.from(this.selectElement.querySelectorAll('option:not([data-placeholder])'));
+    existingOptions.forEach(opt => {
+      if (!opt.hasAttribute('data-placeholder')) {
+        opt.remove();
+      }
+    });
+
+    // Clone light DOM options into shadow DOM select
+    lightDOMOptions.forEach(option => {
+      const clone = option.cloneNode(true) as HTMLOptionElement;
+      this.selectElement.appendChild(clone);
+    });
+
+    // Sync value with selected option
+    const selectedOption = lightDOMOptions.find(opt => opt.selected);
+    if (selectedOption && !this.value) {
+      this.value = selectedOption.value;
+      this._updateFormValue();
+    }
+
+    // Update validity after syncing options
+    this._updateValidity();
   }
 
   private handleChange(event: Event) {
@@ -268,7 +322,7 @@ export class AeSelect extends LitElement {
             @blur="${this.handleBlur}"
           >
             ${this.placeholder && !this.multiple ? html`
-              <option value="" disabled ?selected="${!this.value}">
+              <option value="" disabled ?selected="${!this.value}" data-placeholder>
                 ${this.placeholder}
               </option>
             ` : ''}

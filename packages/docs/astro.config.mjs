@@ -44,16 +44,12 @@ export default defineConfig({
           icon: 'github',
         },
       ],
-      editLink: {
-        baseUrl: 'https://github.com/pallavL01/AetherUI/edit/main/packages/docs/',
-      },
       sidebar: [
         {
           label: 'Getting Started',
           items: [
-            { label: 'Introduction', slug: '' },
+            { label: 'Introduction', slug: 'getting-started/introduction' },
             { label: 'Installation', slug: 'getting-started/installation' },
-            { label: 'Framework Integration', slug: 'getting-started/framework-integration' },
           ],
         },
         {
@@ -67,7 +63,6 @@ export default defineConfig({
             { label: 'Button', slug: 'components/button' },
             { label: 'Checkbox', slug: 'components/checkbox' },
             { label: 'Combo', slug: 'components/combo' },
-            { label: 'DataTable', slug: 'components/datatable' },
             { label: 'Drawer', slug: 'components/drawer' },
             { label: 'Dropdown', slug: 'components/dropdown' },
             { label: 'Input', slug: 'components/input' },
@@ -91,12 +86,12 @@ export default defineConfig({
       components: {
         Hero: './src/components/Hero.astro',
         Head: './src/components/Head.astro',
+        ThemeSelect: './src/components/ThemeToggle.astro',
       },
       customCss: [
-        './src/styles/custom.css', 
+        './src/styles/custom.css',
         './src/styles/global.css'
       ],
-      lastUpdated: true,
       pagination: true,
     }),
   ],

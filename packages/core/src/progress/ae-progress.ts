@@ -74,7 +74,7 @@ export class AeProgress extends LitElement {
 
   render() {
     return html`
-      <div part="base" class="progress-base" role="progressbar" aria-valuenow="${this.value}" aria-valuemin="0" aria-valuemax="${this.max}">
+      <div part="base" class="progress-base ${this.indeterminate ? 'indeterminate' : ''}" role="progressbar" aria-valuenow="${this.value}" aria-valuemin="0" aria-valuemax="${this.max}">
         <div part="track" class="progress-track">
           <div
             part="bar"

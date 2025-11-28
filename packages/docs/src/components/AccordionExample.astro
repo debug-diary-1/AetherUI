@@ -10,7 +10,15 @@ const { code, preview } = Astro.props;
 ---
 
 <div class="accordion-example">
-  {preview ? <div set:html={preview} /> : <slot />}
+  {preview ? (
+    <div class="preview" data-preview={preview}>
+      <!-- Preview will be injected by client-side script -->
+    </div>
+  ) : (
+    <div class="preview">
+      <slot />
+    </div>
+  )}
 </div>
 
 {code && (
@@ -20,25 +28,37 @@ const { code, preview } = Astro.props;
 )}
 
 <script>
-  // Using a more robust initialization method to ensure components are properly registered
-  import { defineAeAccordion } from '@aetherui/core';
-  
-  // Register accordion components
-  // Use a try-catch block to handle possible re-registration
-  try {
-    if (!customElements.get('ae-accordion')) {
-      defineAeAccordion();
-    }
-    
-    // Simplify initialization to avoid potential crashes
-    document.addEventListener('DOMContentLoaded', () => {
-      // Get all accordions
-      const accordions = document.querySelectorAll('ae-accordion');
-      console.log('Accordions found:', accordions.length);
+  // Components are registered globally via Head.astro
+  // This script handles preview injection after components are ready
+
+  function injectPreviews() {
+    const previews = document.querySelectorAll('.accordion-example [data-preview]');
+    previews.forEach(preview => {
+      const html = preview.getAttribute('data-preview');
+      if (html) {
+        preview.innerHTML = html;
+        preview.removeAttribute('data-preview');
+      }
     });
-  } catch (e) {
-    console.error('Error initializing accordion components', e);
   }
+
+  // Wait for components to be ready
+  const checkAndInject = () => {
+    const isDefined = window.customElements.get('ae-accordion') !== undefined;
+
+    if (isDefined) {
+      injectPreviews();
+    } else {
+      setTimeout(checkAndInject, 50);
+    }
+  };
+
+  checkAndInject();
+
+  // Re-inject on page navigation
+  document.addEventListener('astro:page-load', () => {
+    setTimeout(injectPreviews, 50);
+  });
 </script>
 
 <style>
@@ -49,13 +69,24 @@ const { code, preview } = Astro.props;
     padding: 1.5rem 0;
   }
 
+  .preview {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background: var(--sl-color-gray-1);
+    min-height: 60px;
+  }
+
+  :global([data-theme="dark"]) .preview {
+    background: var(--sl-color-gray-6);
+  }
+
   .code-preview {
     border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   }
 
-  [data-theme="dark"] .code-preview {
+  :global([data-theme="dark"]) .code-preview {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
   }
 
