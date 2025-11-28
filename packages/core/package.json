@@ -177,7 +177,7 @@
     "dev": "vite",
     "clean": "rimraf dist",
     "lint": "eslint src --ext .ts",
-    "test": "web-test-runner",
+    "test": "node run-tests.cjs",
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {

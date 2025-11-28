@@ -39,10 +39,13 @@ export default {
   concurrency: 1,
   concurrentBrowsers: 1,
   browsers: [
-    playwrightLauncher({ 
+    playwrightLauncher({
       product: 'chromium',
       launchOptions: {
         headless: true,
+        channel: 'chrome',
+        executablePath: '/root/.cache/ms-playwright/chromium-1194/chrome-linux/chrome',
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
       }
     })
   ],
