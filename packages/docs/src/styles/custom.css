@@ -118,6 +118,57 @@ a {
   letter-spacing: 0.05em;
 }
 
+/* Sidebar navigation links - fix light mode visibility */
+nav.sidebar a,
+.sidebar a,
+aside a,
+[data-sidebar] a {
+  color: #475569;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+nav.sidebar a:hover,
+.sidebar a:hover,
+aside a:hover,
+[data-sidebar] a:hover {
+  color: #0f172a;
+  background: #f1f5f9;
+}
+
+/* Active sidebar link */
+nav.sidebar a[aria-current="page"],
+.sidebar a[aria-current="page"],
+aside a[aria-current="page"],
+[data-sidebar] a[aria-current="page"] {
+  color: #2563eb;
+  background: #eff6ff;
+  font-weight: 500;
+}
+
+:root[data-theme='dark'] nav.sidebar a,
+:root[data-theme='dark'] .sidebar a,
+:root[data-theme='dark'] aside a,
+:root[data-theme='dark'] [data-sidebar] a {
+  color: #94a3b8;
+}
+
+:root[data-theme='dark'] nav.sidebar a:hover,
+:root[data-theme='dark'] .sidebar a:hover,
+:root[data-theme='dark'] aside a:hover,
+:root[data-theme='dark'] [data-sidebar] a:hover {
+  color: #f1f5f9;
+  background: #334155;
+}
+
+:root[data-theme='dark'] nav.sidebar a[aria-current="page"],
+:root[data-theme='dark'] .sidebar a[aria-current="page"],
+:root[data-theme='dark'] aside a[aria-current="page"],
+:root[data-theme='dark'] [data-sidebar] a[aria-current="page"] {
+  color: #60a5fa;
+  background: #1e3a5f;
+}
+
 /* Navigation links */
 nav a {
   border-radius: var(--radius-sm);
@@ -126,6 +177,47 @@ nav a {
 
 nav a:hover {
   background: var(--sl-color-gray-2);
+}
+
+/* Starlight sidebar specific fixes */
+.sidebar-content a,
+starlight-menu-button + nav a,
+.sl-sidebar a {
+  color: #475569 !important;
+}
+
+.sidebar-content a:hover,
+starlight-menu-button + nav a:hover,
+.sl-sidebar a:hover {
+  color: #0f172a !important;
+  background: #f1f5f9;
+}
+
+.sidebar-content a[aria-current="page"],
+starlight-menu-button + nav a[aria-current="page"],
+.sl-sidebar a[aria-current="page"] {
+  color: #2563eb !important;
+  background: #eff6ff;
+}
+
+:root[data-theme='dark'] .sidebar-content a,
+:root[data-theme='dark'] starlight-menu-button + nav a,
+:root[data-theme='dark'] .sl-sidebar a {
+  color: #94a3b8 !important;
+}
+
+:root[data-theme='dark'] .sidebar-content a:hover,
+:root[data-theme='dark'] starlight-menu-button + nav a:hover,
+:root[data-theme='dark'] .sl-sidebar a:hover {
+  color: #f1f5f9 !important;
+  background: #334155;
+}
+
+:root[data-theme='dark'] .sidebar-content a[aria-current="page"],
+:root[data-theme='dark'] starlight-menu-button + nav a[aria-current="page"],
+:root[data-theme='dark'] .sl-sidebar a[aria-current="page"] {
+  color: #60a5fa !important;
+  background: #1e3a5f;
 }
 
 /* Code blocks */
