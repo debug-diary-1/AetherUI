@@ -70,6 +70,7 @@ export const autocompleteStyles = css`
     padding: 0.5rem 1rem;
     cursor: pointer;
     transition: background-color var(--ae-autocomplete-transition);
+    background-color: var(--ae-autocomplete-option-background, var(--ae-autocomplete-dropdown-background, white));
     color: var(--ae-autocomplete-option-text-color, var(--ae-autocomplete-dropdown-text-color, #1e293b));
   }
 
