@@ -76,6 +76,7 @@ export const autocompleteStyles = css`
   .autocomplete-option:hover,
   .autocomplete-option.highlighted {
     background-color: var(--ae-autocomplete-highlight-background);
+    color: var(--ae-autocomplete-highlight-text-color, var(--ae-autocomplete-option-text-color, var(--ae-autocomplete-dropdown-text-color)));
   }
 
   .autocomplete-option.selected {

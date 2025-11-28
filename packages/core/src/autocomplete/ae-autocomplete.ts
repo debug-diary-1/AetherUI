@@ -39,6 +39,8 @@ import { autocompleteStyles } from './styles';
  * @cssproperty --ae-autocomplete-background - Background color of the input
  * @cssproperty --ae-autocomplete-text-color - Text color of the input
  * @cssproperty --ae-autocomplete-highlight-color - Color for highlighted text
+ * @cssproperty --ae-autocomplete-highlight-background - Background color for highlighted/hovered options
+ * @cssproperty --ae-autocomplete-highlight-text-color - Text color for highlighted/hovered options
  * @cssproperty --ae-autocomplete-dropdown-shadow - Shadow for the dropdown
  */
 export class AeAutocomplete extends LitElement {

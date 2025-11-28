@@ -127,14 +127,16 @@ const exampleId = `autocomplete-example-${Math.random().toString(36).slice(2, 10
   :global(.preview ae-autocomplete) {
     --ae-autocomplete-dropdown-background: var(--sl-color-white);
     --ae-autocomplete-dropdown-border-color: var(--sl-color-gray-5);
-    --ae-autocomplete-highlight-background: var(--sl-color-gray-2);
+    --ae-autocomplete-highlight-background: #eff6ff;
+    --ae-autocomplete-highlight-text-color: #1e40af;
   }
-  
+
   /* Dark mode autocomplete dropdown */
   :global([data-theme="dark"] .preview ae-autocomplete) {
     --ae-autocomplete-dropdown-background: var(--sl-color-gray-6);
     --ae-autocomplete-dropdown-border-color: var(--sl-color-gray-4);
-    --ae-autocomplete-highlight-background: var(--sl-color-gray-5);
+    --ae-autocomplete-highlight-background: #334155;
+    --ae-autocomplete-highlight-text-color: #f1f5f9;
     --ae-autocomplete-dropdown-text-color: var(--sl-color-white);
     --ae-autocomplete-option-text-color: var(--sl-color-white);
   }
