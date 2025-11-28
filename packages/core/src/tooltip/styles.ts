@@ -23,13 +23,8 @@ export const tooltipStyles = css`
     max-width: 20rem;
     pointer-events: none;
     line-height: 1.4;
-    opacity: 0;
-    transition: opacity 150ms ease-in-out;
-    z-index: var(--ae-tooltip-z-index, 1200);
-  }
-
-  :host([open]) [part="overlay"] {
     opacity: 1;
+    z-index: var(--ae-tooltip-z-index, 1200);
   }
 
   /* Arrow indicator */
@@ -54,13 +49,9 @@ export const tooltipStyles = css`
     }
   }
 
-  /* Animations */
-  :host([animation="fade"]) [part="overlay"] {
-    transition: opacity 150ms ease-in-out;
-  }
-
+  /* Animations - using visibility from inline styles */
   :host([animation="scale"]) [part="overlay"] {
-    transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+    transition: transform 150ms ease-in-out;
     transform: scale(0.95);
   }
 
