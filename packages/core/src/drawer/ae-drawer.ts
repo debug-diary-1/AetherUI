@@ -198,6 +198,10 @@ export class AeDrawer extends LitElement {
     this.close();
   }
 
+  public show() {
+    this.open = true;
+  }
+
   public close() {
     this.open = false;
   }
