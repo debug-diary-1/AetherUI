@@ -2,12 +2,13 @@ import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { tooltipStyles } from './styles.js';
-import { 
-  positionTooltip, 
-  createAutoUpdate, 
-  type PositionOptions 
+import {
+  positionTooltip,
+  createAutoUpdate,
+  type PositionOptions,
+  type Placement,
+  type Strategy
 } from './middleware.js';
-import type { Placement, Strategy } from '@floating-ui/dom';
 
 /**
  * A lightweight tooltip component that shows contextual information on hover/focus
