@@ -5,7 +5,8 @@ import { css } from 'lit';
  */
 export const badgeStyles = css`
   :host {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     vertical-align: middle;
   }
 
