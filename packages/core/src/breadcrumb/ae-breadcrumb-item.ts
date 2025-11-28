@@ -42,9 +42,9 @@ export class AeBreadcrumbItem extends LitElement {
   }
 
   render() {
-    const separator = this.getRootNode() instanceof ShadowRoot
-      ? (this.getRootNode() as ShadowRoot).host.getAttribute('separator') || '/'
-      : '/';
+    // Get separator from parent ae-breadcrumb element
+    const parent = this.closest('ae-breadcrumb');
+    const separator = parent?.getAttribute('separator') || '/';
 
     return html`
       <li part="base" class="breadcrumb-item" aria-current="${this.current ? 'page' : nothing}">
