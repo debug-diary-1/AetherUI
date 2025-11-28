@@ -55,7 +55,7 @@ export class AeTooltip extends LitElement {
 
   /** Positioning strategy (absolute or fixed) */
   @property()
-  accessor strategy: Strategy = 'absolute';
+  accessor strategy: Strategy = 'fixed';
 
   /** Whether the tooltip is disabled */
   @property({ type: Boolean })
