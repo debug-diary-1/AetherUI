@@ -121,26 +121,48 @@ const exampleId = `autocomplete-example-${Math.random().toString(36).slice(2, 10
     margin-bottom: 1rem;
   }
 
-  /* Autocomplete dropdown styling - Light mode */
+  /* Autocomplete styling - Light mode */
   :global(.preview ae-autocomplete) {
-    --ae-autocomplete-dropdown-background: var(--sl-color-white);
-    --ae-autocomplete-dropdown-border-color: var(--sl-color-gray-5);
+    /* Input field */
+    --ae-autocomplete-background: #ffffff;
+    --ae-autocomplete-text-color: #1e293b;
+    --ae-autocomplete-border-color: #cbd5e1;
+    --ae-autocomplete-focus-border-color: #3b82f6;
+    --ae-autocomplete-focus-shadow-color: rgba(59, 130, 246, 0.25);
+    /* Dropdown */
+    --ae-autocomplete-dropdown-background: #ffffff;
+    --ae-autocomplete-dropdown-border-color: #e2e8f0;
     --ae-autocomplete-dropdown-text-color: #1e293b;
     --ae-autocomplete-option-text-color: #1e293b;
     --ae-autocomplete-match-text-color: #1e40af;
     --ae-autocomplete-highlight-background: #eff6ff;
     --ae-autocomplete-highlight-text-color: #1e40af;
+    /* Icons */
+    --ae-autocomplete-clear-color: #64748b;
+    --ae-autocomplete-clear-hover-color: #1e293b;
+    --ae-autocomplete-arrow-color: #64748b;
   }
 
-  /* Dark mode autocomplete dropdown */
+  /* Dark mode autocomplete */
   :global([data-theme="dark"] .preview ae-autocomplete) {
-    --ae-autocomplete-dropdown-background: var(--sl-color-gray-6);
-    --ae-autocomplete-dropdown-border-color: var(--sl-color-gray-4);
+    /* Input field */
+    --ae-autocomplete-background: #1e293b;
+    --ae-autocomplete-text-color: #f1f5f9;
+    --ae-autocomplete-border-color: #475569;
+    --ae-autocomplete-focus-border-color: #60a5fa;
+    --ae-autocomplete-focus-shadow-color: rgba(96, 165, 250, 0.25);
+    /* Dropdown */
+    --ae-autocomplete-dropdown-background: #1e293b;
+    --ae-autocomplete-dropdown-border-color: #475569;
     --ae-autocomplete-dropdown-text-color: #f1f5f9;
     --ae-autocomplete-option-text-color: #f1f5f9;
     --ae-autocomplete-match-text-color: #93c5fd;
     --ae-autocomplete-highlight-background: #334155;
     --ae-autocomplete-highlight-text-color: #f1f5f9;
+    /* Icons */
+    --ae-autocomplete-clear-color: #94a3b8;
+    --ae-autocomplete-clear-hover-color: #f1f5f9;
+    --ae-autocomplete-arrow-color: #94a3b8;
   }
   
   :global(.label) {
