@@ -1,0 +1,134 @@
+---
+// Custom theme toggle button - cycles through auto/light/dark
+---
+
+<div class="theme-toggle-wrapper">
+  <button
+    id="theme-toggle"
+    class="theme-toggle"
+    aria-label="Toggle theme"
+    title="Toggle theme (auto → light → dark)"
+  >
+    <svg class="icon icon-auto" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+    </svg>
+    <svg class="icon icon-light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5"/>
+      <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+    </svg>
+    <svg class="icon icon-dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+  <span class="theme-label" id="theme-label">Auto</span>
+</div>
+
+<style>
+  .theme-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: var(--sl-color-bg-offset, #f8fafc);
+    border: 1px solid var(--sl-color-border, #e2e8f0);
+    border-radius: 0.5rem;
+    color: var(--sl-color-text, #0f172a);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .theme-toggle:hover {
+    background: var(--sl-color-gray-2, #f1f5f9);
+    border-color: var(--sl-color-accent, #2563eb);
+  }
+
+  .theme-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--sl-color-text, #0f172a);
+    min-width: 3rem;
+  }
+
+  .icon {
+    display: none;
+  }
+
+  /* Show appropriate icon based on theme */
+  [data-theme-mode="auto"] .icon-auto,
+  [data-theme-mode="light"] .icon-light,
+  [data-theme-mode="dark"] .icon-dark {
+    display: block;
+  }
+
+  /* Default to auto icon */
+  .theme-toggle-wrapper:not([data-theme-mode]) .icon-auto {
+    display: block;
+  }
+</style>
+
+<script>
+  function initThemeToggle() {
+    const toggle = document.getElementById('theme-toggle');
+    const label = document.getElementById('theme-label');
+    const wrapper = toggle?.parentElement;
+
+    if (!toggle || !label || !wrapper) return;
+
+    // Get stored preference or default to 'auto'
+    const getStoredTheme = () => localStorage.getItem('starlight-theme') || 'auto';
+
+    // Update UI based on current mode
+    const updateUI = (mode: string) => {
+      wrapper.setAttribute('data-theme-mode', mode);
+      label.textContent = mode.charAt(0).toUpperCase() + mode.slice(1);
+    };
+
+    // Apply theme to document
+    const applyTheme = (mode: string) => {
+      if (mode === 'auto') {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', mode);
+      }
+      localStorage.setItem('starlight-theme', mode);
+      updateUI(mode);
+    };
+
+    // Cycle through themes: auto → light → dark → auto
+    const cycleTheme = () => {
+      const current = getStoredTheme();
+      const next = current === 'auto' ? 'light' : current === 'light' ? 'dark' : 'auto';
+      applyTheme(next);
+    };
+
+    // Initialize
+    const stored = getStoredTheme();
+    applyTheme(stored);
+
+    // Listen for clicks
+    toggle.addEventListener('click', cycleTheme);
+
+    // Listen for system preference changes when in auto mode
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      if (getStoredTheme() === 'auto') {
+        applyTheme('auto');
+      }
+    });
+  }
+
+  // Run on initial load
+  initThemeToggle();
+
+  // Re-run after Astro page transitions
+  document.addEventListener('astro:after-swap', initThemeToggle);
+</script>

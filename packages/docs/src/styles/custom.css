@@ -59,12 +59,12 @@
 
 /* Dark mode */
 :root[data-theme='dark'] {
-  --sl-color-accent-low: #1e3a5f;
+  --sl-color-accent-low: #172554;
   --sl-color-accent: #3b82f6;
   --sl-color-accent-high: #60a5fa;
   --sl-color-text-accent: #60a5fa;
 
-  --sl-color-text: #f1f5f9;
+  --sl-color-text: #e2e8f0;
   --sl-color-text-light: #94a3b8;
   --sl-color-text-heading: #f8fafc;
 
@@ -78,12 +78,48 @@
   --sl-color-bg: #0f172a;
   --sl-color-bg-offset: #1e293b;
   --sl-color-bg-inline-code: #1e293b;
+  --sl-color-bg-nav: #0f172a;
 
-  --sl-color-border: #334155;
+  --sl-color-border: #1e293b;
 
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+}
+
+/* Dark mode - explicit background overrides */
+:root[data-theme='dark'] body,
+:root[data-theme='dark'] html {
+  background-color: #0f172a !important;
+}
+
+:root[data-theme='dark'] .sidebar,
+:root[data-theme='dark'] .sidebar-pane,
+:root[data-theme='dark'] .sidebar-content,
+:root[data-theme='dark'] nav.sidebar,
+:root[data-theme='dark'] aside {
+  background-color: #0f172a !important;
+  border-color: #1e293b !important;
+}
+
+:root[data-theme='dark'] main,
+:root[data-theme='dark'] .main-pane,
+:root[data-theme='dark'] .content-panel,
+:root[data-theme='dark'] article {
+  background-color: #0f172a !important;
+}
+
+:root[data-theme='dark'] .right-sidebar,
+:root[data-theme='dark'] .toc,
+:root[data-theme='dark'] .right-sidebar-panel {
+  background-color: #0f172a !important;
+}
+
+:root[data-theme='dark'] header,
+:root[data-theme='dark'] .header,
+:root[data-theme='dark'] header.header {
+  background-color: rgba(15, 23, 42, 0.95) !important;
+  border-color: #1e293b !important;
 }
 
 /* Global styles */
@@ -354,12 +390,8 @@ starlight-theme-select select:hover {
 /* Header */
 header.header {
   backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   border-bottom: 1px solid var(--sl-color-border);
-}
-
-:root[data-theme='dark'] header.header {
-  background: rgba(15, 23, 42, 0.8);
 }
 
 /* Scrollbar styling */
