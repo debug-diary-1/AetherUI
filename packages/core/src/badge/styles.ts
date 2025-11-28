@@ -7,19 +7,27 @@ export const badgeStyles = css`
   :host {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    align-self: center;
     vertical-align: middle;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    box-sizing: border-box;
   }
 
   .badge-base,
   .badge-dot {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: var(--ae-badge-gap, 0.25rem);
     font-family: var(--ae-badge-font-family, inherit);
     font-weight: var(--ae-badge-font-weight, 500);
     line-height: 1;
     white-space: nowrap;
     transition: all 0.2s ease;
+    box-sizing: border-box;
   }
 
   .badge-base {
