@@ -275,6 +275,62 @@ code {
   font-size: 0.875em;
 }
 
+/* Dark mode code blocks - better contrast */
+:root[data-theme='dark'] pre {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+:root[data-theme='dark'] pre code {
+  color: #e2e8f0 !important;
+}
+
+:root[data-theme='dark'] code {
+  color: #e2e8f0;
+}
+
+:root[data-theme='dark'] :not(pre) > code {
+  background: #334155;
+  color: #f1f5f9;
+}
+
+/* Syntax highlighting improvements for dark mode */
+:root[data-theme='dark'] .expressive-code,
+:root[data-theme='dark'] [data-theme="dark"] .expressive-code {
+  --code-background: #1e293b !important;
+}
+
+:root[data-theme='dark'] .ec-line {
+  color: #e2e8f0 !important;
+}
+
+/* Starlight code block overrides */
+:root[data-theme='dark'] .astro-code,
+:root[data-theme='dark'] [class*="astro-code"] {
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+:root[data-theme='dark'] .astro-code span,
+:root[data-theme='dark'] [class*="astro-code"] span {
+  color: inherit;
+}
+
+/* Tabs in code examples */
+:root[data-theme='dark'] [role="tablist"] {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+:root[data-theme='dark'] [role="tab"] {
+  color: #94a3b8 !important;
+}
+
+:root[data-theme='dark'] [role="tab"][aria-selected="true"] {
+  color: #f1f5f9 !important;
+  background-color: #334155 !important;
+}
+
 /* Tables */
 table {
   border-radius: var(--radius-lg);
