@@ -127,6 +127,7 @@ const exampleId = `autocomplete-example-${Math.random().toString(36).slice(2, 10
     --ae-autocomplete-dropdown-border-color: var(--sl-color-gray-5);
     --ae-autocomplete-dropdown-text-color: #1e293b;
     --ae-autocomplete-option-text-color: #1e293b;
+    --ae-autocomplete-match-text-color: #1e40af;
     --ae-autocomplete-highlight-background: #eff6ff;
     --ae-autocomplete-highlight-text-color: #1e40af;
   }
@@ -135,10 +136,11 @@ const exampleId = `autocomplete-example-${Math.random().toString(36).slice(2, 10
   :global([data-theme="dark"] .preview ae-autocomplete) {
     --ae-autocomplete-dropdown-background: var(--sl-color-gray-6);
     --ae-autocomplete-dropdown-border-color: var(--sl-color-gray-4);
+    --ae-autocomplete-dropdown-text-color: #f1f5f9;
+    --ae-autocomplete-option-text-color: #f1f5f9;
+    --ae-autocomplete-match-text-color: #93c5fd;
     --ae-autocomplete-highlight-background: #334155;
     --ae-autocomplete-highlight-text-color: #f1f5f9;
-    --ae-autocomplete-dropdown-text-color: var(--sl-color-white);
-    --ae-autocomplete-option-text-color: var(--sl-color-white);
   }
   
   :global(.label) {

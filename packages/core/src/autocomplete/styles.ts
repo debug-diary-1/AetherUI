@@ -70,7 +70,7 @@ export const autocompleteStyles = css`
     padding: 0.5rem 1rem;
     cursor: pointer;
     transition: background-color var(--ae-autocomplete-transition);
-    color: var(--ae-autocomplete-option-text-color, var(--ae-autocomplete-dropdown-text-color));
+    color: var(--ae-autocomplete-option-text-color, var(--ae-autocomplete-dropdown-text-color, inherit));
   }
 
   .autocomplete-option:hover,
@@ -104,7 +104,7 @@ export const autocompleteStyles = css`
 
   .autocomplete-match {
     font-weight: bold;
-    color: var(--ae-autocomplete-match-text-color);
+    color: var(--ae-autocomplete-match-text-color, inherit);
   }
 
   .autocomplete-clear {
