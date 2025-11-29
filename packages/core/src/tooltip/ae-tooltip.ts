@@ -2,12 +2,13 @@ import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { tooltipStyles } from './styles.js';
-import { 
-  positionTooltip, 
-  createAutoUpdate, 
-  type PositionOptions 
+import {
+  positionTooltip,
+  createAutoUpdate,
+  type PositionOptions,
+  type Placement,
+  type Strategy
 } from './middleware.js';
-import type { Placement, Strategy } from '@floating-ui/dom';
 
 /**
  * A lightweight tooltip component that shows contextual information on hover/focus
@@ -55,7 +56,7 @@ export class AeTooltip extends LitElement {
 
   /** Positioning strategy (absolute or fixed) */
   @property()
-  accessor strategy: Strategy = 'absolute';
+  accessor strategy: Strategy = 'fixed';
 
   /** Whether the tooltip is disabled */
   @property({ type: Boolean })
@@ -70,10 +71,15 @@ export class AeTooltip extends LitElement {
   accessor animation: 'fade' | 'scale' = 'fade';
 
   @state()
-  private _tooltipStyles: Record<string, string> = {};
+  private _tooltipStyles: Record<string, string> = {
+    visibility: 'hidden'
+  };
 
   @state()
   private _arrowStyles: Record<string, string> = {};
+
+  @state()
+  private _isPositioned = false;
 
   @query('[part="overlay"]')
   private _overlay?: HTMLElement;
@@ -122,13 +128,24 @@ export class AeTooltip extends LitElement {
   protected updated(changedProperties: PropertyValues) {
     if (changedProperties.has('open')) {
       if (this.open) {
+        // Reset positioned state when opening
+        this._isPositioned = false;
+        this._tooltipStyles = { visibility: 'hidden' };
+
         this.updateComplete.then(() => {
-          this._updatePosition();
-          this._updateAriaDescribedBy(true);
+          // Use double-RAF to ensure the browser has painted the overlay
+          // before calculating its dimensions
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              this._updatePosition();
+              this._updateAriaDescribedBy(true);
+            });
+          });
         });
       } else {
         this._cleanupPositioning();
         this._updateAriaDescribedBy(false);
+        this._isPositioned = false;
       }
       this._emitOpenChange();
     }
@@ -301,7 +318,20 @@ export class AeTooltip extends LitElement {
   }
 
   private async _updatePosition() {
+    // Ensure anchor element is set
+    if (!this._anchorElement) {
+      this._findAnchorElement();
+    }
+
     if (!this._anchorElement || !this._overlay) return;
+
+    // Verify overlay has valid dimensions
+    const overlayRect = this._overlay.getBoundingClientRect();
+    if (overlayRect.width === 0 || overlayRect.height === 0) {
+      // Wait for layout and retry
+      requestAnimationFrame(() => this._updatePosition());
+      return;
+    }
 
     const options: PositionOptions = {
       placement: this.placement,
@@ -311,7 +341,7 @@ export class AeTooltip extends LitElement {
 
     const updatePosition = async () => {
       if (!this._anchorElement || !this._overlay) return;
-      
+
       try {
         const result = await positionTooltip(
           this._anchorElement,
@@ -323,8 +353,10 @@ export class AeTooltip extends LitElement {
         this._tooltipStyles = {
           left: `${result.x}px`,
           top: `${result.y}px`,
-          position: this.strategy
+          position: this.strategy,
+          visibility: 'visible'
         };
+        this._isPositioned = true;
 
         // Position arrow if present
         if (this.showArrow && this._arrow && result.middlewareData.arrow) {

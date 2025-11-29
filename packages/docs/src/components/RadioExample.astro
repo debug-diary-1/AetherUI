@@ -39,7 +39,7 @@ const sanitizedPreview = preview?.replace(/\${/g, '\\${');
   .preview {
     padding: 1.5rem;
     border-radius: 0.25rem;
-    background: var(--sl-color-white);
+    background: #ffffff;
     position: relative;
     min-height: 100px;
     display: flex;
@@ -50,11 +50,6 @@ const sanitizedPreview = preview?.replace(/\${/g, '\\${');
   /* Light mode styles */
   :global(.preview ae-radio-group) {
     width: 100%;
-    --ae-color-border: var(--sl-color-gray-4);
-    --ae-color-surface: var(--sl-color-white);
-    --ae-color-primary: var(--sl-color-accent);
-    --ae-color-text: var(--sl-color-text);
-    --ae-font-size-sm: 1rem;
     display: flex;
     gap: 1rem;
   }
@@ -70,7 +65,14 @@ const sanitizedPreview = preview?.replace(/\${/g, '\\${');
 
   /* Custom radio styling using parts */
   :global(.preview ae-radio) {
-    --ae-radio-text-color: var(--sl-color-text);
+    --ae-radio-size: 1.25rem;
+    --ae-radio-border-color: #94a3b8;
+    --ae-radio-bg: #ffffff;
+    --ae-radio-checked-border-color: #3b82f6;
+    --ae-radio-checked-bg: #3b82f6;
+    --ae-radio-indicator-color: #ffffff;
+    --ae-radio-text-color: #1e293b;
+    --ae-radio-focus-ring-color: #3b82f6;
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
@@ -86,7 +88,7 @@ const sanitizedPreview = preview?.replace(/\${/g, '\\${');
   }
 
   :global(.preview ae-radio::part(indicator)) {
-    background: var(--sl-color-accent);
+    background: #3b82f6;
     transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -94,31 +96,36 @@ const sanitizedPreview = preview?.replace(/\${/g, '\\${');
     font-weight: 500;
     letter-spacing: 0.01em;
     white-space: nowrap;
-    color: var(--sl-color-text);
+    color: #1e293b;
   }
 
   :global(.preview ae-radio:hover::part(control)) {
-    border-color: var(--sl-color-accent);
+    border-color: #3b82f6;
     transform: scale(1.05);
   }
 
   /* Dark mode styles */
   :global([data-theme="dark"] .preview) {
-    background: var(--sl-color-gray-6);
+    background: #1e293b;
   }
 
-  :global([data-theme="dark"] .preview ae-radio-group) {
-    --ae-color-border: var(--sl-color-gray-5);
-    --ae-color-surface: var(--sl-color-gray-7);
-    --ae-color-primary: var(--sl-color-accent-high);
-    --ae-color-text: var(--sl-color-gray-1);
+  :global([data-theme="dark"] .preview ae-radio) {
+    --ae-radio-border-color: #64748b;
+    --ae-radio-bg: #334155;
+    --ae-radio-checked-border-color: #60a5fa;
+    --ae-radio-checked-bg: #3b82f6;
+    --ae-radio-text-color: #f1f5f9;
+  }
+
+  :global([data-theme="dark"] .preview ae-radio::part(label)) {
+    color: #f1f5f9;
   }
 
   :global([data-theme="dark"] .preview ae-radio::part(indicator)) {
-    background: var(--sl-color-accent-high);
+    background: #60a5fa;
   }
 
   :global([data-theme="dark"] .preview ae-radio:hover::part(control)) {
-    border-color: var(--sl-color-accent-high);
+    border-color: #60a5fa;
   }
 </style> 

@@ -39,10 +39,11 @@ export default {
   concurrency: 1,
   concurrentBrowsers: 1,
   browsers: [
-    playwrightLauncher({ 
+    playwrightLauncher({
       product: 'chromium',
       launchOptions: {
         headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
       }
     })
   ],

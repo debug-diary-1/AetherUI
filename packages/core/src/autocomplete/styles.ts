@@ -70,12 +70,14 @@ export const autocompleteStyles = css`
     padding: 0.5rem 1rem;
     cursor: pointer;
     transition: background-color var(--ae-autocomplete-transition);
-    color: var(--ae-autocomplete-option-text-color, var(--ae-autocomplete-dropdown-text-color));
+    background-color: var(--ae-autocomplete-option-background, var(--ae-autocomplete-dropdown-background, white));
+    color: var(--ae-autocomplete-option-text-color, var(--ae-autocomplete-dropdown-text-color, #1e293b));
   }
 
   .autocomplete-option:hover,
   .autocomplete-option.highlighted {
-    background-color: var(--ae-autocomplete-highlight-background);
+    background-color: var(--ae-autocomplete-highlight-background, #eff6ff);
+    color: var(--ae-autocomplete-highlight-text-color, var(--ae-autocomplete-option-text-color, var(--ae-autocomplete-dropdown-text-color, #1e40af)));
   }
 
   .autocomplete-option.selected {
@@ -103,7 +105,7 @@ export const autocompleteStyles = css`
 
   .autocomplete-match {
     font-weight: bold;
-    color: var(--ae-autocomplete-match-text-color);
+    color: var(--ae-autocomplete-match-text-color, #1e40af);
   }
 
   .autocomplete-clear {

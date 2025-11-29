@@ -2,8 +2,7 @@ import { LitElement, html, PropertyValues, nothing, css } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { dropdownStyles } from './styles';
 import { KeyboardController } from './keyboard';
-import { updatePosition } from './positioning';
-import type { Placement, Strategy } from '@floating-ui/dom';
+import { updatePosition, type Placement, type Strategy } from './positioning';
 
 /**
  * Dropdown menu component

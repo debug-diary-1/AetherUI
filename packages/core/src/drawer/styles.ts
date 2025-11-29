@@ -24,7 +24,7 @@ export const drawerStyles = css`
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--ae-drawer-backdrop-bg);
+    background: var(--ae-drawer-backdrop-bg, rgba(0, 0, 0, 0.5));
     backdrop-filter: var(--ae-drawer-backdrop-blur, blur(4px));
     animation: fadeIn 0.2s ease;
   }
@@ -33,9 +33,10 @@ export const drawerStyles = css`
     position: fixed;
     display: flex;
     flex-direction: column;
-    background: var(--ae-drawer-bg);
-    box-shadow: var(--ae-drawer-shadow);
+    background: var(--ae-drawer-bg, #ffffff);
+    box-shadow: var(--ae-drawer-shadow, -4px 0 20px rgba(0, 0, 0, 0.15));
     overflow: hidden;
+    color: var(--ae-drawer-text-color, #1e293b);
   }
 
   /* Placement: Right (default) */
@@ -144,7 +145,7 @@ export const drawerStyles = css`
     padding: 0.5rem;
     border: none;
     background: transparent;
-    color: var(--ae-drawer-close-color);
+    color: var(--ae-drawer-close-color, #64748b);
     cursor: pointer;
     border-radius: 0.375rem;
     transition: all 0.2s ease;
@@ -152,32 +153,33 @@ export const drawerStyles = css`
   }
 
   .drawer-close:hover {
-    background: var(--ae-drawer-close-bg-hover);
-    color: var(--ae-drawer-close-color-hover);
+    background: var(--ae-drawer-close-bg-hover, #f1f5f9);
+    color: var(--ae-drawer-close-color-hover, #1e293b);
   }
 
   .drawer-close:focus-visible {
-    outline: 2px solid var(--ae-drawer-focus-ring);
+    outline: 2px solid var(--ae-drawer-focus-ring, #3b82f6);
     outline-offset: 2px;
   }
 
   ::slotted([slot="header"]) {
     padding: var(--ae-drawer-header-padding, 1.5rem);
-    border-bottom: var(--ae-drawer-header-border);
+    border-bottom: var(--ae-drawer-header-border, 1px solid #e2e8f0);
     font-size: var(--ae-drawer-header-font-size, 1.25rem);
     font-weight: var(--ae-drawer-header-font-weight, 600);
-    color: var(--ae-drawer-header-color);
+    color: var(--ae-drawer-header-color, #1e293b);
   }
 
   .drawer-body {
     flex: 1;
     padding: var(--ae-drawer-body-padding, 1.5rem);
     overflow-y: auto;
+    color: var(--ae-drawer-body-color, #334155);
   }
 
   ::slotted([slot="footer"]) {
     padding: var(--ae-drawer-footer-padding, 1rem 1.5rem);
-    border-top: var(--ae-drawer-footer-border);
+    border-top: var(--ae-drawer-footer-border, 1px solid #e2e8f0);
     display: flex;
     gap: 0.5rem;
     justify-content: flex-end;
