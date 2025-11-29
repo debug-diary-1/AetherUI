@@ -14,8 +14,8 @@ export const tooltipStyles = css`
   /* Overlay container */
   [part="overlay"] {
     position: fixed;
-    background: var(--ae-tooltip-bg);
-    color: var(--ae-tooltip-fg);
+    background: var(--ae-tooltip-bg, #1e293b);
+    color: var(--ae-tooltip-fg, #ffffff);
     padding: var(--ae-tooltip-padding, 0.375rem 0.5rem);
     border-radius: var(--ae-tooltip-radius, 4px);
     font-size: var(--ae-tooltip-font-size, 0.8125rem);
@@ -23,13 +23,8 @@ export const tooltipStyles = css`
     max-width: 20rem;
     pointer-events: none;
     line-height: 1.4;
-    opacity: 0;
-    transition: opacity 150ms ease-in-out;
-    z-index: var(--ae-tooltip-z-index, 1200);
-  }
-
-  :host([open]) [part="overlay"] {
     opacity: 1;
+    z-index: var(--ae-tooltip-z-index, 1200);
   }
 
   /* Arrow indicator */
@@ -54,13 +49,9 @@ export const tooltipStyles = css`
     }
   }
 
-  /* Animations */
-  :host([animation="fade"]) [part="overlay"] {
-    transition: opacity 150ms ease-in-out;
-  }
-
+  /* Animations - using visibility from inline styles */
   :host([animation="scale"]) [part="overlay"] {
-    transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+    transition: transform 150ms ease-in-out;
     transform: scale(0.95);
   }
 

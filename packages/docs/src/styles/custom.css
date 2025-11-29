@@ -316,7 +316,30 @@ code {
   color: inherit;
 }
 
-/* Tabs in code examples */
+/* Tabs in code examples - Light mode */
+[role="tablist"] {
+  background-color: var(--sl-color-bg-offset);
+  border-color: var(--sl-color-border);
+}
+
+[role="tab"] {
+  color: #475569 !important;
+  font-weight: 500;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+[role="tab"]:hover {
+  color: #0f172a !important;
+  background-color: #e2e8f0;
+}
+
+[role="tab"][aria-selected="true"] {
+  color: #2563eb !important;
+  background-color: var(--sl-color-bg);
+  font-weight: 600;
+}
+
+/* Tabs in code examples - Dark mode */
 :root[data-theme='dark'] [role="tablist"] {
   background-color: #1e293b !important;
   border-color: #334155 !important;
@@ -324,6 +347,11 @@ code {
 
 :root[data-theme='dark'] [role="tab"] {
   color: #94a3b8 !important;
+}
+
+:root[data-theme='dark'] [role="tab"]:hover {
+  color: #e2e8f0 !important;
+  background-color: #334155;
 }
 
 :root[data-theme='dark'] [role="tab"][aria-selected="true"] {
