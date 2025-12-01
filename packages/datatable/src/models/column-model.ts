@@ -6,13 +6,16 @@ import { TemplateResult } from 'lit';
 export interface ColumnDef<T> {
   /** Unique column identifier */
   id: string;
-  
+
   /** Data field name to display (key of T) */
   field?: keyof T;
-  
+
+  /** String key to access data (alternative to accessor function) */
+  accessorKey?: string;
+
   /** Column header content (string or template) */
   header: string | TemplateResult;
-  
+
   /** Function to extract cell value */
   accessor?: (item: T) => any;
   
@@ -57,7 +60,12 @@ export interface ColumnDef<T> {
   
   /** Pin column to left or right */
   frozen?: boolean;
-  
+
   /** Simple text formatter */
   format?: (value: any) => string;
 }
+
+/**
+ * Alias for ColumnDef used in data operations
+ */
+export type DataColumn<T> = ColumnDef<T>;
