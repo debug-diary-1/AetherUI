@@ -7,8 +7,8 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests/e2e',
 
-  /* Skip visual regression tests in CI (baselines are platform-specific) */
-  testIgnore: process.env.CI ? ['**/*.visual.spec.ts'] : [],
+  /* Store snapshots per platform (linux/darwin/win32) to handle rendering differences */
+  snapshotPathTemplate: '{testDir}/{testFileDir}/__snapshots__/{testFilePath}/{arg}-{projectName}-{platform}{ext}',
 
   /* Run tests in files in parallel */
   fullyParallel: true,
