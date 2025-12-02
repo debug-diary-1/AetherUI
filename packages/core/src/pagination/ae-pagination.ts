@@ -192,7 +192,7 @@ export class AePagination extends LitElement {
                     <button
                       part="button"
                       class="pagination-button ${page === this.currentPage ? 'active' : ''}"
-                      ?aria-current="${page === this.currentPage}"
+                      aria-current="${page === this.currentPage ? 'page' : 'false'}"
                       @click="${() => this.handlePageChange(page)}"
                       aria-label="Page ${page}"
                     >

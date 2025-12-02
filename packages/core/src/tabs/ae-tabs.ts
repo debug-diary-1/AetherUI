@@ -63,6 +63,12 @@ export class AeTabs extends LitElement {
   @property({ type: String })
   accessor activation: 'auto' | 'manual' = 'auto';
 
+  /**
+   * Accessible label for the tablist
+   */
+  @property({ type: String })
+  accessor label: string = '';
+
   @query('slot[name="tab"]')
   private tabSlot!: HTMLSlotElement;
 
@@ -165,7 +171,8 @@ export class AeTabs extends LitElement {
     this.tabs.forEach(tab => {
       const isSelected = tab.id === this.value;
       tab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
-      tab.tabIndex = isSelected ? 0 : -1;
+      // Use data-tabindex attribute to set internal tab index (avoids nested interactive elements)
+      tab.setAttribute('data-tabindex', isSelected ? '0' : '-1');
     });
     
     // Show/hide panels
@@ -229,7 +236,12 @@ export class AeTabs extends LitElement {
 
   render() {
     return html`
-      <div class="tablist" role="tablist" aria-orientation="${this.orientation}">
+      <div
+        class="tablist"
+        role="tablist"
+        aria-orientation="${this.orientation}"
+        aria-label="${this.label || 'Tabs'}"
+      >
         <slot name="tab"></slot>
       </div>
       <div class="panels">

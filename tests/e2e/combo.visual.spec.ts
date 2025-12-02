@@ -1,36 +1,44 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, FrameLocator } from '@playwright/test';
+
+// Helper to get Storybook preview iframe
+function getStorybookFrame(page: import('@playwright/test').Page): FrameLocator {
+  return page.frameLocator('#storybook-preview-iframe');
+}
 
 test.describe('Combo Component - Visual Regression', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/?path=/story/components-combo--basic');
-    // Wait for Storybook to load
-    await page.waitForSelector('ae-combo', { timeout: 10000 });
+    const frame = getStorybookFrame(page);
+    await frame.locator('ae-combo').waitFor({ state: 'visible', timeout: 30000 });
   });
 
   test('renders default state correctly', async ({ page }) => {
-    const combo = page.locator('ae-combo');
+    const frame = getStorybookFrame(page);
+    const combo = frame.locator('ae-combo');
     await expect(combo).toBeVisible();
     await expect(page).toHaveScreenshot('combo-default.png');
   });
 
   test('renders dropdown with filtered items', async ({ page }) => {
-    const input = page.getByRole('combobox');
+    const frame = getStorybookFrame(page);
+    const input = frame.getByRole('combobox');
     await input.fill('app');
     await page.waitForTimeout(300); // Wait for dropdown animation
 
     // Verify dropdown is visible
-    const listbox = page.locator('[role="listbox"]');
+    const listbox = frame.locator('[role="listbox"]');
     await expect(listbox).toBeVisible();
 
     await expect(page).toHaveScreenshot('combo-filtered.png');
   });
 
   test('highlights matched text correctly', async ({ page }) => {
-    const input = page.getByRole('combobox');
+    const frame = getStorybookFrame(page);
+    const input = frame.getByRole('combobox');
     await input.fill('app');
 
     // Verify highlight element exists and is NOT escaped HTML
-    const option = page.getByRole('option', { name: /Apple/i });
+    const option = frame.getByRole('option', { name: /Apple/i });
     await expect(option).toBeVisible();
 
     // Critical test: Ensure highlight is rendered as HTML, not text
@@ -48,21 +56,23 @@ test.describe('Combo Component - Visual Regression', () => {
   });
 
   test('renders with open dropdown', async ({ page }) => {
-    const input = page.getByRole('combobox');
+    const frame = getStorybookFrame(page);
+    const input = frame.getByRole('combobox');
     await input.click();
     await page.waitForTimeout(200);
 
-    const listbox = page.locator('[role="listbox"]');
+    const listbox = frame.locator('[role="listbox"]');
     await expect(listbox).toBeVisible();
 
     await expect(page).toHaveScreenshot('combo-open.png');
   });
 
   test('renders selected state', async ({ page }) => {
-    const input = page.getByRole('combobox');
+    const frame = getStorybookFrame(page);
+    const input = frame.getByRole('combobox');
     await input.fill('ban');
 
-    const option = page.getByRole('option', { name: /Banana/i });
+    const option = frame.getByRole('option', { name: /Banana/i });
     await option.click();
     await page.waitForTimeout(200);
 
