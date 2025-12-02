@@ -37,7 +37,7 @@ export class AeSpinner extends LitElement {
 
   render() {
     return html`
-      <div part="base" class="spinner-base" role="status">
+      <div part="base" class="spinner-base" role="status" aria-live="polite">
         <svg
           part="spinner"
           class="spinner-svg"

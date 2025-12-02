@@ -165,7 +165,8 @@ export class AeTabs extends LitElement {
     this.tabs.forEach(tab => {
       const isSelected = tab.id === this.value;
       tab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
-      tab.tabIndex = isSelected ? 0 : -1;
+      // Use data-tabindex attribute to set internal tab index (avoids nested interactive elements)
+      tab.setAttribute('data-tabindex', isSelected ? '0' : '-1');
     });
     
     // Show/hide panels
