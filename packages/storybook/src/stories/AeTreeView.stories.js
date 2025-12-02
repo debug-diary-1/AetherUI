@@ -134,6 +134,7 @@ export const Basic = {
   render: () => {
     return html`
       <ae-treeview
+        label="File system"
         .data=${fileSystemData}
         @ae-treeview-select=${action('ae-treeview-select')}
         @ae-treeview-expand=${action('ae-treeview-expand')}
@@ -175,6 +176,7 @@ export const WithIcons = {
         }
       </style>
       <ae-treeview
+        label="File browser"
         .data=${fileSystemData}
         .expanded=${['src', 'components']}
         @ae-treeview-select=${action('ae-treeview-select')}
@@ -196,6 +198,7 @@ export const MultiSelect = {
         }
       </style>
       <ae-treeview
+        label="File selection"
         .data=${fileSystemData}
         .expanded=${['src']}
         selectionMode="multiple"
@@ -222,6 +225,7 @@ export const Menu = {
         }
       </style>
       <ae-treeview
+        label="Application menu"
         .data=${menuData}
         @ae-treeview-select=${action('ae-treeview-select')}
         @ae-treeview-expand=${action('ae-treeview-expand')}
@@ -250,6 +254,7 @@ export const CustomTheme = {
         }
       </style>
       <ae-treeview
+        label="File system"
         .data=${fileSystemData}
         .expanded=${['src']}
         @ae-treeview-select=${action('ae-treeview-select')}
@@ -275,9 +280,9 @@ export const EmptyAndLoading = {
         }
       </style>
       <div class="container">
-        <ae-treeview .data=${[]} emptyMessage="No files found"></ae-treeview>
+        <ae-treeview label="Empty tree" .data=${[]} emptyMessage="No files found"></ae-treeview>
 
-        <ae-treeview .data=${[]} loading></ae-treeview>
+        <ae-treeview label="Loading tree" .data=${[]} loading></ae-treeview>
       </div>
     `;
   },
@@ -316,6 +321,7 @@ export const LargeDataSet = {
         }
       </style>
       <ae-treeview
+        label="Large data set"
         .data=${generateLargeData(100)}
         @ae-treeview-select=${action('ae-treeview-select')}
         @ae-treeview-expand=${action('ae-treeview-expand')}
