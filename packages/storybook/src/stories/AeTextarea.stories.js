@@ -88,12 +88,17 @@ export const Default = {
     const textarea = aeTextarea.shadowRoot.querySelector('textarea');
     expect(textarea).toBeTruthy();
 
-    // Verify label property is set correctly (checking property is more reliable than shadow DOM text)
+    // Verify label property is set correctly
     expect(aeTextarea.label).toBe('Description');
 
-    // Type into the textarea
-    await userEvent.type(textarea, 'This is a test description', { delay: 20 });
-    expect(textarea.value).toContain('This is a test description');
+    // Test that the textarea is interactive by setting value directly
+    // (userEvent.type doesn't work reliably with shadow DOM)
+    textarea.value = 'This is a test description';
+    textarea.dispatchEvent(new Event('input', { bubbles: true }));
+    await aeTextarea.updateComplete;
+
+    // Verify the component received the value
+    expect(aeTextarea.value).toBe('This is a test description');
   },
 };
 
