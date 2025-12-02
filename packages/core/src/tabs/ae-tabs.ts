@@ -63,6 +63,12 @@ export class AeTabs extends LitElement {
   @property({ type: String })
   accessor activation: 'auto' | 'manual' = 'auto';
 
+  /**
+   * Accessible label for the tablist
+   */
+  @property({ type: String })
+  accessor label: string = '';
+
   @query('slot[name="tab"]')
   private tabSlot!: HTMLSlotElement;
 
@@ -230,7 +236,12 @@ export class AeTabs extends LitElement {
 
   render() {
     return html`
-      <div class="tablist" role="tablist" aria-orientation="${this.orientation}">
+      <div
+        class="tablist"
+        role="tablist"
+        aria-orientation="${this.orientation}"
+        aria-label="${this.label || 'Tabs'}"
+      >
         <slot name="tab"></slot>
       </div>
       <div class="panels">
