@@ -83,18 +83,21 @@ export const Default = {
     const aeTextarea = canvasElement.querySelector('ae-textarea');
     expect(aeTextarea).toBeInTheDocument();
 
+    // Wait for component to render
+    await aeTextarea.updateComplete;
+
     // Get the textarea element from shadow DOM
     const textarea = aeTextarea.shadowRoot.querySelector('textarea');
     expect(textarea).toBeTruthy();
 
-    // Type into the textarea
-    await userEvent.type(textarea, 'This is a test description', { delay: 20 });
-    expect(textarea.value).toContain('This is a test description');
-
-    // Verify label is present
+    // Verify label is present (check before typing to ensure it renders)
     const label = aeTextarea.shadowRoot.querySelector('label');
     expect(label).toBeTruthy();
     expect(label.textContent).toContain('Description');
+
+    // Type into the textarea
+    await userEvent.type(textarea, 'This is a test description', { delay: 20 });
+    expect(textarea.value).toContain('This is a test description');
   },
 };
 

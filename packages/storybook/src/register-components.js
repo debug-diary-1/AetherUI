@@ -22,8 +22,11 @@ import('@aetherui/core').then(module => {
 setTimeout(() => {
   const components = [
     'ae-autocomplete', 'ae-alert', 'ae-combo', 'ae-tabs', 'ae-treeview',
-    'ae-accordion', 'ae-button', 'ae-checkbox', 'ae-dropdown', 'ae-modal', 
-    'ae-radio', 'ae-radio-group', 'ae-tooltip', 'ae-toast'
+    'ae-accordion', 'ae-button', 'ae-checkbox', 'ae-dropdown', 'ae-modal',
+    'ae-radio', 'ae-radio-group', 'ae-tooltip', 'ae-toast', 'ae-input',
+    'ae-select', 'ae-textarea', 'ae-badge', 'ae-spinner', 'ae-switch',
+    'ae-progress', 'ae-breadcrumb', 'ae-pagination', 'ae-drawer', 'ae-popover',
+    'ae-menu', 'ae-tab', 'ae-tab-panel'
   ];
   
   const registeredComponents = components.filter(tag => customElements.get(tag));
