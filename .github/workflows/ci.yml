@@ -119,6 +119,11 @@ jobs:
         run: pnpm test:storybook:ci
         timeout-minutes: 10
 
+      - name: Serve Storybook for E2E tests
+        run: |
+          npx serve storybook-static -l 6006 &
+          npx wait-on http://localhost:6006 --timeout 60000
+
       - name: Run E2E Visual Tests
         run: pnpm test:e2e --update-snapshots
         env:
