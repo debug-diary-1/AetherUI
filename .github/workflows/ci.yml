@@ -119,6 +119,8 @@ jobs:
         run: pnpm test:storybook:ci
         timeout-minutes: 10
 
-      # Note: Visual regression tests are skipped in CI (see playwright.config.ts)
-      # They run locally where baselines are generated per-platform
-      # To enable in CI: remove testIgnore in playwright.config.ts and set up Linux baselines
+      - name: Run Chromatic Visual Tests
+        if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+        run: pnpm chromatic
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
