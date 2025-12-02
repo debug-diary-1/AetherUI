@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-// Skip visual regression tests until baseline screenshots are generated
-// Run `pnpm test:e2e:update-snapshots` locally to generate baselines
-test.describe.skip('Combo Component - Visual Regression', () => {
+test.describe('Combo Component - Visual Regression', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/?path=/story/components-combo--basic');
     // Wait for Storybook to load
