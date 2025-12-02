@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 
 /**
  * @element ae-tab
@@ -95,10 +95,20 @@ export class AeTab extends LitElement {
   accessor ariaControls: string = '';
 
   /**
-   * Tab index for keyboard navigation
+   * Tab index for keyboard navigation (internal property, uses data attribute to avoid nested interactive elements)
    */
-  @property({ type: Number, reflect: true })
-  accessor tabIndex: number = -1;
+  @property({ type: Number, attribute: 'data-tabindex' })
+  accessor internalTabIndex: number = -1;
+
+  @query('button')
+  private buttonEl!: HTMLButtonElement;
+
+  /**
+   * Focus the tab button
+   */
+  override focus(options?: FocusOptions) {
+    this.buttonEl?.focus(options);
+  }
 
   render() {
     return html`
@@ -107,7 +117,7 @@ export class AeTab extends LitElement {
         part="tab"
         aria-selected="${this.ariaSelected}"
         aria-controls="${this.ariaControls}"
-        tabindex="${this.tabIndex}"
+        tabindex="${this.internalTabIndex}"
       >
         <slot></slot>
       </button>

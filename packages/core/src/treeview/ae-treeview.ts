@@ -21,6 +21,7 @@ import { treeviewStyles } from './styles';
  * @property {number} indentSize - Pixels to indent each depth level
  * @property {boolean} loading - Shows a loading state when true
  * @property {string} emptyMessage - Message to display when there are no items
+ * @property {string} label - Accessible label for the tree (defaults to "Tree")
  *
  * @fires {CustomEvent<{selected: string[]}>} ae-treeview-select - Fired when selection changes
  * @fires {CustomEvent<{expanded: string[]}>} ae-treeview-expand - Fired when expansion state changes
@@ -118,6 +119,9 @@ export class AeTreeView extends LitElement {
 
   @property({ type: String, attribute: 'empty-message' })
   accessor emptyMessage = 'No items';
+
+  @property({ type: String })
+  accessor label = '';
 
   @query('slot:not([name])')
   private defaultSlot!: HTMLSlotElement;
@@ -219,6 +223,7 @@ export class AeTreeView extends LitElement {
         <div
           role="tree"
           tabindex="0"
+          aria-label="${this.label || 'Tree'}"
           aria-multiselectable="${this.selectionMode === 'multiple'}"
           class="tree-slot-mode"
         >
@@ -230,7 +235,7 @@ export class AeTreeView extends LitElement {
     // Data-driven mode: render from data property
     if (!this.data.length) {
       return html`
-        <div role="tree" class="tree-data-mode">
+        <div role="tree" aria-label="${this.label || 'Tree'}" class="tree-data-mode">
           <slot @slotchange="${this.handleSlotChange}"></slot>
           ${renderEmptyState(this.emptyMessage)}
         </div>
@@ -241,6 +246,7 @@ export class AeTreeView extends LitElement {
       <div
         role="tree"
         tabindex="0"
+        aria-label="${this.label || 'Tree'}"
         aria-multiselectable="${this.selectionMode === 'multiple'}"
         style="--ae-treeview-indent: ${this.indentSize}px;"
         class="tree-data-mode"

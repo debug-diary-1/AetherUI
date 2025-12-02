@@ -134,6 +134,7 @@ export const Basic = {
   render: () => {
     return html`
       <ae-treeview
+        label="File system"
         .data=${fileSystemData}
         @ae-treeview-select=${action('ae-treeview-select')}
         @ae-treeview-expand=${action('ae-treeview-expand')}
@@ -141,8 +142,6 @@ export const Basic = {
     `;
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     // Get the treeview element
     const aeTreeView = canvasElement.querySelector('ae-treeview');
     expect(aeTreeView).toBeInTheDocument();
@@ -150,16 +149,20 @@ export const Basic = {
     // Wait for tree to render
     await aeTreeView.updateComplete;
 
-    // Find expand buttons in shadow DOM
-    const expandButtons = aeTreeView.shadowRoot.querySelectorAll('button[aria-label*="Expand"]');
-    expect(expandButtons.length).toBeGreaterThan(0);
+    // Find tree nodes in shadow DOM (data-driven mode uses spans for carets)
+    const treeNodes = aeTreeView.shadowRoot.querySelectorAll('.tree-node');
+    expect(treeNodes.length).toBeGreaterThan(0);
 
-    // Click first expand button to expand a node
-    await userEvent.click(expandButtons[0]);
+    // Find nodes with carets (expandable nodes)
+    const carets = aeTreeView.shadowRoot.querySelectorAll('.tree-caret');
+    expect(carets.length).toBeGreaterThan(0);
 
-    // Verify expansion occurred
-    const collapseButtons = aeTreeView.shadowRoot.querySelectorAll('button[aria-label*="Collapse"]');
-    expect(collapseButtons.length).toBeGreaterThan(0);
+    // Click first caret to expand a node
+    await userEvent.click(carets[0]);
+    await aeTreeView.updateComplete;
+
+    // Verify expansion occurred by checking expanded property or children visibility
+    expect(aeTreeView.expanded.length).toBeGreaterThan(0);
   },
 };
 
@@ -175,6 +178,7 @@ export const WithIcons = {
         }
       </style>
       <ae-treeview
+        label="File browser"
         .data=${fileSystemData}
         .expanded=${['src', 'components']}
         @ae-treeview-select=${action('ae-treeview-select')}
@@ -196,6 +200,7 @@ export const MultiSelect = {
         }
       </style>
       <ae-treeview
+        label="File selection"
         .data=${fileSystemData}
         .expanded=${['src']}
         selectionMode="multiple"
@@ -222,6 +227,7 @@ export const Menu = {
         }
       </style>
       <ae-treeview
+        label="Application menu"
         .data=${menuData}
         @ae-treeview-select=${action('ae-treeview-select')}
         @ae-treeview-expand=${action('ae-treeview-expand')}
@@ -250,6 +256,7 @@ export const CustomTheme = {
         }
       </style>
       <ae-treeview
+        label="File system"
         .data=${fileSystemData}
         .expanded=${['src']}
         @ae-treeview-select=${action('ae-treeview-select')}
@@ -275,9 +282,9 @@ export const EmptyAndLoading = {
         }
       </style>
       <div class="container">
-        <ae-treeview .data=${[]} emptyMessage="No files found"></ae-treeview>
+        <ae-treeview label="Empty tree" .data=${[]} emptyMessage="No files found"></ae-treeview>
 
-        <ae-treeview .data=${[]} loading></ae-treeview>
+        <ae-treeview label="Loading tree" .data=${[]} loading></ae-treeview>
       </div>
     `;
   },
@@ -316,6 +323,7 @@ export const LargeDataSet = {
         }
       </style>
       <ae-treeview
+        label="Large data set"
         .data=${generateLargeData(100)}
         @ae-treeview-select=${action('ae-treeview-select')}
         @ae-treeview-expand=${action('ae-treeview-expand')}

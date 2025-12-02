@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { expect, within, userEvent, waitFor } from '@storybook/test';
 // Import from the wrapper to avoid dynamic imports
 import { showToast, createToastHelpers } from '../toast-wrapper';
 
@@ -51,7 +52,7 @@ export const Basic = (args) => {
   };
 
   return html`
-    <button @click=${showBasicToast}>Show Toast</button>
+    <button type="button" @click=${showBasicToast}>Show Toast</button>
   `;
 };
 
@@ -288,7 +289,7 @@ export const HtmlHelper = () => {
     const toastHelpers = createToastHelpers();
     toastHelpers.html(`
       <div style="display: flex; align-items: center; gap: 0.75rem;">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" aria-hidden="true">
           <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" />
           <path d="M16 10L10.5 15.5L8 13" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -305,7 +306,7 @@ export const HtmlHelper = () => {
   };
 
   return html`
-    <button @click=${showHtmlToast}>
+    <button type="button" @click=${showHtmlToast}>
       Show Toast with HTML Helper
     </button>
   `;
@@ -320,7 +321,7 @@ export const PauseOnHover = () => {
         flex-direction: column;
         gap: 1rem;
       }
-      
+
       button {
         padding: 0.5rem 1rem;
         cursor: pointer;
@@ -328,7 +329,7 @@ export const PauseOnHover = () => {
         border: 1px solid #ddd;
         background: white;
       }
-      
+
       .info {
         margin-bottom: 1rem;
         padding: 1rem;
@@ -339,19 +340,19 @@ export const PauseOnHover = () => {
     </style>
 
     <div class="container">
-      <div class="info">
+      <p class="info">
         Hover over the toast to pause the countdown. Move your mouse away to resume.
-      </div>
-      
-      <button @click=${() => showToast({
+      </p>
+
+      <button type="button" @click=${() => showToast({
         message: 'Hover me to pause the countdown (5s)',
         duration: 5000,
         pauseOnHover: true
       })}>
         Toast with Pause on Hover
       </button>
-      
-      <button @click=${() => showToast({
+
+      <button type="button" @click=${() => showToast({
         message: 'Hover has no effect on this toast (5s)',
         duration: 5000,
         pauseOnHover: false
