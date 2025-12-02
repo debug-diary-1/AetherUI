@@ -186,9 +186,11 @@ describe('ae-tabs', () => {
       const firstTab = tabs[0] as AeTab;
       const secondTab = tabs[1] as AeTab;
 
-      // Only selected tab should be tabbable
-      expect(firstTab.tabIndex).to.equal(0);
-      expect(secondTab.tabIndex).to.equal(-1);
+      // Only selected tab should be tabbable (check inner button's tabindex)
+      const firstButton = firstTab.shadowRoot?.querySelector('button');
+      const secondButton = secondTab.shadowRoot?.querySelector('button');
+      expect(firstButton?.getAttribute('tabindex')).to.equal('0');
+      expect(secondButton?.getAttribute('tabindex')).to.equal('-1');
     });
   });
 
