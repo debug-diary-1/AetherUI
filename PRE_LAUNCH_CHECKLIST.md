@@ -11,8 +11,8 @@ Use this checklist to ensure your repository is ready for public open source rel
 - [x] CHANGELOG.md with version history
 - [x] README.md with badges, examples, and clear installation instructions
 - [x] STANDARDS.md with development standards
-- [ ] **TODO: Update SECURITY.md with your contact email** (search for `[INSERT YOUR EMAIL HERE]`)
-- [ ] **TODO: Update CODE_OF_CONDUCT.md with enforcement contact** (search for `[INSERT CONTACT EMAIL]`)
+- [x] **DONE: Updated SECURITY.md with contact email** (security@pallavl01.dev)
+- [x] **DONE: Updated CODE_OF_CONDUCT.md with enforcement contact** (aetherui-conduct@pallavl01.dev)
 
 ## ✅ Repository Configuration
 

@@ -21,7 +21,7 @@ export default create({
   
   // Brand
   brandTitle: 'AetherUI Components',
-  brandUrl: 'https://github.com/yourusername/aetherui',
+  brandUrl: 'https://github.com/pallavL01/AetherUI',
   brandTarget: '_blank',
   brandImage: null,
   
