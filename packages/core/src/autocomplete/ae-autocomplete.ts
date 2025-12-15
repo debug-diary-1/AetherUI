@@ -16,6 +16,7 @@ import { autocompleteStyles } from './styles';
  * @property {string} value - Current input value
  * @property {string} placeholder - Placeholder text for the input
  * @property {boolean} disabled - Whether the input is disabled
+ * @property {string} ariaLabel - Accessible label for the input (falls back to placeholder)
  * @property {number} minChars - Minimum characters before showing suggestions
  * @property {number} maxItems - Maximum number of items to show in dropdown
  * @property {AutocompleteFilterFunction} filterFn - Custom filter function
@@ -79,6 +80,12 @@ export class AeAutocomplete extends LitElement {
    */
   @property({ type: Boolean, reflect: true })
   disabled: boolean = false;
+
+  /**
+   * Accessible label for the input (required for accessibility)
+   */
+  @property({ type: String, attribute: 'aria-label' })
+  ariaLabel: string = '';
 
   /**
    * Minimum characters before showing suggestions
@@ -507,6 +514,7 @@ export class AeAutocomplete extends LitElement {
           role="combobox"
           aria-autocomplete="list"
           aria-expanded=${this._controller.isOpen ? 'true' : 'false'}
+          aria-label=${this.ariaLabel || this.placeholder || 'Autocomplete'}
           autocomplete="off"
         />
         

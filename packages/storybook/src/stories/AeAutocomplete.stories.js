@@ -9,6 +9,7 @@ export default {
   argTypes: {
     value: { control: 'text', description: 'Current input value' },
     placeholder: { control: 'text', description: 'Placeholder text for the input' },
+    ariaLabel: { control: 'text', description: 'Accessible label for the input (required for accessibility)' },
     disabled: { control: 'boolean', description: 'Whether the input is disabled' },
     'min-chars': { 
       control: 'number', 
@@ -55,6 +56,7 @@ const Template = (args) => html`
   <ae-autocomplete
     value="${ifDefined(args.value)}"
     placeholder="${ifDefined(args.placeholder)}"
+    aria-label="${ifDefined(args.ariaLabel)}"
     ?disabled="${args.disabled}"
     min-chars="${ifDefined(args['min-chars'])}"
     max-items="${ifDefined(args['max-items'])}"
@@ -67,6 +69,7 @@ const Template = (args) => html`
 export const Basic = Template.bind({});
 Basic.args = {
   placeholder: 'Search countries...',
+  ariaLabel: 'Search countries',
   options: [
     'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
     'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria',
@@ -110,6 +113,7 @@ Basic.play = async ({ canvasElement }) => {
 export const WithMinChars = Template.bind({});
 WithMinChars.args = {
   placeholder: 'Type at least 2 characters...',
+  ariaLabel: 'Search countries',
   'min-chars': 2,
   options: [
     'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
@@ -120,6 +124,7 @@ WithMinChars.args = {
 export const WithObjectOptions = Template.bind({});
 WithObjectOptions.args = {
   placeholder: 'Search countries...',
+  ariaLabel: 'Search countries',
   options: [
     { id: 'af', text: 'Afghanistan' },
     { id: 'al', text: 'Albania' },
@@ -133,6 +138,7 @@ WithObjectOptions.args = {
 export const WithGroups = Template.bind({});
 WithGroups.args = {
   placeholder: 'Search countries...',
+  ariaLabel: 'Search countries by region',
   options: [
     { id: 'us', text: 'United States', group: 'North America' },
     { id: 'ca', text: 'Canada', group: 'North America' },
@@ -149,9 +155,10 @@ WithGroups.args = {
 export const WithDefaultValue = Template.bind({});
 WithDefaultValue.args = {
   placeholder: 'Search countries...',
+  ariaLabel: 'Search countries',
   value: 'Canada',
   options: [
-    'United States', 'Canada', 'Mexico', 'Brazil', 'Argentina', 
+    'United States', 'Canada', 'Mexico', 'Brazil', 'Argentina',
     'United Kingdom', 'Germany', 'France', 'Spain', 'Italy'
   ]
 };
@@ -159,6 +166,7 @@ WithDefaultValue.args = {
 export const Disabled = Template.bind({});
 Disabled.args = {
   placeholder: 'Search countries...',
+  ariaLabel: 'Search countries',
   value: 'Canada',
   options: [
     'United States', 'Canada', 'Mexico', 'Brazil', 'Argentina'

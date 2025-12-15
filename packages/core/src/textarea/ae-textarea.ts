@@ -25,6 +25,7 @@ import { textareaStyles } from './styles';
  * @property {boolean} resize - Whether the textarea can be manually resized (none, vertical, horizontal, both)
  * @property {boolean} autoResize - Whether to automatically resize based on content
  * @property {boolean} showCount - Whether to show character count
+ * @property {string} ariaLabel - Accessible label for the textarea (used when no visible label)
  *
  * @fires {CustomEvent<{value: string}>} ae-textarea-change - Fired when the textarea value changes
  * @fires {CustomEvent<{value: string}>} ae-textarea-input - Fired on input event
@@ -105,6 +106,9 @@ export class AeTextarea extends LitElement {
 
   @property({ type: Boolean, attribute: 'show-count' })
   accessor showCount = false;
+
+  @property({ type: String, attribute: 'aria-label' })
+  accessor ariaLabel = '';
 
   @state()
   private accessor focused = false;
@@ -290,6 +294,7 @@ export class AeTextarea extends LitElement {
             minlength="${ifDefined(this.minlength)}"
             maxlength="${ifDefined(this.maxlength)}"
             rows="${this.rows}"
+            aria-label="${ifDefined(this.label ? undefined : (this.ariaLabel || this.placeholder || undefined))}"
             @input="${this.handleInput}"
             @change="${this.handleChange}"
             @focus="${this.handleFocus}"

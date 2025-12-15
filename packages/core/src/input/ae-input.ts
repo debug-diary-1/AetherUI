@@ -28,6 +28,7 @@ import { inputStyles } from './styles';
  * @property {number} step - Step value for number inputs
  * @property {string} autocomplete - Autocomplete attribute
  * @property {boolean} clearable - Whether to show a clear button
+ * @property {string} ariaLabel - Accessible label for the input (used when no visible label)
  *
  * @fires {CustomEvent<{value: string}>} ae-input-change - Fired when the input value changes
  * @fires {CustomEvent<{value: string}>} ae-input-input - Fired on input event
@@ -129,6 +130,9 @@ export class AeInput extends LitElement {
 
   @property({ type: Boolean, reflect: true })
   accessor clearable = false;
+
+  @property({ type: String, attribute: 'aria-label' })
+  accessor ariaLabel = '';
 
   @state()
   private accessor focused = false;
@@ -330,6 +334,7 @@ export class AeInput extends LitElement {
             max="${ifDefined(this.max)}"
             step="${ifDefined(this.step)}"
             autocomplete="${ifDefined(this.autocomplete)}"
+            aria-label="${ifDefined(this.label ? undefined : (this.ariaLabel || this.placeholder || undefined))}"
             @input="${this.handleInput}"
             @change="${this.handleChange}"
             @focus="${this.handleFocus}"
