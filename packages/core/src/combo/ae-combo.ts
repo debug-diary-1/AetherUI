@@ -18,6 +18,7 @@ import { comboStyles } from './styles';
  * @property {string} placeholder - Placeholder text for the input
  * @property {boolean} disabled - Whether the input is disabled
  * @property {boolean} freeInput - Whether user can enter values not in the list
+ * @property {string} ariaLabel - Accessible label for the input (falls back to placeholder)
  * @property {ComboFilterFunction} filterFn - Custom filter function
  * 
  * @fires {CustomEvent<{value: string, item: ComboItem | null}>} ae-combo-select - Fired when an item is selected
@@ -83,6 +84,12 @@ export class AeCombo extends LitElement {
    */
   @property({ type: Boolean, attribute: 'free-input' })
   freeInput = true;
+
+  /**
+   * Accessible label for the input (required for accessibility)
+   */
+  @property({ type: String, attribute: 'aria-label' })
+  ariaLabel = '';
 
   /**
    * Custom filter function
@@ -292,6 +299,7 @@ export class AeCombo extends LitElement {
           aria-autocomplete="list"
           aria-expanded=${this.isOpen}
           aria-controls="listbox"
+          aria-label=${this.ariaLabel || this.placeholder || 'Combobox'}
           @input=${this.handleInput}
           @focus=${this.handleFocus}
           @keydown=${this.handleKeydown}

@@ -9,14 +9,15 @@ export default {
   argTypes: {
     value: { control: 'text', description: 'Current input value' },
     placeholder: { control: 'text', description: 'Placeholder text for the input' },
+    ariaLabel: { control: 'text', description: 'Accessible label for the input (required for accessibility)' },
     disabled: { control: 'boolean', description: 'Whether the input is disabled' },
-    freeInput: { 
+    freeInput: {
       control: 'boolean',
       description: 'Whether user can enter values not in the list',
       table: { category: 'Behavior' }
     },
-    items: { 
-      control: 'object', 
+    items: {
+      control: 'object',
       description: 'Items to display in the dropdown (string[] or {id, label, disabled?}[])',
       table: { type: { summary: 'Array<string | ComboItem>' } }
     },
@@ -44,6 +45,7 @@ const Template = (args) => html`
   <ae-combo
     value="${ifDefined(args.value)}"
     placeholder="${ifDefined(args.placeholder)}"
+    aria-label="${ifDefined(args.ariaLabel)}"
     ?disabled="${args.disabled}"
     ?free-input="${args.freeInput}"
     .items="${args.items || []}"
@@ -55,6 +57,7 @@ const Template = (args) => html`
 export const Basic = Template.bind({});
 Basic.args = {
   placeholder: 'Select a fruit...',
+  ariaLabel: 'Select a fruit',
   items: ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape']
 };
 Basic.play = async ({ canvasElement }) => {
@@ -96,6 +99,7 @@ Basic.play = async ({ canvasElement }) => {
 export const WithObjectItems = Template.bind({});
 WithObjectItems.args = {
   placeholder: 'Select a fruit...',
+  ariaLabel: 'Select a fruit',
   items: [
     { id: 'apple', label: 'Apple' },
     { id: 'banana', label: 'Banana' },
@@ -108,6 +112,7 @@ WithObjectItems.args = {
 export const WithDefaultValue = Template.bind({});
 WithDefaultValue.args = {
   placeholder: 'Select a fruit...',
+  ariaLabel: 'Select a fruit',
   value: 'Banana',
   items: ['Apple', 'Banana', 'Cherry', 'Date']
 };
@@ -115,6 +120,7 @@ WithDefaultValue.args = {
 export const Disabled = Template.bind({});
 Disabled.args = {
   placeholder: 'Select a fruit...',
+  ariaLabel: 'Select a fruit',
   value: 'Banana',
   items: ['Apple', 'Banana', 'Cherry', 'Date'],
   disabled: true
@@ -123,6 +129,7 @@ Disabled.args = {
 export const NoFreeInput = Template.bind({});
 NoFreeInput.args = {
   placeholder: 'Select a fruit from the list...',
+  ariaLabel: 'Select a fruit from the list',
   items: ['Apple', 'Banana', 'Cherry', 'Date'],
   freeInput: false
 };
