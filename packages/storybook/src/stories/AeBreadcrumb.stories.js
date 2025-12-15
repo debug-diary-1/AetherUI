@@ -9,15 +9,20 @@ export default {
       control: 'text',
       description: 'Separator character',
     },
+    ariaLabel: {
+      control: 'text',
+      description: 'Accessible label for the breadcrumb navigation',
+    },
   },
 };
 
 export const Default = {
   args: {
     separator: '/',
+    ariaLabel: 'Main navigation breadcrumb',
   },
   render: (args) => html`
-    <ae-breadcrumb separator="${args.separator}">
+    <ae-breadcrumb separator="${args.separator}" aria-label="${args.ariaLabel}">
       <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
       <ae-breadcrumb-item href="/products">Products</ae-breadcrumb-item>
       <ae-breadcrumb-item href="/products/electronics">Electronics</ae-breadcrumb-item>
@@ -60,19 +65,19 @@ export const Default = {
 export const CustomSeparator = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 1rem;">
-      <ae-breadcrumb separator=">">
+      <ae-breadcrumb separator=">" aria-label="Documentation breadcrumb">
         <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
         <ae-breadcrumb-item href="/docs">Docs</ae-breadcrumb-item>
         <ae-breadcrumb-item current>Components</ae-breadcrumb-item>
       </ae-breadcrumb>
 
-      <ae-breadcrumb separator="•">
+      <ae-breadcrumb separator="•" aria-label="Blog breadcrumb">
         <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
         <ae-breadcrumb-item href="/blog">Blog</ae-breadcrumb-item>
         <ae-breadcrumb-item current>Article</ae-breadcrumb-item>
       </ae-breadcrumb>
 
-      <ae-breadcrumb separator="→">
+      <ae-breadcrumb separator="→" aria-label="Settings breadcrumb">
         <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
         <ae-breadcrumb-item href="/settings">Settings</ae-breadcrumb-item>
         <ae-breadcrumb-item current>Profile</ae-breadcrumb-item>
@@ -83,7 +88,7 @@ export const CustomSeparator = {
 
 export const WithoutLinks = {
   render: () => html`
-    <ae-breadcrumb>
+    <ae-breadcrumb aria-label="Steps progress breadcrumb">
       <ae-breadcrumb-item>Step 1</ae-breadcrumb-item>
       <ae-breadcrumb-item>Step 2</ae-breadcrumb-item>
       <ae-breadcrumb-item current>Step 3</ae-breadcrumb-item>

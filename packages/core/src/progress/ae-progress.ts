@@ -16,6 +16,7 @@ import { progressStyles } from './styles';
  * @property {string} label - Custom label text (overrides percentage)
  * @property {boolean} striped - Whether to show striped pattern
  * @property {boolean} animated - Whether to animate the stripes
+ * @property {string} ariaLabel - Accessible label for the progress bar
  *
  * @csspart base - The component's base wrapper
  * @csspart track - The progress track/background
@@ -61,6 +62,9 @@ export class AeProgress extends LitElement {
   @property({ type: Boolean, reflect: true })
   accessor animated = false;
 
+  @property({ type: String, attribute: 'aria-label' })
+  accessor ariaLabel = '';
+
   private get percentage(): number {
     if (this.indeterminate) return 100;
     return Math.min(Math.max((this.value / this.max) * 100, 0), 100);
@@ -74,7 +78,7 @@ export class AeProgress extends LitElement {
 
   render() {
     return html`
-      <div part="base" class="progress-base ${this.indeterminate ? 'indeterminate' : ''}" role="progressbar" aria-valuenow="${this.value}" aria-valuemin="0" aria-valuemax="${this.max}">
+      <div part="base" class="progress-base ${this.indeterminate ? 'indeterminate' : ''}" role="progressbar" aria-valuenow="${this.indeterminate ? undefined : this.value}" aria-valuemin="0" aria-valuemax="${this.max}" aria-label="${this.ariaLabel || 'Progress'}">
         <div part="track" class="progress-track">
           <div
             part="bar"

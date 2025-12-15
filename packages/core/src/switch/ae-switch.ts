@@ -15,6 +15,7 @@ import { switchStyles } from './styles';
  * @property {string} name - The name attribute for form submission
  * @property {string} value - The value attribute for form submission
  * @property {string} size - The size of the switch (sm, md, lg)
+ * @property {string} ariaLabel - Accessible label for the switch (used when no visible label)
  *
  * @fires {CustomEvent<{checked: boolean}>} ae-switch-change - Fired when the switch state changes
  *
@@ -59,6 +60,9 @@ export class AeSwitch extends LitElement {
   @property({ type: String, reflect: true })
   accessor size: 'sm' | 'md' | 'lg' = 'md';
 
+  @property({ type: String, attribute: 'aria-label' })
+  accessor ariaLabel = '';
+
   @state()
   private accessor pristine = true;
 
@@ -85,6 +89,9 @@ export class AeSwitch extends LitElement {
     // Set ARIA role
     this._internals.role = 'switch';
     this._internals.ariaChecked = String(this.checked);
+    if (this.ariaLabel) {
+      this._internals.ariaLabel = this.ariaLabel;
+    }
   }
 
   updated(changedProperties: Map<string, unknown>) {
@@ -103,6 +110,10 @@ export class AeSwitch extends LitElement {
     if (changedProperties.has('required')) {
       this._internals.ariaRequired = String(this.required);
       this._updateValidity();
+    }
+
+    if (changedProperties.has('ariaLabel') && this.ariaLabel) {
+      this._internals.ariaLabel = this.ariaLabel;
     }
   }
 

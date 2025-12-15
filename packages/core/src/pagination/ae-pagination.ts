@@ -50,6 +50,9 @@ export class AePagination extends LitElement {
   @property({ type: String, reflect: true })
   accessor size: 'sm' | 'md' | 'lg' = 'md';
 
+  @property({ type: String, attribute: 'aria-label' })
+  accessor ariaLabel = 'Pagination';
+
   @state()
   private accessor pages: (number | 'ellipsis')[] = [];
 
@@ -146,7 +149,7 @@ export class AePagination extends LitElement {
     const isLastPage = this.currentPage === this.totalPages;
 
     return html`
-      <nav part="base" class="pagination-base" role="navigation" aria-label="Pagination">
+      <nav part="base" class="pagination-base" role="navigation" aria-label="${this.ariaLabel}">
         <ul part="list" class="pagination-list">
           ${this.showFirstLast ? html`
             <li part="item" class="pagination-item">

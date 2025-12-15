@@ -30,9 +30,12 @@ export class AeBreadcrumb extends LitElement {
   @property({ type: String })
   accessor separator = '/';
 
+  @property({ type: String, attribute: 'aria-label' })
+  accessor ariaLabel = 'Breadcrumb';
+
   render() {
     return html`
-      <nav part="base" class="breadcrumb-base" aria-label="Breadcrumb">
+      <nav part="base" class="breadcrumb-base" aria-label="${this.ariaLabel}">
         <ol part="list" class="breadcrumb-list">
           <slot></slot>
         </ol>

@@ -26,6 +26,10 @@ export default {
       control: 'text',
       description: 'Label text',
     },
+    ariaLabel: {
+      control: 'text',
+      description: 'Accessible label (used when no visible label is provided)',
+    },
   },
 };
 
@@ -43,6 +47,7 @@ export const Default = {
       ?disabled="${args.disabled}"
       ?required="${args.required}"
       size="${args.size}"
+      aria-label="${args.ariaLabel || args.label}"
       @ae-switch-change="${(e) => console.log('Switch toggled:', e.detail)}"
     >
       ${args.label}
@@ -75,9 +80,9 @@ export const Default = {
 export const AllSizes = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 1rem;">
-      <ae-switch size="sm" checked>Small switch</ae-switch>
-      <ae-switch size="md" checked>Medium switch</ae-switch>
-      <ae-switch size="lg" checked>Large switch</ae-switch>
+      <ae-switch size="sm" checked aria-label="Small switch">Small switch</ae-switch>
+      <ae-switch size="md" checked aria-label="Medium switch">Medium switch</ae-switch>
+      <ae-switch size="lg" checked aria-label="Large switch">Large switch</ae-switch>
     </div>
   `,
 };
@@ -93,8 +98,8 @@ export const Checked = {
 export const Disabled = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 1rem;">
-      <ae-switch disabled>Disabled off</ae-switch>
-      <ae-switch disabled checked>Disabled on</ae-switch>
+      <ae-switch disabled aria-label="Disabled off">Disabled off</ae-switch>
+      <ae-switch disabled checked aria-label="Disabled on">Disabled on</ae-switch>
     </div>
   `,
 };
