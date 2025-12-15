@@ -50,8 +50,8 @@ export function renderTreeNode(node: TreeNode, options: TreeNodeRenderOptions): 
           : null
         }
         
-        ${selectionMode !== 'none' 
-          ? html`<span class="tree-checkbox" part="checkbox" role="checkbox" aria-checked="${isSelected}"></span>` 
+        ${selectionMode !== 'none'
+          ? html`<span class="tree-checkbox" part="checkbox" role="checkbox" aria-checked="${isSelected}" aria-label="Select ${node.label}"></span>`
           : null
         }
         
