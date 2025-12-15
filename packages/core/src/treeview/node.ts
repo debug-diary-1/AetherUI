@@ -89,8 +89,8 @@ export function renderEmptyState(message: string): TemplateResult {
  */
 export function renderLoadingState(): TemplateResult {
   return html`
-    <div class="tree-loading" part="loading">
-      <span class="tree-spinner" part="spinner"></span>
+    <div class="tree-loading" part="loading" role="status" aria-live="polite">
+      <span class="tree-spinner" part="spinner" aria-hidden="true"></span>
       Loading...
     </div>
   `;

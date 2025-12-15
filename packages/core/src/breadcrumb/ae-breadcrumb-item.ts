@@ -9,6 +9,7 @@ import { breadcrumbItemStyles } from './item-styles';
  *
  * @property {string} href - The URL to navigate to
  * @property {boolean} current - Whether this is the current/active page
+ * @property {string} ariaLabel - Accessible label for the breadcrumb item link
  *
  * @slot - The breadcrumb item content
  *
@@ -18,9 +19,9 @@ import { breadcrumbItemStyles } from './item-styles';
  *
  * @example
  * ```html
- * <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
- * <ae-breadcrumb-item href="/products">Products</ae-breadcrumb-item>
- * <ae-breadcrumb-item current>Current Page</ae-breadcrumb-item>
+ * <ae-breadcrumb-item href="/" aria-label="Home">Home</ae-breadcrumb-item>
+ * <ae-breadcrumb-item href="/products" aria-label="Products">Products</ae-breadcrumb-item>
+ * <ae-breadcrumb-item current aria-label="Current Page">Current Page</ae-breadcrumb-item>
  * ```
  */
 @customElement('ae-breadcrumb-item')
@@ -32,6 +33,9 @@ export class AeBreadcrumbItem extends LitElement {
 
   @property({ type: Boolean, reflect: true })
   accessor current = false;
+
+  @property({ type: String, attribute: 'aria-label' })
+  accessor ariaLabel = '';
 
   connectedCallback() {
     super.connectedCallback();
@@ -49,11 +53,11 @@ export class AeBreadcrumbItem extends LitElement {
     return html`
       <li part="base" class="breadcrumb-item" aria-current="${this.current ? 'page' : nothing}">
         ${this.href && !this.current ? html`
-          <a part="link" class="breadcrumb-link" href="${this.href}">
+          <a part="link" class="breadcrumb-link" href="${this.href}" aria-label="${this.ariaLabel || nothing}">
             <slot></slot>
           </a>
         ` : html`
-          <span part="link" class="breadcrumb-text">
+          <span part="link" class="breadcrumb-text" aria-label="${this.ariaLabel || nothing}">
             <slot></slot>
           </span>
         `}

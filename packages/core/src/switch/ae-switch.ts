@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { switchStyles } from './styles';
 
@@ -204,16 +204,17 @@ export class AeSwitch extends LitElement {
           part="input"
           type="checkbox"
           class="switch-input"
+          role="switch"
           .checked="${this.checked}"
           ?disabled="${this.disabled}"
           ?required="${this.required}"
           @change="${this.handleChange}"
           @keydown="${this.handleKeyDown}"
           tabindex="${this.disabled ? '-1' : '0'}"
-          aria-hidden="true"
+          aria-label="${this.ariaLabel || nothing}"
         />
 
-        <span part="control" class="switch-control">
+        <span part="control" class="switch-control" aria-hidden="true">
           <span part="thumb" class="switch-thumb"></span>
         </span>
 

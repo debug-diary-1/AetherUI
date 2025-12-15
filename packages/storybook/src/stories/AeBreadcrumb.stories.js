@@ -23,10 +23,10 @@ export const Default = {
   },
   render: (args) => html`
     <ae-breadcrumb separator="${args.separator}" aria-label="${args.ariaLabel}">
-      <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
-      <ae-breadcrumb-item href="/products">Products</ae-breadcrumb-item>
-      <ae-breadcrumb-item href="/products/electronics">Electronics</ae-breadcrumb-item>
-      <ae-breadcrumb-item current>Laptops</ae-breadcrumb-item>
+      <ae-breadcrumb-item href="/" aria-label="Home">Home</ae-breadcrumb-item>
+      <ae-breadcrumb-item href="/products" aria-label="Products">Products</ae-breadcrumb-item>
+      <ae-breadcrumb-item href="/products/electronics" aria-label="Electronics">Electronics</ae-breadcrumb-item>
+      <ae-breadcrumb-item current aria-label="Laptops">Laptops</ae-breadcrumb-item>
     </ae-breadcrumb>
   `,
   play: async ({ canvasElement }) => {
@@ -66,21 +66,21 @@ export const CustomSeparator = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 1rem;">
       <ae-breadcrumb separator=">" aria-label="Documentation breadcrumb">
-        <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
-        <ae-breadcrumb-item href="/docs">Docs</ae-breadcrumb-item>
-        <ae-breadcrumb-item current>Components</ae-breadcrumb-item>
+        <ae-breadcrumb-item href="/" aria-label="Home">Home</ae-breadcrumb-item>
+        <ae-breadcrumb-item href="/docs" aria-label="Docs">Docs</ae-breadcrumb-item>
+        <ae-breadcrumb-item current aria-label="Components">Components</ae-breadcrumb-item>
       </ae-breadcrumb>
 
       <ae-breadcrumb separator="•" aria-label="Blog breadcrumb">
-        <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
-        <ae-breadcrumb-item href="/blog">Blog</ae-breadcrumb-item>
-        <ae-breadcrumb-item current>Article</ae-breadcrumb-item>
+        <ae-breadcrumb-item href="/" aria-label="Home">Home</ae-breadcrumb-item>
+        <ae-breadcrumb-item href="/blog" aria-label="Blog">Blog</ae-breadcrumb-item>
+        <ae-breadcrumb-item current aria-label="Article">Article</ae-breadcrumb-item>
       </ae-breadcrumb>
 
       <ae-breadcrumb separator="→" aria-label="Settings breadcrumb">
-        <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
-        <ae-breadcrumb-item href="/settings">Settings</ae-breadcrumb-item>
-        <ae-breadcrumb-item current>Profile</ae-breadcrumb-item>
+        <ae-breadcrumb-item href="/" aria-label="Home">Home</ae-breadcrumb-item>
+        <ae-breadcrumb-item href="/settings" aria-label="Settings">Settings</ae-breadcrumb-item>
+        <ae-breadcrumb-item current aria-label="Profile">Profile</ae-breadcrumb-item>
       </ae-breadcrumb>
     </div>
   `,
@@ -89,9 +89,9 @@ export const CustomSeparator = {
 export const WithoutLinks = {
   render: () => html`
     <ae-breadcrumb aria-label="Steps progress breadcrumb">
-      <ae-breadcrumb-item>Step 1</ae-breadcrumb-item>
-      <ae-breadcrumb-item>Step 2</ae-breadcrumb-item>
-      <ae-breadcrumb-item current>Step 3</ae-breadcrumb-item>
+      <ae-breadcrumb-item aria-label="Step 1">Step 1</ae-breadcrumb-item>
+      <ae-breadcrumb-item aria-label="Step 2">Step 2</ae-breadcrumb-item>
+      <ae-breadcrumb-item current aria-label="Step 3">Step 3</ae-breadcrumb-item>
     </ae-breadcrumb>
   `,
 };
