@@ -45,6 +45,10 @@ export default {
       control: 'number',
       description: 'Maximum length',
     },
+    ariaLabel: {
+      control: 'text',
+      description: 'Accessible label (used when no visible label is provided)',
+    },
   },
 };
 
@@ -73,6 +77,7 @@ export const Default = {
       ?auto-resize="${args.autoResize}"
       ?show-count="${args.showCount}"
       maxlength="${args.maxlength || undefined}"
+      aria-label="${args.ariaLabel || ''}"
       @ae-textarea-change="${(e) => console.log('Textarea changed:', e.detail)}"
     ></ae-textarea>
   `,

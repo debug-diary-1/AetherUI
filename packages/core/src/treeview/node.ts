@@ -50,8 +50,8 @@ export function renderTreeNode(node: TreeNode, options: TreeNodeRenderOptions): 
           : null
         }
         
-        ${selectionMode !== 'none' 
-          ? html`<span class="tree-checkbox" part="checkbox" role="checkbox" aria-checked="${isSelected}"></span>` 
+        ${selectionMode !== 'none'
+          ? html`<span class="tree-checkbox" part="checkbox" role="checkbox" aria-checked="${isSelected}" aria-label="Select ${node.label}"></span>`
           : null
         }
         
@@ -89,8 +89,8 @@ export function renderEmptyState(message: string): TemplateResult {
  */
 export function renderLoadingState(): TemplateResult {
   return html`
-    <div class="tree-loading" part="loading">
-      <span class="tree-spinner" part="spinner"></span>
+    <div class="tree-loading" part="loading" role="status" aria-live="polite">
+      <span class="tree-spinner" part="spinner" aria-hidden="true"></span>
       Loading...
     </div>
   `;

@@ -214,7 +214,11 @@ export class AeTreeView extends LitElement {
 
   render() {
     if (this.loading) {
-      return renderLoadingState();
+      return html`
+        <div role="tree" aria-label="${this.label || 'Tree'}" aria-busy="true" class="tree-data-mode">
+          ${renderLoadingState()}
+        </div>
+      `;
     }
 
     // Slot-based mode: use slotted ae-tree-item elements

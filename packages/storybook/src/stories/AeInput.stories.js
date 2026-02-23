@@ -46,6 +46,10 @@ export default {
       control: 'text',
       description: 'Help text',
     },
+    ariaLabel: {
+      control: 'text',
+      description: 'Accessible label (used when no visible label is provided)',
+    },
   },
 };
 
@@ -74,6 +78,7 @@ export const Default = {
       ?clearable="${args.clearable}"
       error="${args.error}"
       help-text="${args.helpText}"
+      aria-label="${args.ariaLabel || ''}"
       @ae-input-change="${(e) => console.log('Input changed:', e.detail)}"
     ></ae-input>
   `,

@@ -103,15 +103,15 @@ export const AllSizes = {
     <div style="display: flex; flex-direction: column; gap: 2rem;">
       <div>
         <h4>Small</h4>
-        <ae-pagination current-page="3" total-pages="10" size="sm"></ae-pagination>
+        <ae-pagination current-page="3" total-pages="10" size="sm" aria-label="Small pagination"></ae-pagination>
       </div>
       <div>
         <h4>Medium</h4>
-        <ae-pagination current-page="3" total-pages="10" size="md"></ae-pagination>
+        <ae-pagination current-page="3" total-pages="10" size="md" aria-label="Medium pagination"></ae-pagination>
       </div>
       <div>
         <h4>Large</h4>
-        <ae-pagination current-page="3" total-pages="10" size="lg"></ae-pagination>
+        <ae-pagination current-page="3" total-pages="10" size="lg" aria-label="Large pagination"></ae-pagination>
       </div>
     </div>
   `,

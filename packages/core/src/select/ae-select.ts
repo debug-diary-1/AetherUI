@@ -1,5 +1,6 @@
 import { LitElement, html, PropertyValues } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { selectStyles } from './styles';
 
 /**
@@ -19,6 +20,7 @@ import { selectStyles } from './styles';
  * @property {boolean} multiple - Whether multiple selection is allowed
  * @property {string} error - Error message to display
  * @property {string} helpText - Helper text to display below the select
+ * @property {string} ariaLabel - Accessible label for the select (used when no visible label)
  *
  * @fires {CustomEvent<{value: string | string[]}>} ae-select-change - Fired when the selection changes
  *
@@ -84,6 +86,9 @@ export class AeSelect extends LitElement {
 
   @property({ type: String, attribute: 'help-text' })
   accessor helpText = '';
+
+  @property({ type: String, attribute: 'aria-label' })
+  accessor ariaLabel = '';
 
   @state()
   private accessor focused = false;
@@ -317,6 +322,7 @@ export class AeSelect extends LitElement {
             ?disabled="${this.disabled}"
             ?required="${this.required}"
             ?multiple="${this.multiple}"
+            aria-label="${ifDefined(this.label ? undefined : (this.ariaLabel || this.placeholder || 'Select'))}"
             @change="${this.handleChange}"
             @focus="${this.handleFocus}"
             @blur="${this.handleBlur}"

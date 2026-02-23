@@ -256,7 +256,7 @@ export const CustomTheme = {
         }
       </style>
       <ae-treeview
-        label="File system"
+        label="Dark theme file browser"
         .data=${fileSystemData}
         .expanded=${['src']}
         @ae-treeview-select=${action('ae-treeview-select')}
