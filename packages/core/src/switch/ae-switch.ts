@@ -112,8 +112,8 @@ export class AeSwitch extends LitElement {
       this._updateValidity();
     }
 
-    if (changedProperties.has('ariaLabel') && this.ariaLabel) {
-      this._internals.ariaLabel = this.ariaLabel;
+    if (changedProperties.has('ariaLabel')) {
+      this._internals.ariaLabel = this.ariaLabel || null;
     }
   }
 

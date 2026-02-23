@@ -1,4 +1,5 @@
 import { LitElement, html } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { customElement, property } from 'lit/decorators.js';
 import { progressStyles } from './styles';
 
@@ -78,7 +79,7 @@ export class AeProgress extends LitElement {
 
   render() {
     return html`
-      <div part="base" class="progress-base ${this.indeterminate ? 'indeterminate' : ''}" role="progressbar" aria-valuenow="${this.indeterminate ? undefined : this.value}" aria-valuemin="0" aria-valuemax="${this.max}" aria-label="${this.ariaLabel || 'Progress'}">
+      <div part="base" class="progress-base ${this.indeterminate ? 'indeterminate' : ''}" role="progressbar" aria-valuenow="${ifDefined(this.indeterminate ? undefined : this.value)}" aria-valuemin="0" aria-valuemax="${this.max}" aria-label="${this.ariaLabel || 'Progress'}">
         <div part="track" class="progress-track">
           <div
             part="bar"
