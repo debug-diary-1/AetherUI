@@ -176,12 +176,12 @@
     "build": "vite build",
     "dev": "vite",
     "clean": "rimraf dist",
-    "lint": "eslint src --ext .ts",
+    "lint": "oxlint src",
     "test": "node run-tests.cjs",
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "lit": "^3.3.0"
+    "lit": "^3.3.2"
   },
   "devDependencies": {
     "@open-wc/testing": "^3.2.0",

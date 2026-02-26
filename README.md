@@ -252,8 +252,8 @@ import '@aetherui/tokens/dark.css';
 
 ### Prerequisites
 
-- Node.js >= 20.19.0
-- pnpm 10.18.0
+- Node.js >= 22.0.0
+- pnpm 10.30.2
 
 ### Setup
 

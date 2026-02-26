@@ -1,6 +1,8 @@
 {
   "name": "@aetherui/playground",
+  "private": true,
   "version": "0.1.0",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +12,7 @@
   "dependencies": {
     "@aetherui/core": "workspace:*",
     "@aetherui/tokens": "workspace:*",
-    "lit": "^3.2.1",
+    "lit": "^3.3.2",
     "prismjs": "^1.29.0"
   },
   "devDependencies": {

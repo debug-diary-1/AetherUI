@@ -119,12 +119,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: '10.18.0'
+          version: '10.30.2'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -252,7 +252,7 @@ git push origin feature/new-component
   publish = "packages/storybook/storybook-static"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22"
 ```
 
 **Key settings:**
@@ -316,8 +316,8 @@ pnpm build
 pnpm build-storybook
 
 # If it works locally, check:
-# 1. Node version matches (20.x)
-# 2. pnpm version matches (10.18.0)
+# 1. Node version matches (22.x)
+# 2. pnpm version matches (10.30.2)
 # 3. Environment variables are set
 ```
 

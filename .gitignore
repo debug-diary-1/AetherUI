@@ -47,6 +47,10 @@ tsconfig.tsbuildinfo
 out
 coverage
 
+# Test artifacts
+playwright-report/
+test-results/
+
 # IDE and editor files
 *.swp
 *.swo

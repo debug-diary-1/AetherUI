@@ -4,8 +4,8 @@
   publish = "preview-build"
 
 [build.environment]
-  NODE_VERSION = "20"
-  PNPM_VERSION = "10.18.0"
+  NODE_VERSION = "22"
+  PNPM_VERSION = "10.30.2"
   NODE_OPTIONS = "--max-old-space-size=4096"
 
 [[redirects]]
