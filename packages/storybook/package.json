@@ -30,7 +30,7 @@
     "lit": "^3.3.2",
     "lit-element": "^4.2.0",
     "lit-html": "^3.3.0",
-    "storybook": "^9.0.14",
+    "storybook": "^9.1.19",
     "vite": "^6.3.6"
   },
   "engines": {
