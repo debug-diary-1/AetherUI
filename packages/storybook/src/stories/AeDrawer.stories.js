@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { ref, createRef } from 'lit/directives/ref.js';
-import { expect, within, userEvent, waitFor } from '@storybook/test';
+import { expect, within, userEvent, waitFor } from 'storybook/test';
 
 export default {
   title: 'Components/Drawer',

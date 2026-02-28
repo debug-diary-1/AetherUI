@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { expect, within, userEvent } from '@storybook/test';
+import { expect, within, userEvent } from 'storybook/test';
 
 export default {
   title: 'Components/Tabs',

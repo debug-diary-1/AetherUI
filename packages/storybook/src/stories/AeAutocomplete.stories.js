@@ -1,7 +1,7 @@
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { action } from 'storybook/actions';
-import { expect, within, userEvent, waitFor } from '@storybook/test';
+import { expect, within, userEvent, waitFor } from 'storybook/test';
 
 export default {
   title: 'Components/Autocomplete',

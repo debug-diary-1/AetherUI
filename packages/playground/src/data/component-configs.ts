@@ -1,12 +1,9 @@
-// Component configuration for the playground
-// Defines editable CSS variables for each component
-
 export interface CSSVariable {
   name: string;
   label: string;
   type: 'color' | 'size' | 'number' | 'select';
   default: string;
-  options?: string[]; // For select type
+  options?: string[];
   min?: number;
   max?: number;
   unit?: string;
@@ -16,13 +13,16 @@ export interface ComponentConfig {
   name: string;
   tag: string;
   description: string;
-  category: 'Form' | 'Feedback' | 'Navigation' | 'Layout' | 'Overlay' | 'Data';
+  category: 'Form' | 'Feedback' | 'Navigation' | 'Layout' | 'Overlay';
   cssVariables: CSSVariable[];
   defaultHtml: string;
   variants?: { name: string; html: string }[];
+  properties?: { name: string; type: 'boolean' | 'string' | 'select' | 'number'; default: any; options?: string[] }[];
+  interactive?: boolean;
 }
 
 export const componentConfigs: ComponentConfig[] = [
+  // ─── Form ──────────────────────────────────────────────
   {
     name: 'Button',
     tag: 'ae-button',
@@ -126,6 +126,87 @@ export const componentConfigs: ComponentConfig[] = [
 </ae-radio-group>`,
   },
   {
+    name: 'Select',
+    tag: 'ae-select',
+    description: 'Dropdown select with single or multiple selection',
+    category: 'Form',
+    cssVariables: [
+      { name: '--ae-select-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
+      { name: '--ae-select-color', label: 'Text Color', type: 'color', default: '#f5f5f5' },
+      { name: '--ae-select-border', label: 'Border Color', type: 'color', default: '#333333' },
+      { name: '--ae-select-border-focus', label: 'Focus Border', type: 'color', default: '#5e7ce2' },
+      { name: '--ae-select-label-color', label: 'Label Color', type: 'color', default: '#e5e5e5' },
+      { name: '--ae-select-border-radius', label: 'Border Radius', type: 'size', default: '6', unit: 'px', min: 0, max: 24 },
+      { name: '--ae-select-font-size', label: 'Font Size', type: 'size', default: '16', unit: 'px', min: 12, max: 24 },
+    ],
+    defaultHtml: `<ae-select label="Country" name="country">
+  <option value="">Select a country</option>
+  <option value="us">United States</option>
+  <option value="uk">United Kingdom</option>
+  <option value="ca">Canada</option>
+</ae-select>`,
+    variants: [
+      { name: 'Required', html: `<ae-select label="Priority" required>\n  <option value="">Choose priority</option>\n  <option value="low">Low</option>\n  <option value="medium">Medium</option>\n  <option value="high">High</option>\n</ae-select>` },
+      { name: 'Disabled', html: `<ae-select label="Status" disabled>\n  <option value="active">Active</option>\n</ae-select>` },
+    ],
+  },
+  {
+    name: 'Textarea',
+    tag: 'ae-textarea',
+    description: 'Multi-line text input with auto-resize',
+    category: 'Form',
+    cssVariables: [
+      { name: '--ae-textarea-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
+      { name: '--ae-textarea-color', label: 'Text Color', type: 'color', default: '#f5f5f5' },
+      { name: '--ae-textarea-border', label: 'Border Color', type: 'color', default: '#333333' },
+      { name: '--ae-textarea-border-focus', label: 'Focus Border', type: 'color', default: '#5e7ce2' },
+      { name: '--ae-textarea-label-color', label: 'Label Color', type: 'color', default: '#e5e5e5' },
+      { name: '--ae-textarea-border-radius', label: 'Border Radius', type: 'size', default: '6', unit: 'px', min: 0, max: 24 },
+      { name: '--ae-textarea-font-size', label: 'Font Size', type: 'size', default: '16', unit: 'px', min: 12, max: 24 },
+    ],
+    defaultHtml: `<ae-textarea label="Description" placeholder="Enter a description..."></ae-textarea>`,
+    variants: [
+      { name: 'With Count', html: `<ae-textarea label="Comment" maxlength="500" show-count placeholder="Write a comment..."></ae-textarea>` },
+      { name: 'Auto Resize', html: `<ae-textarea label="Notes" auto-resize placeholder="Start typing..."></ae-textarea>` },
+      { name: 'Error', html: `<ae-textarea label="Bio" error="Bio is required"></ae-textarea>` },
+    ],
+  },
+  {
+    name: 'Autocomplete',
+    tag: 'ae-autocomplete',
+    description: 'Text input with suggestion dropdown',
+    category: 'Form',
+    cssVariables: [
+      { name: '--ae-autocomplete-background', label: 'Background', type: 'color', default: '#1a1a1a' },
+      { name: '--ae-autocomplete-text-color', label: 'Text Color', type: 'color', default: '#f5f5f5' },
+      { name: '--ae-autocomplete-border-color', label: 'Border Color', type: 'color', default: '#333333' },
+      { name: '--ae-autocomplete-focus-border-color', label: 'Focus Border', type: 'color', default: '#5e7ce2' },
+      { name: '--ae-autocomplete-dropdown-background', label: 'Dropdown Background', type: 'color', default: '#1a1a1a' },
+      { name: '--ae-autocomplete-highlight-background', label: 'Highlight Background', type: 'color', default: '#5e7ce2' },
+      { name: '--ae-autocomplete-border-radius', label: 'Border Radius', type: 'size', default: '4', unit: 'px', min: 0, max: 16 },
+    ],
+    defaultHtml: `<ae-autocomplete placeholder="Search countries..." aria-label="Country selector"></ae-autocomplete>`,
+    interactive: true,
+  },
+  {
+    name: 'Combo',
+    tag: 'ae-combo',
+    description: 'Combobox with filtering and free input',
+    category: 'Form',
+    cssVariables: [
+      { name: '--ae-combo-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
+      { name: '--ae-combo-fg', label: 'Text Color', type: 'color', default: '#f5f5f5' },
+      { name: '--ae-combo-border', label: 'Border Color', type: 'color', default: '#333333' },
+      { name: '--ae-combo-option-hover-bg', label: 'Option Hover', type: 'color', default: '#333333' },
+      { name: '--ae-combo-option-selected-bg', label: 'Selected Background', type: 'color', default: '#5e7ce2' },
+      { name: '--ae-combo-radius', label: 'Border Radius', type: 'size', default: '6', unit: 'px', min: 0, max: 16 },
+    ],
+    defaultHtml: `<ae-combo placeholder="Select or type..." aria-label="Combo selector"></ae-combo>`,
+    interactive: true,
+  },
+
+  // ─── Feedback ──────────────────────────────────────────
+  {
     name: 'Alert',
     tag: 'ae-alert',
     description: 'Alert message for user feedback',
@@ -199,6 +280,27 @@ export const componentConfigs: ComponentConfig[] = [
     ],
   },
   {
+    name: 'Toast',
+    tag: 'ae-toast',
+    description: 'Temporary notification message',
+    category: 'Feedback',
+    interactive: true,
+    cssVariables: [
+      { name: '--ae-toast-bg-info', label: 'Background', type: 'color', default: '#1e3a5f' },
+      { name: '--ae-toast-fg-info', label: 'Text Color', type: 'color', default: '#93c5fd' },
+      { name: '--ae-toast-radius', label: 'Border Radius', type: 'size', default: '8', unit: 'px', min: 0, max: 24 },
+    ],
+    defaultHtml: `<ae-button id="toast-trigger">Show Toast</ae-button>
+<ae-toast variant="success" duration="3000">Operation completed successfully!</ae-toast>`,
+    variants: [
+      { name: 'Info', html: `<ae-button id="toast-trigger">Show Toast</ae-button>\n<ae-toast variant="info" duration="3000">This is an informational message.</ae-toast>` },
+      { name: 'Warning', html: `<ae-button id="toast-trigger">Show Toast</ae-button>\n<ae-toast variant="warning" duration="3000">Please review your input.</ae-toast>` },
+      { name: 'Error', html: `<ae-button id="toast-trigger">Show Toast</ae-button>\n<ae-toast variant="error" duration="5000">An error occurred.</ae-toast>` },
+    ],
+  },
+
+  // ─── Navigation ────────────────────────────────────────
+  {
     name: 'Tabs',
     tag: 'ae-tabs',
     description: 'Tabbed navigation component',
@@ -217,6 +319,48 @@ export const componentConfigs: ComponentConfig[] = [
   <ae-tab-panel slot="panel">Content for Tab 3</ae-tab-panel>
 </ae-tabs>`,
   },
+  {
+    name: 'Breadcrumb',
+    tag: 'ae-breadcrumb',
+    description: 'Navigation breadcrumb trail',
+    category: 'Navigation',
+    cssVariables: [
+      { name: '--ae-breadcrumb-link-color', label: 'Link Color', type: 'color', default: '#5e7ce2' },
+      { name: '--ae-breadcrumb-link-hover', label: 'Link Hover', type: 'color', default: '#818cf8' },
+      { name: '--ae-breadcrumb-current-color', label: 'Current Color', type: 'color', default: '#f5f5f5' },
+      { name: '--ae-breadcrumb-separator-color', label: 'Separator Color', type: 'color', default: '#666666' },
+      { name: '--ae-breadcrumb-font-size', label: 'Font Size', type: 'size', default: '14', unit: 'px', min: 10, max: 20 },
+      { name: '--ae-breadcrumb-gap', label: 'Gap', type: 'size', default: '8', unit: 'px', min: 2, max: 16 },
+    ],
+    defaultHtml: `<ae-breadcrumb>
+  <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
+  <ae-breadcrumb-item href="/products">Products</ae-breadcrumb-item>
+  <ae-breadcrumb-item>Electronics</ae-breadcrumb-item>
+</ae-breadcrumb>`,
+  },
+  {
+    name: 'Pagination',
+    tag: 'ae-pagination',
+    description: 'Page navigation with numbered buttons',
+    category: 'Navigation',
+    cssVariables: [
+      { name: '--ae-pagination-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
+      { name: '--ae-pagination-color', label: 'Text Color', type: 'color', default: '#f5f5f5' },
+      { name: '--ae-pagination-border', label: 'Border Color', type: 'color', default: '#333333' },
+      { name: '--ae-pagination-bg-active', label: 'Active Background', type: 'color', default: '#5e7ce2' },
+      { name: '--ae-pagination-color-active', label: 'Active Text', type: 'color', default: '#ffffff' },
+      { name: '--ae-pagination-bg-hover', label: 'Hover Background', type: 'color', default: '#333333' },
+      { name: '--ae-pagination-border-radius', label: 'Border Radius', type: 'size', default: '6', unit: 'px', min: 0, max: 24 },
+      { name: '--ae-pagination-gap', label: 'Gap', type: 'size', default: '4', unit: 'px', min: 0, max: 12 },
+    ],
+    defaultHtml: `<ae-pagination current-page="5" total-pages="10"></ae-pagination>`,
+    variants: [
+      { name: 'First/Last', html: `<ae-pagination current-page="3" total-pages="20" show-first-last></ae-pagination>` },
+      { name: 'Small', html: `<ae-pagination current-page="1" total-pages="5" size="sm"></ae-pagination>` },
+    ],
+  },
+
+  // ─── Layout ────────────────────────────────────────────
   {
     name: 'Accordion',
     tag: 'ae-accordion',
@@ -242,10 +386,41 @@ export const componentConfigs: ComponentConfig[] = [
 </ae-accordion>`,
   },
   {
+    name: 'TreeView',
+    tag: 'ae-treeview',
+    description: 'Hierarchical tree structure display',
+    category: 'Layout',
+    cssVariables: [
+      { name: '--ae-treeview-hover-bg', label: 'Hover Background', type: 'color', default: '#333333' },
+      { name: '--ae-treeview-selected-bg', label: 'Selected Background', type: 'color', default: '#5e7ce2' },
+      { name: '--ae-treeview-selected-color', label: 'Selected Text', type: 'color', default: '#ffffff' },
+      { name: '--ae-treeview-caret-color', label: 'Caret Color', type: 'color', default: '#888888' },
+      { name: '--ae-treeview-font-size', label: 'Font Size', type: 'size', default: '14', unit: 'px', min: 10, max: 20 },
+      { name: '--ae-treeview-indent', label: 'Indent', type: 'size', default: '20', unit: 'px', min: 8, max: 40 },
+    ],
+    defaultHtml: `<ae-treeview>
+  <ae-tree-item label="Documents" expanded>
+    <ae-tree-item label="Work">
+      <ae-tree-item label="Project A.docx"></ae-tree-item>
+      <ae-tree-item label="Report.pdf"></ae-tree-item>
+    </ae-tree-item>
+    <ae-tree-item label="Personal">
+      <ae-tree-item label="Resume.docx"></ae-tree-item>
+    </ae-tree-item>
+  </ae-tree-item>
+  <ae-tree-item label="Images">
+    <ae-tree-item label="photo.jpg"></ae-tree-item>
+  </ae-tree-item>
+</ae-treeview>`,
+  },
+
+  // ─── Overlay ───────────────────────────────────────────
+  {
     name: 'Modal',
     tag: 'ae-modal',
     description: 'Modal dialog overlay',
     category: 'Overlay',
+    interactive: true,
     cssVariables: [
       { name: '--ae-modal-background', label: 'Background', type: 'color', default: '#1a1a1a' },
       { name: '--ae-modal-text-color', label: 'Text Color', type: 'color', default: '#f5f5f5' },
@@ -253,12 +428,12 @@ export const componentConfigs: ComponentConfig[] = [
       { name: '--ae-modal-border-radius', label: 'Border Radius', type: 'size', default: '12', unit: 'px', min: 0, max: 32 },
       { name: '--ae-modal-padding', label: 'Padding', type: 'size', default: '24', unit: 'px', min: 8, max: 48 },
     ],
-    defaultHtml: `<ae-button onclick="document.querySelector('ae-modal').open = true">Open Modal</ae-button>
+    defaultHtml: `<ae-button id="modal-trigger">Open Modal</ae-button>
 <ae-modal>
   <h3 slot="header">Modal Title</h3>
   <p>This is the modal content. You can put any content here.</p>
   <div slot="footer">
-    <ae-button variant="ghost" onclick="this.closest('ae-modal').open = false">Cancel</ae-button>
+    <ae-button variant="ghost" id="modal-close">Cancel</ae-button>
     <ae-button>Confirm</ae-button>
   </div>
 </ae-modal>`,
@@ -290,6 +465,7 @@ export const componentConfigs: ComponentConfig[] = [
     tag: 'ae-dropdown',
     description: 'Dropdown menu with items',
     category: 'Overlay',
+    interactive: true,
     cssVariables: [
       { name: '--ae-dropdown-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
       { name: '--ae-dropdown-fg', label: 'Text Color', type: 'color', default: '#f5f5f5' },
@@ -304,6 +480,76 @@ export const componentConfigs: ComponentConfig[] = [
   <ae-menu-divider></ae-menu-divider>
   <ae-menu-item>Delete</ae-menu-item>
 </ae-dropdown>`,
+  },
+  {
+    name: 'Popover',
+    tag: 'ae-popover',
+    description: 'Floating content panel triggered by interaction',
+    category: 'Overlay',
+    interactive: true,
+    cssVariables: [
+      { name: '--ae-popover-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
+      { name: '--ae-popover-border', label: 'Border Color', type: 'color', default: '#333333' },
+      { name: '--ae-popover-border-radius', label: 'Border Radius', type: 'size', default: '8', unit: 'px', min: 0, max: 24 },
+      { name: '--ae-popover-padding', label: 'Padding', type: 'size', default: '12', unit: 'px', min: 4, max: 32 },
+      { name: '--ae-popover-max-width', label: 'Max Width', type: 'size', default: '300', unit: 'px', min: 150, max: 600 },
+    ],
+    defaultHtml: `<ae-popover trigger="click">
+  <ae-button slot="trigger">Click for info</ae-button>
+  <div>
+    <strong>Popover Title</strong>
+    <p style="margin-top: 0.5rem; font-size: 0.875rem;">This is a popover with some helpful content.</p>
+  </div>
+</ae-popover>`,
+    variants: [
+      { name: 'Hover', html: `<ae-popover trigger="hover">\n  <ae-button slot="trigger">Hover me</ae-button>\n  <div>Popover on hover</div>\n</ae-popover>` },
+    ],
+  },
+  {
+    name: 'Drawer',
+    tag: 'ae-drawer',
+    description: 'Slide-out panel from screen edge',
+    category: 'Overlay',
+    interactive: true,
+    cssVariables: [
+      { name: '--ae-drawer-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
+      { name: '--ae-drawer-text-color', label: 'Text Color', type: 'color', default: '#f5f5f5' },
+      { name: '--ae-drawer-backdrop-bg', label: 'Backdrop', type: 'color', default: 'rgba(0,0,0,0.5)' },
+      { name: '--ae-drawer-width-md', label: 'Width', type: 'size', default: '400', unit: 'px', min: 200, max: 800 },
+    ],
+    defaultHtml: `<ae-button id="drawer-trigger">Open Drawer</ae-button>
+<ae-drawer placement="right">
+  <h3 slot="header">Drawer Title</h3>
+  <p>Drawer content goes here. You can put forms, lists, or any content.</p>
+  <div slot="footer">
+    <ae-button variant="ghost" id="drawer-close">Close</ae-button>
+    <ae-button>Save</ae-button>
+  </div>
+</ae-drawer>`,
+    variants: [
+      { name: 'Left', html: `<ae-button id="drawer-trigger">Open Left</ae-button>\n<ae-drawer placement="left">\n  <h3 slot="header">Left Drawer</h3>\n  <p>This drawer slides from the left.</p>\n</ae-drawer>` },
+    ],
+  },
+  {
+    name: 'Menu',
+    tag: 'ae-menu',
+    description: 'Standalone action menu list',
+    category: 'Overlay',
+    cssVariables: [
+      { name: '--ae-menu-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
+      { name: '--ae-menu-border', label: 'Border Color', type: 'color', default: '#333333' },
+      { name: '--ae-menu-border-radius', label: 'Border Radius', type: 'size', default: '8', unit: 'px', min: 0, max: 24 },
+      { name: '--ae-menu-item-color', label: 'Item Color', type: 'color', default: '#f5f5f5' },
+      { name: '--ae-menu-item-bg-hover', label: 'Item Hover', type: 'color', default: '#333333' },
+      { name: '--ae-menu-item-padding', label: 'Item Padding', type: 'size', default: '8', unit: 'px', min: 4, max: 16 },
+    ],
+    defaultHtml: `<ae-menu>
+  <ae-menu-item>Edit</ae-menu-item>
+  <ae-menu-item>Copy</ae-menu-item>
+  <ae-menu-item>Paste</ae-menu-item>
+  <ae-menu-divider></ae-menu-divider>
+  <ae-menu-item disabled>Delete</ae-menu-item>
+</ae-menu>`,
   },
 ];
 

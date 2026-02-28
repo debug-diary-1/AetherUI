@@ -1,5 +1,5 @@
 import { html } from 'lit-html';
-import { expect, within, userEvent, waitFor } from '@storybook/test';
+import { expect, within, userEvent, waitFor } from 'storybook/test';
 
 export default {
   title: 'Components/Tooltip',

@@ -1,8 +1,10 @@
-import { ComponentConfig, CSSVariable } from './component-configs';
+import { ComponentConfig, CSSVariable } from '../data/component-configs';
 
 export interface GeneratedCode {
   html: string;
   css: string;
+  react: string;
+  vue: string;
   fullExample: string;
 }
 
@@ -18,20 +20,81 @@ export function generateCSS(
     })
     .join('\n');
 
-  return `/* Custom styles for ${component.name} */
-${component.tag} {
-${cssVars}
-}`;
+  return `/* Custom styles for ${component.name} */\n${component.tag} {\n${cssVars}\n}`;
 }
 
 export function generateHTML(component: ComponentConfig, selectedVariant?: string): string {
   if (selectedVariant) {
     const variant = component.variants?.find(v => v.name === selectedVariant);
-    if (variant) {
-      return variant.html;
-    }
+    if (variant) return variant.html;
   }
   return component.defaultHtml;
+}
+
+export function generateReact(
+  component: ComponentConfig,
+  values: Record<string, string>,
+  selectedVariant?: string
+): string {
+  const html = generateHTML(component, selectedVariant);
+
+  const styleObj = component.cssVariables
+    .map((v) => {
+      const val = values[v.name] || v.default;
+      const finalVal = v.unit ? `${val}${v.unit}` : val;
+      return `    '${v.name}': '${finalVal}'`;
+    })
+    .join(',\n');
+
+  return `import { useEffect } from 'react';
+import { defineAll } from '@aetherui/core';
+
+export default function ${component.name}Example() {
+  useEffect(() => { defineAll(); }, []);
+
+  const style = {
+${styleObj}
+  };
+
+  return (
+    <div style={style}>
+      ${html.split('\n').join('\n      ')}
+    </div>
+  );
+}`;
+}
+
+export function generateVue(
+  component: ComponentConfig,
+  values: Record<string, string>,
+  selectedVariant?: string
+): string {
+  const html = generateHTML(component, selectedVariant);
+
+  return `<template>
+  <div class="${component.tag}-wrapper">
+    ${html.split('\n').join('\n    ')}
+  </div>
+</template>
+
+<script setup>
+import { onMounted } from 'vue';
+import { defineAll } from '@aetherui/core';
+
+onMounted(() => { defineAll(); });
+</script>
+
+<style scoped>
+.${component.tag}-wrapper {
+${component.cssVariables
+  .map((v) => {
+    const val = values[v.name] || v.default;
+    const finalVal = v.unit ? `${val}${v.unit}` : val;
+    return `  ${v.name}: ${finalVal};`;
+  })
+  .join('\n')}
+}
+</style>`;
 }
 
 export function generateFullExample(
@@ -86,14 +149,14 @@ export function generateCode(
   return {
     html: generateHTML(component, selectedVariant),
     css: generateCSS(component, values),
+    react: generateReact(component, values, selectedVariant),
+    vue: generateVue(component, values, selectedVariant),
     fullExample: generateFullExample(component, values, selectedVariant),
   };
 }
 
 export function formatVariableValue(variable: CSSVariable, value: string): string {
-  if (variable.unit) {
-    return `${value}${variable.unit}`;
-  }
+  if (variable.unit) return `${value}${variable.unit}`;
   return value;
 }
 

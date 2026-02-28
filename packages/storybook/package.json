@@ -21,11 +21,11 @@
     "@aetherui/core": "workspace:*"
   },
   "devDependencies": {
+    "@lit/reactive-element": "^2.1.0",
     "@storybook/addon-a11y": "^9.1.19",
     "@storybook/addon-docs": "^9.1.19",
     "@storybook/addon-links": "^9.1.19",
     "@storybook/web-components-vite": "^9.1.19",
-    "@lit/reactive-element": "^2.1.0",
     "eslint-plugin-storybook": "^9.1.19",
     "lit": "^3.3.2",
     "lit-element": "^4.2.0",

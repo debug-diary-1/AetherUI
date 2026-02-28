@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { expect, within } from '@storybook/test';
+import { expect, within } from 'storybook/test';
 
 export default {
   title: 'Components/Breadcrumb',
