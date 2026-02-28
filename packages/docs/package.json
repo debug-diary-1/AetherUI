@@ -16,8 +16,8 @@
   "dependencies": {
     "@aetherui/core": "workspace:*",
     "@aetherui/tokens": "workspace:*",
-    "@astrojs/starlight": "^0.34.0",
-    "astro": "^5.7.0"
+    "@astrojs/starlight": "^0.37.6",
+    "astro": "^5.15.9"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
