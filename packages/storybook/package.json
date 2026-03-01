@@ -19,7 +19,8 @@
   "author": "AetherUI Team",
   "license": "MIT",
   "dependencies": {
-    "@aetherui/core": "workspace:*"
+    "@aetherui/core": "workspace:*",
+    "@aetherui/datatable": "workspace:*"
   },
   "devDependencies": {
     "@lit/reactive-element": "^2.1.0",

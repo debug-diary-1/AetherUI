@@ -1,53 +1,88 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
   "globalDependencies": ["**/.env.*local"],
+  "boundaries": {
+    "tags": {
+      "foundation": {
+        "dependencies": {
+          "deny": ["component", "app"]
+        }
+      },
+      "component": {
+        "dependencies": {
+          "allow": ["foundation"],
+          "deny": ["component", "app"]
+        }
+      },
+      "app": {
+        "dependencies": {
+          "allow": ["foundation", "component"]
+        }
+      }
+    }
+  },
   "tasks": {
     "build": {
+      "description": "Compile TypeScript and bundle web components with Vite",
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"],
       "cache": true
     },
     "dev": {
+      "description": "Start development server with hot reload",
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "interruptible": true
     },
     "lint": {
+      "description": "Run oxlint across the monorepo",
       "cache": true,
       "outputs": []
     },
     "format": {
+      "description": "Format code with oxc formatter",
       "cache": true,
       "outputs": []
     },
     "test": {
+      "description": "Run unit tests with @web/test-runner",
       "dependsOn": [],
       "outputs": ["{projectRoot}/coverage/**"],
       "cache": true
     },
     "test:memory": {
+      "description": "Run memory leak detection tests",
       "dependsOn": [],
       "outputs": ["{projectRoot}/coverage/**"],
       "cache": false
     },
     "clean": {
+      "description": "Remove build artifacts",
       "cache": false
     },
     "storybook": {
+      "description": "Launch Storybook for component previews",
       "dependsOn": ["^build"],
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "interruptible": true
     },
     "build-storybook": {
+      "description": "Build static Storybook site for deployment",
       "dependsOn": ["^build"],
       "outputs": ["{workspaceRoot}/storybook-static/**"],
       "cache": false
     },
     "docs": {
+      "description": "Start Astro/Starlight docs dev server",
       "dependsOn": ["^build"],
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "interruptible": true
     },
     "docs:build": {
+      "description": "Build static documentation site",
       "dependsOn": ["^build"],
       "outputs": ["{projectRoot}/dist/**"],
       "cache": true
