@@ -540,3 +540,9 @@ export const defineAeAutocomplete = () => {
     customElements.define('ae-autocomplete', AeAutocomplete);
   }
 };
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'ae-autocomplete': AeAutocomplete;
+  }
+}

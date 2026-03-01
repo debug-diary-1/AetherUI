@@ -177,7 +177,7 @@ export class AeRadio extends LitElement {
           .value="${this.value}"
           @change="${this.handleChange}"
           @keydown="${this.handleKeyDown}"
-          tabindex="${this.disabled ? '-1' : '0'}"
+          tabindex="-1"
           aria-hidden="true"
         />
         

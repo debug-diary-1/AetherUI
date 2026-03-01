@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { alertStyles } from './styles';
 
@@ -85,7 +85,7 @@ export class AeAlert extends LitElement {
   }
 
   render() {
-    if (!this.open) return null;
+    if (!this.open) return nothing;
 
     return html`
       <section part="base" role=${this._getRole()}>

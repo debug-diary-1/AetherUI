@@ -43,20 +43,35 @@ export class AeRadioGroup extends LitElement {
   @property({ type: Boolean, reflect: true })
   accessor disabled = false;
 
-  private radios: NodeListOf<AeRadio> = null!;
+  private _previousRadios: Set<AeRadio> = new Set();
+  private _handleRadioChange = this.handleRadioChange.bind(this);
 
   connectedCallback() {
     super.connectedCallback();
     this.updateRadios();
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._removeOldListeners();
+  }
+
+  private _removeOldListeners() {
+    this._previousRadios.forEach(radio => {
+      radio.removeEventListener('ae-radio-change', this._handleRadioChange);
+    });
+    this._previousRadios.clear();
+  }
+
   private updateRadios() {
-    this.radios = this.querySelectorAll('ae-radio');
-    this.radios.forEach(radio => {
+    this._removeOldListeners();
+    const radios = this.querySelectorAll<AeRadio>('ae-radio');
+    radios.forEach(radio => {
       radio.name = this.name;
       radio.disabled = this.disabled;
       radio.checked = radio.value === this.value;
-      radio.addEventListener('ae-radio-change', this.handleRadioChange.bind(this));
+      radio.addEventListener('ae-radio-change', this._handleRadioChange);
+      this._previousRadios.add(radio);
     });
   }
 
@@ -83,4 +98,10 @@ export class AeRadioGroup extends LitElement {
       </div>
     `;
   }
-} 
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'ae-radio-group': AeRadioGroup;
+  }
+}

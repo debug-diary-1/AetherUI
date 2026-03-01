@@ -83,7 +83,7 @@ export const switchStyles = css`
     border-radius: 50%;
     background: var(--ae-switch-thumb-bg);
     transition: transform 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--ae-switch-thumb-shadow, rgba(0, 0, 0, 0.1));
   }
 
   /* Checked state */

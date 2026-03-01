@@ -61,10 +61,11 @@ export class AeAccordion extends LitElement {
   @state()
   private accessor openPanels = new Set<string>();
 
+  private _observer: MutationObserver | null = null;
+
   connectedCallback() {
     super.connectedCallback();
     this.setupMutationObserver();
-    this.setAttribute('role', 'accordion');
     
     // Initialize from value property
     const initialValue = this.value.length > 0 ? this.value : this.defaultValue;
@@ -127,12 +128,18 @@ export class AeAccordion extends LitElement {
     this.updateItems();
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._observer?.disconnect();
+    this._observer = null;
+  }
+
   private setupMutationObserver() {
-    const observer = new MutationObserver(() => {
+    this._observer = new MutationObserver(() => {
       this.updateItems();
     });
 
-    observer.observe(this, { childList: true, subtree: true });
+    this._observer.observe(this, { childList: true, subtree: true });
   }
 
   firstUpdated() {
@@ -233,5 +240,11 @@ export class AeAccordion extends LitElement {
         <slot></slot>
       </div>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'ae-accordion': AeAccordion;
   }
 }

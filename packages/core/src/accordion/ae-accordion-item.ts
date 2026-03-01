@@ -36,11 +36,13 @@ import { accordionItemStyles } from './styles';
 export class AeAccordionItem extends LitElement {
   static styles = accordionItemStyles;
 
+  private static _idCounter = 0;
+
   /**
    * Unique identifier for this accordion item
    */
   @property({ type: String })
-  accessor headerId = crypto.randomUUID();
+  accessor headerId = `ae-accordion-${AeAccordionItem._idCounter++}`;
 
   /**
    * Whether this panel is currently open
@@ -58,34 +60,12 @@ export class AeAccordionItem extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.setAttribute('role', 'region');
     this.setAttribute('data-header-id', this.headerId);
   }
 
   updated(changedProperties: Map<string, unknown>) {
     if (changedProperties.has('open')) {
       this.updatePanelHeight();
-      
-      // Create event detail
-      const detail = { headerId: this.headerId, open: this.open };
-      
-      // Dispatch standardized event
-      this.dispatchEvent(
-        new CustomEvent('ae-accordion-item-change', {
-          detail,
-          bubbles: true,
-          composed: true,
-        })
-      );
-      
-      // Dispatch legacy event for backward compatibility
-      this.dispatchEvent(
-        new CustomEvent('ae-panel-change', {
-          detail,
-          bubbles: true,
-          composed: true,
-        })
-      );
     }
   }
 
@@ -105,54 +85,62 @@ export class AeAccordionItem extends LitElement {
   private handleHeaderClick() {
     if (this.disabled) return;
     this.open = !this.open;
-  }
 
-  /**
-   * Handles keyboard events on the header
-   */
-  private handleKeydown(event: KeyboardEvent) {
-    if (this.disabled) return;
-    
-    if (event.key === ' ' || event.key === 'Enter') {
-      event.preventDefault();
-      this.handleHeaderClick();
-    }
+    const detail = { headerId: this.headerId, open: this.open };
+
+    this.dispatchEvent(
+      new CustomEvent('ae-accordion-item-change', {
+        detail,
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    this.dispatchEvent(
+      new CustomEvent('ae-panel-change', {
+        detail,
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   render() {
     return html`
       <div class="accordion-item" part="base">
-        <button
-          class="header"
-          part="header"
-          role="button"
-          aria-expanded=${this.open}
-          aria-controls="panel-${this.headerId}"
-          ?disabled=${this.disabled}
-          @click=${this.handleHeaderClick}
-          @keydown=${this.handleKeydown}
-        >
-          <span class="header-content" part="header-content">
-            <slot name="header"></slot>
-          </span>
-          <svg
-            class="icon"
-            part="icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
+        <div role="heading" aria-level="3">
+          <button
+            class="header"
+            part="header"
+            aria-expanded=${this.open}
+            aria-controls="panel-${this.headerId}"
+            ?disabled=${this.disabled}
+            @click=${this.handleHeaderClick}
           >
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
+            <span class="header-content" part="header-content">
+              <slot name="header"></slot>
+            </span>
+            <svg
+              class="icon"
+              part="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
         <div
           class="panel"
           part="panel"
           id="panel-${this.headerId}"
+          role="region"
+          aria-labelledby="header-${this.headerId}"
         >
           <div class="panel-content" part="panel-content">
             <slot></slot>
@@ -160,5 +148,11 @@ export class AeAccordionItem extends LitElement {
         </div>
       </div>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'ae-accordion-item': AeAccordionItem;
   }
 }

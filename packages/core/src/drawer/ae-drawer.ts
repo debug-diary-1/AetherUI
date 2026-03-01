@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { drawerStyles } from './styles';
 
@@ -56,6 +56,9 @@ export class AeDrawer extends LitElement {
 
   @property({ type: String, reflect: true })
   accessor size: 'sm' | 'md' | 'lg' | 'full' = 'md';
+
+  @property({ type: String, attribute: 'aria-label' })
+  override accessor ariaLabel: string | null = null;
 
   @query('[part="panel"]')
   private accessor panel!: HTMLElement;
@@ -169,19 +172,28 @@ export class AeDrawer extends LitElement {
     }
   }
 
+  private getDeepActiveElement(): Element | null {
+    let active = document.activeElement;
+    while (active?.shadowRoot?.activeElement) {
+      active = active.shadowRoot.activeElement;
+    }
+    return active;
+  }
+
   private handleTabKey(event: KeyboardEvent) {
     if (this.focusableElements.length === 0) return;
 
     const firstElement = this.focusableElements[0];
     const lastElement = this.focusableElements[this.focusableElements.length - 1];
+    const activeElement = this.getDeepActiveElement();
 
     if (event.shiftKey) {
-      if (document.activeElement === firstElement) {
+      if (activeElement === firstElement) {
         event.preventDefault();
         lastElement.focus();
       }
     } else {
-      if (document.activeElement === lastElement) {
+      if (activeElement === lastElement) {
         event.preventDefault();
         firstElement.focus();
       }
@@ -207,7 +219,7 @@ export class AeDrawer extends LitElement {
   }
 
   render() {
-    if (!this.open) return null;
+    if (!this.open) return nothing;
 
     return html`
       ${this.backdrop ? html`
@@ -223,6 +235,7 @@ export class AeDrawer extends LitElement {
         class="drawer-panel"
         role="dialog"
         aria-modal="true"
+        aria-label="${this.ariaLabel || 'Drawer'}"
         tabindex="-1"
       >
         ${this.closable ? html`

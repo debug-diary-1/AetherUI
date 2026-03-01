@@ -39,10 +39,6 @@ export class AeBreadcrumbItem extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    // Automatically set current if this is the last item without href
-    if (!this.href) {
-      this.current = true;
-    }
   }
 
   render() {

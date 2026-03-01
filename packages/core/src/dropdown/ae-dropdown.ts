@@ -67,19 +67,19 @@ export class AeDropdown extends LitElement {
   /**
    * Reference to the trigger element
    */
-  @query('[data-trigger]')
+  @query('.trigger')
   private accessor triggerEl!: HTMLElement;
 
   /**
    * Reference to the menu/overlay element
    */
-  @query('[data-overlay]')
+  @query('.overlay')
   private accessor overlayEl!: HTMLElement;
 
   /**
    * Reference to the menu element
    */
-  @query('[data-menu]')
+  @query('.menu')
   private accessor menuEl!: HTMLElement;
 
   /**
@@ -279,7 +279,13 @@ export class AeDropdown extends LitElement {
     const isOpen = this.isOpen;
 
     return html`
-      <div class="trigger" part="trigger" @click=${this.handleTriggerClick}>
+      <div class="trigger" part="trigger"
+        role="button"
+        aria-haspopup="menu"
+        aria-expanded="${isOpen}"
+        tabindex="0"
+        @click=${this.handleTriggerClick}
+      >
         <slot></slot>
       </div>
 

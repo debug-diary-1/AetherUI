@@ -1,4 +1,4 @@
-import { LitElement, html, CSSResult } from 'lit';
+import { LitElement, html, nothing, CSSResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { toastStyles } from './styles';
 
@@ -271,7 +271,7 @@ export class AeToast extends LitElement {
   }
 
   render() {
-    if (!this.open) return null;
+    if (!this.open) return nothing;
 
     // Convert duration to seconds for CSS
     const durationInSeconds = this.duration / 1000;

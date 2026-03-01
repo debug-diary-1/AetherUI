@@ -1,4 +1,4 @@
-import { ReactiveController, ReactiveControllerHost } from 'lit';
+import { ReactiveController, ReactiveControllerHost, html, type TemplateResult } from 'lit';
 import { ComboItem, ComboFilterFunction, defaultFilter } from './types';
 
 export class ComboController implements ReactiveController {
@@ -138,20 +138,20 @@ export class ComboController implements ReactiveController {
   /**
    * Format item label with query highlighting
    */
-  highlightMatches(itemLabel: string, query: string): string {
+  highlightMatches(itemLabel: string, query: string): TemplateResult | string {
     if (!query) return itemLabel;
-    
+
     const lcLabel = itemLabel.toLowerCase();
     const lcQuery = query.toLowerCase();
     const index = lcLabel.indexOf(lcQuery);
-    
+
     if (index === -1) return itemLabel;
-    
+
     const before = itemLabel.substring(0, index);
     const match = itemLabel.substring(index, index + query.length);
     const after = itemLabel.substring(index + query.length);
-    
-    return `${before}<span class="highlight" part="highlight">${match}</span>${after}`;
+
+    return html`${before}<span class="highlight" part="highlight">${match}</span>${after}`;
   }
 
   /**

@@ -59,9 +59,6 @@ export class AeBadge extends LitElement {
       bubbles: true,
       composed: true,
     }));
-
-    // Optionally remove the badge from DOM
-    this.remove();
   }
 
   render() {

@@ -77,6 +77,7 @@ export class AeTabs extends LitElement {
 
   private tabs: HTMLElement[] = [];
   private panels: HTMLElement[] = [];
+  private _tabClickHandlers = new WeakMap<HTMLElement, EventListener>();
 
   constructor() {
     super();
@@ -92,6 +93,13 @@ export class AeTabs extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener('keydown', this._handleKeyDown);
+    this.tabs.forEach(tab => {
+      const handler = this._tabClickHandlers.get(tab);
+      if (handler) {
+        tab.removeEventListener('click', handler);
+        this._tabClickHandlers.delete(tab);
+      }
+    });
   }
 
   firstUpdated() {
@@ -154,8 +162,12 @@ export class AeTabs extends LitElement {
         tab.removeAttribute('data-vertical-tab');
       }
       
-      // Add click handler
-      tab.addEventListener('click', () => this._activateTab(tab.id));
+      // Add click handler (skip if already registered)
+      if (!this._tabClickHandlers.has(tab)) {
+        const handler = () => this._activateTab(tab.id);
+        tab.addEventListener('click', handler);
+        this._tabClickHandlers.set(tab, handler);
+      }
     });
     
     // Select first tab if no tab is active

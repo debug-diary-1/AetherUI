@@ -148,11 +148,18 @@ export class AeButton extends LitElement {
       
       if (hasIcon && !hasLabel) {
         this.iconOnly = true;
-        // Ensure accessibility
         if (!this.hasAttribute('aria-label') && !this.hasAttribute('aria-labelledby')) {
-          // Icon-only buttons should have an aria-label or aria-labelledby attribute for accessibility
+          if (typeof window !== 'undefined' && (window as unknown as Record<string, unknown>).__DEV__) {
+            console.warn('ae-button: icon-only button should have an aria-label or aria-labelledby attribute for accessibility.');
+          }
         }
       }
     });
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'ae-button': AeButton;
   }
 } 

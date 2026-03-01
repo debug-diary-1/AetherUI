@@ -126,7 +126,6 @@ export class AeTreeView extends LitElement {
   @query('slot:not([name])')
   private defaultSlot!: HTMLSlotElement;
 
-  @state()
   private keyboardController: TreeViewKeyboardController;
 
   @state()
@@ -261,4 +260,10 @@ export class AeTreeView extends LitElement {
       </div>
     `;
   }
-} 
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'ae-treeview': AeTreeView;
+  }
+}

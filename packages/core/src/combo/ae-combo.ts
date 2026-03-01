@@ -1,6 +1,5 @@
 import { html, LitElement } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ComboController } from './controller';
 import type { ComboFilterFunction, ComboItem } from './types';
 import { comboStyles } from './styles';
@@ -345,7 +344,7 @@ export class AeCombo extends LitElement {
                       aria-disabled=${item.disabled || false}
                       @click=${() => this.handleOptionClick(item)}
                     >
-                      ${unsafeHTML(itemLabel)}
+                      ${itemLabel}
                     </div>
                   `;
                 })
@@ -365,3 +364,9 @@ export const defineAeCombo = () => {
     customElements.define('ae-combo', AeCombo);
   }
 };
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'ae-combo': AeCombo;
+  }
+}

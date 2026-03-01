@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { modalStyles } from './styles';
 
@@ -74,6 +74,9 @@ export class AeModal extends LitElement {
 
   @property({ type: String })
   accessor size: 'small' | 'medium' | 'large' = 'medium';
+
+  @property({ type: String, attribute: 'aria-label' })
+  override accessor ariaLabel: string | null = null;
 
   @query('[part="panel"]')
   private accessor panel!: HTMLElement;
@@ -159,6 +162,14 @@ export class AeModal extends LitElement {
     }
   }
 
+  private getDeepActiveElement(): Element | null {
+    let active = document.activeElement;
+    while (active?.shadowRoot?.activeElement) {
+      active = active.shadowRoot.activeElement;
+    }
+    return active;
+  }
+
   private handleKeyDown(event: KeyboardEvent) {
     if (!this.open) return;
 
@@ -176,11 +187,12 @@ export class AeModal extends LitElement {
 
         const firstFocusable = this.focusableElements[0];
         const lastFocusable = this.focusableElements[this.focusableElements.length - 1];
+        const activeElement = this.getDeepActiveElement();
 
-        if (event.shiftKey && document.activeElement === firstFocusable) {
+        if (event.shiftKey && activeElement === firstFocusable) {
           event.preventDefault();
           lastFocusable.focus();
-        } else if (!event.shiftKey && document.activeElement === lastFocusable) {
+        } else if (!event.shiftKey && activeElement === lastFocusable) {
           event.preventDefault();
           firstFocusable.focus();
         }
@@ -216,7 +228,7 @@ export class AeModal extends LitElement {
   }
 
   render() {
-    if (!this.open) return null;
+    if (!this.open) return nothing;
 
     return html`
       <div
@@ -230,6 +242,7 @@ export class AeModal extends LitElement {
           class="panel"
           role="dialog"
           aria-modal="true"
+          aria-label="${this.ariaLabel || 'Dialog'}"
           tabindex="-1"
           data-size="${this.size}"
         >

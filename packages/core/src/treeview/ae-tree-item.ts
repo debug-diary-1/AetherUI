@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { treeItemStyles } from './tree-item-styles';
 
 /**
@@ -141,7 +142,7 @@ export class AeTreeItem extends LitElement {
         part="base"
         class="tree-item-base"
         role="treeitem"
-        aria-expanded="${this.hasChildren ? this.expanded : 'false'}"
+        aria-expanded="${ifDefined(this.hasChildren ? String(this.expanded) : undefined)}"
         aria-selected="${this.selected}"
         aria-disabled="${this.disabled}"
         aria-level="${indent + 1}"

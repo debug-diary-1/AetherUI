@@ -229,6 +229,9 @@ export class AePopover extends LitElement {
       <div
         part="trigger"
         class="popover-trigger"
+        aria-haspopup="${this.trigger === 'hover' ? 'true' : 'dialog'}"
+        aria-expanded="${this.open}"
+        tabindex="0"
         @click="${this.handleTriggerClick}"
         @mouseenter="${this.handleTriggerMouseEnter}"
         @mouseleave="${this.handleTriggerMouseLeave}"
@@ -240,6 +243,7 @@ export class AePopover extends LitElement {
         <div
           part="popover"
           class="popover-content"
+          role="${this.trigger === 'hover' ? 'tooltip' : 'dialog'}"
           style="${this.popoverStyles}"
           @mouseenter="${this.handlePopoverMouseEnter}"
           @mouseleave="${this.handlePopoverMouseLeave}"

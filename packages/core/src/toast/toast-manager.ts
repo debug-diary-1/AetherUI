@@ -97,6 +97,26 @@ export class ToastManager {
     return container;
   }
 
+  /**
+   * Remove all containers and the injected stylesheet
+   */
+  public destroy(): void {
+    this.containers.forEach(container => {
+      container.remove();
+    });
+    this.containers.clear();
+    this.styleSheet.remove();
+  }
+
+  /**
+   * Reset the singleton (useful for HMR/SPA cleanup)
+   */
+  public static reset(): void {
+    if (ToastManager.instance) {
+      ToastManager.instance.destroy();
+      ToastManager.instance = undefined!;
+    }
+  }
 }
 
 /**

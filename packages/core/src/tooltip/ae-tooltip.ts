@@ -428,8 +428,10 @@ export class AeTooltip extends LitElement {
     }
   }
 
+  private static _idCounter = 0;
+
   private _generateId(): string {
-    return `ae-tooltip-${Math.random().toString(36).substring(2, 9)}`;
+    return `ae-tooltip-${AeTooltip._idCounter++}`;
   }
 
   private _emitOpenChange() {
