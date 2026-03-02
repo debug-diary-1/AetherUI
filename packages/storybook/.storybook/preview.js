@@ -82,15 +82,15 @@ const preview = {
     },
     // Add backgrounds for component previews
     backgrounds: {
-      default: 'light',
-      values: [
-        { name: 'light', value: '#ffffff' },
-        { name: 'dark', value: '#333333' },
-        { name: 'gray', value: '#f0f0f0' },
-        { name: 'blue', value: '#f0f8ff' },
-      ],
+      options: {
+        light: { name: 'light', value: '#ffffff' },
+        dark: { name: 'dark', value: '#333333' },
+        gray: { name: 'gray', value: '#f0f0f0' },
+        blue: { name: 'blue', value: '#f0f8ff' }
+      }
     },
   },
+
   // Add global decorators to apply themes to all stories
   decorators: [
     (Story, context) => {
@@ -106,6 +106,7 @@ const preview = {
       `;
     },
   ],
+
   // Define global variables that can be changed in the Storybook UI
   globalTypes: {
     theme: {
@@ -122,6 +123,12 @@ const preview = {
       },
     },
   },
+
+  initialGlobals: {
+    backgrounds: {
+      value: 'light'
+    }
+  }
 };
 
 export default preview;

@@ -1,5 +1,6 @@
 import { ColumnFiltersState } from '../models/filter-model';
 import { filterData } from '../utils/filter-utils';
+import type { ColumnDef } from '../models/column-model';
 
 /**
  * The FilterManager class is responsible for handling filtering operations
@@ -17,7 +18,7 @@ export class FilterManager<T> {
    * @param columns Column definitions with functions
    * @returns Filtered data
    */
-  applyFilters(data: T[], columns: any[]): T[] {
+  applyFilters(data: T[], columns: ColumnDef<T>[]): T[] {
     // Delegate to the utility function
     return filterData(data, this._columnFilters, this._globalFilter, columns);
   }

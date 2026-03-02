@@ -1,5 +1,6 @@
 import { SortingState, SortDirection } from '../models/sort-model';
 import { sortData } from '../utils/sort-utils';
+import type { ColumnDef } from '../models/column-model';
 
 /**
  * The SortManager class is responsible for handling sorting operations
@@ -14,7 +15,7 @@ export class SortManager<T> {
    * @param columns Column definitions with functions
    * @returns Sorted data
    */
-  applySort(data: T[], columns: any[]): T[] {
+  applySort(data: T[], columns: ColumnDef<T>[]): T[] {
     // Delegate to the utility function
     return sortData(data, this._sorting, columns);
   }

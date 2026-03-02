@@ -6,7 +6,7 @@
  */
 const { spawn } = require('child_process');
 
-const child = spawn('npx', ['web-test-runner'], {
+const child = spawn('pnpm', ['exec', 'web-test-runner'], {
   stdio: 'pipe',
   cwd: __dirname,
   env: { ...process.env, FORCE_COLOR: '0' }, // Disable colors to simplify parsing

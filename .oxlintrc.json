@@ -1,0 +1,31 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "rules": {
+    "typescript/explicit-function-return-type": "off",
+    "typescript/no-explicit-any": "warn",
+    "no-unused-vars": "warn",
+    "no-unused-expressions": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/__tests__/**", "**/*.test.ts", "**/*.spec.ts", "**/*.stories.js"],
+      "rules": {
+        "no-unused-expressions": "off",
+        "no-unused-vars": "off",
+        "typescript/no-explicit-any": "off"
+      }
+    },
+    {
+      "files": ["**/run-tests.cjs", "**/check-test-env.js"],
+      "rules": {
+        "no-control-regex": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "dist/**",
+    "node_modules/**",
+    "**/dist/**",
+    "**/node_modules/**"
+  ]
+}

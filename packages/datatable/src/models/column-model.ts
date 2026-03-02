@@ -14,10 +14,10 @@ export interface ColumnDef<T> {
   header: string | TemplateResult;
   
   /** Function to extract cell value */
-  accessor?: (item: T) => any;
+  accessor?: (item: T) => unknown;
   
   /** Custom cell renderer */
-  renderer?: (value: any, row: T) => TemplateResult;
+  renderer?: (value: unknown, row: T) => TemplateResult;
   
   /** Column footer content */
   footer?: string | TemplateResult;
@@ -29,10 +29,10 @@ export interface ColumnDef<T> {
   filterable?: boolean;
   
   /** Custom sort comparator */
-  sortFn?: (a: any, b: any) => number;
+  sortFn?: (a: unknown, b: unknown) => number;
   
   /** Custom filter function */
-  filterFn?: (value: any, filter: string) => boolean;
+  filterFn?: (value: unknown, filter: string) => boolean;
   
   /** Column width (CSS value) */
   width?: string;
@@ -59,5 +59,5 @@ export interface ColumnDef<T> {
   frozen?: boolean;
   
   /** Simple text formatter */
-  format?: (value: any) => string;
+  format?: (value: unknown) => string;
 }

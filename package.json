@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "NODE_OPTIONS='--max-old-space-size=4096' turbo build --filter=!@aetherui/storybook",
-    "dev": "turbo dev --parallel",
+    "dev": "turbo dev",
     "lint": "oxlint .",
     "test": "node scripts/check-test-env.js 'NODE_OPTIONS=\"--max-old-space-size=2048\" turbo test'",
     "test:memory": "turbo test:memory --concurrency=1",

@@ -177,7 +177,6 @@ export async function updatePosition(
 
     // Calculate initial position
     let position = computePosition(referenceRect, floatingRect, placement, offsetDistance);
-    let finalPlacement = placement;
 
     // Check if it fits, flip if needed
     const { fits, overflow } = fitsInViewport(position, floatingRect);
@@ -192,7 +191,6 @@ export async function updatePosition(
           (overflow.left && !oppositeFits.overflow.right) ||
           (overflow.right && !oppositeFits.overflow.left)) {
         position = oppositePosition;
-        finalPlacement = oppositePlacement;
       }
     }
 
@@ -209,7 +207,7 @@ export async function updatePosition(
       margin: '0',
       visibility: 'visible',
     });
-  } catch (_error) {
+  } catch {
     // Error handled silently
   }
 

@@ -188,7 +188,7 @@ export class AeDropdown extends LitElement {
       
       // Store the cleanup function
       this.positionCleanup = cleanup;
-    } catch (_error) {
+    } catch {
       // Error handled silently
     }
   }

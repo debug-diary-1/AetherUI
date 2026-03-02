@@ -10,8 +10,8 @@ export type ToastOptionsWithoutVariant = Omit<ToastOptions, 'variant' | 'message
  */
 export function showToast(options: ToastOptions): void {
   // Check if we're in test mode with a mock
-  if (typeof window !== 'undefined' && (window as any).__mockToastManager) {
-    (window as any).__mockToastManager.show(options);
+  if (typeof window !== 'undefined' && (window as unknown as Record<string, unknown>).__mockToastManager) {
+    ((window as unknown as Record<string, unknown>).__mockToastManager as { show: (opts: ToastOptions) => void }).show(options);
   } else {
     showToastBase(options);
   }

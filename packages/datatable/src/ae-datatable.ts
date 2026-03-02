@@ -59,7 +59,7 @@ import './ae-datatable-cell';
  * @cssproperty --ae-datatable-header-text-color - Header text color
  * @cssproperty --ae-datatable-resize-handle-color - Column resize handle color
  */
-export class AeDataTable<T extends Record<string, any>> extends LitElement {
+export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
   static styles = datatableStyles;
 
   /**
@@ -478,7 +478,7 @@ export class AeDataTable<T extends Record<string, any>> extends LitElement {
     return html`
       <div class="datatable__body" part="body">
         ${repeat(processedData, (item: T, index) => {
-          const rowId = (item as any).id || index;
+          const rowId = ((item as Record<string, unknown>).id as string | number) || index;
           const isSelected = this.controller.isRowSelected(rowId);
           
           return html`

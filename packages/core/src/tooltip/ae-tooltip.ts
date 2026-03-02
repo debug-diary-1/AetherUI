@@ -376,7 +376,7 @@ export class AeTooltip extends LitElement {
             [staticSide]: '-4px'
           };
         }
-      } catch (_error) {
+      } catch {
         // Silently handle positioning errors
       }
     };

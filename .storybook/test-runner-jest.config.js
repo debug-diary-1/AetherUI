@@ -1,7 +1,5 @@
-const { getJunitXml } = require('@storybook/test-runner');
-
 module.exports = {
-  async postVisit(page, context) {
+  async postVisit(page, _context) {
     // Get the entire document
     const elementHandler = await page.$('body');
     const innerHTML = await elementHandler?.innerHTML();

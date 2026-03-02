@@ -98,7 +98,7 @@ export class PgPreview extends LitElement {
 
     if (name === 'Modal') {
       const trigger = wrapper.querySelector('#modal-trigger') as HTMLElement;
-      const modal = wrapper.querySelector('ae-modal') as any;
+      const modal = wrapper.querySelector('ae-modal') as HTMLElement & { open: boolean };
       const close = wrapper.querySelector('#modal-close') as HTMLElement;
       if (trigger && modal) {
         trigger.onclick = () => { modal.open = true; };
@@ -110,7 +110,7 @@ export class PgPreview extends LitElement {
 
     if (name === 'Drawer') {
       const trigger = wrapper.querySelector('#drawer-trigger') as HTMLElement;
-      const drawer = wrapper.querySelector('ae-drawer') as any;
+      const drawer = wrapper.querySelector('ae-drawer') as HTMLElement & { open: boolean };
       const close = wrapper.querySelector('#drawer-close') as HTMLElement;
       if (trigger && drawer) {
         trigger.onclick = () => { drawer.open = true; };
@@ -122,7 +122,7 @@ export class PgPreview extends LitElement {
 
     if (name === 'Toast') {
       const trigger = wrapper.querySelector('#toast-trigger') as HTMLElement;
-      const toast = wrapper.querySelector('ae-toast') as any;
+      const toast = wrapper.querySelector('ae-toast') as HTMLElement & { open: boolean };
       if (trigger && toast) {
         trigger.onclick = () => { toast.open = true; };
       }

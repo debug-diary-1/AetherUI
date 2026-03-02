@@ -17,7 +17,7 @@ export interface ComponentConfig {
   cssVariables: CSSVariable[];
   defaultHtml: string;
   variants?: { name: string; html: string }[];
-  properties?: { name: string; type: 'boolean' | 'string' | 'select' | 'number'; default: any; options?: string[] }[];
+  properties?: { name: string; type: 'boolean' | 'string' | 'select' | 'number'; default: unknown; options?: string[] }[];
   interactive?: boolean;
 }
 

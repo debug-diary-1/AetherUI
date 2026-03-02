@@ -20,7 +20,7 @@ export type ColumnFiltersState = ColumnFilter[];
  * @param filter The filter string to match against
  * @returns true if the value matches the filter
  */
-export function defaultStringFilter(value: any, filter: string): boolean {
+export function defaultStringFilter(value: unknown, filter: string): boolean {
   if (filter === '') return true;
   if (value === null || value === undefined) return false;
   
@@ -36,7 +36,7 @@ export function defaultStringFilter(value: any, filter: string): boolean {
  * @param filter The filter string to match against (can be comparison operator)
  * @returns true if the value matches the filter
  */
-export function defaultNumberFilter(value: any, filter: string): boolean {
+export function defaultNumberFilter(value: unknown, filter: string): boolean {
   if (filter === '') return true;
   if (value === null || value === undefined) return false;
   
@@ -71,12 +71,12 @@ export function defaultNumberFilter(value: any, filter: string): boolean {
  * @param filter The filter string to match against (can be comparison operator)
  * @returns true if the value matches the filter
  */
-export function defaultDateFilter(value: any, filter: string): boolean {
+export function defaultDateFilter(value: unknown, filter: string): boolean {
   if (filter === '') return true;
   if (value === null || value === undefined) return false;
   
   // Convert to date
-  const dateValue = value instanceof Date ? value : new Date(value);
+  const dateValue = value instanceof Date ? value : new Date(value as string | number);
   if (isNaN(dateValue.getTime())) return false;
   
   // Check for comparison operators or exact date match
