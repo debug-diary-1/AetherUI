@@ -217,7 +217,6 @@ export class AeCheckbox extends LitElement {
           ?required="${this.required}"
           @change="${this.handleChange}"
           @keydown="${this.handleKeyDown}"
-          tabindex="-1"
           aria-hidden="true"
         />
         
