@@ -16,15 +16,15 @@ An **autocomplete dropdown** that allows free‑type input or selection from a f
 | `filterFn`    | `(query: string, item: ComboItem) => boolean` | built‑in | Custom filter.                                          |
 
 | Event             | Payload                                     |
-| ----------------- | ------------------------------------------- | ------- |
-| `ae-combo-select` | `{ value: string; item: ComboItem           | null }` |
+| ----------------- | ------------------------------------------- |
+| `ae-combo-select` | `{ value: string; item: ComboItem | null }` |
 | `ae-combo-input`  | `{ value: string }` fired on each keystroke |
 
 ## 3 · Accessibility
 
-- Root input has `role="combobox"`, `aria-autocomplete="list"`, `aria-expanded`.
-- Popup list has `role="listbox"`; list items have `role="option"`.
-- **Keyboard**: ArrowDown opens & moves highlight, Enter selects, Esc closes.
+* Root input has `role="combobox"`, `aria-autocomplete="list"`, `aria-expanded`.
+* Popup list has `role="listbox"`; list items have `role="option"`.
+* **Keyboard**: ArrowDown opens & moves highlight, Enter selects, Esc closes.
 
 ## 4 · Styling & Theming
 
@@ -66,10 +66,7 @@ ae-combo::part(input) {
 import { css } from 'lit';
 
 export const comboStyles = css`
-  :host {
-    display: inline-block;
-    position: relative;
-  }
+  :host { display: inline-block; position: relative; }
 
   ::part(input) {
     width: 100%;
@@ -97,7 +94,7 @@ export const comboStyles = css`
     background: var(--ae-combo-bg, #fff);
     border: 1px solid var(--ae-combo-border, #d1d5db);
     border-radius: var(--ae-combo-radius, 0.375rem);
-    box-shadow: var(--ae-combo-shadow, 0 4px 12px rgba(0, 0, 0, 0.1));
+    box-shadow: var(--ae-combo-shadow, 0 4px 12px rgba(0,0,0,.1));
     max-height: 12rem;
     overflow: auto;
   }
@@ -133,21 +130,21 @@ packages/combo/
 
 ## 6 · Architecture
 
-- Lit reactive **controller** maintains query, filtered list, and highlight index.
-- Overlay positions with **@floating-ui** middleware (optional offset, flip).
-- **Debounce** filter at 150 ms for smoother typing.
+* Lit reactive **controller** maintains query, filtered list, and highlight index.
+* Overlay positions with **@floating-ui** middleware (optional offset, flip).
+* **Debounce** filter at 150 ms for smoother typing.
 
 ## 7 · Performance
 
-- Core bundle ≤ 3 KB; `@floating-ui` (4 KB) dynamic import.
-- Virtualization cut‑off at > 200 items roadmap.
+* Core bundle ≤ 3 KB; `@floating-ui` (4 KB) dynamic import.
+* Virtualization cut‑off at > 200 items roadmap.
 
 ## 8 · Testing Strategy
 
-- Unit: filter function, freeInput behaviour.
-- Playwright: keyboard navigation, aria attributes, option hover.
-- axe‑core: ensure listbox semantics, no contrast errors.
+* Unit: filter function, freeInput behaviour.
+* Playwright: keyboard navigation, aria attributes, option hover.
+* axe‑core: ensure listbox semantics, no contrast errors.
 
 ---
 
-_Updated: 2025‑05‑07_
+*Updated: 2025‑05‑07*

@@ -2,7 +2,6 @@
 title: Input
 description: Text input component with validation, form participation, and support for various input types.
 ---
-
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ComponentExample from '../../../components/ComponentExample.astro';
 
@@ -96,8 +95,16 @@ The input supports various HTML5 input types.
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
-  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
 </Tabs>
 
 ## Import
@@ -109,55 +116,55 @@ defineAeInput();
 
 ## Props
 
-| Name          | Type                                                                        | Default  | Description            |
-| ------------- | --------------------------------------------------------------------------- | -------- | ---------------------- |
-| `type`        | `'text' \| 'email' \| 'password' \| 'number' \| 'tel' \| 'url' \| 'search'` | `'text'` | Input type             |
-| `value`       | `string`                                                                    | `''`     | Current value          |
-| `placeholder` | `string`                                                                    | `''`     | Placeholder text       |
-| `label`       | `string`                                                                    | `''`     | Label text             |
-| `name`        | `string`                                                                    | `''`     | Form field name        |
-| `disabled`    | `boolean`                                                                   | `false`  | Disabled state         |
-| `required`    | `boolean`                                                                   | `false`  | Required field         |
-| `readonly`    | `boolean`                                                                   | `false`  | Read-only state        |
-| `error`       | `string`                                                                    | `''`     | Error message          |
-| `help-text`   | `string`                                                                    | `''`     | Helper text            |
-| `minlength`   | `number`                                                                    | -        | Minimum length         |
-| `maxlength`   | `number`                                                                    | -        | Maximum length         |
-| `pattern`     | `string`                                                                    | -        | Validation pattern     |
-| `min`         | `number`                                                                    | -        | Minimum value (number) |
-| `max`         | `number`                                                                    | -        | Maximum value (number) |
-| `clearable`   | `boolean`                                                                   | `false`  | Show clear button      |
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `type` | `'text' \| 'email' \| 'password' \| 'number' \| 'tel' \| 'url' \| 'search'` | `'text'` | Input type |
+| `value` | `string` | `''` | Current value |
+| `placeholder` | `string` | `''` | Placeholder text |
+| `label` | `string` | `''` | Label text |
+| `name` | `string` | `''` | Form field name |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `required` | `boolean` | `false` | Required field |
+| `readonly` | `boolean` | `false` | Read-only state |
+| `error` | `string` | `''` | Error message |
+| `help-text` | `string` | `''` | Helper text |
+| `minlength` | `number` | - | Minimum length |
+| `maxlength` | `number` | - | Maximum length |
+| `pattern` | `string` | - | Validation pattern |
+| `min` | `number` | - | Minimum value (number) |
+| `max` | `number` | - | Maximum value (number) |
+| `clearable` | `boolean` | `false` | Show clear button |
 
 ## Events
 
-| Name              | Detail              | Description        |
-| ----------------- | ------------------- | ------------------ |
-| `ae-input-input`  | `{ value: string }` | Fired on input     |
-| `ae-input-change` | `{ value: string }` | Fired on change    |
-| `ae-input-focus`  | -                   | Fired on focus     |
-| `ae-input-blur`   | -                   | Fired on blur      |
-| `ae-input-clear`  | -                   | Fired when cleared |
+| Name | Detail | Description |
+|------|--------|-------------|
+| `ae-input-input` | `{ value: string }` | Fired on input |
+| `ae-input-change` | `{ value: string }` | Fired on change |
+| `ae-input-focus` | - | Fired on focus |
+| `ae-input-blur` | - | Fired on blur |
+| `ae-input-clear` | - | Fired when cleared |
 
 ## Slots
 
-| Name     | Description          |
-| -------- | -------------------- |
+| Name | Description |
+|------|-------------|
 | `prefix` | Content before input |
-| `suffix` | Content after input  |
+| `suffix` | Content after input |
 
 ## CSS Parts
 
-| Name            | Description      |
-| --------------- | ---------------- |
-| `base`          | Base wrapper     |
-| `label`         | Label element    |
-| `input-wrapper` | Input container  |
-| `input`         | Native input     |
-| `prefix`        | Prefix container |
-| `suffix`        | Suffix container |
-| `clear-button`  | Clear button     |
-| `help-text`     | Help text        |
-| `error-text`    | Error message    |
+| Name | Description |
+|------|-------------|
+| `base` | Base wrapper |
+| `label` | Label element |
+| `input-wrapper` | Input container |
+| `input` | Native input |
+| `prefix` | Prefix container |
+| `suffix` | Suffix container |
+| `clear-button` | Clear button |
+| `help-text` | Help text |
+| `error-text` | Error message |
 
 ## Accessibility
 

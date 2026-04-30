@@ -34,21 +34,21 @@ const columns = [
     id: 'name',
     header: 'Name',
     field: 'name',
-    sortable: true,
+    sortable: true
   },
   {
     id: 'email',
     header: 'Email',
     field: 'email',
-    sortable: true,
+    sortable: true
   },
   {
     id: 'age',
     header: 'Age',
     field: 'age',
     sortable: true,
-    align: 'right',
-  },
+    align: 'right'
+  }
 ];
 
 // Sample data

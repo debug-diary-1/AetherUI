@@ -28,11 +28,11 @@ export default defineConfig({
       template: {
         compilerOptions: {
           // Treat all tags starting with 'ae-' as custom elements
-          isCustomElement: (tag) => tag.startsWith('ae-'),
-        },
-      },
-    }),
-  ],
+          isCustomElement: (tag) => tag.startsWith('ae-')
+        }
+      }
+    })
+  ]
 });
 ```
 
@@ -64,7 +64,12 @@ export {};
   <div class="app">
     <h1>AetherUI with Vue</h1>
 
-    <ae-button variant="primary" @ae-button-click="handleClick"> Click me </ae-button>
+    <ae-button
+      variant="primary"
+      @ae-button-click="handleClick"
+    >
+      Click me
+    </ae-button>
   </div>
 </template>
 
@@ -86,15 +91,28 @@ const handleClick = (e: CustomEvent) => {
 ```vue
 <template>
   <div>
-    <ae-button variant="primary" @ae-button-click="openModal"> Open Modal </ae-button>
+    <ae-button
+      variant="primary"
+      @ae-button-click="openModal"
+    >
+      Open Modal
+    </ae-button>
 
-    <ae-modal :open="isOpen" @ae-modal-close="closeModal">
+    <ae-modal
+      :open="isOpen"
+      @ae-modal-close="closeModal"
+    >
       <h2 slot="header">Modal Title</h2>
       <div slot="body">
         <p>This is a modal using AetherUI components in Vue!</p>
       </div>
       <div slot="footer">
-        <ae-button variant="secondary" @ae-button-click="closeModal"> Close </ae-button>
+        <ae-button
+          variant="secondary"
+          @ae-button-click="closeModal"
+        >
+          Close
+        </ae-button>
       </div>
     </ae-modal>
   </div>
@@ -124,7 +142,9 @@ const closeModal = () => {
 
 ```vue
 <template>
-  <ae-button ref="buttonRef" variant="primary"> Button with Ref </ae-button>
+  <ae-button ref="buttonRef" variant="primary">
+    Button with Ref
+  </ae-button>
 </template>
 
 <script setup lang="ts">
@@ -182,7 +202,7 @@ export default {
   install(app: App) {
     // Register all AetherUI components globally
     defineAll();
-  },
+  }
 };
 
 // main.ts
@@ -212,13 +232,24 @@ app.mount('#app');
       <input id="email" v-model="form.email" type="email" />
     </div>
 
-    <ae-checkbox v-model:checked="form.newsletter" @ae-checkbox-change="handleNewsletterChange">
+    <ae-checkbox
+      v-model:checked="form.newsletter"
+      @ae-checkbox-change="handleNewsletterChange"
+    >
       Subscribe to newsletter
     </ae-checkbox>
 
     <div class="form-actions">
-      <ae-button type="submit" variant="primary"> Submit </ae-button>
-      <ae-button type="button" variant="ghost" @ae-button-click="resetForm"> Reset </ae-button>
+      <ae-button type="submit" variant="primary">
+        Submit
+      </ae-button>
+      <ae-button
+        type="button"
+        variant="ghost"
+        @ae-button-click="resetForm"
+      >
+        Reset
+      </ae-button>
     </div>
   </form>
 </template>
@@ -234,7 +265,7 @@ defineAeCheckbox();
 const form = reactive({
   name: '',
   email: '',
-  newsletter: false,
+  newsletter: false
 });
 
 const handleSubmit = () => {
@@ -291,7 +322,9 @@ import '@aetherui/tokens/dark.css';
 ```vue
 <template>
   <div :class="theme">
-    <ae-button @ae-button-click="toggleTheme"> Toggle Theme </ae-button>
+    <ae-button @ae-button-click="toggleTheme">
+      Toggle Theme
+    </ae-button>
   </div>
 </template>
 
@@ -341,9 +374,9 @@ For Nuxt 3, configure custom elements in `nuxt.config.ts`:
 export default defineNuxtConfig({
   vue: {
     compilerOptions: {
-      isCustomElement: (tag) => tag.startsWith('ae-'),
-    },
-  },
+      isCustomElement: (tag) => tag.startsWith('ae-')
+    }
+  }
 });
 ```
 

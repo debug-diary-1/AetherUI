@@ -3,10 +3,9 @@
 Source of truth for colors, spacing, typography.
 
 ## Folder
-
 ```text
 packages/tokens/
 └─ src/
 ```
 
-_Updated: 2025-05-03_
+*Updated: 2025-05-03*

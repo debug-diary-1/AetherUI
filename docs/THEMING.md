@@ -84,7 +84,9 @@ defineAeButton();
 ```
 
 ```html
-<ae-button unstyled class="my-custom-button"> Fully custom styled </ae-button>
+<ae-button unstyled class="my-custom-button">
+  Fully custom styled
+</ae-button>
 ```
 
 ```css
@@ -231,7 +233,7 @@ ae-button::part(label) {
 
 ```css
 /* Style primary variant differently */
-ae-button[variant='primary']::part(base) {
+ae-button[variant="primary"]::part(base) {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
@@ -327,7 +329,9 @@ ae-accordion-item::part(header) {
 **Best for**: Complete custom styling, CSS frameworks (Tailwind)
 
 ```html
-<ae-button unstyled class="btn btn-primary"> My Custom Button </ae-button>
+<ae-button unstyled class="btn btn-primary">
+  My Custom Button
+</ae-button>
 ```
 
 ```css
@@ -500,7 +504,9 @@ ae-button[unstyled].my-btn::part(base) {
 ```
 
 ```html
-<ae-button unstyled class="px-4 py-2 bg-blue-500 text-white rounded"> Tailwind Styled </ae-button>
+<ae-button unstyled class="px-4 py-2 bg-blue-500 text-white rounded">
+  Tailwind Styled
+</ae-button>
 ```
 
 ### When to Use Unstyled Mode
@@ -519,10 +525,10 @@ ae-button[unstyled].my-btn::part(base) {
 ```css
 :root {
   /* Material Design 3 tokens */
-  --ae-color-primary: #6750a4;
-  --ae-color-secondary: #625b71;
-  --ae-color-success: #6ebd2a;
-  --ae-color-error: #ba1a1a;
+  --ae-color-primary: #6750A4;
+  --ae-color-secondary: #625B71;
+  --ae-color-success: #6EBD2A;
+  --ae-color-error: #BA1A1A;
 
   /* Material typography */
   --ae-font-family: 'Roboto', sans-serif;
@@ -530,7 +536,7 @@ ae-button[unstyled].my-btn::part(base) {
   /* Material elevation shadows */
   --ae-shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.12);
   --ae-shadow-md: 0px 4px 8px rgba(0, 0, 0, 0.16);
-  --ae-shadow-lg: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  --ae-shadow-lg: 0px 8px 16px rgba(0, 0, 0, 0.20);
 
   /* Material button */
   --ae-button-bg-primary: var(--ae-color-primary);
@@ -586,10 +592,10 @@ ae-button::part(base) {
 ```css
 :root {
   /* iOS colors */
-  --ae-color-primary: #007aff;
-  --ae-color-secondary: #8e8e93;
-  --ae-color-success: #34c759;
-  --ae-color-error: #ff3b30;
+  --ae-color-primary: #007AFF;
+  --ae-color-secondary: #8E8E93;
+  --ae-color-success: #34C759;
+  --ae-color-error: #FF3B30;
 
   /* iOS typography */
   --ae-font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
@@ -691,7 +697,7 @@ Or map Tailwind tokens:
 }
 
 /* Or manual toggle */
-[data-theme='dark'] {
+[data-theme="dark"] {
   --ae-color-background: #1a1a1a;
   --ae-color-text: white;
 }

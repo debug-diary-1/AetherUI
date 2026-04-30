@@ -23,26 +23,20 @@ Add type definitions for custom elements in your `vite-env.d.ts` or global types
 
 declare namespace JSX {
   interface IntrinsicElements {
-    'ae-button': React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLElement> & {
-        variant?: 'primary' | 'secondary' | 'ghost';
-        size?: 'sm' | 'md' | 'lg';
-        disabled?: boolean;
-        onAeButtonClick?: (e: CustomEvent) => void;
-      },
-      HTMLElement
-    >;
-    'ae-modal': React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLElement> & {
-        open?: boolean;
-        closable?: boolean;
-        backdrop?: boolean;
-        size?: 'small' | 'medium' | 'large';
-        onAeModalOpen?: (e: CustomEvent) => void;
-        onAeModalClose?: (e: CustomEvent) => void;
-      },
-      HTMLElement
-    >;
+    'ae-button': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
+      variant?: 'primary' | 'secondary' | 'ghost';
+      size?: 'sm' | 'md' | 'lg';
+      disabled?: boolean;
+      onAeButtonClick?: (e: CustomEvent) => void;
+    }, HTMLElement>;
+    'ae-modal': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
+      open?: boolean;
+      closable?: boolean;
+      backdrop?: boolean;
+      size?: 'small' | 'medium' | 'large';
+      onAeModalOpen?: (e: CustomEvent) => void;
+      onAeModalClose?: (e: CustomEvent) => void;
+    }, HTMLElement>;
   }
 }
 ```
@@ -66,7 +60,10 @@ function App() {
     <div className="App">
       <h1>AetherUI with React</h1>
 
-      <ae-button variant="primary" onAeButtonClick={handleClick}>
+      <ae-button
+        variant="primary"
+        onAeButtonClick={handleClick}
+      >
         Click me
       </ae-button>
     </div>
@@ -94,17 +91,26 @@ function ModalExample() {
 
   return (
     <div>
-      <ae-button variant="primary" onAeButtonClick={handleOpen}>
+      <ae-button
+        variant="primary"
+        onAeButtonClick={handleOpen}
+      >
         Open Modal
       </ae-button>
 
-      <ae-modal open={isOpen} onAeModalClose={handleClose}>
+      <ae-modal
+        open={isOpen}
+        onAeModalClose={handleClose}
+      >
         <h2 slot="header">Modal Title</h2>
         <div slot="body">
           <p>This is a modal using AetherUI components in React!</p>
         </div>
         <div slot="footer">
-          <ae-button variant="secondary" onAeButtonClick={handleClose}>
+          <ae-button
+            variant="secondary"
+            onAeButtonClick={handleClose}
+          >
             Close
           </ae-button>
         </div>
@@ -136,7 +142,11 @@ function RefExample() {
     }
   }, []);
 
-  return <ae-button ref={buttonRef}>Button with Ref</ae-button>;
+  return (
+    <ae-button ref={buttonRef}>
+      Button with Ref
+    </ae-button>
+  );
 }
 ```
 
@@ -213,7 +223,10 @@ Web Components don't work with SSR. Use dynamic imports:
 ```tsx
 import dynamic from 'next/dynamic';
 
-const ClientOnlyComponent = dynamic(() => import('./ClientComponent'), { ssr: false });
+const ClientOnlyComponent = dynamic(
+  () => import('./ClientComponent'),
+  { ssr: false }
+);
 ```
 
 ## Resources

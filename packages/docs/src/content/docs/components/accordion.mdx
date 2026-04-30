@@ -13,9 +13,21 @@ The Accordion component is a collapsible disclosure component that shows or hide
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
-  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
-  <TabItem label="yarn">```bash yarn add @aetherui/core ```</TabItem>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="yarn">
+    ```bash
+    yarn add @aetherui/core
+    ```
+  </TabItem>
 </Tabs>
 
 ## Basic Usage
@@ -97,23 +109,23 @@ The Accordion component is a collapsible disclosure component that shows or hide
 
 ### Accordion Props
 
-| Name              | Type       | Default | Description                                              |
-| ----------------- | ---------- | ------- | -------------------------------------------------------- |
-| `multiselectable` | `boolean`  | `false` | Allow multiple panels to be open at once                 |
-| `default-value`   | `string[]` | `[]`    | Array of header IDs to be open by default                |
-| `value`           | `string[]` | `[]`    | Array of header IDs that are currently open (controlled) |
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `multiselectable` | `boolean` | `false` | Allow multiple panels to be open at once |
+| `default-value` | `string[]` | `[]` | Array of header IDs to be open by default |
+| `value` | `string[]` | `[]` | Array of header IDs that are currently open (controlled) |
 
 ### Accordion Item Props
 
-| Name             | Type      | Default        | Description                        |
-| ---------------- | --------- | -------------- | ---------------------------------- |
-| `data-header-id` | `string`  | auto-generated | Unique ID for the accordion header |
-| `open`           | `boolean` | `false`        | Whether the panel is open          |
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `data-header-id` | `string` | auto-generated | Unique ID for the accordion header |
+| `open` | `boolean` | `false` | Whether the panel is open |
 
 ## Events
 
-| Event       | Payload              | Description                       |
-| ----------- | -------------------- | --------------------------------- |
+| Event | Payload | Description |
+|-------|---------|-------------|
 | `ae-change` | `{ open: string[] }` | Fired when the open state changes |
 
 ## Accessibility

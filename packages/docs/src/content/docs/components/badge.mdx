@@ -2,7 +2,6 @@
 title: Badge
 description: Small status indicator component with multiple variants for displaying labels, counts, or status.
 ---
-
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ComponentExample from '../../../components/ComponentExample.astro';
 
@@ -69,8 +68,16 @@ A small status indicator component for displaying labels, counts, or status.
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
-  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
 </Tabs>
 
 ## Import
@@ -82,19 +89,19 @@ defineAeBadge();
 
 ## Props
 
-| Name      | Type                                                                    | Default     | Description   |
-| --------- | ----------------------------------------------------------------------- | ----------- | ------------- |
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
 | `variant` | `'default' \| 'primary' \| 'success' \| 'warning' \| 'error' \| 'info'` | `'default'` | Color variant |
-| `size`    | `'sm' \| 'md' \| 'lg'`                                                  | `'md'`      | Size variant  |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size variant |
 
 ## Slots
 
-| Name    | Description   |
-| ------- | ------------- |
+| Name | Description |
+|------|-------------|
 | default | Badge content |
 
 ## CSS Parts
 
-| Name   | Description       |
-| ------ | ----------------- |
+| Name | Description |
+|------|-------------|
 | `base` | The badge element |

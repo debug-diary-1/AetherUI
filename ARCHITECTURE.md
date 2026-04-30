@@ -1,7 +1,6 @@
 # AetherUI Architecture & Testing Guide
 
 ## Table of Contents
-
 - [Overview](#overview)
 - [Design Principles](#design-principles)
 - [Component Architecture](#component-architecture)
@@ -15,7 +14,6 @@
 AetherUI is a modern, accessible web component library built with **Lit** (Web Components) and TypeScript. The library provides 17 production-ready UI components with comprehensive testing, documentation, and E2E validation.
 
 ### Technology Stack
-
 - **Framework**: Lit 3.x (Web Components)
 - **Language**: TypeScript 5.x
 - **Build Tool**: Vite
@@ -28,16 +26,13 @@ AetherUI is a modern, accessible web component library built with **Lit** (Web C
 ## Design Principles
 
 ### 1. Consistency First
-
 All components follow identical architectural patterns:
-
 - Property naming: `camelCase` → `kebab-case` attributes
 - Event naming: `ae-[component]-[action]` (e.g., `ae-input-change`)
 - Reflected attributes: Properties marked with `reflect: true` for CSS attribute selectors
 - Shadow DOM: Encapsulated styles with CSS parts for customization
 
 ### 2. Accessibility Built-In
-
 - WAI-ARIA compliance out of the box
 - Keyboard navigation support
 - Screen reader announcements
@@ -45,9 +40,7 @@ All components follow identical architectural patterns:
 - High contrast mode support
 
 ### 3. Form Integration
-
 Components that represent form controls use the **ElementInternals API** for native form participation:
-
 - `ae-input`
 - `ae-textarea`
 - `ae-select`
@@ -56,7 +49,6 @@ Components that represent form controls use the **ElementInternals API** for nat
 - `ae-switch`
 
 ### 4. Progressive Enhancement
-
 - Works without JavaScript (where possible)
 - Graceful degradation
 - Respects user preferences (prefers-reduced-motion, forced-colors)
@@ -64,7 +56,6 @@ Components that represent form controls use the **ElementInternals API** for nat
 ## Component Architecture
 
 ### File Structure
-
 ```
 packages/core/src/[component]/
 ├── ae-[component].ts      # Main component class
@@ -109,15 +100,11 @@ export class AeComponent extends LitElement {
   accessor size: 'sm' | 'md' | 'lg' = 'md';
 
   private _handleEvent() {
-    this.dispatchEvent(
-      new CustomEvent('ae-component-action', {
-        detail: {
-          /* event data */
-        },
-        bubbles: true,
-        composed: true,
-      }),
-    );
+    this.dispatchEvent(new CustomEvent('ae-component-action', {
+      detail: { /* event data */ },
+      bubbles: true,
+      composed: true
+    }));
   }
 
   render() {
@@ -147,25 +134,25 @@ export const componentStyles = css`
   }
 
   /* Base styles */
-  [part='base'] {
+  [part="base"] {
     /* ... */
   }
 
   /* Size variants */
-  :host([size='sm']) [part='base'] {
+  :host([size='sm']) [part="base"] {
     font-size: 0.8125rem;
   }
 
-  :host([size='md']) [part='base'] {
+  :host([size='md']) [part="base"] {
     font-size: 0.875rem;
   }
 
-  :host([size='lg']) [part='base'] {
+  :host([size='lg']) [part="base"] {
     font-size: 1rem;
   }
 
   /* Variant styles */
-  :host([variant='primary']) [part='base'] {
+  :host([variant='primary']) [part="base"] {
     background: var(--ae-primary-bg, #4f46e5);
   }
 `;
@@ -205,26 +192,31 @@ export const componentStyles = css`
 **Location**: `packages/core/src/[component]/__tests__/`
 
 **Pattern**:
-
 ```typescript
 import { html, fixture, expect } from '@open-wc/testing';
 import { AeComponent } from '../ae-component.js';
 
 describe('ae-component', () => {
   it('has correct default properties', async () => {
-    const el = await fixture<AeComponent>(html`<ae-component></ae-component>`);
+    const el = await fixture<AeComponent>(
+      html`<ae-component></ae-component>`
+    );
     expect(el.variant).to.equal('primary');
     expect(el.size).to.equal('md');
   });
 
   it('reflects properties to attributes', async () => {
-    const el = await fixture<AeComponent>(html`<ae-component size="lg"></ae-component>`);
+    const el = await fixture<AeComponent>(
+      html`<ae-component size="lg"></ae-component>`
+    );
     expect(el.size).to.equal('lg');
     expect(el.getAttribute('size')).to.equal('lg');
   });
 
   it('emits custom events', async () => {
-    const el = await fixture<AeComponent>(html`<ae-component></ae-component>`);
+    const el = await fixture<AeComponent>(
+      html`<ae-component></ae-component>`
+    );
 
     let eventFired = false;
     el.addEventListener('ae-component-action', () => {
@@ -250,7 +242,6 @@ describe('ae-component', () => {
 **Location**: `packages/storybook/src/stories/Ae[Component].stories.js`
 
 **Pattern**:
-
 ```javascript
 import { html } from 'lit';
 import { expect, within, userEvent, waitFor } from '@storybook/test';
@@ -286,7 +277,6 @@ export const Default = {
 ```
 
 **Key Considerations**:
-
 - ❌ **Don't use**: Testing Library's `getByRole()` (can't pierce shadow DOM)
 - ✅ **Do use**: Direct `.shadowRoot.querySelector()` access
 - ❌ **Don't use**: `userEvent.clear()` on shadow DOM inputs (focus issues)
@@ -301,7 +291,6 @@ export const Default = {
 **Location**: `tests/e2e/visual.spec.ts`
 
 **Pattern**:
-
 ```typescript
 import { test, expect } from '@playwright/test';
 
@@ -332,11 +321,9 @@ test.describe('Component Visual Tests', () => {
 ### Form Controls (6 components)
 
 #### 1. **ae-input**
-
 Text input with validation and accessibility.
 
 **Features**:
-
 - ElementInternals form participation
 - Built-in validation states (error, success, warning)
 - Helper text and error messages
@@ -350,11 +337,9 @@ Text input with validation and accessibility.
 ---
 
 #### 2. **ae-textarea**
-
 Multi-line text input with auto-resize.
 
 **Features**:
-
 - Auto-resize to content
 - Character counter
 - Validation states
@@ -367,11 +352,9 @@ Multi-line text input with auto-resize.
 ---
 
 #### 3. **ae-select**
-
 Native select wrapper with consistent styling.
 
 **Features**:
-
 - Multiple selection support
 - Validation states
 - Option groups
@@ -384,11 +367,9 @@ Native select wrapper with consistent styling.
 ---
 
 #### 4. **ae-checkbox**
-
 Checkbox with indeterminate state.
 
 **Features**:
-
 - Indeterminate state
 - Validation states
 - ElementInternals integration
@@ -400,11 +381,9 @@ Checkbox with indeterminate state.
 ---
 
 #### 5. **ae-radio**
-
 Radio button for mutually exclusive choices.
 
 **Features**:
-
 - Radio groups
 - Validation states
 - ElementInternals integration
@@ -416,11 +395,9 @@ Radio button for mutually exclusive choices.
 ---
 
 #### 6. **ae-switch**
-
 Toggle switch for boolean values.
 
 **Features**:
-
 - Size variants
 - Validation states
 - ElementInternals integration
@@ -434,11 +411,9 @@ Toggle switch for boolean values.
 ### Interactive Components (5 components)
 
 #### 7. **ae-autocomplete**
-
 Search input with filtered dropdown suggestions.
 
 **Features**:
-
 - Client-side filtering
 - Keyboard navigation
 - Highlighting matched text
@@ -453,11 +428,9 @@ Search input with filtered dropdown suggestions.
 ---
 
 #### 8. **ae-combo**
-
 Combobox with custom filtering and selection.
 
 **Features**:
-
 - Highlighting with `unsafeHTML`
 - Keyboard navigation (Arrow keys, Enter, Escape)
 - ARIA compliance (aria-expanded, aria-activedescendant)
@@ -469,11 +442,9 @@ Combobox with custom filtering and selection.
 ---
 
 #### 9. **ae-pagination**
-
 Page navigation with configurable display.
 
 **Features**:
-
 - First/Last page buttons
 - Sibling page range control
 - Size variants
@@ -486,11 +457,9 @@ Page navigation with configurable display.
 ---
 
 #### 10. **ae-tooltip**
-
 Contextual information on hover/focus.
 
 **Features**:
-
 - 12 placement options
 - Hover/hide delays
 - Arrow indicator
@@ -505,11 +474,9 @@ Contextual information on hover/focus.
 ---
 
 #### 11. **ae-tabs**
-
 Tabbed interface with keyboard navigation.
 
 **Features**:
-
 - Horizontal/vertical orientation
 - Auto/manual activation modes
 - ARIA compliance (role=tablist)
@@ -524,11 +491,9 @@ Tabbed interface with keyboard navigation.
 ### Overlay Components (3 components)
 
 #### 12. **ae-drawer**
-
 Side panel that slides in from screen edge.
 
 **Features**:
-
 - 4 placements (left, right, top, bottom)
 - Focus trap
 - ESC key dismissal
@@ -541,11 +506,9 @@ Side panel that slides in from screen edge.
 ---
 
 #### 13. **ae-popover**
-
 Floating overlay with positioning.
 
 **Features**:
-
 - Click/hover/manual triggers
 - Floating UI positioning
 - Arrow indicator
@@ -558,11 +521,9 @@ Floating overlay with positioning.
 ---
 
 #### 14. **ae-menu**
-
 Dropdown menu with keyboard navigation.
 
 **Features**:
-
 - Nested submenus
 - Keyboard navigation
 - ARIA compliance
@@ -577,11 +538,9 @@ Dropdown menu with keyboard navigation.
 ### Feedback Components (2 components)
 
 #### 15. **ae-alert**
-
 In-flow banner for status messages.
 
 **Features**:
-
 - 4 variants (info, success, warning, error)
 - Size variants (sm, md, lg)
 - Closable option
@@ -595,11 +554,9 @@ In-flow banner for status messages.
 ---
 
 #### 16. **ae-toast**
-
 Ephemeral notifications with auto-dismiss.
 
 **Features**:
-
 - 4 variants (info, success, warning, error)
 - Size variants (sm, md, lg)
 - Auto-dismiss with timer
@@ -616,11 +573,9 @@ Ephemeral notifications with auto-dismiss.
 ### Display Components (3 components)
 
 #### 17. **ae-badge**
-
 Small status indicator or label.
 
 **Features**:
-
 - 7 variants (primary, secondary, success, warning, error, info, neutral)
 - Size variants (sm, md, lg)
 - Outline style
@@ -634,11 +589,9 @@ Small status indicator or label.
 ---
 
 #### 18. **ae-breadcrumb**
-
 Navigation trail showing page hierarchy.
 
 **Features**:
-
 - Auto separator rendering
 - aria-current for active page
 - Custom separator slot
@@ -648,11 +601,9 @@ Navigation trail showing page hierarchy.
 ---
 
 #### 19. **ae-progress**
-
 Visual progress indicator.
 
 **Features**:
-
 - Linear progress bar
 - Determinate/indeterminate modes
 - Size variants
@@ -664,11 +615,9 @@ Visual progress indicator.
 ### Utility Components (1 component)
 
 #### 20. **ae-spinner**
-
 Loading indicator.
 
 **Features**:
-
 - Size variants (sm, md, lg)
 - Color customization
 - Accessible labels
@@ -678,11 +627,9 @@ Loading indicator.
 ---
 
 #### 21. **ae-treeview**
-
 Hierarchical list with expand/collapse.
 
 **Features**:
-
 - Nested items
 - Expand/collapse states
 - Keyboard navigation
@@ -790,7 +737,6 @@ jobs:
 ### Quality Gates
 
 All PRs must pass:
-
 - ✅ TypeScript compilation (no errors)
 - ✅ Unit tests (100% pass rate)
 - ✅ Storybook tests (all play functions pass)
@@ -854,38 +800,30 @@ const input = canvas.getByRole('textbox');
 
 ```typescript
 // ✅ Good - bubbles and composed for cross-boundary
-this.dispatchEvent(
-  new CustomEvent('ae-component-action', {
-    detail: { value: this.value },
-    bubbles: true,
-    composed: true,
-  }),
-);
+this.dispatchEvent(new CustomEvent('ae-component-action', {
+  detail: { value: this.value },
+  bubbles: true,
+  composed: true
+}));
 ```
 
 ## Performance Considerations
 
 ### 1. Virtual Scrolling
-
 Not implemented yet, but recommended for:
-
 - Large lists (>100 items)
 - Tables with many rows
 - Tree views with deep nesting
 
 ### 2. Lazy Loading
-
 Components use dynamic imports where possible:
-
 ```typescript
 // Good for large dependencies
 const { computePosition } = await import('@floating-ui/dom');
 ```
 
 ### 3. Animation Performance
-
 All animations use CSS transforms for GPU acceleration:
-
 ```css
 /* ✅ Good */
 transform: translateY(0);
@@ -911,7 +849,6 @@ opacity: 1;
 ## Future Enhancements
 
 ### Planned Features
-
 1. **Virtual scrolling** for large lists
 2. **Date/time pickers**
 3. **Rich text editor**
@@ -922,7 +859,6 @@ opacity: 1;
 8. **Carousel/Slider**
 
 ### Infrastructure
-
 1. **Visual regression testing** in CI
 2. **Automated accessibility audits** (axe-core)
 3. **Bundle size tracking**

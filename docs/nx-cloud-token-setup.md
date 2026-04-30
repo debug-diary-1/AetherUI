@@ -9,13 +9,11 @@
 ## Step 2: Create or Connect to a Workspace
 
 ### Option A: Create a New Workspace
-
 1. After signing in, click "Create Workspace"
 2. Name your workspace (e.g., "AetherUI")
 3. Select the free tier or choose a paid plan
 
 ### Option B: Connect to Existing Organization
-
 - If you need to connect to organization `MpAIVrTJI3`, you'll need to be invited by an admin
 - Contact the organization admin to get an invitation
 
@@ -42,7 +40,6 @@
 ## Step 5: Verify Configuration
 
 After adding the token, the CI workflow will automatically:
-
 - Use Nx Cloud for remote caching
 - Distribute tasks across multiple agents
 - Share cache between CI runs and team members
@@ -62,18 +59,15 @@ pnpm build
 ## Troubleshooting
 
 ### Invalid Token Error
-
 - Ensure you copied the entire token (including any `==` at the end)
 - Check that the token hasn't expired
 - Verify the token is for the correct workspace
 
 ### Organization Access
-
 - For organization `MpAIVrTJI3`, you need to be added as a member
 - Contact the workspace admin for access
 
 ### Token Not Working in CI
-
 - Ensure the secret name is exactly `NX_CLOUD_ACCESS_TOKEN`
 - Check that the secret is available to your workflow (not restricted to certain branches)
 - Verify the token permissions in Nx Cloud dashboard
@@ -83,12 +77,11 @@ pnpm build
 ✅ **30-50% faster CI builds** through remote caching  
 ✅ **Shared cache** between developers and CI  
 ✅ **Distributed task execution** across agents  
-✅ **Build analytics** and performance insights
+✅ **Build analytics** and performance insights  
 
 ## Free Tier Limits
 
 The Nx Cloud free tier includes:
-
 - 500 computation hours per month
 - Unlimited users
 - 7-day cache retention

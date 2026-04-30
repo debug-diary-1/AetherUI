@@ -28,8 +28,8 @@ Mutually exclusive option selection.
 
 ## 4 · Accessibility
 
-- Group `role="radiogroup"`, each radio `role="radio"`.
-- Roving tabindex for keyboard.
+* Group `role="radiogroup"`, each radio `role="radio"`.
+* Roving tabindex for keyboard.
 
 ## 5 · Styling
 
@@ -50,4 +50,4 @@ Similar to Checkbox but with roving tabindex tests.
 
 ---
 
-_Updated: {{date}}_
+*Updated: {{date}}*

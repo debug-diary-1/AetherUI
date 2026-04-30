@@ -5,11 +5,9 @@ This directory contains end-to-end tests for AetherUI components using Playwrigh
 ## 🎯 Test Types
 
 ### 1. **Visual Regression Tests**
-
 Catch visual bugs by comparing screenshots against baselines.
 
 **Example:** Combo component HTML rendering bug would be caught by:
-
 ```typescript
 // Verifies highlight is rendered as HTML, not escaped text
 const innerHTML = await option.innerHTML();
@@ -18,41 +16,34 @@ expect(innerHTML).not.toContain('&lt;span');
 ```
 
 ### 2. **Interaction Tests**
-
 Test user interactions like clicks, keyboard navigation, form submissions.
 
 ### 3. **Accessibility Tests**
-
 Verify ARIA attributes, roles, and keyboard navigation.
 
 ## 🚀 Running Tests
 
 ### Run all E2E tests
-
 ```bash
 pnpm test:e2e
 ```
 
 ### Run tests in UI mode (interactive)
-
 ```bash
 pnpm test:e2e:ui
 ```
 
 ### Run tests in headed mode (see browser)
-
 ```bash
 pnpm test:e2e:headed
 ```
 
 ### Update visual snapshots
-
 ```bash
 pnpm test:e2e:update-snapshots
 ```
 
 ### Run specific test file
-
 ```bash
 pnpm test:e2e combo.visual.spec.ts
 ```
@@ -60,9 +51,7 @@ pnpm test:e2e combo.visual.spec.ts
 ## 📸 Visual Regression Testing
 
 ### First Time Setup
-
 1. Run tests to generate baseline screenshots:
-
    ```bash
    pnpm test:e2e:update-snapshots
    ```
@@ -74,9 +63,7 @@ pnpm test:e2e combo.visual.spec.ts
    ```
 
 ### Updating Baselines
-
 When you intentionally change component visuals:
-
 ```bash
 pnpm test:e2e:update-snapshots
 git add tests/e2e/**/*.png
@@ -86,7 +73,6 @@ git commit -m "test: update visual baselines after design change"
 ## 🧪 Writing New Tests
 
 ### Visual Test Template
-
 ```typescript
 test.describe('MyComponent', () => {
   test.beforeEach(async ({ page }) => {
@@ -101,7 +87,6 @@ test.describe('MyComponent', () => {
 ```
 
 ### Interaction Test Template
-
 ```typescript
 test('user can interact with component', async ({ page }) => {
   const button = page.getByRole('button');
@@ -115,12 +100,10 @@ test('user can interact with component', async ({ page }) => {
 ## 🤝 CI Integration
 
 Tests run automatically on:
-
 - Every push to `main`
 - Every pull request
 
 CI will:
-
 1. Run unit tests
 2. Build Storybook
 3. Run Storybook test runner (interaction tests)
@@ -130,26 +113,22 @@ CI will:
 ## 📊 Test Reports
 
 After running tests locally:
-
 ```bash
 npx playwright show-report
 ```
 
 On CI failures:
-
 - Check the "playwright-report" artifact
 - Check the "playwright-screenshots" artifact
 
 ## 🐛 Debugging
 
 ### Debug specific test
-
 ```bash
 npx playwright test --debug combo.visual.spec.ts
 ```
 
 ### View trace for failed test
-
 ```bash
 npx playwright show-trace test-results/path/to/trace.zip
 ```
@@ -165,7 +144,6 @@ npx playwright show-trace test-results/path/to/trace.zip
 ## 🎨 Component Coverage
 
 ### ✅ Covered
-
 - Combo (including highlight rendering bug prevention)
 - Input
 - Select
@@ -181,5 +159,4 @@ npx playwright show-trace test-results/path/to/trace.zip
 - Menu
 
 ### 🔄 Priority for Additional Coverage
-
 Add more tests as bugs are discovered or for critical user flows.

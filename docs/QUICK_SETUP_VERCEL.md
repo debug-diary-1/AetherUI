@@ -29,7 +29,6 @@ Vercel will auto-detect the settings from `vercel.json`:
 ### Step 4: Configure GitHub Integration
 
 Vercel automatically:
-
 - ✅ Deploys every PR with a unique preview URL
 - ✅ Comments on PRs with the preview link
 - ✅ Updates preview on every push to the PR
@@ -76,7 +75,6 @@ If you need to set environment variables:
 4. Save
 
 Example:
-
 ```
 NODE_OPTIONS = --max-old-space-size=4096
 ```

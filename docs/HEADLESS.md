@@ -90,7 +90,7 @@ defineAll();
 ```
 
 ```css
-[data-ae-unstyled='true'] ae-button,
+[data-ae-unstyled="true"] ae-button,
 ae-button[unstyled] {
   /* Your styles */
 }
@@ -138,7 +138,9 @@ ae-button[unstyled]::part(icon) {
 Add custom classes and style them:
 
 ```html
-<ae-button unstyled class="btn btn-primary"> Click me </ae-button>
+<ae-button unstyled class="btn btn-primary">
+  Click me
+</ae-button>
 ```
 
 ```css
@@ -166,7 +168,9 @@ ae-button.btn-secondary::part(base) {
 While you can't apply Tailwind classes directly to Shadow DOM elements, you can use custom properties:
 
 ```html
-<ae-button unstyled class="btn-blue"> Click me </ae-button>
+<ae-button unstyled class="btn-blue">
+  Click me
+</ae-button>
 ```
 
 ```css
@@ -199,23 +203,17 @@ All components expose CSS Parts for targeting internal elements. Here's what's a
 ```html
 <ae-button unstyled>
   #shadow-root
-  <button part="base">
-    <slot name="icon" part="icon"></slot>
-    <span part="label"><slot></slot></span>
-  </button>
+    <button part="base">
+      <slot name="icon" part="icon"></slot>
+      <span part="label"><slot></slot></span>
+    </button>
 </ae-button>
 ```
 
 ```css
-ae-button::part(base) {
-  /* The button element */
-}
-ae-button::part(icon) {
-  /* Icon wrapper */
-}
-ae-button::part(label) {
-  /* Label wrapper */
-}
+ae-button::part(base) { /* The button element */ }
+ae-button::part(icon) { /* Icon wrapper */ }
+ae-button::part(label) { /* Label wrapper */ }
 ```
 
 ### Accordion
@@ -223,39 +221,27 @@ ae-button::part(label) {
 ```html
 <ae-accordion-item unstyled>
   #shadow-root
-  <div part="base">
-    <button part="header">
-      <slot name="header" part="header-content"></slot>
-      <svg part="icon"></svg>
-    </button>
-    <div part="panel">
-      <div part="panel-content">
-        <slot></slot>
+    <div part="base">
+      <button part="header">
+        <slot name="header" part="header-content"></slot>
+        <svg part="icon"></svg>
+      </button>
+      <div part="panel">
+        <div part="panel-content">
+          <slot></slot>
+        </div>
       </div>
     </div>
-  </div>
 </ae-accordion-item>
 ```
 
 ```css
-ae-accordion-item::part(base) {
-  /* Container */
-}
-ae-accordion-item::part(header) {
-  /* Header button */
-}
-ae-accordion-item::part(header-content) {
-  /* Header content slot */
-}
-ae-accordion-item::part(icon) {
-  /* Expand/collapse icon */
-}
-ae-accordion-item::part(panel) {
-  /* Content panel */
-}
-ae-accordion-item::part(panel-content) {
-  /* Panel content wrapper */
-}
+ae-accordion-item::part(base) { /* Container */ }
+ae-accordion-item::part(header) { /* Header button */ }
+ae-accordion-item::part(header-content) { /* Header content slot */ }
+ae-accordion-item::part(icon) { /* Expand/collapse icon */ }
+ae-accordion-item::part(panel) { /* Content panel */ }
+ae-accordion-item::part(panel-content) { /* Panel content wrapper */ }
 ```
 
 ### Checkbox
@@ -263,32 +249,22 @@ ae-accordion-item::part(panel-content) {
 ```html
 <ae-checkbox unstyled>
   #shadow-root
-  <label part="label">
-    <input part="input" type="checkbox" />
-    <span part="control">
-      <svg part="icon"></svg>
-    </span>
-    <span part="label-text"><slot></slot></span>
-  </label>
+    <label part="label">
+      <input part="input" type="checkbox" />
+      <span part="control">
+        <svg part="icon"></svg>
+      </span>
+      <span part="label-text"><slot></slot></span>
+    </label>
 </ae-checkbox>
 ```
 
 ```css
-ae-checkbox::part(label) {
-  /* Label wrapper */
-}
-ae-checkbox::part(input) {
-  /* Hidden input */
-}
-ae-checkbox::part(control) {
-  /* Visual checkbox */
-}
-ae-checkbox::part(icon) {
-  /* Checkmark icon */
-}
-ae-checkbox::part(label-text) {
-  /* Label text */
-}
+ae-checkbox::part(label) { /* Label wrapper */ }
+ae-checkbox::part(input) { /* Hidden input */ }
+ae-checkbox::part(control) { /* Visual checkbox */ }
+ae-checkbox::part(icon) { /* Checkmark icon */ }
+ae-checkbox::part(label-text) { /* Label text */ }
 ```
 
 For a complete reference of all parts, see [CSS_PROPERTIES.md](./CSS_PROPERTIES.md).
@@ -325,7 +301,9 @@ ae-button.btn-primary::part(base) {
 
 ```vue
 <template>
-  <ae-button unstyled class="custom-button"> Click me </ae-button>
+  <ae-button unstyled class="custom-button">
+    Click me
+  </ae-button>
 </template>
 
 <script setup>
@@ -361,18 +339,20 @@ defineAeButton();
 
 @Component({
   selector: 'app-root',
-  template: ` <ae-button unstyled class="primary-btn"> Click me </ae-button> `,
-  styles: [
-    `
-      ae-button.primary-btn::part(base) {
-        background: #1976d2;
-        color: white;
-        padding: 0.75rem 1.5rem;
-        border-radius: 4px;
-        border: none;
-      }
-    `,
-  ],
+  template: `
+    <ae-button unstyled class="primary-btn">
+      Click me
+    </ae-button>
+  `,
+  styles: [`
+    ae-button.primary-btn::part(base) {
+      background: #1976d2;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      border: none;
+    }
+  `]
 })
 export class AppComponent {}
 ```
@@ -415,7 +395,7 @@ export class AppComponent {}
 ```html
 <ae-button unstyled class="gradient-button">
   <svg slot="icon" width="20" height="20" viewBox="0 0 20 20">
-    <path fill="currentColor" d="M10 0L12 8L20 10L12 12L10 20L8 12L0 10L8 8Z" />
+    <path fill="currentColor" d="M10 0L12 8L20 10L12 12L10 20L8 12L0 10L8 8Z"/>
   </svg>
   Gradient Button
 </ae-button>
@@ -456,7 +436,9 @@ ae-button.gradient-button::part(icon) {
 ### Example 2: Material Design Checkbox
 
 ```html
-<ae-checkbox unstyled class="md-checkbox"> Accept terms and conditions </ae-checkbox>
+<ae-checkbox unstyled class="md-checkbox">
+  Accept terms and conditions
+</ae-checkbox>
 ```
 
 ```css
@@ -596,14 +578,12 @@ ae-accordion-item.glass-item[open]::part(icon) {
 ```
 
 **Pros:**
-
 - Works immediately out of the box
 - Professional default appearance
 - Consistent design language
 - Quick prototyping
 
 **Cons:**
-
 - May not match your brand
 - Requires overriding defaults
 - Larger CSS bundle
@@ -615,14 +595,12 @@ ae-accordion-item.glass-item[open]::part(icon) {
 ```
 
 **Pros:**
-
 - Complete visual control
 - No style conflicts
 - Smaller bundle size
 - Perfect brand alignment
 
 **Cons:**
-
 - More initial setup
 - Need to style all states
 - More CSS to write

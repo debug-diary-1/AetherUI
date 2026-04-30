@@ -13,9 +13,21 @@ The Radio component provides a set of mutually exclusive options for selection.
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
-  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
-  <TabItem label="yarn">```bash yarn add @aetherui/core ```</TabItem>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="yarn">
+    ```bash
+    yarn add @aetherui/core
+    ```
+  </TabItem>
 </Tabs>
 
 ## Basic Usage
@@ -67,32 +79,32 @@ The Radio component provides a set of mutually exclusive options for selection.
 
 ### RadioGroup Props
 
-| Name       | Type      | Default | Description                                         |
-| ---------- | --------- | ------- | --------------------------------------------------- |
-| `name`     | `string`  | `''`    | Name attribute for all radio buttons in the group   |
-| `value`    | `string`  | `''`    | Selected value                                      |
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `name` | `string` | `''` | Name attribute for all radio buttons in the group |
+| `value` | `string` | `''` | Selected value |
 | `disabled` | `boolean` | `false` | Whether all radio buttons in the group are disabled |
 
 ### Radio Props
 
-| Name       | Type      | Default | Description                   |
-| ---------- | --------- | ------- | ----------------------------- |
-| `value`    | `string`  | `''`    | Value of the radio option     |
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | `''` | Value of the radio option |
 | `disabled` | `boolean` | `false` | Whether the radio is disabled |
-| `checked`  | `boolean` | `false` | Whether the radio is checked  |
+| `checked` | `boolean` | `false` | Whether the radio is checked |
 
 ## Events
 
 ### RadioGroup Events
 
-| Event                   | Payload             | Description                           |
-| ----------------------- | ------------------- | ------------------------------------- |
+| Event | Payload | Description |
+|-------|---------|-------------|
 | `ae-radio-group-change` | `{ value: string }` | Fired when the selected value changes |
 
 ### Radio Events
 
-| Event             | Payload                               | Description                           |
-| ----------------- | ------------------------------------- | ------------------------------------- |
+| Event | Payload | Description |
+|-------|---------|-------------|
 | `ae-radio-change` | `{ checked: boolean, value: string }` | Fired when a radio button is selected |
 
 ## Accessibility
@@ -102,7 +114,7 @@ The radio component follows WAI-ARIA guidelines:
 - Uses proper ARIA roles (`radiogroup`, `radio`)
 - Implements keyboard navigation (arrow keys to navigate, Space/Enter to select)
 - Maintains proper focus management
-- Includes proper ARIA attributes (`aria-checked`, `aria-disabled`)
+- Includes proper ARIA attributes (`aria-checked`, `aria-disabled`) 
 
 ## Styling
 
@@ -151,20 +163,20 @@ The Radio component can be styled using CSS custom properties and shadow parts.
 
 ## CSS Custom Properties
 
-| Property                     | Description                  | Default                         |
-| ---------------------------- | ---------------------------- | ------------------------------- |
-| `--ae-radio-size`            | Size of the radio button     | `16px`                          |
-| `--ae-radio-color`           | Color of the unchecked radio | `var(--ae-color-primary)`       |
-| `--ae-radio-hover-color`     | Color on hover               | `var(--ae-color-primary-hover)` |
-| `--ae-radio-checked-color`   | Color when checked           | `var(--ae-color-primary)`       |
-| `--ae-radio-disabled-color`  | Color when disabled          | `var(--ae-color-disabled)`      |
-| `--ae-radio-label-font-size` | Font size of the label       | `1rem`                          |
-| `--ae-radio-label-color`     | Color of the label text      | `var(--ae-color-text)`          |
+| Property | Description | Default |
+|----------|-------------|---------|
+| `--ae-radio-size` | Size of the radio button | `16px` |
+| `--ae-radio-color` | Color of the unchecked radio | `var(--ae-color-primary)` |
+| `--ae-radio-hover-color` | Color on hover | `var(--ae-color-primary-hover)` |
+| `--ae-radio-checked-color` | Color when checked | `var(--ae-color-primary)` |
+| `--ae-radio-disabled-color` | Color when disabled | `var(--ae-color-disabled)` |
+| `--ae-radio-label-font-size` | Font size of the label | `1rem` |
+| `--ae-radio-label-color` | Color of the label text | `var(--ae-color-text)` |
 
 ## CSS Shadow Parts
 
-| Part        | Description                 |
-| ----------- | --------------------------- |
-| `control`   | The radio button circle     |
+| Part | Description |
+|------|-------------|
+| `control` | The radio button circle |
 | `indicator` | The inner checked indicator |
-| `label`     | The label text container    |
+| `label` | The label text container | 

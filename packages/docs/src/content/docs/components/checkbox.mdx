@@ -2,13 +2,12 @@
 title: Checkbox
 description: A binary choice component with support for indeterminate state and accessibility.
 ---
-
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import CheckboxExample from '../../../components/CheckboxExample.astro';
 
 {/* Register custom elements for MDX */}
 export const components = {
-'ae-checkbox': 'ae-checkbox'
+  'ae-checkbox': 'ae-checkbox'
 };
 
 # Checkbox
@@ -18,9 +17,21 @@ The Checkbox component provides a binary choice input with support for indetermi
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
-  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
-  <TabItem label="yarn">```bash yarn add @aetherui/core ```</TabItem>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="yarn">
+    ```bash
+    yarn add @aetherui/core
+    ```
+  </TabItem>
 </Tabs>
 
 ## Basic Usage
@@ -111,20 +122,19 @@ Customize the checkbox appearance using CSS custom properties and parts.
     color: #ef4444;
   }
 
-.square-checkbox::part(indeterminate-icon) {
-color: #ef4444;
-}
+  .square-checkbox::part(indeterminate-icon) {
+    color: #ef4444;
+  }
+  
+  .square-checkbox::part(label) {
+    font-weight: 600;
+  }
 
-.square-checkbox::part(label) {
-font-weight: 600;
-}
-
-.orange-indeterminate {
---ae-checkbox-indeterminate-bg: #f59e0b;
---ae-checkbox-indeterminate-border-color: #f59e0b;
---ae-checkbox-indeterminate-icon-color: #ffffff;
-}
-
+  .orange-indeterminate {
+    --ae-checkbox-indeterminate-bg: #f59e0b;
+    --ae-checkbox-indeterminate-border-color: #f59e0b;
+    --ae-checkbox-indeterminate-icon-color: #ffffff;
+  }
 </style>
 
 <div style="display: flex; flex-direction: column; gap: 1rem;">
@@ -156,20 +166,19 @@ font-weight: 600;
     color: #ef4444;
   }
 
-.square-checkbox::part(indeterminate-icon) {
-color: #ef4444;
-}
+  .square-checkbox::part(indeterminate-icon) {
+    color: #ef4444;
+  }
+  
+  .square-checkbox::part(label) {
+    font-weight: 600;
+  }
 
-.square-checkbox::part(label) {
-font-weight: 600;
-}
-
-.orange-indeterminate {
---ae-checkbox-indeterminate-bg: #f59e0b;
---ae-checkbox-indeterminate-border-color: #f59e0b;
---ae-checkbox-indeterminate-icon-color: #ffffff;
-}
-
+  .orange-indeterminate {
+    --ae-checkbox-indeterminate-bg: #f59e0b;
+    --ae-checkbox-indeterminate-border-color: #f59e0b;
+    --ae-checkbox-indeterminate-icon-color: #ffffff;
+  }
 </style>
 
 <div style="display: flex; flex-direction: column; gap: 1rem;">
@@ -381,50 +390,50 @@ The checkbox emits an `ae-change` event when its state changes.
 
 ## Props
 
-| Name             | Type      | Default | Description                                       |
-| ---------------- | --------- | ------- | ------------------------------------------------- |
-| `checked`        | `boolean` | `false` | Controlled checked state                          |
-| `defaultChecked` | `boolean` | `false` | Initial checked state for uncontrolled usage      |
-| `indeterminate`  | `boolean` | `false` | Sets the checkbox to an indeterminate/mixed state |
-| `disabled`       | `boolean` | `false` | Disables the checkbox                             |
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `checked` | `boolean` | `false` | Controlled checked state |
+| `defaultChecked` | `boolean` | `false` | Initial checked state for uncontrolled usage |
+| `indeterminate` | `boolean` | `false` | Sets the checkbox to an indeterminate/mixed state |
+| `disabled` | `boolean` | `false` | Disables the checkbox |
 
 ## Events
 
-| Name                 | Detail                                         | Description                           |
-| -------------------- | ---------------------------------------------- | ------------------------------------- |
+| Name | Detail | Description |
+|------|--------|-------------|
 | `ae-checkbox-change` | `{ checked: boolean, indeterminate: boolean }` | Fired when the checkbox state changes |
 
 ## CSS Parts
 
-| Name                 | Description                                            |
-| -------------------- | ------------------------------------------------------ |
-| `base`               | The label container wrapping the checkbox              |
-| `control`            | The checkbox control (box that contains the checkmark) |
-| `icon`               | The checkmark icon when checked                        |
-| `indeterminate-icon` | The dash icon when in indeterminate state              |
-| `label`              | The label text container                               |
-| `input`              | The native checkbox input (visually hidden)            |
+| Name | Description |
+|------|-------------|
+| `base` | The label container wrapping the checkbox |
+| `control` | The checkbox control (box that contains the checkmark) |
+| `icon` | The checkmark icon when checked |
+| `indeterminate-icon` | The dash icon when in indeterminate state |
+| `label` | The label text container |
+| `input` | The native checkbox input (visually hidden) |
 
 ## CSS Custom Properties
 
-| Name                                       | Description                                  |
-| ------------------------------------------ | -------------------------------------------- |
-| `--ae-checkbox-size`                       | Size of the checkbox control                 |
-| `--ae-checkbox-border-color`               | Border color for the unchecked state         |
-| `--ae-checkbox-bg`                         | Background color for the unchecked state     |
-| `--ae-checkbox-border-radius`              | Border radius of the checkbox control        |
-| `--ae-checkbox-checked-border-color`       | Border color for the checked state           |
-| `--ae-checkbox-checked-bg`                 | Background color for the checked state       |
-| `--ae-checkbox-checked-icon-color`         | Color of the checkmark icon                  |
-| `--ae-checkbox-indeterminate-border-color` | Border color for the indeterminate state     |
-| `--ae-checkbox-indeterminate-bg`           | Background color for the indeterminate state |
-| `--ae-checkbox-indeterminate-icon-color`   | Color of the indeterminate dash icon         |
-| `--ae-checkbox-disabled-border-color`      | Border color when disabled                   |
-| `--ae-checkbox-disabled-bg`                | Background color when disabled               |
-| `--ae-checkbox-disabled-text-color`        | Text color when disabled                     |
-| `--ae-checkbox-text-color`                 | Text color for the label                     |
-| `--ae-checkbox-font-size`                  | Font size for the label                      |
-| `--ae-checkbox-focus-ring-color`           | Color of the focus ring                      |
+| Name | Description |
+|------|-------------|
+| `--ae-checkbox-size` | Size of the checkbox control |
+| `--ae-checkbox-border-color` | Border color for the unchecked state |
+| `--ae-checkbox-bg` | Background color for the unchecked state |
+| `--ae-checkbox-border-radius` | Border radius of the checkbox control |
+| `--ae-checkbox-checked-border-color` | Border color for the checked state |
+| `--ae-checkbox-checked-bg` | Background color for the checked state |
+| `--ae-checkbox-checked-icon-color` | Color of the checkmark icon |
+| `--ae-checkbox-indeterminate-border-color` | Border color for the indeterminate state |
+| `--ae-checkbox-indeterminate-bg` | Background color for the indeterminate state |
+| `--ae-checkbox-indeterminate-icon-color` | Color of the indeterminate dash icon |
+| `--ae-checkbox-disabled-border-color` | Border color when disabled |
+| `--ae-checkbox-disabled-bg` | Background color when disabled |
+| `--ae-checkbox-disabled-text-color` | Text color when disabled |
+| `--ae-checkbox-text-color` | Text color for the label |
+| `--ae-checkbox-font-size` | Font size for the label |
+| `--ae-checkbox-focus-ring-color` | Color of the focus ring |
 
 ## Accessibility
 
@@ -433,4 +442,4 @@ The checkbox component follows WAI-ARIA guidelines:
 - Uses native `<input type="checkbox">` to maintain accessibility
 - Properly syncs `aria-checked="mixed"` for indeterminate states
 - Supports keyboard navigation and focus management
-- Associates the label text with the checkbox input for clear context
+- Associates the label text with the checkbox input for clear context 

@@ -5,9 +5,7 @@ This directory contains example projects demonstrating how to use AetherUI compo
 ## Available Examples
 
 ### [React Example](./react-example/)
-
 Learn how to integrate AetherUI components into a React application, including:
-
 - TypeScript setup and type definitions
 - Component registration
 - Event handling
@@ -16,9 +14,7 @@ Learn how to integrate AetherUI components into a React application, including:
 - SSR considerations (Next.js)
 
 ### [Vue Example](./vue-example/)
-
 Discover how to use AetherUI with Vue 3, covering:
-
 - Vite configuration for custom elements
 - TypeScript integration
 - Component registration patterns
@@ -28,9 +24,7 @@ Discover how to use AetherUI with Vue 3, covering:
 - SSR setup (Nuxt 3)
 
 ### [Vanilla JavaScript Example](./vanilla-example/)
-
 See how to use AetherUI with plain HTML and JavaScript:
-
 - CDN usage (coming soon)
 - npm installation with build tools
 - Dynamic component creation
@@ -42,7 +36,6 @@ See how to use AetherUI with plain HTML and JavaScript:
 ## Quick Start
 
 Each example directory contains a detailed README with:
-
 - Installation instructions
 - Basic usage examples
 - Advanced patterns
@@ -77,21 +70,18 @@ npm run dev
 ## Framework-Specific Notes
 
 ### React
-
 - Use camelCase for event handlers (`onAeButtonClick`)
 - Add TypeScript declarations for JSX
 - Consider SSR limitations with Next.js
 - Web Components work best with React 19+
 
 ### Vue
-
 - Configure `isCustomElement` in Vite/Nuxt config
 - Events use kebab-case (`@ae-button-click`)
 - Excellent two-way binding support
 - Great SSR support with proper configuration
 
 ### Vanilla JS
-
 - No build configuration needed
 - Use standard `addEventListener`
 - Works in all modern browsers
@@ -114,7 +104,6 @@ Have an example for another framework or use case? We'd love to see it! Please:
 4. Submit a pull request
 
 Examples we'd love to see:
-
 - Angular integration
 - Svelte usage
 - Solid.js implementation

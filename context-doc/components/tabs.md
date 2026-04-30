@@ -20,8 +20,8 @@ Horizontal / vertical tabbed navigation, lazy‑loads panel content.
 
 ## 3 · Accessibility
 
-- Implements APG Tabs pattern.
-- `role="tablist"`, `role="tab"`, `role="tabpanel"`.
+* Implements APG Tabs pattern.
+* `role="tablist"`, `role="tab"`, `role="tabpanel"`.
 
 ## 4 · Styling & Theming
 
@@ -37,7 +37,7 @@ You can style any inner element via `::part()` without piercing Shadow DOM inter
 
 ```css
 /* 1px colored border beneath active tab */
-ae-tabs::part(tab)[aria-selected='true'] {
+ae-tabs::part(tab)[aria-selected="true"] {
   border-bottom: 2px solid var(--ae-tabs-indicator-color, currentColor);
 }
 ```
@@ -54,7 +54,7 @@ ae-tabs::part(tab)[aria-selected='true'] {
 Override at the app or theme layer:
 
 ```css
-:root[data-theme='dark'] {
+:root[data-theme="dark"] {
   --ae-tabs-indicator-color: var(--ae-color-brand-primary-dark);
 }
 ```
@@ -85,7 +85,7 @@ export const tabStyles = css`
     font: inherit;
   }
 
-  ::part(tab)[aria-selected='true'] {
+  ::part(tab)[aria-selected="true"] {
     border-bottom: 2px solid var(--ae-tabs-indicator-color, currentColor);
   }
 `;
@@ -111,7 +111,7 @@ packages/tabs/
 
 ## 6 · Performance
 
-- Virtualize off‑screen panels (optional future).
+* Virtualize off‑screen panels (optional future).
 
 ## 7 · Tests
 
@@ -119,6 +119,6 @@ Keyboard arrow navigation, manual activation.
 
 ---
 
-_Updated: {{date}}_
+*Updated: {{date}}*
 
 What about the styles.ts? 

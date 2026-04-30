@@ -18,7 +18,12 @@ For a responsive, full-page implementation that utilizes the entire available wi
 
 ```html
 <div style="width: 100%; overflow-x: auto; border: 1px solid #e5e7eb; border-radius: 4px;">
-  <ae-datatable .data="${data}" .columns="${columns}" selectable ...other attributes></ae-datatable>
+  <ae-datatable
+    .data=${data}
+    .columns=${columns}
+    selectable
+    ...other attributes
+  ></ae-datatable>
 </div>
 ```
 
@@ -35,7 +40,12 @@ For cases where you need a consistent, predictable width:
 
 ```html
 <div style="width: 700px; overflow-x: auto; border: 1px solid #e5e7eb; border-radius: 4px;">
-  <ae-datatable .data="${data}" .columns="${columns}" selectable ...other attributes></ae-datatable>
+  <ae-datatable
+    .data=${data}
+    .columns=${columns}
+    selectable
+    ...other attributes
+  ></ae-datatable>
 </div>
 ```
 
@@ -50,15 +60,17 @@ For cases where you need a consistent, predictable width:
 For responsive layouts within a constrained area:
 
 ```html
-<div
-  style="width: 100%; max-width: 1200px; margin: 0 auto; overflow-x: auto; border: 1px solid #e5e7eb; border-radius: 4px;"
->
-  <ae-datatable .data="${data}" .columns="${columns}" selectable ...other attributes></ae-datatable>
+<div style="width: 100%; max-width: 1200px; margin: 0 auto; overflow-x: auto; border: 1px solid #e5e7eb; border-radius: 4px;">
+  <ae-datatable
+    .data=${data}
+    .columns=${columns}
+    selectable
+    ...other attributes
+  ></ae-datatable>
 </div>
 ```
 
 This approach:
-
 1. Adapts to the available space up to a maximum width
 2. Centers the table in the available space using `margin: 0 auto`
 3. Provides a balanced experience across different screen sizes

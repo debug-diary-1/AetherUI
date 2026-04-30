@@ -26,15 +26,15 @@ import '@aetherui/tokens/dark.css';
 Or in HTML:
 
 ```html
-<link rel="stylesheet" href="node_modules/@aetherui/tokens/dist/light.css" />
+<link rel="stylesheet" href="node_modules/@aetherui/tokens/dist/light.css">
 ```
 
 ## Available Themes
 
-| Theme | Import                       |
-| ----- | ---------------------------- |
+| Theme | Import |
+|-------|--------|
 | Light | `@aetherui/tokens/light.css` |
-| Dark  | `@aetherui/tokens/dark.css`  |
+| Dark | `@aetherui/tokens/dark.css` |
 
 ## Customization
 
@@ -90,8 +90,8 @@ Tokens are also available as JavaScript values:
 ```typescript
 import { tokens } from '@aetherui/tokens';
 
-console.log(tokens.colors.primary); // 'var(--ae-color-primary, #0066cc)'
-console.log(tokens.spacing.md); // 'var(--ae-spacing-md, 1rem)'
+console.log(tokens.colors.primary);  // 'var(--ae-color-primary, #0066cc)'
+console.log(tokens.spacing.md);      // 'var(--ae-spacing-md, 1rem)'
 ```
 
 ## License

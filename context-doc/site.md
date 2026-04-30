@@ -10,7 +10,7 @@ Below is an expanded, better‑structured guide you can drop straight into your 
 
 ---
 
-## 1. Prerequisites
+## 1.  Prerequisites
 
 | Tool                  | Min version            | Notes                                                                                                                    |
 | --------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
@@ -39,20 +39,20 @@ Below is an expanded, better‑structured guide you can drop straight into your 
 ```
 
 > **Tip — component strategy**
-> _Astro components themselves cannot (yet) render inside Storybook_ because Storybook expects runtime‑renderable components. Wrap reusable UI in React / Svelte / Vue and import those wrappers in both Astro **and** Storybook. ([fantinel.dev][3], [tiborudvari.com][4])
+> *Astro components themselves cannot (yet) render inside Storybook* because Storybook expects runtime‑renderable components. Wrap reusable UI in React / Svelte / Vue and import those wrappers in both Astro **and** Storybook. ([fantinel.dev][3], [tiborudvari.com][4])
 
 ---
 
 ## 3. Astro Configuration (`astro.config.mjs`)
 
 ```js
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: 'https://<user>.github.io',
-  base: '/<repo>/', // critical for correct asset URLs on Pages
-  trailingSlash: 'always', // prevents 404s on refresh in sub‑paths
-  build: { format: 'directory' },
+  site: "https://<user>.github.io",
+  base: "/<repo>/",          // critical for correct asset URLs on Pages
+  trailingSlash: "always",   // prevents 404s on refresh in sub‑paths
+  build: { format: "directory" }
 });
 ```
 
@@ -78,21 +78,21 @@ npm install -D @storybook/manager @storybook/addon-essentials
 ### 4.2 `.storybook/main.ts`
 
 ```ts
-import type { StorybookConfig } from '@storybook/react-vite';
+import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
-  stories: ['../src/components/**/*.stories.@(ts|tsx|mdx)'],
-  addons: ['@storybook/addon-essentials'],
+  stories: ["../src/components/**/*.stories.@(ts|tsx|mdx)"],
+  addons: ["@storybook/addon-essentials"],
   framework: {
-    name: '@storybook/react-vite',
-    options: {},
+    name: "@storybook/react-vite",
+    options: {}
   },
-  staticDirs: ['../public'], // reuse Astro assets
+  staticDirs: ["../public"],               // reuse Astro assets
   viteFinal: (config) => {
     // required for GitHub Pages sub‑folder
-    config.base = '/<repo>/storybook/';
+    config.base = "/<repo>/storybook/";
     return config;
-  },
+  }
 };
 export default config;
 ```
@@ -104,8 +104,8 @@ export default config;
 {
   "scripts": {
     "build": "astro build",
-    "build-storybook": "storybook build --output-dir storybook-static",
-  },
+    "build-storybook": "storybook build --output-dir storybook-static"
+  }
 }
 ```
 
@@ -126,7 +126,7 @@ jobs:
     permissions:
       contents: read
       pages: write
-      id-token: write # required for GitHub Pages
+      id-token: write            # required for GitHub Pages
     steps:
       - uses: actions/checkout@v4
 
@@ -143,14 +143,14 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: ./dist # Astro output
+          path: ./dist            # Astro output
 
       # upload Storybook to a sub‑dir inside same artifact
       - uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
           path: ./storybook-static
-          destination-dir: storybook # → /storybook/index.html
+          destination-dir: storybook   # → /storybook/index.html
 
   deploy:
     needs: build
@@ -181,7 +181,7 @@ jobs:
 ## 7. Advanced / Nice‑to‑Have Extras
 
 1. **Preview builds for PRs**
-   Add a second workflow with `on: pull_request` that uploads to the Pages _Preview_ environment (supports multiple concurrent previews).
+   Add a second workflow with `on: pull_request` that uploads to the Pages *Preview* environment (supports multiple concurrent previews).
 
 2. **Chromatic** for hosted Storybook + visual regression, skipping GitHub Pages for Storybook entirely.
 
@@ -206,12 +206,12 @@ jobs:
 
 ## 9. Further Reading
 
-- Astro official GitHub Pages guide ([docs.astro.build][1])
-- `withastro/action` README ([docs.astro.build][1])
-- Storybook “Publish” docs ([Storybook][6])
-- Deploying Storybook to sub‑directories discussion ([GitHub][7])
-- Article: _“Storybook + Astro Image – why it’s tricky”_ ([tiborudvari.com][4])
-- Medium: _AWSM Docs – Storybook × Astro_ ([Medium][8])
+* Astro official GitHub Pages guide ([docs.astro.build][1])
+* `withastro/action` README ([docs.astro.build][1])
+* Storybook “Publish” docs ([Storybook][6])
+* Deploying Storybook to sub‑directories discussion ([GitHub][7])
+* Article: *“Storybook + Astro Image – why it’s tricky”* ([tiborudvari.com][4])
+* Medium: *AWSM Docs – Storybook × Astro* ([Medium][8])
 
 ---
 
@@ -219,16 +219,16 @@ jobs:
 
 Copy the config snippets above, push to **main**, and GitHub Pages will publish:
 
-- `/` — your Astro site
-- `/storybook/` — full Storybook UI
+* `/` — your Astro site
+* `/storybook/` — full Storybook UI
 
 Every commit re‑builds both targets automatically. Ping me if you hit any snags or want PR‑preview / Chromatic set‑up next.
 
-[1]: https://docs.astro.build/en/guides/deploy/github/?utm_source=chatgpt.com 'Deploy your Astro Site to GitHub Pages | Docs'
-[2]: https://storybook.js.org/docs/migration-guide?utm_source=chatgpt.com 'Migration guide for Storybook 8.0 | Storybook docs'
-[3]: https://fantinel.dev/storybook-astro-svelte?utm_source=chatgpt.com 'Setting up Storybook on an Astro project - Matt Fantinel'
-[4]: https://tiborudvari.com/blog/how-to-work-with-storybook-and-astro-image/?utm_source=chatgpt.com 'How to work with Storybook and Astro Image - Tibor Udvari'
-[5]: https://github.com/storybookjs/storybook/issues/18356?utm_source=chatgpt.com 'Support for Astro components · Issue #18356 · storybookjs/storybook'
-[6]: https://storybook.js.org/docs/sharing/publish-storybook?utm_source=chatgpt.com 'Publish Storybook | Storybook docs'
-[7]: https://github.com/storybookjs/storybook/discussions/17433?utm_source=chatgpt.com 'Deploying Storybook in a subdirectory #17433 - GitHub'
-[8]: https://medium.com/front-end-weekly/how-to-build-awsm-docs-07375167a6b2?utm_source=chatgpt.com 'How to build AWSM docs with Storybook and Astro - Medium'
+[1]: https://docs.astro.build/en/guides/deploy/github/?utm_source=chatgpt.com "Deploy your Astro Site to GitHub Pages | Docs"
+[2]: https://storybook.js.org/docs/migration-guide?utm_source=chatgpt.com "Migration guide for Storybook 8.0 | Storybook docs"
+[3]: https://fantinel.dev/storybook-astro-svelte?utm_source=chatgpt.com "Setting up Storybook on an Astro project - Matt Fantinel"
+[4]: https://tiborudvari.com/blog/how-to-work-with-storybook-and-astro-image/?utm_source=chatgpt.com "How to work with Storybook and Astro Image - Tibor Udvari"
+[5]: https://github.com/storybookjs/storybook/issues/18356?utm_source=chatgpt.com "Support for Astro components · Issue #18356 · storybookjs/storybook"
+[6]: https://storybook.js.org/docs/sharing/publish-storybook?utm_source=chatgpt.com "Publish Storybook | Storybook docs"
+[7]: https://github.com/storybookjs/storybook/discussions/17433?utm_source=chatgpt.com "Deploying Storybook in a subdirectory #17433 - GitHub"
+[8]: https://medium.com/front-end-weekly/how-to-build-awsm-docs-07375167a6b2?utm_source=chatgpt.com "How to build AWSM docs with Storybook and Astro - Medium"

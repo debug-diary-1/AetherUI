@@ -30,14 +30,14 @@ An input control that presents **type‑ahead suggestions**. Supports:
 
 ## 3 · Accessibility
 
-- Input gets `role="combobox"` + `aria-autocomplete="list"`.
-- Popup list `role="listbox"`; options `role="option"` with `aria-disabled`.
-- `aria-busy="true"` applied to listbox while loading.
-- Keyboard: Arrow keys, Enter, Esc, type‑ahead characters.
+* Input gets `role="combobox"` + `aria-autocomplete="list"`.
+* Popup list `role="listbox"`; options `role="option"` with `aria-disabled`.
+* `aria-busy="true"` applied to listbox while loading.
+* Keyboard: Arrow keys, Enter, Esc, type‑ahead characters.
 
 ## 4 · Styling & Theming
 
-_(The snippets in this section show \***\*override hooks\*\*** only — the component itself ships a minimal baseline in **`styles.ts`**; consumers extend or override these tokens/parts as needed)._
+*(The snippets in this section show ****override hooks**** only — the component itself ships a minimal baseline in **`styles.ts`**; consumers extend or override these tokens/parts as needed).*
 
 ### 4.1 Shadow Parts
 
@@ -77,10 +77,7 @@ ae-autocomplete::part(spinner) {
 import { css } from 'lit';
 
 export const autoStyles = css`
-  :host {
-    display: inline-block;
-    position: relative;
-  }
+  :host { display: inline-block; position: relative; }
 
   ::part(input) {
     width: 100%;
@@ -99,17 +96,12 @@ export const autoStyles = css`
     background: var(--ae-auto-bg, #fff);
     border: var(--ae-auto-border, 1px solid #d1d5db);
     border-radius: var(--ae-auto-radius, 0.375rem);
-    box-shadow: var(--ae-auto-shadow, 0 4px 12px rgba(0, 0, 0, 0.1));
+    box-shadow: var(--ae-auto-shadow, 0 4px 12px rgba(0,0,0,.1));
     z-index: 1000;
   }
 
-  ::part(option) {
-    padding: 0.375rem 0.75rem;
-    cursor: pointer;
-  }
-  ::part(option):hover {
-    background: var(--ae-auto-option-hover-bg, #f3f4f6);
-  }
+  ::part(option) { padding: 0.375rem 0.75rem; cursor: pointer; }
+  ::part(option):hover { background: var(--ae-auto-option-hover-bg, #f3f4f6); }
   ::part(option)[data-selected] {
     background: var(--ae-auto-option-selected-bg, #e0e7ff);
   }
@@ -124,11 +116,7 @@ export const autoStyles = css`
     margin: 0.25rem auto;
   }
 
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 `;
 ```
 
@@ -147,22 +135,22 @@ packages/autocomplete/
 
 ## 6 · Architecture
 
-- **Lit reactive controller** manages `query`, debounced calls to `loadOptions`, loading flag, and filtered options.
-- When `loadOptions` resolves, component re‑renders list and fires `ae-load-end`.
-- Suggestion list overlays using **@floating-ui** for viewport clipping.
+* **Lit reactive controller** manages `query`, debounced calls to `loadOptions`, loading flag, and filtered options.
+* When `loadOptions` resolves, component re‑renders list and fires `ae-load-end`.
+* Suggestion list overlays using **@floating-ui** for viewport clipping.
 
 ## 7 · Performance
 
-- Debounce default 200 ms reduces API chatter.
-- Spinner SVG inline; no extra network requests.
-- Bundle ≤ 3 KB + optional dynamic import of `@floating-ui` (4 KB) on first open.
+* Debounce default 200 ms reduces API chatter.
+* Spinner SVG inline; no extra network requests.
+* Bundle ≤ 3 KB + optional dynamic import of `@floating-ui` (4 KB) on first open.
 
 ## 8 · Testing Strategy
 
-- **Unit**: debounce timing, async loading states, controlled vs uncontrolled value.
-- **Playwright**: keyboard navigation, aria states, loading spinner visibility.
-- **axe‑core**: verify `aria-busy`, listbox semantics, contrast.
+* **Unit**: debounce timing, async loading states, controlled vs uncontrolled value.
+* **Playwright**: keyboard navigation, aria states, loading spinner visibility.
+* **axe‑core**: verify `aria-busy`, listbox semantics, contrast.
 
 ---
 
-_Updated: 2025‑05‑07_
+*Updated: 2025‑05‑07*

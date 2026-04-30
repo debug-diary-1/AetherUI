@@ -2,7 +2,6 @@
 title: Textarea
 description: Multi-line text input component with auto-resize, validation, and form participation.
 ---
-
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ComponentExample from '../../../components/ComponentExample.astro';
 
@@ -67,8 +66,16 @@ A multi-line text input component with validation and native form participation.
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
-  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
 </Tabs>
 
 ## Import
@@ -80,35 +87,35 @@ defineAeTextarea();
 
 ## Props
 
-| Name          | Type                                             | Default      | Description            |
-| ------------- | ------------------------------------------------ | ------------ | ---------------------- |
-| `value`       | `string`                                         | `''`         | Current value          |
-| `placeholder` | `string`                                         | `''`         | Placeholder text       |
-| `label`       | `string`                                         | `''`         | Label text             |
-| `name`        | `string`                                         | `''`         | Form field name        |
-| `rows`        | `number`                                         | `4`          | Number of visible rows |
-| `disabled`    | `boolean`                                        | `false`      | Disabled state         |
-| `required`    | `boolean`                                        | `false`      | Required field         |
-| `readonly`    | `boolean`                                        | `false`      | Read-only state        |
-| `error`       | `string`                                         | `''`         | Error message          |
-| `help-text`   | `string`                                         | `''`         | Helper text            |
-| `minlength`   | `number`                                         | -            | Minimum length         |
-| `maxlength`   | `number`                                         | -            | Maximum length         |
-| `resize`      | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `'vertical'` | Resize behavior        |
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | `''` | Current value |
+| `placeholder` | `string` | `''` | Placeholder text |
+| `label` | `string` | `''` | Label text |
+| `name` | `string` | `''` | Form field name |
+| `rows` | `number` | `4` | Number of visible rows |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `required` | `boolean` | `false` | Required field |
+| `readonly` | `boolean` | `false` | Read-only state |
+| `error` | `string` | `''` | Error message |
+| `help-text` | `string` | `''` | Helper text |
+| `minlength` | `number` | - | Minimum length |
+| `maxlength` | `number` | - | Maximum length |
+| `resize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `'vertical'` | Resize behavior |
 
 ## Events
 
-| Name                 | Detail              | Description     |
-| -------------------- | ------------------- | --------------- |
-| `ae-textarea-input`  | `{ value: string }` | Fired on input  |
+| Name | Detail | Description |
+|------|--------|-------------|
+| `ae-textarea-input` | `{ value: string }` | Fired on input |
 | `ae-textarea-change` | `{ value: string }` | Fired on change |
 
 ## CSS Parts
 
-| Name         | Description     |
-| ------------ | --------------- |
-| `base`       | Base wrapper    |
-| `label`      | Label element   |
-| `textarea`   | Native textarea |
-| `help-text`  | Help text       |
-| `error-text` | Error message   |
+| Name | Description |
+|------|-------------|
+| `base` | Base wrapper |
+| `label` | Label element |
+| `textarea` | Native textarea |
+| `help-text` | Help text |
+| `error-text` | Error message |

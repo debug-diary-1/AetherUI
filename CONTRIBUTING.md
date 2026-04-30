@@ -11,7 +11,6 @@ Please note that this project is released with a [Contributor Code of Conduct](C
 ### Reporting Issues
 
 Before creating an issue, please:
-
 - Check the existing issues to avoid duplicates
 - Use the issue search feature to see if a similar issue has already been reported
 - Include as much detail as possible in your report
@@ -62,7 +61,6 @@ We use [Conventional Commits](https://www.conventionalcommits.org/) for our comm
 - `chore:` Maintenance tasks
 
 Examples:
-
 ```
 feat: add new tooltip component
 fix: resolve modal focus trap issue
@@ -108,7 +106,6 @@ If you need help with your contribution:
 ## Recognition
 
 Contributors will be recognized in:
-
 - The project's contributor list
 - Release notes for significant contributions
 - Our documentation site

@@ -2,7 +2,6 @@
 title: Select
 description: Dropdown select component with single and multiple selection support, form participation, and validation.
 ---
-
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ComponentExample from '../../../components/ComponentExample.astro';
 
@@ -94,8 +93,16 @@ A select dropdown component with support for single/multiple selection and nativ
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
-  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
 </Tabs>
 
 ## Import
@@ -107,42 +114,42 @@ defineAeSelect();
 
 ## Props
 
-| Name          | Type       | Default | Description                |
-| ------------- | ---------- | ------- | -------------------------- |
-| `value`       | `string`   | `''`    | Selected value (single)    |
-| `values`      | `string[]` | `[]`    | Selected values (multiple) |
-| `placeholder` | `string`   | `''`    | Placeholder text           |
-| `label`       | `string`   | `''`    | Label text                 |
-| `name`        | `string`   | `''`    | Form field name            |
-| `disabled`    | `boolean`  | `false` | Disabled state             |
-| `required`    | `boolean`  | `false` | Required field             |
-| `multiple`    | `boolean`  | `false` | Allow multiple selection   |
-| `error`       | `string`   | `''`    | Error message              |
-| `help-text`   | `string`   | `''`    | Helper text                |
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | `''` | Selected value (single) |
+| `values` | `string[]` | `[]` | Selected values (multiple) |
+| `placeholder` | `string` | `''` | Placeholder text |
+| `label` | `string` | `''` | Label text |
+| `name` | `string` | `''` | Form field name |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `required` | `boolean` | `false` | Required field |
+| `multiple` | `boolean` | `false` | Allow multiple selection |
+| `error` | `string` | `''` | Error message |
+| `help-text` | `string` | `''` | Helper text |
 
 ## Events
 
-| Name               | Detail                          | Description                  |
-| ------------------ | ------------------------------- | ---------------------------- |
+| Name | Detail | Description |
+|------|--------|-------------|
 | `ae-select-change` | `{ value: string \| string[] }` | Fired when selection changes |
 
 ## Slots
 
-| Name    | Description                          |
-| ------- | ------------------------------------ |
+| Name | Description |
+|------|-------------|
 | default | Select options (`<option>` elements) |
 
 ## CSS Parts
 
-| Name             | Description      |
-| ---------------- | ---------------- |
-| `base`           | Base wrapper     |
-| `label`          | Label element    |
+| Name | Description |
+|------|-------------|
+| `base` | Base wrapper |
+| `label` | Label element |
 | `select-wrapper` | Select container |
-| `select`         | Native select    |
-| `icon`           | Dropdown icon    |
-| `help-text`      | Help text        |
-| `error-text`     | Error message    |
+| `select` | Native select |
+| `icon` | Dropdown icon |
+| `help-text` | Help text |
+| `error-text` | Error message |
 
 ## Accessibility
 

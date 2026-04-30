@@ -27,7 +27,6 @@ The repository is configured to use Nx Cloud when a valid access token is provid
 ### 3. Verify Setup
 
 Once the token is added, the CI workflow will automatically:
-
 - Enable Nx Cloud remote caching
 - Start distributed agents for parallel execution
 - Cache build artifacts across CI runs
@@ -35,7 +34,6 @@ Once the token is added, the CI workflow will automatically:
 ## Benefits
 
 With Nx Cloud enabled, you'll see:
-
 - **30-50% faster CI builds** through remote caching
 - **Distributed task execution** across multiple agents
 - **Shared cache** between team members and CI

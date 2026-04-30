@@ -110,20 +110,18 @@ hero:
 <span class="code-comment">// Register the component</span>
 defineAeButton();
 </code></pre>
-
-</div>
-<div class="code-example">
-<div class="code-header">
-<span class="code-dot"></span>
-<span class="code-dot"></span>
-<span class="code-dot"></span>
-<span class="code-filename">index.html</span>
-</div>
-<pre><code><span class="code-tag">&lt;ae-button</span> <span class="code-attr">variant</span>=<span class="code-string">"primary"</span><span class="code-tag">&gt;</span>
-Click me
+    </div>
+    <div class="code-example">
+      <div class="code-header">
+        <span class="code-dot"></span>
+        <span class="code-dot"></span>
+        <span class="code-dot"></span>
+        <span class="code-filename">index.html</span>
+      </div>
+      <pre><code><span class="code-tag">&lt;ae-button</span> <span class="code-attr">variant</span>=<span class="code-string">"primary"</span><span class="code-tag">&gt;</span>
+  Click me
 <span class="code-tag">&lt;/ae-button&gt;</span></code></pre>
-</div>
-
+    </div>
   </section>
 
   <!-- Components Preview -->

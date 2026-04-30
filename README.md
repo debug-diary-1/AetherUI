@@ -96,21 +96,21 @@ import { AeModal } from '@aetherui/core/modal';
 
 ## 🧩 Available Components
 
-| Component        | Description                                    |
-| ---------------- | ---------------------------------------------- |
-| **Button**       | Primary action trigger with variants and sizes |
-| **Modal**        | Dialog overlay with focus management           |
-| **Dropdown**     | Context menus with positioning                 |
-| **Accordion**    | Expandable sections                            |
-| **Tabs**         | Tab navigation with horizontal/vertical modes  |
-| **Checkbox**     | Boolean input with indeterminate state         |
-| **Radio**        | Mutually exclusive selection                   |
-| **Alert**        | Status messages with variants                  |
-| **Tooltip**      | Information overlays                           |
-| **Toast**        | Temporary notifications                        |
-| **TreeView**     | Hierarchical data display                      |
-| **Combo**        | Combo box with filtering                       |
-| **Autocomplete** | Auto-completing input                          |
+| Component | Description |
+|-----------|-------------|
+| **Button** | Primary action trigger with variants and sizes |
+| **Modal** | Dialog overlay with focus management |
+| **Dropdown** | Context menus with positioning |
+| **Accordion** | Expandable sections |
+| **Tabs** | Tab navigation with horizontal/vertical modes |
+| **Checkbox** | Boolean input with indeterminate state |
+| **Radio** | Mutually exclusive selection |
+| **Alert** | Status messages with variants |
+| **Tooltip** | Information overlays |
+| **Toast** | Temporary notifications |
+| **TreeView** | Hierarchical data display |
+| **Combo** | Combo box with filtering |
+| **Autocomplete** | Auto-completing input |
 
 ## 🍽️ Kitchen Sink Showcase
 
@@ -127,7 +127,6 @@ pnpm showcase:build
 The showcase will be available at **`http://localhost:3000`**
 
 **What's included:**
-
 - 🎨 All 28+ components with custom styling
 - 🌈 Beautiful gradient UI proving headless architecture
 - 📱 Responsive design
@@ -136,7 +135,6 @@ The showcase will be available at **`http://localhost:3000`**
 - ⚡ TypeScript examples
 
 Perfect for:
-
 - Seeing what's possible with AetherUI's headless components
 - Learning React integration patterns
 - Understanding CSS custom property customization
@@ -158,7 +156,10 @@ function App() {
   };
 
   return (
-    <ae-button variant="primary" onAeButtonClick={handleClick}>
+    <ae-button
+      variant="primary"
+      onAeButtonClick={handleClick}
+    >
       Click me
     </ae-button>
   );
@@ -169,7 +170,12 @@ function App() {
 
 ```vue
 <template>
-  <ae-button variant="primary" @ae-button-click="handleClick"> Click me </ae-button>
+  <ae-button
+    variant="primary"
+    @ae-button-click="handleClick"
+  >
+    Click me
+  </ae-button>
 </template>
 
 <script setup>
@@ -189,22 +195,22 @@ const handleClick = (e) => {
 ```html
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="node_modules/@aetherui/tokens/dist/light.css" />
-  </head>
-  <body>
-    <ae-button variant="primary">Click me</ae-button>
+<head>
+  <link rel="stylesheet" href="node_modules/@aetherui/tokens/dist/light.css">
+</head>
+<body>
+  <ae-button variant="primary">Click me</ae-button>
 
-    <script type="module">
-      import { defineAeButton } from '@aetherui/core';
+  <script type="module">
+    import { defineAeButton } from '@aetherui/core';
 
-      defineAeButton();
+    defineAeButton();
 
-      document.querySelector('ae-button').addEventListener('ae-button-click', (e) => {
-        console.log('Button clicked!', e.detail);
-      });
-    </script>
-  </body>
+    document.querySelector('ae-button').addEventListener('ae-button-click', (e) => {
+      console.log('Button clicked!', e.detail);
+    });
+  </script>
+</body>
 </html>
 ```
 

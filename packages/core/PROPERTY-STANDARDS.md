@@ -1,13 +1,11 @@
 # Property Decorator Standards for AetherUI
 
 ## Overview
-
 This document defines the standard patterns for using Lit property decorators across all AetherUI components.
 
 ## Standards
 
 ### 1. Always Use `accessor` Keyword
-
 The `accessor` keyword is the modern way to declare reactive properties in Lit.
 
 ```typescript
@@ -21,7 +19,6 @@ disabled = false;
 ```
 
 ### 2. Always Specify Attribute Names for Multi-Word Properties
-
 Multi-word properties should explicitly define their attribute names using kebab-case.
 
 ```typescript
@@ -35,7 +32,6 @@ accessor hoverDelay = 100;
 ```
 
 ### 3. Use `reflect: true` for Visual State
-
 Properties that affect visual appearance should reflect to attributes for CSS styling.
 
 ```typescript
@@ -52,7 +48,6 @@ accessor value = '';
 ```
 
 ### 4. Use `@state` for Internal Reactive State
-
 Internal state that triggers re-renders but shouldn't be exposed as attributes.
 
 ```typescript
@@ -65,7 +60,6 @@ private accessor tooltipPosition = { x: 0, y: 0 };
 ```
 
 ### 5. Use `@query` for Element References
-
 Use query decorators instead of querySelector in methods.
 
 ```typescript
@@ -123,7 +117,6 @@ export class AeExample extends LitElement {
 ## Migration Checklist
 
 For each component:
-
 - [ ] Add `accessor` keyword to all `@property` decorators
 - [ ] Add explicit `attribute` names for multi-word properties
 - [ ] Verify `reflect: true` is used appropriately

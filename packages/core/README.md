@@ -46,33 +46,33 @@ import { AeTabs } from '@aetherui/core/tabs';
 
 ## Available Components
 
-| Component    | Element             | Description                                   |
-| ------------ | ------------------- | --------------------------------------------- |
-| Button       | `<ae-button>`       | Action trigger with variants and sizes        |
-| Modal        | `<ae-modal>`        | Dialog overlay with focus management          |
-| Dropdown     | `<ae-dropdown>`     | Context menus with positioning                |
-| Accordion    | `<ae-accordion>`    | Expandable content sections                   |
-| Tabs         | `<ae-tabs>`         | Tab navigation with horizontal/vertical modes |
-| Checkbox     | `<ae-checkbox>`     | Boolean input with indeterminate state        |
-| Radio        | `<ae-radio>`        | Mutually exclusive selection                  |
-| Alert        | `<ae-alert>`        | Status messages with variants                 |
-| Tooltip      | `<ae-tooltip>`      | Information overlays                          |
-| Toast        | `<ae-toast>`        | Temporary notifications                       |
-| TreeView     | `<ae-treeview>`     | Hierarchical data display                     |
-| Combo        | `<ae-combo>`        | Combo box with filtering                      |
-| Autocomplete | `<ae-autocomplete>` | Auto-completing input                         |
-| Input        | `<ae-input>`        | Text input field                              |
-| Select       | `<ae-select>`       | Selection dropdown                            |
-| Textarea     | `<ae-textarea>`     | Multi-line text input                         |
-| Badge        | `<ae-badge>`        | Status indicators                             |
-| Spinner      | `<ae-spinner>`      | Loading indicator                             |
-| Switch       | `<ae-switch>`       | Toggle switch                                 |
-| Progress     | `<ae-progress>`     | Progress indicator                            |
-| Breadcrumb   | `<ae-breadcrumb>`   | Navigation breadcrumbs                        |
-| Pagination   | `<ae-pagination>`   | Page navigation                               |
-| Drawer       | `<ae-drawer>`       | Slide-out panel                               |
-| Popover      | `<ae-popover>`      | Floating content panel                        |
-| Menu         | `<ae-menu>`         | Action menu                                   |
+| Component | Element | Description |
+|-----------|---------|-------------|
+| Button | `<ae-button>` | Action trigger with variants and sizes |
+| Modal | `<ae-modal>` | Dialog overlay with focus management |
+| Dropdown | `<ae-dropdown>` | Context menus with positioning |
+| Accordion | `<ae-accordion>` | Expandable content sections |
+| Tabs | `<ae-tabs>` | Tab navigation with horizontal/vertical modes |
+| Checkbox | `<ae-checkbox>` | Boolean input with indeterminate state |
+| Radio | `<ae-radio>` | Mutually exclusive selection |
+| Alert | `<ae-alert>` | Status messages with variants |
+| Tooltip | `<ae-tooltip>` | Information overlays |
+| Toast | `<ae-toast>` | Temporary notifications |
+| TreeView | `<ae-treeview>` | Hierarchical data display |
+| Combo | `<ae-combo>` | Combo box with filtering |
+| Autocomplete | `<ae-autocomplete>` | Auto-completing input |
+| Input | `<ae-input>` | Text input field |
+| Select | `<ae-select>` | Selection dropdown |
+| Textarea | `<ae-textarea>` | Multi-line text input |
+| Badge | `<ae-badge>` | Status indicators |
+| Spinner | `<ae-spinner>` | Loading indicator |
+| Switch | `<ae-switch>` | Toggle switch |
+| Progress | `<ae-progress>` | Progress indicator |
+| Breadcrumb | `<ae-breadcrumb>` | Navigation breadcrumbs |
+| Pagination | `<ae-pagination>` | Page navigation |
+| Drawer | `<ae-drawer>` | Slide-out panel |
+| Popover | `<ae-popover>` | Floating content panel |
+| Menu | `<ae-menu>` | Action menu |
 
 ## Theming
 

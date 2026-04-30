@@ -2,7 +2,6 @@
 title: Progress
 description: Progress bar component for displaying completion status with determinate and indeterminate modes.
 ---
-
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ComponentExample from '../../../components/ComponentExample.astro';
 
@@ -66,8 +65,16 @@ A progress bar component for displaying completion status.
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
-  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
 </Tabs>
 
 ## Import
@@ -79,25 +86,25 @@ defineAeProgress();
 
 ## Props
 
-| Name            | Type                   | Default | Description            |
-| --------------- | ---------------------- | ------- | ---------------------- |
-| `value`         | `number`               | `0`     | Progress value (0-100) |
-| `max`           | `number`               | `100`   | Maximum value          |
-| `size`          | `'sm' \| 'md' \| 'lg'` | `'md'`  | Size variant           |
-| `show-label`    | `boolean`              | `false` | Show percentage label  |
-| `indeterminate` | `boolean`              | `false` | Indeterminate mode     |
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `number` | `0` | Progress value (0-100) |
+| `max` | `number` | `100` | Maximum value |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size variant |
+| `show-label` | `boolean` | `false` | Show percentage label |
+| `indeterminate` | `boolean` | `false` | Indeterminate mode |
 
 ## CSS Parts
 
-| Name    | Description      |
-| ------- | ---------------- |
-| `base`  | Base wrapper     |
+| Name | Description |
+|------|-------------|
+| `base` | Base wrapper |
 | `track` | Background track |
-| `bar`   | Progress bar     |
+| `bar` | Progress bar |
 | `label` | Percentage label |
 
 ## Accessibility
 
-- Uses `role="progressbar"`
+- Uses `role="progressbar"` 
 - Sets `aria-valuenow`, `aria-valuemin`, `aria-valuemax`
 - Screen reader announces progress updates

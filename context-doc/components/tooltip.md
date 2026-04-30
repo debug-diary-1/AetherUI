@@ -22,14 +22,14 @@ Lightweight **hover / focus hint** that reveals contextual information without s
 
 ## 3 · Accessibility
 
-- Tooltip container has `role="tooltip"`.
-- Component manages `aria-describedby` on the anchor when shown.
-- Keyboard: `focus` shows, `blur` hides; **Esc** hides if manually triggered.
-- High‑contrast mode keeps sufficient color ratio.
+* Tooltip container has `role="tooltip"`.
+* Component manages `aria-describedby` on the anchor when shown.
+* Keyboard: `focus` shows, `blur` hides; **Esc** hides if manually triggered.
+* High‑contrast mode keeps sufficient color ratio.
 
 ## 4 · Styling & Theming
 
-_(Override hooks only — baseline lives in `styles.ts`.)_
+*(Override hooks only — baseline lives in `styles.ts`.)*
 
 ### 4.1 Shadow Parts
 
@@ -70,11 +70,7 @@ Dark theme might only adjust the shadow hue; base colors already dark.
 import { css } from 'lit';
 
 export const tooltipStyles = css`
-  :host {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-  }
+  :host { position: fixed; inset: 0; pointer-events: none; }
 
   ::part(overlay) {
     background: var(--ae-tooltip-bg, #111);
@@ -82,7 +78,7 @@ export const tooltipStyles = css`
     padding: var(--ae-tooltip-padding, 0.375rem 0.5rem);
     border-radius: var(--ae-tooltip-radius, 4px);
     font-size: var(--ae-tooltip-font-size, 0.8125rem);
-    box-shadow: var(--ae-tooltip-shadow, 0 2px 8px rgba(0, 0, 0, 0.15));
+    box-shadow: var(--ae-tooltip-shadow, 0 2px 8px rgba(0,0,0,.15));
     max-width: 20rem;
     pointer-events: none;
   }
@@ -111,22 +107,22 @@ packages/tooltip/
 
 ## 6 · Architecture
 
-- Uses **LitElement** + reactive props `open`, timers for hoverDelay/hideDelay.
-- @floating‑ui `autoUpdate` keeps position on scroll/resizes.
-- Arrow placed using `arrow()` middleware.
-- Provides imperative method `show()`/`hide()` for manual control.
+* Uses **LitElement** + reactive props `open`, timers for hoverDelay/hideDelay.
+* @floating‑ui `autoUpdate` keeps position on scroll/resizes.
+* Arrow placed using `arrow()` middleware.
+* Provides imperative method `show()`/`hide()` for manual control.
 
 ## 7 · Performance
 
-- Bundle ≤ 2 KB + dynamic `@floating-ui` import on first show (≈4 KB).
-- Overlay only attached to DOM when shown; removed on hide.
+* Bundle ≤ 2 KB + dynamic `@floating-ui` import on first show (≈4 KB).
+* Overlay only attached to DOM when shown; removed on hide.
 
 ## 8 · Testing Strategy
 
-- **Unit**: delay timers, open/close API, aria-describedby toggle.
-- **Playwright**: hover/focus behaviour, placement near viewport edges.
-- **axe‑core**: ensure tooltip content announced, contrast ratios.
+* **Unit**: delay timers, open/close API, aria-describedby toggle.
+* **Playwright**: hover/focus behaviour, placement near viewport edges.
+* **axe‑core**: ensure tooltip content announced, contrast ratios.
 
 ---
 
-_Updated: 2025‑05‑07_
+*Updated: 2025‑05‑07*

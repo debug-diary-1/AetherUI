@@ -21,9 +21,9 @@ Hierarchical navigation control with expand/collapse, keyboard roving, and optio
 
 ## 3 · Accessibility
 
-- Root gets `role="tree"` and `tabindex="0"` for the roving container.
-- Each node has `role="treeitem"`, `aria-level`, `aria-expanded` (if branch), `aria-selected` (if selectable).
-- **Keyboard**: Arrow keys navigate; `Home`, `End`, `*` (expand all siblings) per WAI‑ARIA TreeView pattern.
+* Root gets `role="tree"` and `tabindex="0"` for the roving container.
+* Each node has `role="treeitem"`, `aria-level`, `aria-expanded` (if branch), `aria-selected` (if selectable).
+* **Keyboard**: Arrow keys navigate; `Home`, `End`, `*` (expand all siblings) per WAI‑ARIA TreeView pattern.
 
 ## 4 · Styling & Theming
 
@@ -40,7 +40,7 @@ Example override:
 
 ```css
 /* Change caret icon colour when node is expanded */
-ae-treeview::part(caret)[aria-expanded='true'] {
+ae-treeview::part(caret)[aria-expanded="true"] {
   color: var(--ae-treeview-caret-open, currentColor);
 }
 ```
@@ -58,8 +58,8 @@ ae-treeview::part(caret)[aria-expanded='true'] {
 Token override example:
 
 ```css
-:root[data-theme='dark'] {
-  --ae-treeview-row-hover-bg: rgba(255, 255, 255, 0.05);
+:root[data-theme="dark"] {
+  --ae-treeview-row-hover-bg: rgba(255,255,255,0.05);
 }
 ```
 
@@ -70,9 +70,7 @@ Token override example:
 import { css } from 'lit';
 
 export const treeviewStyles = css`
-  :host {
-    display: block;
-  }
+  :host { display: block; }
 
   ::part(node) {
     display: flex;
@@ -85,7 +83,7 @@ export const treeviewStyles = css`
   ::part(node):hover {
     background: var(--ae-treeview-row-hover-bg, #f3f4f6);
   }
-  ::part(node)[aria-selected='true'] {
+  ::part(node)[aria-selected="true"] {
     background: var(--ae-treeview-row-selected-bg, #e0e7ff);
     color: var(--ae-treeview-row-selected-fg, #3730a3);
   }
@@ -94,7 +92,7 @@ export const treeviewStyles = css`
     height: var(--ae-treeview-caret-size, 12px);
     transition: transform 120ms ease;
   }
-  ::part(caret)[aria-expanded='true'] {
+  ::part(caret)[aria-expanded="true"] {
     transform: rotate(90deg);
   }
   ::part(subtree) {
@@ -119,15 +117,15 @@ packages/treeview/
 
 ## 6 · Performance
 
-- Render up to 1 000 nodes < 30 ms mount time.
-- Virtualisation roadmap: integrate `lit-virtualizer` for large trees.
+* Render up to 1 000 nodes < 30 ms mount time.
+* Virtualisation roadmap: integrate `lit-virtualizer` for large trees.
 
 ## 7 · Testing
 
-- **Unit**: expansion logic, roving index updates.
-- **Playwright**: keyboard traversal, focus outline, high‑contrast mode.
-- **axe‑core**: verify `aria-level`, `aria-expanded` values.
+* **Unit**: expansion logic, roving index updates.
+* **Playwright**: keyboard traversal, focus outline, high‑contrast mode.
+* **axe‑core**: verify `aria-level`, `aria-expanded` values.
 
 ---
 
-_Updated: 2025-05-09_
+*Updated: 2025-05-09*

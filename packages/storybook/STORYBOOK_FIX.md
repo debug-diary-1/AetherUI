@@ -60,7 +60,7 @@ If you continue to see issues:
 The following files have been modified or created:
 
 1. `main.js` - Fixed syntax error and simplified Vite configuration
-2. `vite.config.override.js` - Added direct aliases for lit and its subpackages
+2. `vite.config.override.js` - Added direct aliases for lit and its subpackages 
 3. `register-components.js` - Simplified to use direct package imports
 4. `source-components.js` - Updated to use package exports
 5. `preview.js` - Added source component fallback loading

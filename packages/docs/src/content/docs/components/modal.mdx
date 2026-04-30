@@ -13,9 +13,21 @@ The Modal component (`<ae-modal>`) provides a dialog overlay that temporarily bl
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
-  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
-  <TabItem label="yarn">```bash yarn add @aetherui/core ```</TabItem>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```bash
+    npm install @aetherui/core
+    ```
+  </TabItem>
+  <TabItem label="yarn">
+    ```bash
+    yarn add @aetherui/core
+    ```
+  </TabItem>
 </Tabs>
 
 ## Basic Usage
@@ -181,53 +193,53 @@ The Modal component (`<ae-modal>`) provides a dialog overlay that temporarily bl
 
 ## Properties
 
-| Property   | Type                             | Default    | Description                                                              |
-| ---------- | -------------------------------- | ---------- | ------------------------------------------------------------------------ |
-| `open`     | `boolean`                        | `false`    | Controls the visibility of the modal                                     |
-| `closable` | `boolean`                        | `true`     | Whether the modal can be closed by clicking the X button or the backdrop |
-| `backdrop` | `boolean`                        | `true`     | Whether to show the backdrop and allow clicking it to close              |
-| `size`     | `'small' \| 'medium' \| 'large'` | `'medium'` | Controls the width of the modal                                          |
+| Property | Type | Default | Description |
+| -------- | ---- | ------- | ----------- |
+| `open` | `boolean` | `false` | Controls the visibility of the modal |
+| `closable` | `boolean` | `true` | Whether the modal can be closed by clicking the X button or the backdrop |
+| `backdrop` | `boolean` | `true` | Whether to show the backdrop and allow clicking it to close |
+| `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Controls the width of the modal |
 
 ## Events
 
-| Event      | Detail | Description             |
-| ---------- | ------ | ----------------------- |
-| `ae-open`  | `{}`   | Fired when modal opens  |
-| `ae-close` | `{}`   | Fired when modal closes |
+| Event | Detail | Description |
+| ----- | ------ | ----------- |
+| `ae-open` | `{}` | Fired when modal opens |
+| `ae-close` | `{}` | Fired when modal closes |
 
 ## Slots
 
-| Name     | Description                                    |
-| -------- | ---------------------------------------------- |
-| `header` | Modal header content                           |
-| `body`   | Main modal content area                        |
+| Name | Description |
+| ---- | ----------- |
+| `header` | Modal header content |
+| `body` | Main modal content area |
 | `footer` | Modal footer content, typically action buttons |
 
 ## CSS Parts
 
-| Part           | Description              |
-| -------------- | ------------------------ |
-| `backdrop`     | The modal backdrop       |
-| `panel`        | The modal container      |
-| `header`       | The header section       |
-| `body`         | The main content section |
-| `footer`       | The footer section       |
-| `close-button` | The close button         |
-| `close-icon`   | The close button icon    |
+| Part | Description |
+| ---- | ----------- |
+| `backdrop` | The modal backdrop |
+| `panel` | The modal container |
+| `header` | The header section |
+| `body` | The main content section |
+| `footer` | The footer section |
+| `close-button` | The close button |
+| `close-icon` | The close button icon |
 
 ## CSS Custom Properties
 
-| Property                    | Description                                                    |
-| --------------------------- | -------------------------------------------------------------- |
-| `--ae-modal-width`          | Width of the modal (default: 32rem)                            |
-| `--ae-modal-max-width`      | Maximum width of the modal (default: calc(100vw - 2rem))       |
-| `--ae-modal-background`     | Background color of the modal (default: white)                 |
-| `--ae-modal-border-radius`  | Border radius of the modal (default: 0.5rem)                   |
-| `--ae-modal-padding`        | Padding inside the modal (default: 1.5rem)                     |
-| `--ae-modal-shadow`         | Box shadow of the modal                                        |
-| `--ae-modal-text-color`     | Text color within modal (default: inherit)                     |
+| Property | Description |
+| -------- | ----------- |
+| `--ae-modal-width` | Width of the modal (default: 32rem) |
+| `--ae-modal-max-width` | Maximum width of the modal (default: calc(100vw - 2rem)) |
+| `--ae-modal-background` | Background color of the modal (default: white) |
+| `--ae-modal-border-radius` | Border radius of the modal (default: 0.5rem) |
+| `--ae-modal-padding` | Padding inside the modal (default: 1.5rem) |
+| `--ae-modal-shadow` | Box shadow of the modal |
+| `--ae-modal-text-color` | Text color within modal (default: inherit) |
 | `--ae-modal-backdrop-color` | Background color of the backdrop (default: rgba(0, 0, 0, 0.4)) |
-| `--ae-modal-backdrop-blur`  | Blur effect applied to the backdrop (default: 2px)             |
+| `--ae-modal-backdrop-blur` | Blur effect applied to the backdrop (default: 2px) |
 
 ## Accessibility
 
@@ -241,4 +253,4 @@ The Modal component follows WAI-ARIA Dialog pattern best practices:
 
 ## Browser Support
 
-Works in all modern browsers that support Web Components.
+Works in all modern browsers that support Web Components. 
