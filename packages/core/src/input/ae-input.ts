@@ -73,6 +73,7 @@ import { inputStyles } from './styles';
 export class AeInput extends LitElement {
   static styles = inputStyles;
   static formAssociated = true;
+  static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   @property({ type: String, reflect: true })
   accessor type: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search' = 'text';

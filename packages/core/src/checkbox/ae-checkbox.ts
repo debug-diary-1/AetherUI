@@ -49,6 +49,7 @@ import { checkboxStyles } from './styles';
 export class AeCheckbox extends LitElement {
   static styles = checkboxStyles;
   static formAssociated = true;
+  static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   @property({ type: Boolean, reflect: true })
   accessor checked = false;

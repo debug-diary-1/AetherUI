@@ -58,6 +58,7 @@ import { textareaStyles } from './styles';
 export class AeTextarea extends LitElement {
   static styles = textareaStyles;
   static formAssociated = true;
+  static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   @property({ type: String })
   accessor value = '';

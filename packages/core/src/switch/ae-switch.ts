@@ -38,6 +38,7 @@ import { switchStyles } from './styles';
 export class AeSwitch extends LitElement {
   static styles = switchStyles;
   static formAssociated = true;
+  static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   @property({ type: Boolean, reflect: true })
   accessor checked = false;

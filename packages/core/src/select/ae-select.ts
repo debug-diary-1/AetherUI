@@ -53,6 +53,7 @@ import { selectStyles } from './styles';
 export class AeSelect extends LitElement {
   static styles = selectStyles;
   static formAssociated = true;
+  static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   @property({ type: String })
   accessor value = '';
