@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-import net from 'node:net';
+
+const net = require('node:net');
 
 const [hostArg, portArg] = (process.argv[2] || '').split(':');
 const host = portArg ? hostArg : '127.0.0.1';
@@ -12,8 +13,6 @@ if (!Number.isInteger(port) || port <= 0) {
   process.exit(2);
 }
 
-const deadline = Date.now() + timeoutMs;
-
 const tryConnect = () =>
   new Promise((resolve) => {
     const sock = net.connect({ host, port });
@@ -21,10 +20,12 @@ const tryConnect = () =>
     sock.once('error', () => { sock.destroy(); resolve(false); });
   });
 
-while (Date.now() < deadline) {
-  if (await tryConnect()) process.exit(0);
-  await new Promise((r) => setTimeout(r, intervalMs));
-}
-
-console.error(`wait-tcp: timed out waiting for ${host}:${port} after ${timeoutMs}ms`);
-process.exit(1);
+(async () => {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    if (await tryConnect()) process.exit(0);
+    await new Promise((r) => setTimeout(r, intervalMs));
+  }
+  console.error(`wait-tcp: timed out waiting for ${host}:${port} after ${timeoutMs}ms`);
+  process.exit(1);
+})();
