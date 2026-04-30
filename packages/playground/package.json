@@ -12,12 +12,12 @@
   "dependencies": {
     "@aetherui/core": "workspace:*",
     "@aetherui/tokens": "workspace:*",
-    "lit": "^3.3.2",
-    "prismjs": "^1.29.0"
+    "lit": "catalog:",
+    "prismjs": "catalog:"
   },
   "devDependencies": {
-    "@types/prismjs": "^1.26.3",
-    "typescript": "^5.7.3",
-    "vite": "^6.3.6"
+    "@types/prismjs": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
   }
 }
