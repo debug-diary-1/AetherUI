@@ -16,8 +16,8 @@ catalogs:
       specifier: 4.0.0
       version: 4.0.0
     '@playwright/test':
-      specifier: 1.57.0
-      version: 1.57.0
+      specifier: 1.59.1
+      version: 1.59.1
     '@storybook/addon-a11y':
       specifier: 10.2.13
       version: 10.2.13
@@ -144,7 +144,7 @@ importers:
         version: 4.0.0
       '@playwright/test':
         specifier: 'catalog:'
-        version: 1.57.0
+        version: 1.59.1
       '@storybook/test-runner':
         specifier: 'catalog:'
         version: 0.24.2(@swc/helpers@0.5.17)(@types/node@20.19.13)(esbuild-register@3.6.0(esbuild@0.25.9))(storybook@10.2.13(@testing-library/dom@10.4.0)(prettier@3.6.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -1339,8 +1339,8 @@ packages:
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@playwright/test@1.57.0':
-    resolution: {integrity: sha512-6TyEnHgd6SArQO8UO2OMTxshln3QMWBtPGrOCgs3wVEmQmwyuNtB10IZMfmYDE0riwNR1cu4q+pPcxMVtaG3TA==}
+  '@playwright/test@1.59.1':
+    resolution: {integrity: sha512-PG6q63nQg5c9rIi4/Z5lR5IVF7yU5MqmKaPOe0HSc0O2cX1fPi96sUQu5j7eo4gKCkB2AnNGoWt7y4/Xx3Kcqg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -4789,8 +4789,18 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  playwright-core@1.59.1:
+    resolution: {integrity: sha512-HBV/RJg81z5BiiZ9yPzIiClYV/QMsDCKUyogwH9p3MCP6IYjUFu/MActgYAvK0oWyV9NlwM3GLBjADyWgydVyg==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   playwright@1.57.0:
     resolution: {integrity: sha512-ilYQj1s8sr2ppEJ2YVadYBN0Mb3mdo9J0wQ+UuDhzYqURwSoW4n1Xs5vs7ORwgDGmyEh33tRMeS8KhdkMoLXQw==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  playwright@1.59.1:
+    resolution: {integrity: sha512-C8oWjPR3F81yljW9o5OxcWzfh6avkVwDD2VYdwIGqTkl+OGFISgypqzfu7dOe4QNLL2aqcWBmI3PMtLIK233lw==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -6979,9 +6989,9 @@ snapshots:
 
   '@pkgr/core@0.2.9': {}
 
-  '@playwright/test@1.57.0':
+  '@playwright/test@1.59.1':
     dependencies:
-      playwright: 1.57.0
+      playwright: 1.59.1
 
   '@puppeteer/browsers@2.10.4':
     dependencies:
@@ -11352,9 +11362,17 @@ snapshots:
 
   playwright-core@1.57.0: {}
 
+  playwright-core@1.59.1: {}
+
   playwright@1.57.0:
     dependencies:
       playwright-core: 1.57.0
+    optionalDependencies:
+      fsevents: 2.3.2
+
+  playwright@1.59.1:
+    dependencies:
+      playwright-core: 1.59.1
     optionalDependencies:
       fsevents: 2.3.2
 
