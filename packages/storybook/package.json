@@ -27,7 +27,7 @@
     "@storybook/addon-a11y": "10.2.13",
     "@storybook/addon-docs": "10.2.13",
     "@storybook/addon-links": "10.2.13",
-    "@storybook/web-components-vite": "10.2.13",
+    "@storybook/web-components-vite": "10.3.6",
     "eslint-plugin-storybook": "10.2.13",
     "lit": "^3.3.2",
     "lit-element": "^4.2.0",
