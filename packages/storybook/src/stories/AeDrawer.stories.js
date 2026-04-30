@@ -54,7 +54,9 @@ const createDrawerExample = (args) => {
         </div>
 
         <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-          <button @click="${() => drawerRef.value && (drawerRef.value.open = false)}">Cancel</button>
+          <button @click="${() => drawerRef.value && (drawerRef.value.open = false)}">
+            Cancel
+          </button>
           <button @click="${() => drawerRef.value && (drawerRef.value.open = false)}">Save</button>
         </div>
       </ae-drawer>

@@ -102,12 +102,12 @@ export const inputStyles = css`
     margin: 0;
   }
 
-  .input-control[type="number"] {
+  .input-control[type='number'] {
     -moz-appearance: textfield;
   }
 
   /* Clear search button in Chrome */
-  .input-control[type="search"]::-webkit-search-cancel-button {
+  .input-control[type='search']::-webkit-search-cancel-button {
     display: none;
   }
 
@@ -135,8 +135,8 @@ export const inputStyles = css`
     outline-offset: 0;
   }
 
-  ::slotted([slot="prefix"]),
-  ::slotted([slot="suffix"]) {
+  ::slotted([slot='prefix']),
+  ::slotted([slot='suffix']) {
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;

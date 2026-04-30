@@ -20,7 +20,7 @@
   --pg-preview-pattern: #333;
 }
 
-[data-theme="light"] {
+[data-theme='light'] {
   --pg-bg: #f5f5f5;
   --pg-bg-secondary: #ffffff;
   --pg-bg-tertiary: #e5e5e5;
@@ -51,15 +51,25 @@ body {
   font-size: 0.875rem;
   font-weight: 500;
   font-family: var(--pg-font-sans);
-  animation: pgSlideIn 0.3s ease, pgFadeOut 0.3s ease 2s forwards;
+  animation:
+    pgSlideIn 0.3s ease,
+    pgFadeOut 0.3s ease 2s forwards;
   z-index: 1000;
 }
 
 @keyframes pgSlideIn {
-  from { transform: translateY(1rem); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes pgFadeOut {
-  to { opacity: 0; }
+  to {
+    opacity: 0;
+  }
 }

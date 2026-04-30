@@ -4,10 +4,10 @@
 export interface ComboItem {
   /** Unique identifier for the item */
   id: string;
-  
+
   /** Display text for the item */
   label: string;
-  
+
   /** Whether the item is disabled */
   disabled?: boolean;
 }

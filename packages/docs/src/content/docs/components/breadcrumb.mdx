@@ -2,6 +2,7 @@
 title: Breadcrumb
 description: Navigation breadcrumb component showing the current page location within a hierarchy.
 ---
+
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ComponentExample from '../../../components/ComponentExample.astro';
 
@@ -62,16 +63,8 @@ A navigation component showing the current page location within a hierarchy.
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">
-    ```bash
-    pnpm add @aetherui/core
-    ```
-  </TabItem>
-  <TabItem label="npm">
-    ```bash
-    npm install @aetherui/core
-    ```
-  </TabItem>
+  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
+  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
 </Tabs>
 
 ## Import
@@ -84,30 +77,32 @@ defineAeBreadcrumbItem();
 
 ## Breadcrumb Props
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `separator` | `string` | `'/'` | Separator character |
+| Name        | Type     | Default | Description         |
+| ----------- | -------- | ------- | ------------------- |
+| `separator` | `string` | `'/'`   | Separator character |
 
 ## Breadcrumb Item Props
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `href` | `string` | - | Link URL |
+| Name      | Type      | Default | Description            |
+| --------- | --------- | ------- | ---------------------- |
+| `href`    | `string`  | -       | Link URL               |
 | `current` | `boolean` | `false` | Current page indicator |
 
 ## CSS Parts
 
 ### ae-breadcrumb
-| Name | Description |
-|------|-------------|
+
+| Name   | Description       |
+| ------ | ----------------- |
 | `base` | Container element |
-| `list` | The `<ol>` list |
+| `list` | The `<ol>` list   |
 
 ### ae-breadcrumb-item
-| Name | Description |
-|------|-------------|
-| `base` | List item |
-| `link` | Anchor element |
+
+| Name        | Description       |
+| ----------- | ----------------- |
+| `base`      | List item         |
+| `link`      | Anchor element    |
 | `separator` | Separator element |
 
 ## Accessibility

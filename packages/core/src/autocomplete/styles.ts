@@ -24,8 +24,9 @@ export const autocompleteStyles = css`
     font-size: var(--ae-autocomplete-font-size, 1rem);
     line-height: var(--ae-autocomplete-line-height, 1.5);
     box-sizing: border-box;
-    transition: border-color var(--ae-autocomplete-transition),
-                box-shadow var(--ae-autocomplete-transition);
+    transition:
+      border-color var(--ae-autocomplete-transition),
+      box-shadow var(--ae-autocomplete-transition);
   }
 
   .autocomplete-input:focus {
@@ -51,7 +52,8 @@ export const autocompleteStyles = css`
     background-color: var(--ae-autocomplete-dropdown-background, white);
     color: var(--ae-autocomplete-dropdown-text-color);
     border: 1px solid var(--ae-autocomplete-dropdown-border-color);
-    border-radius: 0 0 var(--ae-autocomplete-border-radius, 4px) var(--ae-autocomplete-border-radius, 4px);
+    border-radius: 0 0 var(--ae-autocomplete-border-radius, 4px)
+      var(--ae-autocomplete-border-radius, 4px);
     box-shadow: var(--ae-autocomplete-dropdown-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
     display: none;
   }
@@ -70,14 +72,26 @@ export const autocompleteStyles = css`
     padding: 0.5rem 1rem;
     cursor: pointer;
     transition: background-color var(--ae-autocomplete-transition);
-    background-color: var(--ae-autocomplete-option-background, var(--ae-autocomplete-dropdown-background, white));
-    color: var(--ae-autocomplete-option-text-color, var(--ae-autocomplete-dropdown-text-color, var(--ae-text-primary)));
+    background-color: var(
+      --ae-autocomplete-option-background,
+      var(--ae-autocomplete-dropdown-background, white)
+    );
+    color: var(
+      --ae-autocomplete-option-text-color,
+      var(--ae-autocomplete-dropdown-text-color, var(--ae-text-primary))
+    );
   }
 
   .autocomplete-option:hover,
   .autocomplete-option.highlighted {
     background-color: var(--ae-autocomplete-highlight-background, var(--ae-combo-item-selected-bg));
-    color: var(--ae-autocomplete-highlight-text-color, var(--ae-autocomplete-option-text-color, var(--ae-autocomplete-dropdown-text-color, var(--ae-color-primary))));
+    color: var(
+      --ae-autocomplete-highlight-text-color,
+      var(
+        --ae-autocomplete-option-text-color,
+        var(--ae-autocomplete-dropdown-text-color, var(--ae-color-primary))
+      )
+    );
   }
 
   .autocomplete-option.selected {
@@ -123,7 +137,7 @@ export const autocompleteStyles = css`
     justify-content: center;
     transition: color var(--ae-autocomplete-transition);
   }
-  
+
   .autocomplete-clear:hover {
     color: var(--ae-autocomplete-clear-hover-color);
   }

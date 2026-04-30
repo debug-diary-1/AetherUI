@@ -14,7 +14,7 @@ describe('AeTooltip Basic Tests', () => {
         <button>Hover me</button>
       </ae-tooltip>
     `);
-    
+
     expect(el).to.exist;
     expect(el.tagName.toLowerCase()).to.equal('ae-tooltip');
   });
@@ -25,7 +25,7 @@ describe('AeTooltip Basic Tests', () => {
         <button>Hover me</button>
       </ae-tooltip>
     `);
-    
+
     expect(el.text).to.equal('Test tooltip');
     expect(el.open).to.be.false;
     expect(el.placement).to.equal('top');
@@ -39,12 +39,12 @@ describe('AeTooltip Basic Tests', () => {
         <button>Hover me</button>
       </ae-tooltip>
     `);
-    
+
     expect(el.open).to.be.false;
-    
+
     el.show();
     expect(el.open).to.be.true;
-    
+
     el.hide();
     expect(el.open).to.be.false;
   });
@@ -55,7 +55,7 @@ describe('AeTooltip Basic Tests', () => {
         <button>Hover me</button>
       </ae-tooltip>
     `);
-    
+
     el.show();
     expect(el.open).to.be.false;
   });

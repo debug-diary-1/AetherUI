@@ -29,4 +29,4 @@ export function defineAeDropdown(): void {
   if (!customElements.get('ae-menu-section')) {
     customElements.define('ae-menu-section', AeMenuSection);
   }
-} 
+}

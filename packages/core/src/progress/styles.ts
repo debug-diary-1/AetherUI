@@ -23,15 +23,15 @@ export const progressStyles = css`
   }
 
   /* Sizes */
-  :host([size="sm"]) .progress-track {
+  :host([size='sm']) .progress-track {
     height: var(--ae-progress-height-sm, 4px);
   }
 
-  :host([size="md"]) .progress-track {
+  :host([size='md']) .progress-track {
     height: var(--ae-progress-height-md, 8px);
   }
 
-  :host([size="lg"]) .progress-track {
+  :host([size='lg']) .progress-track {
     height: var(--ae-progress-height-lg, 12px);
   }
 
@@ -42,27 +42,27 @@ export const progressStyles = css`
   }
 
   /* Variants */
-  :host([variant="primary"]) .progress-bar {
+  :host([variant='primary']) .progress-bar {
     background: var(--ae-progress-bg-primary);
   }
 
-  :host([variant="secondary"]) .progress-bar {
+  :host([variant='secondary']) .progress-bar {
     background: var(--ae-progress-bg-secondary);
   }
 
-  :host([variant="success"]) .progress-bar {
+  :host([variant='success']) .progress-bar {
     background: var(--ae-progress-bg-success);
   }
 
-  :host([variant="warning"]) .progress-bar {
+  :host([variant='warning']) .progress-bar {
     background: var(--ae-progress-bg-warning);
   }
 
-  :host([variant="error"]) .progress-bar {
+  :host([variant='error']) .progress-bar {
     background: var(--ae-progress-bg-error);
   }
 
-  :host([variant="info"]) .progress-bar {
+  :host([variant='info']) .progress-bar {
     background: var(--ae-progress-bg-info);
   }
 
@@ -70,12 +70,7 @@ export const progressStyles = css`
   :host([indeterminate]) .progress-bar {
     width: 100% !important;
     animation: progress-indeterminate 1.5s ease-in-out infinite;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      currentColor,
-      transparent
-    );
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
   }
 
   @keyframes progress-indeterminate {

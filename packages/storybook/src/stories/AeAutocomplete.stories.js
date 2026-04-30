@@ -9,47 +9,52 @@ export default {
   argTypes: {
     value: { control: 'text', description: 'Current input value' },
     placeholder: { control: 'text', description: 'Placeholder text for the input' },
-    ariaLabel: { control: 'text', description: 'Accessible label for the input (required for accessibility)' },
+    ariaLabel: {
+      control: 'text',
+      description: 'Accessible label for the input (required for accessibility)',
+    },
     disabled: { control: 'boolean', description: 'Whether the input is disabled' },
-    'min-chars': { 
-      control: 'number', 
+    'min-chars': {
+      control: 'number',
       description: 'Minimum characters before showing suggestions',
-      table: { category: 'Behavior' }
+      table: { category: 'Behavior' },
     },
-    'max-items': { 
-      control: 'number', 
+    'max-items': {
+      control: 'number',
       description: 'Maximum number of items to show in dropdown',
-      table: { category: 'Behavior' }
+      table: { category: 'Behavior' },
     },
-    options: { 
-      control: 'object', 
-      description: 'Options to display in the dropdown (string[] or {id, text, group?, disabled?, data?}[])',
-      table: { type: { summary: 'Array<string | AutocompleteOption>' } }
+    options: {
+      control: 'object',
+      description:
+        'Options to display in the dropdown (string[] or {id, text, group?, disabled?, data?}[])',
+      table: { type: { summary: 'Array<string | AutocompleteOption>' } },
     },
-    'ae-autocomplete-change': { 
+    'ae-autocomplete-change': {
       action: 'ae-autocomplete-change',
       description: 'Fired when the value changes',
-      table: { 
-        category: 'Events', 
-        type: { summary: 'CustomEvent<{value: string, option: AutocompleteOption | null}>' } 
-      }
+      table: {
+        category: 'Events',
+        type: { summary: 'CustomEvent<{value: string, option: AutocompleteOption | null}>' },
+      },
     },
-    'ae-autocomplete-select': { 
+    'ae-autocomplete-select': {
       action: 'ae-autocomplete-select',
       description: 'Fired when an option is selected',
-      table: { 
-        category: 'Events', 
-        type: { summary: 'CustomEvent<{value: string, option: AutocompleteOption}>' } 
-      }
-    }
+      table: {
+        category: 'Events',
+        type: { summary: 'CustomEvent<{value: string, option: AutocompleteOption}>' },
+      },
+    },
   },
   parameters: {
     docs: {
       description: {
-        component: 'A text input with dropdown suggestions as users type, helping them quickly find and select items from a list of options.'
-      }
-    }
-  }
+        component:
+          'A text input with dropdown suggestions as users type, helping them quickly find and select items from a list of options.',
+      },
+    },
+  },
 };
 
 const Template = (args) => html`
@@ -71,10 +76,22 @@ Basic.args = {
   placeholder: 'Search countries...',
   ariaLabel: 'Search countries',
   options: [
-    'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
-    'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria',
-    'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados'
-  ]
+    'Afghanistan',
+    'Albania',
+    'Algeria',
+    'Andorra',
+    'Angola',
+    'Antigua and Barbuda',
+    'Argentina',
+    'Armenia',
+    'Australia',
+    'Austria',
+    'Azerbaijan',
+    'Bahamas',
+    'Bahrain',
+    'Bangladesh',
+    'Barbados',
+  ],
 };
 Basic.play = async ({ canvasElement }) => {
   // Get the ae-autocomplete element and access its shadow DOM
@@ -100,7 +117,7 @@ Basic.play = async ({ canvasElement }) => {
   expect(options.length).toBeGreaterThan(0);
 
   // Verify Austria is in the filtered results
-  const austriaOption = Array.from(options).find(opt => opt.textContent.includes('Austria'));
+  const austriaOption = Array.from(options).find((opt) => opt.textContent.includes('Austria'));
   expect(austriaOption).toBeTruthy();
 
   // Click on Austria option
@@ -116,9 +133,17 @@ WithMinChars.args = {
   ariaLabel: 'Search countries',
   'min-chars': 2,
   options: [
-    'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
-    'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria'
-  ]
+    'Afghanistan',
+    'Albania',
+    'Algeria',
+    'Andorra',
+    'Angola',
+    'Antigua and Barbuda',
+    'Argentina',
+    'Armenia',
+    'Australia',
+    'Austria',
+  ],
 };
 
 export const WithObjectOptions = Template.bind({});
@@ -131,8 +156,8 @@ WithObjectOptions.args = {
     { id: 'dz', text: 'Algeria' },
     { id: 'ad', text: 'Andorra' },
     { id: 'ao', text: 'Angola', disabled: true },
-    { id: 'ag', text: 'Antigua and Barbuda' }
-  ]
+    { id: 'ag', text: 'Antigua and Barbuda' },
+  ],
 };
 
 export const WithGroups = Template.bind({});
@@ -148,8 +173,8 @@ WithGroups.args = {
     { id: 'pe', text: 'Peru', group: 'South America' },
     { id: 'gb', text: 'United Kingdom', group: 'Europe' },
     { id: 'de', text: 'Germany', group: 'Europe' },
-    { id: 'fr', text: 'France', group: 'Europe' }
-  ]
+    { id: 'fr', text: 'France', group: 'Europe' },
+  ],
 };
 
 export const WithDefaultValue = Template.bind({});
@@ -158,9 +183,17 @@ WithDefaultValue.args = {
   ariaLabel: 'Search countries',
   value: 'Canada',
   options: [
-    'United States', 'Canada', 'Mexico', 'Brazil', 'Argentina',
-    'United Kingdom', 'Germany', 'France', 'Spain', 'Italy'
-  ]
+    'United States',
+    'Canada',
+    'Mexico',
+    'Brazil',
+    'Argentina',
+    'United Kingdom',
+    'Germany',
+    'France',
+    'Spain',
+    'Italy',
+  ],
 };
 
 export const Disabled = Template.bind({});
@@ -168,8 +201,6 @@ Disabled.args = {
   placeholder: 'Search countries...',
   ariaLabel: 'Search countries',
   value: 'Canada',
-  options: [
-    'United States', 'Canada', 'Mexico', 'Brazil', 'Argentina'
-  ],
-  disabled: true
+  options: ['United States', 'Canada', 'Mexico', 'Brazil', 'Argentina'],
+  disabled: true,
 };

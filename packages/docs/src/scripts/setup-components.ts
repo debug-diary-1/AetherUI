@@ -7,21 +7,20 @@ if (typeof window !== 'undefined') {
   function registerComponents() {
     try {
       defineAll();
-      
+
       // Dispatch ready event
       window.dispatchEvent(new CustomEvent('aetherui:ready'));
-      
+
       // Mark as initialized
       (window as any).__aetherui_initialized = true;
-      
     } catch (error) {
       console.error('[AetherUI] Error registering components:', error);
     }
   }
-  
+
   // Register immediately
   registerComponents();
-  
+
   // Re-register on page navigation
   document.addEventListener('astro:page-load', registerComponents);
   document.addEventListener('astro:after-swap', registerComponents);

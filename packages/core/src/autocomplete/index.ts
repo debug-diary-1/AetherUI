@@ -12,14 +12,14 @@ export interface AeAutocompleteChangeEvent extends CustomEvent {
   detail: {
     value: string;
     option: AutocompleteOption | null;
-  }
+  };
 }
 
 export interface AeAutocompleteSelectEvent extends CustomEvent {
   detail: {
     value: string;
     option: AutocompleteOption;
-  }
+  };
 }
 
 declare global {

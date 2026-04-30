@@ -19,14 +19,14 @@ Primary action trigger with variants (primary, secondary, ghost, icon‑only) an
 | Slot / Part            | Purpose                                            |
 | ---------------------- | -------------------------------------------------- |
 | default slot           | Button label.                                      |
-| `icon` *(slot + part)* | icon on either side (reflect via `icon-position`). |
-| `base` *(part)*        | actual `<button>` element.                         |
+| `icon` _(slot + part)_ | icon on either side (reflect via `icon-position`). |
+| `base` _(part)_        | actual `<button>` element.                         |
 
 ## 3 · Accessibility
 
-* `<button>` semantics out‑of‑box.
-* If `icon‑only`, require `aria-label`.
-* Focus ring uses token `--ae-focus-ring`.
+- `<button>` semantics out‑of‑box.
+- If `icon‑only`, require `aria-label`.
+- Focus ring uses token `--ae-focus-ring`.
 
 ## 4 · Styling & Theming
 
@@ -37,23 +37,25 @@ Primary action trigger with variants (primary, secondary, ghost, icon‑only) an
 | `base`    | `<button>`           | Interactive surface.                                          |
 | `label`   | `<span>`             | Text wrapper; hidden when `icon‑only`.                        |
 | `icon`    | `<slot name="icon">` | Leading or trailing icon (controlled by `icon-position`).     |
-| `loader`  | `<span>`             | Optional spinner shown while `loading` prop true *(roadmap)*. |
+| `loader`  | `<span>`             | Optional spinner shown while `loading` prop true _(roadmap)_. |
 
 Examples:
 
 **External styling** (from outside the component):
+
 ```css
 /* Make ghost variant transparent with brand‑color text */
-ae-button[variant="ghost"]::part(base) {
+ae-button[variant='ghost']::part(base) {
   background: transparent;
   color: var(--ae-color-brand-600);
 }
 ```
 
 **Internal styling** (within the component):
+
 ```css
 /* In the component's styles.ts */
-:host([variant="ghost"]) button {
+:host([variant='ghost']) button {
   background-color: transparent;
   color: var(--ae-color-brand-600, #5e7ce2);
   border-color: transparent;
@@ -78,7 +80,7 @@ Note: Within the component's Shadow DOM, use direct element selectors (`button`)
 Override per theme:
 
 ```css
-:root[data-theme="dark"] {
+:root[data-theme='dark'] {
   --ae-button-bg-primary: var(--ae-color-brand-400);
 }
 ```
@@ -90,7 +92,9 @@ Override per theme:
 import { css } from 'lit';
 
 export const buttonStyles = css`
-  :host { display: inline-block; }
+  :host {
+    display: inline-block;
+  }
 
   /* Base button styles for all variants */
   button {
@@ -106,24 +110,24 @@ export const buttonStyles = css`
     transition-duration: 200ms;
     transition-timing-function: ease;
   }
-  
+
   /* Primary variant */
-  :host([variant="primary"]) button, 
+  :host([variant='primary']) button,
   :host(:not([variant])) button {
     background-color: var(--ae-button-bg-primary, #5e7ce2);
     color: var(--ae-button-fg-primary, white);
     border-color: var(--ae-button-bg-primary, #5e7ce2);
   }
-  
+
   /* Secondary variant */
-  :host([variant="secondary"]) button {
+  :host([variant='secondary']) button {
     background-color: var(--ae-button-bg-secondary, #f3f4f6);
     color: var(--ae-button-fg-secondary, #333333);
     border-color: #d4d4d4;
   }
-  
+
   /* Ghost variant */
-  :host([variant="ghost"]) button {
+  :host([variant='ghost']) button {
     background-color: transparent;
     color: var(--ae-color-brand-600, #5e7ce2);
     border-color: transparent;
@@ -152,18 +156,18 @@ packages/button/
 
 ## 6 · Architecture
 
-* Lightweight Lit component wrapping native `<button>`; passes all unrecognised attributes.
-* Emits `defineAeButton()` for single registration.
+- Lightweight Lit component wrapping native `<button>`; passes all unrecognised attributes.
+- Emits `defineAeButton()` for single registration.
 
 ## 7 · Performance Budget
 
-* ≤ 0.8 KB gzip.
+- ≤ 0.8 KB gzip.
 
 ## 8 · Testing
 
-* Unit: attribute reflection, disabled state.
-* Visual: hover / active / disabled.
+- Unit: attribute reflection, disabled state.
+- Visual: hover / active / disabled.
 
 ---
 
-*Updated: 2025‑05‑07*
+_Updated: 2025‑05‑07_

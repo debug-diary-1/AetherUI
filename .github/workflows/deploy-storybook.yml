@@ -2,7 +2,7 @@ name: Deploy Storybook
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 env:
@@ -16,7 +16,7 @@ permissions:
 
 # Allow only one concurrent deployment
 concurrency:
-  group: "storybook"
+  group: 'storybook'
   cancel-in-progress: true
 
 jobs:

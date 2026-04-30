@@ -11,7 +11,8 @@ export default defineConfig({
   testIgnore: process.env.CI ? ['**/*.visual.spec.ts'] : [],
 
   /* Store snapshots per platform (linux/darwin/win32) to handle rendering differences */
-  snapshotPathTemplate: '{testDir}/{testFileDir}/__snapshots__/{testFilePath}/{arg}-{projectName}-{platform}{ext}',
+  snapshotPathTemplate:
+    '{testDir}/{testFileDir}/__snapshots__/{testFilePath}/{arg}-{projectName}-{platform}{ext}',
 
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -26,11 +27,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
 
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [
-    ['html'],
-    ['list'],
-    ...(process.env.CI ? [['github']] : [])
-  ],
+  reporter: [['html'], ['list'], ...(process.env.CI ? [['github']] : [])],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -53,12 +50,14 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: process.env.CI ? undefined : {
-    command: 'pnpm storybook',
-    url: 'http://localhost:6006',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
-  },
+  webServer: process.env.CI
+    ? undefined
+    : {
+        command: 'pnpm storybook',
+        url: 'http://localhost:6006',
+        reuseExistingServer: !process.env.CI,
+        timeout: 120 * 1000,
+      },
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
   outputDir: 'test-results/',

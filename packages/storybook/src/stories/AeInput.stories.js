@@ -162,11 +162,7 @@ export const WithPrefixSuffix = {
     value: 'example.com',
   },
   render: (args) => html`
-    <ae-input
-      type="${args.type}"
-      label="${args.label}"
-      value="${args.value}"
-    >
+    <ae-input type="${args.type}" label="${args.label}" value="${args.value}">
       <span slot="prefix">https://</span>
       <span slot="suffix">.com</span>
     </ae-input>

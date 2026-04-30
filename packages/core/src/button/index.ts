@@ -4,11 +4,11 @@ export { buttonStyles } from './styles';
 
 /**
  * Register the button component with the CustomElements registry
- * 
+ *
  * @example
  * ```ts
  * import { defineAeButton } from '@aetherui/core';
- * 
+ *
  * defineAeButton(); // Now <ae-button> is available
  * ```
  */
@@ -25,5 +25,5 @@ export type { AeButton as AeButtonElement };
 export interface AeButtonClickEvent extends CustomEvent {
   detail: {
     sourceEvent: Event;
-  }
+  };
 }

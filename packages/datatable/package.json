@@ -2,29 +2,32 @@
   "name": "@aetherui/datatable",
   "version": "0.1.0",
   "description": "DataTable component for AetherUI with virtualization",
-  "author": "AetherUI Contributors",
-  "license": "MIT",
+  "keywords": [
+    "aetherui",
+    "datatable",
+    "lit",
+    "virtualization",
+    "web-components"
+  ],
   "homepage": "https://github.com/pallavL01/AetherUI#readme",
+  "bugs": {
+    "url": "https://github.com/pallavL01/AetherUI/issues"
+  },
+  "license": "MIT",
+  "author": "AetherUI Contributors",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pallavL01/AetherUI.git",
     "directory": "packages/datatable"
   },
-  "bugs": {
-    "url": "https://github.com/pallavL01/AetherUI/issues"
-  },
-  "keywords": [
-    "web-components",
-    "lit",
-    "datatable",
-    "virtualization",
-    "aetherui"
+  "files": [
+    "dist"
   ],
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -33,9 +36,6 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "dist"
-  ],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"

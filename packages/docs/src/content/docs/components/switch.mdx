@@ -2,6 +2,7 @@
 title: Switch
 description: Toggle switch component for binary on/off states as an alternative to checkboxes.
 ---
+
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ComponentExample from '../../../components/ComponentExample.astro';
 
@@ -84,16 +85,8 @@ A toggle switch component for binary on/off states.
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">
-    ```bash
-    pnpm add @aetherui/core
-    ```
-  </TabItem>
-  <TabItem label="npm">
-    ```bash
-    npm install @aetherui/core
-    ```
-  </TabItem>
+  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
+  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
 </Tabs>
 
 ## Import
@@ -105,34 +98,34 @@ defineAeSwitch();
 
 ## Props
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `checked` | `boolean` | `false` | Checked state |
-| `disabled` | `boolean` | `false` | Disabled state |
-| `name` | `string` | `''` | Form field name |
-| `value` | `string` | `'on'` | Value when checked |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size variant |
+| Name       | Type                   | Default | Description        |
+| ---------- | ---------------------- | ------- | ------------------ |
+| `checked`  | `boolean`              | `false` | Checked state      |
+| `disabled` | `boolean`              | `false` | Disabled state     |
+| `name`     | `string`               | `''`    | Form field name    |
+| `value`    | `string`               | `'on'`  | Value when checked |
+| `size`     | `'sm' \| 'md' \| 'lg'` | `'md'`  | Size variant       |
 
 ## Events
 
-| Name | Detail | Description |
-|------|--------|-------------|
+| Name               | Detail                 | Description        |
+| ------------------ | ---------------------- | ------------------ |
 | `ae-switch-change` | `{ checked: boolean }` | Fired when toggled |
 
 ## Slots
 
-| Name | Description |
-|------|-------------|
-| default | Label text |
+| Name    | Description |
+| ------- | ----------- |
+| default | Label text  |
 
 ## CSS Parts
 
-| Name | Description |
-|------|-------------|
-| `base` | Container |
+| Name      | Description  |
+| --------- | ------------ |
+| `base`    | Container    |
 | `control` | Switch track |
-| `thumb` | Switch thumb |
-| `label` | Label text |
+| `thumb`   | Switch thumb |
+| `label`   | Label text   |
 
 ## Accessibility
 

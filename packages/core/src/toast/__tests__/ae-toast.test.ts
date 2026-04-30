@@ -31,7 +31,7 @@ describe('ae-toast', () => {
     // Test setting properties and ensuring they are reflected in the UI
     toast.variant = 'warning';
     await elementUpdated(toast);
-    
+
     // The variant is reflected as an attribute, not a class
     expect(toast.getAttribute('variant')).to.equal('warning');
   });
@@ -42,7 +42,9 @@ describe('ae-toast', () => {
     expect(infoToast.getAttribute('role')).to.equal('status');
     expect(infoToast.getAttribute('aria-live')).to.equal('polite');
 
-    const warningToast = await fixture<AeToast>(html`<ae-toast variant="warning">Warning</ae-toast>`);
+    const warningToast = await fixture<AeToast>(
+      html`<ae-toast variant="warning">Warning</ae-toast>`,
+    );
     expect(warningToast.getAttribute('role')).to.equal('alert');
     expect(warningToast.getAttribute('aria-live')).to.equal('assertive');
 
@@ -57,9 +59,9 @@ describe('ae-toast', () => {
       const closeButton = toast.shadowRoot?.querySelector('[part="close"]') as HTMLElement;
       closeButton?.click();
     });
-    
+
     const event = await oneEvent(toast, 'ae-close');
-    
+
     // Verify the event is correct
     expect(event).to.exist;
     expect(event.type).to.equal('ae-close');
@@ -70,20 +72,22 @@ describe('ae-toast', () => {
   it('should show progress bar when duration > 0', async () => {
     toast.duration = 3000;
     await elementUpdated(toast);
-    
+
     const progressBar = toast.shadowRoot?.querySelector('[part="progress"]');
     expect(progressBar).to.exist;
-    
+
     // Check the CSS variable is set
     const style = getComputedStyle(progressBar as Element);
-    expect(style.getPropertyValue('--ae-toast-duration') || 
-           progressBar?.getAttribute('style')?.includes('--ae-toast-duration')).to.be.ok;
+    expect(
+      style.getPropertyValue('--ae-toast-duration') ||
+        progressBar?.getAttribute('style')?.includes('--ae-toast-duration'),
+    ).to.be.ok;
   });
 
   it('should not show progress bar when duration is 0', async () => {
     toast.duration = 0;
     await elementUpdated(toast);
-    
+
     const progressBar = toast.shadowRoot?.querySelector('[part="progress"]');
     expect(progressBar).to.not.exist;
   });
@@ -94,7 +98,7 @@ describe('ae-toast', () => {
         <div class="custom-content">Custom message</div>
       </ae-toast>
     `);
-    
+
     expect(customToast.textContent?.trim()).to.include('Custom message');
   });
 

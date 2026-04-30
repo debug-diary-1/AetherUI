@@ -24,13 +24,13 @@ Ephemeral **non‑modal notifications** that appear and disappear automatically.
 
 ## 3 · Accessibility
 
-* Toast element outside normal reading order with `role="status"` (polite) or `role="alert"` (error variant).
+- Toast element outside normal reading order with `role="status"` (polite) or `role="alert"` (error variant).
   Uses `aria-live="polite|assertive"`, `aria-atomic="true"` to announce full message.
-* Focus not stolen; but toast becomes focusable when interactive (`tabindex="0"`) so screen‑reader users can dismiss.
+- Focus not stolen; but toast becomes focusable when interactive (`tabindex="0"`) so screen‑reader users can dismiss.
 
 ## 4 · Styling & Theming
 
-*(Override hooks only—the component ships a minimal baseline in **`styles.ts`**.)*
+_(Override hooks only—the component ships a minimal baseline in **`styles.ts`**.)_
 
 ### 4.1 Shadow Parts
 
@@ -51,7 +51,9 @@ ae-toast::part(toast) {
   outline-offset: 2px;
 }
 @media (forced-colors: active) {
-  ae-toast::part(toast) { outline-color: CanvasText; }
+  ae-toast::part(toast) {
+    outline-color: CanvasText;
+  }
 }
 ```
 
@@ -76,7 +78,9 @@ ae-toast::part(toast) {
 import { css } from 'lit';
 
 export const toastStyles = css`
-  :host { display: block; }
+  :host {
+    display: block;
+  }
 
   ::part(toast) {
     display: flex;
@@ -84,7 +88,7 @@ export const toastStyles = css`
     gap: 0.5rem;
     padding: 0.75rem 1rem;
     border-radius: var(--ae-toast-radius, 0.5rem);
-    box-shadow: var(--ae-toast-shadow, 0 6px 20px rgba(0,0,0,.12));
+    box-shadow: var(--ae-toast-shadow, 0 6px 20px rgba(0, 0, 0, 0.12));
     background: var(--ae-toast-bg-info, #e8f4fd);
     color: var(--ae-toast-fg-info, #055160);
   }
@@ -105,7 +109,14 @@ export const toastStyles = css`
     animation: bar var(--ae-toast-duration, 5s) linear forwards;
   }
 
-  @keyframes bar { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+  @keyframes bar {
+    from {
+      transform: scaleX(1);
+    }
+    to {
+      transform: scaleX(0);
+    }
+  }
 `;
 ```
 
@@ -125,22 +136,22 @@ packages/toast/
 
 ## 6 · Architecture
 
-* A **singleton manager** creates one container per `placement` and appends `<ae-toast>` children.
-* Each toast starts a countdown timer (`duration`) that pauses on hover if `pauseOnHover`.
-* Dismiss animation triggers `ae-close`; after animation end, toast removes itself.
-* Uses **Lit directives** to animate height collapse for smooth stacking.
+- A **singleton manager** creates one container per `placement` and appends `<ae-toast>` children.
+- Each toast starts a countdown timer (`duration`) that pauses on hover if `pauseOnHover`.
+- Dismiss animation triggers `ae-close`; after animation end, toast removes itself.
+- Uses **Lit directives** to animate height collapse for smooth stacking.
 
 ## 7 · Performance
 
-* Toast component ≤ 1 KB; manager adds \~0.5 KB. No external deps.
-* Only the active timer renders progress via CSS keyframes (no JS every frame).
+- Toast component ≤ 1 KB; manager adds \~0.5 KB. No external deps.
+- Only the active timer renders progress via CSS keyframes (no JS every frame).
 
 ## 8 · Testing Strategy
 
-* **Unit**: timer behaviour, pauseOnHover, manager queue ordering.
-* **Playwright**: stacking across placements, focus traversal, reduced‑motion preference (`prefers-reduced-motion`).
-* **axe‑core**: assert `role` and live‑region announcing.
+- **Unit**: timer behaviour, pauseOnHover, manager queue ordering.
+- **Playwright**: stacking across placements, focus traversal, reduced‑motion preference (`prefers-reduced-motion`).
+- **axe‑core**: assert `role` and live‑region announcing.
 
 ---
 
-*Updated: 2025‑05‑07*
+_Updated: 2025‑05‑07_

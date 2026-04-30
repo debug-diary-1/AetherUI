@@ -74,10 +74,10 @@ export const Default = {
 
     const handleChange = (e) => {
       console.log('Tab changed:', e.detail.tab);
-      
+
       // Debug - verify the tab is actually getting selected
       const tabs = document.querySelectorAll(`#${e.currentTarget.id} ae-tab`);
-      tabs.forEach(tab => {
+      tabs.forEach((tab) => {
         if (tab.id === e.detail.tab) {
           console.log('Setting selected tab:', tab.id);
           tab.setAttribute('aria-selected', 'true');
@@ -218,10 +218,10 @@ export const Vertical = {
 
     const handleChange = (e) => {
       console.log('Tab changed:', e.detail.tab);
-      
+
       // Debug - verify the tab is actually getting selected
       const tabs = document.querySelectorAll(`#${e.currentTarget.id} ae-tab`);
-      tabs.forEach(tab => {
+      tabs.forEach((tab) => {
         if (tab.id === e.detail.tab) {
           console.log('Setting selected tab:', tab.id);
           tab.setAttribute('aria-selected', 'true');
@@ -299,10 +299,10 @@ export const ManualActivation = {
   render: (args) => {
     const handleChange = (e) => {
       console.log('Tab changed:', e.detail.tab);
-      
+
       // Debug - verify the tab is actually getting selected
       const tabs = document.querySelectorAll(`#${e.currentTarget.id} ae-tab`);
-      tabs.forEach(tab => {
+      tabs.forEach((tab) => {
         if (tab.id === e.detail.tab) {
           console.log('Setting selected tab:', tab.id);
           tab.setAttribute('aria-selected', 'true');
@@ -370,7 +370,9 @@ export const Both = {
 
               <ae-tab-panel slot="panel" id="panel1">
                 <h3>Default Horizontal Tabs</h3>
-                <p>This is using the default orientation which should be horizontal (tabs in a row).</p>
+                <p>
+                  This is using the default orientation which should be horizontal (tabs in a row).
+                </p>
               </ae-tab-panel>
 
               <ae-tab-panel slot="panel" id="panel2">

@@ -50,7 +50,7 @@ export class ToastManager {
       variant = 'info',
       duration = 5000,
       placement = 'bottom-right',
-      pauseOnHover = true
+      pauseOnHover = true,
     } = options;
 
     // Get or create container for this placement
@@ -67,11 +67,15 @@ export class ToastManager {
     // Listen for close event to remove the toast
     toast.addEventListener('ae-close', () => {
       // Wait for exit animation to complete
-      toast.addEventListener('animationend', () => {
-        if (toast.parentNode) {
-          toast.parentNode.removeChild(toast);
-        }
-      }, { once: true });
+      toast.addEventListener(
+        'animationend',
+        () => {
+          if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+          }
+        },
+        { once: true },
+      );
     });
 
     // Add toast to container
@@ -101,7 +105,7 @@ export class ToastManager {
    * Remove all containers and the injected stylesheet
    */
   public destroy(): void {
-    this.containers.forEach(container => {
+    this.containers.forEach((container) => {
       container.remove();
     });
     this.containers.clear();

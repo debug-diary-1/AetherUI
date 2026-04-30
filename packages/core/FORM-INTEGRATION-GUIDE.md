@@ -1,6 +1,7 @@
 # Form Integration Guide for AetherUI
 
 ## Current State
+
 AetherUI form components (checkbox, radio, etc.) currently don't participate in native form submission. They use a shadow DOM approach which prevents native form integration.
 
 ## Recommendation: ElementInternals API
@@ -37,7 +38,7 @@ export class AeCheckbox extends LitElement {
 
   updated(changedProperties: Map<string, unknown>) {
     super.updated(changedProperties);
-    
+
     if (changedProperties.has('checked') || changedProperties.has('value')) {
       this._updateFormValue();
     }
@@ -77,7 +78,7 @@ export class AeCheckbox extends LitElement {
 ## Components That Need Form Integration
 
 - [x] ae-checkbox
-- [ ] ae-radio / ae-radio-group  
+- [ ] ae-radio / ae-radio-group
 - [ ] ae-input (future)
 - [ ] ae-select (future)
 - [ ] ae-textarea (future)
@@ -98,6 +99,7 @@ This ensures form participation works everywhere but requires more setup from co
 ## Browser Support
 
 ElementInternals is supported in all modern browsers:
+
 - Chrome 77+
 - Firefox 98+
 - Safari 16.4+

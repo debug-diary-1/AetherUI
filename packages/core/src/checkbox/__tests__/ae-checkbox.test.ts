@@ -12,8 +12,12 @@ describe('ae-checkbox', () => {
 
   it('reflects ARIA state via ElementInternals', async () => {
     const el = await fixture<AeCheckbox>(html`<ae-checkbox checked></ae-checkbox>`);
-    expect((el as unknown as { _internals: ElementInternals })._internals.role).to.equal('checkbox');
-    expect((el as unknown as { _internals: ElementInternals })._internals.ariaChecked).to.equal('true');
+    expect((el as unknown as { _internals: ElementInternals })._internals.role).to.equal(
+      'checkbox',
+    );
+    expect((el as unknown as { _internals: ElementInternals })._internals.ariaChecked).to.equal(
+      'true',
+    );
   });
 
   describe('keyboard accessibility', () => {

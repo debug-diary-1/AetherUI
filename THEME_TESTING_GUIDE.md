@@ -61,10 +61,12 @@ background: var(--ae-overlay-bg);
 ### 3. Component-Specific Variables
 
 Each component should have dedicated theme variables defined in:
+
 - `packages/tokens/src/light.css`
 - `packages/tokens/src/dark.css`
 
 Example for a component:
+
 ```css
 /* In light.css */
 :root {
@@ -138,10 +140,10 @@ describe('ae-mycomponent', () => {
 
       // Check for rgba patterns that aren't in var() declarations
       const rgbaMatches = styles.match(/rgba\([^)]+\)/g) || [];
-      const inVarDeclarations = rgbaMatches.filter(match => {
+      const inVarDeclarations = rgbaMatches.filter((match) => {
         const context = styles.substring(
           Math.max(0, styles.indexOf(match) - 30),
-          styles.indexOf(match) + 50
+          styles.indexOf(match) + 50,
         );
         return context.includes('var(');
       });
@@ -249,6 +251,7 @@ color: var(--ae-text-primary, #111827);
 **Why it's wrong:** The fallback `#111827` is a dark color that won't change in dark mode.
 
 **Fix:**
+
 ```css
 /* ✅ CORRECT */
 color: var(--ae-text-primary);
@@ -262,6 +265,7 @@ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 ```
 
 **Fix:**
+
 ```css
 /* ✅ CORRECT */
 box-shadow: var(--ae-shadow-sm);
@@ -275,6 +279,7 @@ background: var(--ae-button-bg-primary, #4f46e5);
 ```
 
 **Fix:**
+
 ```css
 /* ✅ CORRECT */
 background: var(--ae-button-bg-primary);

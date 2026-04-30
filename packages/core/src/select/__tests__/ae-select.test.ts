@@ -1,7 +1,11 @@
 import { html, fixture, expect, oneEvent } from '@open-wc/testing';
 import { AeSelect } from '../ae-select.js';
 import '../ae-select.js';
-import { getComponentStyles, assertNoHardcodedColors, assertCSSVariablesUsed } from '../../test-utils/theme-test-helpers.js';
+import {
+  getComponentStyles,
+  assertNoHardcodedColors,
+  assertCSSVariablesUsed,
+} from '../../test-utils/theme-test-helpers.js';
 
 describe('ae-select', () => {
   it('has correct default properties', async () => {
@@ -15,12 +19,7 @@ describe('ae-select', () => {
 
   it('sets properties from attributes', async () => {
     const el = await fixture<AeSelect>(html`
-      <ae-select
-        value="option1"
-        multiple
-        required
-        disabled
-      ></ae-select>
+      <ae-select value="option1" multiple required disabled></ae-select>
     `);
 
     expect(el.value).to.equal('option1');
@@ -30,9 +29,7 @@ describe('ae-select', () => {
   });
 
   it('renders label when provided', async () => {
-    const el = await fixture<AeSelect>(html`
-      <ae-select label="Choose option"></ae-select>
-    `);
+    const el = await fixture<AeSelect>(html` <ae-select label="Choose option"></ae-select> `);
 
     const label = el.shadowRoot!.querySelector('label');
     expect(label).to.exist;
@@ -182,9 +179,7 @@ describe('ae-select', () => {
   });
 
   it('shows required indicator when required', async () => {
-    const el = await fixture<AeSelect>(html`
-      <ae-select label="Choice" required></ae-select>
-    `);
+    const el = await fixture<AeSelect>(html` <ae-select label="Choice" required></ae-select> `);
 
     const requiredIndicator = el.shadowRoot!.querySelector('.required-indicator');
     expect(requiredIndicator).to.exist;
@@ -196,12 +191,11 @@ describe('ae-select', () => {
       const stylesText = getComponentStyles(el);
 
       // Check that theme variables are used
-      assertCSSVariablesUsed(stylesText, [
-        '--ae-select-border',
-        '--ae-select-bg',
-        '--ae-select-color',
-        '--ae-select-focus-ring',
-      ], 'Select');
+      assertCSSVariablesUsed(
+        stylesText,
+        ['--ae-select-border', '--ae-select-bg', '--ae-select-color', '--ae-select-focus-ring'],
+        'Select',
+      );
     });
 
     it('does not have hardcoded color fallbacks', async () => {

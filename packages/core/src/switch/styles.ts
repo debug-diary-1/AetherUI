@@ -34,48 +34,48 @@ export const switchStyles = css`
   }
 
   /* Sizes */
-  :host([size="sm"]) .switch-control {
+  :host([size='sm']) .switch-control {
     width: var(--ae-switch-width-sm, 32px);
     height: var(--ae-switch-height-sm, 18px);
     padding: 2px;
   }
 
-  :host([size="sm"]) .switch-thumb {
+  :host([size='sm']) .switch-thumb {
     width: 14px;
     height: 14px;
   }
 
-  :host([size="sm"]) .switch-input:checked + .switch-control .switch-thumb {
+  :host([size='sm']) .switch-input:checked + .switch-control .switch-thumb {
     transform: translateX(14px);
   }
 
-  :host([size="md"]) .switch-control {
+  :host([size='md']) .switch-control {
     width: var(--ae-switch-width-md, 44px);
     height: var(--ae-switch-height-md, 24px);
     padding: 2px;
   }
 
-  :host([size="md"]) .switch-thumb {
+  :host([size='md']) .switch-thumb {
     width: 20px;
     height: 20px;
   }
 
-  :host([size="md"]) .switch-input:checked + .switch-control .switch-thumb {
+  :host([size='md']) .switch-input:checked + .switch-control .switch-thumb {
     transform: translateX(20px);
   }
 
-  :host([size="lg"]) .switch-control {
+  :host([size='lg']) .switch-control {
     width: var(--ae-switch-width-lg, 56px);
     height: var(--ae-switch-height-lg, 30px);
     padding: 3px;
   }
 
-  :host([size="lg"]) .switch-thumb {
+  :host([size='lg']) .switch-thumb {
     width: 24px;
     height: 24px;
   }
 
-  :host([size="lg"]) .switch-input:checked + .switch-control .switch-thumb {
+  :host([size='lg']) .switch-input:checked + .switch-control .switch-thumb {
     transform: translateX(26px);
   }
 

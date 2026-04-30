@@ -70,7 +70,7 @@ export class AeTreeItem extends LitElement {
   private handleSlotChange() {
     if (!this.defaultSlot) return;
     const nodes = this.defaultSlot.assignedElements({ flatten: true });
-    this.hasChildren = nodes.some(node => node.tagName.toLowerCase() === 'ae-tree-item');
+    this.hasChildren = nodes.some((node) => node.tagName.toLowerCase() === 'ae-tree-item');
   }
 
   private get indentLevel(): number {
@@ -99,8 +99,8 @@ export class AeTreeItem extends LitElement {
       new CustomEvent(eventName, {
         bubbles: true,
         composed: true,
-        detail: { item: this }
-      })
+        detail: { item: this },
+      }),
     );
   }
 
@@ -127,9 +127,9 @@ export class AeTreeItem extends LitElement {
           composed: true,
           detail: {
             item: this,
-            selected: this.selected
-          }
-        })
+            selected: this.selected,
+          },
+        }),
       );
     }
   }
@@ -183,16 +183,10 @@ export class AeTreeItem extends LitElement {
 
           <slot name="icon"></slot>
 
-          <span part="label" class="label">
-            ${this.label}
-          </span>
+          <span part="label" class="label"> ${this.label} </span>
         </div>
 
-        <div
-          part="children"
-          class="children ${this.expanded ? 'expanded' : ''}"
-          role="group"
-        >
+        <div part="children" class="children ${this.expanded ? 'expanded' : ''}" role="group">
           <slot @slotchange="${this.handleSlotChange}"></slot>
         </div>
       </div>

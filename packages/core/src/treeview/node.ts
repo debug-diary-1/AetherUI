@@ -40,35 +40,35 @@ export function renderTreeNode(node: TreeNode, options: TreeNodeRenderOptions): 
         ?disabled="${node.disabled}"
         class="tree-node"
       >
-        ${hasChildren 
-          ? html`<span class="tree-caret" part="caret">▶</span>` 
-          : html`<span class="tree-caret-spacer" part="caret-spacer"></span>`
-        }
-        
-        ${node.icon 
-          ? html`<span class="tree-icon" part="icon">${node.icon}</span>` 
-          : null
-        }
-        
+        ${hasChildren
+          ? html`<span class="tree-caret" part="caret">▶</span>`
+          : html`<span class="tree-caret-spacer" part="caret-spacer"></span>`}
+        ${node.icon ? html`<span class="tree-icon" part="icon">${node.icon}</span>` : null}
         ${selectionMode !== 'none'
-          ? html`<span class="tree-checkbox" part="checkbox" role="checkbox" aria-checked="${isSelected}" aria-label="Select ${node.label}"></span>`
-          : null
-        }
-        
+          ? html`<span
+              class="tree-checkbox"
+              part="checkbox"
+              role="checkbox"
+              aria-checked="${isSelected}"
+              aria-label="Select ${node.label}"
+            ></span>`
+          : null}
+
         <span class="tree-label" part="label">${node.label}</span>
       </div>
-      
+
       ${hasChildren && isExpanded
         ? html`
-          <div role="group" class="tree-children">
-            ${node.children!.map(child => renderTreeNode(child, {
-              ...options,
-              level: level + 1,
-            }))}
-          </div>
-        `
-        : null
-      }
+            <div role="group" class="tree-children">
+              ${node.children!.map((child) =>
+                renderTreeNode(child, {
+                  ...options,
+                  level: level + 1,
+                }),
+              )}
+            </div>
+          `
+        : null}
     </div>
   `;
 }
@@ -77,11 +77,7 @@ export function renderTreeNode(node: TreeNode, options: TreeNodeRenderOptions): 
  * Render empty state for the tree
  */
 export function renderEmptyState(message: string): TemplateResult {
-  return html`
-    <div class="tree-empty" part="empty">
-      ${message}
-    </div>
-  `;
+  return html` <div class="tree-empty" part="empty">${message}</div> `;
 }
 
 /**

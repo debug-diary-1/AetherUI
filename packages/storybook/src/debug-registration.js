@@ -7,14 +7,14 @@ async function debugRegistration() {
   try {
     const autocompleteModule = await import('@aetherui/core/autocomplete');
     console.log('Autocomplete module loaded:', autocompleteModule);
-    
+
     if (autocompleteModule.defineAeAutocomplete) {
       autocompleteModule.defineAeAutocomplete();
       console.log('✓ defineAeAutocomplete called');
     } else {
       console.error('✗ defineAeAutocomplete not found in module');
     }
-    
+
     // Check if the component is defined
     setTimeout(() => {
       const isDefined = customElements.get('ae-autocomplete');
@@ -31,14 +31,14 @@ async function debugRegistration() {
   try {
     const comboModule = await import('@aetherui/core/combo');
     console.log('Combo module loaded:', comboModule);
-    
+
     if (comboModule.defineAeCombo) {
       comboModule.defineAeCombo();
       console.log('✓ defineAeCombo called');
     } else {
       console.error('✗ defineAeCombo not found in module');
     }
-    
+
     // Check if the component is defined
     setTimeout(() => {
       const isDefined = customElements.get('ae-combo');

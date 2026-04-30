@@ -41,8 +41,7 @@ export class PgPreview extends LitElement {
       display: flex;
       align-items: center;
       justify-content: center;
-      background:
-        radial-gradient(circle at 1px 1px, var(--pg-preview-pattern) 1px, transparent 0);
+      background: radial-gradient(circle at 1px 1px, var(--pg-preview-pattern) 1px, transparent 0);
       background-size: 24px 24px;
       overflow: auto;
     }
@@ -60,7 +59,7 @@ export class PgPreview extends LitElement {
   private _getHtml(): string {
     if (!this.config) return '';
     if (this.selectedVariant) {
-      const v = this.config.variants?.find(v => v.name === this.selectedVariant);
+      const v = this.config.variants?.find((v) => v.name === this.selectedVariant);
       if (v) return v.html;
     }
     return this.config.defaultHtml;
@@ -81,7 +80,7 @@ export class PgPreview extends LitElement {
       const finalValue = formatVariableValue(variable, value);
       wrapper.style.setProperty(variable.name, finalValue);
 
-      wrapper.querySelectorAll('*').forEach(el => {
+      wrapper.querySelectorAll('*').forEach((el) => {
         if (el.tagName.toLowerCase().startsWith('ae-')) {
           (el as HTMLElement).style.setProperty(variable.name, finalValue);
         }
@@ -101,10 +100,14 @@ export class PgPreview extends LitElement {
       const modal = wrapper.querySelector('ae-modal') as HTMLElement & { open: boolean };
       const close = wrapper.querySelector('#modal-close') as HTMLElement;
       if (trigger && modal) {
-        trigger.onclick = () => { modal.open = true; };
+        trigger.onclick = () => {
+          modal.open = true;
+        };
       }
       if (close && modal) {
-        close.onclick = () => { modal.open = false; };
+        close.onclick = () => {
+          modal.open = false;
+        };
       }
     }
 
@@ -113,10 +116,14 @@ export class PgPreview extends LitElement {
       const drawer = wrapper.querySelector('ae-drawer') as HTMLElement & { open: boolean };
       const close = wrapper.querySelector('#drawer-close') as HTMLElement;
       if (trigger && drawer) {
-        trigger.onclick = () => { drawer.open = true; };
+        trigger.onclick = () => {
+          drawer.open = true;
+        };
       }
       if (close && drawer) {
-        close.onclick = () => { drawer.open = false; };
+        close.onclick = () => {
+          drawer.open = false;
+        };
       }
     }
 
@@ -124,7 +131,9 @@ export class PgPreview extends LitElement {
       const trigger = wrapper.querySelector('#toast-trigger') as HTMLElement;
       const toast = wrapper.querySelector('ae-toast') as HTMLElement & { open: boolean };
       if (trigger && toast) {
-        trigger.onclick = () => { toast.open = true; };
+        trigger.onclick = () => {
+          toast.open = true;
+        };
       }
     }
   }
@@ -138,9 +147,7 @@ export class PgPreview extends LitElement {
       </div>
       <div class="canvas">
         <pg-device-frame .size=${this.deviceSize}>
-          <div class="component-wrapper">
-            ${unsafeHTML(this._getHtml())}
-          </div>
+          <div class="component-wrapper">${unsafeHTML(this._getHtml())}</div>
         </pg-device-frame>
       </div>
     `;

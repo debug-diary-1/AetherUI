@@ -5,22 +5,22 @@ import { AeRadio } from './ae-radio';
 
 /**
  * A container component that manages a group of radio buttons and their selection state.
- * 
+ *
  * @element ae-radio-group
- * 
+ *
  * @property {string} name - The name attribute for all radio buttons in the group
  * @property {string} value - The value of the currently selected radio button
  * @property {boolean} disabled - Whether all radio buttons in the group are disabled
- * 
+ *
  * @fires {CustomEvent<{value: string}>} ae-radio-group-change - Fired when the selected radio changes
- * 
+ *
  * @slot - The radio buttons (ae-radio elements) to be grouped
- * 
+ *
  * @csspart base - The component's base wrapper
- * 
+ *
  * @cssproperty --ae-radio-group-gap - The gap between radio buttons
  * @cssproperty --ae-radio-group-direction - The flex direction (column or row)
- * 
+ *
  * @example
  * ```html
  * <ae-radio-group name="options" value="2">
@@ -57,7 +57,7 @@ export class AeRadioGroup extends LitElement {
   }
 
   private _removeOldListeners() {
-    this._previousRadios.forEach(radio => {
+    this._previousRadios.forEach((radio) => {
       radio.removeEventListener('ae-radio-change', this._handleRadioChange);
     });
     this._previousRadios.clear();
@@ -66,7 +66,7 @@ export class AeRadioGroup extends LitElement {
   private updateRadios() {
     this._removeOldListeners();
     const radios = this.querySelectorAll<AeRadio>('ae-radio');
-    radios.forEach(radio => {
+    radios.forEach((radio) => {
       radio.name = this.name;
       radio.disabled = this.disabled;
       radio.checked = radio.value === this.value;
@@ -79,21 +79,20 @@ export class AeRadioGroup extends LitElement {
     const radio = event.target as AeRadio;
     this.value = radio.value;
     this.updateRadios();
-    
+
     // Dispatch the standard event
-    this.dispatchEvent(new CustomEvent('ae-radio-group-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-radio-group-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
     return html`
-      <div
-        part="base"
-        role="radiogroup"
-      >
+      <div part="base" role="radiogroup">
         <slot @slotchange="${this.updateRadios}"></slot>
       </div>
     `;

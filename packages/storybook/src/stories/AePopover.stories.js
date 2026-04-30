@@ -12,7 +12,16 @@ export default {
     },
     placement: {
       control: { type: 'select' },
-      options: ['top', 'bottom', 'left', 'right', 'top-start', 'top-end', 'bottom-start', 'bottom-end'],
+      options: [
+        'top',
+        'bottom',
+        'left',
+        'right',
+        'top-start',
+        'top-end',
+        'bottom-start',
+        'bottom-end',
+      ],
       description: 'Popover placement',
     },
     arrow: {
@@ -86,11 +95,7 @@ export const HoverTrigger = {
     arrow: true,
   },
   render: (args) => html`
-    <ae-popover
-      trigger="${args.trigger}"
-      placement="${args.placement}"
-      ?arrow="${args.arrow}"
-    >
+    <ae-popover trigger="${args.trigger}" placement="${args.placement}" ?arrow="${args.arrow}">
       <button slot="trigger">Hover me</button>
       <div style="padding: 1rem;">
         <p style="margin: 0;">Hover popover content</p>

@@ -35,79 +35,79 @@ export const popoverStyles = css`
   }
 
   /* Arrow positions */
-  :host([placement^="bottom"]) .popover-arrow {
+  :host([placement^='bottom']) .popover-arrow {
     top: -5px;
     border-bottom: none;
     border-right: none;
   }
 
-  :host([placement="bottom"]) .popover-arrow {
+  :host([placement='bottom']) .popover-arrow {
     left: 50%;
     margin-left: -5px;
   }
 
-  :host([placement="bottom-start"]) .popover-arrow {
+  :host([placement='bottom-start']) .popover-arrow {
     left: 1rem;
   }
 
-  :host([placement="bottom-end"]) .popover-arrow {
+  :host([placement='bottom-end']) .popover-arrow {
     right: 1rem;
   }
 
-  :host([placement^="top"]) .popover-arrow {
+  :host([placement^='top']) .popover-arrow {
     bottom: -5px;
     border-top: none;
     border-left: none;
   }
 
-  :host([placement="top"]) .popover-arrow {
+  :host([placement='top']) .popover-arrow {
     left: 50%;
     margin-left: -5px;
   }
 
-  :host([placement="top-start"]) .popover-arrow {
+  :host([placement='top-start']) .popover-arrow {
     left: 1rem;
   }
 
-  :host([placement="top-end"]) .popover-arrow {
+  :host([placement='top-end']) .popover-arrow {
     right: 1rem;
   }
 
-  :host([placement^="left"]) .popover-arrow {
+  :host([placement^='left']) .popover-arrow {
     right: -5px;
     border-left: none;
     border-bottom: none;
   }
 
-  :host([placement="left"]) .popover-arrow {
+  :host([placement='left']) .popover-arrow {
     top: 50%;
     margin-top: -5px;
   }
 
-  :host([placement="left-start"]) .popover-arrow {
+  :host([placement='left-start']) .popover-arrow {
     top: 1rem;
   }
 
-  :host([placement="left-end"]) .popover-arrow {
+  :host([placement='left-end']) .popover-arrow {
     bottom: 1rem;
   }
 
-  :host([placement^="right"]) .popover-arrow {
+  :host([placement^='right']) .popover-arrow {
     left: -5px;
     border-right: none;
     border-top: none;
   }
 
-  :host([placement="right"]) .popover-arrow {
+  :host([placement='right']) .popover-arrow {
     top: 50%;
     margin-top: -5px;
   }
 
-  :host([placement="right-start"]) .popover-arrow {
+  :host([placement='right-start']) .popover-arrow {
     top: 1rem;
   }
 
-  :host([placement="right-end"]) .popover-arrow {
+  :host([placement='right-end']) .popover-arrow {
     bottom: 1rem;
   }
 

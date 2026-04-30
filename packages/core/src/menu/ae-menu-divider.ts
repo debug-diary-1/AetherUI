@@ -23,9 +23,7 @@ export class AeMenuDivider extends LitElement {
   static styles = menuDividerStyles;
 
   render() {
-    return html`
-      <div part="base" class="menu-divider" role="separator"></div>
-    `;
+    return html` <div part="base" class="menu-divider" role="separator"></div> `;
   }
 }
 

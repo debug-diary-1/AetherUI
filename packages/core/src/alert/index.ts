@@ -6,4 +6,4 @@ export const defineAeAlert = () => {
     // The element will be defined when the file is imported
     import('./ae-alert');
   }
-}; 
+};

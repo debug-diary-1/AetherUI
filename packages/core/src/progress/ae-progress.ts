@@ -79,17 +79,21 @@ export class AeProgress extends LitElement {
 
   render() {
     return html`
-      <div part="base" class="progress-base ${this.indeterminate ? 'indeterminate' : ''}" role="progressbar" aria-valuenow="${ifDefined(this.indeterminate ? undefined : this.value)}" aria-valuemin="0" aria-valuemax="${this.max}" aria-label="${this.ariaLabel || 'Progress'}">
+      <div
+        part="base"
+        class="progress-base ${this.indeterminate ? 'indeterminate' : ''}"
+        role="progressbar"
+        aria-valuenow="${ifDefined(this.indeterminate ? undefined : this.value)}"
+        aria-valuemin="0"
+        aria-valuemax="${this.max}"
+        aria-label="${this.ariaLabel || 'Progress'}"
+      >
         <div part="track" class="progress-track">
-          <div
-            part="bar"
-            class="progress-bar"
-            style="width: ${this.percentage}%"
-          ></div>
+          <div part="bar" class="progress-bar" style="width: ${this.percentage}%"></div>
         </div>
-        ${this.showLabel ? html`
-          <div part="label" class="progress-label">${this.labelText}</div>
-        ` : ''}
+        ${this.showLabel
+          ? html` <div part="label" class="progress-label">${this.labelText}</div> `
+          : ''}
       </div>
     `;
   }

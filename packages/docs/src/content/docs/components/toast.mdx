@@ -51,66 +51,69 @@ Toast components provide brief, temporary notifications that appear and disappea
   import { useEffect } from 'react';
   import { showToast, createToastHelpers } from '@aetherui/core/toast';
 
-  function MyComponent() {
-    // Create toast helpers
-    const toast = createToastHelpers();
-    
+function MyComponent() {
+// Create toast helpers
+const toast = createToastHelpers();
+
     const handleSuccess = () => {
       toast.success('Operation completed successfully!');
     };
-    
+
     const handleError = () => {
       toast.error('Something went wrong', {
         duration: 8000, // 8 seconds
         placement: 'top-right'
       });
     };
-    
+
     return (
       <div>
         <button onClick={handleSuccess}>Success</button>
         <button onClick={handleError}>Error</button>
       </div>
     );
+
+}
+
+````
+</TabItem>
+
+<TabItem label="Vue">
+```vue
+<template>
+  <div>
+    <button @click="showSuccessToast">Success</button>
+    <button @click="showErrorToast">Error</button>
+  </div>
+</template>
+
+<script>
+import { showToast, createToastHelpers } from '@aetherui/core/toast';
+
+export default {
+  setup() {
+    const toast = createToastHelpers();
+
+    const showSuccessToast = () => {
+      toast.success('Operation completed successfully!');
+    };
+
+    const showErrorToast = () => {
+      toast.error('Something went wrong', {
+        duration: 8000,
+        placement: 'top-right'
+      });
+    };
+
+    return {
+      showSuccessToast,
+      showErrorToast
+    };
   }
-  ```
-  </TabItem>
-  
-  <TabItem label="Vue">
-  ```vue
-  <template>
-    <div>
-      <button @click="showSuccessToast">Success</button>
-      <button @click="showErrorToast">Error</button>
-    </div>
-  </template>
+};
+</script>
+````
 
-  <script>
-  import { showToast, createToastHelpers } from '@aetherui/core/toast';
-
-  export default {
-    setup() {
-      const toast = createToastHelpers();
-      
-      const showSuccessToast = () => {
-        toast.success('Operation completed successfully!');
-      };
-      
-      const showErrorToast = () => {
-        toast.error('Something went wrong', {
-          duration: 8000,
-          placement: 'top-right'
-        });
-      };
-      
-      return {
-        showSuccessToast,
-        showErrorToast
-      };
-    }
-  };
-  </script>
-  ```
   </TabItem>
 </Tabs>
 
@@ -118,52 +121,52 @@ Toast components provide brief, temporary notifications that appear and disappea
 
 ### Properties
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `message` | `string` | `''` | Main text content (can also use default slot) |
-| `variant` | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'` | Visual styling preset |
-| `open` | `boolean` | `true` | Controls visibility |
-| `duration` | `number` | `5000` | Auto-dismiss time in ms (0 = sticky) |
-| `placement` | `'top-right' \| 'bottom-right' \| 'top-left' \| 'bottom-left'` | `'bottom-right'` | Screen corner position |
-| `pauseOnHover` | `boolean` | `true` | Pause countdown when hovered |
+| Property       | Type                                                           | Default          | Description                                   |
+| -------------- | -------------------------------------------------------------- | ---------------- | --------------------------------------------- |
+| `message`      | `string`                                                       | `''`             | Main text content (can also use default slot) |
+| `variant`      | `'info' \| 'success' \| 'warning' \| 'error'`                  | `'info'`         | Visual styling preset                         |
+| `open`         | `boolean`                                                      | `true`           | Controls visibility                           |
+| `duration`     | `number`                                                       | `5000`           | Auto-dismiss time in ms (0 = sticky)          |
+| `placement`    | `'top-right' \| 'bottom-right' \| 'top-left' \| 'bottom-left'` | `'bottom-right'` | Screen corner position                        |
+| `pauseOnHover` | `boolean`                                                      | `true`           | Pause countdown when hovered                  |
 
 ### Events
 
-| Event | Detail | Description |
-|-------|--------|-------------|
+| Event      | Detail                                                 | Description                   |
+| ---------- | ------------------------------------------------------ | ----------------------------- |
 | `ae-close` | `{ source: 'timeout' \| 'closeButton' \| 'keyboard' }` | Fired when toast is dismissed |
-| `ae-click` | `{ originalEvent: MouseEvent }` | Fired when toast is clicked |
+| `ae-click` | `{ originalEvent: MouseEvent }`                        | Fired when toast is clicked   |
 
 ### Slots
 
-| Name | Description |
-|------|-------------|
-| (default) | Main content of the toast |
-| `icon` | Custom icon (replaces default variant icon) |
+| Name      | Description                                 |
+| --------- | ------------------------------------------- |
+| (default) | Main content of the toast                   |
+| `icon`    | Custom icon (replaces default variant icon) |
 
 ### CSS Parts
 
-| Part | Description |
-|------|-------------|
-| `toast` | Main container |
-| `icon` | Status icon |
-| `content` | Message text wrapper |
-| `close` | Close button |
+| Part       | Description                         |
+| ---------- | ----------------------------------- |
+| `toast`    | Main container                      |
+| `icon`     | Status icon                         |
+| `content`  | Message text wrapper                |
+| `close`    | Close button                        |
 | `progress` | Progress bar showing time remaining |
 
 ### CSS Custom Properties
 
-| Property | Description |
-|----------|-------------|
-| `--ae-toast-bg-info` | Info variant background color |
-| `--ae-toast-bg-success` | Success variant background color |
-| `--ae-toast-bg-warning` | Warning variant background color |
-| `--ae-toast-bg-error` | Error variant background color |
-| `--ae-toast-fg-*` | Corresponding text colors |
-| `--ae-toast-radius` | Corner rounding |
-| `--ae-toast-shadow` | Elevation shadow |
-| `--ae-toast-progress-height` | Progress bar thickness |
-| `--ae-toast-z-index` | Stacking layer |
+| Property                     | Description                      |
+| ---------------------------- | -------------------------------- |
+| `--ae-toast-bg-info`         | Info variant background color    |
+| `--ae-toast-bg-success`      | Success variant background color |
+| `--ae-toast-bg-warning`      | Warning variant background color |
+| `--ae-toast-bg-error`        | Error variant background color   |
+| `--ae-toast-fg-*`            | Corresponding text colors        |
+| `--ae-toast-radius`          | Corner rounding                  |
+| `--ae-toast-shadow`          | Elevation shadow                 |
+| `--ae-toast-progress-height` | Progress bar thickness           |
+| `--ae-toast-z-index`         | Stacking layer                   |
 
 ## Helper Functions
 
@@ -174,10 +177,10 @@ The toast component provides two helper functions for creating toasts programmat
 ```js
 showToast({
   message: 'Your message here',
-  variant: 'success',  // 'info', 'success', 'warning', 'error'
-  duration: 5000,      // milliseconds (0 = sticky)
+  variant: 'success', // 'info', 'success', 'warning', 'error'
+  duration: 5000, // milliseconds (0 = sticky)
   placement: 'bottom-right',
-  pauseOnHover: true
+  pauseOnHover: true,
 });
 ```
 
@@ -196,7 +199,7 @@ toast.error('Error message');
 toast.success('Custom success', {
   duration: 8000,
   placement: 'top-right',
-  pauseOnHover: false
+  pauseOnHover: false,
 });
 ```
 
@@ -226,13 +229,13 @@ import { showToast } from '@aetherui/core/toast';
 // Quick toast (2 seconds)
 showToast({
   message: 'Quick notification',
-  duration: 2000
+  duration: 2000,
 });
 
 // Sticky toast (no auto-dismiss)
 showToast({
   message: 'This will stay until closed',
-  duration: 0
+  duration: 0,
 });
 ```
 
@@ -244,12 +247,12 @@ import { showToast } from '@aetherui/core/toast';
 // Different placements
 showToast({
   message: 'Top right notification',
-  placement: 'top-right'
+  placement: 'top-right',
 });
 
 showToast({
   message: 'Bottom left notification',
-  placement: 'bottom-left'
+  placement: 'bottom-left',
 });
 ```
 
@@ -308,7 +311,7 @@ ae-toast::part(toast) {
 }
 
 /* Customize success variant */
-ae-toast[variant="success"]::part(toast) {
+ae-toast[variant='success']::part(toast) {
   background-color: #d1fae5;
   color: #065f46;
 }

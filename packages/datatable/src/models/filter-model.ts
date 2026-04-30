@@ -4,7 +4,7 @@
 export interface ColumnFilter {
   /** Column ID being filtered */
   id: string;
-  
+
   /** Filter value */
   value: string;
 }
@@ -23,10 +23,10 @@ export type ColumnFiltersState = ColumnFilter[];
 export function defaultStringFilter(value: unknown, filter: string): boolean {
   if (filter === '') return true;
   if (value === null || value === undefined) return false;
-  
+
   const strValue = String(value).toLowerCase();
   const strFilter = filter.toLowerCase();
-  
+
   return strValue.includes(strFilter);
 }
 
@@ -39,11 +39,11 @@ export function defaultStringFilter(value: unknown, filter: string): boolean {
 export function defaultNumberFilter(value: unknown, filter: string): boolean {
   if (filter === '') return true;
   if (value === null || value === undefined) return false;
-  
+
   // Convert to number
   const numValue = Number(value);
   if (isNaN(numValue)) return false;
-  
+
   // Check for comparison operators
   if (filter.startsWith('>=')) {
     return numValue >= Number(filter.slice(2));
@@ -74,11 +74,11 @@ export function defaultNumberFilter(value: unknown, filter: string): boolean {
 export function defaultDateFilter(value: unknown, filter: string): boolean {
   if (filter === '') return true;
   if (value === null || value === undefined) return false;
-  
+
   // Convert to date
   const dateValue = value instanceof Date ? value : new Date(value as string | number);
   if (isNaN(dateValue.getTime())) return false;
-  
+
   // Check for comparison operators or exact date match
   if (filter.startsWith('>=')) {
     const filterDate = new Date(filter.slice(2));
@@ -99,7 +99,7 @@ export function defaultDateFilter(value: unknown, filter: string): boolean {
       return dateValue.toDateString() === filterDate.toDateString();
     }
   }
-  
+
   // Default to string contains search on the date string
   return dateValue.toISOString().includes(filter);
 }

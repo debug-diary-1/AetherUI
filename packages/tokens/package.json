@@ -2,22 +2,25 @@
   "name": "@aetherui/tokens",
   "version": "0.1.0",
   "description": "Design tokens for AetherUI components",
-  "author": "AetherUI Contributors",
-  "license": "MIT",
+  "keywords": [
+    "aetherui",
+    "css-variables",
+    "design-tokens",
+    "theming"
+  ],
   "homepage": "https://github.com/pallavL01/AetherUI#readme",
+  "bugs": {
+    "url": "https://github.com/pallavL01/AetherUI/issues"
+  },
+  "license": "MIT",
+  "author": "AetherUI Contributors",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pallavL01/AetherUI.git",
     "directory": "packages/tokens"
   },
-  "bugs": {
-    "url": "https://github.com/pallavL01/AetherUI/issues"
-  },
-  "keywords": [
-    "design-tokens",
-    "css-variables",
-    "theming",
-    "aetherui"
+  "files": [
+    "dist"
   ],
   "type": "module",
   "main": "./dist/index.js",
@@ -35,9 +38,6 @@
       "import": "./dist/dark.css"
     }
   },
-  "files": [
-    "dist"
-  ],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -51,9 +51,9 @@
   },
   "devDependencies": {
     "@types/node": "catalog:",
-    "vite": "catalog:",
-    "vite-plugin-dts": "catalog:",
     "rimraf": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-dts": "catalog:"
   }
-} 
+}

@@ -7,7 +7,7 @@ export const accordionStyles = css`
   :host {
     display: block;
     width: 100%;
-    font-family: var(--ae-font-family, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif);
+    font-family: var(--ae-font-family, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif);
     border-radius: var(--ae-accordion-radius, var(--ae-radius, 0.375rem));
     overflow: hidden;
     background: var(--ae-accordion-bg);
@@ -56,7 +56,9 @@ export const accordionItemStyles = css`
     font-family: inherit;
     font-size: var(--ae-accordion-header-font-size, 0.875rem);
     line-height: 1.5;
-    transition: background-color 0.15s ease, color 0.15s ease;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
   }
 
   .header-content {
@@ -96,8 +98,9 @@ export const accordionItemStyles = css`
     overflow: hidden;
     max-height: 0;
     opacity: 0;
-    transition: max-height 0.3s ease,
-                opacity 0.2s ease;
+    transition:
+      max-height 0.3s ease,
+      opacity 0.2s ease;
   }
 
   .panel-content {

@@ -4,9 +4,11 @@ const os = require('os');
 const { execSync } = require('child_process');
 
 // Check if running in CI environment
-const isCI = process.env.CI === 'true' || process.env.CI === '1' ||
-             process.env.GITHUB_ACTIONS === 'true' ||
-             process.env.VERCEL === '1';
+const isCI =
+  process.env.CI === 'true' ||
+  process.env.CI === '1' ||
+  process.env.GITHUB_ACTIONS === 'true' ||
+  process.env.VERCEL === '1';
 
 // Check if user explicitly wants to run resource-intensive tests
 const forceRun = process.env.FORCE_TEST === 'true' || process.env.FORCE_TEST === '1';
@@ -16,7 +18,7 @@ const testCommand = process.argv[2] || '';
 
 // Resource-intensive test commands
 const intensiveCommands = ['test'];
-const isIntensiveCommand = intensiveCommands.some(cmd => testCommand.includes(cmd));
+const isIntensiveCommand = intensiveCommands.some((cmd) => testCommand.includes(cmd));
 
 /**
  * Get available memory in bytes.
@@ -50,15 +52,17 @@ function getAvailableMemory() {
 }
 
 if (!isCI && !forceRun && isIntensiveCommand) {
-  const totalMemoryGB = os.totalmem() / (1024 ** 3);
-  const availableMemoryGB = getAvailableMemory() / (1024 ** 3);
+  const totalMemoryGB = os.totalmem() / 1024 ** 3;
+  const availableMemoryGB = getAvailableMemory() / 1024 ** 3;
 
   // Only block if truly low — less than 2GB available on a machine with enough total RAM
   const MIN_AVAILABLE_MEMORY_GB = 2;
 
   console.log('\n⚠️  Resource Check for Test Command');
   console.log('─'.repeat(50));
-  console.log(`System Memory: ${totalMemoryGB.toFixed(1)}GB total, ${availableMemoryGB.toFixed(1)}GB available`);
+  console.log(
+    `System Memory: ${totalMemoryGB.toFixed(1)}GB total, ${availableMemoryGB.toFixed(1)}GB available`,
+  );
 
   if (availableMemoryGB < MIN_AVAILABLE_MEMORY_GB) {
     console.warn('\n⚠️  Low memory for parallel test execution.');

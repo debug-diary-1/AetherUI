@@ -5,13 +5,13 @@ import type { ComboFilterFunction, ComboItem } from './types';
 import { comboStyles } from './styles';
 
 /**
- * Aether UI Combobox Component 
- * 
- * An autocomplete dropdown that allows free-text input or selection 
+ * Aether UI Combobox Component
+ *
+ * An autocomplete dropdown that allows free-text input or selection
  * from a filtered list, following the ARIA Listbox Combobox pattern.
- * 
+ *
  * @element ae-combo
- * 
+ *
  * @property {(string|ComboItem)[]} items - Items to display in the dropdown
  * @property {string} value - Current input value (controlled)
  * @property {string} placeholder - Placeholder text for the input
@@ -19,19 +19,19 @@ import { comboStyles } from './styles';
  * @property {boolean} freeInput - Whether user can enter values not in the list
  * @property {string} ariaLabel - Accessible label for the input (falls back to placeholder)
  * @property {ComboFilterFunction} filterFn - Custom filter function
- * 
+ *
  * @fires {CustomEvent<{value: string, item: ComboItem | null}>} ae-combo-select - Fired when an item is selected
  * @fires {CustomEvent<{value: string}>} ae-combo-input - Fired on each keystroke
- * 
+ *
  * @slot - Default slot (not used)
- * 
+ *
  * @csspart input - Text input field
  * @csspart caret - Dropdown arrow icon wrapper
  * @csspart overlay - Positioned wrapper for the popup
  * @csspart listbox - Scroll container
  * @csspart option - Each list option
  * @csspart highlight - Query match highlights
- * 
+ *
  * @cssproperty --ae-combo-border - Input border color
  * @cssproperty --ae-combo-radius - Corner radius of input & listbox
  * @cssproperty --ae-combo-bg - Input background
@@ -126,22 +126,24 @@ export class AeCombo extends LitElement {
     const input = e.target as HTMLInputElement;
     this.value = input.value;
     this.controller.filter(input.value);
-    
+
     // Always open dropdown when typing unless disabled
     if (!this.disabled) {
       this.isOpen = true;
-      
+
       // If typing but no value, still show all options
       if (!input.value) {
         this.controller.filter('');
       }
     }
-    
-    this.dispatchEvent(new CustomEvent('ae-combo-input', {
-      detail: { value: input.value },
-      bubbles: true,
-      composed: true
-    }));
+
+    this.dispatchEvent(
+      new CustomEvent('ae-combo-input', {
+        detail: { value: input.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /**
@@ -167,7 +169,7 @@ export class AeCombo extends LitElement {
    */
   private handleOptionClick(item: ComboItem) {
     if (item.disabled) return;
-    
+
     this.selectItem(item);
   }
 
@@ -178,13 +180,15 @@ export class AeCombo extends LitElement {
     this.value = item.label;
     this.inputElement.value = item.label;
     this.isOpen = false;
-    
-    this.dispatchEvent(new CustomEvent('ae-combo-select', {
-      detail: { value: item.id, item },
-      bubbles: true,
-      composed: true
-    }));
-    
+
+    this.dispatchEvent(
+      new CustomEvent('ae-combo-select', {
+        detail: { value: item.id, item },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+
     this.controller.reset();
   }
 
@@ -193,7 +197,7 @@ export class AeCombo extends LitElement {
    */
   private handleKeydown(e: KeyboardEvent) {
     if (this.disabled) return;
-    
+
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault();
@@ -204,7 +208,7 @@ export class AeCombo extends LitElement {
           this.scrollToHighlighted();
         }
         break;
-        
+
       case 'ArrowUp':
         e.preventDefault();
         if (this.isOpen) {
@@ -212,7 +216,7 @@ export class AeCombo extends LitElement {
           this.scrollToHighlighted();
         }
         break;
-        
+
       case 'Enter':
         if (this.isOpen) {
           e.preventDefault();
@@ -222,22 +226,24 @@ export class AeCombo extends LitElement {
           } else if (this.freeInput) {
             // Allow free input if enabled
             this.isOpen = false;
-            this.dispatchEvent(new CustomEvent('ae-combo-select', {
-              detail: { value: this.value, item: null },
-              bubbles: true,
-              composed: true
-            }));
+            this.dispatchEvent(
+              new CustomEvent('ae-combo-select', {
+                detail: { value: this.value, item: null },
+                bubbles: true,
+                composed: true,
+              }),
+            );
           }
         }
         break;
-        
+
       case 'Escape':
         if (this.isOpen) {
           e.preventDefault();
           this.isOpen = false;
         }
         break;
-        
+
       case 'Tab':
         this.isOpen = false;
         break;
@@ -285,7 +291,7 @@ export class AeCombo extends LitElement {
   render() {
     const filteredItems = this.controller.filteredItems;
     const highlightIndex = this.controller.highlightIndex;
-    
+
     return html`
       <div class="combo-container">
         <input
@@ -303,36 +309,33 @@ export class AeCombo extends LitElement {
           @focus=${this.handleFocus}
           @keydown=${this.handleKeydown}
         />
-        
-        <span 
-          part="caret" 
+
+        <span
+          part="caret"
           class="caret"
           ?data-expanded=${this.isOpen}
           @click=${this.toggleDropdown}
         >
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <svg
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
         </span>
-        
-        <div 
-          part="overlay" 
-          class="overlay"
-          ?data-open=${this.isOpen}
-        >
-          <div 
-            part="listbox" 
-            class="listbox" 
-            role="listbox" 
-            id="listbox"
-            tabindex="-1"
-          >
-            ${filteredItems.length === 0 
-              ? html`<div part="empty-message" class="empty-message">No results found</div>` 
+
+        <div part="overlay" class="overlay" ?data-open=${this.isOpen}>
+          <div part="listbox" class="listbox" role="listbox" id="listbox" tabindex="-1">
+            ${filteredItems.length === 0
+              ? html`<div part="empty-message" class="empty-message">No results found</div>`
               : filteredItems.map((item, index) => {
                   const isHighlighted = index === highlightIndex;
                   const itemLabel = this.controller.highlightMatches(item.label, this.value);
-                  
+
                   return html`
                     <div
                       part="option"
@@ -347,8 +350,7 @@ export class AeCombo extends LitElement {
                       ${itemLabel}
                     </div>
                   `;
-                })
-            }
+                })}
           </div>
         </div>
       </div>

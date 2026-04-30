@@ -14,13 +14,15 @@ This document defines the coding, naming, and design standards for the AetherUI 
 - **Format**: `ae-{component}-{action}` (e.g., `ae-button-click`, `ae-accordion-change`)
 - **For sub-components**: `ae-{component}-{subcomponent}-{action}` (e.g., `ae-accordion-item-change`)
 - **Event Detail**: Should include the relevant property or state that changed:
+
   ```ts
   // For value changes
   { value: newValue }
-  
+
   // For state changes
   { open: boolean, headerId: string }
   ```
+
 - **Event Configuration**: All events must include:
   ```ts
   {
@@ -38,12 +40,10 @@ This document defines the coding, naming, and design standards for the AetherUI 
   - Use `defaultValue` for initial uncontrolled state
   - Use `open` for disclosure components
   - Use `selected` for selection components
-  
 - **State Properties**:
   - `disabled`: Boolean for disabled state
   - `loading`: Boolean for loading state
   - `error`: String/Boolean for error state
-  
 - **Appearance Properties**:
   - `size`: String for component size (`sm`, `md`, `lg`)
   - `variant`: String for visual style variant
@@ -88,30 +88,30 @@ This document defines the coding, naming, and design standards for the AetherUI 
 
 All components must use JSDoc comments with the following tags:
 
-```ts
+````ts
 /**
  * Brief component description
- * 
+ *
  * @element ae-component
- * 
+ *
  * @property {type} propName - Description
  * @property {type} anotherProp - Description
- * 
+ *
  * @fires {CustomEvent<DetailType>} ae-component-action - Description
- * 
+ *
  * @slot - Default slot description
  * @slot name - Named slot description
- * 
+ *
  * @csspart partName - Part description
- * 
+ *
  * @cssproperty --ae-component-property - Description
- * 
+ *
  * @example
  * ```html
  * <ae-component property="value">Content</ae-component>
  * ```
  */
-```
+````
 
 ## 7. Backward Compatibility
 
@@ -151,7 +151,6 @@ When renaming properties or events to conform to standards:
 - **Web Component Tests**: Place in `src/{component}/__tests__/ae-{component}.test.ts`
   - Use Web Test Runner with `@open-wc/testing`
   - Test actual DOM rendering and shadow DOM behavior
-  
 - **Unit/API Tests**: Place in `src/{component}/__tests__/{feature}.unit.test.ts` or `api.test.ts`
   - Use Vitest for fast, lightweight testing
   - Mock components and test business logic without DOM

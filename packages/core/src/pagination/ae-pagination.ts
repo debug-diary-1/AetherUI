@@ -59,8 +59,11 @@ export class AePagination extends LitElement {
   updated(changedProperties: Map<string, unknown>) {
     super.updated(changedProperties);
 
-    if (changedProperties.has('currentPage') || changedProperties.has('totalPages') ||
-        changedProperties.has('siblingCount')) {
+    if (
+      changedProperties.has('currentPage') ||
+      changedProperties.has('totalPages') ||
+      changedProperties.has('siblingCount')
+    ) {
       this.pages = this.generatePages();
     }
   }
@@ -121,11 +124,13 @@ export class AePagination extends LitElement {
     }
 
     this.currentPage = page;
-    this.dispatchEvent(new CustomEvent('ae-page-change', {
-      detail: { page },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-page-change', {
+        detail: { page },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private handlePrevious() {
@@ -151,38 +156,52 @@ export class AePagination extends LitElement {
     return html`
       <nav part="base" class="pagination-base" role="navigation" aria-label="${this.ariaLabel}">
         <ul part="list" class="pagination-list">
-          ${this.showFirstLast ? html`
-            <li part="item" class="pagination-item">
-              <button
-                part="button"
-                class="pagination-button"
-                ?disabled="${isFirstPage}"
-                @click="${this.handleFirst}"
-                aria-label="First page"
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M11 12L7 8L11 4M5 12V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </li>
-          ` : ''}
-
-          ${this.showPrevNext ? html`
-            <li part="item" class="pagination-item">
-              <button
-                part="button"
-                class="pagination-button"
-                ?disabled="${isFirstPage}"
-                @click="${this.handlePrevious}"
-                aria-label="Previous page"
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </li>
-          ` : ''}
-
+          ${this.showFirstLast
+            ? html`
+                <li part="item" class="pagination-item">
+                  <button
+                    part="button"
+                    class="pagination-button"
+                    ?disabled="${isFirstPage}"
+                    @click="${this.handleFirst}"
+                    aria-label="First page"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M11 12L7 8L11 4M5 12V4"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </li>
+              `
+            : ''}
+          ${this.showPrevNext
+            ? html`
+                <li part="item" class="pagination-item">
+                  <button
+                    part="button"
+                    class="pagination-button"
+                    ?disabled="${isFirstPage}"
+                    @click="${this.handlePrevious}"
+                    aria-label="Previous page"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M10 12L6 8L10 4"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </li>
+              `
+            : ''}
           ${this.pages.map((page) =>
             page === 'ellipsis'
               ? html`
@@ -202,40 +221,54 @@ export class AePagination extends LitElement {
                       ${page}
                     </button>
                   </li>
-                `
+                `,
           )}
-
-          ${this.showPrevNext ? html`
-            <li part="item" class="pagination-item">
-              <button
-                part="button"
-                class="pagination-button"
-                ?disabled="${isLastPage}"
-                @click="${this.handleNext}"
-                aria-label="Next page"
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </li>
-          ` : ''}
-
-          ${this.showFirstLast ? html`
-            <li part="item" class="pagination-item">
-              <button
-                part="button"
-                class="pagination-button"
-                ?disabled="${isLastPage}"
-                @click="${this.handleLast}"
-                aria-label="Last page"
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M5 4L9 8L5 12M11 4V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </li>
-          ` : ''}
+          ${this.showPrevNext
+            ? html`
+                <li part="item" class="pagination-item">
+                  <button
+                    part="button"
+                    class="pagination-button"
+                    ?disabled="${isLastPage}"
+                    @click="${this.handleNext}"
+                    aria-label="Next page"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M6 4L10 8L6 12"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </li>
+              `
+            : ''}
+          ${this.showFirstLast
+            ? html`
+                <li part="item" class="pagination-item">
+                  <button
+                    part="button"
+                    class="pagination-button"
+                    ?disabled="${isLastPage}"
+                    @click="${this.handleLast}"
+                    aria-label="Last page"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M5 4L9 8L5 12M11 4V12"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </li>
+              `
+            : ''}
         </ul>
       </nav>
     `;

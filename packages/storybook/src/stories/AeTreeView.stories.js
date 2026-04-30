@@ -39,16 +39,16 @@ export default {
       description: 'Message to show when the tree is empty',
       defaultValue: 'No items',
     },
-    'ae-treeview-select': { 
+    'ae-treeview-select': {
       action: 'ae-treeview-select',
       description: 'Fired when selection changes',
-      table: { category: 'Events', type: { summary: 'CustomEvent<{selected: string[]}>'}  }
+      table: { category: 'Events', type: { summary: 'CustomEvent<{selected: string[]}>' } },
     },
-    'ae-treeview-expand': { 
+    'ae-treeview-expand': {
       action: 'ae-treeview-expand',
       description: 'Fired when expansion state changes',
-      table: { category: 'Events', type: { summary: 'CustomEvent<{expanded: string[]}>'}  }
-    }
+      table: { category: 'Events', type: { summary: 'CustomEvent<{expanded: string[]}>' } },
+    },
   },
 };
 

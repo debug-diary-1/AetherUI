@@ -22,7 +22,7 @@ export const DEFAULT_PAGINATION_STATE: PaginationState = {
   page: 1,
   pageSize: 10,
   totalItems: 0,
-  totalPages: 1
+  totalPages: 1,
 };
 
 /**
@@ -36,25 +36,25 @@ export const DEFAULT_PAGE_SIZES = [10, 25, 50, 100];
 export interface PaginationInfo {
   /** Current page (1-based for display) */
   currentPage: number;
-  
+
   /** Total pages based on row count */
   totalPages: number;
-  
+
   /** First row index (0-based) */
   firstRowIndex: number;
-  
+
   /** Last row index (0-based) */
   lastRowIndex: number;
-  
+
   /** First row number (1-based for display) */
   firstRowNumber: number;
-  
+
   /** Last row number (1-based for display) */
   lastRowNumber: number;
-  
+
   /** Whether we can go to previous page */
   canPreviousPage: boolean;
-  
+
   /** Whether we can go to next page */
   canNextPage: boolean;
 }
@@ -67,7 +67,7 @@ export interface PaginationInfo {
  */
 export function getPaginationInfo(
   pagination: PaginationState,
-  totalRowCount?: number
+  totalRowCount?: number,
 ): PaginationInfo {
   const { page, pageSize, totalItems = totalRowCount || 0 } = pagination;
 
@@ -87,6 +87,6 @@ export function getPaginationInfo(
     firstRowNumber: firstRowIndex + 1,
     lastRowNumber: lastRowIndex + 1,
     canPreviousPage: page > 1,
-    canNextPage: page < totalPages
+    canNextPage: page < totalPages,
   };
 }

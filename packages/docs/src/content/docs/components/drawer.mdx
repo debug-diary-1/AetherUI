@@ -2,6 +2,7 @@
 title: Drawer
 description: Sliding panel component that appears from the edge of the screen for secondary content or navigation.
 ---
+
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ComponentExample from '../../../components/ComponentExample.astro';
 
@@ -67,16 +68,8 @@ A sliding panel component that appears from the edge of the screen.
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">
-    ```bash
-    pnpm add @aetherui/core
-    ```
-  </TabItem>
-  <TabItem label="npm">
-    ```bash
-    npm install @aetherui/core
-    ```
-  </TabItem>
+  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
+  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
 </Tabs>
 
 ## Import
@@ -88,46 +81,46 @@ defineAeDrawer();
 
 ## Props
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `open` | `boolean` | `false` | Open state |
-| `label` | `string` | `''` | Accessible label |
-| `placement` | `'left' \| 'right' \| 'top' \| 'bottom'` | `'right'` | Slide-in direction |
-| `contained` | `boolean` | `false` | Contained within parent |
+| Name        | Type                                     | Default   | Description             |
+| ----------- | ---------------------------------------- | --------- | ----------------------- |
+| `open`      | `boolean`                                | `false`   | Open state              |
+| `label`     | `string`                                 | `''`      | Accessible label        |
+| `placement` | `'left' \| 'right' \| 'top' \| 'bottom'` | `'right'` | Slide-in direction      |
+| `contained` | `boolean`                                | `false`   | Contained within parent |
 
 ## Methods
 
-| Name | Description |
-|------|-------------|
-| `show()` | Open the drawer |
+| Name     | Description      |
+| -------- | ---------------- |
+| `show()` | Open the drawer  |
 | `hide()` | Close the drawer |
 
 ## Events
 
-| Name | Description |
-|------|-------------|
-| `ae-drawer-show` | Fired when drawer opens |
+| Name             | Description              |
+| ---------------- | ------------------------ |
+| `ae-drawer-show` | Fired when drawer opens  |
 | `ae-drawer-hide` | Fired when drawer closes |
 
 ## Slots
 
-| Name | Description |
-|------|-------------|
-| default | Main content |
+| Name     | Description    |
+| -------- | -------------- |
+| default  | Main content   |
 | `header` | Header content |
 | `footer` | Footer content |
 
 ## CSS Parts
 
-| Name | Description |
-|------|-------------|
-| `base` | Container |
-| `overlay` | Background overlay |
-| `panel` | Drawer panel |
-| `header` | Header area |
-| `body` | Content area |
-| `footer` | Footer area |
-| `close-button` | Close button |
+| Name           | Description        |
+| -------------- | ------------------ |
+| `base`         | Container          |
+| `overlay`      | Background overlay |
+| `panel`        | Drawer panel       |
+| `header`       | Header area        |
+| `body`         | Content area       |
+| `footer`       | Footer area        |
+| `close-button` | Close button       |
 
 ## Accessibility
 

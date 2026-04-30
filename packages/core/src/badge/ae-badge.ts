@@ -55,10 +55,12 @@ export class AeBadge extends LitElement {
   private handleClose(event: Event) {
     event.stopPropagation();
 
-    this.dispatchEvent(new CustomEvent('ae-badge-close', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-badge-close', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
@@ -76,19 +78,26 @@ export class AeBadge extends LitElement {
         <span part="content" class="badge-content">
           <slot></slot>
         </span>
-        ${this.closable ? html`
-          <button
-            part="close-button"
-            class="close-button"
-            type="button"
-            @click="${this.handleClose}"
-            aria-label="Close badge"
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </button>
-        ` : ''}
+        ${this.closable
+          ? html`
+              <button
+                part="close-button"
+                class="close-button"
+                type="button"
+                @click="${this.handleClose}"
+                aria-label="Close badge"
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </button>
+            `
+          : ''}
       </span>
     `;
   }

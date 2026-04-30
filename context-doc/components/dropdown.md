@@ -21,10 +21,10 @@ Floating context menu that anchors to a trigger element and positions itself wit
 
 ## 3 · Accessibility
 
-* Trigger receives `aria-haspopup="menu"` and `aria-expanded`.
-* Menu root gets `role="menu"` and is focus‑managed via roving tabindex.
-* Menu items are `role="menuitem"`; separators use `role="separator"`.
-* Keyboard: **Arrow keys** navigate, **Enter/Space** activate, **Esc** closes, **type‑ahead** focuses first match.
+- Trigger receives `aria-haspopup="menu"` and `aria-expanded`.
+- Menu root gets `role="menu"` and is focus‑managed via roving tabindex.
+- Menu items are `role="menuitem"`; separators use `role="separator"`.
+- Keyboard: **Arrow keys** navigate, **Enter/Space** activate, **Esc** closes, **type‑ahead** focuses first match.
 
 ## 4 · Styling & Theming
 
@@ -63,7 +63,7 @@ ae-dropdown::part(overlay) {
 Global dark‑theme override:
 
 ```css
-:root[data-theme="dark"] {
+:root[data-theme='dark'] {
   --ae-dropdown-bg: var(--ae-color-base-900);
   --ae-dropdown-fg: var(--ae-color-base-50);
 }
@@ -76,13 +76,15 @@ Global dark‑theme override:
 import { css } from 'lit';
 
 export const dropdownStyles = css`
-  :host { display: contents; }
+  :host {
+    display: contents;
+  }
 
   ::part(overlay) {
     background: var(--ae-dropdown-bg, #fff);
     color: var(--ae-dropdown-fg, #111);
     border-radius: var(--ae-dropdown-radius, 6px);
-    box-shadow: var(--ae-dropdown-shadow, 0 4px 12px rgba(0,0,0,.1));
+    box-shadow: var(--ae-dropdown-shadow, 0 4px 12px rgba(0, 0, 0, 0.1));
     padding: 0.25rem 0;
   }
 
@@ -127,21 +129,21 @@ packages/dropdown/
 
 ## 6 · Architecture
 
-* **Lit reactive controller** handles open state, outside‑click & Esc key close.
-* **@floating‑ui/dom** computes placement; middleware for offset & flip.
-* Menu lazily rendered into `document.body` via `LitPortalController` to avoid clipping inside scrolling containers.
+- **Lit reactive controller** handles open state, outside‑click & Esc key close.
+- **@floating‑ui/dom** computes placement; middleware for offset & flip.
+- Menu lazily rendered into `document.body` via `LitPortalController` to avoid clipping inside scrolling containers.
 
 ## 7 · Performance
 
-* Core bundle ≤ 2 KB; `@floating-ui` (≈4 KB) dynamically imported on first open.
-* Re‑renders only when `open` or content slot mutations occur.
+- Core bundle ≤ 2 KB; `@floating-ui` (≈4 KB) dynamically imported on first open.
+- Re‑renders only when `open` or content slot mutations occur.
 
 ## 8 · Testing Strategy
 
-* **Unit**: state transitions, event emissions.
-* **Playwright**: arrow‑key navigation, viewport edge flipping.
-* **axe‑core**: ensure `aria-haspopup`, `role` attributes, and focus order.
+- **Unit**: state transitions, event emissions.
+- **Playwright**: arrow‑key navigation, viewport edge flipping.
+- **axe‑core**: ensure `aria-haspopup`, `role` attributes, and focus order.
 
 ---
 
-*Updated: {{date}}*
+_Updated: {{date}}_

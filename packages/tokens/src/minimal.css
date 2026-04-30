@@ -29,27 +29,30 @@
   --ae-color-gray-900: #111827;
 
   /* ===== Spacing Scale ===== */
-  --ae-spacing-xs: 0.25rem;    /* 4px */
-  --ae-spacing-sm: 0.5rem;     /* 8px */
-  --ae-spacing-md: 1rem;       /* 16px */
-  --ae-spacing-lg: 1.5rem;     /* 24px */
-  --ae-spacing-xl: 2rem;       /* 32px */
-  --ae-spacing-2xl: 3rem;      /* 48px */
-  --ae-spacing-3xl: 4rem;      /* 64px */
+  --ae-spacing-xs: 0.25rem; /* 4px */
+  --ae-spacing-sm: 0.5rem; /* 8px */
+  --ae-spacing-md: 1rem; /* 16px */
+  --ae-spacing-lg: 1.5rem; /* 24px */
+  --ae-spacing-xl: 2rem; /* 32px */
+  --ae-spacing-2xl: 3rem; /* 48px */
+  --ae-spacing-3xl: 4rem; /* 64px */
 
   /* ===== Typography ===== */
-  --ae-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --ae-font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  --ae-font-family:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --ae-font-family-mono:
+    'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 
   /* Font Sizes */
-  --ae-font-size-xs: 0.75rem;     /* 12px */
-  --ae-font-size-sm: 0.875rem;    /* 14px */
-  --ae-font-size-md: 1rem;        /* 16px */
-  --ae-font-size-lg: 1.125rem;    /* 18px */
-  --ae-font-size-xl: 1.25rem;     /* 20px */
-  --ae-font-size-2xl: 1.5rem;     /* 24px */
-  --ae-font-size-3xl: 1.875rem;   /* 30px */
-  --ae-font-size-4xl: 2.25rem;    /* 36px */
+  --ae-font-size-xs: 0.75rem; /* 12px */
+  --ae-font-size-sm: 0.875rem; /* 14px */
+  --ae-font-size-md: 1rem; /* 16px */
+  --ae-font-size-lg: 1.125rem; /* 18px */
+  --ae-font-size-xl: 1.25rem; /* 20px */
+  --ae-font-size-2xl: 1.5rem; /* 24px */
+  --ae-font-size-3xl: 1.875rem; /* 30px */
+  --ae-font-size-4xl: 2.25rem; /* 36px */
 
   /* Font Weights */
   --ae-font-weight-light: 300;
@@ -65,11 +68,11 @@
 
   /* ===== Border Radius ===== */
   --ae-border-radius-none: 0;
-  --ae-border-radius-sm: 0.25rem;    /* 4px */
-  --ae-border-radius-md: 0.5rem;     /* 8px */
-  --ae-border-radius-lg: 1rem;       /* 16px */
-  --ae-border-radius-xl: 1.5rem;     /* 24px */
-  --ae-border-radius-full: 9999px;   /* Fully rounded */
+  --ae-border-radius-sm: 0.25rem; /* 4px */
+  --ae-border-radius-md: 0.5rem; /* 8px */
+  --ae-border-radius-lg: 1rem; /* 16px */
+  --ae-border-radius-xl: 1.5rem; /* 24px */
+  --ae-border-radius-full: 9999px; /* Fully rounded */
 
   /* ===== Shadows ===== */
   --ae-shadow-none: none;

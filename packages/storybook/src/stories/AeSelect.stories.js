@@ -116,11 +116,7 @@ export const Multiple = {
     helpText: 'Hold Ctrl/Cmd to select multiple',
   },
   render: (args) => html`
-    <ae-select
-      label="${args.label}"
-      ?multiple="${args.multiple}"
-      help-text="${args.helpText}"
-    >
+    <ae-select label="${args.label}" ?multiple="${args.multiple}" help-text="${args.helpText}">
       <option value="javascript">JavaScript</option>
       <option value="typescript">TypeScript</option>
       <option value="python">Python</option>

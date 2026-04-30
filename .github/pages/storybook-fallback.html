@@ -1,111 +1,107 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AetherUI Storybook</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      line-height: 1.6;
-    }
-    h1 {
-      color: #3a86ff;
-    }
-    .notice {
-      background: #f8f9fa;
-      border-left: 4px solid #3a86ff;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 4px;
-    }
-    .back-link {
-      display: inline-block;
-      margin-top: 20px;
-      color: #3a86ff;
-      text-decoration: none;
-    }
-    .back-link:hover {
-      text-decoration: underline;
-    }
-    .preview {
-      margin-top: 30px;
-      border: 1px solid #e9ecef;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .preview-header {
-      background: #f8f9fa;
-      padding: 10px 15px;
-      border-bottom: 1px solid #e9ecef;
-    }
-    .preview-content {
-      padding: 30px;
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-    .preview-button {
-      display: inline-block;
-      padding: 10px 20px;
-      background: #3a86ff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-family: inherit;
-      font-size: 14px;
-      cursor: pointer;
-    }
-    .preview-button.secondary {
-      background: #6c757d;
-    }
-    .preview-button.outline {
-      background: transparent;
-      border: 1px solid #3a86ff;
-      color: #3a86ff;
-    }
-    .preview-checkbox {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-  </style>
-</head>
-<body>
-  <h1>AetherUI Storybook</h1>
-  <div class="notice">
-    <p><strong>Notice:</strong> The Storybook site is currently being updated.</p>
-    <p>Below are some preview examples of the component library.</p>
-  </div>
-  
-  <h2>Component Preview</h2>
-  <div class="preview">
-    <div class="preview-header">Button Component</div>
-    <div class="preview-content">
-      <button class="preview-button">Primary</button>
-      <button class="preview-button secondary">Secondary</button>
-      <button class="preview-button outline">Outline</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AetherUI Storybook</title>
+    <style>
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+          sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      h1 {
+        color: #3a86ff;
+      }
+      .notice {
+        background: #f8f9fa;
+        border-left: 4px solid #3a86ff;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 4px;
+      }
+      .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        color: #3a86ff;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        text-decoration: underline;
+      }
+      .preview {
+        margin-top: 30px;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .preview-header {
+        background: #f8f9fa;
+        padding: 10px 15px;
+        border-bottom: 1px solid #e9ecef;
+      }
+      .preview-content {
+        padding: 30px;
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+      .preview-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background: #3a86ff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .preview-button.secondary {
+        background: #6c757d;
+      }
+      .preview-button.outline {
+        background: transparent;
+        border: 1px solid #3a86ff;
+        color: #3a86ff;
+      }
+      .preview-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>AetherUI Storybook</h1>
+    <div class="notice">
+      <p><strong>Notice:</strong> The Storybook site is currently being updated.</p>
+      <p>Below are some preview examples of the component library.</p>
     </div>
-  </div>
-  
-  <div class="preview" style="margin-top: 20px;">
-    <div class="preview-header">Checkbox Component</div>
-    <div class="preview-content">
-      <label class="preview-checkbox">
-        <input type="checkbox" checked> Option 1
-      </label>
-      <label class="preview-checkbox">
-        <input type="checkbox"> Option 2
-      </label>
-      <label class="preview-checkbox">
-        <input type="checkbox"> Option 3
-      </label>
+
+    <h2>Component Preview</h2>
+    <div class="preview">
+      <div class="preview-header">Button Component</div>
+      <div class="preview-content">
+        <button class="preview-button">Primary</button>
+        <button class="preview-button secondary">Secondary</button>
+        <button class="preview-button outline">Outline</button>
+      </div>
     </div>
-  </div>
-  
-  <a href="../" class="back-link">← Back to AetherUI Home</a>
-</body>
+
+    <div class="preview" style="margin-top: 20px">
+      <div class="preview-header">Checkbox Component</div>
+      <div class="preview-content">
+        <label class="preview-checkbox"> <input type="checkbox" checked /> Option 1 </label>
+        <label class="preview-checkbox"> <input type="checkbox" /> Option 2 </label>
+        <label class="preview-checkbox"> <input type="checkbox" /> Option 3 </label>
+      </div>
+    </div>
+
+    <a href="../" class="back-link">← Back to AetherUI Home</a>
+  </body>
 </html>

@@ -15,7 +15,9 @@ export class PgSidebar extends LitElement {
       position: relative;
     }
 
-    .section { margin-bottom: 1rem; }
+    .section {
+      margin-bottom: 1rem;
+    }
 
     .section-title {
       font-size: 0.6875rem;
@@ -42,7 +44,9 @@ export class PgSidebar extends LitElement {
       border: 1px solid transparent;
     }
 
-    .item:hover { background: var(--pg-bg-tertiary); }
+    .item:hover {
+      background: var(--pg-bg-tertiary);
+    }
 
     .item.active {
       background: var(--pg-accent);
@@ -55,7 +59,9 @@ export class PgSidebar extends LitElement {
       font-family: var(--pg-font-mono);
     }
 
-    .item.active .tag { color: rgba(255,255,255,0.7); }
+    .item.active .tag {
+      color: rgba(255, 255, 255, 0.7);
+    }
 
     .empty {
       padding: 1rem;
@@ -70,11 +76,13 @@ export class PgSidebar extends LitElement {
 
   private _filteredByCategory(category: string): ComponentConfig[] {
     const q = this.searchQuery.toLowerCase();
-    return componentConfigs.filter(c =>
-      c.category === category &&
-      (!q || c.name.toLowerCase().includes(q) ||
-       c.tag.toLowerCase().includes(q) ||
-       c.description.toLowerCase().includes(q))
+    return componentConfigs.filter(
+      (c) =>
+        c.category === category &&
+        (!q ||
+          c.name.toLowerCase().includes(q) ||
+          c.tag.toLowerCase().includes(q) ||
+          c.description.toLowerCase().includes(q)),
     );
   }
 
@@ -82,13 +90,17 @@ export class PgSidebar extends LitElement {
     const target = (e.target as HTMLElement).closest<HTMLElement>('[data-component]');
     if (!target) return;
     const name = target.dataset.component!;
-    this.dispatchEvent(new CustomEvent('pg-component-select', {
-      bubbles: true, composed: true, detail: { name },
-    }));
+    this.dispatchEvent(
+      new CustomEvent('pg-component-select', {
+        bubbles: true,
+        composed: true,
+        detail: { name },
+      }),
+    );
   }
 
   render() {
-    const hasResults = categories.some(cat => this._filteredByCategory(cat).length > 0);
+    const hasResults = categories.some((cat) => this._filteredByCategory(cat).length > 0);
 
     if (!hasResults) {
       return html`<div class="empty">No components match "${this.searchQuery}"</div>`;
@@ -96,20 +108,24 @@ export class PgSidebar extends LitElement {
 
     return html`
       <div @click=${this._onClick}>
-        ${categories.map(category => {
+        ${categories.map((category) => {
           const components = this._filteredByCategory(category);
           if (components.length === 0) return null;
           return html`
             <div class="section">
               <div class="section-title">${category}</div>
               <div class="list">
-                ${components.map(c => html`
-                  <div class="item ${c.name === this.selected ? 'active' : ''}"
-                       data-component="${c.name}">
-                    ${c.name}
-                    <span class="tag">${c.tag}</span>
-                  </div>
-                `)}
+                ${components.map(
+                  (c) => html`
+                    <div
+                      class="item ${c.name === this.selected ? 'active' : ''}"
+                      data-component="${c.name}"
+                    >
+                      ${c.name}
+                      <span class="tag">${c.tag}</span>
+                    </div>
+                  `,
+                )}
               </div>
             </div>
           `;

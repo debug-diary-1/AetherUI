@@ -4,21 +4,21 @@ import { modalStyles } from './styles';
 
 /**
  * A modal dialog component with backdrop, focus management, and accessibility features.
- * 
+ *
  * @element ae-modal
- * 
+ *
  * @property {boolean} open - Whether the modal is open
  * @property {boolean} closable - Whether the modal can be closed by the user (shows close button, allows Escape key)
  * @property {boolean} backdrop - Whether to show a backdrop behind the modal
  * @property {'small' | 'medium' | 'large'} size - The size of the modal panel
- * 
+ *
  * @fires {CustomEvent} ae-modal-open - Fired when the modal opens
  * @fires {CustomEvent} ae-modal-close - Fired when the modal closes
- * 
+ *
  * @slot header - The modal header content
  * @slot body - The modal body content
  * @slot footer - The modal footer content (typically action buttons)
- * 
+ *
  * @csspart backdrop - The backdrop overlay
  * @csspart panel - The modal panel container
  * @csspart header - The header section
@@ -26,7 +26,7 @@ import { modalStyles } from './styles';
  * @csspart close-icon - The close icon SVG
  * @csspart body - The body section
  * @csspart footer - The footer section
- * 
+ *
  * @cssproperty --ae-modal-width - The modal width (default: 32rem)
  * @cssproperty --ae-modal-max-width - Maximum width (default: calc(100vw - 2rem))
  * @cssproperty --ae-modal-height - The modal height (default: auto)
@@ -38,7 +38,7 @@ import { modalStyles } from './styles';
  * @cssproperty --ae-modal-shadow - The panel box shadow
  * @cssproperty --ae-modal-backdrop-color - The backdrop background color
  * @cssproperty --ae-modal-backdrop-blur - The backdrop blur amount
- * 
+ *
  * @example
  * ```html
  * <ae-modal open>
@@ -60,7 +60,7 @@ export class AeModal extends LitElement {
         /* Signal to consuming app that modal is open */
         --ae-modal-is-open: 1;
       }
-    `
+    `,
   ];
 
   @property({ type: Boolean, reflect: true })
@@ -100,7 +100,7 @@ export class AeModal extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener('keydown', this._handleKeyDown);
-    
+
     // Clean up if modal is still open
     if (this.open) {
       this.restoreFocus();
@@ -110,7 +110,7 @@ export class AeModal extends LitElement {
 
   updated(changedProperties: Map<string, unknown>) {
     super.updated(changedProperties);
-    
+
     if (changedProperties.has('open')) {
       if (this.open) {
         this.handleOpen();
@@ -142,8 +142,8 @@ export class AeModal extends LitElement {
     // Find all focusable elements
     this.focusableElements = Array.from(
       this.panel.querySelectorAll(
-        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
-      )
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ),
     ) as HTMLElement[];
 
     // Focus first focusable element or panel itself
@@ -214,17 +214,21 @@ export class AeModal extends LitElement {
   }
 
   private emitOpenEvent() {
-    this.dispatchEvent(new CustomEvent('ae-modal-open', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-modal-open', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private emitCloseEvent() {
-    this.dispatchEvent(new CustomEvent('ae-modal-close', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-modal-close', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
@@ -248,30 +252,32 @@ export class AeModal extends LitElement {
         >
           <div part="header" class="header">
             <slot name="header"></slot>
-            ${this.closable ? html`
-              <button
-                part="close-button"
-                class="close-button"
-                aria-label="Close dialog"
-                @click="${this.handleCloseClick}"
-              >
-                <svg
-                  part="close-icon"
-                  class="close-icon"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </button>
-            ` : null}
+            ${this.closable
+              ? html`
+                  <button
+                    part="close-button"
+                    class="close-button"
+                    aria-label="Close dialog"
+                    @click="${this.handleCloseClick}"
+                  >
+                    <svg
+                      part="close-icon"
+                      class="close-icon"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                `
+              : null}
           </div>
 
           <div part="body" class="body">

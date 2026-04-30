@@ -136,7 +136,7 @@ export class AeSwitch extends LitElement {
       this._internals.setValidity(
         { valueMissing: true },
         'Please toggle this switch if you want to proceed.',
-        input || undefined
+        input || undefined,
       );
     }
   }
@@ -153,11 +153,13 @@ export class AeSwitch extends LitElement {
     this.checked = !this.checked;
 
     // Dispatch change event
-    this.dispatchEvent(new CustomEvent('ae-switch-change', {
-      detail: { checked: this.checked },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-switch-change', {
+        detail: { checked: this.checked },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private handleKeyDown(event: KeyboardEvent) {
@@ -196,11 +198,7 @@ export class AeSwitch extends LitElement {
 
   render() {
     return html`
-      <label
-        part="base"
-        class="switch-label"
-        ?aria-disabled="${this.disabled}"
-      >
+      <label part="base" class="switch-label" ?aria-disabled="${this.disabled}">
         <input
           part="input"
           type="checkbox"

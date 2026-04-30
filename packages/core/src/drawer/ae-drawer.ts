@@ -107,19 +107,23 @@ export class AeDrawer extends LitElement {
       this.focusFirstElement();
     });
 
-    this.dispatchEvent(new CustomEvent('ae-drawer-open', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-drawer-open', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private handleClose() {
     this.restoreFocus();
 
-    this.dispatchEvent(new CustomEvent('ae-drawer-close', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-drawer-close', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private setupFocusTrap() {
@@ -134,11 +138,11 @@ export class AeDrawer extends LitElement {
 
     // Collect focusable elements from both light DOM (slotted content) and shadow DOM (close button)
     const lightDomElements = Array.from(
-      this.querySelectorAll(focusableSelectors.join(','))
+      this.querySelectorAll(focusableSelectors.join(',')),
     ) as HTMLElement[];
 
     const shadowDomElements = Array.from(
-      this.shadowRoot!.querySelectorAll(focusableSelectors.join(','))
+      this.shadowRoot!.querySelectorAll(focusableSelectors.join(',')),
     ) as HTMLElement[];
 
     this.focusableElements = [...shadowDomElements, ...lightDomElements];
@@ -222,13 +226,15 @@ export class AeDrawer extends LitElement {
     if (!this.open) return nothing;
 
     return html`
-      ${this.backdrop ? html`
-        <div
-          part="backdrop"
-          class="drawer-backdrop"
-          @click="${this._handleBackdropClick}"
-        ></div>
-      ` : ''}
+      ${this.backdrop
+        ? html`
+            <div
+              part="backdrop"
+              class="drawer-backdrop"
+              @click="${this._handleBackdropClick}"
+            ></div>
+          `
+        : ''}
 
       <div
         part="panel"
@@ -238,18 +244,25 @@ export class AeDrawer extends LitElement {
         aria-label="${this.ariaLabel || 'Drawer'}"
         tabindex="-1"
       >
-        ${this.closable ? html`
-          <button
-            part="close-button"
-            class="drawer-close"
-            @click="${this.handleCloseClick}"
-            aria-label="Close drawer"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </button>
-        ` : ''}
+        ${this.closable
+          ? html`
+              <button
+                part="close-button"
+                class="drawer-close"
+                @click="${this.handleCloseClick}"
+                aria-label="Close drawer"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path
+                    d="M15 5L5 15M5 5L15 15"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </button>
+            `
+          : ''}
 
         <slot name="header" part="header" class="drawer-header"></slot>
 

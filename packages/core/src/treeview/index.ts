@@ -10,32 +10,32 @@ export { TreeViewKeyboardController } from './keyboard';
 export interface AeTreeviewSelectEvent extends CustomEvent {
   detail: {
     selected: string[];
-  }
+  };
 }
 
 export interface AeTreeviewExpandEvent extends CustomEvent {
   detail: {
     expanded: string[];
-  }
+  };
 }
 
 export interface AeTreeItemExpandEvent extends CustomEvent {
   detail: {
     item: AeTreeItem;
-  }
+  };
 }
 
 export interface AeTreeItemCollapseEvent extends CustomEvent {
   detail: {
     item: AeTreeItem;
-  }
+  };
 }
 
 export interface AeTreeItemSelectEvent extends CustomEvent {
   detail: {
     item: AeTreeItem;
     selected: boolean;
-  }
+  };
 }
 
 declare global {
@@ -64,4 +64,4 @@ export function defineAeTreeItem() {
   if (!customElements.get('ae-tree-item')) {
     customElements.define('ae-tree-item', AeTreeItem);
   }
-} 
+}

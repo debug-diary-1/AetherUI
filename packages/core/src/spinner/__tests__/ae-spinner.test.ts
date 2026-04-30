@@ -1,7 +1,11 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import { AeSpinner } from '../ae-spinner.js';
 import '../ae-spinner.js';
-import { getComponentStyles, assertNoHardcodedColors, assertCSSVariablesUsed } from '../../test-utils/theme-test-helpers.js';
+import {
+  getComponentStyles,
+  assertNoHardcodedColors,
+  assertCSSVariablesUsed,
+} from '../../test-utils/theme-test-helpers.js';
 
 describe('ae-spinner', () => {
   it('has correct default properties', async () => {
@@ -84,12 +88,16 @@ describe('ae-spinner', () => {
       const stylesText = getComponentStyles(el);
 
       // Check that theme variables are used
-      assertCSSVariablesUsed(stylesText, [
-        '--ae-spinner-color-primary',
-        '--ae-spinner-color-secondary',
-        '--ae-spinner-color-success',
-        '--ae-spinner-track-color',
-      ], 'Spinner');
+      assertCSSVariablesUsed(
+        stylesText,
+        [
+          '--ae-spinner-color-primary',
+          '--ae-spinner-color-secondary',
+          '--ae-spinner-color-success',
+          '--ae-spinner-track-color',
+        ],
+        'Spinner',
+      );
     });
 
     it('does not have hardcoded color fallbacks', async () => {

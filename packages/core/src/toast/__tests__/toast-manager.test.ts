@@ -36,9 +36,9 @@ class MockToastManager {
       close: () => {
         mockToast.open = false;
       },
-      open: true
+      open: true,
     };
-    
+
     mockToastInstances.push(mockToast);
     return mockToast;
   }
@@ -62,7 +62,7 @@ describe('Toast Manager API', () => {
   it('should show a toast with default values', () => {
     const manager = MockToastManager.getInstance();
     manager.show({ message: 'Test message' });
-    
+
     expect(mockToastInstances.length).to.equal(1);
     expect(mockToastInstances[0].message).to.equal('Test message');
     expect(mockToastInstances[0].variant).to.equal('info');
@@ -78,9 +78,9 @@ describe('Toast Manager API', () => {
       variant: 'error',
       duration: 10000,
       placement: 'top-left',
-      pauseOnHover: false
+      pauseOnHover: false,
     });
-    
+
     expect(mockToastInstances.length).to.equal(1);
     expect(mockToastInstances[0].message).to.equal('Custom toast');
     expect(mockToastInstances[0].variant).to.equal('error');
@@ -91,11 +91,11 @@ describe('Toast Manager API', () => {
 
   it('should handle multiple toasts', () => {
     const manager = MockToastManager.getInstance();
-    
+
     manager.show({ message: 'Toast 1' });
     manager.show({ message: 'Toast 2' });
     manager.show({ message: 'Toast 3' });
-    
+
     expect(mockToastInstances.length).to.equal(3);
     expect(mockToastInstances[0].message).to.equal('Toast 1');
     expect(mockToastInstances[1].message).to.equal('Toast 2');

@@ -5,7 +5,11 @@ import { AeMenuDivider } from '../ae-menu-divider.js';
 import '../ae-menu.js';
 import '../ae-menu-item.js';
 import '../ae-menu-divider.js';
-import { getComponentStyles, assertNoHardcodedColors, assertCSSVariablesUsed } from '../../test-utils/theme-test-helpers.js';
+import {
+  getComponentStyles,
+  assertNoHardcodedColors,
+  assertCSSVariablesUsed,
+} from '../../test-utils/theme-test-helpers.js';
 
 describe('ae-menu', () => {
   it('renders menu element', async () => {
@@ -45,43 +49,33 @@ describe('ae-menu', () => {
 
 describe('ae-menu-item', () => {
   it('has correct default properties', async () => {
-    const el = await fixture<AeMenuItem>(html`
-      <ae-menu-item>Menu Item</ae-menu-item>
-    `);
+    const el = await fixture<AeMenuItem>(html` <ae-menu-item>Menu Item</ae-menu-item> `);
 
     expect(el.disabled).to.be.false;
   });
 
   it('sets properties from attributes', async () => {
-    const el = await fixture<AeMenuItem>(html`
-      <ae-menu-item disabled>Menu Item</ae-menu-item>
-    `);
+    const el = await fixture<AeMenuItem>(html` <ae-menu-item disabled>Menu Item</ae-menu-item> `);
 
     expect(el.disabled).to.be.true;
   });
 
   it('renders menu item element', async () => {
-    const el = await fixture<AeMenuItem>(html`
-      <ae-menu-item>Menu Item</ae-menu-item>
-    `);
+    const el = await fixture<AeMenuItem>(html` <ae-menu-item>Menu Item</ae-menu-item> `);
 
     const item = el.shadowRoot!.querySelector('[part="base"]');
     expect(item).to.exist;
   });
 
   it('has correct ARIA role', async () => {
-    const el = await fixture<AeMenuItem>(html`
-      <ae-menu-item>Menu Item</ae-menu-item>
-    `);
+    const el = await fixture<AeMenuItem>(html` <ae-menu-item>Menu Item</ae-menu-item> `);
 
     const item = el.shadowRoot!.querySelector('[part="base"]')!;
     expect(item.getAttribute('role')).to.equal('menuitem');
   });
 
   it('emits ae-menu-select event when clicked', async () => {
-    const el = await fixture<AeMenuItem>(html`
-      <ae-menu-item>Menu Item</ae-menu-item>
-    `);
+    const el = await fixture<AeMenuItem>(html` <ae-menu-item>Menu Item</ae-menu-item> `);
 
     const item = el.shadowRoot!.querySelector('[part="base"]') as HTMLElement;
 
@@ -92,9 +86,7 @@ describe('ae-menu-item', () => {
   });
 
   it('does not emit event when disabled and clicked', async () => {
-    const el = await fixture<AeMenuItem>(html`
-      <ae-menu-item disabled>Menu Item</ae-menu-item>
-    `);
+    const el = await fixture<AeMenuItem>(html` <ae-menu-item disabled>Menu Item</ae-menu-item> `);
 
     let eventFired = false;
     el.addEventListener('ae-menu-select', () => {
@@ -109,35 +101,27 @@ describe('ae-menu-item', () => {
   });
 
   it('reflects disabled attribute', async () => {
-    const el = await fixture<AeMenuItem>(html`
-      <ae-menu-item disabled>Menu Item</ae-menu-item>
-    `);
+    const el = await fixture<AeMenuItem>(html` <ae-menu-item disabled>Menu Item</ae-menu-item> `);
 
     expect(el.hasAttribute('disabled')).to.be.true;
   });
 
   it('sets aria-disabled when disabled', async () => {
-    const el = await fixture<AeMenuItem>(html`
-      <ae-menu-item disabled>Menu Item</ae-menu-item>
-    `);
+    const el = await fixture<AeMenuItem>(html` <ae-menu-item disabled>Menu Item</ae-menu-item> `);
 
     const item = el.shadowRoot!.querySelector('[part="base"]')!;
     expect(item.hasAttribute('aria-disabled')).to.be.true;
   });
 
   it('renders slot content', async () => {
-    const el = await fixture<AeMenuItem>(html`
-      <ae-menu-item>Test Content</ae-menu-item>
-    `);
+    const el = await fixture<AeMenuItem>(html` <ae-menu-item>Test Content</ae-menu-item> `);
 
     const slot = el.shadowRoot!.querySelector('slot');
     expect(slot).to.exist;
   });
 
   it('is keyboard accessible', async () => {
-    const el = await fixture<AeMenuItem>(html`
-      <ae-menu-item>Menu Item</ae-menu-item>
-    `);
+    const el = await fixture<AeMenuItem>(html` <ae-menu-item>Menu Item</ae-menu-item> `);
 
     const item = el.shadowRoot!.querySelector('[part="base"]')!;
     expect(item.getAttribute('tabindex')).to.exist;
@@ -173,11 +157,11 @@ describe('Menu Theme Integration', () => {
     const stylesText = getComponentStyles(el);
 
     // Check that theme variables are used
-    assertCSSVariablesUsed(stylesText, [
-      '--ae-menu-border',
-      '--ae-menu-bg',
-      '--ae-menu-shadow',
-    ], 'Menu');
+    assertCSSVariablesUsed(
+      stylesText,
+      ['--ae-menu-border', '--ae-menu-bg', '--ae-menu-shadow'],
+      'Menu',
+    );
   });
 
   it('does not have hardcoded color fallbacks', async () => {

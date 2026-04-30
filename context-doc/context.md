@@ -31,21 +31,21 @@ Teams often reinvent basic UI primitives or adopt bulky framework‑bound librar
 
 ### 2.4 User Stories (excerpt)
 
-* **US‑01** As an FE‑ENG, I can install `@aetherui/button` and call `defineAeButton()` so my app uses `<ae-button>` without bundling React.
-* **US‑02** As a DS‑LEAD, I can override `--ae-color-primary` to switch themes site‑wide.
-* **US‑03** As an A11Y‑QA, I can run `pnpm test:a11y` and get zero critical issues.
+- **US‑01** As an FE‑ENG, I can install `@aetherui/button` and call `defineAeButton()` so my app uses `<ae-button>` without bundling React.
+- **US‑02** As a DS‑LEAD, I can override `--ae-color-primary` to switch themes site‑wide.
+- **US‑03** As an A11Y‑QA, I can run `pnpm test:a11y` and get zero critical issues.
 
 ### 2.5 Scope & Out‑of‑Scope
 
-*In‑scope*: **Alert**, Accordion, Button, Checkbox, **Combobox** (`ae-combo`), Dropdown, **Data‑Table** (`ae-data-table`), Dialog/Modal, Radio Group, Tabs, Tooltip, Tour, Treeview, Layout primitives (Stack/Grid), Design‑token pipeline, Astro Starlight docs.
+_In‑scope_: **Alert**, Accordion, Button, Checkbox, **Combobox** (`ae-combo`), Dropdown, **Data‑Table** (`ae-data-table`), Dialog/Modal, Radio Group, Tabs, Tooltip, Tour, Treeview, Layout primitives (Stack/Grid), Design‑token pipeline, Astro Starlight docs.
 
-*Out‑of‑scope*: Data Grid, Rich Text Editor, mobile‑native gesture components.
+_Out‑of‑scope_: Data Grid, Rich Text Editor, mobile‑native gesture components.
 
 ### 2.6 Assumptions & Dependencies
 
-* Consumers use evergreen browsers (ES2019+).
-* NPM scope **`@aetherui`** is available and owned.
-* Vercel Remote Cache credentials provisioned.
+- Consumers use evergreen browsers (ES2019+).
+- NPM scope **`@aetherui`** is available and owned.
+- Vercel Remote Cache credentials provisioned.
 
 ### 2.7 Milestones
 
@@ -93,8 +93,8 @@ repo-root/
 └─ turbo.json            # pipeline (build, test, docs)
 ```
 
-* **Turborepo 2.5** orchestrates tasks with remote cache.
-* All builds target `es2019` with ESM output and `.d.ts` bundles.
+- **Turborepo 2.5** orchestrates tasks with remote cache.
+- All builds target `es2019` with ESM output and `.d.ts` bundles.
 
 ### 3.4 Detailed Requirements
 
@@ -108,9 +108,9 @@ repo-root/
 
 #### 3.4.2 Non‑Functional
 
-* **Performance** ≤ 50 ms first interaction, ≤ 15 KB core bundle.
-* **Browser Support** Chrome, Edge, Safari 15+, Firefox ESR.
-* **CI time** ≤ 5 min with Vercel Remote Cache.
+- **Performance** ≤ 50 ms first interaction, ≤ 15 KB core bundle.
+- **Browser Support** Chrome, Edge, Safari 15+, Firefox ESR.
+- **CI time** ≤ 5 min with Vercel Remote Cache.
 
 ### 3.5 Component Spec Template
 
@@ -124,7 +124,7 @@ repo-root/
 | **Tokens**       | `--ae-accordion-border`, `--ae-accordion-duration`                     |
 | **A11y**         | APG Disclosure pattern                                                 |
 
-*(Each real component spec will instantiate this template.)*
+_(Each real component spec will instantiate this template.)_
 
 ### 3.6 Build & Tooling
 
@@ -140,7 +140,7 @@ repo-root/
 
 Every component package (e.g., `packages/button`, `packages/alert`) ships its own library build while sharing the same base config to avoid drift.
 
-*`package.json` scripts*
+_`package.json` scripts_
 
 ```jsonc
 "scripts": {
@@ -149,7 +149,7 @@ Every component package (e.g., `packages/button`, `packages/alert`) ships its ow
 }
 ```
 
-*`vite.lib.config.ts` template*
+_`vite.lib.config.ts` template_
 
 ```ts
 import { defineConfig } from 'vite';
@@ -161,25 +161,25 @@ export default defineConfig({
       entry: 'src/index.ts',
       name: 'AeButton', // change per package
       fileName: 'index',
-      formats: ['es']
+      formats: ['es'],
     },
     target: 'es2019',
     outDir: 'dist',
     rollupOptions: {
-      external: [/^lit/]
-    }
+      external: [/^lit/],
+    },
   },
-  plugins: [dts({ entryRoot: 'src' })]
+  plugins: [dts({ entryRoot: 'src' })],
 });
 ```
 
-*Highlights*
+_Highlights_
 
-* **Single‑source DX** – `vite dev` hot‑reloads demos, `vite build` creates production bundle.
-* **Typed declarations** – auto‑generated with `vite-plugin-dts` to keep IDEs happy.
-* **Externalization** – prevents Lit from being bundled multiple times.
+- **Single‑source DX** – `vite dev` hot‑reloads demos, `vite build` creates production bundle.
+- **Typed declarations** – auto‑generated with `vite-plugin-dts` to keep IDEs happy.
+- **Externalization** – prevents Lit from being bundled multiple times.
 
-The umbrella package `packages/core` re‑exports each component so consumers can pick *per‑component* (tree‑shakable) or the *kitchen‑sink* bundle.
+The umbrella package `packages/core` re‑exports each component so consumers can pick _per‑component_ (tree‑shakable) or the _kitchen‑sink_ bundle.
 
 ### 3.7 CI/CD Workflow CI/CD Workflow
 
@@ -215,8 +215,8 @@ A prominent **"Playground"** link will appear in the Starlight sidebar and each 
 
 #### 3.10.1 Shadow DOM Philosophy
 
-* **Encapsulate logic, expose hooks.** Keep critical layout/behavior inside Shadow DOM but surface deliberate styling seams.
-* **Use `display: contents` var‑hooks sparingly.** Avoid leaking internals; prefer single‑root wrappers when practical.
+- **Encapsulate logic, expose hooks.** Keep critical layout/behavior inside Shadow DOM but surface deliberate styling seams.
+- **Use `display: contents` var‑hooks sparingly.** Avoid leaking internals; prefer single‑root wrappers when practical.
 
 #### 3.10.2 Expose Styling Hooks via `::part()`
 
@@ -226,9 +226,9 @@ A prominent **"Playground"** link will appear in the Starlight sidebar and each 
 | `::part(icon)`               | SVG icon slot                               | `ae-button[variant="icon"]::part(icon) { width: 16px; }`                    |
 | `:host([variant="primary"])` | Theme/variant guard                         | `ae-button[variant="primary"]::part(base) { --ae-color-primary: #0055ff; }` |
 
-* **Custom Props First.** Document token variables (`--ae-*`) before suggesting `::part` overrides. This keeps themes consistent and central.
-* **Cascade Layers.** Recommend consumers create a `@layer theme.aether` block so overrides win against resets without `!important`.
-* **Avoid breaking changes.** Once a `part` name ships it is a contractual API—additive only.
+- **Custom Props First.** Document token variables (`--ae-*`) before suggesting `::part` overrides. This keeps themes consistent and central.
+- **Cascade Layers.** Recommend consumers create a `@layer theme.aether` block so overrides win against resets without `!important`.
+- **Avoid breaking changes.** Once a `part` name ships it is a contractual API—additive only.
 
 #### 3.10.3 Global Theme Switchers
 
@@ -236,9 +236,13 @@ Use attribute scoping:
 
 ```css
 /* light */
-:root[data-theme="light"] { --ae-color-bg: #fff; }
+:root[data-theme='light'] {
+  --ae-color-bg: #fff;
+}
 /* dark */
-:root[data-theme="dark"] { --ae-color-bg: #000; }
+:root[data-theme='dark'] {
+  --ae-color-bg: #000;
+}
 ```
 
 Shadow‑dom styles rely on these global variables; toggling `data-theme` instant‑updates components with no JS.
@@ -256,23 +260,23 @@ The core library is framework‑agnostic, but thin wrappers improve DX and SSR.
 | **Vue 3**   | `@aetherui/vue`     | Global plugin registers all, or import on‑demand via `defineAsyncComponent`   | `app.use(AetherUIVue)`                               |
 | **Svelte**  | `@aetherui/svelte`  | Provide `.svelte` wrappers, export props as component props                   | `<AeButton on:click/>`                               |
 
-*Each adapter re‑exports TypeScript types generated from core so editors keep intellisense consistent.*
+_Each adapter re‑exports TypeScript types generated from core so editors keep intellisense consistent._
 
 ---
 
 ### 3.12 Contribution Model
 
-* RFC → PR → Review (a11y, design, code owners).
-* Conventional commit messages enforced by commitlint.
-* Version bump rules: MAJOR (breaking), MINOR (new component), PATCH (bug/ docs).
+- RFC → PR → Review (a11y, design, code owners).
+- Conventional commit messages enforced by commitlint.
+- Version bump rules: MAJOR (breaking), MINOR (new component), PATCH (bug/ docs).
 
 ---
 
 ## 4 · Appendices
 
-* Glossary (headless, shadow part, token, remote cache)
-* Link: WAI‑ARIA Authoring Practices 1.2
-* Issue templates and PR checklist drafts
+- Glossary (headless, shadow part, token, remote cache)
+- Link: WAI‑ARIA Authoring Practices 1.2
+- Issue templates and PR checklist drafts
 
 ## 4 · Operational Excellence & Governance Enhancements
 
@@ -290,12 +294,12 @@ The core library is framework‑agnostic, but thin wrappers improve DX and SSR.
 }
 ```
 
-*Runs `bundlesize --fail-if-exceeds 15KB` plus Web‑Test‑Runner interaction tests. CI fails on regression.*
+_Runs `bundlesize --fail-if-exceeds 15KB` plus Web‑Test‑Runner interaction tests. CI fails on regression._
 
 ### 4.2 Design‑Token Governance
 
-* **Taxonomy**: `core → semantic → component`. Example: `--ae-color-base-100` (core neutral) → `--ae-color-surface` (semantic) → used in `ae-dialog`.
-* **Versioning**: additive only; deprecate via alias vars for one MINOR cycle.
+- **Taxonomy**: `core → semantic → component`. Example: `--ae-color-base-100` (core neutral) → `--ae-color-surface` (semantic) → used in `ae-dialog`.
+- **Versioning**: additive only; deprecate via alias vars for one MINOR cycle.
 
 ### 4.3 Internationalization & RTL
 
@@ -339,12 +343,12 @@ GitHub workflow adds **`checks-report`** step that collates ESLint, Vitest, axe,
 
 ### 4.8 Release Channels
 
-* **`latest`**: stable releases (`1.x`).
-* **`next`**: every commit to `main` publishes canary (`1.1.0-next.<sha>`).
+- **`latest`**: stable releases (`1.x`).
+- **`next`**: every commit to `main` publishes canary (`1.1.0-next.<sha>`).
 
 ### 4.9 Design Handoff (Figma Tokens)
 
-Tokens package exports `figma-tokens.json`; designers sync via *Figma Tokens* plugin → "Pull from URL".
+Tokens package exports `figma-tokens.json`; designers sync via _Figma Tokens_ plugin → "Pull from URL".
 
 ### 4.10 Migration Codemods
 
@@ -362,9 +366,9 @@ ADR template stored in `/adr/000-template.md`; new decisions follow numeric sequ
 
 GitHub templates:
 
-* **bug\_report.yml** – StackBlitz repro required
-* **feature\_request.yml**
-* **accessibility.yml** – prompts for WCAG success criteria
+- **bug_report.yml** – StackBlitz repro required
+- **feature_request.yml**
+- **accessibility.yml** – prompts for WCAG success criteria
 
 ---
 

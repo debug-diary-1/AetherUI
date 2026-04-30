@@ -4,7 +4,6 @@ about: Create a report to help us improve
 title: '[BUG] '
 labels: bug
 assignees: ''
-
 ---
 
 **Describe the bug**
@@ -12,6 +11,7 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
+
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
@@ -21,6 +21,7 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 **Code example**
+
 ```html
 <!-- Minimal reproducible example -->
 <ae-button>Click me</ae-button>
@@ -30,10 +31,11 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Environment:**
- - OS: [e.g. macOS, Windows, Linux]
- - Browser: [e.g. Chrome 120, Safari 17]
- - Framework: [e.g. React 18, Vue 3, vanilla]
- - AetherUI version: [e.g. 0.1.0]
+
+- OS: [e.g. macOS, Windows, Linux]
+- Browser: [e.g. Chrome 120, Safari 17]
+- Framework: [e.g. React 18, Vue 3, vanilla]
+- AetherUI version: [e.g. 0.1.0]
 
 **Additional context**
 Add any other context about the problem here.

@@ -19,11 +19,11 @@ Binary choice widget with **checked / unchecked / indeterminate** states. Offers
 
 ## 3 · Accessibility
 
-* Shadow DOM wraps a visually‑hidden native input (using **visually‑hidden** CSS).
+- Shadow DOM wraps a visually‑hidden native input (using **visually‑hidden** CSS).
   The custom control forwards focus & click to this input.
-* Reflects state via `aria‑checked="mixed"` when `indeterminate`.
-* Native form participation ensured by leaving the hidden input in the light DOM.
-* Keyboard: `Space` toggles, `Tab` focuses; obeys OS high‑contrast mode.
+- Reflects state via `aria‑checked="mixed"` when `indeterminate`.
+- Native form participation ensured by leaving the hidden input in the light DOM.
+- Keyboard: `Space` toggles, `Tab` focuses; obeys OS high‑contrast mode.
 
 ## 4 · Styling & Theming
 
@@ -59,7 +59,7 @@ ae-checkbox::part(control) {
 Dark theme sample:
 
 ```css
-:root[data-theme="dark"] {
+:root[data-theme='dark'] {
   --ae-checkbox-bg: var(--ae-color-base-800);
   --ae-checkbox-border: 2px solid var(--ae-color-base-600);
 }
@@ -72,10 +72,19 @@ Dark theme sample:
 import { css } from 'lit';
 
 export const checkboxStyles = css`
-  :host { display: inline-flex; align-items: center; gap: 0.5rem; }
+  :host {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
   /* Hidden native input */
-  input { position: absolute; opacity: 0; width: 0; height: 0; }
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
 
   ::part(control) {
     width: var(--ae-checkbox-size, 1rem);
@@ -85,7 +94,9 @@ export const checkboxStyles = css`
     background: var(--ae-checkbox-bg, #fff);
     display: grid;
     place-items: center;
-    transition: background 120ms ease, border-color 120ms ease;
+    transition:
+      background 120ms ease,
+      border-color 120ms ease;
   }
 
   /* Indicator (check or minus) */
@@ -98,7 +109,9 @@ export const checkboxStyles = css`
     stroke-linejoin: round;
     opacity: 0;
     transform: scale(0.5);
-    transition: opacity 120ms ease, transform 120ms ease;
+    transition:
+      opacity 120ms ease,
+      transform 120ms ease;
   }
 
   /* Checked state */
@@ -119,7 +132,7 @@ export const checkboxStyles = css`
 
   /* Focus ring */
   :host(:focus-visible) ::part(control) {
-    box-shadow: var(--ae-checkbox-focus-ring, 0 0 0 3px rgba(59,113,202,.5));
+    box-shadow: var(--ae-checkbox-focus-ring, 0 0 0 3px rgba(59, 113, 202, 0.5));
   }
 `;
 ```
@@ -137,20 +150,20 @@ packages/checkbox/
 
 ## 6 · Architecture
 
-* Lit component with reactive props `checked`, `indeterminate`.
-* Syncs native `<input>` properties so forms submit values.
-* Emits `ae-change` after state changes; consumer prevents if they want controlled behaviour.
+- Lit component with reactive props `checked`, `indeterminate`.
+- Syncs native `<input>` properties so forms submit values.
+- Emits `ae-change` after state changes; consumer prevents if they want controlled behaviour.
 
 ## 7 · Performance
 
-* ≤ 1 KB gzip (excluding optional SVG paths which are tiny).
+- ≤ 1 KB gzip (excluding optional SVG paths which are tiny).
 
 ## 8 · Testing Strategy
 
-* **Unit**: controlled vs uncontrolled, indeterminate logic.
-* **Playwright**: focus ring visibility, keyboard toggle, high‑contrast.
-* **axe‑core**: ensure correct `aria-checked` value.
+- **Unit**: controlled vs uncontrolled, indeterminate logic.
+- **Playwright**: focus ring visibility, keyboard toggle, high‑contrast.
+- **axe‑core**: ensure correct `aria-checked` value.
 
 ---
 
-*Updated: 2025‑05‑07*
+_Updated: 2025‑05‑07_

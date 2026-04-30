@@ -17,15 +17,17 @@ export class PgApp extends LitElement {
     :host {
       display: grid;
       grid-template-areas:
-        "header  header   header"
-        "sidebar preview  controls";
+        'header  header   header'
+        'sidebar preview  controls';
       grid-template-columns: var(--sidebar-w) 1fr var(--controls-w);
       grid-template-rows: 60px 1fr;
       height: 100vh;
       overflow: hidden;
     }
 
-    pg-header { grid-area: header; }
+    pg-header {
+      grid-area: header;
+    }
 
     .sidebar-container {
       grid-area: sidebar;
@@ -69,7 +71,9 @@ export class PgApp extends LitElement {
       height: 100%;
     }
 
-    pg-resize-handle { position: absolute; }
+    pg-resize-handle {
+      position: absolute;
+    }
   `;
 
   @state() private _selectedComponent: ComponentConfig = componentConfigs[0];
@@ -105,19 +109,26 @@ export class PgApp extends LitElement {
         if (s.codePanelHeight) this._codePanelHeight = s.codePanelHeight;
         if (s.isDarkMode !== undefined) this._isDarkMode = s.isDarkMode;
       }
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
     this._applyTheme();
   }
 
   private _persistState() {
     try {
-      localStorage.setItem('pg-state', JSON.stringify({
-        sidebarWidth: this._sidebarWidth,
-        controlsWidth: this._controlsWidth,
-        codePanelHeight: this._codePanelHeight,
-        isDarkMode: this._isDarkMode,
-      }));
-    } catch { /* ignore */ }
+      localStorage.setItem(
+        'pg-state',
+        JSON.stringify({
+          sidebarWidth: this._sidebarWidth,
+          controlsWidth: this._controlsWidth,
+          codePanelHeight: this._codePanelHeight,
+          isDarkMode: this._isDarkMode,
+        }),
+      );
+    } catch {
+      /* ignore */
+    }
   }
 
   private _applyTheme() {
@@ -126,7 +137,7 @@ export class PgApp extends LitElement {
 
   private _initCSSValues() {
     this._cssValues = {};
-    this._selectedComponent.cssVariables.forEach(v => {
+    this._selectedComponent.cssVariables.forEach((v) => {
       this._cssValues[v.name] = v.default;
     });
   }
@@ -152,7 +163,7 @@ export class PgApp extends LitElement {
   // ── Event handlers ──
 
   private _onComponentSelect(e: CustomEvent<{ name: string }>) {
-    const comp = componentConfigs.find(c => c.name === e.detail.name);
+    const comp = componentConfigs.find((c) => c.name === e.detail.name);
     if (comp) {
       this._selectedComponent = comp;
       this._selectedVariant = undefined;
@@ -297,7 +308,9 @@ export class PgApp extends LitElement {
         <pg-code-panel
           .activeTab=${this._activeCodeTab}
           .code=${this._generatedCode}
-          @pg-code-tab-change=${(e: CustomEvent<{ tab: CodeTab }>) => { this._activeCodeTab = e.detail.tab; }}
+          @pg-code-tab-change=${(e: CustomEvent<{ tab: CodeTab }>) => {
+            this._activeCodeTab = e.detail.tab;
+          }}
           @pg-toast-show=${this._onToastShow}
         ></pg-code-panel>
         <pg-resize-handle

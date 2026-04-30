@@ -54,8 +54,12 @@ export class PgCodePanel extends LitElement {
         font-family: inherit;
         transition: color 0.15s;
       }
-      .tab:hover { color: var(--pg-text); }
-      .tab.active { color: var(--pg-accent); }
+      .tab:hover {
+        color: var(--pg-text);
+      }
+      .tab.active {
+        color: var(--pg-accent);
+      }
 
       .copy-btn {
         display: flex;
@@ -73,7 +77,10 @@ export class PgCodePanel extends LitElement {
         color: var(--pg-text);
         background: var(--pg-bg-tertiary);
       }
-      .copy-btn svg { width: 14px; height: 14px; }
+      .copy-btn svg {
+        width: 14px;
+        height: 14px;
+      }
 
       pre {
         flex: 1;
@@ -95,43 +102,65 @@ export class PgCodePanel extends LitElement {
 
   private _setTab(tab: CodeTab) {
     this.activeTab = tab;
-    this.dispatchEvent(new CustomEvent('pg-code-tab-change', {
-      bubbles: true, composed: true, detail: { tab },
-    }));
+    this.dispatchEvent(
+      new CustomEvent('pg-code-tab-change', {
+        bubbles: true,
+        composed: true,
+        detail: { tab },
+      }),
+    );
   }
 
   private async _copy() {
     const text = this._getCode();
     try {
       await navigator.clipboard.writeText(text);
-      this.dispatchEvent(new CustomEvent('pg-toast-show', {
-        bubbles: true, composed: true, detail: { message: 'Copied to clipboard!' },
-      }));
+      this.dispatchEvent(
+        new CustomEvent('pg-toast-show', {
+          bubbles: true,
+          composed: true,
+          detail: { message: 'Copied to clipboard!' },
+        }),
+      );
     } catch {
-      this.dispatchEvent(new CustomEvent('pg-toast-show', {
-        bubbles: true, composed: true, detail: { message: 'Failed to copy' },
-      }));
+      this.dispatchEvent(
+        new CustomEvent('pg-toast-show', {
+          bubbles: true,
+          composed: true,
+          detail: { message: 'Failed to copy' },
+        }),
+      );
     }
   }
 
   private _getCode(): string {
     if (!this.code) return '';
     switch (this.activeTab) {
-      case 'html': return this.code.html;
-      case 'css': return this.code.css;
-      case 'react': return this.code.react;
-      case 'vue': return this.code.vue;
-      case 'full': return this.code.fullExample;
+      case 'html':
+        return this.code.html;
+      case 'css':
+        return this.code.css;
+      case 'react':
+        return this.code.react;
+      case 'vue':
+        return this.code.vue;
+      case 'full':
+        return this.code.fullExample;
     }
   }
 
   private _getTabLabel(tab: CodeTab): string {
     switch (tab) {
-      case 'css': return 'CSS';
-      case 'html': return 'HTML';
-      case 'react': return 'React';
-      case 'vue': return 'Vue';
-      case 'full': return 'Full Example';
+      case 'css':
+        return 'CSS';
+      case 'html':
+        return 'HTML';
+      case 'react':
+        return 'React';
+      case 'vue':
+        return 'Vue';
+      case 'full':
+        return 'Full Example';
     }
   }
 
@@ -143,17 +172,21 @@ export class PgCodePanel extends LitElement {
     return html`
       <div class="header">
         <div class="tabs">
-          ${this._tabs.map(tab => html`
-            <button class="tab ${this.activeTab === tab ? 'active' : ''}"
-                    @click=${() => this._setTab(tab)}>
-              ${this._getTabLabel(tab)}
-            </button>
-          `)}
+          ${this._tabs.map(
+            (tab) => html`
+              <button
+                class="tab ${this.activeTab === tab ? 'active' : ''}"
+                @click=${() => this._setTab(tab)}
+              >
+                ${this._getTabLabel(tab)}
+              </button>
+            `,
+          )}
         </div>
         <button class="copy-btn" title="Copy code" @click=${this._copy}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
           </svg>
         </button>
       </div>

@@ -206,12 +206,12 @@ export const headerCellStyles = css`
     cursor: pointer;
   }
 
-  :host([align="center"]) {
+  :host([align='center']) {
     justify-content: center;
     text-align: center;
   }
 
-  :host([align="right"]) {
+  :host([align='right']) {
     justify-content: flex-end;
     text-align: right;
   }
@@ -242,12 +242,12 @@ export const cellStyles = css`
     white-space: nowrap;
   }
 
-  :host([align="center"]) {
+  :host([align='center']) {
     justify-content: center;
     text-align: center;
   }
 
-  :host([align="right"]) {
+  :host([align='right']) {
     justify-content: flex-end;
     text-align: right;
   }

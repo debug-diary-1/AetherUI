@@ -4,7 +4,4 @@ import { AeAutocomplete, defineAeAutocomplete } from '@aetherui/core/autocomplet
 // Register the autocomplete component
 defineAeAutocomplete();
 
-export {
-  AeAutocomplete,
-  defineAeAutocomplete
-};
+export { AeAutocomplete, defineAeAutocomplete };

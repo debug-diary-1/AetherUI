@@ -6,10 +6,10 @@ const typeScriptPlugin = () => ({
   async transform(context) {
     if (context.response.is('ts')) {
       const body = context.body;
-      
+
       // Use dynamic import to load TypeScript
       const { default: ts } = await import('typescript');
-      
+
       // Create a TypeScript compiler
       const result = ts.transpileModule(body, {
         compilerOptions: {
@@ -19,10 +19,10 @@ const typeScriptPlugin = () => ({
           emitDecoratorMetadata: true,
           useDefineForClassFields: false,
           // This is key - it handles the accessor keyword properly
-          lib: ["ES2022", "DOM", "DOM.Iterable"],
-        }
+          lib: ['ES2022', 'DOM', 'DOM.Iterable'],
+        },
       });
-      
+
       return {
         body: result.outputText,
         headers: {
@@ -43,16 +43,19 @@ export default {
       product: 'chromium',
       launchOptions: {
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
-      }
-    })
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-gpu',
+        ],
+      },
+    }),
   ],
   mimeTypes: {
     '**/*.ts': 'ts',
   },
-  plugins: [
-    typeScriptPlugin(),
-  ],
+  plugins: [typeScriptPlugin()],
   testFramework: {
     config: {
       timeout: 10000,

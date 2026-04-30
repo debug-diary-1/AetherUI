@@ -383,7 +383,7 @@
   --ae-badge-color-success: white;
   --ae-badge-bg-danger: #ef4444;
   --ae-badge-color-danger: white;
-  --ae-badge-bg-error: #ef4444;  /* Alias for danger */
+  --ae-badge-bg-error: #ef4444; /* Alias for danger */
   --ae-badge-color-error: white;
   --ae-badge-bg-warning: #f59e0b;
   --ae-badge-color-warning: white;

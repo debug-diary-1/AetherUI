@@ -2,22 +2,25 @@
   "name": "@aetherui/accordion",
   "version": "0.1.0",
   "description": "Accordion component for AetherUI",
-  "author": "AetherUI Contributors",
-  "license": "MIT",
+  "keywords": [
+    "accordion",
+    "aetherui",
+    "lit",
+    "web-components"
+  ],
   "homepage": "https://github.com/pallavL01/AetherUI#readme",
+  "bugs": {
+    "url": "https://github.com/pallavL01/AetherUI/issues"
+  },
+  "license": "MIT",
+  "author": "AetherUI Contributors",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pallavL01/AetherUI.git",
     "directory": "packages/accordion"
   },
-  "bugs": {
-    "url": "https://github.com/pallavL01/AetherUI/issues"
-  },
-  "keywords": [
-    "web-components",
-    "lit",
-    "accordion",
-    "aetherui"
+  "files": [
+    "dist"
   ],
   "type": "module",
   "main": "./dist/index.js",
@@ -29,9 +32,6 @@
       "import": "./dist/index.js"
     }
   },
-  "files": [
-    "dist"
-  ],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -48,9 +48,9 @@
   },
   "devDependencies": {
     "@types/node": "catalog:",
-    "vite": "catalog:",
-    "vite-plugin-dts": "catalog:",
     "rimraf": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-dts": "catalog:"
   }
 }

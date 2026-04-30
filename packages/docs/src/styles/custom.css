@@ -131,7 +131,12 @@ body {
 }
 
 /* Headings */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 600;
   letter-spacing: -0.025em;
   color: var(--sl-color-text-heading);
@@ -140,7 +145,9 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Links */
 a {
-  transition: color 0.15s ease, opacity 0.15s ease;
+  transition:
+    color 0.15s ease,
+    opacity 0.15s ease;
 }
 
 /* Sidebar styling */
@@ -161,7 +168,9 @@ aside a,
 [data-sidebar] a {
   color: #475569;
   border-radius: var(--radius-sm);
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 nav.sidebar a:hover,
@@ -173,10 +182,10 @@ aside a:hover,
 }
 
 /* Active sidebar link */
-nav.sidebar a[aria-current="page"],
-.sidebar a[aria-current="page"],
-aside a[aria-current="page"],
-[data-sidebar] a[aria-current="page"] {
+nav.sidebar a[aria-current='page'],
+.sidebar a[aria-current='page'],
+aside a[aria-current='page'],
+[data-sidebar] a[aria-current='page'] {
   color: #2563eb;
   background: #eff6ff;
   font-weight: 500;
@@ -197,10 +206,10 @@ aside a[aria-current="page"],
   background: #334155;
 }
 
-:root[data-theme='dark'] nav.sidebar a[aria-current="page"],
-:root[data-theme='dark'] .sidebar a[aria-current="page"],
-:root[data-theme='dark'] aside a[aria-current="page"],
-:root[data-theme='dark'] [data-sidebar] a[aria-current="page"] {
+:root[data-theme='dark'] nav.sidebar a[aria-current='page'],
+:root[data-theme='dark'] .sidebar a[aria-current='page'],
+:root[data-theme='dark'] aside a[aria-current='page'],
+:root[data-theme='dark'] [data-sidebar] a[aria-current='page'] {
   color: #60a5fa;
   background: #1e3a5f;
 }
@@ -208,7 +217,9 @@ aside a[aria-current="page"],
 /* Navigation links */
 nav a {
   border-radius: var(--radius-sm);
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 nav a:hover {
@@ -229,9 +240,9 @@ starlight-menu-button + nav a:hover,
   background: #f1f5f9;
 }
 
-.sidebar-content a[aria-current="page"],
-starlight-menu-button + nav a[aria-current="page"],
-.sl-sidebar a[aria-current="page"] {
+.sidebar-content a[aria-current='page'],
+starlight-menu-button + nav a[aria-current='page'],
+.sl-sidebar a[aria-current='page'] {
   color: #2563eb !important;
   background: #eff6ff;
 }
@@ -249,9 +260,9 @@ starlight-menu-button + nav a[aria-current="page"],
   background: #334155;
 }
 
-:root[data-theme='dark'] .sidebar-content a[aria-current="page"],
-:root[data-theme='dark'] starlight-menu-button + nav a[aria-current="page"],
-:root[data-theme='dark'] .sl-sidebar a[aria-current="page"] {
+:root[data-theme='dark'] .sidebar-content a[aria-current='page'],
+:root[data-theme='dark'] starlight-menu-button + nav a[aria-current='page'],
+:root[data-theme='dark'] .sl-sidebar a[aria-current='page'] {
   color: #60a5fa !important;
   background: #1e3a5f;
 }
@@ -296,7 +307,7 @@ code {
 
 /* Syntax highlighting improvements for dark mode */
 :root[data-theme='dark'] .expressive-code,
-:root[data-theme='dark'] [data-theme="dark"] .expressive-code {
+:root[data-theme='dark'] [data-theme='dark'] .expressive-code {
   --code-background: #1e293b !important;
 }
 
@@ -306,55 +317,57 @@ code {
 
 /* Starlight code block overrides */
 :root[data-theme='dark'] .astro-code,
-:root[data-theme='dark'] [class*="astro-code"] {
+:root[data-theme='dark'] [class*='astro-code'] {
   background-color: #1e293b !important;
   color: #e2e8f0 !important;
 }
 
 :root[data-theme='dark'] .astro-code span,
-:root[data-theme='dark'] [class*="astro-code"] span {
+:root[data-theme='dark'] [class*='astro-code'] span {
   color: inherit;
 }
 
 /* Tabs in code examples - Light mode */
-[role="tablist"] {
+[role='tablist'] {
   background-color: var(--sl-color-bg-offset);
   border-color: var(--sl-color-border);
 }
 
-[role="tab"] {
+[role='tab'] {
   color: #475569 !important;
   font-weight: 500;
-  transition: color 0.15s ease, background-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
 
-[role="tab"]:hover {
+[role='tab']:hover {
   color: #0f172a !important;
   background-color: #e2e8f0;
 }
 
-[role="tab"][aria-selected="true"] {
+[role='tab'][aria-selected='true'] {
   color: #2563eb !important;
   background-color: var(--sl-color-bg);
   font-weight: 600;
 }
 
 /* Tabs in code examples - Dark mode */
-:root[data-theme='dark'] [role="tablist"] {
+:root[data-theme='dark'] [role='tablist'] {
   background-color: #1e293b !important;
   border-color: #334155 !important;
 }
 
-:root[data-theme='dark'] [role="tab"] {
+:root[data-theme='dark'] [role='tab'] {
   color: #94a3b8 !important;
 }
 
-:root[data-theme='dark'] [role="tab"]:hover {
+:root[data-theme='dark'] [role='tab']:hover {
   color: #e2e8f0 !important;
   background-color: #334155;
 }
 
-:root[data-theme='dark'] [role="tab"][aria-selected="true"] {
+:root[data-theme='dark'] [role='tab'][aria-selected='true'] {
   color: #f1f5f9 !important;
   background-color: #334155 !important;
 }
@@ -371,7 +384,8 @@ th {
   font-weight: 600;
 }
 
-td, th {
+td,
+th {
   padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--sl-color-border);
 }
@@ -387,7 +401,9 @@ tr:last-child td {
   border: 1px solid var(--sl-color-border);
   background: var(--sl-color-bg);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .sl-card:hover,

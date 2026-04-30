@@ -22,7 +22,7 @@ export const menuItemStyles = css`
     outline: none;
   }
 
-  .menu-item:hover:not([aria-disabled="true"]) {
+  .menu-item:hover:not([aria-disabled='true']) {
     background: var(--ae-menu-item-bg-hover);
     color: var(--ae-menu-item-color-hover);
   }
@@ -33,7 +33,7 @@ export const menuItemStyles = css`
     outline-offset: -2px;
   }
 
-  .menu-item[aria-disabled="true"] {
+  .menu-item[aria-disabled='true'] {
     color: var(--ae-menu-item-color-disabled);
     cursor: not-allowed;
     opacity: 0.6;
@@ -43,8 +43,8 @@ export const menuItemStyles = css`
     flex: 1;
   }
 
-  ::slotted([slot="prefix"]),
-  ::slotted([slot="suffix"]) {
+  ::slotted([slot='prefix']),
+  ::slotted([slot='suffix']) {
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;

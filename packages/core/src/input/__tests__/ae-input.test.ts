@@ -1,7 +1,11 @@
 import { html, fixture, expect, oneEvent } from '@open-wc/testing';
 import { AeInput } from '../ae-input.js';
 import '../ae-input.js';
-import { getComponentStyles, assertNoHardcodedColors, assertCSSVariablesUsed } from '../../test-utils/theme-test-helpers.js';
+import {
+  getComponentStyles,
+  assertNoHardcodedColors,
+  assertCSSVariablesUsed,
+} from '../../test-utils/theme-test-helpers.js';
 
 describe('ae-input', () => {
   it('has correct default properties', async () => {
@@ -34,9 +38,7 @@ describe('ae-input', () => {
   });
 
   it('renders label when provided', async () => {
-    const el = await fixture<AeInput>(html`
-      <ae-input label="Username"></ae-input>
-    `);
+    const el = await fixture<AeInput>(html` <ae-input label="Username"></ae-input> `);
 
     const label = el.shadowRoot!.querySelector('label');
     expect(label).to.exist;
@@ -44,9 +46,7 @@ describe('ae-input', () => {
   });
 
   it('shows required indicator when required', async () => {
-    const el = await fixture<AeInput>(html`
-      <ae-input label="Email" required></ae-input>
-    `);
+    const el = await fixture<AeInput>(html` <ae-input label="Email" required></ae-input> `);
 
     const requiredIndicator = el.shadowRoot!.querySelector('.required-indicator');
     expect(requiredIndicator).to.exist;
@@ -63,9 +63,7 @@ describe('ae-input', () => {
   });
 
   it('renders error message when provided', async () => {
-    const el = await fixture<AeInput>(html`
-      <ae-input error="This field is required"></ae-input>
-    `);
+    const el = await fixture<AeInput>(html` <ae-input error="This field is required"></ae-input> `);
 
     await el.updateComplete;
 
@@ -185,12 +183,11 @@ describe('ae-input', () => {
       const stylesText = getComponentStyles(el);
 
       // Check that theme variables are used
-      assertCSSVariablesUsed(stylesText, [
-        '--ae-input-border',
-        '--ae-input-bg',
-        '--ae-input-color',
-        '--ae-input-focus-ring',
-      ], 'Input');
+      assertCSSVariablesUsed(
+        stylesText,
+        ['--ae-input-border', '--ae-input-bg', '--ae-input-color', '--ae-input-focus-ring'],
+        'Input',
+      );
     });
 
     it('does not have hardcoded color fallbacks', async () => {

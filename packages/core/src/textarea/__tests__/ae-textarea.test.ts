@@ -1,7 +1,11 @@
 import { html, fixture, expect, oneEvent } from '@open-wc/testing';
 import { AeTextarea } from '../ae-textarea.js';
 import '../ae-textarea.js';
-import { getComponentStyles, assertNoHardcodedColors, assertCSSVariablesUsed } from '../../test-utils/theme-test-helpers.js';
+import {
+  getComponentStyles,
+  assertNoHardcodedColors,
+  assertCSSVariablesUsed,
+} from '../../test-utils/theme-test-helpers.js';
 
 describe('ae-textarea', () => {
   it('has correct default properties', async () => {
@@ -36,9 +40,7 @@ describe('ae-textarea', () => {
   });
 
   it('renders label when provided', async () => {
-    const el = await fixture<AeTextarea>(html`
-      <ae-textarea label="Description"></ae-textarea>
-    `);
+    const el = await fixture<AeTextarea>(html` <ae-textarea label="Description"></ae-textarea> `);
 
     const label = el.shadowRoot!.querySelector('label');
     expect(label).to.exist;
@@ -69,7 +71,6 @@ describe('ae-textarea', () => {
       <ae-textarea error="This field is required"></ae-textarea>
     `);
 
-    
     await el.updateComplete;
 
     const errorMessage = el.shadowRoot!.querySelector('[part="error-text"]');
@@ -172,12 +173,16 @@ describe('ae-textarea', () => {
       const stylesText = getComponentStyles(el);
 
       // Check that theme variables are used
-      assertCSSVariablesUsed(stylesText, [
-        '--ae-textarea-border',
-        '--ae-textarea-bg',
-        '--ae-textarea-color',
-        '--ae-textarea-focus-ring',
-      ], 'Textarea');
+      assertCSSVariablesUsed(
+        stylesText,
+        [
+          '--ae-textarea-border',
+          '--ae-textarea-bg',
+          '--ae-textarea-color',
+          '--ae-textarea-focus-ring',
+        ],
+        'Textarea',
+      );
     });
 
     it('does not have hardcoded color fallbacks', async () => {

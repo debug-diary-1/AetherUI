@@ -2,6 +2,7 @@
 title: Popover
 description: Floating content panel that appears next to a trigger element for additional information or actions.
 ---
+
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ComponentExample from '../../../components/ComponentExample.astro';
 
@@ -85,16 +86,8 @@ A floating content panel that appears next to a trigger element.
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">
-    ```bash
-    pnpm add @aetherui/core
-    ```
-  </TabItem>
-  <TabItem label="npm">
-    ```bash
-    npm install @aetherui/core
-    ```
-  </TabItem>
+  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
+  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
 </Tabs>
 
 ## Import
@@ -106,36 +99,36 @@ defineAePopover();
 
 ## Props
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `open` | `boolean` | `false` | Open state |
-| `trigger` | `'click' \| 'hover'` | `'click'` | How to trigger |
-| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` | Position |
-| `arrow` | `boolean` | `true` | Show arrow |
-| `offset` | `number` | `8` | Distance from trigger |
-| `close-on-click-outside` | `boolean` | `true` | Close when clicking outside |
+| Name                     | Type                                     | Default    | Description                 |
+| ------------------------ | ---------------------------------------- | ---------- | --------------------------- |
+| `open`                   | `boolean`                                | `false`    | Open state                  |
+| `trigger`                | `'click' \| 'hover'`                     | `'click'`  | How to trigger              |
+| `placement`              | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` | Position                    |
+| `arrow`                  | `boolean`                                | `true`     | Show arrow                  |
+| `offset`                 | `number`                                 | `8`        | Distance from trigger       |
+| `close-on-click-outside` | `boolean`                                | `true`     | Close when clicking outside |
 
 ## Slots
 
-| Name | Description |
-|------|-------------|
+| Name      | Description     |
+| --------- | --------------- |
 | `trigger` | Trigger element |
-| default | Popover content |
+| default   | Popover content |
 
 ## Events
 
-| Name | Description |
-|------|-------------|
-| `ae-popover-open` | Fired when opened |
+| Name               | Description       |
+| ------------------ | ----------------- |
+| `ae-popover-open`  | Fired when opened |
 | `ae-popover-close` | Fired when closed |
 
 ## CSS Parts
 
-| Name | Description |
-|------|-------------|
+| Name      | Description       |
+| --------- | ----------------- |
 | `trigger` | Trigger container |
-| `popover` | Popover panel |
-| `arrow` | Arrow element |
+| `popover` | Popover panel     |
+| `arrow`   | Arrow element     |
 
 ## Accessibility
 

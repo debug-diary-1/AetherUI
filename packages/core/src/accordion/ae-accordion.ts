@@ -5,25 +5,25 @@ import type { AeAccordionItem } from './ae-accordion-item';
 
 /**
  * A collapsible disclosure component that shows or hides content panels.
- * 
+ *
  * @element ae-accordion
- * 
+ *
  * @property {boolean} multiselectable - Allows multiple panels to be open simultaneously
  * @property {string[]} value - Array of panel IDs that are currently open/expanded
  * @property {string[]} defaultValue - Initial panel IDs to open (uncontrolled mode)
- * 
+ *
  * @fires {CustomEvent<{value: string[]}>} ae-accordion-change - Fired when open/expanded panels change
- * 
+ *
  * @slot - Default slot for accordion items
- * 
+ *
  * @csspart base - The container element for the accordion
- * 
+ *
  * @cssproperty --ae-accordion-bg - Background color
  * @cssproperty --ae-accordion-border - Border style
  * @cssproperty --ae-accordion-radius - Border radius
  * @cssproperty --ae-accordion-shadow - Box shadow
  * @cssproperty --ae-accordion-divider - Divider between items
- * 
+ *
  * @example
  * ```html
  * <ae-accordion>
@@ -57,7 +57,6 @@ export class AeAccordion extends LitElement {
   @property({ type: Array, attribute: 'default-value' })
   accessor defaultValue: string[] = [];
 
-
   @state()
   private accessor openPanels = new Set<string>();
 
@@ -66,24 +65,24 @@ export class AeAccordion extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.setupMutationObserver();
-    
+
     // Initialize from value property
     const initialValue = this.value.length > 0 ? this.value : this.defaultValue;
-                        
+
     if (initialValue.length) {
       if (this.multiselectable) {
-        initialValue.forEach(id => this.openPanels.add(id));
+        initialValue.forEach((id) => this.openPanels.add(id));
       } else {
         // In non-multiselectable mode, only keep the first panel open
         this.openPanels.add(initialValue[0]);
       }
       this.updateItems();
     }
-    
+
     // Check for initially open items (set via HTML attributes)
     this.handleInitiallyOpenItems();
   }
-  
+
   /**
    * Handle the case where items have the open attribute set in HTML
    * This ensures only one panel is open if multiselectable is false
@@ -91,39 +90,39 @@ export class AeAccordion extends LitElement {
   private handleInitiallyOpenItems() {
     // Get all items with the open attribute
     const items = Array.from(this.querySelectorAll('ae-accordion-item[open]'));
-    
+
     if (items.length === 0) return;
-    
+
     if (!this.multiselectable && items.length > 0) {
       // In single selection mode, only the first open item should stay open
       const firstOpenItem = items[0];
       const headerId = firstOpenItem.getAttribute('data-header-id');
-      
+
       if (headerId) {
         // Clear any existing open panels
         this.openPanels.clear();
         // Only add the first open panel
         this.openPanels.add(headerId);
-        
+
         // Force close all other items by setting open=false
-        items.slice(1).forEach(item => {
+        items.slice(1).forEach((item) => {
           item.removeAttribute('open');
           (item as AeAccordionItem).open = false;
         });
       }
     } else if (this.multiselectable) {
       // In multiselectable mode, add all open items to the set
-      items.forEach(item => {
+      items.forEach((item) => {
         const headerId = item.getAttribute('data-header-id');
         if (headerId) {
           this.openPanels.add(headerId);
         }
       });
     }
-    
+
     // Update value property to match
     this.value = Array.from(this.openPanels);
-    
+
     // Force the update on all items to ensure consistency
     this.updateItems();
   }
@@ -158,7 +157,7 @@ export class AeAccordion extends LitElement {
   private updateItems() {
     // Update all accordion items based on the current open panels
     const items = Array.from(this.querySelectorAll('ae-accordion-item'));
-    
+
     if (!this.multiselectable && items.length > 0) {
       // Make sure only one panel is open in non-multiselectable mode
       const openPanelIds = Array.from(this.openPanels);
@@ -171,9 +170,9 @@ export class AeAccordion extends LitElement {
         this.value = [firstPanelId];
       }
     }
-    
+
     // Apply the open state to all items
-    items.forEach(item => {
+    items.forEach((item) => {
       const headerId = item.getAttribute('data-header-id');
       if (headerId) {
         (item as AeAccordionItem).open = this.openPanels.has(headerId);
@@ -185,9 +184,9 @@ export class AeAccordion extends LitElement {
     // Prevent handling events from nested accordions
     const target = event.target as Element;
     if (!target || target.closest('ae-accordion') !== this) return;
-    
+
     const { headerId, open } = event.detail;
-    
+
     if (this.multiselectable) {
       // In multiselectable mode, just toggle the individual panel
       if (open) {
@@ -200,13 +199,13 @@ export class AeAccordion extends LitElement {
       if (open) {
         // First close all panels - we'll do this manually to ensure it works
         const items = Array.from(this.querySelectorAll('ae-accordion-item'));
-        items.forEach(item => {
+        items.forEach((item) => {
           const itemId = item.getAttribute('data-header-id');
           if (itemId && itemId !== headerId) {
             (item as AeAccordionItem).open = false;
           }
         });
-        
+
         // Clear the set and add only the new panel
         this.openPanels.clear();
         this.openPanels.add(headerId);
@@ -218,21 +217,23 @@ export class AeAccordion extends LitElement {
 
     // Update all accordion items to reflect the new state
     this.updateItems();
-    
+
     // Update the value property
     this.value = Array.from(this.openPanels);
-    
+
     // Dispatch standardized event
-    this.dispatchEvent(new CustomEvent('ae-accordion-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-accordion-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
     return html`
-      <div 
+      <div
         class="accordion"
         part="base"
         @ae-panel-change="${(e: CustomEvent) => this.handlePanelChange(e)}"

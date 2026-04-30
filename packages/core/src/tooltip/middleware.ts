@@ -42,7 +42,7 @@ function computePosition(
   reference: DOMRect,
   floating: DOMRect,
   placement: Placement,
-  offset: number
+  offset: number,
 ): Position {
   let x = 0;
   let y = 0;
@@ -88,11 +88,7 @@ function computePosition(
 /**
  * Check if position fits in viewport
  */
-function fitsInViewport(
-  position: Position,
-  floating: DOMRect,
-  padding: number = 5
-): boolean {
+function fitsInViewport(position: Position, floating: DOMRect, padding: number = 5): boolean {
   const viewport = {
     width: window.innerWidth,
     height: window.innerHeight,
@@ -126,11 +122,7 @@ function getOppositePlacement(placement: Placement): Placement {
 /**
  * Shift position to stay in viewport
  */
-function shiftToViewport(
-  position: Position,
-  floating: DOMRect,
-  padding: number = 5
-): Position {
+function shiftToViewport(position: Position, floating: DOMRect, padding: number = 5): Position {
   const viewport = {
     width: window.innerWidth,
     height: window.innerHeight,
@@ -161,7 +153,7 @@ function calculateArrowPosition(
   floating: DOMRect,
   position: Position,
   placement: Placement,
-  arrowElement: HTMLElement
+  arrowElement: HTMLElement,
 ): { x?: number; y?: number } {
   const arrowRect = arrowElement.getBoundingClientRect();
   const [side] = placement.split('-');
@@ -185,7 +177,7 @@ function calculateArrowPosition(
 export async function positionTooltip(
   anchor: HTMLElement,
   tooltip: HTMLElement,
-  options: PositionOptions
+  options: PositionOptions,
 ): Promise<PositionResult> {
   const offsetDistance = options.offsetDistance ?? 8;
   const anchorRect = anchor.getBoundingClientRect();
@@ -197,7 +189,12 @@ export async function positionTooltip(
   // Flip if doesn't fit
   if (!fitsInViewport(position, tooltipRect)) {
     const oppositePlacement = getOppositePlacement(placement);
-    const oppositePosition = computePosition(anchorRect, tooltipRect, oppositePlacement, offsetDistance);
+    const oppositePosition = computePosition(
+      anchorRect,
+      tooltipRect,
+      oppositePlacement,
+      offsetDistance,
+    );
 
     if (fitsInViewport(oppositePosition, tooltipRect)) {
       placement = oppositePlacement;
@@ -211,7 +208,13 @@ export async function positionTooltip(
   // Calculate arrow position
   let arrowData: { x?: number; y?: number } | undefined;
   if (options.arrowElement) {
-    arrowData = calculateArrowPosition(anchorRect, tooltipRect, position, placement, options.arrowElement);
+    arrowData = calculateArrowPosition(
+      anchorRect,
+      tooltipRect,
+      position,
+      placement,
+      options.arrowElement,
+    );
   }
 
   return {
@@ -231,7 +234,7 @@ export async function positionTooltip(
 export function createAutoUpdate(
   anchor: HTMLElement,
   tooltip: HTMLElement,
-  updateFn: () => void
+  updateFn: () => void,
 ): () => void {
   const handleUpdate = () => {
     requestAnimationFrame(updateFn);
@@ -271,7 +274,7 @@ export function createAutoUpdate(
 export function positionArrow(
   arrowElement: HTMLElement,
   placement: Placement,
-  middlewareData: { arrow?: { x?: number; y?: number } }
+  middlewareData: { arrow?: { x?: number; y?: number } },
 ) {
   if (!middlewareData.arrow) return;
 

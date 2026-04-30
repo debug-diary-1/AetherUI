@@ -335,7 +335,7 @@
 }
 
 /* Dark mode */
-[data-theme="dark"] {
+[data-theme='dark'] {
   --ae-color-primary: #3b82f6;
   --ae-color-brand-600: #60a5fa;
   --ae-color-text-primary: #f1f5f9;
@@ -497,7 +497,9 @@ body {
 }
 
 /* Improved readability */
-p, li, td {
+p,
+li,
+td {
   line-height: 1.6;
 }
 
@@ -511,10 +513,10 @@ p, li, td {
   border-radius: 0.75rem;
 }
 
-[data-theme="dark"] .preview,
-[data-theme="dark"] .example-preview,
-[data-theme="dark"] .component-example,
-[data-theme="dark"] .interactive-example {
+[data-theme='dark'] .preview,
+[data-theme='dark'] .example-preview,
+[data-theme='dark'] .component-example,
+[data-theme='dark'] .interactive-example {
   background-color: #1e293b;
   color: #f1f5f9;
 }

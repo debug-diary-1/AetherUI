@@ -44,7 +44,7 @@ export class SelectionManager<T> {
   selectAllRows(data: T[]): boolean {
     if (this._selectionMode !== 'multiple') return false;
 
-    const rowIds = data.map(row => this.getRowId(row));
+    const rowIds = data.map((row) => this.getRowId(row));
     return this.selectAll(rowIds);
   }
 
@@ -79,7 +79,7 @@ export class SelectionManager<T> {
   private _selectionMode: SelectionMode = 'none';
   private _selectionTrigger: SelectionTrigger = 'checkbox';
   private _selectedRows: Record<string, boolean> = {};
-  
+
   /**
    * Initialize selection state and options
    * @param selectedRows Initial selected rows state
@@ -90,16 +90,16 @@ export class SelectionManager<T> {
     options?: {
       selectionMode?: SelectionMode;
       selectionTrigger?: SelectionTrigger;
-    }
+    },
   ): void {
     this._selectedRows = { ...selectedRows };
-    
+
     if (options) {
       this._selectionMode = options.selectionMode ?? 'none';
       this._selectionTrigger = options.selectionTrigger ?? 'checkbox';
     }
   }
-  
+
   /**
    * Get selected rows as a mapping
    * @returns Object mapping row IDs to selection state
@@ -117,7 +117,7 @@ export class SelectionManager<T> {
       .filter(([_, selected]) => selected)
       .map(([id]) => id);
   }
-  
+
   /**
    * Set selected rows
    * @param selectedRows New selected rows state
@@ -125,31 +125,31 @@ export class SelectionManager<T> {
    */
   setSelectedRows(selectedRows: Record<string, boolean>): boolean {
     if (this._selectionMode === 'none') return false;
-    
+
     // For single selection mode, ensure only one row is selected
     let newSelectedRows = { ...selectedRows };
-    
+
     if (this._selectionMode === 'single') {
       const selectedIds = Object.entries(newSelectedRows)
         .filter(([_, selected]) => selected)
         .map(([id]) => id);
-      
+
       if (selectedIds.length > 1) {
         // Keep only the first selected row
         newSelectedRows = { [selectedIds[0]]: true };
       }
     }
-    
+
     // Compare and only update if changed
     const changed = JSON.stringify(this._selectedRows) !== JSON.stringify(newSelectedRows);
-    
+
     if (changed) {
       this._selectedRows = newSelectedRows;
     }
-    
+
     return changed;
   }
-  
+
   /**
    * Toggle selection for a row
    * @param rowId Row ID to toggle
@@ -182,10 +182,10 @@ export class SelectionManager<T> {
         delete newSelectedRows[id];
       }
     }
-    
+
     return this.setSelectedRows(newSelectedRows);
   }
-  
+
   /**
    * Select all rows
    * @param rowIds Array of all row IDs
@@ -193,15 +193,15 @@ export class SelectionManager<T> {
    */
   selectAll(rowIds: string[]): boolean {
     if (this._selectionMode !== 'multiple') return false;
-    
+
     const newSelectedRows: Record<string, boolean> = {};
-    rowIds.forEach(id => {
+    rowIds.forEach((id) => {
       newSelectedRows[id] = true;
     });
-    
+
     return this.setSelectedRows(newSelectedRows);
   }
-  
+
   /**
    * Deselect all rows
    * @returns True if selection changed
@@ -209,18 +209,18 @@ export class SelectionManager<T> {
   deselectAll(): boolean {
     return this.setSelectedRows({});
   }
-  
+
   /* This duplicate method was removed to fix TS2393 */
-  
+
   /**
    * Get all selected row IDs (alias for getSelectedRows for backward compatibility)
    * @returns Array of selected row IDs
    * @deprecated Use getSelectedRows instead
    */
   getSelectedRowIds(): string[] {
-    return this.getSelectedRows().map(id => String(id));
+    return this.getSelectedRows().map((id) => String(id));
   }
-  
+
   /**
    * Check if the "select all" state is indeterminate
    * @param totalRows Total number of rows
@@ -228,11 +228,11 @@ export class SelectionManager<T> {
    */
   isIndeterminate(totalRows: number): boolean {
     if (this._selectionMode !== 'multiple') return false;
-    
+
     const selectedCount = Object.values(this._selectedRows).filter(Boolean).length;
     return selectedCount > 0 && selectedCount < totalRows;
   }
-  
+
   /**
    * Check if all rows are selected
    * @param totalRows Total number of rows
@@ -240,7 +240,7 @@ export class SelectionManager<T> {
    */
   isAllSelected(totalRows: number): boolean {
     if (this._selectionMode !== 'multiple' || totalRows === 0) return false;
-    
+
     const selectedCount = Object.values(this._selectedRows).filter(Boolean).length;
     return selectedCount === totalRows;
   }

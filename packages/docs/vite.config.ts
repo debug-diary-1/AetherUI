@@ -8,4 +8,4 @@ export default defineConfig({
   ssr: {
     noExternal: ['@aetherui/core', 'lit', '@lit/reactive-element'],
   },
-}); 
+});

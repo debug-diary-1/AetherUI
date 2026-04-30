@@ -9,36 +9,43 @@ export default {
   argTypes: {
     value: { control: 'text', description: 'Current input value' },
     placeholder: { control: 'text', description: 'Placeholder text for the input' },
-    ariaLabel: { control: 'text', description: 'Accessible label for the input (required for accessibility)' },
+    ariaLabel: {
+      control: 'text',
+      description: 'Accessible label for the input (required for accessibility)',
+    },
     disabled: { control: 'boolean', description: 'Whether the input is disabled' },
     freeInput: {
       control: 'boolean',
       description: 'Whether user can enter values not in the list',
-      table: { category: 'Behavior' }
+      table: { category: 'Behavior' },
     },
     items: {
       control: 'object',
       description: 'Items to display in the dropdown (string[] or {id, label, disabled?}[])',
-      table: { type: { summary: 'Array<string | ComboItem>' } }
+      table: { type: { summary: 'Array<string | ComboItem>' } },
     },
-    'ae-combo-select': { 
+    'ae-combo-select': {
       action: 'ae-combo-select',
       description: 'Fired when an item is selected',
-      table: { category: 'Events', type: { summary: 'CustomEvent<{value: string, item: ComboItem | null}>' } }
+      table: {
+        category: 'Events',
+        type: { summary: 'CustomEvent<{value: string, item: ComboItem | null}>' },
+      },
     },
-    'ae-combo-input': { 
+    'ae-combo-input': {
       action: 'ae-combo-input',
       description: 'Fired on each keystroke',
-      table: { category: 'Events', type: { summary: 'CustomEvent<{value: string}>' } }
-    }
+      table: { category: 'Events', type: { summary: 'CustomEvent<{value: string}>' } },
+    },
   },
   parameters: {
     docs: {
       description: {
-        component: 'An autocomplete dropdown that allows free-text input or selection from a filtered list, following the ARIA Listbox Combobox pattern.'
-      }
-    }
-  }
+        component:
+          'An autocomplete dropdown that allows free-text input or selection from a filtered list, following the ARIA Listbox Combobox pattern.',
+      },
+    },
+  },
 };
 
 const Template = (args) => html`
@@ -58,7 +65,7 @@ export const Basic = Template.bind({});
 Basic.args = {
   placeholder: 'Select a fruit...',
   ariaLabel: 'Select a fruit',
-  items: ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape']
+  items: ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape'],
 };
 Basic.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
@@ -81,7 +88,7 @@ Basic.play = async ({ canvasElement }) => {
 
   // Find the option with "Apple" in shadow DOM
   const options = combo.shadowRoot.querySelectorAll('[role="option"]');
-  const appleOption = Array.from(options).find(opt => opt.textContent.includes('Apple'));
+  const appleOption = Array.from(options).find((opt) => opt.textContent.includes('Apple'));
   expect(appleOption).toBeTruthy();
 
   // CRITICAL: Verify highlight is rendered as HTML, not escaped text
@@ -105,8 +112,8 @@ WithObjectItems.args = {
     { id: 'banana', label: 'Banana' },
     { id: 'cherry', label: 'Cherry' },
     { id: 'date', label: 'Date', disabled: true },
-    { id: 'elderberry', label: 'Elderberry' }
-  ]
+    { id: 'elderberry', label: 'Elderberry' },
+  ],
 };
 
 export const WithDefaultValue = Template.bind({});
@@ -114,7 +121,7 @@ WithDefaultValue.args = {
   placeholder: 'Select a fruit...',
   ariaLabel: 'Select a fruit',
   value: 'Banana',
-  items: ['Apple', 'Banana', 'Cherry', 'Date']
+  items: ['Apple', 'Banana', 'Cherry', 'Date'],
 };
 
 export const Disabled = Template.bind({});
@@ -123,7 +130,7 @@ Disabled.args = {
   ariaLabel: 'Select a fruit',
   value: 'Banana',
   items: ['Apple', 'Banana', 'Cherry', 'Date'],
-  disabled: true
+  disabled: true,
 };
 
 export const NoFreeInput = Template.bind({});
@@ -131,5 +138,5 @@ NoFreeInput.args = {
   placeholder: 'Select a fruit from the list...',
   ariaLabel: 'Select a fruit from the list',
   items: ['Apple', 'Banana', 'Cherry', 'Date'],
-  freeInput: false
+  freeInput: false,
 };

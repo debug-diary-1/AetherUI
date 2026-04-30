@@ -6,10 +6,10 @@ import { updatePosition, type Placement, type Strategy } from './positioning';
 
 /**
  * Dropdown menu component
- * 
+ *
  * @fires ae-open-change - When the dropdown opens or closes
  * @fires ae-select - When a menu item is selected
- * 
+ *
  * @cssprop --ae-dropdown-shadow - Overlay box shadow
  * @cssprop --ae-dropdown-radius - Corner rounding
  * @cssprop --ae-dropdown-bg - Menu background
@@ -109,7 +109,7 @@ export class AeDropdown extends LitElement {
 
     // Check if we're in controlled or uncontrolled mode
     this.isControlled = this.hasAttribute('open');
-    
+
     // Initialize internal state for uncontrolled mode
     if (!this.isControlled) {
       this.internalOpen = this.defaultOpen;
@@ -122,7 +122,7 @@ export class AeDropdown extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    
+
     // Clean up event listeners and positioning
     document.removeEventListener('click', this.handleClickOutside);
     document.removeEventListener('keydown', this.handleKeyDown);
@@ -156,7 +156,7 @@ export class AeDropdown extends LitElement {
    */
   private async handleOpen() {
     if (!this.overlayEl || !this.triggerEl) return;
-    
+
     // Make overlay visible before positioning
     this.overlayEl.style.visibility = 'visible';
     this.overlayEl.style.zIndex = '9999';
@@ -183,9 +183,9 @@ export class AeDropdown extends LitElement {
         this.triggerEl,
         this.overlayEl,
         this.placement,
-        this.strategy
+        this.strategy,
       );
-      
+
       // Store the cleanup function
       this.positionCleanup = cleanup;
     } catch {
@@ -208,14 +208,16 @@ export class AeDropdown extends LitElement {
    */
   toggleOpen(open: boolean) {
     if (this.disabled) return;
-    
+
     if (this.isControlled) {
       // In controlled mode, emit event to let parent know state should change
-      this.dispatchEvent(new CustomEvent('ae-open-change', {
-        detail: { open },
-        bubbles: true,
-        composed: true
-      }));
+      this.dispatchEvent(
+        new CustomEvent('ae-open-change', {
+          detail: { open },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     } else {
       // In uncontrolled mode, update internal state
       this.internalOpen = open;
@@ -236,14 +238,16 @@ export class AeDropdown extends LitElement {
    */
   private handleItemClick = (e: Event, value: string) => {
     e.stopPropagation();
-    
+
     // Dispatch select event
-    this.dispatchEvent(new CustomEvent('ae-select', {
-      detail: { value },
-      bubbles: true,
-      composed: true
-    }));
-    
+    this.dispatchEvent(
+      new CustomEvent('ae-select', {
+        detail: { value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+
     // Close the dropdown
     this.toggleOpen(false);
   };
@@ -253,13 +257,13 @@ export class AeDropdown extends LitElement {
    */
   private handleClickOutside = (e: MouseEvent) => {
     if (!this.isOpen) return;
-    
+
     // Skip if clicking inside the component
     const clickedElement = e.target as Node;
     if (this.contains(clickedElement) || this.overlayEl?.contains(clickedElement)) {
       return;
     }
-    
+
     this.toggleOpen(false);
   };
 
@@ -279,7 +283,9 @@ export class AeDropdown extends LitElement {
     const isOpen = this.isOpen;
 
     return html`
-      <div class="trigger" part="trigger"
+      <div
+        class="trigger"
+        part="trigger"
         role="button"
         aria-haspopup="menu"
         aria-expanded="${isOpen}"
@@ -289,32 +295,29 @@ export class AeDropdown extends LitElement {
         <slot></slot>
       </div>
 
-      ${isOpen ? html`
-        <div class="overlay" part="overlay">
-          ${this.header ? html`
-            <div class="header" part="header">
-              ${this.header}
+      ${isOpen
+        ? html`
+            <div class="overlay" part="overlay">
+              ${this.header
+                ? html` <div class="header" part="header">${this.header}</div> `
+                : nothing}
+
+              <div class="menu" part="menu" role="menu" tabindex="-1" aria-orientation="vertical">
+                <slot
+                  name="item"
+                  @click=${(e: Event) => {
+                    // Find the closest menuitem role
+                    const menuItem = (e.target as HTMLElement).closest('[role="menuitem"]');
+                    if (menuItem) {
+                      const value = menuItem.getAttribute('data-value') || '';
+                      this.handleItemClick(e, value);
+                    }
+                  }}
+                ></slot>
+              </div>
             </div>
-          ` : nothing}
-          
-          <div 
-            class="menu" 
-            part="menu" 
-            role="menu" 
-            tabindex="-1"
-            aria-orientation="vertical"
-          >
-            <slot name="item" @click=${(e: Event) => {
-              // Find the closest menuitem role
-              const menuItem = (e.target as HTMLElement).closest('[role="menuitem"]');
-              if (menuItem) {
-                const value = menuItem.getAttribute('data-value') || '';
-                this.handleItemClick(e, value);
-              }
-            }}></slot>
-          </div>
-        </div>
-      ` : nothing}
+          `
+        : nothing}
     `;
   }
 }
@@ -348,8 +351,8 @@ export class AeDropdownItem extends LitElement {
 
   render() {
     return html`
-      <button 
-        role="menuitem" 
+      <button
+        role="menuitem"
         part="item"
         ?disabled=${this.disabled}
         data-value=${this.value}
@@ -360,13 +363,22 @@ export class AeDropdownItem extends LitElement {
           <slot></slot>
         </div>
         <slot name="hint" part="item-hint"></slot>
-        ${this.hasSubmenu ? html`
-          <span part="item-submenu-indicator">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </span>
-        ` : nothing}
+        ${this.hasSubmenu
+          ? html`
+              <span part="item-submenu-indicator">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            `
+          : nothing}
       </button>
     `;
   }
@@ -382,7 +394,7 @@ export class AeMenuSeparator extends LitElement {
   `;
 
   render() {
-    return html`<hr role="separator" part="separator">`;
+    return html`<hr role="separator" part="separator" />`;
   }
 }
 
@@ -418,4 +430,4 @@ declare global {
     'ae-menu-separator': AeMenuSeparator;
     'ae-menu-section': AeMenuSection;
   }
-} 
+}

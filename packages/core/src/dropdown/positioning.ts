@@ -26,7 +26,7 @@ function computePosition(
   reference: DOMRect,
   floating: DOMRect,
   placement: Placement,
-  offset: number
+  offset: number,
 ): Position {
   let x = 0;
   let y = 0;
@@ -77,7 +77,7 @@ function computePosition(
 function fitsInViewport(
   position: Position,
   floating: DOMRect,
-  padding: number = 8
+  padding: number = 8,
 ): { fits: boolean; overflow: { top: boolean; bottom: boolean; left: boolean; right: boolean } } {
   const viewport = {
     width: window.innerWidth,
@@ -119,11 +119,7 @@ function getOppositePlacement(placement: Placement): Placement {
 /**
  * Shift position to keep within viewport
  */
-function shiftToViewport(
-  position: Position,
-  floating: DOMRect,
-  padding: number = 8
-): Position {
+function shiftToViewport(position: Position, floating: DOMRect, padding: number = 8): Position {
   const viewport = {
     width: window.innerWidth,
     height: window.innerHeight,
@@ -156,7 +152,7 @@ export async function updatePosition(
   floating: HTMLElement,
   placement: Placement = 'bottom-start',
   strategy: Strategy = 'absolute',
-  offsetDistance: number = 4
+  offsetDistance: number = 4,
 ): Promise<() => void> {
   const abortController = new AbortController();
   const { signal } = abortController;
@@ -182,14 +178,21 @@ export async function updatePosition(
     const { fits, overflow } = fitsInViewport(position, floatingRect);
     if (!fits) {
       const oppositePlacement = getOppositePlacement(placement);
-      const oppositePosition = computePosition(referenceRect, floatingRect, oppositePlacement, offsetDistance);
+      const oppositePosition = computePosition(
+        referenceRect,
+        floatingRect,
+        oppositePlacement,
+        offsetDistance,
+      );
       const oppositeFits = fitsInViewport(oppositePosition, floatingRect);
 
-      if (oppositeFits.fits ||
-          (overflow.top && !oppositeFits.overflow.bottom) ||
-          (overflow.bottom && !oppositeFits.overflow.top) ||
-          (overflow.left && !oppositeFits.overflow.right) ||
-          (overflow.right && !oppositeFits.overflow.left)) {
+      if (
+        oppositeFits.fits ||
+        (overflow.top && !oppositeFits.overflow.bottom) ||
+        (overflow.bottom && !oppositeFits.overflow.top) ||
+        (overflow.left && !oppositeFits.overflow.right) ||
+        (overflow.right && !oppositeFits.overflow.left)
+      ) {
         position = oppositePosition;
       }
     }

@@ -2,6 +2,7 @@
 title: Spinner
 description: Loading indicator component with multiple sizes and color variants for indicating loading or processing states.
 ---
+
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ComponentExample from '../../../components/ComponentExample.astro';
 
@@ -72,16 +73,8 @@ Combine spinners with loading text for better UX.
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">
-    ```bash
-    pnpm add @aetherui/core
-    ```
-  </TabItem>
-  <TabItem label="npm">
-    ```bash
-    npm install @aetherui/core
-    ```
-  </TabItem>
+  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
+  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
 </Tabs>
 
 ## Import
@@ -97,36 +90,36 @@ defineAll();
 
 ## Props
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Size of the spinner |
-| `variant` | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'error' \| 'info'` | `'primary'` | Color variant |
-| `label` | `string` | `'Loading...'` | Accessible label for screen readers |
+| Name      | Type                                                                      | Default        | Description                         |
+| --------- | ------------------------------------------------------------------------- | -------------- | ----------------------------------- |
+| `size`    | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'`                                    | `'md'`         | Size of the spinner                 |
+| `variant` | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'error' \| 'info'` | `'primary'`    | Color variant                       |
+| `label`   | `string`                                                                  | `'Loading...'` | Accessible label for screen readers |
 
 ## CSS Parts
 
-| Name | Description |
-|------|-------------|
-| `base` | The component's base wrapper |
-| `spinner` | The spinner SVG element |
-| `label` | The label element (visually hidden) |
+| Name      | Description                         |
+| --------- | ----------------------------------- |
+| `base`    | The component's base wrapper        |
+| `spinner` | The spinner SVG element             |
+| `label`   | The label element (visually hidden) |
 
 ## CSS Custom Properties
 
-| Name | Description |
-|------|-------------|
-| `--ae-spinner-size-xs` | Size for xs variant (16px) |
-| `--ae-spinner-size-sm` | Size for sm variant (20px) |
-| `--ae-spinner-size-md` | Size for md variant (24px) |
-| `--ae-spinner-size-lg` | Size for lg variant (32px) |
-| `--ae-spinner-size-xl` | Size for xl variant (48px) |
-| `--ae-spinner-color-primary` | Primary variant color |
-| `--ae-spinner-color-secondary` | Secondary variant color |
-| `--ae-spinner-color-success` | Success variant color |
-| `--ae-spinner-color-warning` | Warning variant color |
-| `--ae-spinner-color-error` | Error variant color |
-| `--ae-spinner-color-info` | Info variant color |
-| `--ae-spinner-track-color` | Track (background) color |
+| Name                           | Description                |
+| ------------------------------ | -------------------------- |
+| `--ae-spinner-size-xs`         | Size for xs variant (16px) |
+| `--ae-spinner-size-sm`         | Size for sm variant (20px) |
+| `--ae-spinner-size-md`         | Size for md variant (24px) |
+| `--ae-spinner-size-lg`         | Size for lg variant (32px) |
+| `--ae-spinner-size-xl`         | Size for xl variant (48px) |
+| `--ae-spinner-color-primary`   | Primary variant color      |
+| `--ae-spinner-color-secondary` | Secondary variant color    |
+| `--ae-spinner-color-success`   | Success variant color      |
+| `--ae-spinner-color-warning`   | Warning variant color      |
+| `--ae-spinner-color-error`     | Error variant color        |
+| `--ae-spinner-color-info`      | Info variant color         |
+| `--ae-spinner-track-color`     | Track (background) color   |
 
 ## Accessibility
 

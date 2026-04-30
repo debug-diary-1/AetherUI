@@ -89,15 +89,15 @@ export const modalStyles = css`
   }
 
   /* Size variants */
-  .panel[data-size="small"] {
+  .panel[data-size='small'] {
     --ae-modal-width: 24rem;
   }
 
-  .panel[data-size="medium"] {
+  .panel[data-size='medium'] {
     --ae-modal-width: 32rem;
   }
 
-  .panel[data-size="large"] {
+  .panel[data-size='large'] {
     --ae-modal-width: 48rem;
   }
-`; 
+`;

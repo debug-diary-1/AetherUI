@@ -10,4 +10,4 @@ export const defineAeCheckbox = () => {
 };
 
 // Export types
-export type { AeCheckbox as AeCheckboxElement } from './ae-checkbox'; 
+export type { AeCheckbox as AeCheckboxElement } from './ae-checkbox';

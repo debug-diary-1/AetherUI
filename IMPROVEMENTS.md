@@ -15,6 +15,7 @@ This document outlines all the improvements made to AetherUI to enhance its capa
 **Created three new comprehensive guides:**
 
 #### a) `docs/THEMING.md` - Complete Theming Guide
+
 - Theming philosophy and strategies
 - CSS custom properties usage
 - CSS Parts styling techniques
@@ -26,6 +27,7 @@ This document outlines all the improvements made to AetherUI to enhance its capa
 - Best practices and common pitfalls
 
 #### b) `docs/CSS_PROPERTIES.md` - CSS Properties Reference
+
 - Complete reference of all CSS custom properties
 - Global semantic tokens
 - Component-specific properties
@@ -34,6 +36,7 @@ This document outlines all the improvements made to AetherUI to enhance its capa
 - Best practices
 
 #### c) `docs/HEADLESS.md` - Headless/Unstyled Mode Guide
+
 - What is headless mode and when to use it
 - Enabling headless mode (3 methods)
 - Styling unstyled components
@@ -48,6 +51,7 @@ This document outlines all the improvements made to AetherUI to enhance its capa
 **Created production-ready CSS theme files:**
 
 #### a) `packages/tokens/src/minimal.css`
+
 - Semantic design tokens only
 - No component-specific styling
 - Perfect foundation for custom themes
@@ -63,6 +67,7 @@ This document outlines all the improvements made to AetherUI to enhance its capa
   - Focus ring styles
 
 #### b) `packages/tokens/src/light.css`
+
 - Complete light theme
 - Imports minimal.css for semantic tokens
 - Full component-specific styling
@@ -70,6 +75,7 @@ This document outlines all the improvements made to AetherUI to enhance its capa
 - Covers all 12+ components
 
 #### c) `packages/tokens/src/dark.css`
+
 - Complete dark theme
 - Optimized for low-light environments
 - Excellent contrast ratios
@@ -77,6 +83,7 @@ This document outlines all the improvements made to AetherUI to enhance its capa
 - Covers all 12+ components
 
 #### d) Updated `packages/tokens/vite.config.ts`
+
 - Added CSS file copying plugin
 - Automatically copies CSS files to dist/ during build
 - Ensures themes are available for import
@@ -86,6 +93,7 @@ This document outlines all the improvements made to AetherUI to enhance its capa
 **Critical improvements for headless flexibility:**
 
 #### a) Dropdown Component (`packages/core/src/dropdown/styles.ts`)
+
 - **BEFORE**: Hardcoded dark theme by default with light theme override
 - **AFTER**: No hardcoded defaults, relies on imported theme
 - **Removed**: Lines 146-165 containing hardcoded `:host` and `:host([theme="light"])` styles
@@ -96,13 +104,14 @@ This document outlines all the improvements made to AetherUI to enhance its capa
 **Enhanced theme-driven approach:**
 
 #### a) Button Component (`packages/core/src/button/styles.ts`)
+
 - **BEFORE**: All CSS custom properties had hardcoded fallback colors
   ```css
-  background-color: var(--ae-button-bg-primary, #5e7ce2);  /* ❌ Hardcoded fallback */
+  background-color: var(--ae-button-bg-primary, #5e7ce2); /* ❌ Hardcoded fallback */
   ```
 - **AFTER**: No fallbacks, requires theme import
   ```css
-  background-color: var(--ae-button-bg-primary);  /* ✅ Theme-driven */
+  background-color: var(--ae-button-bg-primary); /* ✅ Theme-driven */
   ```
 - **Benefit**: Forces explicit theming, no unwanted default colors
 
@@ -111,6 +120,7 @@ This document outlines all the improvements made to AetherUI to enhance its capa
 **Implemented comprehensive unstyled mode:**
 
 #### a) Button Component
+
 - Added `unstyled` boolean property
 - Reflects to attribute for CSS targeting
 - When `unstyled="true"`:
@@ -120,6 +130,7 @@ This document outlines all the improvements made to AetherUI to enhance its capa
 - Pattern established for other components to follow
 
 **Example usage:**
+
 ```html
 <ae-button unstyled class="custom-btn">Click me</ae-button>
 ```
@@ -135,6 +146,7 @@ ae-button.custom-btn::part(base) {
 **Improved external styling capabilities:**
 
 #### a) Accordion Component (`packages/core/src/accordion/ae-accordion-item.ts`)
+
 - **Added**: `part="header-content"` to header content wrapper
 - **Added**: `part="panel-content"` to panel content wrapper
 - **Before**: Only `base`, `header`, `icon`, `panel` were exposed
@@ -142,18 +154,32 @@ ae-button.custom-btn::part(base) {
 - **Benefit**: Fine-grained control over accordion styling
 
 **New CSS Parts available:**
+
 ```css
-ae-accordion-item::part(base) { /* Container */ }
-ae-accordion-item::part(header) { /* Header button */ }
-ae-accordion-item::part(header-content) { /* NEW: Header content wrapper */ }
-ae-accordion-item::part(icon) { /* Expand/collapse icon */ }
-ae-accordion-item::part(panel) { /* Content panel */ }
-ae-accordion-item::part(panel-content) { /* NEW: Panel content wrapper */ }
+ae-accordion-item::part(base) {
+  /* Container */
+}
+ae-accordion-item::part(header) {
+  /* Header button */
+}
+ae-accordion-item::part(header-content) {
+  /* NEW: Header content wrapper */
+}
+ae-accordion-item::part(icon) {
+  /* Expand/collapse icon */
+}
+ae-accordion-item::part(panel) {
+  /* Content panel */
+}
+ae-accordion-item::part(panel-content) {
+  /* NEW: Panel content wrapper */
+}
 ```
 
 ### 7. ✅ Updated Component Documentation
 
 **Button component improvements:**
+
 - Updated JSDoc to mention theme requirement
 - Added `unstyled` property documentation
 - Added note about requiring theme import
@@ -166,6 +192,7 @@ ae-accordion-item::part(panel-content) { /* NEW: Panel content wrapper */ }
 #### Theming Approach
 
 **BEFORE:**
+
 - Components had hardcoded color fallbacks
 - Worked "out of the box" but hard to customize
 - Dropdown forced a dark theme by default
@@ -173,6 +200,7 @@ ae-accordion-item::part(panel-content) { /* NEW: Panel content wrapper */ }
 - Overriding defaults required `!important` or high specificity
 
 **AFTER:**
+
 - Components require explicit theming (import a CSS file)
 - Three pre-built themes: minimal, light, dark
 - No component has hardcoded defaults
@@ -182,12 +210,14 @@ ae-accordion-item::part(panel-content) { /* NEW: Panel content wrapper */ }
 #### Headless Capabilities
 
 **BEFORE:**
+
 - No official unstyled mode
 - Had to override all default styles
 - Complex to integrate with design systems
 - Not ideal for CSS frameworks (Tailwind, etc.)
 
 **AFTER:**
+
 - Official `unstyled` attribute on components
 - Minimal structural styles only in unstyled mode
 - Perfect for design system integration
@@ -197,6 +227,7 @@ ae-accordion-item::part(panel-content) { /* NEW: Panel content wrapper */ }
 #### Developer Experience
 
 **BEFORE:**
+
 ```typescript
 // Limited control, had to override defaults
 import '@aetherui/core';
@@ -205,6 +236,7 @@ import '@aetherui/core';
 ```
 
 **AFTER:**
+
 ```typescript
 // Option 1: Use pre-built theme
 import '@aetherui/tokens/light.css';
@@ -234,17 +266,20 @@ Custom overrides (Optional)
 ### Import Strategy
 
 **For Quick Start:**
+
 ```typescript
-import '@aetherui/tokens/light.css';  // or dark.css
+import '@aetherui/tokens/light.css'; // or dark.css
 ```
 
 **For Custom Theme:**
+
 ```typescript
 import '@aetherui/tokens/minimal.css';
 // Then customize in your CSS
 ```
 
 **For Headless:**
+
 ```typescript
 // Don't import any theme
 // Style everything yourself
@@ -252,14 +287,14 @@ import '@aetherui/tokens/minimal.css';
 
 ## Component Updates Summary
 
-| Component | Hardcoded Colors Removed | Unstyled Mode Added | CSS Parts Expanded | Icon Slots |
-|-----------|-------------------------|---------------------|-------------------|------------|
-| Button | ✅ | ✅ | N/A (already good) | N/A (uses slots) |
-| Dropdown | ✅ | ⏳ Next phase | ⏳ Next phase | N/A |
-| Accordion | ⏳ Next phase | ⏳ Next phase | ✅ | ⏳ Next phase |
-| Checkbox | ⏳ Next phase | ⏳ Next phase | ⏳ Next phase | N/A |
-| Alert | ⏳ Next phase | ⏳ Next phase | ⏳ Next phase | ⏳ Next phase |
-| Others | ⏳ Next phase | ⏳ Next phase | ⏳ Next phase | ⏳ Next phase |
+| Component | Hardcoded Colors Removed | Unstyled Mode Added | CSS Parts Expanded | Icon Slots       |
+| --------- | ------------------------ | ------------------- | ------------------ | ---------------- |
+| Button    | ✅                       | ✅                  | N/A (already good) | N/A (uses slots) |
+| Dropdown  | ✅                       | ⏳ Next phase       | ⏳ Next phase      | N/A              |
+| Accordion | ⏳ Next phase            | ⏳ Next phase       | ✅                 | ⏳ Next phase    |
+| Checkbox  | ⏳ Next phase            | ⏳ Next phase       | ⏳ Next phase      | N/A              |
+| Alert     | ⏳ Next phase            | ⏳ Next phase       | ⏳ Next phase      | ⏳ Next phase    |
+| Others    | ⏳ Next phase            | ⏳ Next phase       | ⏳ Next phase      | ⏳ Next phase    |
 
 **Note:** Button and Dropdown are fully updated as reference implementations. Other components can follow the same pattern.
 
@@ -333,9 +368,7 @@ defineAeButton();
 ```
 
 ```html
-<ae-button unstyled class="tailwind-btn">
-  Click me
-</ae-button>
+<ae-button unstyled class="tailwind-btn"> Click me </ae-button>
 ```
 
 ```css
@@ -413,6 +446,7 @@ ae-button::part(base) {
 ## Benefits Achieved
 
 ### For Library Maintainers
+
 - ✅ Cleaner component code
 - ✅ Better separation of concerns
 - ✅ Easier to add new themes
@@ -420,6 +454,7 @@ ae-button::part(base) {
 - ✅ Clear architecture for contributors
 
 ### For Library Users
+
 - ✅ Complete styling control
 - ✅ Easy brand integration
 - ✅ Flexible theming options
@@ -429,6 +464,7 @@ ae-button::part(base) {
 - ✅ Better documentation
 
 ### For Companies Adopting AetherUI
+
 - ✅ Perfect design system alignment
 - ✅ No style conflicts
 - ✅ Easy to maintain
@@ -439,6 +475,7 @@ ae-button::part(base) {
 ## Files Modified
 
 ### New Files Created
+
 - `docs/THEMING.md` (comprehensive theming guide)
 - `docs/CSS_PROPERTIES.md` (CSS properties reference)
 - `docs/HEADLESS.md` (headless mode guide)
@@ -448,6 +485,7 @@ ae-button::part(base) {
 - `IMPROVEMENTS.md` (this file)
 
 ### Modified Files
+
 - `packages/tokens/vite.config.ts` (added CSS copy plugin)
 - `packages/core/src/button/styles.ts` (removed fallbacks, added unstyled mode)
 - `packages/core/src/button/ae-button.ts` (added unstyled property)
@@ -457,6 +495,7 @@ ae-button::part(base) {
 ## Conclusion
 
 AetherUI is now a truly **headless, framework-agnostic component system** that provides:
+
 - **Complete styling control** through unstyled mode
 - **Flexible theming** through comprehensive token system
 - **Production-ready themes** (light, dark, minimal)
@@ -468,12 +507,14 @@ Companies can now easily adopt AetherUI and make it look exactly like their bran
 ---
 
 **Next Actions:**
+
 1. Build tokens package to generate CSS files
 2. Test all changes
 3. Update main README.md with new theming capabilities
 4. Commit and push changes
 
 **For Questions or Issues:**
+
 - See documentation in `docs/` folder
 - Check examples in `/examples` (to be created)
 - Open GitHub issue for specific questions

@@ -46,7 +46,7 @@ export class AeAccordionItem extends LitElement {
           detail: { headerId: this.headerId, open: this.open },
           bubbles: true,
           composed: true,
-        })
+        }),
       );
     }
   }
@@ -74,7 +74,7 @@ export class AeAccordionItem extends LitElement {
    */
   private handleKeydown(event: KeyboardEvent) {
     if (this.disabled) return;
-    
+
     if (event.key === ' ' || event.key === 'Enter') {
       event.preventDefault();
       this.handleHeaderClick();
@@ -111,11 +111,7 @@ export class AeAccordionItem extends LitElement {
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </button>
-        <div
-          class="panel"
-          part="panel"
-          id="panel-${this.headerId}"
-        >
+        <div class="panel" part="panel" id="panel-${this.headerId}">
           <div class="panel-content">
             <slot></slot>
           </div>

@@ -17,7 +17,12 @@ export interface ComponentConfig {
   cssVariables: CSSVariable[];
   defaultHtml: string;
   variants?: { name: string; html: string }[];
-  properties?: { name: string; type: 'boolean' | 'string' | 'select' | 'number'; default: unknown; options?: string[] }[];
+  properties?: {
+    name: string;
+    type: 'boolean' | 'string' | 'select' | 'number';
+    default: unknown;
+    options?: string[];
+  }[];
   interactive?: boolean;
 }
 
@@ -31,12 +36,54 @@ export const componentConfigs: ComponentConfig[] = [
     cssVariables: [
       { name: '--ae-button-bg-primary', label: 'Background', type: 'color', default: '#5e7ce2' },
       { name: '--ae-button-fg-primary', label: 'Text Color', type: 'color', default: '#ffffff' },
-      { name: '--ae-button-bg-primary-hover', label: 'Hover Background', type: 'color', default: '#4b69c8' },
-      { name: '--ae-button-border-primary', label: 'Border Color', type: 'color', default: '#5e7ce2' },
-      { name: '--ae-button-radius', label: 'Border Radius', type: 'size', default: '6', unit: 'px', min: 0, max: 24 },
-      { name: '--ae-button-padding-x', label: 'Horizontal Padding', type: 'size', default: '16', unit: 'px', min: 4, max: 48 },
-      { name: '--ae-button-padding-y', label: 'Vertical Padding', type: 'size', default: '8', unit: 'px', min: 4, max: 24 },
-      { name: '--ae-button-gap', label: 'Icon Gap', type: 'size', default: '8', unit: 'px', min: 0, max: 16 },
+      {
+        name: '--ae-button-bg-primary-hover',
+        label: 'Hover Background',
+        type: 'color',
+        default: '#4b69c8',
+      },
+      {
+        name: '--ae-button-border-primary',
+        label: 'Border Color',
+        type: 'color',
+        default: '#5e7ce2',
+      },
+      {
+        name: '--ae-button-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '6',
+        unit: 'px',
+        min: 0,
+        max: 24,
+      },
+      {
+        name: '--ae-button-padding-x',
+        label: 'Horizontal Padding',
+        type: 'size',
+        default: '16',
+        unit: 'px',
+        min: 4,
+        max: 48,
+      },
+      {
+        name: '--ae-button-padding-y',
+        label: 'Vertical Padding',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 4,
+        max: 24,
+      },
+      {
+        name: '--ae-button-gap',
+        label: 'Icon Gap',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 0,
+        max: 16,
+      },
     ],
     defaultHtml: `<ae-button>Click Me</ae-button>`,
     variants: [
@@ -55,16 +102,46 @@ export const componentConfigs: ComponentConfig[] = [
       { name: '--ae-input-color', label: 'Text Color', type: 'color', default: '#f5f5f5' },
       { name: '--ae-input-border', label: 'Border Color', type: 'color', default: '#333333' },
       { name: '--ae-input-border-focus', label: 'Focus Border', type: 'color', default: '#5e7ce2' },
-      { name: '--ae-input-placeholder-color', label: 'Placeholder Color', type: 'color', default: '#666666' },
+      {
+        name: '--ae-input-placeholder-color',
+        label: 'Placeholder Color',
+        type: 'color',
+        default: '#666666',
+      },
       { name: '--ae-input-label-color', label: 'Label Color', type: 'color', default: '#e5e5e5' },
-      { name: '--ae-input-border-radius', label: 'Border Radius', type: 'size', default: '6', unit: 'px', min: 0, max: 24 },
-      { name: '--ae-input-padding', label: 'Padding', type: 'size', default: '10', unit: 'px', min: 4, max: 24 },
+      {
+        name: '--ae-input-border-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '6',
+        unit: 'px',
+        min: 0,
+        max: 24,
+      },
+      {
+        name: '--ae-input-padding',
+        label: 'Padding',
+        type: 'size',
+        default: '10',
+        unit: 'px',
+        min: 4,
+        max: 24,
+      },
     ],
     defaultHtml: `<ae-input label="Email" placeholder="Enter your email"></ae-input>`,
     variants: [
-      { name: 'With Helper', html: `<ae-input label="Username" helper-text="Choose a unique username"></ae-input>` },
-      { name: 'Error State', html: `<ae-input label="Password" error="Password is required"></ae-input>` },
-      { name: 'Disabled', html: `<ae-input label="Disabled" disabled value="Cannot edit"></ae-input>` },
+      {
+        name: 'With Helper',
+        html: `<ae-input label="Username" helper-text="Choose a unique username"></ae-input>`,
+      },
+      {
+        name: 'Error State',
+        html: `<ae-input label="Password" error="Password is required"></ae-input>`,
+      },
+      {
+        name: 'Disabled',
+        html: `<ae-input label="Disabled" disabled value="Cannot edit"></ae-input>`,
+      },
     ],
   },
   {
@@ -74,12 +151,43 @@ export const componentConfigs: ComponentConfig[] = [
     category: 'Form',
     cssVariables: [
       { name: '--ae-checkbox-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
-      { name: '--ae-checkbox-border-color', label: 'Border Color', type: 'color', default: '#333333' },
-      { name: '--ae-checkbox-checked-bg', label: 'Checked Background', type: 'color', default: '#5e7ce2' },
-      { name: '--ae-checkbox-checked-icon-color', label: 'Check Color', type: 'color', default: '#ffffff' },
+      {
+        name: '--ae-checkbox-border-color',
+        label: 'Border Color',
+        type: 'color',
+        default: '#333333',
+      },
+      {
+        name: '--ae-checkbox-checked-bg',
+        label: 'Checked Background',
+        type: 'color',
+        default: '#5e7ce2',
+      },
+      {
+        name: '--ae-checkbox-checked-icon-color',
+        label: 'Check Color',
+        type: 'color',
+        default: '#ffffff',
+      },
       { name: '--ae-checkbox-text-color', label: 'Text Color', type: 'color', default: '#e5e5e5' },
-      { name: '--ae-checkbox-size', label: 'Size', type: 'size', default: '20', unit: 'px', min: 14, max: 32 },
-      { name: '--ae-checkbox-border-radius', label: 'Border Radius', type: 'size', default: '4', unit: 'px', min: 0, max: 16 },
+      {
+        name: '--ae-checkbox-size',
+        label: 'Size',
+        type: 'size',
+        default: '20',
+        unit: 'px',
+        min: 14,
+        max: 32,
+      },
+      {
+        name: '--ae-checkbox-border-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '4',
+        unit: 'px',
+        min: 0,
+        max: 16,
+      },
     ],
     defaultHtml: `<ae-checkbox>Accept terms and conditions</ae-checkbox>`,
     variants: [
@@ -97,8 +205,24 @@ export const componentConfigs: ComponentConfig[] = [
       { name: '--ae-switch-bg-checked', label: 'Active Track', type: 'color', default: '#5e7ce2' },
       { name: '--ae-switch-thumb-bg', label: 'Thumb Color', type: 'color', default: '#ffffff' },
       { name: '--ae-switch-text-color', label: 'Text Color', type: 'color', default: '#e5e5e5' },
-      { name: '--ae-switch-width-md', label: 'Width', type: 'size', default: '44', unit: 'px', min: 32, max: 64 },
-      { name: '--ae-switch-height-md', label: 'Height', type: 'size', default: '24', unit: 'px', min: 16, max: 40 },
+      {
+        name: '--ae-switch-width-md',
+        label: 'Width',
+        type: 'size',
+        default: '44',
+        unit: 'px',
+        min: 32,
+        max: 64,
+      },
+      {
+        name: '--ae-switch-height-md',
+        label: 'Height',
+        type: 'size',
+        default: '24',
+        unit: 'px',
+        min: 16,
+        max: 40,
+      },
     ],
     defaultHtml: `<ae-switch>Enable notifications</ae-switch>`,
     variants: [
@@ -114,10 +238,28 @@ export const componentConfigs: ComponentConfig[] = [
     cssVariables: [
       { name: '--ae-radio-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
       { name: '--ae-radio-border-color', label: 'Border Color', type: 'color', default: '#333333' },
-      { name: '--ae-radio-checked-bg', label: 'Checked Background', type: 'color', default: '#5e7ce2' },
-      { name: '--ae-radio-checked-dot-color', label: 'Checked Dot', type: 'color', default: '#ffffff' },
+      {
+        name: '--ae-radio-checked-bg',
+        label: 'Checked Background',
+        type: 'color',
+        default: '#5e7ce2',
+      },
+      {
+        name: '--ae-radio-checked-dot-color',
+        label: 'Checked Dot',
+        type: 'color',
+        default: '#ffffff',
+      },
       { name: '--ae-radio-text-color', label: 'Text Color', type: 'color', default: '#e5e5e5' },
-      { name: '--ae-radio-size', label: 'Size', type: 'size', default: '20', unit: 'px', min: 14, max: 32 },
+      {
+        name: '--ae-radio-size',
+        label: 'Size',
+        type: 'size',
+        default: '20',
+        unit: 'px',
+        min: 14,
+        max: 32,
+      },
     ],
     defaultHtml: `<ae-radio-group label="Select option">
   <ae-radio value="1">Option 1</ae-radio>
@@ -134,10 +276,31 @@ export const componentConfigs: ComponentConfig[] = [
       { name: '--ae-select-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
       { name: '--ae-select-color', label: 'Text Color', type: 'color', default: '#f5f5f5' },
       { name: '--ae-select-border', label: 'Border Color', type: 'color', default: '#333333' },
-      { name: '--ae-select-border-focus', label: 'Focus Border', type: 'color', default: '#5e7ce2' },
+      {
+        name: '--ae-select-border-focus',
+        label: 'Focus Border',
+        type: 'color',
+        default: '#5e7ce2',
+      },
       { name: '--ae-select-label-color', label: 'Label Color', type: 'color', default: '#e5e5e5' },
-      { name: '--ae-select-border-radius', label: 'Border Radius', type: 'size', default: '6', unit: 'px', min: 0, max: 24 },
-      { name: '--ae-select-font-size', label: 'Font Size', type: 'size', default: '16', unit: 'px', min: 12, max: 24 },
+      {
+        name: '--ae-select-border-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '6',
+        unit: 'px',
+        min: 0,
+        max: 24,
+      },
+      {
+        name: '--ae-select-font-size',
+        label: 'Font Size',
+        type: 'size',
+        default: '16',
+        unit: 'px',
+        min: 12,
+        max: 24,
+      },
     ],
     defaultHtml: `<ae-select label="Country" name="country">
   <option value="">Select a country</option>
@@ -146,8 +309,14 @@ export const componentConfigs: ComponentConfig[] = [
   <option value="ca">Canada</option>
 </ae-select>`,
     variants: [
-      { name: 'Required', html: `<ae-select label="Priority" required>\n  <option value="">Choose priority</option>\n  <option value="low">Low</option>\n  <option value="medium">Medium</option>\n  <option value="high">High</option>\n</ae-select>` },
-      { name: 'Disabled', html: `<ae-select label="Status" disabled>\n  <option value="active">Active</option>\n</ae-select>` },
+      {
+        name: 'Required',
+        html: `<ae-select label="Priority" required>\n  <option value="">Choose priority</option>\n  <option value="low">Low</option>\n  <option value="medium">Medium</option>\n  <option value="high">High</option>\n</ae-select>`,
+      },
+      {
+        name: 'Disabled',
+        html: `<ae-select label="Status" disabled>\n  <option value="active">Active</option>\n</ae-select>`,
+      },
     ],
   },
   {
@@ -159,15 +328,47 @@ export const componentConfigs: ComponentConfig[] = [
       { name: '--ae-textarea-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
       { name: '--ae-textarea-color', label: 'Text Color', type: 'color', default: '#f5f5f5' },
       { name: '--ae-textarea-border', label: 'Border Color', type: 'color', default: '#333333' },
-      { name: '--ae-textarea-border-focus', label: 'Focus Border', type: 'color', default: '#5e7ce2' },
-      { name: '--ae-textarea-label-color', label: 'Label Color', type: 'color', default: '#e5e5e5' },
-      { name: '--ae-textarea-border-radius', label: 'Border Radius', type: 'size', default: '6', unit: 'px', min: 0, max: 24 },
-      { name: '--ae-textarea-font-size', label: 'Font Size', type: 'size', default: '16', unit: 'px', min: 12, max: 24 },
+      {
+        name: '--ae-textarea-border-focus',
+        label: 'Focus Border',
+        type: 'color',
+        default: '#5e7ce2',
+      },
+      {
+        name: '--ae-textarea-label-color',
+        label: 'Label Color',
+        type: 'color',
+        default: '#e5e5e5',
+      },
+      {
+        name: '--ae-textarea-border-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '6',
+        unit: 'px',
+        min: 0,
+        max: 24,
+      },
+      {
+        name: '--ae-textarea-font-size',
+        label: 'Font Size',
+        type: 'size',
+        default: '16',
+        unit: 'px',
+        min: 12,
+        max: 24,
+      },
     ],
     defaultHtml: `<ae-textarea label="Description" placeholder="Enter a description..."></ae-textarea>`,
     variants: [
-      { name: 'With Count', html: `<ae-textarea label="Comment" maxlength="500" show-count placeholder="Write a comment..."></ae-textarea>` },
-      { name: 'Auto Resize', html: `<ae-textarea label="Notes" auto-resize placeholder="Start typing..."></ae-textarea>` },
+      {
+        name: 'With Count',
+        html: `<ae-textarea label="Comment" maxlength="500" show-count placeholder="Write a comment..."></ae-textarea>`,
+      },
+      {
+        name: 'Auto Resize',
+        html: `<ae-textarea label="Notes" auto-resize placeholder="Start typing..."></ae-textarea>`,
+      },
       { name: 'Error', html: `<ae-textarea label="Bio" error="Bio is required"></ae-textarea>` },
     ],
   },
@@ -177,13 +378,51 @@ export const componentConfigs: ComponentConfig[] = [
     description: 'Text input with suggestion dropdown',
     category: 'Form',
     cssVariables: [
-      { name: '--ae-autocomplete-background', label: 'Background', type: 'color', default: '#1a1a1a' },
-      { name: '--ae-autocomplete-text-color', label: 'Text Color', type: 'color', default: '#f5f5f5' },
-      { name: '--ae-autocomplete-border-color', label: 'Border Color', type: 'color', default: '#333333' },
-      { name: '--ae-autocomplete-focus-border-color', label: 'Focus Border', type: 'color', default: '#5e7ce2' },
-      { name: '--ae-autocomplete-dropdown-background', label: 'Dropdown Background', type: 'color', default: '#1a1a1a' },
-      { name: '--ae-autocomplete-highlight-background', label: 'Highlight Background', type: 'color', default: '#5e7ce2' },
-      { name: '--ae-autocomplete-border-radius', label: 'Border Radius', type: 'size', default: '4', unit: 'px', min: 0, max: 16 },
+      {
+        name: '--ae-autocomplete-background',
+        label: 'Background',
+        type: 'color',
+        default: '#1a1a1a',
+      },
+      {
+        name: '--ae-autocomplete-text-color',
+        label: 'Text Color',
+        type: 'color',
+        default: '#f5f5f5',
+      },
+      {
+        name: '--ae-autocomplete-border-color',
+        label: 'Border Color',
+        type: 'color',
+        default: '#333333',
+      },
+      {
+        name: '--ae-autocomplete-focus-border-color',
+        label: 'Focus Border',
+        type: 'color',
+        default: '#5e7ce2',
+      },
+      {
+        name: '--ae-autocomplete-dropdown-background',
+        label: 'Dropdown Background',
+        type: 'color',
+        default: '#1a1a1a',
+      },
+      {
+        name: '--ae-autocomplete-highlight-background',
+        label: 'Highlight Background',
+        type: 'color',
+        default: '#5e7ce2',
+      },
+      {
+        name: '--ae-autocomplete-border-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '4',
+        unit: 'px',
+        min: 0,
+        max: 16,
+      },
     ],
     defaultHtml: `<ae-autocomplete placeholder="Search countries..." aria-label="Country selector"></ae-autocomplete>`,
     interactive: true,
@@ -197,9 +436,27 @@ export const componentConfigs: ComponentConfig[] = [
       { name: '--ae-combo-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
       { name: '--ae-combo-fg', label: 'Text Color', type: 'color', default: '#f5f5f5' },
       { name: '--ae-combo-border', label: 'Border Color', type: 'color', default: '#333333' },
-      { name: '--ae-combo-option-hover-bg', label: 'Option Hover', type: 'color', default: '#333333' },
-      { name: '--ae-combo-option-selected-bg', label: 'Selected Background', type: 'color', default: '#5e7ce2' },
-      { name: '--ae-combo-radius', label: 'Border Radius', type: 'size', default: '6', unit: 'px', min: 0, max: 16 },
+      {
+        name: '--ae-combo-option-hover-bg',
+        label: 'Option Hover',
+        type: 'color',
+        default: '#333333',
+      },
+      {
+        name: '--ae-combo-option-selected-bg',
+        label: 'Selected Background',
+        type: 'color',
+        default: '#5e7ce2',
+      },
+      {
+        name: '--ae-combo-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '6',
+        unit: 'px',
+        min: 0,
+        max: 16,
+      },
     ],
     defaultHtml: `<ae-combo placeholder="Select or type..." aria-label="Combo selector"></ae-combo>`,
     interactive: true,
@@ -215,15 +472,40 @@ export const componentConfigs: ComponentConfig[] = [
       { name: '--ae-alert-bg-info', label: 'Background', type: 'color', default: '#1e3a5f' },
       { name: '--ae-alert-fg-info', label: 'Text Color', type: 'color', default: '#93c5fd' },
       { name: '--ae-alert-border-info', label: 'Border Color', type: 'color', default: '#3b82f6' },
-      { name: '--ae-alert-radius', label: 'Border Radius', type: 'size', default: '8', unit: 'px', min: 0, max: 24 },
-      { name: '--ae-alert-padding-md', label: 'Padding', type: 'size', default: '16', unit: 'px', min: 8, max: 32 },
+      {
+        name: '--ae-alert-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 0,
+        max: 24,
+      },
+      {
+        name: '--ae-alert-padding-md',
+        label: 'Padding',
+        type: 'size',
+        default: '16',
+        unit: 'px',
+        min: 8,
+        max: 32,
+      },
     ],
     defaultHtml: `<ae-alert variant="info">This is an informational alert.</ae-alert>`,
     variants: [
-      { name: 'Success', html: `<ae-alert variant="success">Operation completed successfully!</ae-alert>` },
+      {
+        name: 'Success',
+        html: `<ae-alert variant="success">Operation completed successfully!</ae-alert>`,
+      },
       { name: 'Warning', html: `<ae-alert variant="warning">Please review your input.</ae-alert>` },
-      { name: 'Error', html: `<ae-alert variant="error">An error occurred. Please try again.</ae-alert>` },
-      { name: 'Closable', html: `<ae-alert variant="info" closable>You can dismiss this alert.</ae-alert>` },
+      {
+        name: 'Error',
+        html: `<ae-alert variant="error">An error occurred. Please try again.</ae-alert>`,
+      },
+      {
+        name: 'Closable',
+        html: `<ae-alert variant="info" closable>You can dismiss this alert.</ae-alert>`,
+      },
     ],
   },
   {
@@ -234,9 +516,33 @@ export const componentConfigs: ComponentConfig[] = [
     cssVariables: [
       { name: '--ae-badge-bg-primary', label: 'Background', type: 'color', default: '#5e7ce2' },
       { name: '--ae-badge-color-primary', label: 'Text Color', type: 'color', default: '#ffffff' },
-      { name: '--ae-badge-border-radius', label: 'Border Radius', type: 'size', default: '9999', unit: 'px', min: 0, max: 9999 },
-      { name: '--ae-badge-padding-md', label: 'Padding', type: 'size', default: '8', unit: 'px', min: 2, max: 24 },
-      { name: '--ae-badge-font-size-md', label: 'Font Size', type: 'size', default: '12', unit: 'px', min: 8, max: 18 },
+      {
+        name: '--ae-badge-border-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '9999',
+        unit: 'px',
+        min: 0,
+        max: 9999,
+      },
+      {
+        name: '--ae-badge-padding-md',
+        label: 'Padding',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 2,
+        max: 24,
+      },
+      {
+        name: '--ae-badge-font-size-md',
+        label: 'Font Size',
+        type: 'size',
+        default: '12',
+        unit: 'px',
+        min: 8,
+        max: 18,
+      },
     ],
     defaultHtml: `<ae-badge>New</ae-badge>`,
     variants: [
@@ -253,7 +559,15 @@ export const componentConfigs: ComponentConfig[] = [
     cssVariables: [
       { name: '--ae-spinner-color', label: 'Color', type: 'color', default: '#5e7ce2' },
       { name: '--ae-spinner-track-color', label: 'Track Color', type: 'color', default: '#333333' },
-      { name: '--ae-spinner-size-md', label: 'Size', type: 'size', default: '32', unit: 'px', min: 16, max: 64 },
+      {
+        name: '--ae-spinner-size-md',
+        label: 'Size',
+        type: 'size',
+        default: '32',
+        unit: 'px',
+        min: 16,
+        max: 64,
+      },
     ],
     defaultHtml: `<ae-spinner></ae-spinner>`,
     variants: [
@@ -267,10 +581,31 @@ export const componentConfigs: ComponentConfig[] = [
     description: 'Progress bar indicator',
     category: 'Feedback',
     cssVariables: [
-      { name: '--ae-progress-track-bg', label: 'Track Background', type: 'color', default: '#333333' },
+      {
+        name: '--ae-progress-track-bg',
+        label: 'Track Background',
+        type: 'color',
+        default: '#333333',
+      },
       { name: '--ae-progress-bg-primary', label: 'Fill Color', type: 'color', default: '#5e7ce2' },
-      { name: '--ae-progress-height-md', label: 'Height', type: 'size', default: '8', unit: 'px', min: 2, max: 24 },
-      { name: '--ae-progress-border-radius', label: 'Border Radius', type: 'size', default: '9999', unit: 'px', min: 0, max: 9999 },
+      {
+        name: '--ae-progress-height-md',
+        label: 'Height',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 2,
+        max: 24,
+      },
+      {
+        name: '--ae-progress-border-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '9999',
+        unit: 'px',
+        min: 0,
+        max: 9999,
+      },
     ],
     defaultHtml: `<ae-progress value="60"></ae-progress>`,
     variants: [
@@ -288,14 +623,31 @@ export const componentConfigs: ComponentConfig[] = [
     cssVariables: [
       { name: '--ae-toast-bg-info', label: 'Background', type: 'color', default: '#1e3a5f' },
       { name: '--ae-toast-fg-info', label: 'Text Color', type: 'color', default: '#93c5fd' },
-      { name: '--ae-toast-radius', label: 'Border Radius', type: 'size', default: '8', unit: 'px', min: 0, max: 24 },
+      {
+        name: '--ae-toast-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 0,
+        max: 24,
+      },
     ],
     defaultHtml: `<ae-button id="toast-trigger">Show Toast</ae-button>
 <ae-toast variant="success" duration="3000">Operation completed successfully!</ae-toast>`,
     variants: [
-      { name: 'Info', html: `<ae-button id="toast-trigger">Show Toast</ae-button>\n<ae-toast variant="info" duration="3000">This is an informational message.</ae-toast>` },
-      { name: 'Warning', html: `<ae-button id="toast-trigger">Show Toast</ae-button>\n<ae-toast variant="warning" duration="3000">Please review your input.</ae-toast>` },
-      { name: 'Error', html: `<ae-button id="toast-trigger">Show Toast</ae-button>\n<ae-toast variant="error" duration="5000">An error occurred.</ae-toast>` },
+      {
+        name: 'Info',
+        html: `<ae-button id="toast-trigger">Show Toast</ae-button>\n<ae-toast variant="info" duration="3000">This is an informational message.</ae-toast>`,
+      },
+      {
+        name: 'Warning',
+        html: `<ae-button id="toast-trigger">Show Toast</ae-button>\n<ae-toast variant="warning" duration="3000">Please review your input.</ae-toast>`,
+      },
+      {
+        name: 'Error',
+        html: `<ae-button id="toast-trigger">Show Toast</ae-button>\n<ae-toast variant="error" duration="5000">An error occurred.</ae-toast>`,
+      },
     ],
   },
 
@@ -308,7 +660,15 @@ export const componentConfigs: ComponentConfig[] = [
     cssVariables: [
       { name: '--ae-tabs-border-color', label: 'Border Color', type: 'color', default: '#333333' },
       { name: '--ae-tabs-active-color', label: 'Active Color', type: 'color', default: '#5e7ce2' },
-      { name: '--ae-tabs-gap', label: 'Tab Gap', type: 'size', default: '8', unit: 'px', min: 0, max: 24 },
+      {
+        name: '--ae-tabs-gap',
+        label: 'Tab Gap',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 0,
+        max: 24,
+      },
     ],
     defaultHtml: `<ae-tabs>
   <ae-tab slot="tab">Tab 1</ae-tab>
@@ -325,12 +685,48 @@ export const componentConfigs: ComponentConfig[] = [
     description: 'Navigation breadcrumb trail',
     category: 'Navigation',
     cssVariables: [
-      { name: '--ae-breadcrumb-link-color', label: 'Link Color', type: 'color', default: '#5e7ce2' },
-      { name: '--ae-breadcrumb-link-hover', label: 'Link Hover', type: 'color', default: '#818cf8' },
-      { name: '--ae-breadcrumb-current-color', label: 'Current Color', type: 'color', default: '#f5f5f5' },
-      { name: '--ae-breadcrumb-separator-color', label: 'Separator Color', type: 'color', default: '#666666' },
-      { name: '--ae-breadcrumb-font-size', label: 'Font Size', type: 'size', default: '14', unit: 'px', min: 10, max: 20 },
-      { name: '--ae-breadcrumb-gap', label: 'Gap', type: 'size', default: '8', unit: 'px', min: 2, max: 16 },
+      {
+        name: '--ae-breadcrumb-link-color',
+        label: 'Link Color',
+        type: 'color',
+        default: '#5e7ce2',
+      },
+      {
+        name: '--ae-breadcrumb-link-hover',
+        label: 'Link Hover',
+        type: 'color',
+        default: '#818cf8',
+      },
+      {
+        name: '--ae-breadcrumb-current-color',
+        label: 'Current Color',
+        type: 'color',
+        default: '#f5f5f5',
+      },
+      {
+        name: '--ae-breadcrumb-separator-color',
+        label: 'Separator Color',
+        type: 'color',
+        default: '#666666',
+      },
+      {
+        name: '--ae-breadcrumb-font-size',
+        label: 'Font Size',
+        type: 'size',
+        default: '14',
+        unit: 'px',
+        min: 10,
+        max: 20,
+      },
+      {
+        name: '--ae-breadcrumb-gap',
+        label: 'Gap',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 2,
+        max: 16,
+      },
     ],
     defaultHtml: `<ae-breadcrumb>
   <ae-breadcrumb-item href="/">Home</ae-breadcrumb-item>
@@ -347,16 +743,53 @@ export const componentConfigs: ComponentConfig[] = [
       { name: '--ae-pagination-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
       { name: '--ae-pagination-color', label: 'Text Color', type: 'color', default: '#f5f5f5' },
       { name: '--ae-pagination-border', label: 'Border Color', type: 'color', default: '#333333' },
-      { name: '--ae-pagination-bg-active', label: 'Active Background', type: 'color', default: '#5e7ce2' },
-      { name: '--ae-pagination-color-active', label: 'Active Text', type: 'color', default: '#ffffff' },
-      { name: '--ae-pagination-bg-hover', label: 'Hover Background', type: 'color', default: '#333333' },
-      { name: '--ae-pagination-border-radius', label: 'Border Radius', type: 'size', default: '6', unit: 'px', min: 0, max: 24 },
-      { name: '--ae-pagination-gap', label: 'Gap', type: 'size', default: '4', unit: 'px', min: 0, max: 12 },
+      {
+        name: '--ae-pagination-bg-active',
+        label: 'Active Background',
+        type: 'color',
+        default: '#5e7ce2',
+      },
+      {
+        name: '--ae-pagination-color-active',
+        label: 'Active Text',
+        type: 'color',
+        default: '#ffffff',
+      },
+      {
+        name: '--ae-pagination-bg-hover',
+        label: 'Hover Background',
+        type: 'color',
+        default: '#333333',
+      },
+      {
+        name: '--ae-pagination-border-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '6',
+        unit: 'px',
+        min: 0,
+        max: 24,
+      },
+      {
+        name: '--ae-pagination-gap',
+        label: 'Gap',
+        type: 'size',
+        default: '4',
+        unit: 'px',
+        min: 0,
+        max: 12,
+      },
     ],
     defaultHtml: `<ae-pagination current-page="5" total-pages="10"></ae-pagination>`,
     variants: [
-      { name: 'First/Last', html: `<ae-pagination current-page="3" total-pages="20" show-first-last></ae-pagination>` },
-      { name: 'Small', html: `<ae-pagination current-page="1" total-pages="5" size="sm"></ae-pagination>` },
+      {
+        name: 'First/Last',
+        html: `<ae-pagination current-page="3" total-pages="20" show-first-last></ae-pagination>`,
+      },
+      {
+        name: 'Small',
+        html: `<ae-pagination current-page="1" total-pages="5" size="sm"></ae-pagination>`,
+      },
     ],
   },
 
@@ -369,10 +802,33 @@ export const componentConfigs: ComponentConfig[] = [
     cssVariables: [
       { name: '--ae-accordion-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
       { name: '--ae-accordion-border', label: 'Border Color', type: 'color', default: '#333333' },
-      { name: '--ae-accordion-header-bg', label: 'Header Background', type: 'color', default: '#242424' },
-      { name: '--ae-accordion-header-color', label: 'Header Text', type: 'color', default: '#f5f5f5' },
-      { name: '--ae-accordion-panel-color', label: 'Panel Text', type: 'color', default: '#e5e5e5' },
-      { name: '--ae-accordion-radius', label: 'Border Radius', type: 'size', default: '8', unit: 'px', min: 0, max: 24 },
+      {
+        name: '--ae-accordion-header-bg',
+        label: 'Header Background',
+        type: 'color',
+        default: '#242424',
+      },
+      {
+        name: '--ae-accordion-header-color',
+        label: 'Header Text',
+        type: 'color',
+        default: '#f5f5f5',
+      },
+      {
+        name: '--ae-accordion-panel-color',
+        label: 'Panel Text',
+        type: 'color',
+        default: '#e5e5e5',
+      },
+      {
+        name: '--ae-accordion-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 0,
+        max: 24,
+      },
     ],
     defaultHtml: `<ae-accordion>
   <ae-accordion-item>
@@ -391,12 +847,48 @@ export const componentConfigs: ComponentConfig[] = [
     description: 'Hierarchical tree structure display',
     category: 'Layout',
     cssVariables: [
-      { name: '--ae-treeview-hover-bg', label: 'Hover Background', type: 'color', default: '#333333' },
-      { name: '--ae-treeview-selected-bg', label: 'Selected Background', type: 'color', default: '#5e7ce2' },
-      { name: '--ae-treeview-selected-color', label: 'Selected Text', type: 'color', default: '#ffffff' },
-      { name: '--ae-treeview-caret-color', label: 'Caret Color', type: 'color', default: '#888888' },
-      { name: '--ae-treeview-font-size', label: 'Font Size', type: 'size', default: '14', unit: 'px', min: 10, max: 20 },
-      { name: '--ae-treeview-indent', label: 'Indent', type: 'size', default: '20', unit: 'px', min: 8, max: 40 },
+      {
+        name: '--ae-treeview-hover-bg',
+        label: 'Hover Background',
+        type: 'color',
+        default: '#333333',
+      },
+      {
+        name: '--ae-treeview-selected-bg',
+        label: 'Selected Background',
+        type: 'color',
+        default: '#5e7ce2',
+      },
+      {
+        name: '--ae-treeview-selected-color',
+        label: 'Selected Text',
+        type: 'color',
+        default: '#ffffff',
+      },
+      {
+        name: '--ae-treeview-caret-color',
+        label: 'Caret Color',
+        type: 'color',
+        default: '#888888',
+      },
+      {
+        name: '--ae-treeview-font-size',
+        label: 'Font Size',
+        type: 'size',
+        default: '14',
+        unit: 'px',
+        min: 10,
+        max: 20,
+      },
+      {
+        name: '--ae-treeview-indent',
+        label: 'Indent',
+        type: 'size',
+        default: '20',
+        unit: 'px',
+        min: 8,
+        max: 40,
+      },
     ],
     defaultHtml: `<ae-treeview>
   <ae-tree-item label="Documents" expanded>
@@ -424,9 +916,30 @@ export const componentConfigs: ComponentConfig[] = [
     cssVariables: [
       { name: '--ae-modal-background', label: 'Background', type: 'color', default: '#1a1a1a' },
       { name: '--ae-modal-text-color', label: 'Text Color', type: 'color', default: '#f5f5f5' },
-      { name: '--ae-modal-backdrop-color', label: 'Backdrop Color', type: 'color', default: 'rgba(0,0,0,0.7)' },
-      { name: '--ae-modal-border-radius', label: 'Border Radius', type: 'size', default: '12', unit: 'px', min: 0, max: 32 },
-      { name: '--ae-modal-padding', label: 'Padding', type: 'size', default: '24', unit: 'px', min: 8, max: 48 },
+      {
+        name: '--ae-modal-backdrop-color',
+        label: 'Backdrop Color',
+        type: 'color',
+        default: 'rgba(0,0,0,0.7)',
+      },
+      {
+        name: '--ae-modal-border-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '12',
+        unit: 'px',
+        min: 0,
+        max: 32,
+      },
+      {
+        name: '--ae-modal-padding',
+        label: 'Padding',
+        type: 'size',
+        default: '24',
+        unit: 'px',
+        min: 8,
+        max: 48,
+      },
     ],
     defaultHtml: `<ae-button id="modal-trigger">Open Modal</ae-button>
 <ae-modal>
@@ -446,18 +959,54 @@ export const componentConfigs: ComponentConfig[] = [
     cssVariables: [
       { name: '--ae-tooltip-bg', label: 'Background', type: 'color', default: '#333333' },
       { name: '--ae-tooltip-fg', label: 'Text Color', type: 'color', default: '#f5f5f5' },
-      { name: '--ae-tooltip-radius', label: 'Border Radius', type: 'size', default: '6', unit: 'px', min: 0, max: 16 },
-      { name: '--ae-tooltip-padding', label: 'Padding', type: 'size', default: '8', unit: 'px', min: 4, max: 24 },
-      { name: '--ae-tooltip-font-size', label: 'Font Size', type: 'size', default: '13', unit: 'px', min: 10, max: 18 },
+      {
+        name: '--ae-tooltip-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '6',
+        unit: 'px',
+        min: 0,
+        max: 16,
+      },
+      {
+        name: '--ae-tooltip-padding',
+        label: 'Padding',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 4,
+        max: 24,
+      },
+      {
+        name: '--ae-tooltip-font-size',
+        label: 'Font Size',
+        type: 'size',
+        default: '13',
+        unit: 'px',
+        min: 10,
+        max: 18,
+      },
     ],
     defaultHtml: `<ae-tooltip content="This is helpful information">
   <ae-button>Hover me</ae-button>
 </ae-tooltip>`,
     variants: [
-      { name: 'Top', html: `<ae-tooltip content="Top tooltip" placement="top"><ae-button>Top</ae-button></ae-tooltip>` },
-      { name: 'Bottom', html: `<ae-tooltip content="Bottom tooltip" placement="bottom"><ae-button>Bottom</ae-button></ae-tooltip>` },
-      { name: 'Left', html: `<ae-tooltip content="Left tooltip" placement="left"><ae-button>Left</ae-button></ae-tooltip>` },
-      { name: 'Right', html: `<ae-tooltip content="Right tooltip" placement="right"><ae-button>Right</ae-button></ae-tooltip>` },
+      {
+        name: 'Top',
+        html: `<ae-tooltip content="Top tooltip" placement="top"><ae-button>Top</ae-button></ae-tooltip>`,
+      },
+      {
+        name: 'Bottom',
+        html: `<ae-tooltip content="Bottom tooltip" placement="bottom"><ae-button>Bottom</ae-button></ae-tooltip>`,
+      },
+      {
+        name: 'Left',
+        html: `<ae-tooltip content="Left tooltip" placement="left"><ae-button>Left</ae-button></ae-tooltip>`,
+      },
+      {
+        name: 'Right',
+        html: `<ae-tooltip content="Right tooltip" placement="right"><ae-button>Right</ae-button></ae-tooltip>`,
+      },
     ],
   },
   {
@@ -470,8 +1019,21 @@ export const componentConfigs: ComponentConfig[] = [
       { name: '--ae-dropdown-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
       { name: '--ae-dropdown-fg', label: 'Text Color', type: 'color', default: '#f5f5f5' },
       { name: '--ae-dropdown-border', label: 'Border Color', type: 'color', default: '#333333' },
-      { name: '--ae-dropdown-item-hover-bg', label: 'Item Hover', type: 'color', default: '#333333' },
-      { name: '--ae-dropdown-radius', label: 'Border Radius', type: 'size', default: '8', unit: 'px', min: 0, max: 24 },
+      {
+        name: '--ae-dropdown-item-hover-bg',
+        label: 'Item Hover',
+        type: 'color',
+        default: '#333333',
+      },
+      {
+        name: '--ae-dropdown-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 0,
+        max: 24,
+      },
     ],
     defaultHtml: `<ae-dropdown>
   <ae-button slot="trigger">Options</ae-button>
@@ -490,9 +1052,33 @@ export const componentConfigs: ComponentConfig[] = [
     cssVariables: [
       { name: '--ae-popover-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
       { name: '--ae-popover-border', label: 'Border Color', type: 'color', default: '#333333' },
-      { name: '--ae-popover-border-radius', label: 'Border Radius', type: 'size', default: '8', unit: 'px', min: 0, max: 24 },
-      { name: '--ae-popover-padding', label: 'Padding', type: 'size', default: '12', unit: 'px', min: 4, max: 32 },
-      { name: '--ae-popover-max-width', label: 'Max Width', type: 'size', default: '300', unit: 'px', min: 150, max: 600 },
+      {
+        name: '--ae-popover-border-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 0,
+        max: 24,
+      },
+      {
+        name: '--ae-popover-padding',
+        label: 'Padding',
+        type: 'size',
+        default: '12',
+        unit: 'px',
+        min: 4,
+        max: 32,
+      },
+      {
+        name: '--ae-popover-max-width',
+        label: 'Max Width',
+        type: 'size',
+        default: '300',
+        unit: 'px',
+        min: 150,
+        max: 600,
+      },
     ],
     defaultHtml: `<ae-popover trigger="click">
   <ae-button slot="trigger">Click for info</ae-button>
@@ -502,7 +1088,10 @@ export const componentConfigs: ComponentConfig[] = [
   </div>
 </ae-popover>`,
     variants: [
-      { name: 'Hover', html: `<ae-popover trigger="hover">\n  <ae-button slot="trigger">Hover me</ae-button>\n  <div>Popover on hover</div>\n</ae-popover>` },
+      {
+        name: 'Hover',
+        html: `<ae-popover trigger="hover">\n  <ae-button slot="trigger">Hover me</ae-button>\n  <div>Popover on hover</div>\n</ae-popover>`,
+      },
     ],
   },
   {
@@ -514,8 +1103,21 @@ export const componentConfigs: ComponentConfig[] = [
     cssVariables: [
       { name: '--ae-drawer-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
       { name: '--ae-drawer-text-color', label: 'Text Color', type: 'color', default: '#f5f5f5' },
-      { name: '--ae-drawer-backdrop-bg', label: 'Backdrop', type: 'color', default: 'rgba(0,0,0,0.5)' },
-      { name: '--ae-drawer-width-md', label: 'Width', type: 'size', default: '400', unit: 'px', min: 200, max: 800 },
+      {
+        name: '--ae-drawer-backdrop-bg',
+        label: 'Backdrop',
+        type: 'color',
+        default: 'rgba(0,0,0,0.5)',
+      },
+      {
+        name: '--ae-drawer-width-md',
+        label: 'Width',
+        type: 'size',
+        default: '400',
+        unit: 'px',
+        min: 200,
+        max: 800,
+      },
     ],
     defaultHtml: `<ae-button id="drawer-trigger">Open Drawer</ae-button>
 <ae-drawer placement="right">
@@ -527,7 +1129,10 @@ export const componentConfigs: ComponentConfig[] = [
   </div>
 </ae-drawer>`,
     variants: [
-      { name: 'Left', html: `<ae-button id="drawer-trigger">Open Left</ae-button>\n<ae-drawer placement="left">\n  <h3 slot="header">Left Drawer</h3>\n  <p>This drawer slides from the left.</p>\n</ae-drawer>` },
+      {
+        name: 'Left',
+        html: `<ae-button id="drawer-trigger">Open Left</ae-button>\n<ae-drawer placement="left">\n  <h3 slot="header">Left Drawer</h3>\n  <p>This drawer slides from the left.</p>\n</ae-drawer>`,
+      },
     ],
   },
   {
@@ -538,10 +1143,26 @@ export const componentConfigs: ComponentConfig[] = [
     cssVariables: [
       { name: '--ae-menu-bg', label: 'Background', type: 'color', default: '#1a1a1a' },
       { name: '--ae-menu-border', label: 'Border Color', type: 'color', default: '#333333' },
-      { name: '--ae-menu-border-radius', label: 'Border Radius', type: 'size', default: '8', unit: 'px', min: 0, max: 24 },
+      {
+        name: '--ae-menu-border-radius',
+        label: 'Border Radius',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 0,
+        max: 24,
+      },
       { name: '--ae-menu-item-color', label: 'Item Color', type: 'color', default: '#f5f5f5' },
       { name: '--ae-menu-item-bg-hover', label: 'Item Hover', type: 'color', default: '#333333' },
-      { name: '--ae-menu-item-padding', label: 'Item Padding', type: 'size', default: '8', unit: 'px', min: 4, max: 16 },
+      {
+        name: '--ae-menu-item-padding',
+        label: 'Item Padding',
+        type: 'size',
+        default: '8',
+        unit: 'px',
+        min: 4,
+        max: 16,
+      },
     ],
     defaultHtml: `<ae-menu>
   <ae-menu-item>Edit</ae-menu-item>
@@ -554,11 +1175,11 @@ export const componentConfigs: ComponentConfig[] = [
 ];
 
 export function getComponentByName(name: string): ComponentConfig | undefined {
-  return componentConfigs.find(c => c.name === name);
+  return componentConfigs.find((c) => c.name === name);
 }
 
 export function getComponentsByCategory(category: string): ComponentConfig[] {
-  return componentConfigs.filter(c => c.category === category);
+  return componentConfigs.filter((c) => c.category === category);
 }
 
 export const categories = ['Form', 'Feedback', 'Navigation', 'Layout', 'Overlay'] as const;

@@ -2,6 +2,7 @@
 title: Pagination
 description: Pagination component for navigating through pages of content.
 ---
+
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ComponentExample from '../../../components/ComponentExample.astro';
 
@@ -59,16 +60,8 @@ A pagination component for navigating through pages of content.
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">
-    ```bash
-    pnpm add @aetherui/core
-    ```
-  </TabItem>
-  <TabItem label="npm">
-    ```bash
-    npm install @aetherui/core
-    ```
-  </TabItem>
+  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
+  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
 </Tabs>
 
 ## Import
@@ -80,32 +73,32 @@ defineAePagination();
 
 ## Props
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `total` | `number` | `0` | Total items |
-| `page` | `number` | `1` | Current page |
-| `per-page` | `number` | `10` | Items per page |
-| `sibling-count` | `number` | `1` | Pages shown around current |
-| `boundary-count` | `number` | `1` | Pages shown at boundaries |
-| `simple` | `boolean` | `false` | Simple prev/next mode |
-| `disabled` | `boolean` | `false` | Disabled state |
+| Name             | Type      | Default | Description                |
+| ---------------- | --------- | ------- | -------------------------- |
+| `total`          | `number`  | `0`     | Total items                |
+| `page`           | `number`  | `1`     | Current page               |
+| `per-page`       | `number`  | `10`    | Items per page             |
+| `sibling-count`  | `number`  | `1`     | Pages shown around current |
+| `boundary-count` | `number`  | `1`     | Pages shown at boundaries  |
+| `simple`         | `boolean` | `false` | Simple prev/next mode      |
+| `disabled`       | `boolean` | `false` | Disabled state             |
 
 ## Events
 
-| Name | Detail | Description |
-|------|--------|-------------|
+| Name                   | Detail             | Description             |
+| ---------------------- | ------------------ | ----------------------- |
 | `ae-pagination-change` | `{ page: number }` | Fired when page changes |
 
 ## CSS Parts
 
-| Name | Description |
-|------|-------------|
-| `base` | Container |
-| `button` | Page buttons |
+| Name              | Description         |
+| ----------------- | ------------------- |
+| `base`            | Container           |
+| `button`          | Page buttons        |
 | `button--current` | Current page button |
-| `button--prev` | Previous button |
-| `button--next` | Next button |
-| `ellipsis` | Ellipsis indicator |
+| `button--prev`    | Previous button     |
+| `button--next`    | Next button         |
+| `ellipsis`        | Ellipsis indicator  |
 
 ## Accessibility
 

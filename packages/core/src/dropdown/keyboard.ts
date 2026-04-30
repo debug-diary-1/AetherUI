@@ -36,7 +36,7 @@ export class KeyboardController implements ReactiveController {
 
     this.menuElement = menu;
     this.refresh();
-    
+
     // Set up keyboard event listeners
     this.menuElement.addEventListener('keydown', this.handleKeyDown);
   }
@@ -46,12 +46,12 @@ export class KeyboardController implements ReactiveController {
    */
   refresh() {
     if (!this.menuElement) return;
-    
+
     // Get all menu items with role="menuitem"
     this.items = Array.from(
-      this.menuElement.querySelectorAll('[role="menuitem"]')
+      this.menuElement.querySelectorAll('[role="menuitem"]'),
     ) as HTMLElement[];
-    
+
     // Set initial active item if none is set
     if (this.activeIndex === -1 && this.items.length > 0) {
       this.setActiveItem(0);
@@ -141,7 +141,7 @@ export class KeyboardController implements ReactiveController {
     }, 500);
 
     // Search for an item that starts with the typeahead buffer
-    const index = this.items.findIndex(item => {
+    const index = this.items.findIndex((item) => {
       const text = item.textContent?.trim().toLowerCase() || '';
       return text.startsWith(this.typeaheadBuffer);
     });
@@ -177,15 +177,15 @@ export class KeyboardController implements ReactiveController {
     if (this.menuElement) {
       this.menuElement.removeEventListener('keydown', this.handleKeyDown);
     }
-    
+
     this.menuElement = null;
     this.items = [];
     this.activeIndex = -1;
-    
+
     if (this.typeaheadTimeout !== null) {
       window.clearTimeout(this.typeaheadTimeout);
       this.typeaheadTimeout = null;
     }
     this.typeaheadBuffer = '';
   }
-} 
+}

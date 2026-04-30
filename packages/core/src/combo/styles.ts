@@ -1,8 +1,8 @@
 import { css } from 'lit';
 
 export const comboStyles = css`
-  :host { 
-    display: inline-block; 
+  :host {
+    display: inline-block;
     position: relative;
     width: 100%;
     --ae-combo-transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -17,9 +17,10 @@ export const comboStyles = css`
     background: var(--ae-combo-bg);
     color: var(--ae-combo-fg);
     font: inherit;
-    transition: border-color var(--ae-combo-transition), 
-                box-shadow var(--ae-combo-transition),
-                background-color var(--ae-combo-transition);
+    transition:
+      border-color var(--ae-combo-transition),
+      box-shadow var(--ae-combo-transition),
+      background-color var(--ae-combo-transition);
   }
 
   input:hover:not(:disabled) {
@@ -73,15 +74,19 @@ export const comboStyles = css`
     background: var(--ae-combo-bg);
     border: 1px solid var(--ae-combo-border-hover);
     border-radius: var(--ae-combo-radius, 0.375rem);
-    box-shadow: var(--ae-combo-shadow, 
-                 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-                 0 2px 4px -1px rgba(0, 0, 0, 0.06));
+    box-shadow: var(
+      --ae-combo-shadow,
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06)
+    );
     margin-top: 0.4rem;
     display: none;
     opacity: 0;
     transform: translateY(-8px) scale(0.98);
     transform-origin: top center;
-    transition: opacity 120ms ease-out, transform 120ms ease-out;
+    transition:
+      opacity 120ms ease-out,
+      transform 120ms ease-out;
   }
 
   .overlay[data-open] {
@@ -110,8 +115,9 @@ export const comboStyles = css`
     cursor: pointer;
     user-select: none;
     position: relative;
-    transition: background-color var(--ae-combo-transition),
-                color var(--ae-combo-transition);
+    transition:
+      background-color var(--ae-combo-transition),
+      color var(--ae-combo-transition);
   }
 
   .option:hover {
@@ -133,7 +139,7 @@ export const comboStyles = css`
     background: var(--ae-combo-option-selected-hover-bg);
   }
 
-  .option[aria-disabled="true"] {
+  .option[aria-disabled='true'] {
     opacity: 0.5;
     cursor: not-allowed;
   }

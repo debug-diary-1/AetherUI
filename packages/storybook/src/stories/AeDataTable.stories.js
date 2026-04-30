@@ -34,45 +34,49 @@ const sampleData = [
 
 // Column definitions
 const columns = [
-  { 
-    id: 'name', 
-    field: 'name', 
-    header: 'Name', 
-    sortable: true, 
-    filterable: true 
+  {
+    id: 'name',
+    field: 'name',
+    header: 'Name',
+    sortable: true,
+    filterable: true,
   },
-  { 
-    id: 'age', 
-    field: 'age', 
-    header: 'Age', 
-    sortable: true, 
-    align: 'right' 
+  {
+    id: 'age',
+    field: 'age',
+    header: 'Age',
+    sortable: true,
+    align: 'right',
   },
-  { 
-    id: 'email', 
-    field: 'email', 
-    header: 'Email', 
-    sortable: true 
+  {
+    id: 'email',
+    field: 'email',
+    header: 'Email',
+    sortable: true,
   },
-  { 
-    id: 'status', 
-    field: 'status', 
-    header: 'Status', 
+  {
+    id: 'status',
+    field: 'status',
+    header: 'Status',
     sortable: true,
     renderer: (value) => {
       const getStatusColor = (status) => {
         switch (status) {
-          case 'Active': return 'green';
-          case 'Inactive': return 'red';
-          case 'Pending': return 'orange';
-          default: return 'gray';
+          case 'Active':
+            return 'green';
+          case 'Inactive':
+            return 'red';
+          case 'Pending':
+            return 'orange';
+          default:
+            return 'gray';
         }
       };
-      
+
       return html`
         <span style="color: ${getStatusColor(value)}; font-weight: 500;">${value}</span>
       `;
-    }
+    },
   },
 ];
 
@@ -132,13 +136,7 @@ export const Empty = () => {
 export const CustomToolbar = () => {
   return html`
     <div style="height: 400px;">
-      <ae-datatable
-        .data=${sampleData}
-        .columns=${columns}
-        sortable
-        paginated
-        page-size="5"
-      >
+      <ae-datatable .data=${sampleData} .columns=${columns} sortable paginated page-size="5">
         <div slot="toolbar" style="display: flex; justify-content: space-between; width: 100%;">
           <div>
             <button style="margin-right: 10px;">Export</button>
@@ -174,12 +172,7 @@ export const SelectableRows = () => {
 export const Pagination = () => {
   return html`
     <div style="height: 400px;">
-      <ae-datatable
-        .data=${sampleData}
-        .columns=${columns}
-        paginated
-        page-size="3"
-      ></ae-datatable>
+      <ae-datatable .data=${sampleData} .columns=${columns} paginated page-size="3"></ae-datatable>
     </div>
   `;
 };
@@ -196,17 +189,13 @@ export const CustomCellRendering = () => {
           <button style="padding: 4px 8px;">Edit</button>
           <button style="padding: 4px 8px;">Delete</button>
         </div>
-      `
-    }
+      `,
+    },
   ];
 
   return html`
     <div style="height: 400px;">
-      <ae-datatable
-        .data=${sampleData}
-        .columns=${customColumns}
-        sortable
-      ></ae-datatable>
+      <ae-datatable .data=${sampleData} .columns=${customColumns} sortable></ae-datatable>
     </div>
   `;
 };

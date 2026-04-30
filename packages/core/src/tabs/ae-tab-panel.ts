@@ -11,7 +11,7 @@ export class AeTabPanel extends LitElement {
     :host {
       display: block;
     }
-    
+
     section {
       padding: var(--ae-tabs-panel-padding, 1rem);
     }

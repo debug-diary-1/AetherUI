@@ -1,5 +1,5 @@
 // This file has been automatically migrated to valid ESM format by Storybook.
-import { createRequire } from "node:module";
+import { createRequire } from 'node:module';
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 import { dirname, join } from 'path';
 
@@ -34,13 +34,13 @@ const config = {
   ],
 
   addons: [
-    getAbsolutePath("@storybook/addon-links"),
-    getAbsolutePath("@storybook/addon-a11y"),
-    getAbsolutePath("@storybook/addon-docs")
+    getAbsolutePath('@storybook/addon-links'),
+    getAbsolutePath('@storybook/addon-a11y'),
+    getAbsolutePath('@storybook/addon-docs'),
   ],
 
   framework: {
-    name: getAbsolutePath("@storybook/web-components-vite"),
+    name: getAbsolutePath('@storybook/web-components-vite'),
     options: {},
   },
 
@@ -50,7 +50,7 @@ const config = {
       ...config,
       resolve: {
         ...config.resolve,
-        dedupe: ['lit', 'lit-html', 'lit-element', '@lit/reactive-element']
+        dedupe: ['lit', 'lit-html', 'lit-element', '@lit/reactive-element'],
       },
       build: {
         ...config.build,
@@ -58,14 +58,14 @@ const config = {
           ...config.build?.commonjsOptions,
           include: [/node_modules/],
           extensions: ['.js', '.cjs'],
-        }
-      }
+        },
+      },
     };
-  }
+  },
 };
 
 export default config;
 
 function getAbsolutePath(value) {
-  return dirname(require.resolve(join(value, "package.json")));
+  return dirname(require.resolve(join(value, 'package.json')));
 }

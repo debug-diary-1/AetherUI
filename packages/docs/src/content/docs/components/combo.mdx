@@ -2,6 +2,7 @@
 title: Combobox
 description: Autocomplete input component combining text input with a dropdown list for filtering and selecting options.
 ---
+
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ComponentExample from '../../../components/ComponentExample.astro';
 
@@ -64,16 +65,8 @@ An autocomplete input combining text input with a filterable dropdown list.
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">
-    ```bash
-    pnpm add @aetherui/core
-    ```
-  </TabItem>
-  <TabItem label="npm">
-    ```bash
-    npm install @aetherui/core
-    ```
-  </TabItem>
+  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
+  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
 </Tabs>
 
 ## Import
@@ -86,36 +79,36 @@ defineAeComboOption();
 
 ## Props
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `string` | `''` | Current value |
-| `placeholder` | `string` | `'Select an option'` | Placeholder text |
-| `label` | `string` | `''` | Label text |
-| `name` | `string` | `''` | Form field name |
-| `disabled` | `boolean` | `false` | Disabled state |
-| `free-input` | `boolean` | `true` | Allow custom values |
+| Name          | Type      | Default              | Description         |
+| ------------- | --------- | -------------------- | ------------------- |
+| `value`       | `string`  | `''`                 | Current value       |
+| `placeholder` | `string`  | `'Select an option'` | Placeholder text    |
+| `label`       | `string`  | `''`                 | Label text          |
+| `name`        | `string`  | `''`                 | Form field name     |
+| `disabled`    | `boolean` | `false`              | Disabled state      |
+| `free-input`  | `boolean` | `true`               | Allow custom values |
 
 ## Events
 
-| Name | Detail | Description |
-|------|--------|-------------|
+| Name              | Detail              | Description              |
+| ----------------- | ------------------- | ------------------------ |
 | `ae-combo-change` | `{ value: string }` | Fired when value changes |
-| `ae-combo-input` | `{ value: string }` | Fired on input |
+| `ae-combo-input`  | `{ value: string }` | Fired on input           |
 
 ## Slots
 
-| Name | Description |
-|------|-------------|
+| Name    | Description                       |
+| ------- | --------------------------------- |
 | default | Combo options (`ae-combo-option`) |
 
 ## CSS Parts
 
-| Name | Description |
-|------|-------------|
-| `base` | Container |
-| `input` | Text input |
+| Name      | Description       |
+| --------- | ----------------- |
+| `base`    | Container         |
+| `input`   | Text input        |
 | `listbox` | Options container |
-| `option` | Individual option |
+| `option`  | Individual option |
 
 ## Accessibility
 

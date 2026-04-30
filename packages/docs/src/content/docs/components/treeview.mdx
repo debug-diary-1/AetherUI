@@ -52,10 +52,11 @@ The TreeView component provides a hierarchical display of data with expand/colla
   import { defineAeTreeView } from '@aetherui/core';
   defineAeTreeView();
 
-  // Or import the class directly
-  import { AeTreeView } from '@aetherui/core';
-  ```
-  </TabItem>
+// Or import the class directly
+import { AeTreeView } from '@aetherui/core';
+
+````
+</TabItem>
 </Tabs>
 
 ## Usage
@@ -66,25 +67,25 @@ The simplest usage is to provide an array of nodes with `id` and `label` propert
 
 ```html
 <ae-treeview
-  data='[
-    { 
-      "id": "docs", 
-      "label": "Documents",
-      "children": [
-        { "id": "report", "label": "Annual Report" },
-        { "id": "budget", "label": "Budget Spreadsheet" }
-      ]
-    },
-    { 
-      "id": "pics", 
-      "label": "Pictures",
-      "children": [
-        { "id": "vacation", "label": "Vacation Photos" }
-      ]
-    }
-  ]'
+data='[
+  {
+    "id": "docs",
+    "label": "Documents",
+    "children": [
+      { "id": "report", "label": "Annual Report" },
+      { "id": "budget", "label": "Budget Spreadsheet" }
+    ]
+  },
+  {
+    "id": "pics",
+    "label": "Pictures",
+    "children": [
+      { "id": "vacation", "label": "Vacation Photos" }
+    ]
+  }
+]'
 ></ae-treeview>
-```
+````
 
 ### With Icons
 
@@ -159,84 +160,84 @@ You can set items to be expanded or selected when the component renders.
 
 ## Attributes
 
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `data` | Array | `[]` | Array of tree nodes with format `{ id, label, children?, icon? }` |
-| `expanded` | Array | `[]` | Array of expanded node IDs (controlled) |
-| `selectionMode` | String | `'single'` | Selection mode: `'single'` or `'multiple'` |
-| `selected` | Array | `[]` | Array of selected node IDs (controlled) |
-| `indentSize` | Number | `16` | Size of indentation in pixels per level |
-| `loading` | Boolean | `false` | Show loading state |
-| `emptyMessage` | String | `'No items'` | Message to display when there are no items |
+| Attribute       | Type    | Default      | Description                                                       |
+| --------------- | ------- | ------------ | ----------------------------------------------------------------- |
+| `data`          | Array   | `[]`         | Array of tree nodes with format `{ id, label, children?, icon? }` |
+| `expanded`      | Array   | `[]`         | Array of expanded node IDs (controlled)                           |
+| `selectionMode` | String  | `'single'`   | Selection mode: `'single'` or `'multiple'`                        |
+| `selected`      | Array   | `[]`         | Array of selected node IDs (controlled)                           |
+| `indentSize`    | Number  | `16`         | Size of indentation in pixels per level                           |
+| `loading`       | Boolean | `false`      | Show loading state                                                |
+| `emptyMessage`  | String  | `'No items'` | Message to display when there are no items                        |
 
 ## Events
 
-| Event | Detail | Description |
-|-------|--------|-------------|
-| `ae-select` | `{ selected: string[] }` | Fired when selection changes |
+| Event              | Detail                   | Description                        |
+| ------------------ | ------------------------ | ---------------------------------- |
+| `ae-select`        | `{ selected: string[] }` | Fired when selection changes       |
 | `ae-expand-change` | `{ expanded: string[] }` | Fired when expansion state changes |
 
 ## Shadow Parts
 
 The following shadow parts are available for styling:
 
-| Part | Description |
-|------|-------------|
-| `node` | The container for each tree node |
-| `caret` | Expand/collapse indicator |
+| Part           | Description                            |
+| -------------- | -------------------------------------- |
+| `node`         | The container for each tree node       |
+| `caret`        | Expand/collapse indicator              |
 | `caret-spacer` | Space holder for leaf nodes (no caret) |
-| `label` | Text label for the node |
-| `checkbox` | Checkbox for multi-select mode |
-| `icon` | Icon container |
-| `subtree` | Container for child nodes |
-| `loading` | Loading state container |
-| `empty` | Empty state container |
+| `label`        | Text label for the node                |
+| `checkbox`     | Checkbox for multi-select mode         |
+| `icon`         | Icon container                         |
+| `subtree`      | Container for child nodes              |
+| `loading`      | Loading state container                |
+| `empty`        | Empty state container                  |
 
 ## CSS Custom Properties
 
-| Property | Description |
-|----------|-------------|
-| `--ae-treeview-indent` | Indentation size for nested levels |
-| `--ae-treeview-node-radius` | Border radius for tree nodes |
-| `--ae-treeview-font-size` | Font size for node text |
-| `--ae-treeview-row-hover-bg` | Background color for node hover state |
-| `--ae-treeview-focus-color` | Outline color for focused node |
-| `--ae-treeview-row-selected-bg` | Background color for selected node |
-| `--ae-treeview-row-selected-fg` | Text color for selected node |
-| `--ae-treeview-caret-size` | Size of the caret icon |
-| `--ae-treeview-caret-color` | Color of the caret icon |
-| `--ae-treeview-caret-open` | Color of the caret icon when expanded |
-| `--ae-treeview-icon-size` | Size of node icons |
-| `--ae-treeview-icon-color` | Color of node icons |
-| `--ae-treeview-checkbox-size` | Size of the checkbox in multi-select mode |
-| `--ae-treeview-checkbox-radius` | Border radius of the checkbox |
-| `--ae-treeview-checkbox-border` | Border color of the checkbox |
-| `--ae-treeview-checkbox-bg` | Background color of the checkbox |
-| `--ae-treeview-checkbox-selected-bg` | Background color of selected checkbox |
-| `--ae-treeview-checkbox-selected-border` | Border color of selected checkbox |
-| `--ae-treeview-empty-color` | Text color for empty state |
-| `--ae-treeview-loading-color` | Text color for loading state |
+| Property                                 | Description                               |
+| ---------------------------------------- | ----------------------------------------- |
+| `--ae-treeview-indent`                   | Indentation size for nested levels        |
+| `--ae-treeview-node-radius`              | Border radius for tree nodes              |
+| `--ae-treeview-font-size`                | Font size for node text                   |
+| `--ae-treeview-row-hover-bg`             | Background color for node hover state     |
+| `--ae-treeview-focus-color`              | Outline color for focused node            |
+| `--ae-treeview-row-selected-bg`          | Background color for selected node        |
+| `--ae-treeview-row-selected-fg`          | Text color for selected node              |
+| `--ae-treeview-caret-size`               | Size of the caret icon                    |
+| `--ae-treeview-caret-color`              | Color of the caret icon                   |
+| `--ae-treeview-caret-open`               | Color of the caret icon when expanded     |
+| `--ae-treeview-icon-size`                | Size of node icons                        |
+| `--ae-treeview-icon-color`               | Color of node icons                       |
+| `--ae-treeview-checkbox-size`            | Size of the checkbox in multi-select mode |
+| `--ae-treeview-checkbox-radius`          | Border radius of the checkbox             |
+| `--ae-treeview-checkbox-border`          | Border color of the checkbox              |
+| `--ae-treeview-checkbox-bg`              | Background color of the checkbox          |
+| `--ae-treeview-checkbox-selected-bg`     | Background color of selected checkbox     |
+| `--ae-treeview-checkbox-selected-border` | Border color of selected checkbox         |
+| `--ae-treeview-empty-color`              | Text color for empty state                |
+| `--ae-treeview-loading-color`            | Text color for loading state              |
 
 ## Keyboard Navigation
 
 The TreeView supports comprehensive keyboard navigation:
 
-| Key | Action |
-|-----|--------|
-| `↑` / `↓` | Move focus to previous/next visible node |
-| `←` | Collapse node if expanded, or move to parent node |
-| `→` | Expand node if collapsed, or move to first child if already expanded |
-| `Home` | Move focus to first node |
-| `End` | Move focus to last visible node |
-| `Enter` / `Space` | Select/deselect the focused node |
-| `*` | Expand all siblings of the current node |
-| Type characters | Jump to the next node that starts with the typed characters (type-ahead) |
+| Key               | Action                                                                   |
+| ----------------- | ------------------------------------------------------------------------ |
+| `↑` / `↓`         | Move focus to previous/next visible node                                 |
+| `←`               | Collapse node if expanded, or move to parent node                        |
+| `→`               | Expand node if collapsed, or move to first child if already expanded     |
+| `Home`            | Move focus to first node                                                 |
+| `End`             | Move focus to last visible node                                          |
+| `Enter` / `Space` | Select/deselect the focused node                                         |
+| `*`               | Expand all siblings of the current node                                  |
+| Type characters   | Jump to the next node that starts with the typed characters (type-ahead) |
 
 ## Accessibility
 
 The TreeView component follows WAI-ARIA best practices:
 
-- The tree container has `role="tree"` 
+- The tree container has `role="tree"`
 - Each node has `role="treeitem"` with appropriate `aria-level` and `aria-expanded` attributes
 - Implements roving tabindex pattern for keyboard navigation
 - Type-ahead search lets users quickly navigate by typing the first few characters
@@ -375,33 +376,34 @@ Here are some interactive examples of the TreeView component:
 </style>
 
 <ae-treeview
-  class="custom-tree"
-  data='[
-    { 
-      "id": "inbox", 
-      "label": "Inbox",
-      "children": [
-        { "id": "important", "label": "Important" },
-        { "id": "starred", "label": "Starred" }
-      ]
-    },
-    { 
-      "id": "drafts", 
-      "label": "Drafts" 
-    },
-    { 
-      "id": "sent", 
-      "label": "Sent Mail" 
-    },
-    { 
-      "id": "trash", 
-      "label": "Trash" 
-    }
-  ]'
-  expanded='["inbox"]'
-  selected='["important"]'
-></ae-treeview>`}
-/>
+class="custom-tree"
+data='[
+{
+"id": "inbox",
+"label": "Inbox",
+"children": [
+{ "id": "important", "label": "Important" },
+{ "id": "starred", "label": "Starred" }
+]
+},
+{
+"id": "drafts",
+"label": "Drafts"
+},
+{
+"id": "sent",
+"label": "Sent Mail"
+},
+{
+"id": "trash",
+"label": "Trash"
+}
+]'
+expanded='["inbox"]'
+selected='["important"]'
+
+> </ae-treeview>`}
+> />
 
 <TreeViewExample
   title="Empty and Loading States"
@@ -417,4 +419,4 @@ Here are some interactive examples of the TreeView component:
     data='[]'>
   </ae-treeview>
 </div>`}
-/> 
+/>

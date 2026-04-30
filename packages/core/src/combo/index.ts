@@ -12,13 +12,13 @@ export interface AeComboSelectEvent extends CustomEvent {
   detail: {
     value: string;
     item: ComboItem | null;
-  }
+  };
 }
 
 export interface AeComboInputEvent extends CustomEvent {
   detail: {
     value: string;
-  }
+  };
 }
 
 declare global {

@@ -8,10 +8,7 @@ export interface GeneratedCode {
   fullExample: string;
 }
 
-export function generateCSS(
-  component: ComponentConfig,
-  values: Record<string, string>
-): string {
+export function generateCSS(component: ComponentConfig, values: Record<string, string>): string {
   const cssVars = component.cssVariables
     .map((variable) => {
       const value = values[variable.name] || variable.default;
@@ -25,7 +22,7 @@ export function generateCSS(
 
 export function generateHTML(component: ComponentConfig, selectedVariant?: string): string {
   if (selectedVariant) {
-    const variant = component.variants?.find(v => v.name === selectedVariant);
+    const variant = component.variants?.find((v) => v.name === selectedVariant);
     if (variant) return variant.html;
   }
   return component.defaultHtml;
@@ -34,7 +31,7 @@ export function generateHTML(component: ComponentConfig, selectedVariant?: strin
 export function generateReact(
   component: ComponentConfig,
   values: Record<string, string>,
-  selectedVariant?: string
+  selectedVariant?: string,
 ): string {
   const html = generateHTML(component, selectedVariant);
 
@@ -67,7 +64,7 @@ ${styleObj}
 export function generateVue(
   component: ComponentConfig,
   values: Record<string, string>,
-  selectedVariant?: string
+  selectedVariant?: string,
 ): string {
   const html = generateHTML(component, selectedVariant);
 
@@ -100,7 +97,7 @@ ${component.cssVariables
 export function generateFullExample(
   component: ComponentConfig,
   values: Record<string, string>,
-  selectedVariant?: string
+  selectedVariant?: string,
 ): string {
   const html = generateHTML(component, selectedVariant);
   const css = generateCSS(component, values);
@@ -132,11 +129,17 @@ export function generateFullExample(
       margin: 0;
     }
 
-${css.split('\n').map(line => '    ' + line).join('\n')}
+${css
+  .split('\n')
+  .map((line) => '    ' + line)
+  .join('\n')}
   </style>
 </head>
 <body>
-  ${html.split('\n').map((line, i) => i === 0 ? line : '  ' + line).join('\n')}
+  ${html
+    .split('\n')
+    .map((line, i) => (i === 0 ? line : '  ' + line))
+    .join('\n')}
 </body>
 </html>`;
 }
@@ -144,7 +147,7 @@ ${css.split('\n').map(line => '    ' + line).join('\n')}
 export function generateCode(
   component: ComponentConfig,
   values: Record<string, string>,
-  selectedVariant?: string
+  selectedVariant?: string,
 ): GeneratedCode {
   return {
     html: generateHTML(component, selectedVariant),

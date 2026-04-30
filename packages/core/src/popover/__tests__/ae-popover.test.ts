@@ -16,12 +16,7 @@ describe('ae-popover', () => {
 
   it('sets properties from attributes', async () => {
     const el = await fixture<AePopover>(html`
-      <ae-popover
-        open
-        trigger="hover"
-        placement="top"
-        offset="12"
-      ></ae-popover>
+      <ae-popover open trigger="hover" placement="top" offset="12"></ae-popover>
     `);
 
     expect(el.open).to.be.true;
@@ -184,7 +179,20 @@ describe('ae-popover', () => {
   });
 
   it('supports all placement types', async () => {
-    const placements = ['top', 'bottom', 'left', 'right', 'top-start', 'top-end', 'bottom-start', 'bottom-end', 'left-start', 'left-end', 'right-start', 'right-end'];
+    const placements = [
+      'top',
+      'bottom',
+      'left',
+      'right',
+      'top-start',
+      'top-end',
+      'bottom-start',
+      'bottom-end',
+      'left-start',
+      'left-end',
+      'right-start',
+      'right-end',
+    ];
 
     for (const placement of placements) {
       const el = await fixture<AePopover>(html`

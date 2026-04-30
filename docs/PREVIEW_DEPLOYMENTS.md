@@ -9,6 +9,7 @@ AetherUI supports **automatic preview deployments** for every Pull Request, allo
 ## 🚀 Quick Start (Recommended: Vercel)
 
 ### Why Vercel?
+
 - ✅ **Automatic PR previews** - Every PR gets a unique URL
 - ✅ **Zero configuration** - Works out of the box
 - ✅ **Fast deployments** - Optimized for static sites
@@ -27,6 +28,7 @@ AetherUI supports **automatic preview deployments** for every Pull Request, allo
 5. Click **"Deploy"**
 
 That's it! Vercel will now automatically:
+
 - Deploy Storybook on every PR
 - Comment on PRs with preview URL
 - Deploy to production on merge to `main`
@@ -43,6 +45,7 @@ NODE_OPTIONS=--max-old-space-size=4096
 #### 3. Custom Domain (Optional)
 
 In Vercel dashboard → Settings → Domains:
+
 - Add your custom domain
 - Production: `storybook.aetherui.dev`
 - Previews: `pr-123.storybook.aetherui.dev`
@@ -64,6 +67,7 @@ In Vercel dashboard → Settings → Domains:
 #### 2. Configure Build Settings
 
 The `netlify.toml` file handles configuration automatically:
+
 - Build command: `pnpm install && pnpm build && pnpm build-storybook`
 - Publish directory: `packages/storybook/storybook-static`
 - Node version: 20
@@ -71,6 +75,7 @@ The `netlify.toml` file handles configuration automatically:
 #### 3. Enable Deploy Previews
 
 In Netlify dashboard → Site settings → Build & deploy → Deploy contexts:
+
 - ✅ Enable deploy previews
 - Choose "Any pull request against your production branch"
 
@@ -104,9 +109,9 @@ name: Chromatic
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   chromatic:
@@ -176,6 +181,7 @@ Built with ❤️ by Vercel
 ## 📦 What Gets Deployed
 
 The preview deployment includes:
+
 - ✅ **Full Storybook** with all components
 - ✅ **Interactive component playground**
 - ✅ **Documentation pages**
@@ -239,6 +245,7 @@ git push origin feature/new-component
 ```
 
 **Key settings:**
+
 - `buildCommand`: Builds entire monorepo then Storybook
 - `outputDirectory`: Where Storybook outputs static files
 - `github.enabled`: Enables automatic PR comments
@@ -256,6 +263,7 @@ git push origin feature/new-component
 ```
 
 **Key settings:**
+
 - `command`: Build command
 - `publish`: Output directory
 - `environment`: Build environment variables
@@ -269,18 +277,21 @@ git push origin feature/new-component
 When reviewing a PR preview, check:
 
 #### Theming
+
 - [ ] Light theme works correctly
 - [ ] Dark theme works correctly
 - [ ] Minimal theme shows unstyled components
 - [ ] Custom CSS properties apply correctly
 
 #### Variants
+
 - [ ] Primary variant styled correctly
 - [ ] Secondary variant styled correctly
 - [ ] Ghost variant styled correctly
 - [ ] All color combinations work
 
 #### States
+
 - [ ] Default state
 - [ ] Hover state
 - [ ] Focus state (keyboard navigation)
@@ -289,6 +300,7 @@ When reviewing a PR preview, check:
 - [ ] Loading state (if applicable)
 
 #### Accessibility
+
 - [ ] Check Accessibility addon tab
 - [ ] All ARIA attributes present
 - [ ] Keyboard navigation works
@@ -296,6 +308,7 @@ When reviewing a PR preview, check:
 - [ ] Color contrast passes WCAG AA
 
 #### Responsive
+
 - [ ] Mobile viewport (320px, 375px, 414px)
 - [ ] Tablet viewport (768px, 1024px)
 - [ ] Desktop viewport (1280px, 1920px)
@@ -309,6 +322,7 @@ When reviewing a PR preview, check:
 **Issue**: Build command fails
 
 **Solutions:**
+
 ```bash
 # Check build locally first
 pnpm install
@@ -326,6 +340,7 @@ pnpm build-storybook
 **Issue**: Preview shows old version
 
 **Solutions:**
+
 1. **Force rebuild**: Push an empty commit
    ```bash
    git commit --allow-empty -m "trigger rebuild"
@@ -339,6 +354,7 @@ pnpm build-storybook
 **Issue**: Build fails with "JavaScript heap out of memory"
 
 **Solution:** Already configured in both `vercel.json` and `netlify.toml`:
+
 ```bash
 NODE_OPTIONS=--max-old-space-size=4096
 ```
@@ -349,26 +365,28 @@ If still failing, increase to `8192` in environment settings.
 
 ## 📊 Comparison: Vercel vs Netlify vs Chromatic
 
-| Feature | Vercel | Netlify | Chromatic |
-|---------|--------|---------|-----------|
-| **PR Previews** | ✅ Auto | ✅ Auto | ✅ Auto |
-| **Build Speed** | ⚡ Fast | ⚡ Fast | 🐢 Slower |
-| **Free Tier** | ✅ Generous | ✅ Generous | ⚠️ Limited |
-| **Custom Domain** | ✅ Yes | ✅ Yes | ❌ No |
-| **Visual Testing** | ❌ No | ❌ No | ✅ Yes |
-| **GitHub Integration** | ✅ Excellent | ✅ Excellent | ✅ Good |
-| **Setup Difficulty** | 🟢 Easy | 🟢 Easy | 🟡 Medium |
-| **Best For** | General hosting | General hosting | Storybook + testing |
+| Feature                | Vercel          | Netlify         | Chromatic           |
+| ---------------------- | --------------- | --------------- | ------------------- |
+| **PR Previews**        | ✅ Auto         | ✅ Auto         | ✅ Auto             |
+| **Build Speed**        | ⚡ Fast         | ⚡ Fast         | 🐢 Slower           |
+| **Free Tier**          | ✅ Generous     | ✅ Generous     | ⚠️ Limited          |
+| **Custom Domain**      | ✅ Yes          | ✅ Yes          | ❌ No               |
+| **Visual Testing**     | ❌ No           | ❌ No           | ✅ Yes              |
+| **GitHub Integration** | ✅ Excellent    | ✅ Excellent    | ✅ Good             |
+| **Setup Difficulty**   | 🟢 Easy         | 🟢 Easy         | 🟡 Medium           |
+| **Best For**           | General hosting | General hosting | Storybook + testing |
 
 ### Recommendation
 
 **Use Vercel** for most cases:
+
 - Fastest setup
 - Best GitHub integration
 - Generous free tier
 - Great for component previews
 
 **Add Chromatic** if you need visual regression testing:
+
 - Use both Vercel (for hosting) + Chromatic (for testing)
 - Chromatic provides visual diff on every PR
 - Catches unintended visual changes
@@ -388,16 +406,19 @@ If still failing, increase to `8192` in environment settings.
 ## 📚 Resources
 
 ### Vercel
+
 - [Documentation](https://vercel.com/docs)
 - [GitHub Integration](https://vercel.com/docs/git/vercel-for-github)
 - [Build Configuration](https://vercel.com/docs/build-step)
 
 ### Netlify
+
 - [Documentation](https://docs.netlify.com/)
 - [Deploy Previews](https://docs.netlify.com/site-deploys/deploy-previews/)
 - [Build Configuration](https://docs.netlify.com/configure-builds/file-based-configuration/)
 
 ### Chromatic
+
 - [Documentation](https://www.chromatic.com/docs/)
 - [Visual Testing](https://www.chromatic.com/docs/test)
 - [Storybook Publishing](https://www.chromatic.com/docs/publish)
@@ -407,21 +428,26 @@ If still failing, increase to `8192` in environment settings.
 ## 💡 Pro Tips
 
 1. **Use preview URLs in PR descriptions**:
+
    ```markdown
    ## Preview
+
    🔍 [View Storybook Preview](https://aetherui-pr-123.vercel.app)
 
    Changes to review:
+
    - Button component now supports unstyled mode
    - Added dark theme support
    ```
 
 2. **Share specific component links**:
+
    ```
    https://aetherui-pr-123.vercel.app/?path=/story/components-button--primary
    ```
 
 3. **Enable automatic deployments** on branch patterns:
+
    ```json
    {
      "git": {
@@ -441,6 +467,7 @@ If still failing, increase to `8192` in environment settings.
 ## ✅ Success Criteria
 
 You'll know preview deployments are working when:
+
 - ✅ Every PR automatically gets a preview comment
 - ✅ Preview URL shows your latest Storybook
 - ✅ Changes appear within 2-5 minutes of push

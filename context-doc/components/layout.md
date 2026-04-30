@@ -3,9 +3,10 @@
 Stack, Inline, Grid helpers for spacing.
 
 ## Folder
+
 ```text
 packages/layout/
 └─ src/
 ```
 
-*Updated: 2025-05-03*
+_Updated: 2025-05-03_

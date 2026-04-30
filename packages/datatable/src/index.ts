@@ -21,11 +21,11 @@ import { AeDatatableRow } from './ae-datatable-row';
 import { AeDatatableCell } from './ae-datatable-cell';
 
 // Import constants directly to avoid circular dependency
-import { 
-  DATATABLE_ELEMENT_NAME, 
+import {
+  DATATABLE_ELEMENT_NAME,
   DATATABLE_HEADER_ELEMENT_NAME,
   DATATABLE_ROW_ELEMENT_NAME,
-  DATATABLE_CELL_ELEMENT_NAME
+  DATATABLE_CELL_ELEMENT_NAME,
 } from './constants';
 
 // Register components to ensure they're available
@@ -34,15 +34,15 @@ try {
   if (!customElements.get(DATATABLE_ELEMENT_NAME)) {
     customElements.define(DATATABLE_ELEMENT_NAME, AeDataTable);
   }
-  
+
   if (!customElements.get(DATATABLE_HEADER_ELEMENT_NAME)) {
     customElements.define(DATATABLE_HEADER_ELEMENT_NAME, AeDatatableHeader);
   }
-  
+
   if (!customElements.get(DATATABLE_ROW_ELEMENT_NAME)) {
     customElements.define(DATATABLE_ROW_ELEMENT_NAME, AeDatatableRow);
   }
-  
+
   if (!customElements.get(DATATABLE_CELL_ELEMENT_NAME)) {
     customElements.define(DATATABLE_CELL_ELEMENT_NAME, AeDatatableCell);
   }
@@ -57,19 +57,19 @@ export function defineDataTableElements() {
     if (!customElements.get(DATATABLE_ELEMENT_NAME)) {
       customElements.define(DATATABLE_ELEMENT_NAME, AeDataTable);
     }
-    
+
     if (!customElements.get(DATATABLE_HEADER_ELEMENT_NAME)) {
       customElements.define(DATATABLE_HEADER_ELEMENT_NAME, AeDatatableHeader);
     }
-    
+
     if (!customElements.get(DATATABLE_ROW_ELEMENT_NAME)) {
       customElements.define(DATATABLE_ROW_ELEMENT_NAME, AeDatatableRow);
     }
-    
+
     if (!customElements.get(DATATABLE_CELL_ELEMENT_NAME)) {
       customElements.define(DATATABLE_CELL_ELEMENT_NAME, AeDatatableCell);
     }
-    
+
     return true;
   } catch (error) {
     console.warn('Error defining datatable elements:', error);

@@ -42,7 +42,8 @@ export const checkboxStyles = css`
     flex-shrink: 0;
   }
 
-  .checkbox-icon, .indeterminate-icon {
+  .checkbox-icon,
+  .indeterminate-icon {
     width: calc(var(--ae-checkbox-size, 18px) - 6px);
     height: calc(var(--ae-checkbox-size, 18px) - 6px);
     color: var(--ae-checkbox-checked-icon-color);
@@ -104,4 +105,4 @@ export const checkboxStyles = css`
     color: var(--ae-checkbox-text-color, inherit);
     font-size: var(--ae-checkbox-font-size, inherit);
   }
-`; 
+`;

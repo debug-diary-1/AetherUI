@@ -7,7 +7,7 @@ import {
   createAutoUpdate,
   type PositionOptions,
   type Placement,
-  type Strategy
+  type Strategy,
 } from './middleware.js';
 
 /**
@@ -72,7 +72,7 @@ export class AeTooltip extends LitElement {
 
   @state()
   private _tooltipStyles: Record<string, string> = {
-    visibility: 'hidden'
+    visibility: 'hidden',
   };
 
   @state()
@@ -158,18 +158,16 @@ export class AeTooltip extends LitElement {
   render() {
     return html`
       <slot @slotchange=${this._handleSlotChange}></slot>
-      ${this.open ? html`
-        <div 
-          part="overlay" 
-          role="tooltip"
-          style=${styleMap(this._tooltipStyles)}
-        >
-          ${this.showArrow ? html`
-            <div part="arrow" style=${styleMap(this._arrowStyles)}></div>
-          ` : ''}
-          <span part="content">${this.text}</span>
-        </div>
-      ` : ''}
+      ${this.open
+        ? html`
+            <div part="overlay" role="tooltip" style=${styleMap(this._tooltipStyles)}>
+              ${this.showArrow
+                ? html` <div part="arrow" style=${styleMap(this._arrowStyles)}></div> `
+                : ''}
+              <span part="content">${this.text}</span>
+            </div>
+          `
+        : ''}
     `;
   }
 
@@ -197,7 +195,7 @@ export class AeTooltip extends LitElement {
   private _findAnchorElement() {
     const assignedElements = this._slot?.assignedElements({ flatten: true }) || [];
     const slotted = assignedElements[0] as HTMLElement;
-    
+
     if (this._anchorElement !== slotted) {
       this._removeAnchorEventListeners();
       this._anchorElement = slotted || this;
@@ -237,10 +235,10 @@ export class AeTooltip extends LitElement {
 
   private _onMouseEnter() {
     if (this.disabled || !this.text) return;
-    
+
     this._isHovering = true;
     this._clearTimers();
-    
+
     if (this.hoverDelay > 0) {
       this._hoverTimer = window.setTimeout(() => {
         if (this._isHovering) {
@@ -255,7 +253,7 @@ export class AeTooltip extends LitElement {
   private _onMouseLeave() {
     this._isHovering = false;
     this._clearTimers();
-    
+
     if (this.hideDelay > 0) {
       this._hideTimer = window.setTimeout(() => {
         if (!this._isHovering && !this._isFocused) {
@@ -269,10 +267,10 @@ export class AeTooltip extends LitElement {
 
   private _onFocus() {
     if (this.disabled || !this.text) return;
-    
+
     this._isFocused = true;
     this._clearTimers();
-    
+
     if (this.hoverDelay > 0) {
       this._hoverTimer = window.setTimeout(() => {
         if (this._isFocused) {
@@ -287,7 +285,7 @@ export class AeTooltip extends LitElement {
   private _onBlur() {
     this._isFocused = false;
     this._clearTimers();
-    
+
     if (this.hideDelay > 0) {
       this._hideTimer = window.setTimeout(() => {
         if (!this._isHovering && !this._isFocused) {
@@ -336,25 +334,21 @@ export class AeTooltip extends LitElement {
     const options: PositionOptions = {
       placement: this.placement,
       strategy: this.strategy,
-      arrowElement: this.showArrow ? this._arrow : null
+      arrowElement: this.showArrow ? this._arrow : null,
     };
 
     const updatePosition = async () => {
       if (!this._anchorElement || !this._overlay) return;
 
       try {
-        const result = await positionTooltip(
-          this._anchorElement,
-          this._overlay,
-          options
-        );
+        const result = await positionTooltip(this._anchorElement, this._overlay, options);
 
         // Use Lit's reactive properties instead of direct style manipulation
         this._tooltipStyles = {
           left: `${result.x}px`,
           top: `${result.y}px`,
           position: this.strategy,
-          visibility: 'visible'
+          visibility: 'visible',
         };
         this._isPositioned = true;
 
@@ -373,7 +367,7 @@ export class AeTooltip extends LitElement {
             top: y != null ? `${y}px` : '',
             right: '',
             bottom: '',
-            [staticSide]: '-4px'
+            [staticSide]: '-4px',
           };
         }
       } catch {
@@ -385,11 +379,7 @@ export class AeTooltip extends LitElement {
     await updatePosition();
 
     // Setup auto-update for position changes
-    this._cleanupAutoUpdate = createAutoUpdate(
-      this._anchorElement,
-      this._overlay,
-      updatePosition
-    );
+    this._cleanupAutoUpdate = createAutoUpdate(this._anchorElement, this._overlay, updatePosition);
   }
 
   private _cleanupPositioning() {
@@ -403,22 +393,20 @@ export class AeTooltip extends LitElement {
     if (!this._anchorElement || !this._overlay) return;
 
     const tooltipId = this._overlay.id || this._generateId();
-    
+
     if (add) {
       this._overlay.id = tooltipId;
       const currentDescribedBy = this._anchorElement.getAttribute('aria-describedby');
-      const newDescribedBy = currentDescribedBy 
-        ? `${currentDescribedBy} ${tooltipId}`
-        : tooltipId;
+      const newDescribedBy = currentDescribedBy ? `${currentDescribedBy} ${tooltipId}` : tooltipId;
       this._anchorElement.setAttribute('aria-describedby', newDescribedBy);
     } else {
       const currentDescribedBy = this._anchorElement.getAttribute('aria-describedby');
       if (currentDescribedBy) {
         const newDescribedBy = currentDescribedBy
           .split(' ')
-          .filter(id => id !== tooltipId)
+          .filter((id) => id !== tooltipId)
           .join(' ');
-        
+
         if (newDescribedBy) {
           this._anchorElement.setAttribute('aria-describedby', newDescribedBy);
         } else {
@@ -436,11 +424,13 @@ export class AeTooltip extends LitElement {
 
   private _emitOpenChange() {
     const eventName = this.open ? 'ae-tooltip-show' : 'ae-tooltip-hide';
-    this.dispatchEvent(new CustomEvent(eventName, {
-      detail: { open: this.open },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent(eventName, {
+        detail: { open: this.open },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 }
 

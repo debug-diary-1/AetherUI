@@ -45,11 +45,13 @@ export class AeMenuItem extends LitElement {
       return;
     }
 
-    this.dispatchEvent(new CustomEvent('ae-menu-select', {
-      detail: { value: this.value || this.textContent?.trim() || '' },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-menu-select', {
+        detail: { value: this.value || this.textContent?.trim() || '' },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private handleKeyDown(event: KeyboardEvent) {

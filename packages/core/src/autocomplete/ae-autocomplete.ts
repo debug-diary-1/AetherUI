@@ -6,12 +6,12 @@ import { autocompleteStyles } from './styles';
 
 /**
  * Aether UI Autocomplete Component
- * 
+ *
  * A text input with dropdown suggestions as users type, helping them quickly
  * find and select from a list of options.
- * 
+ *
  * @element ae-autocomplete
- * 
+ *
  * @property {string|AutocompleteOption[]} options - Options to display in the dropdown
  * @property {string} value - Current input value
  * @property {string} placeholder - Placeholder text for the input
@@ -20,22 +20,22 @@ import { autocompleteStyles } from './styles';
  * @property {number} minChars - Minimum characters before showing suggestions
  * @property {number} maxItems - Maximum number of items to show in dropdown
  * @property {AutocompleteFilterFunction} filterFn - Custom filter function
- * 
+ *
  * @fires {CustomEvent<{value: string, option: AutocompleteOption|null}>} ae-autocomplete-change - Fired when the value changes
  * @fires {CustomEvent<{value: string, option: AutocompleteOption}>} ae-autocomplete-select - Fired when an option is selected
- * 
+ *
  * @slot option - Custom template for rendering each option
  * @slot no-results - Content shown when no results match
  * @slot clear - Custom template for the clear button
  * @slot arrow - Custom template for the dropdown arrow
- * 
+ *
  * @csspart input - The text input element
  * @csspart dropdown - The dropdown container
  * @csspart option - Each option in the dropdown
  * @csspart group - Group heading for categorized options
  * @csspart clear - The clear button
  * @csspart arrow - The dropdown arrow
- * 
+ *
  * @cssproperty --ae-autocomplete-border-color - Border color of the input
  * @cssproperty --ae-autocomplete-background - Background color of the input
  * @cssproperty --ae-autocomplete-text-color - Text color of the input
@@ -171,7 +171,7 @@ export class AeAutocomplete extends LitElement {
 
     // Update controller with new value
     this._controller.value = value;
-    
+
     // Dispatch change event
     this._dispatchChangeEvent(value);
   }
@@ -253,12 +253,12 @@ export class AeAutocomplete extends LitElement {
    */
   private _handleOptionClick(option: AutocompleteOption) {
     if (option.disabled) return;
-    
+
     this._skipNextChange = true;
     this._controller.value = option.text;
     this._controller.close();
     this._dispatchSelectEvent(option);
-    
+
     // Focus back on input after selection
     this.input.focus();
   }
@@ -302,30 +302,34 @@ export class AeAutocomplete extends LitElement {
       return;
     }
 
-    const matchingOption = this._controller.options.find(opt => opt.text === value);
-    
-    this.dispatchEvent(new CustomEvent('ae-autocomplete-change', {
-      detail: {
-        value,
-        option: matchingOption || null
-      },
-      bubbles: true,
-      composed: true
-    }));
+    const matchingOption = this._controller.options.find((opt) => opt.text === value);
+
+    this.dispatchEvent(
+      new CustomEvent('ae-autocomplete-change', {
+        detail: {
+          value,
+          option: matchingOption || null,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /**
    * Dispatch select event
    */
   private _dispatchSelectEvent(option: AutocompleteOption) {
-    this.dispatchEvent(new CustomEvent('ae-autocomplete-select', {
-      detail: {
-        value: option.text,
-        option
-      },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-autocomplete-select', {
+        detail: {
+          value: option.text,
+          option,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /**
@@ -354,9 +358,9 @@ export class AeAutocomplete extends LitElement {
    */
   private _renderHighlightedText(text: string) {
     const parts = this._controller.getHighlightedText(text);
-    
+
     return html`
-      ${parts.map(part => {
+      ${parts.map((part) => {
         if (part.isMatch) {
           return html`<span class="autocomplete-match">${part.text}</span>`;
         }
@@ -371,7 +375,7 @@ export class AeAutocomplete extends LitElement {
   private _renderOptions() {
     const filteredOptions = this._controller.filteredOptions;
     const highlightedIndex = this._controller.highlightedIndex;
-    
+
     if (filteredOptions.length === 0) {
       // No results to show
       return html`
@@ -384,15 +388,15 @@ export class AeAutocomplete extends LitElement {
     // Group options if needed
     const groupedOptions: Record<string, AutocompleteOption[]> = {};
     let hasGroups = false;
-    
-    filteredOptions.forEach(option => {
+
+    filteredOptions.forEach((option) => {
       const group = option.group || '';
       if (group) hasGroups = true;
-      
+
       if (!groupedOptions[group]) {
         groupedOptions[group] = [];
       }
-      
+
       groupedOptions[group].push(option);
     });
 
@@ -400,12 +404,13 @@ export class AeAutocomplete extends LitElement {
       // Render simple option list
       return html`
         <ul class="autocomplete-options" role="listbox" part="options">
-          ${filteredOptions.map((option, index) => html`
+          ${filteredOptions.map(
+            (option, index) => html`
               <li
                 class=${this._getClasses({
                   'autocomplete-option': true,
-                  'highlighted': index === highlightedIndex,
-                  'disabled': !!option.disabled
+                  highlighted: index === highlightedIndex,
+                  disabled: !!option.disabled,
                 })}
                 role="option"
                 aria-selected=${index === highlightedIndex ? 'true' : 'false'}
@@ -416,7 +421,7 @@ export class AeAutocomplete extends LitElement {
                   ${this._renderHighlightedText(option.text)}
                 </slot>
               </li>
-            `
+            `,
           )}
         </ul>
       `;
@@ -424,21 +429,21 @@ export class AeAutocomplete extends LitElement {
       // Render grouped options
       return html`
         <ul class="autocomplete-options" role="listbox" part="options">
-          ${Object.entries(groupedOptions).map(([group, options]) => html`
-            ${group ? html`
-              <li class="autocomplete-group-heading" part="group-heading">${group}</li>
-            ` : ''}
-            
-            ${options.map((option, _index) => {
+          ${Object.entries(groupedOptions).map(
+            ([group, options]) => html`
+              ${group
+                ? html` <li class="autocomplete-group-heading" part="group-heading">${group}</li> `
+                : ''}
+              ${options.map((option, _index) => {
                 // Calculate the overall index in the flat list
-                const flatIndex = filteredOptions.findIndex(o => o.id === option.id);
-                
+                const flatIndex = filteredOptions.findIndex((o) => o.id === option.id);
+
                 return html`
                   <li
                     class=${this._getClasses({
                       'autocomplete-option': true,
-                      'highlighted': flatIndex === highlightedIndex,
-                      'disabled': !!option.disabled
+                      highlighted: flatIndex === highlightedIndex,
+                      disabled: !!option.disabled,
                     })}
                     role="option"
                     aria-selected=${flatIndex === highlightedIndex ? 'true' : 'false'}
@@ -450,9 +455,9 @@ export class AeAutocomplete extends LitElement {
                     </slot>
                   </li>
                 `;
-              }
-            )}
-          `)}
+              })}
+            `,
+          )}
         </ul>
       `;
     }
@@ -463,9 +468,9 @@ export class AeAutocomplete extends LitElement {
    */
   private _renderClearButton() {
     if (!this.value) return null;
-    
+
     return html`
-      <button 
+      <button
         type="button"
         class="autocomplete-clear"
         part="clear"
@@ -517,14 +522,13 @@ export class AeAutocomplete extends LitElement {
           aria-label=${this.ariaLabel || this.placeholder || 'Autocomplete'}
           autocomplete="off"
         />
-        
-        ${this._renderClearButton()}
-        ${this._renderArrow()}
-        
-        <div 
+
+        ${this._renderClearButton()} ${this._renderArrow()}
+
+        <div
           class=${this._getClasses({
             'autocomplete-dropdown': true,
-            'open': this._controller.isOpen
+            open: this._controller.isOpen,
           })}
           part="dropdown"
         >

@@ -37,7 +37,7 @@ export class AutocompleteController implements ReactiveController {
    * Set the options for the autocomplete
    */
   set options(options: (string | AutocompleteOption)[]) {
-    this._options = options.map(option => {
+    this._options = options.map((option) => {
       if (typeof option === 'string') {
         return { id: option, text: option };
       }
@@ -167,7 +167,7 @@ export class AutocompleteController implements ReactiveController {
 
     // Filter options based on the value
     this._filteredOptions = this._options
-      .filter(option => this._filterFn(value, option))
+      .filter((option) => this._filterFn(value, option))
       .slice(0, this._maxItems);
 
     // Update UI state
@@ -223,7 +223,7 @@ export class AutocompleteController implements ReactiveController {
    */
   highlightNext(): void {
     if (this._filteredOptions.length === 0) return;
-    
+
     const newIndex = this._highlightedIndex + 1;
     if (newIndex >= this._filteredOptions.length) {
       this._highlightedIndex = 0;
@@ -238,7 +238,7 @@ export class AutocompleteController implements ReactiveController {
    */
   highlightPrev(): void {
     if (this._filteredOptions.length === 0) return;
-    
+
     const newIndex = this._highlightedIndex - 1;
     if (newIndex < 0) {
       this._highlightedIndex = this._filteredOptions.length - 1;
@@ -256,7 +256,7 @@ export class AutocompleteController implements ReactiveController {
       const option = this._filteredOptions[this._highlightedIndex];
       if (option && !option.disabled) {
         this._value = option.text;
-        this._selectedIndex = this._options.findIndex(o => o.id === option.id);
+        this._selectedIndex = this._options.findIndex((o) => o.id === option.id);
         this.close();
         this.host.requestUpdate();
         return option;
@@ -269,7 +269,7 @@ export class AutocompleteController implements ReactiveController {
    * Select option by id
    */
   selectById(id: string | number): AutocompleteOption | null {
-    const optionIndex = this._options.findIndex(o => o.id === id);
+    const optionIndex = this._options.findIndex((o) => o.id === id);
     if (optionIndex >= 0) {
       const option = this._options[optionIndex];
       if (!option.disabled) {
@@ -315,19 +315,19 @@ export class AutocompleteController implements ReactiveController {
     if (startIndex > 0) {
       result.push({
         text: text.substring(0, startIndex),
-        isMatch: false
+        isMatch: false,
       });
     }
 
     result.push({
       text: text.substring(startIndex, startIndex + query.length),
-      isMatch: true
+      isMatch: true,
     });
 
     if (startIndex + query.length < text.length) {
       result.push({
         text: text.substring(startIndex + query.length),
-        isMatch: false
+        isMatch: false,
       });
     }
 

@@ -14,4 +14,4 @@ export const defineAeRadioGroup = () => {
   if (!customElements.get('ae-radio-group')) {
     customElements.define('ae-radio-group', AeRadioGroup);
   }
-}; 
+};

@@ -18,12 +18,12 @@ export const toastStyles = css`
   }
 
   /* Prevent transition animation on first render */
-  :host(.no-animation) [part="toast"] {
+  :host(.no-animation) [part='toast'] {
     animation: none;
   }
 
   /* Main toast container */
-  [part="toast"] {
+  [part='toast'] {
     display: flex;
     align-items: flex-start;
     gap: 0.5rem;
@@ -47,61 +47,61 @@ export const toastStyles = css`
   }
 
   /* Size variants */
-  :host([size='sm']) [part="toast"] {
+  :host([size='sm']) [part='toast'] {
     padding: 0.625rem 0.75rem;
     gap: 0.375rem;
     font-size: 0.8125rem;
   }
 
-  :host([size='sm']) [part="icon"] {
+  :host([size='sm']) [part='icon'] {
     width: 16px;
     height: 16px;
   }
 
-  :host([size='md']) [part="toast"] {
+  :host([size='md']) [part='toast'] {
     padding: 0.75rem 1rem;
     gap: 0.5rem;
     font-size: 0.875rem;
   }
 
-  :host([size='md']) [part="icon"] {
+  :host([size='md']) [part='icon'] {
     width: 20px;
     height: 20px;
   }
 
-  :host([size='lg']) [part="toast"] {
+  :host([size='lg']) [part='toast'] {
     padding: 1rem 1.25rem;
     gap: 0.625rem;
     font-size: 1rem;
   }
 
-  :host([size='lg']) [part="icon"] {
+  :host([size='lg']) [part='icon'] {
     width: 24px;
     height: 24px;
   }
 
-  :host([exiting]) [part="toast"] {
+  :host([exiting]) [part='toast'] {
     animation: toast-out 0.15s ease-in forwards;
   }
 
   /* Variant styles */
-  :host([variant="success"]) [part="toast"] {
+  :host([variant='success']) [part='toast'] {
     background: var(--ae-toast-bg-success);
     color: var(--ae-toast-fg-success);
   }
 
-  :host([variant="warning"]) [part="toast"] {
+  :host([variant='warning']) [part='toast'] {
     background: var(--ae-toast-bg-warning);
     color: var(--ae-toast-fg-warning);
   }
 
-  :host([variant="error"]) [part="toast"] {
+  :host([variant='error']) [part='toast'] {
     background: var(--ae-toast-bg-error);
     color: var(--ae-toast-fg-error);
   }
 
   /* Icon styling */
-  [part="icon"] {
+  [part='icon'] {
     flex-shrink: 0;
     width: 20px;
     height: 20px;
@@ -109,14 +109,14 @@ export const toastStyles = css`
   }
 
   /* Content area */
-  [part="content"] {
+  [part='content'] {
     flex: 1;
     font-size: 0.875rem;
     line-height: 1.4;
   }
 
   /* Close button */
-  [part="close"] {
+  [part='close'] {
     background: none;
     border: none;
     padding: 4px;
@@ -133,18 +133,18 @@ export const toastStyles = css`
     height: 20px;
   }
 
-  [part="close"]:hover {
+  [part='close']:hover {
     opacity: 1;
     background: var(--ae-toast-close-hover-bg);
   }
 
-  [part="close"]:focus-visible {
+  [part='close']:focus-visible {
     outline: 2px solid var(--ae-focus-ring-color);
     outline-offset: 2px;
   }
 
   /* Progress bar */
-  [part="progress"] {
+  [part='progress'] {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -157,7 +157,7 @@ export const toastStyles = css`
   }
 
   @media (prefers-reduced-motion: reduce) {
-    [part="progress"] {
+    [part='progress'] {
       animation-duration: calc(var(--ae-toast-duration, 5s) * 0.01);
     }
   }
@@ -198,7 +198,7 @@ export const toastStyles = css`
 
   /* Make sure toasts are visually distinct when using high contrast mode */
   @media (forced-colors: active) {
-    [part="toast"] {
+    [part='toast'] {
       outline: 2px solid CanvasText;
       outline-offset: -2px;
     }
@@ -223,28 +223,28 @@ export const toastContainerStyles = css`
   }
 
   /* Top right placement */
-  .ae-toast-container[data-placement="top-right"] {
+  .ae-toast-container[data-placement='top-right'] {
     top: 0;
     right: 0;
     align-items: flex-end;
   }
 
   /* Bottom right placement */
-  .ae-toast-container[data-placement="bottom-right"] {
+  .ae-toast-container[data-placement='bottom-right'] {
     bottom: 0;
     right: 0;
     align-items: flex-end;
   }
 
   /* Top left placement */
-  .ae-toast-container[data-placement="top-left"] {
+  .ae-toast-container[data-placement='top-left'] {
     top: 0;
     left: 0;
     align-items: flex-start;
   }
 
   /* Bottom left placement */
-  .ae-toast-container[data-placement="bottom-left"] {
+  .ae-toast-container[data-placement='bottom-left'] {
     bottom: 0;
     left: 0;
     align-items: flex-start;

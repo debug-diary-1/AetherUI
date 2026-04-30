@@ -2,6 +2,7 @@
 title: Button Component
 description: Primary action trigger with variants (primary, secondary, ghost, icon-only) and sizes (sm, md, lg).
 ---
+
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ButtonExample from '../../../components/ButtonExample.astro';
 
@@ -34,21 +35,9 @@ The Button component is a clickable element that triggers an action with differe
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">
-    ```bash
-    pnpm add @aetherui/core
-    ```
-  </TabItem>
-  <TabItem label="npm">
-    ```bash
-    npm install @aetherui/core
-    ```
-  </TabItem>
-  <TabItem label="yarn">
-    ```bash
-    yarn add @aetherui/core
-    ```
-  </TabItem>
+  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
+  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
+  <TabItem label="yarn">```bash yarn add @aetherui/core ```</TabItem>
 </Tabs>
 
 ## Import
@@ -128,14 +117,24 @@ The button supports icons through the `icon` slot. You can position the icon at 
   </ae-button>
 
   <!-- Icon at end -->
-  <ae-button icon-position="end">
-    Next
-    <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M9 18l6-6-6-6"/>
-    </svg>
-  </ae-button>
+
+<ae-button icon-position="end">
+  Next
+  <svg
+    slot="icon"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <path d="M9 18l6-6-6-6" />
+  </svg>
+</ae-button>
 
   <!-- Icon only -->
+
   <ae-button variant="ghost" aria-label="Add item">
     <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M12 5v14M5 12h14"/>
@@ -157,12 +156,14 @@ The button supports icons through the `icon` slot. You can position the icon at 
   </div>
 
   <!-- Dialog actions -->
-  <div class="button-group">
-    <ae-button variant="primary">Confirm</ae-button>
-    <ae-button variant="ghost">Cancel</ae-button>
-  </div>
+
+<div class="button-group">
+  <ae-button variant="primary">Confirm</ae-button>
+  <ae-button variant="ghost">Cancel</ae-button>
+</div>
 
   <!-- Toolbar actions -->
+
   <div class="button-group">
     <ae-button variant="ghost" aria-label="Add item">
       <svg slot="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -193,42 +194,42 @@ The button supports icons through the `icon` slot. You can position the icon at 
 
 ## Props
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `'primary' \| 'secondary' \| 'ghost'` | `'primary'` | Visual style variant of the button |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Applied to padding & font-size |
-| `disabled` | `boolean` | `false` | Native disable state |
-| `icon-position` | `'start' \| 'end'` | `'start'` | Position of the icon when both icon and text are present |
+| Name            | Type                                  | Default     | Description                                              |
+| --------------- | ------------------------------------- | ----------- | -------------------------------------------------------- |
+| `variant`       | `'primary' \| 'secondary' \| 'ghost'` | `'primary'` | Visual style variant of the button                       |
+| `size`          | `'sm' \| 'md' \| 'lg'`                | `'md'`      | Applied to padding & font-size                           |
+| `disabled`      | `boolean`                             | `false`     | Native disable state                                     |
+| `icon-position` | `'start' \| 'end'`                    | `'start'`   | Position of the icon when both icon and text are present |
 
 ## Slots
 
-| Name | Description |
-|------|-------------|
-| `default` | The button's label text |
-| `icon` | Icon content that can be positioned at start or end |
+| Name      | Description                                         |
+| --------- | --------------------------------------------------- |
+| `default` | The button's label text                             |
+| `icon`    | Icon content that can be positioned at start or end |
 
 ## CSS Parts
 
-| Name | Description |
-|------|-------------|
-| `base` | The button element |
-| `label` | Text wrapper element |
-| `icon` | The icon wrapper element |
+| Name    | Description              |
+| ------- | ------------------------ |
+| `base`  | The button element       |
+| `label` | Text wrapper element     |
+| `icon`  | The icon wrapper element |
 
 ## CSS Custom Properties
 
-| Name | Description |
-|------|-------------|
-| `--ae-button-bg-primary` | Primary button background color |
-| `--ae-button-fg-primary` | Primary button text color |
-| `--ae-button-bg-secondary` | Secondary button background color |
-| `--ae-button-fg-secondary` | Secondary button text color |
-| `--ae-color-brand-600` | Used for ghost button color and focus ring |
-| `--ae-button-radius` | Button border radius |
-| `--ae-button-padding-x` | Horizontal button padding |
-| `--ae-button-padding-y` | Vertical button padding |
-| `--ae-button-gap` | Gap between button text and icon |
-| `--ae-focus-ring-color` | Focus ring color |
+| Name                       | Description                                |
+| -------------------------- | ------------------------------------------ |
+| `--ae-button-bg-primary`   | Primary button background color            |
+| `--ae-button-fg-primary`   | Primary button text color                  |
+| `--ae-button-bg-secondary` | Secondary button background color          |
+| `--ae-button-fg-secondary` | Secondary button text color                |
+| `--ae-color-brand-600`     | Used for ghost button color and focus ring |
+| `--ae-button-radius`       | Button border radius                       |
+| `--ae-button-padding-x`    | Horizontal button padding                  |
+| `--ae-button-padding-y`    | Vertical button padding                    |
+| `--ae-button-gap`          | Gap between button text and icon           |
+| `--ae-focus-ring-color`    | Focus ring color                           |
 
 ## Styling Examples
 
@@ -236,7 +237,7 @@ Custom styling can be applied using CSS custom properties and shadow parts:
 
 ```css
 /* Make ghost variant transparent with brand-color text */
-ae-button[variant="ghost"]::part(base) {
+ae-button[variant='ghost']::part(base) {
   background: transparent;
   color: var(--ae-color-brand-600);
 }
@@ -249,7 +250,7 @@ ae-button[variant="ghost"]::part(base) {
 }
 
 /* Dark theme */
-[data-theme="dark"] {
+[data-theme='dark'] {
   --ae-button-bg-primary: #7353eb;
   --ae-color-brand-600: #7353eb;
 }

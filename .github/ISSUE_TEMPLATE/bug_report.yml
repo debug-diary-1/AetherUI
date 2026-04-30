@@ -1,7 +1,7 @@
 name: Bug Report
 description: Create a report to help us improve
-title: "[Bug] "
-labels: ["bug"]
+title: '[Bug] '
+labels: ['bug']
 body:
   - type: markdown
     attributes:
@@ -58,4 +58,4 @@ body:
         - Version: [e.g. 22]
         - Package version: [e.g. @aetherui/core@1.0.0]
     validations:
-      required: true 
+      required: true

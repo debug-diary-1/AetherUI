@@ -6,11 +6,11 @@ import { cellStyles } from './styles';
 /**
  * Cell component for the datatable
  * @element ae-datatable-cell
- * 
+ *
  * @property {string} align - Text alignment ('left', 'center', 'right')
- * 
+ *
  * @slot - Default content for the cell
- * 
+ *
  * @csspart content - The cell content
  */
 export class AeDatatableCell extends LitElement {

@@ -28,16 +28,16 @@ export class PgDeviceFrame extends LitElement {
       transition: max-width 0.3s ease;
     }
 
-    :host([size="mobile"]) .frame,
-    :host([size="tablet"]) .frame,
-    :host([size="desktop"]) .frame {
+    :host([size='mobile']) .frame,
+    :host([size='tablet']) .frame,
+    :host([size='desktop']) .frame {
       border: 1px solid var(--pg-border, #333);
       border-radius: 0.75rem;
       background: var(--pg-preview-bg, #1a1a1a);
       padding: 1.5rem;
     }
 
-    :host([size="full"]) .frame {
+    :host([size='full']) .frame {
       max-width: 100%;
     }
   `;

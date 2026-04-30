@@ -22,7 +22,7 @@
 /* Prevent body scroll when modal is open */
 body.ae-modal-open {
   overflow: hidden;
-  
+
   /* Prevent layout shift from scrollbar */
   padding-right: var(--ae-scrollbar-width, 0);
 }

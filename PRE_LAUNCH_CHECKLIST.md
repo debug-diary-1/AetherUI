@@ -28,6 +28,7 @@ Use this checklist to ensure your repository is ready for public open source rel
 ### Repository Settings Checklist
 
 Go to **Settings → General**:
+
 - [ ] Enable "Issues"
 - [ ] Enable "Discussions" (recommended)
 - [ ] Enable "Preserve this repository" (optional - for archival)
@@ -37,6 +38,7 @@ Go to **Settings → General**:
 - [ ] Automatically delete head branches after merge
 
 Go to **Settings → Branches**:
+
 - [ ] Add branch protection rule for `main`:
   - [ ] Require pull request reviews before merging (at least 1)
   - [ ] Require status checks to pass before merging
@@ -45,10 +47,12 @@ Go to **Settings → Branches**:
   - [ ] Do not allow bypassing the above settings
 
 Go to **Settings → Actions → General**:
+
 - [ ] Allow all actions and reusable workflows
 - [ ] Allow GitHub Actions to create and approve pull requests (for Dependabot)
 
 Go to **Settings → Code security**:
+
 - [ ] Enable Dependabot alerts
 - [ ] Enable Dependabot security updates
 - [ ] Enable secret scanning (if available)
@@ -169,6 +173,7 @@ npm publish --dry-run
    - [ ] CODE_OF_CONDUCT.md - Add enforcement contact email
 
 2. **Test Builds**
+
    ```bash
    # Clean everything
    pnpm clean
@@ -183,6 +188,7 @@ npm publish --dry-run
    ```
 
 3. **Version Bump**
+
    ```bash
    # Update all package.json versions
    # packages/core/package.json → 0.1.0 (or 1.0.0)
@@ -199,6 +205,7 @@ npm publish --dry-run
    - [ ] Publish release (this will trigger npm publish workflow if configured)
 
 5. **Manual NPM Publish** (if not using automated workflow)
+
    ```bash
    # Login to npm
    npm login
@@ -298,4 +305,4 @@ cd packages/core && npm publish --access public
 
 ---
 
-*This checklist was generated for the AetherUI project open source preparation.*
+_This checklist was generated for the AetherUI project open source preparation._

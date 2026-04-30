@@ -88,10 +88,7 @@ export default defineConfig({
         Head: './src/components/Head.astro',
         ThemeSelect: './src/components/ThemeToggle.astro',
       },
-      customCss: [
-        './src/styles/custom.css',
-        './src/styles/global.css'
-      ],
+      customCss: ['./src/styles/custom.css', './src/styles/global.css'],
       pagination: true,
     }),
   ],

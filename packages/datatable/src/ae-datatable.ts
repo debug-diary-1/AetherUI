@@ -15,7 +15,7 @@ import './ae-datatable-cell';
 /**
  * A powerful data table component for displaying and manipulating tabular data
  * @element ae-datatable
- * 
+ *
  * @property {Object[]} data - Array of data objects to display in the table
  * @property {ColumnDef[]} columns - Column definitions for the table
  * @property {boolean} sortable - Whether the table supports sorting (global setting)
@@ -26,17 +26,17 @@ import './ae-datatable-cell';
  * @property {number} pageSize - Number of rows per page
  * @property {string} emptyMessage - Message to display when there is no data
  * @property {boolean} resizable - Whether columns can be resized
- * 
+ *
  * @fires {CustomEvent} ae-datatable-sort - Fired when a column is sorted
  * @fires {CustomEvent} ae-datatable-filter - Fired when data is filtered
  * @fires {CustomEvent} ae-datatable-select - Fired when row selection changes
  * @fires {CustomEvent} ae-datatable-page - Fired when page changes
  * @fires {CustomEvent} ae-datatable-resize - Fired when a column is resized
- * 
+ *
  * @slot toolbar - Custom toolbar content at the top of the table
  * @slot footer - Custom footer content
  * @slot empty - Content to display when there is no data
- * 
+ *
  * @csspart base - The table container
  * @csspart header - The table header
  * @csspart body - The table body
@@ -45,7 +45,7 @@ import './ae-datatable-cell';
  * @csspart toolbar - The toolbar container
  * @csspart footer - The footer container
  * @csspart pagination - The pagination control container
- * 
+ *
  * @cssproperty --ae-datatable-border-color - Border color
  * @cssproperty --ae-datatable-header-bg - Header background color
  * @cssproperty --ae-datatable-hover-bg - Row hover background color
@@ -116,7 +116,6 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
   @property({ type: String, reflect: true, attribute: 'empty-message' })
   emptyMessage = 'No data to display';
 
-
   /**
    * Whether columns can be resized
    */
@@ -132,7 +131,12 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
    * Current pagination state
    */
   @state()
-  private paginationState: PaginationState = { page: 1, pageSize: 10, totalItems: 0, totalPages: 1 };
+  private paginationState: PaginationState = {
+    page: 1,
+    pageSize: 10,
+    totalItems: 0,
+    totalPages: 1,
+  };
 
   /**
    * Global filter value
@@ -189,11 +193,13 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
    */
   private updateGridTemplateColumns() {
     const visibleColumns = this.controller.getVisibleColumns();
-    const columnsStyle = visibleColumns.map(col => {
-      const width = this.controller.getColumn(col.id)?.width || '1fr';
-      return typeof width === 'number' ? `${width}px` : width;
-    }).join(' ');
-    
+    const columnsStyle = visibleColumns
+      .map((col) => {
+        const width = this.controller.getColumn(col.id)?.width || '1fr';
+        return typeof width === 'number' ? `${width}px` : width;
+      })
+      .join(' ');
+
     this.gridTemplateColumns = columnsStyle;
   }
 
@@ -205,17 +211,19 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
    */
   handleSort(columnId: string, direction: SortDirection, multiSort = false) {
     this.controller.setSortState(columnId, direction, multiSort);
-    
+
     // Dispatch sort event
-    this.dispatchEvent(new CustomEvent('ae-datatable-sort', {
-      detail: {
-        columnId,
-        direction,
-        sortState: this.controller.getSortState()
-      },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-datatable-sort', {
+        detail: {
+          columnId,
+          direction,
+          sortState: this.controller.getSortState(),
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /**
@@ -226,16 +234,18 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
     const input = e.target as HTMLInputElement;
     this.globalFilter = input.value;
     this.controller.setGlobalFilter(input.value);
-    
+
     // Dispatch filter event
-    this.dispatchEvent(new CustomEvent('ae-datatable-filter', {
-      detail: {
-        globalFilter: input.value,
-        filterState: this.controller.getFilterState()
-      },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-datatable-filter', {
+        detail: {
+          globalFilter: input.value,
+          filterState: this.controller.getFilterState(),
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /**
@@ -245,17 +255,19 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
    */
   handleColumnFilter(columnId: string, value: string) {
     this.controller.setColumnFilter(columnId, value);
-    
+
     // Dispatch filter event
-    this.dispatchEvent(new CustomEvent('ae-datatable-filter', {
-      detail: {
-        columnId,
-        value,
-        filterState: this.controller.getFilterState()
-      },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-datatable-filter', {
+        detail: {
+          columnId,
+          value,
+          filterState: this.controller.getFilterState(),
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /**
@@ -266,39 +278,44 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
     if (this.selectionMode === 'single') {
       this.controller.deselectAllRows();
     }
-    
+
     this.controller.toggleRowSelection(rowId);
-    
+
     // Dispatch selection event
-    this.dispatchEvent(new CustomEvent('ae-datatable-select', {
-      detail: {
-        selectedRows: this.controller.getSelectedRows()
-      },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-datatable-select', {
+        detail: {
+          selectedRows: this.controller.getSelectedRows(),
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /**
    * Handle select all rows
    */
   handleSelectAll() {
-    const allSelected = this.controller.getSelectedRows().length === this.controller.getProcessedData().length;
-    
+    const allSelected =
+      this.controller.getSelectedRows().length === this.controller.getProcessedData().length;
+
     if (allSelected) {
       this.controller.deselectAllRows();
     } else {
       this.controller.selectAllRows();
     }
-    
+
     // Dispatch selection event
-    this.dispatchEvent(new CustomEvent('ae-datatable-select', {
-      detail: {
-        selectedRows: this.controller.getSelectedRows()
-      },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-datatable-select', {
+        detail: {
+          selectedRows: this.controller.getSelectedRows(),
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /**
@@ -308,16 +325,18 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
   handlePageChange(page: number) {
     this.controller.setPage(page);
     this.paginationState = this.controller.getPaginationState();
-    
+
     // Dispatch page event
-    this.dispatchEvent(new CustomEvent('ae-datatable-page', {
-      detail: {
-        page,
-        paginationState: this.paginationState
-      },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-datatable-page', {
+        detail: {
+          page,
+          paginationState: this.paginationState,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /**
@@ -328,16 +347,18 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
   handleColumnResize(columnId: string, width: number) {
     this.controller.setColumnWidth(columnId, width);
     this.updateGridTemplateColumns();
-    
+
     // Dispatch resize event
-    this.dispatchEvent(new CustomEvent('ae-datatable-resize', {
-      detail: {
-        columnId,
-        width
-      },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-datatable-resize', {
+        detail: {
+          columnId,
+          width,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /**
@@ -347,37 +368,24 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
     if (!this.paginated) {
       return html``;
     }
-    
+
     const { page, pageSize, totalItems, totalPages } = this.paginationState;
     const start = (page - 1) * pageSize + 1;
     const end = Math.min(page * pageSize, totalItems);
-    
+
     return html`
       <div class="datatable__footer" part="footer">
-        <div class="datatable__pagination-info">
-          Showing ${start}-${end} of ${totalItems} items
-        </div>
+        <div class="datatable__pagination-info">Showing ${start}-${end} of ${totalItems} items</div>
         <div class="datatable__pagination" part="pagination">
-          <button 
-            ?disabled=${page === 1}
-            @click=${() => this.handlePageChange(1)}
-          >
-            First
-          </button>
-          <button 
-            ?disabled=${page === 1}
-            @click=${() => this.handlePageChange(page - 1)}
-          >
+          <button ?disabled=${page === 1} @click=${() => this.handlePageChange(1)}>First</button>
+          <button ?disabled=${page === 1} @click=${() => this.handlePageChange(page - 1)}>
             Previous
           </button>
           <span>Page ${page} of ${totalPages}</span>
-          <button 
-            ?disabled=${page === totalPages}
-            @click=${() => this.handlePageChange(page + 1)}
-          >
+          <button ?disabled=${page === totalPages} @click=${() => this.handlePageChange(page + 1)}>
             Next
           </button>
-          <button 
+          <button
             ?disabled=${page === totalPages}
             @click=${() => this.handlePageChange(totalPages)}
           >
@@ -393,17 +401,19 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
    */
   private renderToolbar() {
     // Default toolbar with filter input
-    const defaultToolbar = this.filterable ? html`
-      <div class="datatable__filter">
-        <input
-          type="text"
-          placeholder="Search..."
-          .value=${this.globalFilter}
-          @input=${this.handleGlobalFilterChange}
-        />
-      </div>
-    ` : html``;
-    
+    const defaultToolbar = this.filterable
+      ? html`
+          <div class="datatable__filter">
+            <input
+              type="text"
+              placeholder="Search..."
+              .value=${this.globalFilter}
+              @input=${this.handleGlobalFilterChange}
+            />
+          </div>
+        `
+      : html``;
+
     return html`
       <div class="datatable__toolbar" part="toolbar">
         <slot name="toolbar">${defaultToolbar}</slot>
@@ -417,26 +427,27 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
   private renderHeader() {
     const visibleColumns = this.controller.getVisibleColumns();
     const sortState = this.controller.getSortState();
-    
+
     const headerStyle = {
-      gridTemplateColumns: this.gridTemplateColumns
+      gridTemplateColumns: this.gridTemplateColumns,
     };
-    
+
     return html`
       <div class="datatable__header" part="header" style=${styleMap(headerStyle)}>
-        ${this.selectable ? html`
-          <ae-datatable-header-cell
-            id="selection"
-            .sortable=${false}
-            @click=${this.handleSelectAll}
-          >
-            <input type="checkbox" slot="content" />
-          </ae-datatable-header-cell>
-        ` : ''}
-        
-        ${visibleColumns.map(column => {
-          const sortInfo = sortState.find(s => s.id === column.id);
-          
+        ${this.selectable
+          ? html`
+              <ae-datatable-header-cell
+                id="selection"
+                .sortable=${false}
+                @click=${this.handleSelectAll}
+              >
+                <input type="checkbox" slot="content" />
+              </ae-datatable-header-cell>
+            `
+          : ''}
+        ${visibleColumns.map((column) => {
+          const sortInfo = sortState.find((s) => s.id === column.id);
+
           return html`
             <ae-datatable-header
               id=${column.id}
@@ -444,12 +455,12 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
               .resizable=${this.resizable && column.resizable !== false}
               .direction=${sortInfo?.direction || 'none'}
               .align=${column.align || 'left'}
-              @ae-datatable-header-sort=${(e: CustomEvent) => this.handleSort(column.id, e.detail.direction, e.detail.multiSort)}
-              @ae-datatable-header-resize=${(e: CustomEvent) => this.handleColumnResize(column.id, e.detail.width)}
+              @ae-datatable-header-sort=${(e: CustomEvent) =>
+                this.handleSort(column.id, e.detail.direction, e.detail.multiSort)}
+              @ae-datatable-header-resize=${(e: CustomEvent) =>
+                this.handleColumnResize(column.id, e.detail.width)}
             >
-              ${typeof column.header === 'string' 
-                ? column.header 
-                : column.header}
+              ${typeof column.header === 'string' ? column.header : column.header}
             </ae-datatable-header>
           `;
         })}
@@ -463,7 +474,7 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
   private renderBody() {
     const processedData = this.controller.getProcessedData();
     const visibleColumns = this.controller.getVisibleColumns();
-    
+
     if (processedData.length === 0) {
       return html`
         <div class="datatable__body" part="body">
@@ -473,14 +484,13 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
         </div>
       `;
     }
-    
-    
+
     return html`
       <div class="datatable__body" part="body">
         ${repeat(processedData, (item: T, index) => {
           const rowId = ((item as Record<string, unknown>).id as string | number) || index;
           const isSelected = this.controller.isRowSelected(rowId);
-          
+
           return html`
             <ae-datatable-row
               id=${String(rowId)}
@@ -488,18 +498,23 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
               ?selectable=${this.selectable}
               @click=${() => this.selectable && this.handleRowSelect(rowId)}
             >
-              ${this.selectable ? html`
-                <ae-datatable-cell align="center">
-                  <input type="checkbox" ?checked=${isSelected} />
-                </ae-datatable-cell>
-              ` : ''}
-              
-              ${visibleColumns.map(column => {
+              ${this.selectable
+                ? html`
+                    <ae-datatable-cell align="center">
+                      <input type="checkbox" ?checked=${isSelected} />
+                    </ae-datatable-cell>
+                  `
+                : ''}
+              ${visibleColumns.map((column) => {
                 let cellContent: string | TemplateResult;
-                
+
                 if (column.renderer) {
                   // Use custom renderer if provided
-                  const value = column.accessor ? column.accessor(item) : column.field ? item[column.field] : null;
+                  const value = column.accessor
+                    ? column.accessor(item)
+                    : column.field
+                      ? item[column.field]
+                      : null;
                   cellContent = column.renderer(value, item);
                 } else {
                   // Get value from accessor or field
@@ -511,7 +526,7 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
                   } else {
                     value = '';
                   }
-                  
+
                   // Format value if formatter is provided
                   if (column.format && value !== undefined && value !== null) {
                     cellContent = column.format(value);
@@ -519,12 +534,9 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
                     cellContent = value !== undefined && value !== null ? String(value) : '';
                   }
                 }
-                
+
                 return html`
-                  <ae-datatable-cell
-                    data-column=${column.id}
-                    align=${column.align || 'left'}
-                  >
+                  <ae-datatable-cell data-column=${column.id} align=${column.align || 'left'}>
                     ${cellContent}
                   </ae-datatable-cell>
                 `;
@@ -540,12 +552,10 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
     if (!this.initialized) {
       return html`<div part="base">Loading...</div>`;
     }
-    
+
     return html`
       <div class="datatable" part="base">
-        ${this.renderToolbar()}
-        ${this.renderHeader()}
-        ${this.renderBody()}
+        ${this.renderToolbar()} ${this.renderHeader()} ${this.renderBody()}
         ${this.renderPagination()}
       </div>
     `;

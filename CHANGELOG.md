@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
+
 - Visual regression testing with Chromatic
 - Additional component variants and sizes
 - Enhanced theming system
@@ -16,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2024-TBD
 
 ### Added
+
 - Initial release of AetherUI component library
 - Core components:
   - **Button** - Primary action trigger with variants (primary, secondary, ghost) and sizes
@@ -44,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documentation site with Astro and Starlight
 
 ### Infrastructure
+
 - Nx monorepo setup with pnpm workspaces
 - Vite build system with optimized bundles
 - Automated testing with memory optimization
@@ -53,6 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive development standards (STANDARDS.md)
 
 ### Documentation
+
 - Getting started guide
 - Component API documentation
 - Architecture Decision Records (ADRs)
@@ -65,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Release Notes Format
 
 ### Types of Changes
+
 - `Added` for new features
 - `Changed` for changes in existing functionality
 - `Deprecated` for soon-to-be removed features
@@ -73,5 +78,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Security` in case of vulnerabilities
 
 ### Version History Links
+
 [unreleased]: https://github.com/pallavL01/AetherUI/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/pallavL01/AetherUI/releases/tag/v0.1.0

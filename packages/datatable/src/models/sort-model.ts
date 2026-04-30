@@ -44,7 +44,7 @@ export function defaultSortCompare<T>(a: T, b: T, desc: boolean = false): number
 
   // Simple comparison based on type
   let result = 0;
-  
+
   if (typeof valueA === 'string' && typeof valueB === 'string') {
     result = valueA.localeCompare(valueB);
   } else if (typeof valueA === 'number' && typeof valueB === 'number') {
@@ -57,6 +57,6 @@ export function defaultSortCompare<T>(a: T, b: T, desc: boolean = false): number
     const stringB = String(valueB);
     result = stringA.localeCompare(stringB);
   }
-  
+
   return desc ? -result : result;
 }

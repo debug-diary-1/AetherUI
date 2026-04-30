@@ -5,5 +5,5 @@ const { isTemplateResult, isDirectiveResult } = require('lit/directive-helpers.j
 
 module.exports = {
   isTemplateResult,
-  isDirectiveResult
+  isDirectiveResult,
 };

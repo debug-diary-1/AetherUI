@@ -14,7 +14,7 @@ export class AeTab extends LitElement {
       position: relative;
       padding-bottom: 2px; /* Space for the indicator */
     }
-    
+
     button {
       display: flex;
       align-items: center;
@@ -26,24 +26,26 @@ export class AeTab extends LitElement {
       font: inherit;
       color: var(--ae-tabs-inactive-color, inherit);
       cursor: pointer;
-      transition: color 0.2s ease, background-color 0.2s ease;
+      transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
     }
 
     button:hover {
       background-color: var(--ae-tabs-hover-bg, transparent);
     }
 
-    :host([aria-selected="true"]) button {
+    :host([aria-selected='true']) button {
       color: var(--ae-tabs-active-color);
       font-weight: var(--ae-tabs-selected-weight, 500);
       background-color: transparent;
     }
 
     /* Remove hover background from selected tabs */
-    :host([aria-selected="true"]) button:hover {
+    :host([aria-selected='true']) button:hover {
       background-color: transparent;
     }
-    
+
     /* The indicator for selected tab - horizontal (default) */
     .indicator {
       position: absolute;
@@ -54,7 +56,7 @@ export class AeTab extends LitElement {
       background-color: transparent;
       transition: background-color 0.2s ease;
     }
-    
+
     /* Special indicator for vertical tabs - applied via custom attribute */
     :host([data-vertical-tab]) .indicator {
       left: auto;
@@ -64,9 +66,9 @@ export class AeTab extends LitElement {
       width: 2px;
       height: 100%;
     }
-    
+
     /* Indicator color when selected */
-    :host([aria-selected="true"]) .indicator {
+    :host([aria-selected='true']) .indicator {
       background-color: var(--ae-tabs-active-color);
     }
 

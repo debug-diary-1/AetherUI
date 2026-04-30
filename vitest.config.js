@@ -13,50 +13,43 @@ export default defineConfig({
     setupFiles: ['./vitest.dom-setup.js'],
     include: [
       'packages/**/src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
-      'packages/**/__tests__/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'
+      'packages/**/__tests__/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
     ],
-    exclude: [
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/build/**'
-    ],
+    exclude: ['**/node_modules/**', '**/dist/**', '**/build/**'],
     coverage: {
       reporter: ['text', 'html'],
-      exclude: [
-        'node_modules/',
-        'dist/',
-        '**/*.d.ts',
-        '**/*.test.ts'
-      ]
+      exclude: ['node_modules/', 'dist/', '**/*.d.ts', '**/*.test.ts'],
     },
     watch: false,
     reporters: ['default'],
     testTimeout: 10000,
     passWithNoTests: true,
-    
+
     // Apply memory optimization settings conditionally
-    ...(memoryLimited ? {
-      // Memory optimizations
-      pool: 'forks', // Use process isolation instead of worker threads
-      poolOptions: {
-        forks: {
-          isolate: true,
-          singleFork: false
+    ...(memoryLimited
+      ? {
+          // Memory optimizations
+          pool: 'forks', // Use process isolation instead of worker threads
+          poolOptions: {
+            forks: {
+              isolate: true,
+              singleFork: false,
+            },
+          },
+          maxConcurrency, // Limit concurrent test runs
+          maxWorkers, // Limit worker processes
+          minWorkers: 1,
+          fileParallelism: false, // Run files sequentially
+          // Silent reduces console output memory usage
+          silent: false,
+          // Set a reasonable timeout to prevent hanging tests
+          teardownTimeout: 5000,
         }
-      },
-      maxConcurrency,      // Limit concurrent test runs
-      maxWorkers,          // Limit worker processes
-      minWorkers: 1,
-      fileParallelism: false, // Run files sequentially
-      // Silent reduces console output memory usage
-      silent: false,
-      // Set a reasonable timeout to prevent hanging tests
-      teardownTimeout: 5000
-    } : {})
+      : {}),
   },
   resolve: {
     alias: {
-      '@aetherui/core': resolve(__dirname, 'packages/core/src')
-    }
-  }
+      '@aetherui/core': resolve(__dirname, 'packages/core/src'),
+    },
+  },
 });

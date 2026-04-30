@@ -24,16 +24,17 @@ describe('ae-switch', () => {
   });
 
   it('renders label when provided', async () => {
-    const el = await fixture<AeSwitch>(html`
-      <ae-switch>Enable notifications</ae-switch>
-    `);
+    const el = await fixture<AeSwitch>(html` <ae-switch>Enable notifications</ae-switch> `);
 
     const labelText = el.shadowRoot!.querySelector('[part="label"]');
     expect(labelText).to.exist;
     // Check slot content via assignedNodes
     const slot = labelText!.querySelector('slot');
     const assignedNodes = slot!.assignedNodes();
-    const textContent = assignedNodes.map(n => n.textContent).join('').trim();
+    const textContent = assignedNodes
+      .map((n) => n.textContent)
+      .join('')
+      .trim();
     expect(textContent).to.equal('Enable notifications');
   });
 

@@ -9,19 +9,19 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'AetherUITokens',
       fileName: 'index',
-      formats: ['es']
+      formats: ['es'],
     },
     target: 'es2022',
     outDir: 'dist',
     rollupOptions: {
-      external: []
-    }
+      external: [],
+    },
   },
   plugins: [
     dts({
       insertTypesEntry: true,
       outDir: 'dist',
-      entryRoot: 'src'
+      entryRoot: 'src',
     }),
     // Copy CSS files to dist
     {
@@ -31,27 +31,21 @@ export default defineConfig({
           mkdirSync(resolve(__dirname, 'dist'), { recursive: true });
           copyFileSync(
             resolve(__dirname, 'src/minimal.css'),
-            resolve(__dirname, 'dist/minimal.css')
+            resolve(__dirname, 'dist/minimal.css'),
           );
-          copyFileSync(
-            resolve(__dirname, 'src/light.css'),
-            resolve(__dirname, 'dist/light.css')
-          );
-          copyFileSync(
-            resolve(__dirname, 'src/dark.css'),
-            resolve(__dirname, 'dist/dark.css')
-          );
+          copyFileSync(resolve(__dirname, 'src/light.css'), resolve(__dirname, 'dist/light.css'));
+          copyFileSync(resolve(__dirname, 'src/dark.css'), resolve(__dirname, 'dist/dark.css'));
           console.log('✅ CSS theme files copied to dist/');
         } catch (error) {
           console.error('❌ Error copying CSS files:', error);
         }
-      }
-    }
+      },
+    },
   ],
   server: {
-    port: 3001
+    port: 3001,
   },
   test: {
-    passWithNoTests: true
-  }
+    passWithNoTests: true,
+  },
 });

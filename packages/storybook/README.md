@@ -52,7 +52,7 @@ export default {
 export const Default = {
   args: {
     // ... default args
-  }
+  },
 };
 ```
 
@@ -64,4 +64,4 @@ To build Storybook for deployment:
 pnpm build-storybook
 ```
 
-This creates a static web application in the `storybook-static` directory that can be deployed to any static hosting service. 
+This creates a static web application in the `storybook-static` directory that can be deployed to any static hosting service.

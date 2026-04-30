@@ -15,12 +15,7 @@ describe('ae-badge', () => {
 
   it('sets properties from attributes', async () => {
     const el = await fixture<AeBadge>(html`
-      <ae-badge
-        variant="success"
-        size="lg"
-        closable
-        outline
-      >Badge</ae-badge>
+      <ae-badge variant="success" size="lg" closable outline>Badge</ae-badge>
     `);
 
     expect(el.variant).to.equal('success');

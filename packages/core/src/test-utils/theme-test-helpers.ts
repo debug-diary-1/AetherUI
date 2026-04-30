@@ -34,7 +34,7 @@ export function getComponentStyles(element: LitElement): string {
   if (!styles) return '';
 
   if (Array.isArray(styles)) {
-    return styles.map(s => s?.toString() || '').join('\n');
+    return styles.map((s) => s?.toString() || '').join('\n');
   }
 
   return styles.toString() || '';
@@ -48,7 +48,7 @@ export function assertNoHardcodedColors(
   options: {
     allowedPatterns?: RegExp[];
     componentName?: string;
-  } = {}
+  } = {},
 ): void {
   const { allowedPatterns = [], componentName = 'Component' } = options;
 
@@ -56,15 +56,15 @@ export function assertNoHardcodedColors(
     // Check if color appears in styles
     if (stylesText.includes(color)) {
       // Check if it matches any allowed pattern (like in comments)
-      const isAllowed = allowedPatterns.some(pattern => {
+      const isAllowed = allowedPatterns.some((pattern) => {
         const matches = stylesText.match(new RegExp(`.*${color}.*`, 'g')) || [];
-        return matches.every(match => pattern.test(match));
+        return matches.every((match) => pattern.test(match));
       });
 
       if (!isAllowed) {
         expect.fail(
           `${componentName} styles contain hardcoded color ${color}. ` +
-          `Use CSS variables from the theme system instead.`
+            `Use CSS variables from the theme system instead.`,
         );
       }
     }
@@ -77,13 +77,9 @@ export function assertNoHardcodedColors(
 export function assertCSSVariablesUsed(
   stylesText: string,
   variables: string[],
-  componentName = 'Component'
+  componentName = 'Component',
 ): void {
   for (const variable of variables) {
-    expect(
-      stylesText,
-      `${componentName} should use CSS variable ${variable}`
-    ).to.include(variable);
+    expect(stylesText, `${componentName} should use CSS variable ${variable}`).to.include(variable);
   }
 }
-

@@ -1,7 +1,7 @@
-import { 
-  DEFAULT_PAGINATION_STATE, 
-  DEFAULT_PAGE_SIZES, 
-  PaginationState 
+import {
+  DEFAULT_PAGINATION_STATE,
+  DEFAULT_PAGE_SIZES,
+  PaginationState,
 } from '../models/pagination-model';
 
 /**
@@ -12,7 +12,7 @@ export class PaginationManager {
   private _pageSizeOptions: number[] = [...DEFAULT_PAGE_SIZES];
   private _enablePagination: boolean = true;
   private _rowCount?: number;
-  
+
   /**
    * Initialize pagination state and options
    * @param pagination Initial pagination state
@@ -24,7 +24,7 @@ export class PaginationManager {
       pageSizeOptions?: number[];
       enablePagination?: boolean;
       rowCount?: number;
-    }
+    },
   ): void {
     if (typeof paginationOrRowCount === 'number') {
       // If passed a number, treat it as rowCount
@@ -34,7 +34,7 @@ export class PaginationManager {
       // Otherwise treat as partial pagination state
       this._pagination = {
         ...DEFAULT_PAGINATION_STATE,
-        ...paginationOrRowCount
+        ...paginationOrRowCount,
       };
     }
 
@@ -50,7 +50,7 @@ export class PaginationManager {
       }
     }
   }
-  
+
   /**
    * Get current pagination state
    * @returns Current pagination state
@@ -66,7 +66,7 @@ export class PaginationManager {
   getPaginationState(): PaginationState {
     return this.getPagination();
   }
-  
+
   /**
    * Set pagination state
    * @param pagination New pagination state
@@ -74,19 +74,19 @@ export class PaginationManager {
    */
   setPagination(pagination: Partial<PaginationState>): boolean {
     if (!this._enablePagination) return false;
-    
+
     const newPagination = { ...this._pagination, ...pagination };
     const changed =
       this._pagination.page !== newPagination.page ||
       this._pagination.pageSize !== newPagination.pageSize;
-    
+
     if (changed) {
       this._pagination = newPagination;
     }
-    
+
     return changed;
   }
-  
+
   /**
    * Set page
    * @param page New page (1-based)
@@ -95,7 +95,7 @@ export class PaginationManager {
   setPage(page: number): boolean {
     return this.setPagination({ page });
   }
-  
+
   /**
    * Set page size
    * @param pageSize New page size
@@ -105,10 +105,10 @@ export class PaginationManager {
     // When changing page size, reset to the first page
     return this.setPagination({
       pageSize,
-      page: 1
+      page: 1,
     });
   }
-  
+
   /**
    * Go to the next page
    * @returns True if pagination changed
@@ -124,7 +124,7 @@ export class PaginationManager {
   previousPage(): boolean {
     return this.setPage(Math.max(1, this._pagination.page - 1));
   }
-  
+
   /**
    * Go to the first page
    * @returns True if pagination changed
@@ -140,14 +140,11 @@ export class PaginationManager {
   lastPage(): boolean {
     if (this._rowCount === undefined) return false;
 
-    const lastPage = Math.max(
-      1,
-      Math.ceil(this._rowCount / this._pagination.pageSize)
-    );
+    const lastPage = Math.max(1, Math.ceil(this._rowCount / this._pagination.pageSize));
 
     return this.setPage(lastPage);
   }
-  
+
   /**
    * Check if can go to next page
    * @returns True if can go to next page
@@ -166,7 +163,7 @@ export class PaginationManager {
   canPreviousPage(): boolean {
     return this._pagination.page > 1;
   }
-  
+
   /**
    * Get page size options
    * @returns Array of page size options
@@ -174,7 +171,7 @@ export class PaginationManager {
   getPageSizeOptions(): number[] {
     return [...this._pageSizeOptions];
   }
-  
+
   /**
    * Set row count
    * @param count Total number of rows
@@ -192,7 +189,7 @@ export class PaginationManager {
     this._pagination.totalItems = count;
     this._pagination.totalPages = Math.max(1, Math.ceil(count / this._pagination.pageSize));
   }
-  
+
   /**
    * Get row count
    * @returns Total number of rows
@@ -200,14 +197,14 @@ export class PaginationManager {
   getRowCount(): number | undefined {
     return this._rowCount;
   }
-  
+
   /**
    * Get the number of pages
    * @returns Number of pages
    */
   getPageCount(): number {
     if (!this._rowCount) return 0;
-    
+
     return Math.ceil(this._rowCount / this._pagination.pageSize);
   }
 }

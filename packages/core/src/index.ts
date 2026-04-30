@@ -32,14 +32,14 @@ import type {
   AutocompleteOption,
   AutocompleteFilterFunction,
   AeAutocompleteChangeEvent,
-  AeAutocompleteSelectEvent
+  AeAutocompleteSelectEvent,
 } from './autocomplete';
 
 import type {
   ComboItem,
   ComboFilterFunction,
   AeComboSelectEvent,
-  AeComboInputEvent
+  AeComboInputEvent,
 } from './combo';
 
 // Import components and utilities to re-export
@@ -58,7 +58,12 @@ export { AeAutocomplete };
 export { defineAeAutocomplete };
 export { autocompleteStyles };
 export { AutocompleteController };
-export type { AutocompleteOption, AutocompleteFilterFunction, AeAutocompleteChangeEvent, AeAutocompleteSelectEvent };
+export type {
+  AutocompleteOption,
+  AutocompleteFilterFunction,
+  AeAutocompleteChangeEvent,
+  AeAutocompleteSelectEvent,
+};
 
 export { AeCombo };
 export { defineAeCombo };
@@ -127,4 +132,3 @@ export { AePopover } from './popover/ae-popover';
 export { AeMenu } from './menu/ae-menu';
 export { AeMenuItem as AeMenuItemComponent } from './menu/ae-menu-item';
 export { AeMenuDivider } from './menu/ae-menu-divider';
-

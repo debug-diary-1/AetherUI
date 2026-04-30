@@ -7,18 +7,18 @@ import type { SortDirection } from './models/sort-model';
 /**
  * Header cell component for the datatable
  * @element ae-datatable-header
- * 
+ *
  * @property {boolean} sortable - Whether the column is sortable
  * @property {SortDirection} direction - Current sort direction ('asc', 'desc', 'none')
  * @property {boolean} resizable - Whether the column is resizable
  * @property {string} align - Text alignment ('left', 'center', 'right')
- * 
+ *
  * @fires {CustomEvent} ae-datatable-header-sort - Fired when sort is changed
  * @fires {CustomEvent} ae-datatable-header-resize - Fired when column is resized
- * 
+ *
  * @slot - Default content for the header cell
  * @slot content - Named slot for header content
- * 
+ *
  * @csspart content - The header cell content
  * @csspart sort-icon - The sort indicator icon
  * @csspart resize-handle - The resize handle
@@ -79,14 +79,16 @@ export class AeDatatableHeader extends LitElement {
     }
 
     // Dispatch sort event
-    this.dispatchEvent(new CustomEvent('ae-datatable-header-sort', {
-      detail: {
-        direction: newDirection,
-        multiSort: e.ctrlKey || e.metaKey // Allow multi-sort with Ctrl/Cmd key
-      },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-datatable-header-sort', {
+        detail: {
+          direction: newDirection,
+          multiSort: e.ctrlKey || e.metaKey, // Allow multi-sort with Ctrl/Cmd key
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /**
@@ -148,13 +150,15 @@ export class AeDatatableHeader extends LitElement {
     }
 
     // Dispatch resize event with final width
-    this.dispatchEvent(new CustomEvent('ae-datatable-header-resize', {
-      detail: {
-        width: this.currentWidth
-      },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-datatable-header-resize', {
+        detail: {
+          width: this.currentWidth,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   };
 
   /**
@@ -166,12 +170,8 @@ export class AeDatatableHeader extends LitElement {
     }
 
     const iconClass = `header-cell__sort-icon header-cell__sort-icon--${this.direction}`;
-    
-    return html`
-      <div class=${iconClass} part="sort-icon">
-        ▲
-      </div>
-    `;
+
+    return html` <div class=${iconClass} part="sort-icon">▲</div> `;
   }
 
   /**
@@ -185,22 +185,20 @@ export class AeDatatableHeader extends LitElement {
 
   render() {
     return html`
-      <div
-        class="header-cell__content"
-        part="content"
-        @click=${this.handleSortClick}
-      >
+      <div class="header-cell__content" part="content" @click=${this.handleSortClick}>
         <slot name="content"><slot></slot></slot>
         ${this.renderSortIcon()}
       </div>
-      
-      ${this.resizable ? html`
-        <div
-          class="header-cell__resize-handle"
-          part="resize-handle"
-          @mousedown=${this.handleResizeStart}
-        ></div>
-      ` : ''}
+
+      ${this.resizable
+        ? html`
+            <div
+              class="header-cell__resize-handle"
+              part="resize-handle"
+              @mousedown=${this.handleResizeStart}
+            ></div>
+          `
+        : ''}
     `;
   }
 }

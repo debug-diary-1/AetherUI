@@ -2,6 +2,7 @@
 title: Menu
 description: Dropdown menu component for displaying a list of actions or options.
 ---
+
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import ComponentExample from '../../../components/ComponentExample.astro';
 
@@ -83,16 +84,8 @@ A dropdown menu component for displaying a list of actions or options.
 ## Installation
 
 <Tabs>
-  <TabItem label="pnpm">
-    ```bash
-    pnpm add @aetherui/core
-    ```
-  </TabItem>
-  <TabItem label="npm">
-    ```bash
-    npm install @aetherui/core
-    ```
-  </TabItem>
+  <TabItem label="pnpm">```bash pnpm add @aetherui/core ```</TabItem>
+  <TabItem label="npm">```bash npm install @aetherui/core ```</TabItem>
 </Tabs>
 
 ## Import
@@ -106,29 +99,29 @@ defineAeMenuDivider();
 
 ## Menu Item Props
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `disabled` | `boolean` | `false` | Disabled state |
-| `variant` | `'default' \| 'danger'` | `'default'` | Visual variant |
+| Name       | Type                    | Default     | Description    |
+| ---------- | ----------------------- | ----------- | -------------- |
+| `disabled` | `boolean`               | `false`     | Disabled state |
+| `variant`  | `'default' \| 'danger'` | `'default'` | Visual variant |
 
 ## Menu Item Slots
 
-| Name | Description |
-|------|-------------|
-| default | Item label |
+| Name     | Description                 |
+| -------- | --------------------------- |
+| default  | Item label                  |
 | `prefix` | Content before label (icon) |
-| `suffix` | Content after label |
+| `suffix` | Content after label         |
 
 ## Events
 
-| Name | Detail | Description |
-|------|--------|-------------|
+| Name             | Detail              | Description              |
+| ---------------- | ------------------- | ------------------------ |
 | `ae-menu-select` | `{ value: string }` | Fired when item selected |
 
 ## CSS Parts
 
-| Name | Description |
-|------|-------------|
-| `base` | Menu container |
-| `item` | Menu item |
-| `divider` | Divider line |
+| Name      | Description    |
+| --------- | -------------- |
+| `base`    | Menu container |
+| `item`    | Menu item      |
+| `divider` | Divider line   |

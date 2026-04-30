@@ -41,4 +41,4 @@ export const tokens = {
     normal: 'var(--ae-transition-normal, 250ms)',
     slow: 'var(--ae-transition-slow, 350ms)',
   },
-}; 
+};

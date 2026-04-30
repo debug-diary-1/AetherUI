@@ -18,15 +18,15 @@ A **collapsible disclosure component** that shows or hides content panels one‑
 
 | Slot / Part       | Purpose                  |
 | ----------------- | ------------------------ |
-| `header` *(part)* | Clickable header button. |
-| `panel` *(part)*  | Content region.          |
+| `header` _(part)_ | Clickable header button. |
+| `panel` _(part)_  | Content region.          |
 
 ## 3 · Accessibility
 
-* Follows **WAI‑ARIA Disclosure** pattern.
-* Header gets `role="button"` + `aria-expanded` + `aria-controls`.
-* Panel gets `id` and `role="region"`.
-* Keyboard: `Enter`/`Space` toggle, `ArrowUp/Down` navigate headers.
+- Follows **WAI‑ARIA Disclosure** pattern.
+- Header gets `role="button"` + `aria-expanded` + `aria-controls`.
+- Panel gets `id` and `role="region"`.
+- Keyboard: `Enter`/`Space` toggle, `ArrowUp/Down` navigate headers.
 
 ## 4 · Styling Best Practices
 
@@ -40,7 +40,7 @@ ae-accordion[open]::part(header-icon) {
 }
 ```
 
-* Prefer design tokens: `--ae-accordion-border`, `--ae-accordion-duration`.
+- Prefer design tokens: `--ae-accordion-border`, `--ae-accordion-duration`.
 
 ## 5 · Folder Structure
 
@@ -57,20 +57,20 @@ packages/accordion/
 
 ## 6 · Architecture Notes
 
-* Composition of child `<ae-collapse-panel>` elements managed by controller.
-* State stored as `Set<string>`; Lit reactive property triggers render cycle.
-* Uses `requestUpdate()` throttling to avoid layout thrash when many panels.
+- Composition of child `<ae-collapse-panel>` elements managed by controller.
+- State stored as `Set<string>`; Lit reactive property triggers render cycle.
+- Uses `requestUpdate()` throttling to avoid layout thrash when many panels.
 
 ## 7 · Performance Budget
 
-* Incremental cost ≤ 1 KB gzip over `@aetherui/core`.
+- Incremental cost ≤ 1 KB gzip over `@aetherui/core`.
 
 ## 8 · Testing Strategy
 
-* **Unit**: toggle logic, keyboard events.
-* **Playwright**: visual diff (open/closed), focus rings.
-* **axe‑core**: zero violations baseline.
+- **Unit**: toggle logic, keyboard events.
+- **Playwright**: visual diff (open/closed), focus rings.
+- **axe‑core**: zero violations baseline.
 
 ---
 
-*Updated: {{date}}*
+_Updated: {{date}}_

@@ -1,7 +1,7 @@
 name: Accessibility Issue
 description: Report an accessibility concern or improvement
-title: "[A11y] "
-labels: ["accessibility"]
+title: '[A11y] '
+labels: ['accessibility']
 body:
   - type: markdown
     attributes:
@@ -49,4 +49,4 @@ body:
         - Browser: [e.g. Chrome, Firefox]
         - Version: [e.g. 22]
     validations:
-      required: true 
+      required: true

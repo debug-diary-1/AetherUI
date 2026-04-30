@@ -5,6 +5,7 @@ This directory contains automation tools to help systematically fix hardcoded co
 ## Overview
 
 These scripts help you:
+
 1. Analyze components for hardcoded colors
 2. Check theme variable definitions
 3. Generate theme integration tests
@@ -21,6 +22,7 @@ These scripts help you:
 ```
 
 This interactive script:
+
 - Analyzes hardcoded colors
 - Checks theme variable definitions
 - Generates theme tests
@@ -40,6 +42,7 @@ Analyzes a component and identifies all hardcoded colors that need to be fixed.
 ```
 
 **Output:**
+
 - List of all hardcoded colors found
 - Specific line numbers and files
 - Suggested fixes for each issue
@@ -58,7 +61,8 @@ Checks if all CSS variables used in a component are defined in both `light.css` 
 ```
 
 **Output:**
-- Status of each variable (✅ complete, ⚠️  partial, ❌ missing)
+
+- Status of each variable (✅ complete, ⚠️ partial, ❌ missing)
 - List of variables to add to each theme file
 - Example format for adding variables
 
@@ -75,6 +79,7 @@ Generates theme integration tests for a component.
 ```
 
 **Output:**
+
 - Creates `packages/core/src/[component]/__tests__/ae-[component].theme.test.ts`
 - Tests verify CSS variable usage
 - Tests check for hardcoded colors
@@ -205,6 +210,7 @@ done
 ```
 Line 21: --ae-accordion-border has fallback #e5e7eb
 ```
+
 - **Line 21**: Location in the file
 - **--ae-accordion-border**: The CSS variable name
 - **#e5e7eb**: The hardcoded fallback value to remove
@@ -220,6 +226,7 @@ Line 21: --ae-accordion-border has fallback #e5e7eb
 ### Test Generation
 
 Generated tests check:
+
 - ✅ CSS variables are used
 - ❌ Hardcoded colors are NOT present
 - ✅ Computed styles work correctly
@@ -228,7 +235,9 @@ Generated tests check:
 ## Common Issues and Solutions
 
 ### Issue: "Component directory not found"
+
 **Solution:** Make sure you use the exact component directory name:
+
 ```bash
 # Correct:
 ./scripts/analyze-component-theme.sh accordion
@@ -239,7 +248,9 @@ Generated tests check:
 ```
 
 ### Issue: Variables marked as missing but they exist
+
 **Solution:** Make sure the variable name in the component matches exactly with theme files:
+
 ```css
 /* Component uses: */
 var(--ae-accordion-border)
@@ -249,13 +260,17 @@ var(--ae-accordion-border)
 ```
 
 ### Issue: Tests fail after removing fallbacks
+
 **Solution:**
+
 1. Ensure all variables are defined in BOTH light.css AND dark.css
 2. Check for typos in variable names
 3. Make sure you removed ALL hardcoded fallbacks
 
 ### Issue: Component looks broken in showcase
+
 **Solution:**
+
 1. Hard refresh the page (Cmd/Ctrl + Shift + R)
 2. Check browser console for CSS errors
 3. Verify theme CSS is loading correctly

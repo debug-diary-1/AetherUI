@@ -8,7 +8,7 @@ export class ComboController implements ReactiveController {
   private _highlightIndex: number = -1;
   private _filterFn: ComboFilterFunction = defaultFilter;
   private _debounceTimeout: number | null = null;
-  
+
   constructor(private host: ReactiveControllerHost) {
     this.host.addController(this);
   }
@@ -28,7 +28,7 @@ export class ComboController implements ReactiveController {
    * Set the items for the combobox
    */
   set items(items: (string | ComboItem)[]) {
-    this._items = items.map(item => {
+    this._items = items.map((item) => {
       if (typeof item === 'string') {
         return { id: item, label: item };
       }
@@ -81,7 +81,7 @@ export class ComboController implements ReactiveController {
     // Clamp the index to valid range
     if (index < -1) index = -1;
     if (index >= this._filteredItems.length) index = this._filteredItems.length - 1;
-    
+
     this._highlightIndex = index;
     this.host.requestUpdate();
   }
@@ -91,7 +91,7 @@ export class ComboController implements ReactiveController {
    */
   moveHighlight(direction: 'up' | 'down'): void {
     if (this._filteredItems.length === 0) return;
-    
+
     if (direction === 'down') {
       this.setHighlight(this._highlightIndex + 1);
     } else {
@@ -112,11 +112,11 @@ export class ComboController implements ReactiveController {
    */
   filterWithDebounce(query: string, debounceMs: number = 150): void {
     this._query = query;
-    
+
     if (this._debounceTimeout !== null) {
       window.clearTimeout(this._debounceTimeout);
     }
-    
+
     this._debounceTimeout = window.setTimeout(() => {
       this.filter(query);
       this._debounceTimeout = null;
@@ -128,8 +128,8 @@ export class ComboController implements ReactiveController {
    */
   filter(query: string): void {
     this._query = query;
-    this._filteredItems = this._items.filter(item => this._filterFn(query, item));
-    
+    this._filteredItems = this._items.filter((item) => this._filterFn(query, item));
+
     // Reset highlight index when filter changes
     this._highlightIndex = -1;
     this.host.requestUpdate();

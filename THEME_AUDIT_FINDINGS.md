@@ -28,7 +28,7 @@ Components use CSS variables with hardcoded color fallback values:
 
 ```css
 /* Current (BROKEN) pattern */
-color: var(--ae-component-color, #111827);  /* Falls back to dark text */
+color: var(--ae-component-color, #111827); /* Falls back to dark text */
 background: var(--ae-component-bg, #ffffff); /* Falls back to white */
 ```
 
@@ -38,7 +38,7 @@ background: var(--ae-component-bg, #ffffff); /* Falls back to white */
 
 ```css
 /* Correct pattern */
-color: var(--ae-component-color);  /* No fallback */
+color: var(--ae-component-color); /* No fallback */
 background: var(--ae-component-bg); /* No fallback */
 ```
 
@@ -92,14 +92,16 @@ Listed by severity (number of hardcoded values found):
 **File:** `packages/core/src/accordion/styles.ts`
 
 **Issues Found:**
+
 ```css
-border: var(--ae-accordion-border, 1px solid #e5e7eb);  /* Light gray */
+border: var(--ae-accordion-border, 1px solid #e5e7eb); /* Light gray */
 color: var(--ae-accordion-header-color, var(--ae-text-primary, #111827)); /* Dark text */
 background: var(--ae-accordion-header-hover-bg, #f9fafb); /* Light background */
 color: var(--ae-accordion-icon-color, #4b5563); /* Medium gray */
 ```
 
 **Result in Dark Mode:**
+
 - Light gray borders on dark background (low contrast)
 - Dark text on dark background (invisible)
 - Light hover background (jarring visual)
@@ -109,6 +111,7 @@ color: var(--ae-accordion-icon-color, #4b5563); /* Medium gray */
 **File:** `packages/core/src/checkbox/styles.ts`
 
 **Issues Found:**
+
 ```css
 border: 2px solid var(--ae-checkbox-border-color, #d1d5db); /* Light border */
 background: var(--ae-checkbox-checked-bg, #4f46e5); /* Purple */
@@ -116,6 +119,7 @@ border-color: var(--ae-checkbox-disabled-border-color, #e5e7eb); /* Light gray *
 ```
 
 **Result in Dark Mode:**
+
 - Light borders barely visible on dark background
 - Color inconsistency with theme's primary color
 
@@ -233,6 +237,7 @@ If not fixed:
 This audit revealed a systematic issue affecting the majority of AetherUI components. While the problem is widespread, the solution is straightforward and can be addressed methodically. The tabs component serves as a template for proper theme integration.
 
 **Next Steps:**
+
 1. Review and approve this audit report
 2. Prioritize components for remediation
 3. Begin systematic fixes using the testing guide

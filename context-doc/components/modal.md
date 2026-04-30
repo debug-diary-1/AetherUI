@@ -21,10 +21,10 @@ Blocking overlay for critical user tasks—must **trap focus**, restore focus on
 
 ## 3 · Accessibility
 
-* Uses `<dialog>` when available; polyfills via inert/aria‑hidden otherwise.
-* Root panel gets `role="dialog"`, `aria-modal="true"`, `aria-labelledby` / `aria-describedby`.
-* **Focus trap** implemented with `focus-trap` library; restores focus to trigger on close.
-* **Keyboard**: `Esc` closes (unless `preventDefault()`), tab cycles within trap.
+- Uses `<dialog>` when available; polyfills via inert/aria‑hidden otherwise.
+- Root panel gets `role="dialog"`, `aria-modal="true"`, `aria-labelledby` / `aria-describedby`.
+- **Focus trap** implemented with `focus-trap` library; restores focus to trigger on close.
+- **Keyboard**: `Esc` closes (unless `preventDefault()`), tab cycles within trap.
 
 ## 4 · Styling & Theming
 
@@ -45,7 +45,7 @@ Example:
 /* Glassy backdrop */
 ae-modal::part(overlay) {
   backdrop-filter: blur(4px) saturate(150%);
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
 }
 ```
 
@@ -64,7 +64,7 @@ ae-modal::part(overlay) {
 Dark‑theme override:
 
 ```css
-:root[data-theme="dark"] {
+:root[data-theme='dark'] {
   --ae-modal-panel-bg: #1f2937;
 }
 ```
@@ -76,12 +76,16 @@ Dark‑theme override:
 import { css } from 'lit';
 
 export const modalStyles = css`
-  :host { position: fixed; inset: 0; z-index: var(--ae-modal-z-index, 1000); }
+  :host {
+    position: fixed;
+    inset: 0;
+    z-index: var(--ae-modal-z-index, 1000);
+  }
 
   ::part(overlay) {
     position: absolute;
     inset: 0;
-    background: var(--ae-modal-overlay-bg, rgba(0,0,0,.4));
+    background: var(--ae-modal-overlay-bg, rgba(0, 0, 0, 0.4));
   }
 
   ::part(panel) {
@@ -93,13 +97,22 @@ export const modalStyles = css`
     transform: translate(-50%, -50%);
     background: var(--ae-modal-panel-bg, #fff);
     border-radius: var(--ae-modal-panel-radius, 0.75rem);
-    box-shadow: var(--ae-modal-panel-shadow, 0 15px 30px rgba(0,0,0,.2));
+    box-shadow: var(--ae-modal-panel-shadow, 0 15px 30px rgba(0, 0, 0, 0.2));
     display: flex;
     flex-direction: column;
     animation: modal-enter var(--ae-modal-animation-duration, 180ms) ease;
   }
 
-  @keyframes modal-enter { from { opacity: 0; transform: translate(-50%, -48%); } to { opacity: 1; transform: translate(-50%, -50%); } }
+  @keyframes modal-enter {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -48%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
 `;
 ```
 
@@ -120,21 +133,21 @@ packages/modal/
 
 ## 6 · Architecture
 
-* Renders overlay & panel into a **portal** attached to `document.body` to avoid stacking issues.
-* `open` reflection drives `aria-hidden` on sibling nodes for assistive tech.
-* `scroll-lock.ts` toggles `overflow:hidden` on `<html>` while modal is open.
+- Renders overlay & panel into a **portal** attached to `document.body` to avoid stacking issues.
+- `open` reflection drives `aria-hidden` on sibling nodes for assistive tech.
+- `scroll-lock.ts` toggles `overflow:hidden` on `<html>` while modal is open.
 
 ## 7 · Performance
 
-* Core bundle ≤ 3 KB; focus‑trap polyfill (\~1 KB) lazy‑imports when opened.
-* Enter/exit animation uses `transform` for GPU‑friendly rendering.
+- Core bundle ≤ 3 KB; focus‑trap polyfill (\~1 KB) lazy‑imports when opened.
+- Enter/exit animation uses `transform` for GPU‑friendly rendering.
 
 ## 8 · Testing Strategy
 
-* **Unit**: open/close API, event emission, scroll lock state.
-* **Playwright**: focus trap, escape key, backdrop click.
-* **axe‑core**: ensure `aria-modal`, labelled dialog, focusable elements within.
+- **Unit**: open/close API, event emission, scroll lock state.
+- **Playwright**: focus trap, escape key, backdrop click.
+- **axe‑core**: ensure `aria-modal`, labelled dialog, focusable elements within.
 
 ---
 
-*Updated: 2025‑05‑07*
+_Updated: 2025‑05‑07_

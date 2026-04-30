@@ -97,8 +97,8 @@ export class AeTreeView extends LitElement {
         } catch {
           return [];
         }
-      }
-    }
+      },
+    },
   })
   accessor data: TreeNode[] = [];
 
@@ -140,9 +140,7 @@ export class AeTreeView extends LitElement {
     if (!this.defaultSlot) return;
 
     const assignedElements = this.defaultSlot.assignedElements({ flatten: true });
-    this.isSlotMode = assignedElements.some(
-      el => el.tagName.toLowerCase() === 'ae-tree-item'
-    );
+    this.isSlotMode = assignedElements.some((el) => el.tagName.toLowerCase() === 'ae-tree-item');
   }
 
   updated(changedProperties: Map<string, unknown>) {
@@ -158,7 +156,7 @@ export class AeTreeView extends LitElement {
   private handleNodeClick(event: Event) {
     const target = event.target as HTMLElement;
     const nodeId = target.closest('[data-node-id]')?.getAttribute('data-node-id');
-    
+
     if (!nodeId) return;
 
     if (target.closest('.tree-caret')) {
@@ -171,15 +169,17 @@ export class AeTreeView extends LitElement {
   private toggleExpanded(nodeId: string) {
     const isExpanded = this.expanded.includes(nodeId);
     const newExpanded = isExpanded
-      ? this.expanded.filter(id => id !== nodeId)
+      ? this.expanded.filter((id) => id !== nodeId)
       : [...this.expanded, nodeId];
 
     this.expanded = newExpanded;
-    this.dispatchEvent(new CustomEvent('ae-treeview-expand', {
-      detail: { expanded: newExpanded },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-treeview-expand', {
+        detail: { expanded: newExpanded },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private toggleSelected(nodeId: string) {
@@ -190,31 +190,40 @@ export class AeTreeView extends LitElement {
       newSelected = isSelected ? [] : [nodeId];
     } else {
       newSelected = isSelected
-        ? this.selected.filter(id => id !== nodeId)
+        ? this.selected.filter((id) => id !== nodeId)
         : [...this.selected, nodeId];
     }
 
     this.selected = newSelected;
-    this.dispatchEvent(new CustomEvent('ae-treeview-select', {
-      detail: { selected: newSelected },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-treeview-select', {
+        detail: { selected: newSelected },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private renderNodes(nodes: TreeNode[], level = 1): unknown {
-    return nodes.map(node => renderTreeNode(node, {
-      level,
-      isExpanded: this.expanded.includes(node.id),
-      isSelected: this.selected.includes(node.id),
-      selectionMode: this.selectionMode,
-    }));
+    return nodes.map((node) =>
+      renderTreeNode(node, {
+        level,
+        isExpanded: this.expanded.includes(node.id),
+        isSelected: this.selected.includes(node.id),
+        selectionMode: this.selectionMode,
+      }),
+    );
   }
 
   render() {
     if (this.loading) {
       return html`
-        <div role="tree" aria-label="${this.label || 'Tree'}" aria-busy="true" class="tree-data-mode">
+        <div
+          role="tree"
+          aria-label="${this.label || 'Tree'}"
+          aria-busy="true"
+          class="tree-data-mode"
+        >
           ${renderLoadingState()}
         </div>
       `;

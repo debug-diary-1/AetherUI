@@ -30,7 +30,7 @@ child.on('close', (code) => {
   // Strip all ANSI escape codes for reliable parsing
   // The key is to strip the ESC character (0x1B or 27) followed by [ and codes
   const cleanOutput = output
-    .replace(/\u001b\[[0-9;]*[A-Za-z]/g, '')  // ESC[ sequences
+    .replace(/\u001b\[[0-9;]*[A-Za-z]/g, '') // ESC[ sequences
     .replace(/\u001b\][^\u0007]*\u0007/g, '') // OSC sequences
     .replace(/[\u0000-\u0009\u000B-\u001F]/g, ''); // Control characters
 

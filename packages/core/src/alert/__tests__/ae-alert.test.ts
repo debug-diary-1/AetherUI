@@ -24,13 +24,13 @@ describe('ae-alert', () => {
 
   it('handles open state changes', async () => {
     const el = await fixture<AeAlert>(html`<ae-alert>Alert content</ae-alert>`);
-    
+
     expect(el.open).to.be.true;
-    
+
     // Set open to false
     el.open = false;
     await el.updateComplete;
-    
+
     expect(el.open).to.be.false;
     expect(el.shadowRoot!.querySelector('[part="base"]')).to.be.null;
   });
@@ -61,7 +61,9 @@ describe('ae-alert', () => {
   });
 
   it('uses slotted content to replace the default icon', async () => {
-    const el = await fixture<AeAlert>(html`<ae-alert><span slot="icon" id="custom-icon">X</span>Alert content</ae-alert>`);
+    const el = await fixture<AeAlert>(
+      html`<ae-alert><span slot="icon" id="custom-icon">X</span>Alert content</ae-alert>`,
+    );
 
     const defaultIcon = el.shadowRoot!.querySelector('svg[part="icon"]');
     const slottedIconSlot = el.shadowRoot!.querySelector('slot[name="icon"]');

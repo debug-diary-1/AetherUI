@@ -1,7 +1,11 @@
 import { html, fixture, expect, oneEvent } from '@open-wc/testing';
 import { AePagination } from '../ae-pagination.js';
 import '../ae-pagination.js';
-import { getComponentStyles, assertNoHardcodedColors, assertCSSVariablesUsed } from '../../test-utils/theme-test-helpers.js';
+import {
+  getComponentStyles,
+  assertNoHardcodedColors,
+  assertCSSVariablesUsed,
+} from '../../test-utils/theme-test-helpers.js';
 
 describe('ae-pagination', () => {
   it('has correct default properties', async () => {
@@ -16,11 +20,7 @@ describe('ae-pagination', () => {
 
   it('sets properties from attributes', async () => {
     const el = await fixture<AePagination>(html`
-      <ae-pagination
-        current-page="5"
-        total-pages="10"
-        size="lg"
-      ></ae-pagination>
+      <ae-pagination current-page="5" total-pages="10" size="lg"></ae-pagination>
     `);
 
     expect(el.currentPage).to.equal(5);
@@ -34,7 +34,9 @@ describe('ae-pagination', () => {
     `);
 
     const buttons = el.shadowRoot!.querySelectorAll('button');
-    const nextButton = Array.from(buttons).find(btn => btn.getAttribute('aria-label')?.includes('Next'));
+    const nextButton = Array.from(buttons).find((btn) =>
+      btn.getAttribute('aria-label')?.includes('Next'),
+    );
 
     setTimeout(() => nextButton?.click());
 
@@ -49,7 +51,9 @@ describe('ae-pagination', () => {
     `);
 
     const buttons = el.shadowRoot!.querySelectorAll('button');
-    const prevButton = Array.from(buttons).find(btn => btn.getAttribute('aria-label')?.includes('Previous'));
+    const prevButton = Array.from(buttons).find((btn) =>
+      btn.getAttribute('aria-label')?.includes('Previous'),
+    );
 
     expect(prevButton?.disabled).to.be.true;
   });
@@ -60,7 +64,9 @@ describe('ae-pagination', () => {
     `);
 
     const buttons = el.shadowRoot!.querySelectorAll('button');
-    const nextButton = Array.from(buttons).find(btn => btn.getAttribute('aria-label')?.includes('Next'));
+    const nextButton = Array.from(buttons).find((btn) =>
+      btn.getAttribute('aria-label')?.includes('Next'),
+    );
 
     expect(nextButton?.disabled).to.be.true;
   });
@@ -71,8 +77,12 @@ describe('ae-pagination', () => {
     `);
 
     const buttons = el.shadowRoot!.querySelectorAll('button');
-    const firstButton = Array.from(buttons).find(btn => btn.getAttribute('aria-label')?.includes('First'));
-    const lastButton = Array.from(buttons).find(btn => btn.getAttribute('aria-label')?.includes('Last'));
+    const firstButton = Array.from(buttons).find((btn) =>
+      btn.getAttribute('aria-label')?.includes('First'),
+    );
+    const lastButton = Array.from(buttons).find((btn) =>
+      btn.getAttribute('aria-label')?.includes('Last'),
+    );
 
     expect(firstButton).to.exist;
     expect(lastButton).to.exist;
@@ -87,8 +97,12 @@ describe('ae-pagination', () => {
     await el.updateComplete;
 
     const buttons = el.shadowRoot!.querySelectorAll('button');
-    const firstButton = Array.from(buttons).find(btn => btn.getAttribute('aria-label')?.includes('First'));
-    const lastButton = Array.from(buttons).find(btn => btn.getAttribute('aria-label')?.includes('Last'));
+    const firstButton = Array.from(buttons).find((btn) =>
+      btn.getAttribute('aria-label')?.includes('First'),
+    );
+    const lastButton = Array.from(buttons).find((btn) =>
+      btn.getAttribute('aria-label')?.includes('Last'),
+    );
 
     expect(firstButton).to.not.exist;
     expect(lastButton).to.not.exist;
@@ -100,7 +114,9 @@ describe('ae-pagination', () => {
     `);
 
     const buttons = el.shadowRoot!.querySelectorAll('button');
-    const firstButton = Array.from(buttons).find(btn => btn.getAttribute('aria-label')?.includes('First'));
+    const firstButton = Array.from(buttons).find((btn) =>
+      btn.getAttribute('aria-label')?.includes('First'),
+    );
 
     setTimeout(() => firstButton?.click());
 
@@ -114,7 +130,9 @@ describe('ae-pagination', () => {
     `);
 
     const buttons = el.shadowRoot!.querySelectorAll('button');
-    const lastButton = Array.from(buttons).find(btn => btn.getAttribute('aria-label')?.includes('Last'));
+    const lastButton = Array.from(buttons).find((btn) =>
+      btn.getAttribute('aria-label')?.includes('Last'),
+    );
 
     setTimeout(() => lastButton?.click());
 
@@ -123,9 +141,7 @@ describe('ae-pagination', () => {
   });
 
   it('applies size attribute correctly', async () => {
-    const el = await fixture<AePagination>(html`
-      <ae-pagination size="sm"></ae-pagination>
-    `);
+    const el = await fixture<AePagination>(html` <ae-pagination size="sm"></ae-pagination> `);
 
     expect(el.getAttribute('size')).to.equal('sm');
   });
@@ -145,9 +161,7 @@ describe('ae-pagination', () => {
     `);
 
     const pageButtons = el.shadowRoot!.querySelectorAll('[part="button"]');
-    const currentButton = Array.from(pageButtons).find(btn =>
-      btn.classList.contains('active')
-    );
+    const currentButton = Array.from(pageButtons).find((btn) => btn.classList.contains('active'));
 
     expect(currentButton).to.exist;
   });
@@ -170,11 +184,11 @@ describe('ae-pagination', () => {
       const stylesText = getComponentStyles(el);
 
       // Check that theme variables are used
-      assertCSSVariablesUsed(stylesText, [
-        '--ae-pagination-border',
-        '--ae-pagination-bg',
-        '--ae-pagination-color',
-      ], 'Pagination');
+      assertCSSVariablesUsed(
+        stylesText,
+        ['--ae-pagination-border', '--ae-pagination-bg', '--ae-pagination-color'],
+        'Pagination',
+      );
     });
 
     it('does not have hardcoded color fallbacks', async () => {

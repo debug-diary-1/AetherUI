@@ -17,24 +17,32 @@ export class PgResizeHandle extends LitElement {
       background: var(--pg-accent, #6366f1);
     }
 
-    :host([direction="horizontal"]) {
+    :host([direction='horizontal']) {
       width: 4px;
       height: 100%;
       top: 0;
       cursor: ew-resize;
     }
 
-    :host([direction="vertical"]) {
+    :host([direction='vertical']) {
       height: 4px;
       width: 100%;
       left: 0;
       cursor: ns-resize;
     }
 
-    :host([side="right"]) { right: 0; }
-    :host([side="left"]) { left: 0; }
-    :host([side="top"]) { top: 0; }
-    :host([side="bottom"]) { bottom: 0; }
+    :host([side='right']) {
+      right: 0;
+    }
+    :host([side='left']) {
+      left: 0;
+    }
+    :host([side='top']) {
+      top: 0;
+    }
+    :host([side='bottom']) {
+      bottom: 0;
+    }
   `;
 
   @property({ reflect: true }) direction: 'horizontal' | 'vertical' = 'horizontal';
@@ -65,10 +73,12 @@ export class PgResizeHandle extends LitElement {
 
     this._startPos = this.direction === 'horizontal' ? e.clientX : e.clientY;
 
-    this.dispatchEvent(new CustomEvent('pg-resize-start', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('pg-resize-start', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
 
     this.addEventListener('pointermove', this._onPointerMove);
     this.addEventListener('pointerup', this._onPointerUp);
@@ -79,11 +89,13 @@ export class PgResizeHandle extends LitElement {
     const currentPos = this.direction === 'horizontal' ? e.clientX : e.clientY;
     const delta = currentPos - this._startPos;
 
-    this.dispatchEvent(new CustomEvent('pg-resize', {
-      bubbles: true,
-      composed: true,
-      detail: { delta, direction: this.direction, side: this.side },
-    }));
+    this.dispatchEvent(
+      new CustomEvent('pg-resize', {
+        bubbles: true,
+        composed: true,
+        detail: { delta, direction: this.direction, side: this.side },
+      }),
+    );
   };
 
   private _onPointerUp = (e: PointerEvent) => {
@@ -93,9 +105,11 @@ export class PgResizeHandle extends LitElement {
     this.removeEventListener('pointerup', this._onPointerUp);
     this.removeEventListener('pointercancel', this._onPointerUp);
 
-    this.dispatchEvent(new CustomEvent('pg-resize-end', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('pg-resize-end', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   };
 }

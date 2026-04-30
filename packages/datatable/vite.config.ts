@@ -7,40 +7,40 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       formats: ['es'],
-      fileName: 'index'
+      fileName: 'index',
     },
     rollupOptions: {
       external: [/^lit/, /^@floating-ui/],
       output: {
-        preserveModules: true
-      }
+        preserveModules: true,
+      },
     },
     target: 'es2022',
-    outDir: 'dist'
+    outDir: 'dist',
   },
   esbuild: {
     target: 'es2022',
     supported: {
-      decorators: true
-    }
+      decorators: true,
+    },
   },
   plugins: [
     dts({
       entryRoot: 'src',
-      outDir: 'dist'
-    })
+      outDir: 'dist',
+    }),
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src')
-    }
+      '@': resolve(__dirname, 'src'),
+    },
   },
   optimizeDeps: {
     esbuildOptions: {
-      target: 'esnext'
-    }
+      target: 'esnext',
+    },
   },
   test: {
-    passWithNoTests: true
-  }
+    passWithNoTests: true,
+  },
 });

@@ -3,11 +3,22 @@ import { css } from 'lit';
 export const treeviewStyles = css`
   :host {
     display: block;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      'Open Sans',
+      'Helvetica Neue',
+      sans-serif;
   }
 
   /* Tree container */
-  [role="tree"] {
+  [role='tree'] {
     display: block;
     padding: 4px;
     outline: none;
@@ -34,7 +45,7 @@ export const treeviewStyles = css`
     background-color: var(--ae-treeview-hover-bg);
   }
 
-  .tree-node[aria-selected="true"] {
+  .tree-node[aria-selected='true'] {
     background-color: var(--ae-treeview-selected-bg);
     color: var(--ae-treeview-selected-color);
   }
@@ -62,7 +73,7 @@ export const treeviewStyles = css`
     color: var(--ae-treeview-caret-color);
   }
 
-  .tree-caret[aria-expanded="true"] {
+  .tree-caret[aria-expanded='true'] {
     transform: rotate(90deg);
   }
 
@@ -99,12 +110,12 @@ export const treeviewStyles = css`
     background-color: var(--ae-treeview-checkbox-bg, transparent);
   }
 
-  .tree-checkbox[aria-checked="true"] {
+  .tree-checkbox[aria-checked='true'] {
     background-color: var(--ae-treeview-checkbox-checked-bg);
     border-color: var(--ae-treeview-checkbox-checked-border-color);
   }
 
-  .tree-checkbox[aria-checked="true"]::after {
+  .tree-checkbox[aria-checked='true']::after {
     content: '';
     width: 8px;
     height: 8px;
@@ -164,4 +175,4 @@ export const treeviewStyles = css`
       transform: rotate(360deg);
     }
   }
-`; 
+`;

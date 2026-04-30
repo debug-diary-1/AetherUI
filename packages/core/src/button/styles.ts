@@ -40,38 +40,38 @@ export const buttonStyles = css`
   }
 
   /* Primary variant */
-  :host(:not([unstyled])[variant="primary"]) button,
+  :host(:not([unstyled])[variant='primary']) button,
   :host(:not([unstyled]):not([variant])) button {
     background-color: var(--ae-button-bg-primary);
     color: var(--ae-button-fg-primary);
     border-color: var(--ae-button-border-primary);
   }
 
-  :host(:not([unstyled])[variant="primary"]) button:hover,
+  :host(:not([unstyled])[variant='primary']) button:hover,
   :host(:not([unstyled]):not([variant])) button:hover {
     background-color: var(--ae-button-bg-primary-hover);
     border-color: var(--ae-button-border-primary-hover);
   }
 
   /* Secondary variant */
-  :host(:not([unstyled])[variant="secondary"]) button {
+  :host(:not([unstyled])[variant='secondary']) button {
     background-color: var(--ae-button-bg-secondary);
     color: var(--ae-button-fg-secondary);
     border-color: var(--ae-button-border-secondary);
   }
 
-  :host(:not([unstyled])[variant="secondary"]) button:hover {
+  :host(:not([unstyled])[variant='secondary']) button:hover {
     background-color: var(--ae-button-bg-secondary-hover);
   }
 
   /* Ghost variant */
-  :host(:not([unstyled])[variant="ghost"]) button {
+  :host(:not([unstyled])[variant='ghost']) button {
     background-color: var(--ae-button-bg-ghost);
     color: var(--ae-button-fg-ghost);
     border-color: var(--ae-button-border-ghost);
   }
 
-  :host(:not([unstyled])[variant="ghost"]) button:hover {
+  :host(:not([unstyled])[variant='ghost']) button:hover {
     background-color: var(--ae-button-bg-ghost-hover);
   }
 
@@ -97,7 +97,7 @@ export const buttonStyles = css`
   }
 
   /* Icon positioning */
-  ::slotted([slot="icon"]) {
+  ::slotted([slot='icon']) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -105,7 +105,7 @@ export const buttonStyles = css`
     height: 1em;
   }
 
-  :host([icon-position="end"]) button {
+  :host([icon-position='end']) button {
     flex-direction: row-reverse;
   }
 
@@ -116,7 +116,7 @@ export const buttonStyles = css`
   }
 
   /* Hide label in icon-only mode */
-  :host([icon-only]) [part="label"] {
+  :host([icon-only]) [part='label'] {
     display: none;
   }
 

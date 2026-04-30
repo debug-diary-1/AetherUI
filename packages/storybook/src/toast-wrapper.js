@@ -62,7 +62,7 @@ export function createToastHelpers() {
     // Helper for HTML content
     html(htmlContent, options = {}) {
       showToast({ ...options, message: htmlContent });
-    }
+    },
   };
 }
 

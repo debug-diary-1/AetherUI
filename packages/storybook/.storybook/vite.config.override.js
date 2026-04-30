@@ -4,12 +4,12 @@
  */
 export default {
   resolve: {
-    dedupe: ['lit', 'lit-html', 'lit-element', '@lit/reactive-element']
+    dedupe: ['lit', 'lit-html', 'lit-element', '@lit/reactive-element'],
   },
   build: {
     commonjsOptions: {
       include: [/node_modules/],
       extensions: ['.js', '.cjs'],
-    }
-  }
+    },
+  },
 };

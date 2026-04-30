@@ -12,9 +12,7 @@ describe('ae-breadcrumb', () => {
   });
 
   it('sets separator from attribute', async () => {
-    const el = await fixture<AeBreadcrumb>(html`
-      <ae-breadcrumb separator=">"></ae-breadcrumb>
-    `);
+    const el = await fixture<AeBreadcrumb>(html` <ae-breadcrumb separator=">"></ae-breadcrumb> `);
 
     expect(el.separator).to.equal('>');
   });

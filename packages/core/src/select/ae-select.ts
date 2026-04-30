@@ -158,7 +158,7 @@ export class AeSelect extends LitElement {
   private _updateFormValue() {
     if (this.multiple) {
       const formData = new FormData();
-      this.values.forEach(val => formData.append(this.name, val));
+      this.values.forEach((val) => formData.append(this.name, val));
       this._internals.setFormValue(formData);
     } else {
       this._internals.setFormValue(this.value || null);
@@ -175,7 +175,8 @@ export class AeSelect extends LitElement {
 
     if (!validity.valid) {
       // Provide a default message if the browser's validationMessage is empty
-      const message = this.selectElement.validationMessage ||
+      const message =
+        this.selectElement.validationMessage ||
         (validity.valueMissing ? 'Please select an option.' : 'Invalid selection.');
 
       this._internals.setValidity(
@@ -183,7 +184,7 @@ export class AeSelect extends LitElement {
           valueMissing: validity.valueMissing,
         },
         message,
-        this.selectElement
+        this.selectElement,
       );
     }
   }
@@ -207,21 +208,23 @@ export class AeSelect extends LitElement {
     const lightDOMOptions = Array.from(this.querySelectorAll('option'));
 
     // Remove existing cloned options (keep placeholder if any)
-    const existingOptions = Array.from(this.selectElement.querySelectorAll('option:not([data-placeholder])'));
-    existingOptions.forEach(opt => {
+    const existingOptions = Array.from(
+      this.selectElement.querySelectorAll('option:not([data-placeholder])'),
+    );
+    existingOptions.forEach((opt) => {
       if (!opt.hasAttribute('data-placeholder')) {
         opt.remove();
       }
     });
 
     // Clone light DOM options into shadow DOM select
-    lightDOMOptions.forEach(option => {
+    lightDOMOptions.forEach((option) => {
       const clone = option.cloneNode(true) as HTMLOptionElement;
       this.selectElement.appendChild(clone);
     });
 
     // Sync value with selected option
-    const selectedOption = lightDOMOptions.find(opt => opt.selected);
+    const selectedOption = lightDOMOptions.find((opt) => opt.selected);
     if (selectedOption && !this.value) {
       this.value = selectedOption.value;
       this._updateFormValue();
@@ -235,19 +238,23 @@ export class AeSelect extends LitElement {
     const select = event.target as HTMLSelectElement;
 
     if (this.multiple) {
-      this.values = Array.from(select.selectedOptions).map(opt => opt.value);
-      this.dispatchEvent(new CustomEvent('ae-select-change', {
-        detail: { value: this.values },
-        bubbles: true,
-        composed: true,
-      }));
+      this.values = Array.from(select.selectedOptions).map((opt) => opt.value);
+      this.dispatchEvent(
+        new CustomEvent('ae-select-change', {
+          detail: { value: this.values },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     } else {
       this.value = select.value;
-      this.dispatchEvent(new CustomEvent('ae-select-change', {
-        detail: { value: this.value },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('ae-select-change', {
+          detail: { value: this.value },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }
   }
 
@@ -304,16 +311,21 @@ export class AeSelect extends LitElement {
 
     return html`
       <div part="base" class="select-base">
-        ${this.label ? html`
-          <label part="label" class="select-label" for="select">
-            ${this.label}
-            ${this.required ? html`<span class="required-indicator">*</span>` : ''}
-          </label>
-        ` : ''}
+        ${this.label
+          ? html`
+              <label part="label" class="select-label" for="select">
+                ${this.label}
+                ${this.required ? html`<span class="required-indicator">*</span>` : ''}
+              </label>
+            `
+          : ''}
 
         <div
           part="select-wrapper"
-          class="select-wrapper ${this.focused ? 'focused' : ''} ${hasError ? 'error' : ''} ${this.disabled ? 'disabled' : ''}"
+          class="select-wrapper ${this.focused ? 'focused' : ''} ${hasError ? 'error' : ''} ${this
+            .disabled
+            ? 'disabled'
+            : ''}"
         >
           <select
             part="select"
@@ -323,33 +335,49 @@ export class AeSelect extends LitElement {
             ?disabled="${this.disabled}"
             ?required="${this.required}"
             ?multiple="${this.multiple}"
-            aria-label="${ifDefined(this.label ? undefined : (this.ariaLabel || this.placeholder || 'Select'))}"
+            aria-label="${ifDefined(
+              this.label ? undefined : this.ariaLabel || this.placeholder || 'Select',
+            )}"
             @change="${this.handleChange}"
             @focus="${this.handleFocus}"
             @blur="${this.handleBlur}"
           >
-            ${this.placeholder && !this.multiple ? html`
-              <option value="" disabled ?selected="${!this.value}" data-placeholder>
-                ${this.placeholder}
-              </option>
-            ` : ''}
+            ${this.placeholder && !this.multiple
+              ? html`
+                  <option value="" disabled ?selected="${!this.value}" data-placeholder>
+                    ${this.placeholder}
+                  </option>
+                `
+              : ''}
             <slot></slot>
           </select>
 
-          ${!this.multiple ? html`
-            <svg part="icon" class="select-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M7 8.5L10 11.5L13 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          ` : ''}
+          ${!this.multiple
+            ? html`
+                <svg
+                  part="icon"
+                  class="select-icon"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M7 8.5L10 11.5L13 8.5"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              `
+            : ''}
         </div>
 
-        ${showHelpText ? html`
-          <div part="help-text" class="help-text">${this.helpText}</div>
-        ` : ''}
-
-        ${hasError ? html`
-          <div part="error-text" class="error-text">${this.error}</div>
-        ` : ''}
+        ${showHelpText
+          ? html` <div part="help-text" class="help-text">${this.helpText}</div> `
+          : ''}
+        ${hasError ? html` <div part="error-text" class="error-text">${this.error}</div> ` : ''}
       </div>
     `;
   }

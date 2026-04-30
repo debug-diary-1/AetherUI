@@ -8,7 +8,7 @@ let mockShowCalls: any[] = [];
 (window as any).__mockToastManager = {
   show: (options: any) => {
     mockShowCalls.push(options);
-  }
+  },
 };
 
 describe('Toast API', () => {
@@ -20,14 +20,14 @@ describe('Toast API', () => {
     showToast({
       message: 'Test message',
       variant: 'success',
-      duration: 3000
+      duration: 3000,
     });
 
     expect(mockShowCalls.length).to.equal(1);
     expect(mockShowCalls[0]).to.deep.equal({
       message: 'Test message',
       variant: 'success',
-      duration: 3000
+      duration: 3000,
     });
   });
 
@@ -39,25 +39,25 @@ describe('Toast API', () => {
     expect(mockShowCalls[0]).to.deep.equal({
       message: 'Info message',
       variant: 'info',
-      duration: 3000
+      duration: 3000,
     });
 
     helpers.success('Success message');
     expect(mockShowCalls[1]).to.deep.equal({
       message: 'Success message',
-      variant: 'success'
+      variant: 'success',
     });
 
     helpers.warning('Warning message');
     expect(mockShowCalls[2]).to.deep.equal({
       message: 'Warning message',
-      variant: 'warning'
+      variant: 'warning',
     });
 
     helpers.error('Error message');
     expect(mockShowCalls[3]).to.deep.equal({
       message: 'Error message',
-      variant: 'error'
+      variant: 'error',
     });
   });
 
@@ -67,7 +67,7 @@ describe('Toast API', () => {
     helpers.success('Success message', {
       duration: 10000,
       placement: 'top-left',
-      pauseOnHover: false
+      pauseOnHover: false,
     });
 
     expect(mockShowCalls[0]).to.deep.equal({
@@ -75,7 +75,7 @@ describe('Toast API', () => {
       variant: 'success',
       duration: 10000,
       placement: 'top-left',
-      pauseOnHover: false
+      pauseOnHover: false,
     });
   });
 });

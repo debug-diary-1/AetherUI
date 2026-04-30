@@ -6,12 +6,12 @@ import { rowStyles } from './styles';
 /**
  * Row component for the datatable
  * @element ae-datatable-row
- * 
+ *
  * @property {boolean} selected - Whether the row is selected
  * @property {boolean} selectable - Whether the row is selectable
- * 
+ *
  * @fires {CustomEvent} ae-datatable-row-click - Fired when the row is clicked
- * 
+ *
  * @slot - Default slot for cells
  */
 export class AeDatatableRow extends LitElement {
@@ -34,22 +34,22 @@ export class AeDatatableRow extends LitElement {
    */
   private handleClick(e: MouseEvent) {
     if (!this.selectable) return;
-    
+
     // Dispatch row click event
-    this.dispatchEvent(new CustomEvent('ae-datatable-row-click', {
-      detail: {
-        id: this.id,
-        originalEvent: e
-      },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-datatable-row-click', {
+        detail: {
+          id: this.id,
+          originalEvent: e,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
-    return html`
-      <slot @click=${this.handleClick}></slot>
-    `;
+    return html` <slot @click=${this.handleClick}></slot> `;
   }
 }
 

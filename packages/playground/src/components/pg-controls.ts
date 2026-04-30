@@ -32,7 +32,9 @@ export class PgControls extends LitElement {
       transition: all 0.15s ease;
       font-family: inherit;
     }
-    .tab:hover { color: var(--pg-text); }
+    .tab:hover {
+      color: var(--pg-text);
+    }
     .tab.active {
       color: var(--pg-accent);
       box-shadow: inset 0 -2px 0 var(--pg-accent);
@@ -44,7 +46,9 @@ export class PgControls extends LitElement {
       padding: 1rem;
     }
 
-    .section { margin-bottom: 1.25rem; }
+    .section {
+      margin-bottom: 1.25rem;
+    }
 
     .section-title {
       font-size: 0.6875rem;
@@ -55,7 +59,9 @@ export class PgControls extends LitElement {
       margin-bottom: 0.75rem;
     }
 
-    .control { margin-bottom: 0.875rem; }
+    .control {
+      margin-bottom: 0.875rem;
+    }
 
     .control-label {
       display: flex;
@@ -87,7 +93,7 @@ export class PgControls extends LitElement {
       flex-shrink: 0;
     }
 
-    .color-swatch input[type="color"] {
+    .color-swatch input[type='color'] {
       width: 150%;
       height: 150%;
       margin: -25%;
@@ -106,11 +112,15 @@ export class PgControls extends LitElement {
       font-family: var(--pg-font-mono);
       outline: none;
     }
-    .text-input:focus { border-color: var(--pg-accent); }
+    .text-input:focus {
+      border-color: var(--pg-accent);
+    }
 
-    .color-text { flex: 1; }
+    .color-text {
+      flex: 1;
+    }
 
-    input[type="range"] {
+    input[type='range'] {
       width: 100%;
       -webkit-appearance: none;
       appearance: none;
@@ -120,7 +130,7 @@ export class PgControls extends LitElement {
       outline: none;
     }
 
-    input[type="range"]::-webkit-slider-thumb {
+    input[type='range']::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
       width: 14px;
@@ -156,7 +166,9 @@ export class PgControls extends LitElement {
       transition: all 0.15s ease;
       border: 1px solid transparent;
     }
-    .variant-item:hover { background: var(--pg-bg-tertiary); }
+    .variant-item:hover {
+      background: var(--pg-bg-tertiary);
+    }
     .variant-item.active {
       background: var(--pg-accent);
       color: white;
@@ -169,19 +181,23 @@ export class PgControls extends LitElement {
   @property() activeTab: 'style' | 'variants' = 'style';
 
   private _dispatch(varName: string, value: string) {
-    this.dispatchEvent(new CustomEvent('pg-control-change', {
-      bubbles: true,
-      composed: true,
-      detail: { name: varName, value },
-    }));
+    this.dispatchEvent(
+      new CustomEvent('pg-control-change', {
+        bubbles: true,
+        composed: true,
+        detail: { name: varName, value },
+      }),
+    );
   }
 
   private _selectVariant(name: string | undefined) {
-    this.dispatchEvent(new CustomEvent('pg-variant-select', {
-      bubbles: true,
-      composed: true,
-      detail: { name },
-    }));
+    this.dispatchEvent(
+      new CustomEvent('pg-variant-select', {
+        bubbles: true,
+        composed: true,
+        detail: { name },
+      }),
+    );
   }
 
   private _renderColorControl(v: CSSVariable) {
@@ -194,11 +210,18 @@ export class PgControls extends LitElement {
         </div>
         <div class="color-control">
           <div class="color-swatch" style="background: ${value}">
-            <input type="color" .value=${value.startsWith('#') ? value : '#000000'}
-                   @input=${(e: Event) => this._dispatch(v.name, (e.target as HTMLInputElement).value)}>
+            <input
+              type="color"
+              .value=${value.startsWith('#') ? value : '#000000'}
+              @input=${(e: Event) => this._dispatch(v.name, (e.target as HTMLInputElement).value)}
+            />
           </div>
-          <input class="text-input color-text" type="text" .value=${value}
-                 @input=${(e: Event) => this._dispatch(v.name, (e.target as HTMLInputElement).value)}>
+          <input
+            class="text-input color-text"
+            type="text"
+            .value=${value}
+            @input=${(e: Event) => this._dispatch(v.name, (e.target as HTMLInputElement).value)}
+          />
         </div>
       </div>
     `;
@@ -212,8 +235,13 @@ export class PgControls extends LitElement {
           <span>${v.label}</span>
           <span class="control-value">${value}${v.unit || ''}</span>
         </div>
-        <input type="range" min=${v.min || 0} max=${v.max || 100} .value=${value}
-               @input=${(e: Event) => this._dispatch(v.name, (e.target as HTMLInputElement).value)}>
+        <input
+          type="range"
+          min=${v.min || 0}
+          max=${v.max || 100}
+          .value=${value}
+          @input=${(e: Event) => this._dispatch(v.name, (e.target as HTMLInputElement).value)}
+        />
       </div>
     `;
   }
@@ -223,10 +251,12 @@ export class PgControls extends LitElement {
     return html`
       <div class="control">
         <div class="control-label"><span>${v.label}</span></div>
-        <select @change=${(e: Event) => this._dispatch(v.name, (e.target as HTMLSelectElement).value)}>
-          ${v.options?.map(opt => html`
-            <option value=${opt} ?selected=${opt === value}>${opt}</option>
-          `)}
+        <select
+          @change=${(e: Event) => this._dispatch(v.name, (e.target as HTMLSelectElement).value)}
+        >
+          ${v.options?.map(
+            (opt) => html` <option value=${opt} ?selected=${opt === value}>${opt}</option> `,
+          )}
         </select>
       </div>
     `;
@@ -234,44 +264,63 @@ export class PgControls extends LitElement {
 
   private _renderStyleTab() {
     if (!this.config) return null;
-    const colors = this.config.cssVariables.filter(v => v.type === 'color');
-    const sizes = this.config.cssVariables.filter(v => v.type === 'size' || v.type === 'number');
-    const selects = this.config.cssVariables.filter(v => v.type === 'select');
+    const colors = this.config.cssVariables.filter((v) => v.type === 'color');
+    const sizes = this.config.cssVariables.filter((v) => v.type === 'size' || v.type === 'number');
+    const selects = this.config.cssVariables.filter((v) => v.type === 'select');
 
     return html`
-      ${colors.length ? html`
-        <div class="section">
-          <div class="section-title">Colors</div>
-          ${colors.map(v => this._renderColorControl(v))}
-        </div>
-      ` : null}
-      ${sizes.length ? html`
-        <div class="section">
-          <div class="section-title">Sizing</div>
-          ${sizes.map(v => this._renderSizeControl(v))}
-        </div>
-      ` : null}
-      ${selects.length ? html`
-        <div class="section">
-          <div class="section-title">Options</div>
-          ${selects.map(v => this._renderSelectControl(v))}
-        </div>
-      ` : null}
+      ${colors.length
+        ? html`
+            <div class="section">
+              <div class="section-title">Colors</div>
+              ${colors.map((v) => this._renderColorControl(v))}
+            </div>
+          `
+        : null}
+      ${sizes.length
+        ? html`
+            <div class="section">
+              <div class="section-title">Sizing</div>
+              ${sizes.map((v) => this._renderSizeControl(v))}
+            </div>
+          `
+        : null}
+      ${selects.length
+        ? html`
+            <div class="section">
+              <div class="section-title">Options</div>
+              ${selects.map((v) => this._renderSelectControl(v))}
+            </div>
+          `
+        : null}
     `;
   }
 
   private _renderVariantsTab() {
-    if (!this.config?.variants) return html`<div style="padding:1rem;color:var(--pg-text-muted);font-size:0.8125rem;">No variants available</div>`;
+    if (!this.config?.variants)
+      return html`<div style="padding:1rem;color:var(--pg-text-muted);font-size:0.8125rem;">
+        No variants available
+      </div>`;
     return html`
       <div class="section">
         <div class="section-title">Component Variants</div>
         <div class="variant-list">
-          <div class="variant-item ${!this.selectedVariant ? 'active' : ''}"
-               @click=${() => this._selectVariant(undefined)}>Default</div>
-          ${this.config.variants.map(v => html`
-            <div class="variant-item ${this.selectedVariant === v.name ? 'active' : ''}"
-                 @click=${() => this._selectVariant(v.name)}>${v.name}</div>
-          `)}
+          <div
+            class="variant-item ${!this.selectedVariant ? 'active' : ''}"
+            @click=${() => this._selectVariant(undefined)}
+          >
+            Default
+          </div>
+          ${this.config.variants.map(
+            (v) => html`
+              <div
+                class="variant-item ${this.selectedVariant === v.name ? 'active' : ''}"
+                @click=${() => this._selectVariant(v.name)}
+              >
+                ${v.name}
+              </div>
+            `,
+          )}
         </div>
       </div>
     `;
@@ -282,12 +331,26 @@ export class PgControls extends LitElement {
 
     return html`
       <div class="tabs">
-        <button class="tab ${this.activeTab === 'style' ? 'active' : ''}"
-                @click=${() => { this.activeTab = 'style'; }}>Style</button>
-        ${hasVariants ? html`
-          <button class="tab ${this.activeTab === 'variants' ? 'active' : ''}"
-                  @click=${() => { this.activeTab = 'variants'; }}>Variants</button>
-        ` : null}
+        <button
+          class="tab ${this.activeTab === 'style' ? 'active' : ''}"
+          @click=${() => {
+            this.activeTab = 'style';
+          }}
+        >
+          Style
+        </button>
+        ${hasVariants
+          ? html`
+              <button
+                class="tab ${this.activeTab === 'variants' ? 'active' : ''}"
+                @click=${() => {
+                  this.activeTab = 'variants';
+                }}
+              >
+                Variants
+              </button>
+            `
+          : null}
       </div>
       <div class="content">
         ${this.activeTab === 'style' ? this._renderStyleTab() : this._renderVariantsTab()}

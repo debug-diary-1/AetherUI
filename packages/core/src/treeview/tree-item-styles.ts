@@ -54,7 +54,9 @@ export const treeItemStyles = css`
     background: transparent;
     cursor: pointer;
     color: var(--ae-treeview-caret-color);
-    transition: transform 0.2s ease-in-out, color 0.15s ease-in-out;
+    transition:
+      transform 0.2s ease-in-out,
+      color 0.15s ease-in-out;
     flex-shrink: 0;
   }
 

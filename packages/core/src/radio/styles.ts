@@ -37,7 +37,9 @@ export const radioStyles = css`
     height: calc(var(--ae-radio-size, 18px) * 0.5);
     border-radius: 50%;
     background: var(--ae-radio-checked-dot-color);
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
   }
 
   input:checked + .control {
@@ -72,14 +74,14 @@ export const radioGroupStyles = css`
     display: block;
   }
 
-  [part="base"] {
+  [part='base'] {
     display: flex;
     flex-direction: column;
     gap: var(--ae-radio-group-gap, 0.5rem);
   }
 
-  :host([orientation="horizontal"]) [part="base"] {
+  :host([orientation='horizontal']) [part='base'] {
     flex-direction: row;
     align-items: center;
   }
-`; 
+`;

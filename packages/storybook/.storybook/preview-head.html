@@ -1,81 +1,96 @@
 <!-- Debug scripts for troubleshooting Storybook issues -->
 <script>
-    // Capture all errors
-    window.errors = [];
-    window.addEventListener('error', function(event) {
-        console.error('Runtime error caught:', event.message);
-        window.errors.push({
-            message: event.message,
-            source: event.filename,
-            line: event.lineno,
-            timestamp: new Date().toISOString()
-        });
+  // Capture all errors
+  window.errors = [];
+  window.addEventListener('error', function (event) {
+    console.error('Runtime error caught:', event.message);
+    window.errors.push({
+      message: event.message,
+      source: event.filename,
+      line: event.lineno,
+      timestamp: new Date().toISOString(),
     });
+  });
 
-    // Log when document is fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('Document fully loaded');
-        
-        // Check component registration after 3 seconds
-        setTimeout(function() {
-            const components = [
-                'ae-autocomplete', 'ae-alert', 'ae-combo', 'ae-tabs', 'ae-treeview',
-                'ae-accordion', 'ae-button', 'ae-checkbox', 'ae-dropdown', 'ae-modal', 'ae-radio'
-            ];
-            
-            const missingComponents = components.filter(function(tag) {
-                return !customElements.get(tag);
+  // Log when document is fully loaded
+  document.addEventListener('DOMContentLoaded', function () {
+    console.log('Document fully loaded');
+
+    // Check component registration after 3 seconds
+    setTimeout(function () {
+      const components = [
+        'ae-autocomplete',
+        'ae-alert',
+        'ae-combo',
+        'ae-tabs',
+        'ae-treeview',
+        'ae-accordion',
+        'ae-button',
+        'ae-checkbox',
+        'ae-dropdown',
+        'ae-modal',
+        'ae-radio',
+      ];
+
+      const missingComponents = components.filter(function (tag) {
+        return !customElements.get(tag);
+      });
+
+      if (missingComponents.length > 0) {
+        console.warn('Components not registered after 3s:', missingComponents);
+
+        // Try to directly import components as a last resort
+        try {
+          // This is a fallback mechanism for lit/decorators.js issues
+          console.log('Attempting direct component registration');
+
+          // Try to load components directly via dynamic import
+          // This will be handled by the module system if possible
+          import('/packages/storybook/src/source-components.js')
+            .then(function () {
+              console.log('Direct import succeeded');
+            })
+            .catch(function (err) {
+              console.error('Direct import failed:', err);
             });
-            
-            if (missingComponents.length > 0) {
-                console.warn('Components not registered after 3s:', missingComponents);
-                
-                // Try to directly import components as a last resort
-                try {
-                    // This is a fallback mechanism for lit/decorators.js issues
-                    console.log('Attempting direct component registration');
-                    
-                    // Try to load components directly via dynamic import
-                    // This will be handled by the module system if possible
-                    import('/packages/storybook/src/source-components.js')
-                        .then(function() { console.log('Direct import succeeded'); })
-                        .catch(function(err) { console.error('Direct import failed:', err); });
-                } catch (e) {
-                    console.error('Fallback import error:', e);
-                }
-            } else {
-                console.log('All components registered successfully!');
-            }
-        }, 3000);
-    });
-
-    // Check if custom elements are supported
-    console.log('Custom Elements supported:', !!window.customElements);
-    
-    // Ensure lit is available as a global
-    window.ensureLit = function() {
-        // This is a fallback to make sure lit is available
-        if (!window.litHtml) {
-            console.log('Attempting to make lit globally available');
-            try {
-                const script = document.createElement('script');
-                script.src = '/node_modules/lit/index.js';
-                script.type = 'module';
-                document.head.appendChild(script);
-                console.log('Added lit script tag');
-            } catch (e) {
-                console.error('Failed to add lit script:', e);
-            }
+        } catch (e) {
+          console.error('Fallback import error:', e);
         }
-    };
-    
-    // Run this after a short delay
-    setTimeout(window.ensureLit, 1000);
+      } else {
+        console.log('All components registered successfully!');
+      }
+    }, 3000);
+  });
+
+  // Check if custom elements are supported
+  console.log('Custom Elements supported:', !!window.customElements);
+
+  // Ensure lit is available as a global
+  window.ensureLit = function () {
+    // This is a fallback to make sure lit is available
+    if (!window.litHtml) {
+      console.log('Attempting to make lit globally available');
+      try {
+        const script = document.createElement('script');
+        script.src = '/node_modules/lit/index.js';
+        script.type = 'module';
+        document.head.appendChild(script);
+        console.log('Added lit script tag');
+      } catch (e) {
+        console.error('Failed to add lit script:', e);
+      }
+    }
+  };
+
+  // Run this after a short delay
+  setTimeout(window.ensureLit, 1000);
 </script>
 
 <style>
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family:
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     margin: 0;
     padding: 1rem;
   }
@@ -113,7 +128,8 @@
   }
 
   /* Light Theme (default) */
-  :root, .light-theme {
+  :root,
+  .light-theme {
     /* Common variables */
     --ae-border-radius: 4px;
     --ae-transition-speed: 0.2s;
@@ -299,7 +315,8 @@
     margin-bottom: 8px;
   }
 
-  ae-checkbox, ae-radio {
+  ae-checkbox,
+  ae-radio {
     margin-right: 16px;
     margin-bottom: 8px;
   }

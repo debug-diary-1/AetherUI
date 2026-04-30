@@ -5,11 +5,11 @@ export { AeModal, modalStyles };
 
 /**
  * Register the modal component with the CustomElements registry
- * 
+ *
  * @example
  * ```ts
  * import { defineAeModal } from '@aetherui/core';
- * 
+ *
  * defineAeModal(); // Now <ae-modal> is available
  * ```
  */

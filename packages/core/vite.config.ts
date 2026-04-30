@@ -14,17 +14,17 @@ const components = [
   'tabs',
   'treeview',
   'combo',
-  'autocomplete'
+  'autocomplete',
 ];
 
 // Create entries object with index and components
 // Use Record<string, string> type to allow dynamic keys
 const entries: Record<string, string> = {
-  'index': resolve(__dirname, 'src/index.ts'),
+  index: resolve(__dirname, 'src/index.ts'),
 };
 
 // Add individual component entries
-components.forEach(component => {
+components.forEach((component) => {
   entries[`${component}/index`] = resolve(__dirname, `src/${component}/index.ts`);
 });
 
@@ -48,7 +48,7 @@ export default defineConfig({
   plugins: [
     dts({
       include: ['src/**/*.ts'],
-      entryRoot: 'src'
+      entryRoot: 'src',
     }),
   ],
   esbuild: {

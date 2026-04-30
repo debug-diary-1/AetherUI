@@ -4,24 +4,24 @@ import { accordionItemStyles } from './styles';
 
 /**
  * An individual collapsible panel within an accordion.
- * 
+ *
  * @element ae-accordion-item
- * 
+ *
  * @property {string} headerId - Unique identifier for this accordion item
  * @property {boolean} open - Whether this panel is currently open
  * @property {boolean} disabled - Whether this accordion item is disabled
- * 
+ *
  * @fires {CustomEvent<{headerId: string, open: boolean}>} ae-panel-change - Fired when this panel is opened or closed
  * @fires {CustomEvent<{headerId: string, open: boolean}>} ae-accordion-item-change - Standardized event fired when opened/closed
- * 
+ *
  * @slot - Default slot for panel content
  * @slot header - Content for the accordion header/button
- * 
+ *
  * @csspart base - The container element
  * @csspart header - The clickable header button
  * @csspart icon - The expand/collapse icon
  * @csspart panel - The content panel
- * 
+ *
  * @cssproperty --ae-accordion-header-bg - Header background color
  * @cssproperty --ae-accordion-header-color - Header text color
  * @cssproperty --ae-accordion-header-active-bg - Open header background color
@@ -93,7 +93,7 @@ export class AeAccordionItem extends LitElement {
         detail,
         bubbles: true,
         composed: true,
-      })
+      }),
     );
 
     this.dispatchEvent(
@@ -101,7 +101,7 @@ export class AeAccordionItem extends LitElement {
         detail,
         bubbles: true,
         composed: true,
-      })
+      }),
     );
   }
 

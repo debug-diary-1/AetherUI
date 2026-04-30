@@ -19,27 +19,27 @@ export const spinnerStyles = css`
   }
 
   /* Sizes */
-  :host([size="xs"]) .spinner-svg {
+  :host([size='xs']) .spinner-svg {
     width: var(--ae-spinner-size-xs, 16px);
     height: var(--ae-spinner-size-xs, 16px);
   }
 
-  :host([size="sm"]) .spinner-svg {
+  :host([size='sm']) .spinner-svg {
     width: var(--ae-spinner-size-sm, 20px);
     height: var(--ae-spinner-size-sm, 20px);
   }
 
-  :host([size="md"]) .spinner-svg {
+  :host([size='md']) .spinner-svg {
     width: var(--ae-spinner-size-md, 24px);
     height: var(--ae-spinner-size-md, 24px);
   }
 
-  :host([size="lg"]) .spinner-svg {
+  :host([size='lg']) .spinner-svg {
     width: var(--ae-spinner-size-lg, 32px);
     height: var(--ae-spinner-size-lg, 32px);
   }
 
-  :host([size="xl"]) .spinner-svg {
+  :host([size='xl']) .spinner-svg {
     width: var(--ae-spinner-size-xl, 48px);
     height: var(--ae-spinner-size-xl, 48px);
   }
@@ -58,27 +58,27 @@ export const spinnerStyles = css`
   }
 
   /* Variant colors */
-  :host([variant="primary"]) .spinner-indicator {
+  :host([variant='primary']) .spinner-indicator {
     stroke: var(--ae-spinner-color-primary);
   }
 
-  :host([variant="secondary"]) .spinner-indicator {
+  :host([variant='secondary']) .spinner-indicator {
     stroke: var(--ae-spinner-color-secondary);
   }
 
-  :host([variant="success"]) .spinner-indicator {
+  :host([variant='success']) .spinner-indicator {
     stroke: var(--ae-spinner-color-success);
   }
 
-  :host([variant="warning"]) .spinner-indicator {
+  :host([variant='warning']) .spinner-indicator {
     stroke: var(--ae-spinner-color-warning);
   }
 
-  :host([variant="error"]) .spinner-indicator {
+  :host([variant='error']) .spinner-indicator {
     stroke: var(--ae-spinner-color-error);
   }
 
-  :host([variant="info"]) .spinner-indicator {
+  :host([variant='info']) .spinner-indicator {
     stroke: var(--ae-spinner-color-info);
   }
 

@@ -25,7 +25,9 @@ export const Default = {
     <ae-breadcrumb separator="${args.separator}" aria-label="${args.ariaLabel}">
       <ae-breadcrumb-item href="/" aria-label="Home">Home</ae-breadcrumb-item>
       <ae-breadcrumb-item href="/products" aria-label="Products">Products</ae-breadcrumb-item>
-      <ae-breadcrumb-item href="/products/electronics" aria-label="Electronics">Electronics</ae-breadcrumb-item>
+      <ae-breadcrumb-item href="/products/electronics" aria-label="Electronics"
+        >Electronics</ae-breadcrumb-item
+      >
       <ae-breadcrumb-item current aria-label="Laptops">Laptops</ae-breadcrumb-item>
     </ae-breadcrumb>
   `,

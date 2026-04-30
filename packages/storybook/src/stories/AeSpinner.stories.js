@@ -28,11 +28,7 @@ export const Default = {
     label: 'Loading...',
   },
   render: (args) => html`
-    <ae-spinner
-      size="${args.size}"
-      variant="${args.variant}"
-      label="${args.label}"
-    ></ae-spinner>
+    <ae-spinner size="${args.size}" variant="${args.variant}" label="${args.label}"></ae-spinner>
   `,
 };
 

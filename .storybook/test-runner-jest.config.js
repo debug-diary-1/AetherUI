@@ -9,7 +9,9 @@ module.exports = {
       // Ensure highlighted text is rendered, not as raw HTML
       const rawHtmlPattern = /&lt;span class="highlight"&gt;/;
       if (rawHtmlPattern.test(innerHTML)) {
-        throw new Error('Highlighted text is being rendered as escaped HTML instead of actual HTML');
+        throw new Error(
+          'Highlighted text is being rendered as escaped HTML instead of actual HTML',
+        );
       }
     }
   },

@@ -66,19 +66,23 @@ The Autocomplete component provides a text input with dropdown suggestions as us
 ## Basic Usage
 
 ```html
-<ae-autocomplete 
-  placeholder="Search countries"
-  min-chars="2"
-  max-items="5">
-</ae-autocomplete>
+<ae-autocomplete placeholder="Search countries" min-chars="2" max-items="5"> </ae-autocomplete>
 ```
 
 ```javascript
 // Setting options
 const autocomplete = document.querySelector('ae-autocomplete');
 autocomplete.options = [
-  'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
-  'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria'
+  'Afghanistan',
+  'Albania',
+  'Algeria',
+  'Andorra',
+  'Angola',
+  'Antigua and Barbuda',
+  'Argentina',
+  'Armenia',
+  'Australia',
+  'Austria',
 ];
 
 // Or with more detailed option objects
@@ -97,63 +101,63 @@ autocomplete.addEventListener('ae-autocomplete-select', (e) => {
 
 ## Properties
 
-| Property | Attribute | Type | Default | Description |
-|----------|-----------|------|---------|-------------|
-| `options` | — | `Array` | `[]` | Options to display in the dropdown |
-| `value` | `value` | `string` | `''` | Current input value |
-| `placeholder` | `placeholder` | `string` | `'Start typing...'` | Placeholder text for input |
-| `disabled` | `disabled` | `boolean` | `false` | Whether the input is disabled |
-| `minChars` | `min-chars` | `number` | `1` | Minimum characters before showing suggestions |
-| `maxItems` | `max-items` | `number` | `10` | Maximum items to show |
-| `filterFn` | — | `function` | — | Custom filter function |
+| Property      | Attribute     | Type       | Default             | Description                                   |
+| ------------- | ------------- | ---------- | ------------------- | --------------------------------------------- |
+| `options`     | —             | `Array`    | `[]`                | Options to display in the dropdown            |
+| `value`       | `value`       | `string`   | `''`                | Current input value                           |
+| `placeholder` | `placeholder` | `string`   | `'Start typing...'` | Placeholder text for input                    |
+| `disabled`    | `disabled`    | `boolean`  | `false`             | Whether the input is disabled                 |
+| `minChars`    | `min-chars`   | `number`   | `1`                 | Minimum characters before showing suggestions |
+| `maxItems`    | `max-items`   | `number`   | `10`                | Maximum items to show                         |
+| `filterFn`    | —             | `function` | —                   | Custom filter function                        |
 
 ## Events
 
-| Event | Detail | Description |
-|-------|--------|-------------|
-| `ae-autocomplete-change` | `{ value: string, option: AutocompleteOption \| null }` | Fired when input value changes |
-| `ae-autocomplete-select` | `{ value: string, option: AutocompleteOption }` | Fired when an option is selected |
+| Event                    | Detail                                                  | Description                      |
+| ------------------------ | ------------------------------------------------------- | -------------------------------- |
+| `ae-autocomplete-change` | `{ value: string, option: AutocompleteOption \| null }` | Fired when input value changes   |
+| `ae-autocomplete-select` | `{ value: string, option: AutocompleteOption }`         | Fired when an option is selected |
 
 ## Methods
 
-| Method | Parameters | Description |
-|--------|------------|-------------|
+| Method            | Parameters      | Description                           |
+| ----------------- | --------------- | ------------------------------------- |
 | `setValue(value)` | `value: string` | Sets the input value programmatically |
-| `clearValue()` | — | Clears the current value |
-| `focus()` | — | Focuses the input element |
+| `clearValue()`    | —               | Clears the current value              |
+| `focus()`         | —               | Focuses the input element             |
 
 ## Slots
 
-| Name | Description |
-|------|-------------|
-| `option` | Custom template for option rendering |
-| `no-results` | Content shown when no results match |
-| `clear` | Custom template for the clear button |
-| `arrow` | Custom template for the dropdown arrow |
+| Name         | Description                            |
+| ------------ | -------------------------------------- |
+| `option`     | Custom template for option rendering   |
+| `no-results` | Content shown when no results match    |
+| `clear`      | Custom template for the clear button   |
+| `arrow`      | Custom template for the dropdown arrow |
 
 ## CSS Parts
 
-| Part | Description |
-|------|-------------|
-| `input` | The text input element |
-| `dropdown` | The dropdown container | 
-| `option` | Each option in the dropdown |
+| Part            | Description                           |
+| --------------- | ------------------------------------- |
+| `input`         | The text input element                |
+| `dropdown`      | The dropdown container                |
+| `option`        | Each option in the dropdown           |
 | `group-heading` | Group heading for categorized options |
-| `clear` | The clear button |
-| `arrow` | The dropdown arrow |
+| `clear`         | The clear button                      |
+| `arrow`         | The dropdown arrow                    |
 
 ## CSS Custom Properties
 
-| Property | Description |
-|----------|-------------|
-| `--ae-autocomplete-border-color` | Border color for the input |
-| `--ae-autocomplete-background` | Background color of the input |
-| `--ae-autocomplete-text-color` | Text color of the input |
-| `--ae-autocomplete-border-radius` | Corner radius for input and dropdown |
-| `--ae-autocomplete-highlight-background` | Background for highlighted options |
-| `--ae-autocomplete-selected-background` | Background for selected option |
-| `--ae-autocomplete-dropdown-shadow` | Shadow for the dropdown |
-| `--ae-autocomplete-match-text-color` | Text color for matching characters |
+| Property                                 | Description                          |
+| ---------------------------------------- | ------------------------------------ |
+| `--ae-autocomplete-border-color`         | Border color for the input           |
+| `--ae-autocomplete-background`           | Background color of the input        |
+| `--ae-autocomplete-text-color`           | Text color of the input              |
+| `--ae-autocomplete-border-radius`        | Corner radius for input and dropdown |
+| `--ae-autocomplete-highlight-background` | Background for highlighted options   |
+| `--ae-autocomplete-selected-background`  | Background for selected option       |
+| `--ae-autocomplete-dropdown-shadow`      | Shadow for the dropdown              |
+| `--ae-autocomplete-match-text-color`     | Text color for matching characters   |
 
 ## Examples
 
@@ -165,8 +169,16 @@ autocomplete.addEventListener('ae-autocomplete-select', (e) => {
 <script>
   const autocomplete = document.querySelector('ae-autocomplete');
   autocomplete.options = [
-    'United States', 'United Kingdom', 'Canada', 'Australia', 
-    'Germany', 'France', 'Japan', 'China', 'Brazil', 'India'
+    'United States',
+    'United Kingdom',
+    'Canada',
+    'Australia',
+    'Germany',
+    'France',
+    'Japan',
+    'China',
+    'Brazil',
+    'India',
   ];
 </script>
 ```
@@ -186,7 +198,7 @@ autocomplete.addEventListener('ae-autocomplete-select', (e) => {
     { id: 'ar', text: 'Argentina', group: 'South America' },
     { id: 'gb', text: 'United Kingdom', group: 'Europe' },
     { id: 'de', text: 'Germany', group: 'Europe' },
-    { id: 'fr', text: 'France', group: 'Europe' }
+    { id: 'fr', text: 'France', group: 'Europe' },
   ];
 </script>
 ```
@@ -198,16 +210,14 @@ autocomplete.addEventListener('ae-autocomplete-select', (e) => {
 
 <script>
   const autocomplete = document.querySelector('ae-autocomplete');
-  
+
   // Set options
-  autocomplete.options = [
-    'United States', 'United Kingdom', 'Canada', 'Australia'
-  ];
-  
+  autocomplete.options = ['United States', 'United Kingdom', 'Canada', 'Australia'];
+
   // Custom filter: match start of word
   autocomplete.filterFn = (query, option) => {
     const words = option.text.toLowerCase().split(' ');
-    return words.some(word => word.startsWith(query.toLowerCase()));
+    return words.some((word) => word.startsWith(query.toLowerCase()));
   };
 </script>
 ```
@@ -218,7 +228,10 @@ autocomplete.addEventListener('ae-autocomplete-select', (e) => {
 <ae-autocomplete placeholder="Search users">
   <template slot="option">
     <div style="display: flex; align-items: center;">
-      <img src="${option.data.avatar}" style="width: 24px; height: 24px; border-radius: 50%; margin-right: 8px;" />
+      <img
+        src="${option.data.avatar}"
+        style="width: 24px; height: 24px; border-radius: 50%; margin-right: 8px;"
+      />
       <div>
         <div style="font-weight: bold;">${option.text}</div>
         <div style="font-size: 0.8em; color: #666;">${option.data.email}</div>
@@ -229,16 +242,16 @@ autocomplete.addEventListener('ae-autocomplete-select', (e) => {
 
 <script>
   const autocomplete = document.querySelector('ae-autocomplete');
-  
+
   // Set options with extra data
   autocomplete.options = [
-    { 
-      id: '1', 
-      text: 'John Doe', 
-      data: { 
+    {
+      id: '1',
+      text: 'John Doe',
+      data: {
         email: 'john@example.com',
-        avatar: 'https://example.com/avatars/john.jpg'
-      }
+        avatar: 'https://example.com/avatars/john.jpg',
+      },
     },
     // More users...
   ];

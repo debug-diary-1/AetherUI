@@ -42,21 +42,21 @@ export const paginationStyles = css`
   }
 
   /* Sizes */
-  :host([size="sm"]) .pagination-button {
+  :host([size='sm']) .pagination-button {
     min-width: var(--ae-pagination-button-size-sm, 32px);
     height: var(--ae-pagination-button-size-sm, 32px);
     padding: var(--ae-pagination-padding-sm, 0.25rem 0.5rem);
     font-size: var(--ae-pagination-font-size-sm, 0.75rem);
   }
 
-  :host([size="md"]) .pagination-button {
+  :host([size='md']) .pagination-button {
     min-width: var(--ae-pagination-button-size-md, 40px);
     height: var(--ae-pagination-button-size-md, 40px);
     padding: var(--ae-pagination-padding-md, 0.5rem 0.75rem);
     font-size: var(--ae-pagination-font-size-md, 0.875rem);
   }
 
-  :host([size="lg"]) .pagination-button {
+  :host([size='lg']) .pagination-button {
     min-width: var(--ae-pagination-button-size-lg, 48px);
     height: var(--ae-pagination-button-size-lg, 48px);
     padding: var(--ae-pagination-padding-lg, 0.625rem 1rem);
@@ -94,12 +94,12 @@ export const paginationStyles = css`
     font-weight: 500;
   }
 
-  :host([size="sm"]) .pagination-ellipsis {
+  :host([size='sm']) .pagination-ellipsis {
     min-width: var(--ae-pagination-button-size-sm, 32px);
     height: var(--ae-pagination-button-size-sm, 32px);
   }
 
-  :host([size="lg"]) .pagination-ellipsis {
+  :host([size='lg']) .pagination-ellipsis {
     min-width: var(--ae-pagination-button-size-lg, 48px);
     height: var(--ae-pagination-button-size-lg, 48px);
   }

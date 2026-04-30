@@ -12,6 +12,6 @@ export const collections = {
       description: z.string().optional(),
       framework: z.string().optional(),
       order: z.number().optional(),
-    })
-  })
+    }),
+  }),
 };

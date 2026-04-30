@@ -15,13 +15,7 @@ describe('ae-drawer', () => {
 
   it('sets properties from attributes', async () => {
     const el = await fixture<AeDrawer>(html`
-      <ae-drawer
-        open
-        placement="left"
-        size="lg"
-        closable
-        backdrop
-      ></ae-drawer>
+      <ae-drawer open placement="left" size="lg" closable backdrop></ae-drawer>
     `);
 
     expect(el.open).to.be.true;
@@ -155,9 +149,7 @@ describe('ae-drawer', () => {
   });
 
   it('renders body slot content', async () => {
-    const el = await fixture<AeDrawer>(html`
-      <ae-drawer open>Body Content</ae-drawer>
-    `);
+    const el = await fixture<AeDrawer>(html` <ae-drawer open>Body Content</ae-drawer> `);
 
     const bodySlot = el.shadowRoot!.querySelector('slot:not([name])');
     expect(bodySlot).to.exist;
@@ -191,9 +183,7 @@ describe('ae-drawer', () => {
     const sizes = ['sm', 'md', 'lg', 'full'];
 
     for (const size of sizes) {
-      const el = await fixture<AeDrawer>(html`
-        <ae-drawer open size="${size}"></ae-drawer>
-      `);
+      const el = await fixture<AeDrawer>(html` <ae-drawer open size="${size}"></ae-drawer> `);
 
       expect(el.getAttribute('size')).to.equal(size);
     }

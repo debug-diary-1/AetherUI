@@ -12,7 +12,7 @@ export const tooltipStyles = css`
   }
 
   /* Overlay container */
-  [part="overlay"] {
+  [part='overlay'] {
     position: fixed;
     background: var(--ae-tooltip-bg, var(--ae-text-primary));
     color: var(--ae-tooltip-fg, var(--ae-bg-primary));
@@ -28,7 +28,7 @@ export const tooltipStyles = css`
   }
 
   /* Arrow indicator */
-  [part="arrow"] {
+  [part='arrow'] {
     position: absolute;
     width: 8px;
     height: 8px;
@@ -37,25 +37,25 @@ export const tooltipStyles = css`
   }
 
   /* Content wrapper */
-  [part="content"] {
+  [part='content'] {
     position: relative;
     z-index: 1;
   }
 
   /* High contrast mode support */
   @media (prefers-contrast: high) {
-    [part="overlay"] {
+    [part='overlay'] {
       border: 1px solid;
     }
   }
 
   /* Animations - using visibility from inline styles */
-  :host([animation="scale"]) [part="overlay"] {
+  :host([animation='scale']) [part='overlay'] {
     transition: transform 150ms ease-in-out;
     transform: scale(0.95);
   }
 
-  :host([animation="scale"][open]) [part="overlay"] {
+  :host([animation='scale'][open]) [part='overlay'] {
     transform: scale(1);
   }
 `;

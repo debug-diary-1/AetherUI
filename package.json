@@ -3,20 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "description": "Monorepo for AetherUI - A headless, framework-agnostic Web Component library",
-  "author": "AetherUI Contributors",
-  "license": "MIT",
   "homepage": "https://github.com/pallavL01/AetherUI#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pallavL01/AetherUI.git"
-  },
   "bugs": {
     "url": "https://github.com/pallavL01/AetherUI/issues"
   },
-  "packageManager": "pnpm@10.30.3",
-  "engines": {
-    "node": ">=24.0.0",
-    "pnpm": "10.30.3"
+  "license": "MIT",
+  "author": "AetherUI Contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pallavL01/AetherUI.git"
   },
   "scripts": {
     "build": "NODE_OPTIONS='--max-old-space-size=4096' turbo build --filter=!@aetherui/storybook",
@@ -66,6 +61,14 @@
     "vite": "catalog:",
     "vite-plugin-dts": "catalog:"
   },
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": "10.30.3"
+  },
+  "volta": {
+    "node": "24.14.0"
+  },
+  "packageManager": "pnpm@10.30.3",
   "pnpm": {
     "overrides": {
       "micromatch": "4.0.8",
@@ -96,8 +99,5 @@
       "h3@>=1.0.0 <1.15.9": "1.15.9",
       "postcss@<8.5.10": "8.5.10"
     }
-  },
-  "volta": {
-    "node": "24.14.0"
   }
 }

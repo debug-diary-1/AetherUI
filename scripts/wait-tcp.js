@@ -16,8 +16,14 @@ if (!Number.isInteger(port) || port <= 0) {
 const tryConnect = () =>
   new Promise((resolve) => {
     const sock = net.connect({ host, port });
-    sock.once('connect', () => { sock.destroy(); resolve(true); });
-    sock.once('error', () => { sock.destroy(); resolve(false); });
+    sock.once('connect', () => {
+      sock.destroy();
+      resolve(true);
+    });
+    sock.once('error', () => {
+      sock.destroy();
+      resolve(false);
+    });
   });
 
 (async () => {

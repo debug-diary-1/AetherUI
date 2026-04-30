@@ -30,4 +30,4 @@ What other options were considered and why were they not chosen?
 ## References
 
 - [Link to relevant documentation]
-- [Link to relevant issues or PRs] 
+- [Link to relevant issues or PRs]

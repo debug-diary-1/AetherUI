@@ -30,7 +30,7 @@ export class TreeViewKeyboardController implements ReactiveController {
 
   private handleKeyDown = (event: Event) => {
     if (!this.nodes.length) return;
-    
+
     const keyEvent = event as KeyboardEvent;
 
     switch (keyEvent.key) {
@@ -144,4 +144,4 @@ export class TreeViewKeyboardController implements ReactiveController {
       }
     }
   }
-} 
+}

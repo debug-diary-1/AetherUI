@@ -149,8 +149,11 @@ export class AeTextarea extends LitElement {
       }
     }
 
-    if (changedProperties.has('required') || changedProperties.has('minlength') ||
-        changedProperties.has('maxlength')) {
+    if (
+      changedProperties.has('required') ||
+      changedProperties.has('minlength') ||
+      changedProperties.has('maxlength')
+    ) {
       this._updateValidity();
     }
   }
@@ -175,7 +178,7 @@ export class AeTextarea extends LitElement {
           tooShort: validity.tooShort,
         },
         this.textareaElement.validationMessage,
-        this.textareaElement
+        this.textareaElement,
       );
     }
   }
@@ -192,38 +195,46 @@ export class AeTextarea extends LitElement {
     const textarea = event.target as HTMLTextAreaElement;
     this.value = textarea.value;
 
-    this.dispatchEvent(new CustomEvent('ae-textarea-input', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-textarea-input', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private handleChange(event: Event) {
     const textarea = event.target as HTMLTextAreaElement;
     this.value = textarea.value;
 
-    this.dispatchEvent(new CustomEvent('ae-textarea-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-textarea-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private handleFocus() {
     this.focused = true;
-    this.dispatchEvent(new CustomEvent('ae-textarea-focus', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-textarea-focus', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private handleBlur() {
     this.focused = false;
-    this.dispatchEvent(new CustomEvent('ae-textarea-blur', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-textarea-blur', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   // Form-associated callbacks
@@ -272,16 +283,21 @@ export class AeTextarea extends LitElement {
 
     return html`
       <div part="base" class="textarea-base">
-        ${this.label ? html`
-          <label part="label" class="textarea-label" for="textarea">
-            ${this.label}
-            ${this.required ? html`<span class="required-indicator">*</span>` : ''}
-          </label>
-        ` : ''}
+        ${this.label
+          ? html`
+              <label part="label" class="textarea-label" for="textarea">
+                ${this.label}
+                ${this.required ? html`<span class="required-indicator">*</span>` : ''}
+              </label>
+            `
+          : ''}
 
         <div
           part="textarea-wrapper"
-          class="textarea-wrapper ${this.focused ? 'focused' : ''} ${hasError ? 'error' : ''} ${this.disabled ? 'disabled' : ''}"
+          class="textarea-wrapper ${this.focused ? 'focused' : ''} ${hasError ? 'error' : ''} ${this
+            .disabled
+            ? 'disabled'
+            : ''}"
         >
           <textarea
             part="textarea"
@@ -295,7 +311,9 @@ export class AeTextarea extends LitElement {
             minlength="${ifDefined(this.minlength)}"
             maxlength="${ifDefined(this.maxlength)}"
             rows="${this.rows}"
-            aria-label="${ifDefined(this.label ? undefined : (this.ariaLabel || this.placeholder || undefined))}"
+            aria-label="${ifDefined(
+              this.label ? undefined : this.ariaLabel || this.placeholder || undefined,
+            )}"
             @input="${this.handleInput}"
             @change="${this.handleChange}"
             @focus="${this.handleFocus}"
@@ -303,22 +321,21 @@ export class AeTextarea extends LitElement {
           ></textarea>
         </div>
 
-        ${showHelpText || showCharCount ? html`
-          <div part="footer" class="textarea-footer">
-            ${showHelpText ? html`
-              <div part="help-text" class="help-text">${this.helpText}</div>
-            ` : ''}
-            ${showCharCount ? html`
-              <div part="char-count" class="char-count">
-                ${charCount}/${this.maxlength}
+        ${showHelpText || showCharCount
+          ? html`
+              <div part="footer" class="textarea-footer">
+                ${showHelpText
+                  ? html` <div part="help-text" class="help-text">${this.helpText}</div> `
+                  : ''}
+                ${showCharCount
+                  ? html`
+                      <div part="char-count" class="char-count">${charCount}/${this.maxlength}</div>
+                    `
+                  : ''}
               </div>
-            ` : ''}
-          </div>
-        ` : ''}
-
-        ${hasError ? html`
-          <div part="error-text" class="error-text">${this.error}</div>
-        ` : ''}
+            `
+          : ''}
+        ${hasError ? html` <div part="error-text" class="error-text">${this.error}</div> ` : ''}
       </div>
     `;
   }

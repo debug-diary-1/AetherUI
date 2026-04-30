@@ -5,14 +5,14 @@ import { html } from 'lit-html';
 // Debug registration for autocomplete and combo
 import('../src/debug-registration.js')
   .then(() => console.log('Debug registration complete'))
-  .catch(e => console.error('Debug registration failed:', e));
+  .catch((e) => console.error('Debug registration failed:', e));
 
 // Try source components as a fallback if needed
 const useSourceImports = true; // Set to false to disable
 if (useSourceImports) {
   import('../src/source-components.js')
     .then(() => console.log('Source components loaded'))
-    .catch(e => console.warn('Failed to load source components:', e));
+    .catch((e) => console.warn('Failed to load source components:', e));
 }
 
 /** @type { import('@storybook/web-components-vite').Preview } */
@@ -27,15 +27,28 @@ const preview = {
     },
     docs: {
       description: {
-        component: 'AetherUI Components Library'
-      }
+        component: 'AetherUI Components Library',
+      },
     },
     options: {
       storySort: {
         order: [
           'Debug',
           'Components',
-          ['Autocomplete', 'Alert', 'Button', 'Checkbox', 'Combo', 'Dropdown', 'Modal', 'Radio', 'Tabs', 'Toast', 'Tooltip', 'TreeView'],
+          [
+            'Autocomplete',
+            'Alert',
+            'Button',
+            'Checkbox',
+            'Combo',
+            'Dropdown',
+            'Modal',
+            'Radio',
+            'Tabs',
+            'Toast',
+            'Tooltip',
+            'TreeView',
+          ],
         ],
       },
     },
@@ -86,8 +99,8 @@ const preview = {
         light: { name: 'light', value: '#ffffff' },
         dark: { name: 'dark', value: '#333333' },
         gray: { name: 'gray', value: '#f0f0f0' },
-        blue: { name: 'blue', value: '#f0f8ff' }
-      }
+        blue: { name: 'blue', value: '#f0f8ff' },
+      },
     },
   },
 
@@ -96,11 +109,13 @@ const preview = {
     (Story, context) => {
       // Get the current theme
       const isDark = context.globals.theme === 'dark';
-      
+
       // Use lit-html to wrap the story
       return html`
-        <div class="${isDark ? 'dark-theme' : 'light-theme'}"
-             style="padding: 20px; transition: all 0.3s;">
+        <div
+          class="${isDark ? 'dark-theme' : 'light-theme'}"
+          style="padding: 20px; transition: all 0.3s;"
+        >
           ${Story()}
         </div>
       `;
@@ -126,9 +141,9 @@ const preview = {
 
   initialGlobals: {
     backgrounds: {
-      value: 'light'
-    }
-  }
+      value: 'light',
+    },
+  },
 };
 
 export default preview;

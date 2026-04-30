@@ -11,7 +11,7 @@ export class FilterManager<T> {
   private _globalFilter: string = '';
   private _enableFiltering: boolean = true;
   private _enableColumnFilters: boolean = true;
-  
+
   /**
    * Apply the current filter configuration to data
    * @param data Data to filter
@@ -22,7 +22,7 @@ export class FilterManager<T> {
     // Delegate to the utility function
     return filterData(data, this._columnFilters, this._globalFilter, columns);
   }
-  
+
   /**
    * Initialize filter state and options
    * @param columnFilters Initial column filters state
@@ -35,17 +35,17 @@ export class FilterManager<T> {
     options?: {
       enableFiltering?: boolean;
       enableColumnFilters?: boolean;
-    }
+    },
   ): void {
     this._columnFilters = [...columnFilters];
     this._globalFilter = globalFilter;
-    
+
     if (options) {
       this._enableFiltering = options.enableFiltering ?? true;
       this._enableColumnFilters = options.enableColumnFilters ?? true;
     }
   }
-  
+
   /**
    * Get column filters
    * @returns Current column filters state
@@ -53,7 +53,7 @@ export class FilterManager<T> {
   getColumnFilters(): ColumnFiltersState {
     return [...this._columnFilters];
   }
-  
+
   /**
    * Set column filters
    * @param filters New column filters state
@@ -61,19 +61,19 @@ export class FilterManager<T> {
    */
   setColumnFilters(filters: ColumnFiltersState): boolean {
     if (!this._enableFiltering || !this._enableColumnFilters) return false;
-    
+
     // Compare and only update if changed
-    const changed = 
-      this._columnFilters.length !== filters.length || 
+    const changed =
+      this._columnFilters.length !== filters.length ||
       JSON.stringify(this._columnFilters) !== JSON.stringify(filters);
-    
+
     if (changed) {
       this._columnFilters = [...filters];
     }
-    
+
     return changed;
   }
-  
+
   /**
    * Get global filter
    * @returns Current global filter value
@@ -81,7 +81,7 @@ export class FilterManager<T> {
   getGlobalFilter(): string {
     return this._globalFilter;
   }
-  
+
   /**
    * Set global filter
    * @param filter New global filter value
@@ -89,16 +89,16 @@ export class FilterManager<T> {
    */
   setGlobalFilter(filter: string): boolean {
     if (!this._enableFiltering) return false;
-    
+
     const changed = this._globalFilter !== filter;
-    
+
     if (changed) {
       this._globalFilter = filter;
     }
-    
+
     return changed;
   }
-  
+
   /**
    * Set a column filter
    * @param columnId Column ID to filter
@@ -107,12 +107,12 @@ export class FilterManager<T> {
    */
   setColumnFilter(columnId: string, value: string): boolean {
     if (!this._enableFiltering || !this._enableColumnFilters) return false;
-    
-    const currentFilterIndex = this._columnFilters.findIndex(f => f.id === columnId);
-    
+
+    const currentFilterIndex = this._columnFilters.findIndex((f) => f.id === columnId);
+
     // Create a copy of the current filters
     const newFilters = [...this._columnFilters];
-    
+
     if (currentFilterIndex >= 0) {
       if (value === '') {
         // Remove filter if value is empty
@@ -125,10 +125,10 @@ export class FilterManager<T> {
       // Add new filter if value isn't empty
       newFilters.push({ id: columnId, value });
     }
-    
+
     return this.setColumnFilters(newFilters);
   }
-  
+
   /**
    * Remove a column filter
    * @param columnId Column ID to remove filter for
@@ -137,7 +137,7 @@ export class FilterManager<T> {
   removeColumnFilter(columnId: string): boolean {
     return this.setColumnFilter(columnId, '');
   }
-  
+
   /**
    * Clear all filters
    * @param includeGlobal Whether to clear global filter too
@@ -145,21 +145,21 @@ export class FilterManager<T> {
    */
   clearFilters(includeGlobal: boolean = true): boolean {
     let changed = this.setColumnFilters([]);
-    
+
     if (includeGlobal) {
       changed = this.setGlobalFilter('') || changed;
     }
-    
+
     return changed;
   }
-  
+
   /**
    * Get a column filter value
    * @param columnId Column ID to get filter for
    * @returns Current filter value or empty string
    */
   getColumnFilterValue(columnId: string): string {
-    const filter = this._columnFilters.find(f => f.id === columnId);
+    const filter = this._columnFilters.find((f) => f.id === columnId);
     return filter?.value || '';
   }
 }

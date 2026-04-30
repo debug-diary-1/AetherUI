@@ -5,24 +5,24 @@ import { radioStyles } from './styles';
 /**
  * A radio button input component that participates in native form submission.
  * Should be used within an ae-radio-group for proper grouping.
- * 
+ *
  * @element ae-radio
- * 
+ *
  * @property {boolean} checked - Whether the radio is checked
  * @property {boolean} disabled - Whether the radio is disabled
  * @property {string} name - The name attribute for form submission
  * @property {string} value - The value attribute for form submission
- * 
+ *
  * @fires {CustomEvent<{checked: boolean, value: string}>} ae-radio-change - Fired when the radio state changes
- * 
+ *
  * @slot - The radio label content
- * 
+ *
  * @csspart base - The component's base wrapper (label element)
  * @csspart input - The native radio input element
  * @csspart control - The custom radio control container
  * @csspart dot - The radio dot indicator
  * @csspart label - The label text container
- * 
+ *
  * @cssproperty --ae-radio-size - The size of the radio control
  * @cssproperty --ae-radio-border - The border style of the radio
  * @cssproperty --ae-radio-bg - The background color of the radio
@@ -30,7 +30,7 @@ import { radioStyles } from './styles';
  * @cssproperty --ae-radio-bg-hover - The background color on hover
  * @cssproperty --ae-radio-fg - The dot color
  * @cssproperty --ae-radio-gap - The gap between radio and label
- * 
+ *
  * @example
  * ```html
  * <ae-radio-group name="options">
@@ -70,10 +70,10 @@ export class AeRadio extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    
+
     // Set initial form value
     this._updateFormValue();
-    
+
     // Set ARIA role
     this._internals.role = 'radio';
     this._internals.ariaChecked = String(this.checked);
@@ -81,11 +81,11 @@ export class AeRadio extends LitElement {
 
   updated(changedProperties: Map<string, unknown>) {
     super.updated(changedProperties);
-    
+
     if (changedProperties.has('checked')) {
       this._updateFormValue();
       this._internals.ariaChecked = String(this.checked);
-      
+
       // If checked, uncheck other radios in the same group
       if (this.checked && this.name) {
         this._uncheckOthers();
@@ -108,13 +108,14 @@ export class AeRadio extends LitElement {
   private _uncheckOthers() {
     const form = this.closest('form');
     const root = form || this.getRootNode();
-    
+
     // Find all radios with the same name
-    const radios = root instanceof DocumentFragment || root instanceof Document || root instanceof Element
-      ? Array.from(root.querySelectorAll(`ae-radio[name="${this.name}"]`)) as AeRadio[]
-      : [];
-    
-    radios.forEach(radio => {
+    const radios =
+      root instanceof DocumentFragment || root instanceof Document || root instanceof Element
+        ? (Array.from(root.querySelectorAll(`ae-radio[name="${this.name}"]`)) as AeRadio[])
+        : [];
+
+    radios.forEach((radio) => {
       if (radio !== this && radio.checked) {
         radio.checked = false;
       }
@@ -123,21 +124,23 @@ export class AeRadio extends LitElement {
 
   private handleChange(event: Event) {
     event.preventDefault(); // Prevent native radio behavior
-    
+
     if (this.disabled || this.checked) return;
 
     // Set this radio as checked
     this.checked = true;
-    
+
     // Dispatch change event
-    this.dispatchEvent(new CustomEvent('ae-radio-change', {
-      detail: { 
-        checked: this.checked,
-        value: this.value
-      },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('ae-radio-change', {
+        detail: {
+          checked: this.checked,
+          value: this.value,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private handleKeyDown(event: KeyboardEvent) {
@@ -164,11 +167,7 @@ export class AeRadio extends LitElement {
 
   render() {
     return html`
-      <label 
-        part="base" 
-        class="radio"
-        ?aria-disabled="${this.disabled}"
-      >
+      <label part="base" class="radio" ?aria-disabled="${this.disabled}">
         <input
           part="input"
           type="radio"
@@ -181,13 +180,11 @@ export class AeRadio extends LitElement {
           tabindex="-1"
           aria-hidden="true"
         />
-        
+
         <span part="control" class="control">
-          ${this.checked ? html`
-            <span part="dot" class="dot"></span>
-          ` : null}
+          ${this.checked ? html` <span part="dot" class="dot"></span> ` : null}
         </span>
-        
+
         <span part="label" class="label">
           <slot></slot>
         </span>

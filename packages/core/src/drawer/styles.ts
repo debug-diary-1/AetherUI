@@ -40,98 +40,98 @@ export const drawerStyles = css`
   }
 
   /* Placement: Right (default) */
-  :host([placement="right"]) .drawer-panel {
+  :host([placement='right']) .drawer-panel {
     top: 0;
     right: 0;
     height: 100%;
     animation: slideInRight 0.3s ease;
   }
 
-  :host([placement="right"][size="sm"]) .drawer-panel {
+  :host([placement='right'][size='sm']) .drawer-panel {
     width: var(--ae-drawer-width-sm, 300px);
   }
 
-  :host([placement="right"][size="md"]) .drawer-panel {
+  :host([placement='right'][size='md']) .drawer-panel {
     width: var(--ae-drawer-width-md, 400px);
   }
 
-  :host([placement="right"][size="lg"]) .drawer-panel {
+  :host([placement='right'][size='lg']) .drawer-panel {
     width: var(--ae-drawer-width-lg, 600px);
   }
 
-  :host([placement="right"][size="full"]) .drawer-panel {
+  :host([placement='right'][size='full']) .drawer-panel {
     width: 100%;
   }
 
   /* Placement: Left */
-  :host([placement="left"]) .drawer-panel {
+  :host([placement='left']) .drawer-panel {
     top: 0;
     left: 0;
     height: 100%;
     animation: slideInLeft 0.3s ease;
   }
 
-  :host([placement="left"][size="sm"]) .drawer-panel {
+  :host([placement='left'][size='sm']) .drawer-panel {
     width: var(--ae-drawer-width-sm, 300px);
   }
 
-  :host([placement="left"][size="md"]) .drawer-panel {
+  :host([placement='left'][size='md']) .drawer-panel {
     width: var(--ae-drawer-width-md, 400px);
   }
 
-  :host([placement="left"][size="lg"]) .drawer-panel {
+  :host([placement='left'][size='lg']) .drawer-panel {
     width: var(--ae-drawer-width-lg, 600px);
   }
 
-  :host([placement="left"][size="full"]) .drawer-panel {
+  :host([placement='left'][size='full']) .drawer-panel {
     width: 100%;
   }
 
   /* Placement: Top */
-  :host([placement="top"]) .drawer-panel {
+  :host([placement='top']) .drawer-panel {
     top: 0;
     left: 0;
     width: 100%;
     animation: slideInTop 0.3s ease;
   }
 
-  :host([placement="top"][size="sm"]) .drawer-panel {
+  :host([placement='top'][size='sm']) .drawer-panel {
     height: var(--ae-drawer-height-sm, 200px);
   }
 
-  :host([placement="top"][size="md"]) .drawer-panel {
+  :host([placement='top'][size='md']) .drawer-panel {
     height: var(--ae-drawer-height-md, 300px);
   }
 
-  :host([placement="top"][size="lg"]) .drawer-panel {
+  :host([placement='top'][size='lg']) .drawer-panel {
     height: var(--ae-drawer-height-lg, 500px);
   }
 
-  :host([placement="top"][size="full"]) .drawer-panel {
+  :host([placement='top'][size='full']) .drawer-panel {
     height: 100%;
   }
 
   /* Placement: Bottom */
-  :host([placement="bottom"]) .drawer-panel {
+  :host([placement='bottom']) .drawer-panel {
     bottom: 0;
     left: 0;
     width: 100%;
     animation: slideInBottom 0.3s ease;
   }
 
-  :host([placement="bottom"][size="sm"]) .drawer-panel {
+  :host([placement='bottom'][size='sm']) .drawer-panel {
     height: var(--ae-drawer-height-sm, 200px);
   }
 
-  :host([placement="bottom"][size="md"]) .drawer-panel {
+  :host([placement='bottom'][size='md']) .drawer-panel {
     height: var(--ae-drawer-height-md, 300px);
   }
 
-  :host([placement="bottom"][size="lg"]) .drawer-panel {
+  :host([placement='bottom'][size='lg']) .drawer-panel {
     height: var(--ae-drawer-height-lg, 500px);
   }
 
-  :host([placement="bottom"][size="full"]) .drawer-panel {
+  :host([placement='bottom'][size='full']) .drawer-panel {
     height: 100%;
   }
 
@@ -162,7 +162,7 @@ export const drawerStyles = css`
     outline-offset: 2px;
   }
 
-  ::slotted([slot="header"]) {
+  ::slotted([slot='header']) {
     padding: var(--ae-drawer-header-padding, 1.5rem);
     border-bottom: var(--ae-drawer-header-border, 1px solid var(--ae-border-primary));
     font-size: var(--ae-drawer-header-font-size, 1.25rem);
@@ -177,7 +177,7 @@ export const drawerStyles = css`
     color: var(--ae-drawer-body-color, var(--ae-text-secondary));
   }
 
-  ::slotted([slot="footer"]) {
+  ::slotted([slot='footer']) {
     padding: var(--ae-drawer-footer-padding, 1rem 1.5rem);
     border-top: var(--ae-drawer-footer-border, 1px solid var(--ae-border-primary));
     display: flex;
