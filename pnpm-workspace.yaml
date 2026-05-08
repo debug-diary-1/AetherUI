@@ -33,7 +33,7 @@ catalog:
   lit-element: 4.2.1
   lit-html: 3.3.1
   oxfmt: 0.45.0
-  oxlint: 1.29.0
+  oxlint: 1.63.0
   playwright: 1.57.0
   prismjs: 1.30.0
   rimraf: 5.0.10
