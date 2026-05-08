@@ -20,7 +20,7 @@ catalog:
   '@storybook/web-components-vite': 10.2.13
   '@types/node': 20.19.13
   '@types/prismjs': 1.26.5
-  '@web/dev-server-esbuild': 1.0.4
+  '@web/dev-server-esbuild': 1.0.5
   '@web/test-runner': 0.20.2
   '@web/test-runner-playwright': 0.11.1
   astro: 5.18.0
@@ -34,7 +34,7 @@ catalog:
   lit-html: 3.3.1
   oxfmt: 0.45.0
   oxlint: 1.29.0
-  playwright: 1.57.0
+  playwright: 1.59.1
   prismjs: 1.30.0
   rimraf: 5.0.10
   storybook: 10.2.13
