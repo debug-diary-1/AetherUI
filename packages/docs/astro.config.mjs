@@ -50,6 +50,16 @@ export default defineConfig({
           items: [
             { label: 'Introduction', slug: 'getting-started/introduction' },
             { label: 'Installation', slug: 'getting-started/installation' },
+            {
+              label: 'Framework integrations',
+              items: [
+                { label: 'React', slug: 'getting-started/integrations/react' },
+                {
+                  label: 'Vue, Angular, Svelte, Solid, Vanilla',
+                  slug: 'getting-started/integrations/other-frameworks',
+                },
+              ],
+            },
           ],
         },
         {

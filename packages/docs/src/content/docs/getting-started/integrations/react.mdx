@@ -1,0 +1,81 @@
+---
+title: React
+description: Use AetherUI in a React 19+ application with full TypeScript support.
+---
+
+AetherUI components are framework-agnostic web components and work directly inside React 19. No runtime wrappers are required — React 19 binds props and custom events to custom elements natively.
+
+:::caution[Requires React 19]
+React 18 and older do not pass non-string props or attach custom-event listeners to unknown HTML elements correctly. AetherUI does not ship a `@lit/react` wrapper; if you are on React 18, please upgrade before integrating.
+:::
+
+## Install
+
+```bash
+pnpm add @aetherui/core
+```
+
+## Configure TypeScript
+
+The package ships an auto-generated `react.d.ts` that augments React's `JSX.IntrinsicElements` so every AetherUI tag is fully typed. Reference it from your `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "types": ["@aetherui/core/react"]
+  }
+}
+```
+
+If you cannot edit `compilerOptions.types`, add a triple-slash directive to a setup file (e.g. `src/main.tsx`):
+
+```ts
+/// <reference types="@aetherui/core/react" />
+```
+
+Either form gives you autocomplete and type-checking for tags, props, and custom-event handlers.
+
+## Usage
+
+Register the components you need (this defines the custom elements with the browser) and use them like any other JSX tag:
+
+```tsx
+import { useState } from 'react';
+import { defineAeCheckbox, defineAeButton } from '@aetherui/core';
+
+defineAeCheckbox();
+defineAeButton();
+
+export function SignupForm() {
+  const [accepted, setAccepted] = useState(false);
+
+  return (
+    <form>
+      <ae-checkbox
+        checked={accepted}
+        onAeCheckboxChange={(e) => setAccepted(e.detail.checked)}
+      >
+        I accept the terms
+      </ae-checkbox>
+
+      <ae-button variant="primary" disabled={!accepted}>
+        Sign up
+      </ae-button>
+    </form>
+  );
+}
+```
+
+Three things to note:
+
+1. **Boolean and array props** are passed as values (`checked={accepted}`), not stringified. React 19 sets them as DOM properties on custom elements automatically.
+2. **Custom events** use camelCase handler props (`onAeCheckboxChange`, `onAeButtonClick`) and receive the underlying `CustomEvent`. Read the typed payload from `event.detail`.
+3. **No imports for the elements themselves** — once `defineAe*()` is called, the custom element is registered globally for the page lifetime.
+
+## Form integration
+
+Form-associated components (`ae-input`, `ae-textarea`, `ae-checkbox`, `ae-radio`, `ae-switch`, `ae-select`) participate in native form submission via `ElementInternals`. Drop them inside a `<form>` and `FormData` picks them up automatically — no React state plumbing required for the value to reach the server.
+
+## Server-side rendering
+
+AetherUI components render to declarative shadow DOM via Lit's SSR package, but Next/Remix integration requires a small `@lit-labs/ssr-react` setup that is out of scope for this guide. If you need SSR support, [open an issue](https://github.com/pallavL01/AetherUI/issues) and we will prioritize the integration recipe.

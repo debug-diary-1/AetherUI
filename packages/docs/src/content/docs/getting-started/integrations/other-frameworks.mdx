@@ -1,0 +1,99 @@
+---
+title: Vue, Angular, Svelte, Solid, Vanilla
+description: Drop-in setup for AetherUI components in non-React frameworks.
+---
+
+AetherUI components implement the Custom Elements v1 spec, so every modern framework can render them. The only difference between frameworks is how they bind props and listen to custom events. This page collects the one-time setup snippet for each.
+
+## Vue 3
+
+Tell Vue's compiler that any tag starting with `ae-` is a custom element so it does not try to resolve them as Vue components.
+
+```ts
+// vite.config.ts
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+
+export default defineConfig({
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith('ae-'),
+        },
+      },
+    }),
+  ],
+});
+```
+
+Then use the components normally — Vue's `:checked` binding sets DOM properties, and `@ae-checkbox-change` listens for the custom event:
+
+```vue
+<ae-checkbox :checked="accepted" @ae-checkbox-change="accepted = $event.detail.checked">
+  I accept the terms
+</ae-checkbox>
+```
+
+## Angular
+
+Add `CUSTOM_ELEMENTS_SCHEMA` to any module or standalone component that uses AetherUI tags so Angular's template compiler does not error on unknown elements:
+
+```ts
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+@Component({
+  selector: 'app-signup',
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  template: `
+    <ae-checkbox [checked]="accepted" (ae-checkbox-change)="onChange($event)">
+      I accept the terms
+    </ae-checkbox>
+  `,
+})
+export class SignupComponent {
+  accepted = false;
+  onChange(event: CustomEvent<{ checked: boolean }>) {
+    this.accepted = event.detail.checked;
+  }
+}
+```
+
+## Svelte and SolidJS
+
+Both frameworks support custom elements out of the box — no configuration needed. Bind props as attributes for primitives, with `prop:` (Svelte) or `prop:` directive (Solid) for complex values, and listen with the standard `on:event` syntax.
+
+```svelte
+<!-- Svelte -->
+<ae-checkbox checked={accepted} on:ae-checkbox-change={(e) => accepted = e.detail.checked}>
+  I accept the terms
+</ae-checkbox>
+```
+
+```tsx
+// SolidJS
+<ae-checkbox
+  prop:checked={accepted()}
+  on:ae-checkbox-change={(e) => setAccepted(e.detail.checked)}
+>
+  I accept the terms
+</ae-checkbox>
+```
+
+## Vanilla JavaScript / TypeScript
+
+No build tooling required. Import the `define*` helper for each component you use and let the browser do the rest:
+
+```ts
+import { defineAeCheckbox } from '@aetherui/core';
+
+defineAeCheckbox();
+
+const checkbox = document.querySelector('ae-checkbox');
+checkbox?.addEventListener('ae-checkbox-change', (e) => {
+  console.log((e as CustomEvent<{ checked: boolean }>).detail.checked);
+});
+```
+
+TypeScript users automatically get autocomplete via the `HTMLElementTagNameMap` declarations shipped with `@aetherui/core` — `document.querySelector('ae-checkbox')` returns `AeCheckbox | null` without any extra setup.

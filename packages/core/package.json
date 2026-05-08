@@ -23,7 +23,9 @@
     "directory": "packages/core"
   },
   "files": [
-    "dist"
+    "dist",
+    "custom-elements.json",
+    "react.d.ts"
   ],
   "type": "module",
   "sideEffects": false,
@@ -161,6 +163,10 @@
       "import": "./dist/menu/index.js",
       "require": "./dist/menu/index.js"
     },
+    "./react": {
+      "types": "./react.d.ts"
+    },
+    "./custom-elements.json": "./custom-elements.json",
     "./package.json": "./package.json",
     "./*": {
       "types": "./dist/*/index.d.ts",
@@ -173,7 +179,9 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "vite build",
+    "build": "pnpm analyze && pnpm gen:react-types && vite build",
+    "analyze": "cem analyze --litelement --globs 'src/**/ae-*.ts'",
+    "gen:react-types": "node ../../scripts/generate-react-types.mjs",
     "dev": "vite",
     "clean": "rimraf dist",
     "lint": "oxlint src",
@@ -184,6 +192,7 @@
     "lit": "catalog:"
   },
   "devDependencies": {
+    "@custom-elements-manifest/analyzer": "catalog:",
     "@open-wc/testing": "catalog:",
     "@types/node": "catalog:",
     "@web/test-runner-playwright": "catalog:",
@@ -192,5 +201,6 @@
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plugin-dts": "catalog:"
-  }
+  },
+  "customElements": "custom-elements.json"
 }
