@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Questions & Discussions
-    url: https://github.com/pallavL01/AetherUI/discussions
+    url: https://github.com/debug-diary-1/AetherUI/discussions
     about: Please ask and answer questions here
   - name: Documentation
-    url: https://aetherui.dev
+    url: https://debug-diary-1.github.io/AetherUI/docs/
     about: Check our documentation for guides and API references

@@ -3,15 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "description": "Monorepo for AetherUI - A headless, framework-agnostic Web Component library",
-  "homepage": "https://github.com/pallavL01/AetherUI#readme",
+  "homepage": "https://github.com/debug-diary-1/AetherUI#readme",
   "bugs": {
-    "url": "https://github.com/pallavL01/AetherUI/issues"
+    "url": "https://github.com/debug-diary-1/AetherUI/issues"
   },
   "license": "MIT",
   "author": "AetherUI Contributors",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pallavL01/AetherUI.git"
+    "url": "git+https://github.com/debug-diary-1/AetherUI.git"
   },
   "scripts": {
     "build": "NODE_OPTIONS='--max-old-space-size=4096' turbo build --filter=!@aetherui/storybook",

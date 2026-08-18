@@ -15,11 +15,11 @@ We take the security of AetherUI seriously. If you believe you have found a secu
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
-Instead, please report them via email to:
+Instead, please use **GitHub's private vulnerability reporting** for this repository:
 
-**security@aetherui.dev**
+**https://github.com/debug-diary-1/AetherUI/security/advisories/new**
 
-You should receive a response within 48 hours. If for some reason you do not, please follow up via email to ensure we received your original message.
+This opens a private advisory that only the maintainers can see. You should receive a response within 48 hours. If for some reason you do not, please follow up by mentioning `@debug-diary-1` in a new *non-detailed* issue that simply asks us to check the private advisory queue — never include vulnerability details in a public issue.
 
 Please include the following information (as much as you can provide) to help us better understand the nature and scope of the possible issue:
 

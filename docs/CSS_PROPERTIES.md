@@ -468,9 +468,9 @@ All AetherUI CSS custom properties follow this convention:
 ## Need More Information?
 
 - [Theming Guide](./THEMING.md) - Learn how to create custom themes
-- [Component Documentation](https://pallavL01.github.io/AetherUI/) - See component-specific examples
-- [Storybook](https://pallavL01.github.io/AetherUI/storybook/) - Interactive property editor
+- [Component Documentation](https://debug-diary-1.github.io/AetherUI/docs/) - See component-specific examples
+- [Storybook](https://debug-diary-1.github.io/AetherUI/storybook/) - Interactive property editor
 
 ---
 
-**Note**: This reference is automatically generated from component source code. If you find any missing or incorrect properties, please [open an issue](https://github.com/pallavL01/AetherUI/issues).
+**Note**: This reference is automatically generated from component source code. If you find any missing or incorrect properties, please [open an issue](https://github.com/debug-diary-1/AetherUI/issues).

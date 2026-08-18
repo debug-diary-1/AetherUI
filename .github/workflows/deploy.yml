@@ -58,6 +58,11 @@ jobs:
       - name: Build docs
         id: build-docs
         continue-on-error: true
+        env:
+          # Project pages live under /AetherUI/, so the docs site must be built with
+          # that prefix or its /_astro assets 404 (see packages/docs/astro.config.mjs).
+          DOCS_SITE: https://debug-diary-1.github.io
+          DOCS_BASE: /AetherUI/docs/
         run: |
           cd packages/docs
           pnpm build

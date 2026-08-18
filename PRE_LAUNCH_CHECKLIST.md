@@ -1,301 +1,70 @@
 # AetherUI Pre-Launch Checklist
 
-Use this checklist to ensure your repository is ready for public open source release.
+Status of the open-source launch under **github.com/debug-diary-1/AetherUI**. Items marked ✅ were verified on 2026-08-17; unchecked items are what's left and can only be done by a maintainer with account access.
 
-## ✅ Documentation
+## ✅ Done in-repo
 
-- [x] CODE_OF_CONDUCT.md created
-- [x] SECURITY.md with vulnerability reporting process
-- [x] CONTRIBUTING.md with contribution guidelines
-- [x] LICENSE file (MIT)
-- [x] CHANGELOG.md with version history
-- [x] README.md with badges, examples, and clear installation instructions
-- [x] STANDARDS.md with development standards
-- [ ] **TODO: Update SECURITY.md with your contact email** (search for `[INSERT YOUR EMAIL HERE]`)
-- [ ] **TODO: Update CODE_OF_CONDUCT.md with enforcement contact** (search for `[INSERT CONTACT EMAIL]`)
+- [x] LICENSE (MIT) at root and inside every publishable package (`core`, `tokens`, `accordion`, `datatable`)
+- [x] README, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, CHANGELOG, STANDARDS, ARCHITECTURE
+- [x] Security reports go to GitHub private vulnerability reporting (no email dependency)
+- [x] All repo/docs URLs point at `debug-diary-1/AetherUI`; docs at `https://debug-diary-1.github.io/AetherUI/docs/`, Storybook at `/storybook/`, playground at `https://aetherui-seven.vercel.app/playground/`
+- [x] Issue templates (bug, feature, accessibility, component request), PR template, Dependabot config
+- [x] Package metadata: `publishConfig`, `files`, `exports`, types, keywords, `repository` on all 4 publishable packages
+- [x] CI (`ci.yml`): oxlint → theme validation → tests → build → Storybook build/tests → Chromatic; green on `main`
+- [x] `deploy.yml` builds docs (with `DOCS_SITE`/`DOCS_BASE` for the `/AetherUI/` prefix) + Storybook and deploys both to GitHub Pages; the racing `deploy-storybook.yml` was removed
+- [x] `publish.yml` publishes tokens → core → accordion → datatable with npm provenance
+- [x] No secrets / `.env` files in the repo or history; published packages depend only on `lit`
+- [x] `pnpm lint`, `pnpm format:check`, `pnpm build`, `pnpm test` pass locally
 
-## ✅ Repository Configuration
+## 🔲 Maintainer actions (GitHub)
 
-- [x] .gitignore properly configured
-- [x] .npmignore files for all publishable packages
-- [x] Dependabot configuration (.github/dependabot.yml)
-- [x] Issue templates configured
-- [x] Pull request template configured
-- [ ] **TODO: Enable GitHub Discussions** (Settings → Features → Discussions)
-- [ ] **TODO: Add repository description and topics** (Settings → About)
-- [ ] **TODO: Add repository social media image** (Settings → Social Preview)
+Settings → General
+- [ ] Fix description typo / set topics *(may already be done via API — verify)*
+- [ ] Enable **Discussions** (README and issue-template config link to it)
+- [ ] Allow squash merging; auto-delete head branches
 
-### Repository Settings Checklist
+Settings → Code security
+- [ ] Enable **Private vulnerability reporting** (SECURITY.md relies on it — only available once the repo is public)
+- [ ] Enable Dependabot alerts + security updates, secret scanning
 
-Go to **Settings → General**:
-- [ ] Enable "Issues"
-- [ ] Enable "Discussions" (recommended)
-- [ ] Enable "Preserve this repository" (optional - for archival)
-- [ ] Set default branch to `main`
-- [ ] Allow squash merging
-- [ ] Allow merge commits (optional)
-- [ ] Automatically delete head branches after merge
+Settings → Branches
+- [ ] Protect `main`: require PR + passing `CI` status check (optional for a solo maintainer, recommended once contributors arrive)
 
-Go to **Settings → Branches**:
-- [ ] Add branch protection rule for `main`:
-  - [ ] Require pull request reviews before merging (at least 1)
-  - [ ] Require status checks to pass before merging
-  - [ ] Require branches to be up to date before merging
-  - [ ] Require conversation resolution before merging
-  - [ ] Do not allow bypassing the above settings
+Housekeeping
+- [ ] Delete stale remote branches (`claude/*`, `cursor/*`, merged/failed `dependabot/*`) — they'll be visible once public
+- [ ] Close or fix the failing Dependabot PRs (astro 7 breaks the docs build; several have stale lockfiles)
 
-Go to **Settings → Actions → General**:
-- [ ] Allow all actions and reusable workflows
-- [ ] Allow GitHub Actions to create and approve pull requests (for Dependabot)
+## 🔲 Maintainer actions (npm)
 
-Go to **Settings → Code security**:
-- [ ] Enable Dependabot alerts
-- [ ] Enable Dependabot security updates
-- [ ] Enable secret scanning (if available)
+- [ ] Create an npm account and claim the **@aetherui** org (scope is currently unclaimed — 0 packages)
+- [ ] Generate a granular/automation token and add it as the **`NPM_TOKEN`** repository secret
+- [ ] Optional: sign up for Codecov and add `CODECOV_TOKEN` (upload is `fail_ci_if_error: false`, so CI passes without it)
 
-## ✅ NPM Configuration
-
-- [x] package.json files have proper metadata (description, author, keywords, homepage, repository)
-- [x] publishConfig added to all packages
-- [x] files array configured to include only dist/
-- [ ] **TODO: Create npm account** (https://www.npmjs.com/signup)
-- [ ] **TODO: Claim @aetherui organization on npm** (https://www.npmjs.com/org/create)
-- [ ] **TODO: Generate npm token** (npm.com → Access Tokens → Generate New Token → Automation)
-- [ ] **TODO: Add NPM_TOKEN to GitHub Secrets** (Settings → Secrets → Actions → New repository secret)
-
-### NPM Pre-Publish Checklist
+Dry-run what will ship:
 
 ```bash
-# Build all packages
 pnpm build
-
-# Test package contents (do NOT actually publish yet)
-cd packages/core
-pnpm pack --dry-run
-
-# Check what files will be published
-npm publish --dry-run
-
-# Repeat for other packages (tokens, accordion, datatable)
+for p in tokens core accordion datatable; do (cd packages/$p && pnpm pack --dry-run); done
 ```
 
-## ✅ CI/CD
+## 🔲 First release (v0.1.0)
 
-- [x] GitHub Actions workflows configured:
-  - [x] ci.yml - Lint, test, build
-  - [x] deploy.yml - Deploy documentation
-  - [x] publish.yml - Publish to npm
-  - [x] deploy-storybook.yml - Deploy Storybook
-- [x] Coverage reporting configured (Codecov)
-- [ ] **TODO: Sign up for Codecov** (https://about.codecov.io/)
-- [ ] **TODO: Add CODECOV_TOKEN to GitHub Secrets**
-- [ ] **TODO: Add Nx Cloud token** (optional, for distributed caching)
-  - Sign up at https://nx.app/
-  - Add NX_CLOUD_ACCESS_TOKEN to GitHub Secrets
+1. Fill in the `[0.1.0]` release date in `CHANGELOG.md`
+2. `git tag -a v0.1.0 -m "Release v0.1.0" && git push origin v0.1.0`
+3. **Draft a GitHub Release** for `v0.1.0` (title `AetherUI v0.1.0 – Initial Release`, body from CHANGELOG) and publish it
+   - `publish.yml` triggers on **release published** (not on tag push) — or run it manually via *Actions → Publish to NPM → Run workflow*
+   - npm provenance requires the repo to be **public** at publish time
+4. Verify: `npm view @aetherui/core`, then `npm i @aetherui/core @aetherui/tokens` in a scratch project
 
-## ✅ Testing
+## 🔲 Go public
 
-- [x] Test suite passes locally
-- [ ] **TODO: Run full test suite**: `pnpm test`
-- [ ] **TODO: Check test coverage**: Review coverage reports
-- [ ] **TODO: Fix any failing tests**
-- [ ] **TODO: Ensure all CI checks pass on main branch**
+- [ ] Settings → General → Danger Zone → **Change visibility → Public**
+- [ ] Immediately after: enable Private vulnerability reporting (above), confirm the README badges render, and confirm https://debug-diary-1.github.io/AetherUI/docs/ loads with styles after the next `deploy.yml` run
+- [ ] Announce (Show HN, r/webdev, dev.to, webcomponents.org, madewithlit.com)
 
-## ✅ Code Quality
+## Known non-blockers to revisit after launch
 
-- [x] ESLint configured with strict rules
-- [x] Prettier configured
-- [x] TypeScript strict mode enabled
-- [x] no-explicit-any is an error (not warning)
-- [ ] **TODO: Run linting**: `pnpm lint`
-- [ ] **TODO: Format code**: `pnpm format`
-- [ ] **TODO: Fix any linting errors**
-
-## ✅ Examples
-
-- [x] React example created (examples/react-example/)
-- [x] Vue example created (examples/vue-example/)
-- [x] Vanilla JS example created (examples/vanilla-example/)
-- [ ] **TODO: Test each example works correctly**
-- [ ] **TODO: Consider adding more examples** (Angular, Svelte, Next.js, Nuxt)
-
-## ✅ Documentation Site
-
-- [ ] **TODO: Build documentation**: `pnpm docs:build`
-- [ ] **TODO: Test documentation locally**: `pnpm docs:dev`
-- [ ] **TODO: Verify all component docs are complete**
-- [ ] **TODO: Check all links work**
-- [ ] **TODO: Add getting started guide**
-- [ ] **TODO: Add API documentation**
-- [ ] **TODO: Deploy documentation** (should happen automatically on push to main)
-
-## ✅ Storybook
-
-- [ ] **TODO: Build Storybook**: `pnpm build-storybook`
-- [ ] **TODO: Test Storybook locally**: `pnpm storybook`
-- [ ] **TODO: Verify all components have stories**
-- [ ] **TODO: Check all interactive examples work**
-- [ ] **TODO: Deploy Storybook** (workflow is configured)
-
-## ✅ Security Audit
-
-- [x] No sensitive data in repository (API keys, tokens, credentials)
-- [x] .env files properly gitignored
-- [x] Security policy documented
-- [ ] **TODO: Run security audit**: `pnpm audit`
-- [ ] **TODO: Fix any critical/high vulnerabilities**
-- [ ] **TODO: Review all dependencies**
-
-## ✅ Legal & Licensing
-
-- [x] MIT License file present
-- [x] Copyright year is current (2024)
-- [ ] **TODO: Verify all dependencies are MIT-compatible**
-- [ ] **TODO: Review all third-party code attributions**
-
-## ✅ Version 1.0.0 Release Preparation
-
-- [ ] **TODO: Update version in all package.json files to 1.0.0**
-- [ ] **TODO: Update CHANGELOG.md with release date**
-- [ ] **TODO: Create git tag**: `git tag -a v1.0.0 -m "Release v1.0.0"`
-- [ ] **TODO: Push tag**: `git push origin v1.0.0`
-
-## ✅ First Release (v0.1.0 or v1.0.0)
-
-### Pre-Release Steps
-
-1. **Update Contact Emails**
-   - [ ] SECURITY.md - Add your email for vulnerability reports
-   - [ ] CODE_OF_CONDUCT.md - Add enforcement contact email
-
-2. **Test Builds**
-   ```bash
-   # Clean everything
-   pnpm clean
-   rm -rf node_modules
-   rm -rf packages/*/node_modules
-   rm pnpm-lock.yaml
-
-   # Fresh install and build
-   pnpm install
-   pnpm build
-   pnpm test
-   ```
-
-3. **Version Bump**
-   ```bash
-   # Update all package.json versions
-   # packages/core/package.json → 0.1.0 (or 1.0.0)
-   # packages/tokens/package.json → 0.1.0 (or 1.0.0)
-   # packages/accordion/package.json → 0.1.0 (or 1.0.0)
-   # packages/datatable/package.json → 0.1.0 (or 1.0.0)
-   ```
-
-4. **Create GitHub Release**
-   - [ ] Go to Releases → Draft a new release
-   - [ ] Create tag: v0.1.0 (or v1.0.0)
-   - [ ] Release title: "AetherUI v0.1.0 - Initial Release"
-   - [ ] Description: Copy relevant section from CHANGELOG.md
-   - [ ] Publish release (this will trigger npm publish workflow if configured)
-
-5. **Manual NPM Publish** (if not using automated workflow)
-   ```bash
-   # Login to npm
-   npm login
-
-   # Publish each package
-   cd packages/tokens && npm publish --access public
-   cd ../core && npm publish --access public
-   cd ../accordion && npm publish --access public
-   cd ../datatable && npm publish --access public
-   ```
-
-6. **Verify Published Packages**
-   - [ ] Check https://www.npmjs.com/package/@aetherui/core
-   - [ ] Check https://www.npmjs.com/package/@aetherui/tokens
-   - [ ] Install in a test project: `npm install @aetherui/core @aetherui/tokens`
-   - [ ] Test basic functionality works
-
-## ✅ Post-Launch
-
-### Announcement
-
-- [ ] **Post on social media**:
-  - [ ] Twitter/X
-  - [ ] LinkedIn
-  - [ ] Dev.to
-  - [ ] Reddit (r/webdev, r/javascript)
-  - [ ] Hacker News (Show HN)
-
-- [ ] **Submit to directories**:
-  - [ ] https://madewithlit.com (for Lit-based projects)
-  - [ ] https://bestofjs.org
-  - [ ] https://www.webcomponents.org
-
-### Monitoring
-
-- [ ] **Monitor for issues** (GitHub Issues)
-- [ ] **Respond to community feedback**
-- [ ] **Track npm download stats**
-- [ ] **Monitor CI/CD pipelines**
-- [ ] **Check Dependabot PRs weekly**
-- [ ] **Review security alerts promptly**
-
-### Documentation
-
-- [ ] **Create a blog post** explaining the project
-- [ ] **Record demo video** (optional but recommended)
-- [ ] **Create GIF demos** for README
-- [ ] **Write tutorials** for common use cases
-
-## 🎯 Quick Command Reference
-
-```bash
-# Development
-pnpm install          # Install dependencies
-pnpm dev             # Start dev servers
-pnpm build           # Build all packages
-pnpm test            # Run tests
-pnpm lint            # Lint code
-pnpm format          # Format code
-
-# Documentation
-pnpm docs:dev        # Start docs dev server
-pnpm docs:build      # Build docs
-pnpm storybook       # Start Storybook
-
-# Publishing (automated via GitHub Actions)
-git tag v0.1.0
-git push origin v0.1.0
-
-# Publishing (manual)
-cd packages/core && npm publish --access public
-```
-
-## 📝 Notes
-
-- Remember to announce the project on relevant communities
-- Be prepared to respond to issues and questions quickly initially
-- Consider setting up a Discord or Slack for community
-- Plan roadmap for future releases
-- Thank contributors regularly
-
----
-
-## Final Checklist Before Going Public
-
-- [ ] All TODO items above are completed
-- [ ] Repository is tested end-to-end
-- [ ] Documentation is complete and accurate
-- [ ] CI/CD pipelines are green
-- [ ] No sensitive data in repository
-- [ ] Contact emails are updated
-- [ ] npm packages are published
-- [ ] GitHub repository is made public
-- [ ] Announcement is ready to post
-
-🎉 **Ready to launch!**
-
----
-
-*This checklist was generated for the AetherUI project open source preparation.*
+- Mixed element-registration model: 22 components self-register via `@customElement` on import *and* expose `defineAeX()`; `@aetherui/core` declares `sideEffects: false`. Decide on one model before 1.0.
+- `ROADMAP.md` predates most of the current component set — refresh or remove.
+- `examples/*` are integration guides (README-only), not runnable apps.
+- Dev-dependency audit findings (astro 5.x, `shell-quote` via `concurrently`) — none affect published packages.

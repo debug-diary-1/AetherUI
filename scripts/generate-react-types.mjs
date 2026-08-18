@@ -27,7 +27,10 @@ const isPublicField = (member) =>
   !member.name.startsWith('_');
 
 const kebabToPascal = (s) =>
-  s.split('-').map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
+  s
+    .split('-')
+    .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+    .join('');
 
 const eventToHandler = (eventName) => `on${kebabToPascal(eventName)}`;
 
@@ -71,7 +74,7 @@ const renderEntry = ({ tagName, props, events, className }) => {
     return `${doc}        ${e.handler}?: (event: ${e.type}) => void;`;
   });
   const body = [...propLines, ...eventLines].join('\n');
-  return `      /** ${className ?? tagName} — see https://github.com/pallavL01/AetherUI for docs. */
+  return `      /** ${className ?? tagName} — see https://github.com/debug-diary-1/AetherUI for docs. */
       '${tagName}': React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLElement>,
         HTMLElement

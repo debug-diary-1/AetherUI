@@ -104,9 +104,9 @@ All components are WCAG 2.1 Level AA compliant with full keyboard navigation and
 
 ## Documentation
 
-- [Full Documentation](https://pallavL01.github.io/AetherUI/)
-- [Storybook](https://pallavL01.github.io/AetherUI/storybook/)
-- [Contributing](https://github.com/pallavL01/AetherUI/blob/main/CONTRIBUTING.md)
+- [Full Documentation](https://debug-diary-1.github.io/AetherUI/docs/)
+- [Storybook](https://debug-diary-1.github.io/AetherUI/storybook/)
+- [Contributing](https://github.com/debug-diary-1/AetherUI/blob/main/CONTRIBUTING.md)
 
 ## License
 

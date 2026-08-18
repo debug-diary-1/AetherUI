@@ -34,7 +34,7 @@ This will:
 
 ## Configuration
 
-The site is configured in `packages/docs/astro.config.mjs`. The `site` field is set to `https://aetherui.dev`.
+The site is configured in `packages/docs/astro.config.mjs`. The `site`/`base` fields default to the Vercel preview layout (`/docs/`) and are overridden via `DOCS_SITE` / `DOCS_BASE` env vars in `.github/workflows/deploy.yml` for GitHub Pages (`https://debug-diary-1.github.io/AetherUI/docs/`).
 
 ## GitHub Pages Setup
 

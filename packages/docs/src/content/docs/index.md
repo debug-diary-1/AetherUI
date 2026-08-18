@@ -24,13 +24,13 @@ hero:
       Framework-agnostic and designed for performance.
     </p>
     <div class="hero-actions">
-      <a href="/docs/getting-started/installation/" class="btn btn-primary">
+      <a href="getting-started/installation/" class="btn btn-primary">
         Get Started
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
       </a>
-      <a href="https://github.com/pallavL01/AetherUI" class="btn btn-secondary">
+      <a href="https://github.com/debug-diary-1/AetherUI" class="btn btn-secondary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
         </svg>
@@ -129,20 +129,20 @@ defineAeButton();
     <h2>25+ Components</h2>
     <p class="section-description">Everything you need to build modern interfaces</p>
     <div class="components-grid">
-      <a href="/docs/components/button/" class="component-chip">Button</a>
-      <a href="/docs/components/modal/" class="component-chip">Modal</a>
-      <a href="/docs/components/dropdown/" class="component-chip">Dropdown</a>
-      <a href="/docs/components/tabs/" class="component-chip">Tabs</a>
-      <a href="/docs/components/accordion/" class="component-chip">Accordion</a>
-      <a href="/docs/components/toast/" class="component-chip">Toast</a>
-      <a href="/docs/components/tooltip/" class="component-chip">Tooltip</a>
-      <a href="/docs/components/input/" class="component-chip">Input</a>
-      <a href="/docs/components/select/" class="component-chip">Select</a>
-      <a href="/docs/components/checkbox/" class="component-chip">Checkbox</a>
-      <a href="/docs/components/radio/" class="component-chip">Radio</a>
-      <a href="/docs/components/switch/" class="component-chip">Switch</a>
+      <a href="components/button/" class="component-chip">Button</a>
+      <a href="components/modal/" class="component-chip">Modal</a>
+      <a href="components/dropdown/" class="component-chip">Dropdown</a>
+      <a href="components/tabs/" class="component-chip">Tabs</a>
+      <a href="components/accordion/" class="component-chip">Accordion</a>
+      <a href="components/toast/" class="component-chip">Toast</a>
+      <a href="components/tooltip/" class="component-chip">Tooltip</a>
+      <a href="components/input/" class="component-chip">Input</a>
+      <a href="components/select/" class="component-chip">Select</a>
+      <a href="components/checkbox/" class="component-chip">Checkbox</a>
+      <a href="components/radio/" class="component-chip">Radio</a>
+      <a href="components/switch/" class="component-chip">Switch</a>
     </div>
-    <a href="/docs/components/accordion/" class="view-all-link">
+    <a href="components/accordion/" class="view-all-link">
       View all components →
     </a>
   </section>
@@ -151,7 +151,7 @@ defineAeButton();
   <section class="cta-section">
     <h2>Ready to get started?</h2>
     <p>Install AetherUI and start building beautiful interfaces today.</p>
-    <a href="/docs/getting-started/installation/" class="btn btn-primary btn-lg">
+    <a href="getting-started/installation/" class="btn btn-primary btn-lg">
       Read the Docs
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M5 12h14M12 5l7 7-7 7"/>

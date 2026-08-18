@@ -22,7 +22,7 @@ AetherUI supports **automatic preview deployments** for every Pull Request, allo
 
 1. Go to [vercel.com](https://vercel.com) and sign in with GitHub
 2. Click **"Add New..."** → **"Project"**
-3. Import `pallavL01/AetherUI` repository
+3. Import `debug-diary-1/AetherUI` repository
 4. Vercel will auto-detect the configuration from `vercel.json`
 5. Click **"Deploy"**
 
@@ -44,8 +44,8 @@ NODE_OPTIONS=--max-old-space-size=4096
 
 In Vercel dashboard → Settings → Domains:
 - Add your custom domain
-- Production: `storybook.aetherui.dev`
-- Previews: `pr-123.storybook.aetherui.dev`
+- Production: `storybook.your-domain.example`
+- Previews: `pr-123.storybook.your-domain.example`
 
 ---
 
@@ -57,7 +57,7 @@ In Vercel dashboard → Settings → Domains:
 
 1. Go to [netlify.com](https://netlify.com) and sign in with GitHub
 2. Click **"Add new site"** → **"Import an existing project"**
-3. Select `pallavL01/AetherUI`
+3. Select `debug-diary-1/AetherUI`
 4. Netlify will auto-detect settings from `netlify.toml`
 5. Click **"Deploy site"**
 
@@ -86,7 +86,7 @@ Chromatic is specifically built for Storybook with visual regression testing.
 
 1. Go to [chromatic.com](https://www.chromatic.com/)
 2. Sign in with GitHub
-3. Add `pallavL01/AetherUI` project
+3. Add `debug-diary-1/AetherUI` project
 
 #### 2. Get Project Token
 
@@ -449,4 +449,4 @@ You'll know preview deployments are working when:
 
 ---
 
-**Questions?** Check the [Deployment Troubleshooting](https://github.com/pallavL01/AetherUI/wiki/Deployment-Troubleshooting) wiki page.
+**Questions?** Check the [Deployment Troubleshooting](https://github.com/debug-diary-1/AetherUI/wiki/Deployment-Troubleshooting) wiki page.

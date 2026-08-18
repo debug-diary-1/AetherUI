@@ -89,10 +89,10 @@ npm run dev
 
 ## Additional Resources
 
-- [AetherUI Documentation](https://pallavL01.github.io/AetherUI/)
-- [Component API Reference](https://pallavL01.github.io/AetherUI/components/)
-- [Theming Guide](https://pallavL01.github.io/AetherUI/theming/)
-- [GitHub Repository](https://github.com/pallavL01/AetherUI)
+- [AetherUI Documentation](https://debug-diary-1.github.io/AetherUI/docs/)
+- [Component API Reference](https://debug-diary-1.github.io/AetherUI/docs/components/button/)
+- [Theming Guide](https://github.com/debug-diary-1/AetherUI/blob/main/docs/THEMING.md)
+- [GitHub Repository](https://github.com/debug-diary-1/AetherUI)
 
 ## Contributing Examples
 
@@ -110,13 +110,13 @@ Examples we'd love to see:
 - Web Components with Lit
 - Astro components
 - Server-side rendering patterns
-- Testing examples (Jest, Vitest, Playwright)
+- Testing examples (Web Test Runner, Playwright)
 - Storybook integration
 - Design system implementation
 
 ## Need Help?
 
-- 📖 [Read the docs](https://pallavL01.github.io/AetherUI/)
-- 🐛 [Report issues](https://github.com/pallavL01/AetherUI/issues)
-- 💬 [Join discussions](https://github.com/pallavL01/AetherUI/discussions)
-- 💡 [Request features](https://github.com/pallavL01/AetherUI/issues/new?template=feature_request.yml)
+- 📖 [Read the docs](https://debug-diary-1.github.io/AetherUI/docs/)
+- 🐛 [Report issues](https://github.com/debug-diary-1/AetherUI/issues)
+- 💬 [Join discussions](https://github.com/debug-diary-1/AetherUI/discussions)
+- 💡 [Request features](https://github.com/debug-diary-1/AetherUI/issues/new?template=feature_request.yml)

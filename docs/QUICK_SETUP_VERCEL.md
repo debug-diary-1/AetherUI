@@ -7,7 +7,7 @@
 1. **Go to Vercel**: https://vercel.com/new
 2. **Sign in with GitHub** (if not already signed in)
 3. **Click "Import Project"**
-4. **Search** for `pallavL01/AetherUI`
+4. **Search** for `debug-diary-1/AetherUI`
 5. **Click "Import"** on the repository
 
 ### Step 2: Configure Project
@@ -53,7 +53,7 @@ Now every PR will automatically get a preview deployment.
 
 ## Optional: Custom Domain
 
-If you want a custom domain (e.g., `storybook.aetherui.dev`):
+If you want a custom domain (e.g., `storybook.your-domain.example`):
 
 1. Go to Vercel dashboard → Settings → Domains
 2. Click "Add"
@@ -61,7 +61,7 @@ If you want a custom domain (e.g., `storybook.aetherui.dev`):
 4. Follow DNS configuration instructions
 5. Wait for DNS propagation (~5 minutes)
 
-Preview URLs will now be: `pr-123-storybook.aetherui.dev`
+Preview URLs will now be: `pr-123-storybook.your-domain.example`
 
 ---
 

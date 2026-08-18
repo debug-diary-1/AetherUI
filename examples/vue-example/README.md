@@ -399,6 +399,6 @@ if (process.client) {
 
 ## Resources
 
-- [AetherUI Documentation](https://pallavL01.github.io/AetherUI/)
+- [AetherUI Documentation](https://debug-diary-1.github.io/AetherUI/docs/)
 - [Vue and Web Components](https://vuejs.org/guide/extras/web-components.html)
 - [Custom Elements Everywhere](https://custom-elements-everywhere.com/)

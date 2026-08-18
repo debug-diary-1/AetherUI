@@ -303,7 +303,7 @@ cat > preview-build/index.html << 'EOF'
     <div class="footer">
       <p>
         Built by the AetherUI Contributors ·
-        <a href="https://github.com/pallavL01/AetherUI" target="_blank">GitHub</a>
+        <a href="https://github.com/debug-diary-1/AetherUI" target="_blank">GitHub</a>
       </p>
     </div>
   </div>

@@ -31,8 +31,8 @@ Before creating an issue, please:
 
 ```bash
 # Clone your fork
-git clone https://github.com/your-username/aetherUi.git
-cd aetherUi
+git clone https://github.com/your-username/AetherUI.git
+cd AetherUI
 
 # Install dependencies
 pnpm install
@@ -81,7 +81,7 @@ When creating or modifying components:
 
 ### Testing
 
-- Write both Web Component tests (using @open-wc/testing) and API tests (using Vitest)
+- Write browser-based component tests with @open-wc/testing + Web Test Runner (see existing `__tests__` folders)
 - Aim for high test coverage
 - Test accessibility features
 - Test keyboard navigation
@@ -98,7 +98,7 @@ When creating or modifying components:
 
 If you need help with your contribution:
 
-1. Check the [documentation](https://aetherui.dev)
+1. Check the [documentation](https://debug-diary-1.github.io/AetherUI/docs/)
 2. Read the [CLAUDE.md](CLAUDE.md) file for codebase guidance
 3. Open a discussion in the GitHub Discussions tab
 4. Reach out in issues with questions

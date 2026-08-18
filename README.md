@@ -4,13 +4,12 @@
 
 **A headless, framework-agnostic Web Component library built with Lit**
 
-[![CI](https://github.com/pallavL01/AetherUI/actions/workflows/ci.yml/badge.svg)](https://github.com/pallavL01/AetherUI/actions/workflows/ci.yml)
+[![CI](https://github.com/debug-diary-1/AetherUI/actions/workflows/ci.yml/badge.svg)](https://github.com/debug-diary-1/AetherUI/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/@aetherui/core?label=%40aetherui%2Fcore)](https://www.npmjs.com/package/@aetherui/core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-[Documentation](https://pallavL01.github.io/AetherUI/) · [Storybook](https://pallavL01.github.io/AetherUI/storybook/) · [Kitchen Sink](#-kitchen-sink-showcase) · [Examples](#examples) · [Contributing](CONTRIBUTING.md)
+[Documentation](https://debug-diary-1.github.io/AetherUI/docs/) · [Storybook](https://debug-diary-1.github.io/AetherUI/storybook/) · [Playground](https://aetherui-seven.vercel.app/playground/) · [Examples](#-examples) · [Contributing](CONTRIBUTING.md)
 
 </div>
 
@@ -24,7 +23,7 @@
 - ♿️ **Accessible** - WCAG 2.1 Level AA compliant with full keyboard navigation
 - 📦 **Tree-Shakeable** - Import only what you need for optimal bundle sizes
 - 🎯 **TypeScript** - Fully typed with excellent IntelliSense support
-- 🧪 **Well-Tested** - Comprehensive test coverage with Vitest and Web Test Runner
+- 🧪 **Well-Tested** - Browser-based test suite with Web Test Runner + Playwright
 - 📚 **Well-Documented** - Extensive documentation with interactive examples
 - 🔍 **PR Preview Deployments** - Automatic Storybook preview for every pull request
 - 🚀 **Modern** - Built on Web Standards (Custom Elements, Shadow DOM)
@@ -96,49 +95,31 @@ import { AeModal } from '@aetherui/core/modal';
 
 ## 🧩 Available Components
 
-| Component | Description |
-|-----------|-------------|
-| **Button** | Primary action trigger with variants and sizes |
-| **Modal** | Dialog overlay with focus management |
-| **Dropdown** | Context menus with positioning |
-| **Accordion** | Expandable sections |
-| **Tabs** | Tab navigation with horizontal/vertical modes |
-| **Checkbox** | Boolean input with indeterminate state |
-| **Radio** | Mutually exclusive selection |
-| **Alert** | Status messages with variants |
-| **Tooltip** | Information overlays |
-| **Toast** | Temporary notifications |
-| **TreeView** | Hierarchical data display |
-| **Combo** | Combo box with filtering |
-| **Autocomplete** | Auto-completing input |
+`@aetherui/core` ships 25 components, each importable from its own subpath (e.g. `@aetherui/core/button`):
 
-## 🍽️ Kitchen Sink Showcase
+| Category | Components |
+|----------|------------|
+| **Actions & navigation** | Button, Dropdown, Menu, Breadcrumb, Pagination, Tabs |
+| **Overlays** | Modal, Drawer, Popover, Tooltip, Toast |
+| **Forms** | Input, Textarea, Select, Checkbox, Radio, Switch, Combo, Autocomplete |
+| **Feedback & data display** | Alert, Badge, Progress, Spinner, Accordion, TreeView |
 
-Want to see **all components in action** with custom styling? Check out our comprehensive Kitchen Sink showcase - a beautiful React app demonstrating every component with custom gradient themes!
+Also available as separate packages: **`@aetherui/datatable`** (sortable/selectable data table) and **`@aetherui/tokens`** (design tokens + light/dark/minimal themes).
+
+See the [component docs](https://debug-diary-1.github.io/AetherUI/docs/components/button/) for props, events, slots, and CSS parts of each.
+
+## 🎛️ Playground
+
+Want to see **every component in action**? The interactive playground lets you tweak props live and copies out the matching HTML.
+
+- **Online:** https://aetherui-seven.vercel.app/playground/
+- **Locally:**
 
 ```bash
-# Run the showcase locally
-pnpm showcase
-
-# Or build it
-pnpm showcase:build
+pnpm --filter @aetherui/playground dev
 ```
 
-The showcase will be available at **`http://localhost:3000`**
-
-**What's included:**
-- 🎨 All 28+ components with custom styling
-- 🌈 Beautiful gradient UI proving headless architecture
-- 📱 Responsive design
-- 🔄 Live interactive demos with state management
-- 💻 React integration patterns
-- ⚡ TypeScript examples
-
-Perfect for:
-- Seeing what's possible with AetherUI's headless components
-- Learning React integration patterns
-- Understanding CSS custom property customization
-- Getting inspiration for your own designs
+There is also a full [Storybook](https://debug-diary-1.github.io/AetherUI/storybook/) with a story per component and an accessibility addon.
 
 ## 💡 Examples
 
@@ -239,27 +220,27 @@ import '@aetherui/tokens/dark.css';
 
 ## 📚 Documentation
 
-- **[Getting Started Guide](https://pallavL01.github.io/AetherUI/)**
-- **[Component API Documentation](https://pallavL01.github.io/AetherUI/components/)**
+- **[Getting Started Guide](https://debug-diary-1.github.io/AetherUI/docs/)**
+- **[Component API Documentation](https://debug-diary-1.github.io/AetherUI/docs/components/button/)**
 - **[Theming Guide](./docs/THEMING.md)** - Complete theming strategies and examples
 - **[CSS Properties Reference](./docs/CSS_PROPERTIES.md)** - All CSS custom properties
 - **[Headless Mode Guide](./docs/HEADLESS.md)** - Unstyled mode and complete customization
 - **[Preview Deployments](./docs/PREVIEW_DEPLOYMENTS.md)** - Automatic PR previews setup
-- **[Accessibility Guide](https://pallavL01.github.io/AetherUI/accessibility/)**
-- **[Migration Guide](https://pallavL01.github.io/AetherUI/migration/)**
+- **[Framework Integrations](https://debug-diary-1.github.io/AetherUI/docs/getting-started/integrations/react/)** - React, Vue, Angular, Svelte, Solid, vanilla
+- **[Architecture](./ARCHITECTURE.md)** and **[Component Standards](./STANDARDS.md)** - How the library is built
 
 ## 🛠️ Development
 
 ### Prerequisites
 
-- Node.js >= 22.0.0
-- pnpm 10.30.2
+- Node.js >= 24.0.0
+- pnpm 10.30.3 (pinned via `packageManager`; `corepack enable` will pick it up)
 
 ### Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/pallavL01/AetherUI.git
+git clone https://github.com/debug-diary-1/AetherUI.git
 cd AetherUI
 
 # Install dependencies
@@ -277,8 +258,11 @@ pnpm build
 # Run Storybook
 pnpm storybook
 
-# Run Kitchen Sink showcase
-pnpm showcase
+# Run the docs site
+pnpm docs:dev
+
+# Run the interactive playground
+pnpm --filter @aetherui/playground dev
 ```
 
 ### Preview Deployments
@@ -297,11 +281,14 @@ Every PR automatically gets a **live Storybook preview** deployed to Vercel or N
 ```
 AetherUI/
 ├── packages/
-│   ├── core/          # Core component library
-│   ├── tokens/        # Design tokens
-│   ├── docs/          # Documentation site
-│   ├── storybook/     # Component showcase
-│   └── showcase/      # Kitchen Sink React app
+│   ├── core/          # Core component library (@aetherui/core)
+│   ├── tokens/        # Design tokens + themes (@aetherui/tokens)
+│   ├── datatable/     # Data table (@aetherui/datatable)
+│   ├── accordion/     # Standalone accordion (@aetherui/accordion)
+│   ├── docs/          # Documentation site (Astro + Starlight)
+│   ├── storybook/     # Storybook stories
+│   └── playground/    # Interactive playground (Vite + Lit)
+├── examples/          # Framework integration guides
 ├── .github/           # GitHub Actions workflows
 ├── CONTRIBUTING.md    # Contribution guidelines
 ├── CODE_OF_CONDUCT.md # Community guidelines
@@ -310,20 +297,21 @@ AetherUI/
 
 ## 🧪 Testing
 
-We use a dual testing strategy:
+Component tests run in a real browser (Chromium via Playwright) using [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/) and `@open-wc/testing`:
 
 ```bash
-# Run all tests
+# Run all package tests
 pnpm test
 
-# Run only unit/API tests (fast, memory-efficient)
-pnpm test:api
-
-# Run web component tests (browser-based)
-pnpm test:wc
-
-# Run tests with memory optimization
+# Run tests with memory optimization (constrained machines / CI)
 pnpm test:memory
+
+# Watch mode for a single package
+pnpm --filter @aetherui/core test:watch
+
+# Storybook interaction tests / Playwright e2e
+pnpm test:storybook
+pnpm test:e2e
 ```
 
 ## 🤝 Contributing
@@ -350,10 +338,10 @@ Found a security vulnerability? Please refer to our [Security Policy](SECURITY.m
 
 ## 💬 Community
 
-- 🐛 [Report a Bug](https://github.com/pallavL01/AetherUI/issues/new?template=bug_report.yml)
-- 💡 [Request a Feature](https://github.com/pallavL01/AetherUI/issues/new?template=feature_request.yml)
-- 📖 [Documentation](https://pallavL01.github.io/AetherUI/)
-- 💬 [Discussions](https://github.com/pallavL01/AetherUI/discussions)
+- 🐛 [Report a Bug](https://github.com/debug-diary-1/AetherUI/issues/new?template=bug_report.yml)
+- 💡 [Request a Feature](https://github.com/debug-diary-1/AetherUI/issues/new?template=feature_request.yml)
+- 📖 [Documentation](https://debug-diary-1.github.io/AetherUI/docs/)
+- 💬 [Discussions](https://github.com/debug-diary-1/AetherUI/discussions)
 
 ## 🙏 Acknowledgements
 
@@ -361,13 +349,13 @@ Found a security vulnerability? Please refer to our [Security Policy](SECURITY.m
 - Positioned with [Floating UI](https://floating-ui.com)
 - Tested with [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/)
 - Documentation powered by [Astro](https://astro.build) and [Starlight](https://starlight.astro.build)
-- Monorepo managed with [Nx](https://nx.dev)
+- Monorepo managed with [Turborepo](https://turbo.build) · linted & formatted with [oxlint / oxfmt](https://oxc.rs)
 
 ## 📊 Project Stats
 
-![GitHub stars](https://img.shields.io/github/stars/pallavL01/AetherUI?style=social)
-![GitHub forks](https://img.shields.io/github/forks/pallavL01/AetherUI?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/pallavL01/AetherUI?style=social)
+![GitHub stars](https://img.shields.io/github/stars/debug-diary-1/AetherUI?style=social)
+![GitHub forks](https://img.shields.io/github/forks/debug-diary-1/AetherUI?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/debug-diary-1/AetherUI?style=social)
 
 ---
 

@@ -456,6 +456,6 @@ This includes:
 
 ## Resources
 
-- [AetherUI Documentation](https://pallavL01.github.io/AetherUI/)
+- [AetherUI Documentation](https://debug-diary-1.github.io/AetherUI/docs/)
 - [MDN Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
 - [Custom Elements Everywhere](https://custom-elements-everywhere.com/)

@@ -153,7 +153,7 @@ When renaming properties or events to conform to standards:
   - Test actual DOM rendering and shadow DOM behavior
   
 - **Unit/API Tests**: Place in `src/{component}/__tests__/{feature}.unit.test.ts` or `api.test.ts`
-  - Use Vitest for fast, lightweight testing
+  - Use Web Test Runner (@open-wc/testing) for browser-based component tests
   - Mock components and test business logic without DOM
   - Ideal for CI/CD with memory constraints
 

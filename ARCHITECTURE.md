@@ -741,7 +741,7 @@ All PRs must pass:
 - ✅ Unit tests (100% pass rate)
 - ✅ Storybook tests (all play functions pass)
 - ✅ E2E visual tests (no regressions)
-- ✅ Linting (ESLint)
+- ✅ Linting (oxlint) and formatting (oxfmt)
 
 ## Best Practices
 

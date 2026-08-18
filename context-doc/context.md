@@ -322,9 +322,8 @@ if (!('adoptedStyleSheets' in Document.prototype))
 `SECURITY.md` template:
 
 ```md
-Contact: security@aetherui.dev
+Contact: https://github.com/debug-diary-1/AetherUI/security/advisories/new (GitHub private vulnerability reporting)
 Embargo Period: 30 days
-PGP Key: https://aetherui.dev/pgp.txt
 ```
 
 CI step `npm audit --omit dev` gate added.

@@ -59,8 +59,10 @@ representative at an online or offline event.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement at
-security@aetherui.dev.
+reported to the community leaders responsible for enforcement by opening a
+private report at https://github.com/debug-diary-1/AetherUI/security/advisories/new
+(private to maintainers) or by contacting the maintainer directly on GitHub
+(@debug-diary-1).
 
 All complaints will be reviewed and investigated promptly and fairly.
 
