@@ -19,7 +19,6 @@
     }
   },
   "regions": ["iad1"],
-  "public": true,
   "rewrites": [
     {
       "source": "/playground/:path*",
