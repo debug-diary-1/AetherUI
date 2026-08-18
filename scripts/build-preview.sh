@@ -3,9 +3,9 @@ set -e
 
 echo "🏗️  Building AetherUI Preview (Storybook + Documentation + Playground)"
 
-# Build core first (dependency for all)
-echo "🔧 Building Core..."
-pnpm --filter @aetherui/core build
+# Build core + tokens first (docs and playground import @aetherui/tokens/*.css)
+echo "🔧 Building Core + Tokens..."
+pnpm exec turbo build --filter=@aetherui/core --filter=@aetherui/tokens
 
 # Build Storybook
 echo "📚 Building Storybook..."
