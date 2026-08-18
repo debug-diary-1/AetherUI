@@ -1,9 +1,15 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
+// Defaults match the Vercel preview layout (site root + /docs/). The GitHub Pages
+// workflow (.github/workflows/deploy.yml) overrides these because project pages are
+// served from https://debug-diary-1.github.io/AetherUI/ and need the repo prefix.
+const site = process.env.DOCS_SITE ?? 'https://aetherui-seven.vercel.app';
+const base = process.env.DOCS_BASE ?? '/docs/';
+
 export default defineConfig({
-  site: 'https://aetherui.dev',
-  base: '/docs/',
+  site,
+  base,
   outDir: './dist',
   integrations: [
     starlight({
@@ -40,7 +46,7 @@ export default defineConfig({
       social: [
         {
           label: 'GitHub',
-          href: 'https://github.com/pallavL01/AetherUI',
+          href: 'https://github.com/debug-diary-1/AetherUI',
           icon: 'github',
         },
       ],

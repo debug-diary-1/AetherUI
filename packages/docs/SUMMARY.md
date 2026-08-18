@@ -39,4 +39,4 @@
    - Branch: gh-pages
    - Directory: /docs
 4. Trigger a deployment manually or by pushing to the main branch
-5. Verify the deployment at https://aetherui.dev
+5. Verify the deployment at https://debug-diary-1.github.io/AetherUI/docs/

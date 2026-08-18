@@ -641,16 +641,16 @@ import './my-custom-theme.css';
 
 - [Theming Guide](./THEMING.md) - Learn about styled theming
 - [CSS Properties Reference](./CSS_PROPERTIES.md) - All available CSS parts and properties
-- [Component Documentation](https://pallavL01.github.io/AetherUI/) - Component APIs
+- [Component Documentation](https://debug-diary-1.github.io/AetherUI/docs/) - Component APIs
 - [Examples](../examples/headless-example/) - Real-world headless implementations
 
 ---
 
 ## Need Help?
 
-- [GitHub Discussions](https://github.com/pallavL01/AetherUI/discussions) - Ask questions
+- [GitHub Discussions](https://github.com/debug-diary-1/AetherUI/discussions) - Ask questions
 - [Examples Repository](../examples/) - See complete implementations
-- [Storybook](https://pallavL01.github.io/AetherUI/storybook/) - Interactive component explorer
+- [Storybook](https://debug-diary-1.github.io/AetherUI/storybook/) - Interactive component explorer
 
 ---
 

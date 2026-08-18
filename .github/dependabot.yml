@@ -9,7 +9,7 @@ updates:
       time: '09:00'
     open-pull-requests-limit: 10
     reviewers:
-      - 'pallavL01'
+      - 'debug-diary-1'
     labels:
       - 'dependencies'
       - 'automated'
@@ -22,12 +22,12 @@ updates:
       development-dependencies:
         dependency-type: 'development'
         patterns:
-          - '@typescript-eslint/*'
-          - 'eslint*'
-          - 'prettier'
-          - 'vitest'
-          - '@nx/*'
+          - 'oxlint'
+          - 'oxfmt'
+          - 'turbo'
+          - 'typescript'
           - 'vite*'
+          - 'husky'
       lit-ecosystem:
         patterns:
           - 'lit*'

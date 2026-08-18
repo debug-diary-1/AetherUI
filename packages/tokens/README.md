@@ -1,6 +1,6 @@
 # @aetherui/tokens
 
-Design tokens and pre-built themes for [AetherUI](https://github.com/pallavL01/AetherUI) components.
+Design tokens and pre-built themes for [AetherUI](https://github.com/debug-diary-1/AetherUI) components.
 
 [![npm version](https://img.shields.io/npm/v/@aetherui/tokens)](https://www.npmjs.com/package/@aetherui/tokens)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

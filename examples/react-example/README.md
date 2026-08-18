@@ -231,6 +231,6 @@ const ClientOnlyComponent = dynamic(
 
 ## Resources
 
-- [AetherUI Documentation](https://pallavL01.github.io/AetherUI/)
+- [AetherUI Documentation](https://debug-diary-1.github.io/AetherUI/docs/)
 - [React and Web Components](https://reactjs.org/docs/web-components.html)
 - [Custom Elements Everywhere](https://custom-elements-everywhere.com/)

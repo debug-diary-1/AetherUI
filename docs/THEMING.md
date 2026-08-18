@@ -786,15 +786,15 @@ function generateTheme(primaryColor: string) {
 
 - [CSS Properties Reference](./CSS_PROPERTIES.md) - Complete list of all CSS custom properties
 - [Headless Usage Guide](./HEADLESS.md) - Deep dive into unstyled mode
-- [Component Documentation](https://pallavL01.github.io/AetherUI/) - API docs for each component
-- [Storybook Examples](https://pallavL01.github.io/AetherUI/storybook/) - Interactive examples with different themes
+- [Component Documentation](https://debug-diary-1.github.io/AetherUI/docs/) - API docs for each component
+- [Storybook Examples](https://debug-diary-1.github.io/AetherUI/storybook/) - Interactive examples with different themes
 
 ---
 
 ## Getting Help
 
-- [GitHub Discussions](https://github.com/pallavL01/AetherUI/discussions) - Ask questions
-- [GitHub Issues](https://github.com/pallavL01/AetherUI/issues) - Report bugs or request features
+- [GitHub Discussions](https://github.com/debug-diary-1/AetherUI/discussions) - Ask questions
+- [GitHub Issues](https://github.com/debug-diary-1/AetherUI/issues) - Report bugs or request features
 - [Examples](../examples/) - See real-world implementations
 
 ---

@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced theming system
 - Performance optimizations
 
-## [0.1.0] - 2024-TBD
+## [0.1.0] - TBD
 
 ### Added
 - Initial release of AetherUI component library
@@ -73,5 +73,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Security` in case of vulnerabilities
 
 ### Version History Links
-[unreleased]: https://github.com/pallavL01/AetherUI/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/pallavL01/AetherUI/releases/tag/v0.1.0
+[unreleased]: https://github.com/debug-diary-1/AetherUI/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/debug-diary-1/AetherUI/releases/tag/v0.1.0
