@@ -45,7 +45,4 @@ export default defineConfig({
   server: {
     port: 3001,
   },
-  test: {
-    passWithNoTests: true,
-  },
 });

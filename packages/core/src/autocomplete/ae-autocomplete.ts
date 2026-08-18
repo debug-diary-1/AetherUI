@@ -116,6 +116,9 @@ export class AeAutocomplete extends LitElement {
   set filterFn(fn: AutocompleteFilterFunction) {
     this._controller.filterFn = fn;
   }
+  get filterFn(): AutocompleteFilterFunction {
+    return this._controller.filterFn;
+  }
 
   /**
    * Whether the component has focus

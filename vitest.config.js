@@ -23,7 +23,7 @@ export default defineConfig({
     watch: false,
     reporters: ['default'],
     testTimeout: 10000,
-    passWithNoTests: true,
+    passWithNoTests: false,
 
     // Apply memory optimization settings conditionally
     ...(memoryLimited

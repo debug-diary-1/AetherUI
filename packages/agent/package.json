@@ -1,0 +1,71 @@
+{
+  "name": "@aetherui/agent",
+  "version": "0.1.0",
+  "description": "Validated, safe runtime rendering for agent-generated AetherUI documents",
+  "keywords": [
+    "aetherui",
+    "agentic-ui",
+    "json-schema",
+    "llm",
+    "web-components"
+  ],
+  "homepage": "https://github.com/debug-diary-1/AetherUI#readme",
+  "bugs": {
+    "url": "https://github.com/debug-diary-1/AetherUI/issues"
+  },
+  "license": "MIT",
+  "author": "AetherUI Contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/debug-diary-1/AetherUI.git",
+    "directory": "packages/agent"
+  },
+  "files": [
+    "dist",
+    "agent-ui.schema.json",
+    "component-catalog.json",
+    "README.md"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./schema.json": "./agent-ui.schema.json",
+    "./catalog.json": "./component-catalog.json",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf dist",
+    "lint": "oxlint src test",
+    "test": "web-test-runner --config web-test-runner.config.mjs"
+  },
+  "devDependencies": {
+    "@open-wc/testing": "catalog:",
+    "@types/node": "catalog:",
+    "@web/dev-server-esbuild": "catalog:",
+    "@web/test-runner": "catalog:",
+    "@web/test-runner-playwright": "catalog:",
+    "playwright": "catalog:",
+    "rimraf": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "@aetherui/core": "workspace:^"
+  },
+  "peerDependenciesMeta": {
+    "@aetherui/core": {
+      "optional": true
+    }
+  }
+}

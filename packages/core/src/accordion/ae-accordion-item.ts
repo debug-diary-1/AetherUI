@@ -41,7 +41,7 @@ export class AeAccordionItem extends LitElement {
   /**
    * Unique identifier for this accordion item
    */
-  @property({ type: String })
+  @property({ type: String, attribute: 'header-id' })
   accessor headerId = `ae-accordion-${AeAccordionItem._idCounter++}`;
 
   /**
@@ -64,6 +64,9 @@ export class AeAccordionItem extends LitElement {
   }
 
   updated(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has('headerId')) {
+      this.setAttribute('data-header-id', this.headerId);
+    }
     if (changedProperties.has('open')) {
       this.updatePanelHeight();
     }
@@ -112,6 +115,7 @@ export class AeAccordionItem extends LitElement {
           <button
             class="header"
             part="header"
+            id="header-${this.headerId}"
             aria-expanded=${this.open}
             aria-controls="panel-${this.headerId}"
             ?disabled=${this.disabled}

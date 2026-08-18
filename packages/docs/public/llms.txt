@@ -1,0 +1,19 @@
+# AetherUI
+
+> Headless, accessible custom elements built with Lit. Register elements explicitly, import one token theme, and use the documented properties and custom events.
+
+## Canonical resources
+
+- /component-catalog.json — machine-readable element interfaces
+- /agent-ui.schema.json — constrained runtime-generated UI document
+- /llms-full.txt — complete property, event, slot, and CSS-part reference
+- /getting-started/installation/ — installation and registration
+- /getting-started/integrations/react/ — React 19 JSX typing
+
+## Rules
+
+- Import from @aetherui/core or a documented subpath and call the matching define function once.
+- Import @aetherui/tokens/light.css or @aetherui/tokens/dark.css once.
+- Listen for documented ae-* CustomEvents; read payloads from event.detail.
+- Treat accessibility and keyboard behavior as part of each element's interface.
+- For model-generated interfaces, emit the JSON schema and validate it with @aetherui/agent before rendering.

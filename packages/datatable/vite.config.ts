@@ -28,6 +28,7 @@ export default defineConfig({
     dts({
       entryRoot: 'src',
       outDir: 'dist',
+      exclude: ['src/test/**'],
     }),
   ],
   resolve: {
@@ -39,8 +40,5 @@ export default defineConfig({
     esbuildOptions: {
       target: 'esnext',
     },
-  },
-  test: {
-    passWithNoTests: true,
   },
 });

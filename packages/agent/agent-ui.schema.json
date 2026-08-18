@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://debug-diary-1.github.io/AetherUI/docs/agent-ui.schema.json",
+  "title": "AetherUI Agent Document",
+  "description": "A constrained, validated document for rendering AetherUI custom elements.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "root"
+  ],
+  "properties": {
+    "version": {
+      "const": "1"
+    },
+    "root": {
+      "$ref": "#/$defs/node"
+    }
+  },
+  "$defs": {
+    "jsonValue": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        }
+      ]
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "component"
+      ],
+      "properties": {
+        "component": {
+          "enum": [
+            "ae-accordion",
+            "ae-accordion-item",
+            "ae-alert",
+            "ae-autocomplete",
+            "ae-badge",
+            "ae-breadcrumb",
+            "ae-breadcrumb-item",
+            "ae-button",
+            "ae-checkbox",
+            "ae-combo",
+            "ae-drawer",
+            "ae-dropdown",
+            "ae-dropdown-item",
+            "ae-input",
+            "ae-menu",
+            "ae-menu-divider",
+            "ae-menu-item",
+            "ae-menu-section",
+            "ae-menu-separator",
+            "ae-modal",
+            "ae-pagination",
+            "ae-popover",
+            "ae-progress",
+            "ae-radio",
+            "ae-radio-group",
+            "ae-select",
+            "ae-spinner",
+            "ae-switch",
+            "ae-tab",
+            "ae-tab-panel",
+            "ae-tabs",
+            "ae-textarea",
+            "ae-toast",
+            "ae-tooltip",
+            "ae-tree-item",
+            "ae-treeview"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "slot": {
+          "type": "string"
+        },
+        "props": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        },
+        "actions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/node"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

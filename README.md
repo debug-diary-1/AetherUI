@@ -27,6 +27,7 @@
 - 📚 **Well-Documented** - Extensive documentation with interactive examples
 - 🔍 **PR Preview Deployments** - Automatic Storybook preview for every pull request
 - 🚀 **Modern** - Built on Web Standards (Custom Elements, Shadow DOM)
+- 🤖 **Agent-Ready** - Machine-readable contracts, validated runtime-generated UI, and MCP discovery
 
 ## 📦 Installation
 
@@ -227,6 +228,8 @@ import '@aetherui/tokens/dark.css';
 - **[Headless Mode Guide](./docs/HEADLESS.md)** - Unstyled mode and complete customization
 - **[Preview Deployments](./docs/PREVIEW_DEPLOYMENTS.md)** - Automatic PR previews setup
 - **[Framework Integrations](https://debug-diary-1.github.io/AetherUI/docs/getting-started/integrations/react/)** - React, Vue, Angular, Svelte, Solid, vanilla
+- **[Agentic UI Guide](./packages/docs/src/content/docs/agentic-ui/generate-safely.mdx)** - Validate and render structured model output
+- **[LLM Index](./packages/docs/public/llms.txt)** - Machine-readable documentation and catalog pointers
 - **[Architecture](./ARCHITECTURE.md)** and **[Component Standards](./STANDARDS.md)** - How the library is built
 
 ## 🛠️ Development

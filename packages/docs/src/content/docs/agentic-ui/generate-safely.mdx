@@ -1,0 +1,86 @@
+---
+title: Generate UI safely
+description: Validate structured model output and render allowlisted AetherUI elements.
+---
+
+Use `@aetherui/agent` when a model chooses interface elements at runtime. It accepts constrained JSON data rather than HTML or executable event handlers.
+
+```bash
+pnpm add @aetherui/core @aetherui/agent @aetherui/tokens
+```
+
+Register only the elements the experience permits, then apply the same allowlist at the rendering seam:
+
+```ts
+import { defineAeButton, defineAeInput } from '@aetherui/core';
+import { renderAgentUi } from '@aetherui/agent';
+import '@aetherui/tokens/light.css';
+
+defineAeButton();
+defineAeInput();
+
+renderAgentUi(document.querySelector('#agent-surface')!, modelOutput, {
+  allowedComponents: ['ae-button', 'ae-input'],
+  maxDepth: 6,
+  maxNodes: 30,
+  onAction(action) {
+    if (action.actionId === 'save-profile') saveProfile();
+  },
+});
+```
+
+## Structured model output
+
+Constrain model output with [`agent-ui.schema.json`](/agent-ui.schema.json). The runtime validator adds semantic checks against the generated component catalog:
+
+```json
+{
+  "version": "1",
+  "root": {
+    "component": "ae-button",
+    "id": "save",
+    "props": { "variant": "primary" },
+    "children": ["Save"],
+    "actions": { "ae-button-click": "save-profile" }
+  }
+}
+```
+
+An action maps a documented custom event to an application-owned identifier. The model cannot provide callback code. Applications retain authority over what each identifier does.
+
+## Validation policy
+
+`validateAgentUi` and `renderAgentUi` reject:
+
+- unknown or policy-excluded elements;
+- properties and events absent from the canonical component catalog;
+- executable URL protocols;
+- empty action identifiers;
+- documents over the configured depth or node limits;
+- cyclic or non-JSON property values.
+
+The renderer builds DOM nodes with `document.createElement`, assigns validated properties, and never uses `innerHTML`.
+
+## Machine-readable references
+
+- [`component-catalog.json`](/component-catalog.json) contains properties, events, slots, CSS parts, and CSS properties.
+- [`agent-ui.schema.json`](/agent-ui.schema.json) constrains structured model output.
+- [`llms.txt`](/llms.txt) provides a compact model-oriented index.
+- [`llms-full.txt`](/llms-full.txt) contains the complete generated interface reference.
+
+## MCP discovery
+
+`@aetherui/mcp` exposes the same catalog and schema to MCP hosts, plus read-only tools for focused component lookup and agent document validation:
+
+```json
+{
+  "mcpServers": {
+    "aetherui": {
+      "command": "npx",
+      "args": ["-y", "@aetherui/mcp"]
+    }
+  }
+}
+```
+
+The MCP server does not render documents, execute generated handlers, or modify projects.

@@ -40,11 +40,11 @@
     "build": "vite build",
     "dev": "vite",
     "clean": "rimraf dist",
-    "lint": "oxlint src",
-    "test": "echo 'No tests yet'"
+    "lint": "oxlint src test",
+    "test": "node --test test/*.test.js"
   },
   "dependencies": {
-    "lit": "catalog:"
+    "@aetherui/core": "workspace:^"
   },
   "devDependencies": {
     "@types/node": "catalog:",

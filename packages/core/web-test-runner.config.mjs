@@ -1,5 +1,9 @@
 import { playwrightLauncher } from '@web/test-runner-playwright';
 
+const crossBrowser = process.env.CROSS_BROWSER === 'true';
+const coverage = process.env.COVERAGE === 'true';
+const products = crossBrowser ? ['chromium', 'firefox', 'webkit'] : ['chromium'];
+
 // Custom plugin to handle TypeScript with accessor keyword
 const typeScriptPlugin = () => ({
   name: 'typescript-transform',
@@ -38,20 +42,38 @@ export default {
   nodeResolve: true,
   concurrency: 1,
   concurrentBrowsers: 1,
-  browsers: [
+  browsers: products.map((product) =>
     playwrightLauncher({
-      product: 'chromium',
+      product,
       launchOptions: {
         headless: true,
-        args: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
-          '--disable-gpu',
-        ],
+        ...(product === 'chromium'
+          ? {
+              args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu',
+              ],
+            }
+          : {}),
       },
     }),
-  ],
+  ),
+  coverage,
+  coverageConfig: {
+    include: ['src/**/*.ts'],
+    exclude: ['src/**/*.test.ts', 'src/**/__tests__/**', 'src/**/styles.ts', 'src/test-utils/**'],
+    threshold: {
+      statements: 80,
+      branches: 65,
+      functions: 70,
+      lines: 80,
+    },
+    report: true,
+    reportDir: 'coverage',
+    reporters: ['lcov', 'text-summary'],
+  },
   mimeTypes: {
     '**/*.ts': 'ts',
   },

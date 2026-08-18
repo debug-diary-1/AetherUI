@@ -1,0 +1,55 @@
+import assert from 'node:assert/strict';
+import { test } from 'node:test';
+import { Client, InMemoryTransport } from '@modelcontextprotocol/client';
+import { createAetherUiMcpServer } from '../dist/server.js';
+
+async function withClient(run) {
+  const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
+  const server = createAetherUiMcpServer();
+  const client = new Client({ name: 'aetherui-test', version: '1.0.0' });
+  await server.connect(serverTransport);
+  await client.connect(clientTransport);
+  try {
+    await run(client);
+  } finally {
+    await client.close();
+    await server.close();
+  }
+}
+
+test('lists and reads canonical AetherUI resources', async () => {
+  await withClient(async (client) => {
+    const { resources } = await client.listResources();
+    assert.deepEqual(resources.map((resource) => resource.uri).sort(), [
+      'aetherui://agent-ui-schema',
+      'aetherui://component-catalog',
+    ]);
+
+    const catalog = await client.readResource({ uri: 'aetherui://component-catalog' });
+    const parsed = JSON.parse(catalog.contents[0].text);
+    assert.ok(parsed.components.some((component) => component.tagName === 'ae-button'));
+  });
+});
+
+test('looks up components and validates agent documents', async () => {
+  await withClient(async (client) => {
+    const component = await client.callTool({
+      name: 'get_component',
+      arguments: { tagName: 'ae-button' },
+    });
+    assert.equal(component.isError, undefined);
+    assert.equal(component.structuredContent.component.tagName, 'ae-button');
+
+    const validation = await client.callTool({
+      name: 'validate_agent_ui',
+      arguments: {
+        document: {
+          version: '1',
+          root: { component: 'script', children: ['unsafe'] },
+        },
+      },
+    });
+    assert.equal(validation.isError, true);
+    assert.equal(validation.structuredContent.ok, false);
+  });
+});

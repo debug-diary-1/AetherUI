@@ -13,7 +13,7 @@ export default defineConfig({
     target: 'es2022',
     outDir: 'dist',
     rollupOptions: {
-      external: ['lit', 'lit/decorators.js'],
+      external: [/^@aetherui\/core/],
     },
   },
   plugins: [
@@ -33,8 +33,5 @@ export default defineConfig({
   },
   server: {
     port: 3002,
-  },
-  test: {
-    passWithNoTests: true,
   },
 });
