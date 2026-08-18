@@ -11,7 +11,7 @@ catalog:
   '@custom-elements-manifest/analyzer': 0.11.0
   '@astrojs/starlight': 0.41.7
   '@lit/reactive-element': 2.1.2
-  '@open-wc/testing': 4.0.0
+  '@open-wc/testing': 5.0.0
   '@playwright/test': 1.62.1
   '@storybook/addon-a11y': 10.5.8
   '@storybook/addon-docs': 10.5.8
@@ -20,9 +20,9 @@ catalog:
   '@storybook/web-components-vite': 10.5.8
   '@types/node': 20.19.13
   '@types/prismjs': 1.26.6
-  '@web/dev-server-esbuild': 1.0.4
-  '@web/test-runner': 0.20.2
-  '@web/test-runner-playwright': 0.11.1
+  '@web/dev-server-esbuild': 2.0.0
+  '@web/test-runner': 1.0.0
+  '@web/test-runner-playwright': 1.0.0
   astro: 7.2.2
   chromatic: 13.3.4
   concurrently: 9.2.1
