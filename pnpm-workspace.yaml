@@ -9,7 +9,7 @@ onlyBuiltDependencies:
   - sharp
 catalog:
   '@custom-elements-manifest/analyzer': 0.11.0
-  '@astrojs/starlight': 0.37.6
+  '@astrojs/starlight': 0.41.7
   '@lit/reactive-element': 2.1.2
   '@open-wc/testing': 4.0.0
   '@playwright/test': 1.62.1
