@@ -16,6 +16,13 @@
           "description": "Initial panel IDs to open (uncontrolled mode)"
         },
         {
+          "name": "expanded",
+          "attribute": "expanded",
+          "type": "string[]",
+          "default": "[]",
+          "description": "Compatibility alias retained for the standalone accordion package."
+        },
+        {
           "name": "multiselectable",
           "attribute": "multiselectable",
           "type": "boolean",
@@ -35,6 +42,11 @@
           "name": "ae-accordion-change",
           "type": "CustomEvent<{value: string[]}>",
           "description": "Fired when open/expanded panels change"
+        },
+        {
+          "name": "ae-expand-change",
+          "type": "CustomEvent",
+          "description": ""
         }
       ],
       "slots": [
@@ -2111,132 +2123,109 @@
       "tagName": "ae-select",
       "className": "AeSelect",
       "module": "src/select/ae-select.ts",
-      "description": "A select dropdown component with support for single/multiple selection and form participation.\nParticipates in native form submission via ElementInternals API.",
+      "description": "",
       "properties": [
         {
           "name": "ariaLabel",
           "attribute": "aria-label",
           "type": "string",
           "default": "''",
-          "description": "Accessible label for the select (used when no visible label)"
+          "description": ""
         },
         {
           "name": "defaultValue",
           "attribute": "default-value",
           "type": "string",
           "default": "''",
-          "description": "Initial value for uncontrolled usage"
+          "description": ""
         },
         {
           "name": "disabled",
           "attribute": "disabled",
           "type": "boolean",
           "default": "false",
-          "description": "Whether the select is disabled"
+          "description": ""
         },
         {
           "name": "error",
           "attribute": "error",
           "type": "string",
           "default": "''",
-          "description": "Error message to display"
+          "description": ""
         },
         {
           "name": "helpText",
           "attribute": "help-text",
           "type": "string",
           "default": "''",
-          "description": "Helper text to display below the select"
+          "description": ""
         },
         {
           "name": "label",
           "attribute": "label",
           "type": "string",
           "default": "''",
-          "description": "Label text for the select"
+          "description": ""
         },
         {
           "name": "multiple",
           "attribute": "multiple",
           "type": "boolean",
           "default": "false",
-          "description": "Whether multiple selection is allowed"
+          "description": ""
         },
         {
           "name": "name",
           "attribute": "name",
           "type": "string",
           "default": "''",
-          "description": "The name attribute for form submission"
+          "description": ""
+        },
+        {
+          "name": "options",
+          "attribute": "options",
+          "type": "SelectOption[]",
+          "default": "[]",
+          "description": ""
         },
         {
           "name": "placeholder",
           "attribute": "placeholder",
           "type": "string",
           "default": "''",
-          "description": "Placeholder text when no option is selected"
+          "description": ""
         },
         {
           "name": "required",
           "attribute": "required",
           "type": "boolean",
           "default": "false",
-          "description": "Whether the select is required"
+          "description": ""
         },
         {
           "name": "value",
           "attribute": "value",
           "type": "string",
           "default": "''",
-          "description": "The current selected value (single select)"
+          "description": ""
         },
         {
           "name": "values",
           "attribute": "values",
           "type": "string[]",
           "default": "[]",
-          "description": "The current selected values (multiple select)"
+          "description": ""
         }
       ],
       "events": [
         {
           "name": "ae-select-change",
-          "type": "CustomEvent<{value: string | string[]}>",
-          "description": "Fired when the selection changes"
+          "type": "CustomEvent",
+          "description": ""
         }
       ],
-      "slots": [
-        {
-          "name": "",
-          "description": "The select options (ae-option elements)"
-        }
-      ],
-      "cssParts": [
-        {
-          "name": "base",
-          "description": "The component's base wrapper"
-        },
-        {
-          "name": "error-text",
-          "description": "The error text element"
-        },
-        {
-          "name": "help-text",
-          "description": "The help text element"
-        },
-        {
-          "name": "label",
-          "description": "The label element"
-        },
-        {
-          "name": "select",
-          "description": "The native select element"
-        },
-        {
-          "name": "select-wrapper",
-          "description": "The wrapper around the select"
-        }
-      ],
+      "slots": [],
+      "cssParts": [],
       "cssProperties": []
     },
     {
@@ -2906,11 +2895,6 @@
           "name": "ae-tooltip-show",
           "type": "CustomEvent<unknown>",
           "description": "Fired when tooltip opens"
-        },
-        {
-          "name": "eventName",
-          "type": "CustomEvent",
-          "description": ""
         }
       ],
       "slots": [
@@ -2992,11 +2976,6 @@
           "name": "ae-tree-item-select",
           "type": "CustomEvent",
           "description": "Fired when the item is selected"
-        },
-        {
-          "name": "eventName",
-          "type": "CustomEvent",
-          "description": ""
         }
       ],
       "slots": [

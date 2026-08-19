@@ -50,6 +50,10 @@ export class AeAccordion extends LitElement {
   @property({ type: Array, attribute: 'value' })
   accessor value: string[] = [];
 
+  /** Compatibility alias retained for the standalone accordion package. */
+  @property({ type: Array })
+  accessor expanded: string[] = [];
+
   /**
    * Initial panel IDs to open (uncontrolled mode)
    * This property is only used during initialization
@@ -65,9 +69,13 @@ export class AeAccordion extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.setupMutationObserver();
-
-    // Initialize from value property
-    const initialValue = this.value.length > 0 ? this.value : this.defaultValue;
+    // Initialize from the current API, then the compatibility alias, then defaults.
+    const initialValue =
+      this.value.length > 0
+        ? this.value
+        : this.expanded.length > 0
+          ? this.expanded
+          : this.defaultValue;
 
     if (initialValue.length) {
       if (this.multiselectable) {
@@ -120,8 +128,8 @@ export class AeAccordion extends LitElement {
       });
     }
 
-    // Update value property to match
-    this.value = Array.from(this.openPanels);
+    // Update both current and compatibility properties to match.
+    this.syncPublicValues();
 
     // Force the update on all items to ensure consistency
     this.updateItems();
@@ -134,11 +142,31 @@ export class AeAccordion extends LitElement {
   }
 
   private setupMutationObserver() {
-    this._observer = new MutationObserver(() => {
+    this._observer = new MutationObserver((mutations) => {
+      let identityChanged = false;
+      for (const mutation of mutations) {
+        if (mutation.type !== 'attributes' || mutation.attributeName !== 'data-header-id') continue;
+        const previousId = mutation.oldValue;
+        const nextId = (mutation.target as Element).getAttribute('data-header-id');
+        if (!previousId || !nextId || previousId === nextId || !this.openPanels.has(previousId)) {
+          continue;
+        }
+        this.openPanels = new Set(
+          Array.from(this.openPanels, (panelId) => (panelId === previousId ? nextId : panelId)),
+        );
+        identityChanged = true;
+      }
+      if (identityChanged) this.syncPublicValues();
       this.updateItems();
     });
 
-    this._observer.observe(this, { childList: true, subtree: true });
+    this._observer.observe(this, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['data-header-id'],
+      attributeOldValue: true,
+    });
   }
 
   firstUpdated() {
@@ -148,10 +176,26 @@ export class AeAccordion extends LitElement {
   }
 
   updated(changedProperties: Map<string, unknown>) {
-    if (changedProperties.has('value')) {
-      this.openPanels = new Set(this.value);
-      this.updateItems();
-    }
+    const valueChanged = changedProperties.has('value');
+    const expandedChanged = changedProperties.has('expanded');
+    if (!valueChanged && !expandedChanged) return;
+
+    const nextValue =
+      valueChanged && (this.value.length > 0 || !expandedChanged) ? this.value : this.expanded;
+    this.openPanels = new Set(nextValue);
+    if (!this.arraysEqual(this.value, nextValue)) this.value = [...nextValue];
+    if (!this.arraysEqual(this.expanded, nextValue)) this.expanded = [...nextValue];
+    this.updateItems();
+  }
+
+  private arraysEqual(left: readonly string[], right: readonly string[]): boolean {
+    return left.length === right.length && left.every((value, index) => value === right[index]);
+  }
+
+  private syncPublicValues() {
+    const nextValue = Array.from(this.openPanels);
+    if (!this.arraysEqual(this.value, nextValue)) this.value = [...nextValue];
+    if (!this.arraysEqual(this.expanded, nextValue)) this.expanded = [...nextValue];
   }
 
   private updateItems() {
@@ -166,8 +210,7 @@ export class AeAccordion extends LitElement {
         const firstPanelId = openPanelIds[0];
         this.openPanels.clear();
         this.openPanels.add(firstPanelId);
-        // Update the value property to match
-        this.value = [firstPanelId];
+        this.syncPublicValues();
       }
     }
 
@@ -218,13 +261,21 @@ export class AeAccordion extends LitElement {
     // Update all accordion items to reflect the new state
     this.updateItems();
 
-    // Update the value property
-    this.value = Array.from(this.openPanels);
+    this.syncPublicValues();
 
     // Dispatch standardized event
     this.dispatchEvent(
       new CustomEvent('ae-accordion-change', {
         detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+
+    // Preserve the original standalone package event contract.
+    this.dispatchEvent(
+      new CustomEvent('ae-expand-change', {
+        detail: { expanded: this.expanded },
         bubbles: true,
         composed: true,
       }),

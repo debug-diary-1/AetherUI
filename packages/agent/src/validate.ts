@@ -10,6 +10,7 @@ import type {
 
 const DEFAULT_MAX_DEPTH = 12;
 const DEFAULT_MAX_NODES = 100;
+const DEFAULT_MAX_PROPERTY_DEPTH = 32;
 const DEFAULT_URL_PROTOCOLS = ['https:', 'http:', 'mailto:', 'tel:'];
 const URL_PROPERTY = /^(?:href|src|action|formAction)$/i;
 
@@ -21,26 +22,75 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
-function isJsonValue(value: unknown, seen = new Set<object>()): value is AgentUiJsonValue {
-  if (value === null || ['string', 'number', 'boolean'].includes(typeof value)) return true;
-  if (typeof value !== 'object') return false;
-  if (seen.has(value)) return false;
-  seen.add(value);
-  if (Array.isArray(value)) return value.every((entry) => isJsonValue(entry, seen));
-  return Object.values(value as Record<string, unknown>).every((entry) => isJsonValue(entry, seen));
+type JsonInspection = 'valid' | 'invalid' | 'too-deep';
+
+function inspectJsonValue(
+  value: unknown,
+  maxDepth: number,
+  depth = 0,
+  ancestors = new Set<object>(),
+): JsonInspection {
+  if (depth > maxDepth) return 'too-deep';
+  if (value === null || typeof value === 'string' || typeof value === 'boolean') return 'valid';
+  if (typeof value === 'number') return Number.isFinite(value) ? 'valid' : 'invalid';
+  if (typeof value !== 'object' || ancestors.has(value)) return 'invalid';
+
+  ancestors.add(value);
+  const entries = Array.isArray(value) ? value : Object.values(value as Record<string, unknown>);
+  for (const entry of entries) {
+    const result = inspectJsonValue(entry, maxDepth, depth + 1, ancestors);
+    if (result !== 'valid') {
+      ancestors.delete(value);
+      return result;
+    }
+  }
+  ancestors.delete(value);
+  return 'valid';
+}
+
+type JsonKind = 'string' | 'number' | 'boolean' | 'array' | 'object' | 'null';
+
+function jsonKind(value: AgentUiJsonValue): JsonKind {
+  if (value === null) return 'null';
+  if (Array.isArray(value)) return 'array';
+  return typeof value as Exclude<JsonKind, 'array' | 'null'>;
+}
+
+function expectedJsonKinds(contractType: string): Set<JsonKind> | undefined {
+  if (/\b(?:any|unknown|AgentUiJsonValue)\b/.test(contractType)) return undefined;
+
+  const kinds = new Set<JsonKind>();
+  for (const rawPart of contractType.split('|')) {
+    const part = rawPart.trim();
+    if (/\[\]$|^(?:Readonly)?Array\s*</.test(part) || /^readonly\s+\[|^\[/.test(part)) {
+      kinds.add('array');
+    } else if (/^string$|^`|^['"]/.test(part)) {
+      kinds.add('string');
+    } else if (/^number$/.test(part)) {
+      kinds.add('number');
+    } else if (/^boolean$|^(?:true|false)$/.test(part)) {
+      kinds.add('boolean');
+    } else if (/^null$/.test(part)) {
+      kinds.add('null');
+    } else if (/^(?:object|Record\s*<|\{)/.test(part)) {
+      kinds.add('object');
+    }
+  }
+  return kinds.size > 0 ? kinds : undefined;
+}
+
+function matchesPropertyType(value: AgentUiJsonValue, contractType: string): boolean {
+  const expectedKinds = expectedJsonKinds(contractType);
+  return !expectedKinds || expectedKinds.has(jsonKind(value));
 }
 
 function isSafeUrl(value: string, protocols: readonly string[]): boolean {
-  if (
-    value.startsWith('/') ||
-    value.startsWith('./') ||
-    value.startsWith('../') ||
-    value.startsWith('#')
-  ) {
-    return true;
-  }
+  if (value.includes('\\') || /^[\\/]{2}/.test(value)) return false;
+  const base = new URL('https://aetherui.invalid/');
   try {
-    return protocols.includes(new URL(value).protocol);
+    const parsed = new URL(value, base);
+    const hasExplicitScheme = /^[a-z][a-z\d+.-]*:/i.test(value);
+    return hasExplicitScheme ? protocols.includes(parsed.protocol) : parsed.origin === base.origin;
   } catch {
     return false;
   }
@@ -53,6 +103,7 @@ export function validateAgentUi(
   const issues: AgentUiValidationIssue[] = [];
   const maxDepth = policy.maxDepth ?? DEFAULT_MAX_DEPTH;
   const maxNodes = policy.maxNodes ?? DEFAULT_MAX_NODES;
+  const maxPropertyDepth = policy.maxPropertyDepth ?? DEFAULT_MAX_PROPERTY_DEPTH;
   const allowedComponents = policy.allowedComponents
     ? new Set(policy.allowedComponents)
     : undefined;
@@ -121,22 +172,42 @@ export function validateAgentUi(
           message: 'props must be an object.',
         });
       } else {
-        const properties = new Set(contract.properties.map((property) => property.name));
+        const properties = new Map(
+          contract.properties.map((property) => [property.name, property] as const),
+        );
         for (const [name, value] of Object.entries(candidate.props)) {
           const propertyPath = `${path}.props.${name}`;
-          if (!properties.has(name)) {
+          const property = properties.get(name);
+          if (!property) {
             issues.push({
               path: propertyPath,
               code: 'unknown-property',
               message: `Property "${name}" is not exposed by ${contract.tagName}.`,
             });
-          } else if (!isJsonValue(value)) {
-            issues.push({
-              path: propertyPath,
-              code: 'invalid-node',
-              message: 'Property value must be JSON.',
-            });
-          } else if (
+          } else {
+            const jsonInspection = inspectJsonValue(value, maxPropertyDepth);
+            if (jsonInspection !== 'valid') {
+              issues.push({
+                path: propertyPath,
+                code: jsonInspection === 'too-deep' ? 'limit-exceeded' : 'invalid-node',
+                message:
+                  jsonInspection === 'too-deep'
+                    ? `Property value exceeds depth ${maxPropertyDepth}.`
+                    : 'Property value must be JSON.',
+              });
+              continue;
+            }
+            if (!matchesPropertyType(value as AgentUiJsonValue, property.type)) {
+              issues.push({
+                path: propertyPath,
+                code: 'invalid-property',
+                message: `Property "${name}" must match catalog type ${property.type}.`,
+              });
+              continue;
+            }
+          }
+          if (
+            property &&
             URL_PROPERTY.test(name) &&
             typeof value === 'string' &&
             !isSafeUrl(value, allowedUrlProtocols)

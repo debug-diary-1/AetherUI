@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('autocomplete filters and selects through the published Storybook surface', async ({
   page,
 }) => {
-  await page.goto('/iframe.html?id=components-autocomplete--basic&viewMode=story');
+  await page.goto('/iframe.html?id=components-autocomplete--with-min-chars&viewMode=story');
   const autocomplete = page.locator('ae-autocomplete');
   await expect(autocomplete).toBeVisible();
 

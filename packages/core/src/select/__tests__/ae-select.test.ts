@@ -72,6 +72,23 @@ describe('ae-select', () => {
     expect(options.length).to.equal(3);
   });
 
+  it('renders options supplied through the public options property', async () => {
+    const el = await fixture<AeSelect>(html`<ae-select label="Country"></ae-select>`);
+    (
+      el as AeSelect & {
+        options: Array<{ value: string; label: string; disabled?: boolean }>;
+      }
+    ).options = [
+      { value: 'us', label: 'United States' },
+      { value: 'ca', label: 'Canada', disabled: true },
+    ];
+    await el.updateComplete;
+
+    const options = Array.from(el.shadowRoot!.querySelectorAll('option'));
+    expect(options.map((option) => option.value)).to.deep.equal(['us', 'ca']);
+    expect(options[1].disabled).to.be.true;
+  });
+
   it('emits ae-select-change event when value changes', async () => {
     const el = await fixture<AeSelect>(html`
       <ae-select>

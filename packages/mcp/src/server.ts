@@ -83,11 +83,17 @@ export function createAetherUiMcpServer(): McpServer {
         allowedComponents: z.array(z.string()).optional(),
         maxDepth: z.number().int().positive().optional(),
         maxNodes: z.number().int().positive().optional(),
+        maxPropertyDepth: z.number().int().positive().optional(),
       }),
       annotations: { readOnlyHint: true, idempotentHint: true },
     },
-    async ({ document, allowedComponents, maxDepth, maxNodes }) => {
-      const result = validateAgentUi(document, { allowedComponents, maxDepth, maxNodes });
+    async ({ document, allowedComponents, maxDepth, maxNodes, maxPropertyDepth }) => {
+      const result = validateAgentUi(document, {
+        allowedComponents,
+        maxDepth,
+        maxNodes,
+        maxPropertyDepth,
+      });
       const structuredContent = result.ok
         ? { ok: true, nodeCount: result.nodeCount }
         : { ok: false, issues: result.issues };

@@ -26,7 +26,7 @@
     "build": {
       "description": "Compile TypeScript and bundle web components with Vite",
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"],
+      "outputs": ["dist/**", ".next/**", "custom-elements.json", "react.d.ts"],
       "cache": true
     },
     "dev": {

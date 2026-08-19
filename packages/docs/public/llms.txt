@@ -4,11 +4,11 @@
 
 ## Canonical resources
 
-- /component-catalog.json — machine-readable element interfaces
-- /agent-ui.schema.json — constrained runtime-generated UI document
-- /llms-full.txt — complete property, event, slot, and CSS-part reference
-- /getting-started/installation/ — installation and registration
-- /getting-started/integrations/react/ — React 19 JSX typing
+- component-catalog.json — machine-readable element interfaces
+- agent-ui.schema.json — constrained runtime-generated UI document
+- llms-full.txt — complete property, event, slot, and CSS-part reference
+- getting-started/installation/ — installation and registration
+- getting-started/integrations/react/ — React 19 JSX typing
 
 ## Rules
 

@@ -60,6 +60,66 @@ describe('@aetherui/agent', () => {
     if (!result.ok) expect(result.issues[0]?.code).to.equal('unsafe-url');
   });
 
+  it('accepts relative URLs and rejects network-path references', () => {
+    for (const href of ['', 'docs/intro', '?page=2', '#current', '/docs', '../docs']) {
+      expect(
+        validateAgentUi({
+          version: '1',
+          root: { component: 'ae-breadcrumb-item', props: { href } },
+        }).ok,
+        href,
+      ).to.equal(true);
+    }
+
+    for (const href of ['//evil.example/x', '/\\evil.example/x']) {
+      const result = validateAgentUi({
+        version: '1',
+        root: { component: 'ae-breadcrumb-item', props: { href } },
+      });
+      expect(result.ok, href).to.equal(false);
+      if (!result.ok) expect(result.issues[0]?.code).to.equal('unsafe-url');
+    }
+  });
+
+  it('enforces catalog property types', () => {
+    const result = validateAgentUi({
+      version: '1',
+      root: { component: 'ae-accordion', props: { value: 'shipping' } },
+    });
+
+    expect(result.ok).to.equal(false);
+    if (!result.ok) expect(result.issues[0]?.code).to.equal('invalid-property');
+  });
+
+  it('accepts shared JSON subtrees while rejecting cycles and excessive property depth', () => {
+    const shared = { id: 'shared' };
+    expect(
+      validateAgentUi({
+        version: '1',
+        root: {
+          component: 'ae-treeview',
+          props: { data: [shared, shared] },
+        },
+      }).ok,
+    ).to.equal(true);
+
+    const cycle: Record<string, unknown> = {};
+    cycle.self = cycle;
+    expect(
+      validateAgentUi({ version: '1', root: { component: 'ae-treeview', props: { data: cycle } } })
+        .ok,
+    ).to.equal(false);
+
+    let deeplyNested: Record<string, unknown> = {};
+    for (let index = 0; index < 100; index += 1) deeplyNested = { child: deeplyNested };
+    const result = validateAgentUi({
+      version: '1',
+      root: { component: 'ae-treeview', props: { data: deeplyNested } },
+    });
+    expect(result.ok).to.equal(false);
+    if (!result.ok) expect(result.issues[0]?.code).to.equal('limit-exceeded');
+  });
+
   it('enforces document size and depth limits', () => {
     const result = validateAgentUi(
       {
@@ -109,6 +169,36 @@ describe('@aetherui/agent', () => {
 
     rendered.dispose();
     expect(container.children).to.have.length(0);
+  });
+
+  it('attributes bubbled actions only to the component that emitted them', () => {
+    const container = document.createElement('div');
+    const actions: AgentUiAction[] = [];
+    const rendered = renderAgentUi(
+      container,
+      {
+        version: '1',
+        root: {
+          component: 'ae-tree-item',
+          id: 'parent',
+          actions: { 'ae-tree-item-select': 'select-parent' },
+          children: [
+            {
+              component: 'ae-tree-item',
+              id: 'child',
+              actions: { 'ae-tree-item-select': 'select-child' },
+            },
+          ],
+        },
+      },
+      { onAction: (action) => actions.push(action) },
+    );
+
+    rendered.element
+      .querySelector('#child')!
+      .dispatchEvent(new CustomEvent('ae-tree-item-select', { bubbles: true, composed: true }));
+
+    expect(actions.map((action) => action.actionId)).to.deep.equal(['select-child']);
   });
 
   it('validates before replacing existing content', () => {

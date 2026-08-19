@@ -44,6 +44,10 @@ export class AeAccordionItem extends LitElement {
   @property({ type: String, attribute: 'header-id' })
   accessor headerId = `ae-accordion-${AeAccordionItem._idCounter++}`;
 
+  /** Compatibility alias for the original package's `headerid` attribute. */
+  @property({ type: String, attribute: 'headerid' })
+  private accessor legacyHeaderId = '';
+
   /**
    * Whether this panel is currently open
    */
@@ -60,10 +64,17 @@ export class AeAccordionItem extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    if (!this.hasAttribute('header-id')) {
+      const legacyHeaderId = this.legacyHeaderId || this.getAttribute('data-header-id');
+      if (legacyHeaderId) this.headerId = legacyHeaderId;
+    }
     this.setAttribute('data-header-id', this.headerId);
   }
 
   updated(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has('legacyHeaderId') && this.legacyHeaderId) {
+      this.headerId = this.legacyHeaderId;
+    }
     if (changedProperties.has('headerId')) {
       this.setAttribute('data-header-id', this.headerId);
     }
@@ -110,7 +121,7 @@ export class AeAccordionItem extends LitElement {
 
   render() {
     return html`
-      <div class="accordion-item" part="base">
+      <div class="accordion-item" part="base item">
         <div role="heading" aria-level="3">
           <button
             class="header"

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -14,6 +14,14 @@ function collectTargets(value, targets = []) {
     Object.values(value).forEach((entry) => collectTargets(entry, targets));
   }
   return targets;
+}
+
+function collectFiles(directory) {
+  if (!existsSync(directory)) return [];
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const path = resolve(directory, entry.name);
+    return entry.isDirectory() ? collectFiles(path) : [path];
+  });
 }
 
 for (const directory of packageDirectories) {
@@ -47,6 +55,15 @@ for (const directory of packageDirectories) {
     if (!target || target === './package.json' || target.includes('*')) continue;
     if (!existsSync(resolve(packageRoot, target)))
       failures.push(`${label}: missing package target ${target}`);
+  }
+
+  for (const declaration of collectFiles(resolve(packageRoot, 'dist')).filter((path) =>
+    path.endsWith('.d.ts'),
+  )) {
+    const contents = readFileSync(declaration, 'utf8');
+    if (/from\s+['"](?:\.\.\/)+[^'"]*\/src(?:\/|['"])/.test(contents)) {
+      failures.push(`${label}: declaration imports unpublished workspace source`);
+    }
   }
 }
 

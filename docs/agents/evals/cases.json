@@ -61,7 +61,15 @@
       "root": {
         "component": "ae-select",
         "id": "country",
-        "props": { "label": "Country", "required": true, "placeholder": "Choose a country" },
+        "props": {
+          "label": "Country",
+          "required": true,
+          "placeholder": "Choose a country",
+          "options": [
+            { "value": "us", "label": "United States" },
+            { "value": "ca", "label": "Canada" }
+          ]
+        },
         "actions": { "ae-select-change": "country-changed" }
       }
     },
@@ -139,7 +147,7 @@
       "version": "1",
       "root": {
         "component": "ae-accordion",
-        "props": { "value": "shipping" },
+        "props": { "value": ["shipping"] },
         "children": [
           {
             "component": "ae-accordion-item",

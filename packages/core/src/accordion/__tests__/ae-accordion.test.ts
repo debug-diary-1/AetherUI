@@ -41,4 +41,41 @@ describe('ae-accordion', () => {
     expect(items[0].open).to.be.false;
     expect(items[1].open).to.be.true;
   });
+
+  it('keeps the legacy expanded property and event working', async () => {
+    const accordion = await fixture<AeAccordion>(html`
+      <ae-accordion .expanded=${['first']}>
+        <ae-accordion-item headerid="first"><span slot="header">First</span></ae-accordion-item>
+        <ae-accordion-item headerid="second"><span slot="header">Second</span></ae-accordion-item>
+      </ae-accordion>
+    `);
+    const items = Array.from(accordion.querySelectorAll('ae-accordion-item'));
+    expect(items[0].open).to.be.true;
+
+    const changed = oneEvent(accordion, 'ae-expand-change');
+    items[1].shadowRoot!.querySelector<HTMLButtonElement>('button')!.click();
+    const event = (await changed) as CustomEvent<{ expanded: string[] }>;
+
+    expect(event.detail.expanded).to.deep.equal(['second']);
+    expect((accordion as AeAccordion & { expanded: string[] }).expanded).to.deep.equal(['second']);
+  });
+
+  it('updates the selected identity when an open item headerId changes', async () => {
+    const accordion = await fixture<AeAccordion>(html`
+      <ae-accordion value='["shipping"]'>
+        <ae-accordion-item header-id="shipping"
+          ><span slot="header">Shipping</span></ae-accordion-item
+        >
+      </ae-accordion>
+    `);
+    const item = accordion.querySelector('ae-accordion-item') as AeAccordionItem;
+    await accordion.updateComplete;
+
+    item.headerId = 'delivery';
+    await item.updateComplete;
+    await new Promise((resolve) => setTimeout(resolve));
+
+    expect(accordion.value).to.deep.equal(['delivery']);
+    expect(item.open).to.be.true;
+  });
 });

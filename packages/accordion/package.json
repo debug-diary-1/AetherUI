@@ -1,6 +1,6 @@
 {
   "name": "@aetherui/accordion",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Accordion component for AetherUI",
   "keywords": [
     "accordion",
@@ -41,7 +41,7 @@
     "dev": "vite",
     "clean": "rimraf dist",
     "lint": "oxlint src test",
-    "test": "node --test test/*.test.js"
+    "test": "pnpm build && node --test test/*.test.js"
   },
   "dependencies": {
     "@aetherui/core": "workspace:^"

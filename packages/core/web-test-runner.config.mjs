@@ -16,12 +16,15 @@ const typeScriptPlugin = () => ({
 
       // Create a TypeScript compiler
       const result = ts.transpileModule(body, {
+        fileName: context.path.replace(/^\//, ''),
         compilerOptions: {
           target: ts.ScriptTarget.ES2020,
           module: ts.ModuleKind.ESNext,
           experimentalDecorators: true,
           emitDecoratorMetadata: true,
           useDefineForClassFields: false,
+          inlineSourceMap: true,
+          inlineSources: true,
           // This is key - it handles the accessor keyword properly
           lib: ['ES2022', 'DOM', 'DOM.Iterable'],
         },

@@ -21,6 +21,7 @@ import { selectStyles } from './styles';
  * @property {string} error - Error message to display
  * @property {string} helpText - Helper text to display below the select
  * @property {string} ariaLabel - Accessible label for the select (used when no visible label)
+ * @property {SelectOption[]} options - Programmatic options for structured or agent-generated UIs
  *
  * @fires {CustomEvent<{value: string | string[]}>} ae-select-change - Fired when the selection changes
  *
@@ -49,6 +50,13 @@ import { selectStyles } from './styles';
  * </ae-select>
  * ```
  */
+export interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+  selected?: boolean;
+}
+
 @customElement('ae-select')
 export class AeSelect extends LitElement {
   static styles = selectStyles;
@@ -90,6 +98,9 @@ export class AeSelect extends LitElement {
 
   @property({ type: String, attribute: 'aria-label' })
   accessor ariaLabel = '';
+
+  @property({ type: Array })
+  accessor options: SelectOption[] = [];
 
   @state()
   private accessor focused = false;
@@ -152,6 +163,10 @@ export class AeSelect extends LitElement {
 
     if (changedProperties.has('required')) {
       this._updateValidity();
+    }
+
+    if (changedProperties.has('options')) {
+      this._syncOptionsFromLightDOM();
     }
   }
 
@@ -217,14 +232,24 @@ export class AeSelect extends LitElement {
       }
     });
 
-    // Clone light DOM options into shadow DOM select
+    // Create programmatic options before compatibility light-DOM options.
+    this.options.forEach((option) => {
+      const element = document.createElement('option');
+      element.value = option.value;
+      element.textContent = option.label;
+      element.disabled = option.disabled ?? false;
+      element.selected = option.selected ?? false;
+      this.selectElement.appendChild(element);
+    });
+
+    // Clone light DOM options into shadow DOM select.
     lightDOMOptions.forEach((option) => {
       const clone = option.cloneNode(true) as HTMLOptionElement;
       this.selectElement.appendChild(clone);
     });
 
     // Sync value with selected option
-    const selectedOption = lightDOMOptions.find((opt) => opt.selected);
+    const selectedOption = this.selectElement.querySelector<HTMLOptionElement>('option:checked');
     if (selectedOption && !this.value) {
       this.value = selectedOption.value;
       this._updateFormValue();

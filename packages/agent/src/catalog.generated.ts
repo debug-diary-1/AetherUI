@@ -11,6 +11,11 @@ export const componentCatalog = [
         "type": "string[]"
       },
       {
+        "name": "expanded",
+        "attribute": "expanded",
+        "type": "string[]"
+      },
+      {
         "name": "multiselectable",
         "attribute": "multiselectable",
         "type": "boolean"
@@ -25,6 +30,10 @@ export const componentCatalog = [
       {
         "name": "ae-accordion-change",
         "type": "CustomEvent<{value: string[]}>"
+      },
+      {
+        "name": "ae-expand-change",
+        "type": "CustomEvent"
       }
     ]
   },
@@ -922,6 +931,11 @@ export const componentCatalog = [
         "type": "string"
       },
       {
+        "name": "options",
+        "attribute": "options",
+        "type": "SelectOption[]"
+      },
+      {
         "name": "placeholder",
         "attribute": "placeholder",
         "type": "string"
@@ -945,7 +959,7 @@ export const componentCatalog = [
     "events": [
       {
         "name": "ae-select-change",
-        "type": "CustomEvent<{value: string | string[]}>"
+        "type": "CustomEvent"
       }
     ]
   },
@@ -1314,10 +1328,6 @@ export const componentCatalog = [
       {
         "name": "ae-tooltip-show",
         "type": "CustomEvent<unknown>"
-      },
-      {
-        "name": "eventName",
-        "type": "CustomEvent"
       }
     ]
   },
@@ -1361,10 +1371,6 @@ export const componentCatalog = [
       },
       {
         "name": "ae-tree-item-select",
-        "type": "CustomEvent"
-      },
-      {
-        "name": "eventName",
         "type": "CustomEvent"
       }
     ]

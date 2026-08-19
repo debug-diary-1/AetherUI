@@ -4,11 +4,11 @@
 
 ## Canonical resources
 
-- /component-catalog.json — machine-readable element interfaces
-- /agent-ui.schema.json — constrained runtime-generated UI document
-- /llms-full.txt — complete property, event, slot, and CSS-part reference
-- /getting-started/installation/ — installation and registration
-- /getting-started/integrations/react/ — React 19 JSX typing
+- component-catalog.json — machine-readable element interfaces
+- agent-ui.schema.json — constrained runtime-generated UI document
+- llms-full.txt — complete property, event, slot, and CSS-part reference
+- getting-started/installation/ — installation and registration
+- getting-started/integrations/react/ — React 19 JSX typing
 
 ## Rules
 
@@ -26,11 +26,13 @@ A collapsible disclosure component that shows or hides content panels.
 
 Properties:
 - `defaultValue` (string[], default []): Initial panel IDs to open (uncontrolled mode)
+- `expanded` (string[], default []): Compatibility alias retained for the standalone accordion package.
 - `multiselectable` (boolean, default false): Allows multiple panels to be open simultaneously
 - `value` (string[], default []): Array of panel IDs that are currently open/expanded
 
 Events:
 - `ae-accordion-change` (CustomEvent<{value: string[]}>): Fired when open/expanded panels change
+- `ae-expand-change` (CustomEvent): No description.
 
 Slots:
 - `default`: Default slot for accordion items
@@ -616,36 +618,31 @@ CSS parts:
 
 ## `<ae-select>`
 
-A select dropdown component with support for single/multiple selection and form participation.
-Participates in native form submission via ElementInternals API.
+AeSelect custom element.
 
 Properties:
-- `ariaLabel` (string, default ''): Accessible label for the select (used when no visible label)
-- `defaultValue` (string, default ''): Initial value for uncontrolled usage
-- `disabled` (boolean, default false): Whether the select is disabled
-- `error` (string, default ''): Error message to display
-- `helpText` (string, default ''): Helper text to display below the select
-- `label` (string, default ''): Label text for the select
-- `multiple` (boolean, default false): Whether multiple selection is allowed
-- `name` (string, default ''): The name attribute for form submission
-- `placeholder` (string, default ''): Placeholder text when no option is selected
-- `required` (boolean, default false): Whether the select is required
-- `value` (string, default ''): The current selected value (single select)
-- `values` (string[], default []): The current selected values (multiple select)
+- `ariaLabel` (string, default ''): No description.
+- `defaultValue` (string, default ''): No description.
+- `disabled` (boolean, default false): No description.
+- `error` (string, default ''): No description.
+- `helpText` (string, default ''): No description.
+- `label` (string, default ''): No description.
+- `multiple` (boolean, default false): No description.
+- `name` (string, default ''): No description.
+- `options` (SelectOption[], default []): No description.
+- `placeholder` (string, default ''): No description.
+- `required` (boolean, default false): No description.
+- `value` (string, default ''): No description.
+- `values` (string[], default []): No description.
 
 Events:
-- `ae-select-change` (CustomEvent<{value: string | string[]}>): Fired when the selection changes
+- `ae-select-change` (CustomEvent): No description.
 
 Slots:
-- `default`: The select options (ae-option elements)
+- None documented
 
 CSS parts:
-- `base`: The component's base wrapper
-- `error-text`: The error text element
-- `help-text`: The help text element
-- `label`: The label element
-- `select`: The native select element
-- `select-wrapper`: The wrapper around the select
+- None documented
 
 ## `<ae-spinner>`
 
@@ -843,7 +840,6 @@ Properties:
 Events:
 - `ae-tooltip-hide` (CustomEvent<unknown>): Fired when tooltip closes
 - `ae-tooltip-show` (CustomEvent<unknown>): Fired when tooltip opens
-- `eventName` (CustomEvent): No description.
 
 Slots:
 - `default`: Default slot for the anchor element that triggers the tooltip
@@ -868,7 +864,6 @@ Events:
 - `ae-tree-item-collapse` (CustomEvent): Fired when the item is collapsed
 - `ae-tree-item-expand` (CustomEvent): Fired when the item is expanded
 - `ae-tree-item-select` (CustomEvent): Fired when the item is selected
-- `eventName` (CustomEvent): No description.
 
 Slots:
 - `default`: The default slot for nested tree items

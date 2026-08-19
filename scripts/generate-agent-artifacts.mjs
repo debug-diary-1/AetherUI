@@ -10,6 +10,8 @@ const checkOnly = process.argv.includes('--check');
 const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
 
 const clean = (value) => (typeof value === 'string' ? value.trim() : '');
+const compareText = (left, right) => (left < right ? -1 : left > right ? 1 : 0);
+const isLiteralPublicEvent = (event) => /^ae-[a-z0-9-]+$/.test(event.name ?? '');
 const publicProperties = (declaration) =>
   (declaration.members ?? [])
     .filter(
@@ -28,7 +30,7 @@ const publicProperties = (declaration) =>
       default: member.default ?? null,
       description: clean(member.description),
     }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a, b) => compareText(a.name, b.name));
 
 const components = manifest.modules
   .flatMap((module) =>
@@ -41,24 +43,25 @@ const components = manifest.modules
         description: clean(declaration.description),
         properties: publicProperties(declaration),
         events: (declaration.events ?? [])
+          .filter(isLiteralPublicEvent)
           .map((event) => ({
             name: event.name,
             type: event.type?.text ?? 'CustomEvent<unknown>',
             description: clean(event.description),
           }))
-          .sort((a, b) => a.name.localeCompare(b.name)),
+          .sort((a, b) => compareText(a.name, b.name)),
         slots: (declaration.slots ?? [])
           .map((slot) => ({ name: slot.name ?? '', description: clean(slot.description) }))
-          .sort((a, b) => a.name.localeCompare(b.name)),
+          .sort((a, b) => compareText(a.name, b.name)),
         cssParts: (declaration.cssParts ?? [])
           .map((part) => ({ name: part.name, description: clean(part.description) }))
-          .sort((a, b) => a.name.localeCompare(b.name)),
+          .sort((a, b) => compareText(a.name, b.name)),
         cssProperties: (declaration.cssProperties ?? [])
           .map((property) => ({ name: property.name, description: clean(property.description) }))
-          .sort((a, b) => a.name.localeCompare(b.name)),
+          .sort((a, b) => compareText(a.name, b.name)),
       })),
   )
-  .sort((a, b) => a.tagName.localeCompare(b.tagName));
+  .sort((a, b) => compareText(a.tagName, b.tagName));
 
 const catalog = {
   schemaVersion: '1.0.0',
@@ -145,11 +148,11 @@ const llms = `# AetherUI
 
 ## Canonical resources
 
-- /component-catalog.json — machine-readable element interfaces
-- /agent-ui.schema.json — constrained runtime-generated UI document
-- /llms-full.txt — complete property, event, slot, and CSS-part reference
-- /getting-started/installation/ — installation and registration
-- /getting-started/integrations/react/ — React 19 JSX typing
+- component-catalog.json — machine-readable element interfaces
+- agent-ui.schema.json — constrained runtime-generated UI document
+- llms-full.txt — complete property, event, slot, and CSS-part reference
+- getting-started/installation/ — installation and registration
+- getting-started/integrations/react/ — React 19 JSX typing
 
 ## Rules
 

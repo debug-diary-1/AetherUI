@@ -53,3 +53,24 @@ test('looks up components and validates agent documents', async () => {
     assert.equal(validation.structuredContent.ok, false);
   });
 });
+
+test('returns structured validation issues for deeply nested property values', async () => {
+  let data = {};
+  for (let index = 0; index < 100; index += 1) data = { child: data };
+
+  await withClient(async (client) => {
+    const validation = await client.callTool({
+      name: 'validate_agent_ui',
+      arguments: {
+        document: {
+          version: '1',
+          root: { component: 'ae-treeview', props: { data } },
+        },
+      },
+    });
+
+    assert.equal(validation.isError, true);
+    assert.equal(validation.structuredContent.ok, false);
+    assert.equal(validation.structuredContent.issues[0].code, 'limit-exceeded');
+  });
+});

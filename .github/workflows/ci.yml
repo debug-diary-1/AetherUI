@@ -95,6 +95,9 @@ jobs:
           echo "Theme validation passed - no hardcoded colors found!"
         timeout-minutes: 2
 
+      - name: Verify generated agent artifacts
+        run: pnpm check:agent-artifacts
+
       - name: Run tests
         run: NODE_OPTIONS='--max-old-space-size=2048' pnpm test
         timeout-minutes: 15
@@ -120,9 +123,6 @@ jobs:
       - name: Run build
         run: NODE_OPTIONS='--max-old-space-size=4096' pnpm build
         timeout-minutes: 15
-
-      - name: Verify generated agent artifacts
-        run: pnpm check:agent-artifacts
 
       - name: Run agent UI evals
         run: pnpm test:agent-evals

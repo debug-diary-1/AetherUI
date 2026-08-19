@@ -40,6 +40,7 @@ export interface AgentUiComponentContract {
 export interface AgentUiPolicy {
   maxDepth?: number;
   maxNodes?: number;
+  maxPropertyDepth?: number;
   allowedComponents?: readonly string[];
   allowedUrlProtocols?: readonly string[];
 }
@@ -51,6 +52,7 @@ export interface AgentUiValidationIssue {
     | 'invalid-node'
     | 'unknown-component'
     | 'unknown-property'
+    | 'invalid-property'
     | 'unknown-event'
     | 'invalid-action'
     | 'unsafe-url'

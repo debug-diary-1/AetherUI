@@ -30,6 +30,7 @@ export function renderAgentUi(
 
     for (const [eventName, actionId] of Object.entries(node.actions ?? {})) {
       const listener = (event: Event): void => {
+        if (event.composedPath()[0] !== element) return;
         const action: AgentUiAction = {
           actionId,
           componentId: node.id,

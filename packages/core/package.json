@@ -181,10 +181,10 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "pnpm analyze && pnpm gen:react-types && pnpm gen:agent-artifacts && vite build",
+    "build": "pnpm analyze && pnpm gen:react-types && vite build",
     "analyze": "cem analyze --litelement --globs 'src/**/ae-*.ts'",
     "gen:react-types": "node ../../scripts/generate-react-types.mjs",
-    "gen:agent-artifacts": "node ../../scripts/generate-agent-artifacts.mjs",
+    "gen:agent-artifacts": "pnpm analyze && node ../../scripts/generate-agent-artifacts.mjs",
     "dev": "vite",
     "clean": "rimraf dist",
     "lint": "oxlint src",

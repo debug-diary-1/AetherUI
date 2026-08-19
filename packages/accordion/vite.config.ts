@@ -20,6 +20,7 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
       rollupTypes: true,
+      aliasesExclude: [/^@aetherui\/core/],
     }),
   ],
   esbuild: {
