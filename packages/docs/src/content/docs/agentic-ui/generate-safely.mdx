@@ -31,7 +31,7 @@ renderAgentUi(document.querySelector('#agent-surface')!, modelOutput, {
 
 ## Structured model output
 
-Constrain model output with [`agent-ui.schema.json`](../../agent-ui.schema.json). The runtime validator adds semantic checks against the generated component catalog:
+Constrain model output with <a href={`${import.meta.env.BASE_URL}agent-ui.schema.json`}><code>agent-ui.schema.json</code></a>. The runtime validator adds semantic checks against the generated component catalog:
 
 ```json
 {
@@ -63,10 +63,10 @@ The renderer builds DOM nodes with `document.createElement`, assigns validated p
 
 ## Machine-readable references
 
-- [`component-catalog.json`](../../component-catalog.json) contains properties, events, slots, CSS parts, and CSS properties.
-- [`agent-ui.schema.json`](../../agent-ui.schema.json) constrains structured model output.
-- [`llms.txt`](../../llms.txt) provides a compact model-oriented index.
-- [`llms-full.txt`](../../llms-full.txt) contains the complete generated interface reference.
+- <a href={`${import.meta.env.BASE_URL}component-catalog.json`}><code>component-catalog.json</code></a> contains properties, events, slots, CSS parts, and CSS properties.
+- <a href={`${import.meta.env.BASE_URL}agent-ui.schema.json`}><code>agent-ui.schema.json</code></a> constrains structured model output.
+- <a href={`${import.meta.env.BASE_URL}llms.txt`}><code>llms.txt</code></a> provides a compact model-oriented index.
+- <a href={`${import.meta.env.BASE_URL}llms-full.txt`}><code>llms-full.txt</code></a> contains the complete generated interface reference.
 
 ## MCP discovery
 

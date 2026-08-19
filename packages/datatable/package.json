@@ -45,7 +45,7 @@
     "dev": "vite",
     "clean": "rimraf dist",
     "lint": "oxlint src test",
-    "test": "pnpm build && node --test test/*.test.js"
+    "test": "node --test test/*.test.js"
   },
   "dependencies": {
     "lit": "catalog:"

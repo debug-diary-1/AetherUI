@@ -41,7 +41,7 @@
     "dev": "vite",
     "clean": "rimraf dist",
     "lint": "oxlint src test",
-    "test": "pnpm --filter @aetherui/core build && pnpm build && node --test test/*.test.js"
+    "test": "node --test test/*.test.js"
   },
   "dependencies": {
     "@aetherui/core": "workspace:^"

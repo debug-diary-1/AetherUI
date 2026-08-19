@@ -52,7 +52,12 @@ export class AeAccordion extends LitElement {
 
   /** Compatibility alias retained for the standalone accordion package. */
   @property({ type: Array })
-  accessor expanded: string[] = [];
+  set expanded(value: string[]) {
+    this.value = value;
+  }
+  get expanded(): string[] {
+    return this.value;
+  }
 
   /**
    * Initial panel IDs to open (uncontrolled mode)
@@ -65,25 +70,18 @@ export class AeAccordion extends LitElement {
   private accessor openPanels = new Set<string>();
 
   private _observer: MutationObserver | null = null;
+  private syncingItems = false;
 
   connectedCallback() {
     super.connectedCallback();
     this.setupMutationObserver();
-    // Initialize from the current API, then the compatibility alias, then defaults.
-    const initialValue =
-      this.value.length > 0
-        ? this.value
-        : this.expanded.length > 0
-          ? this.expanded
-          : this.defaultValue;
+    // Initialize controlled state before the first reactive update can reconcile items.
+    const initialValue = this.value.length > 0 ? this.value : this.defaultValue;
 
     if (initialValue.length) {
-      if (this.multiselectable) {
-        initialValue.forEach((id) => this.openPanels.add(id));
-      } else {
-        // In non-multiselectable mode, only keep the first panel open
-        this.openPanels.add(initialValue[0]);
-      }
+      const normalizedValue = this.multiselectable ? initialValue : initialValue.slice(0, 1);
+      this.openPanels = new Set(normalizedValue);
+      if (this.value.length === 0) this.value = [...normalizedValue];
       this.updateItems();
     }
 
@@ -128,8 +126,7 @@ export class AeAccordion extends LitElement {
       });
     }
 
-    // Update both current and compatibility properties to match.
-    this.syncPublicValues();
+    this.syncPublicValue();
 
     // Force the update on all items to ensure consistency
     this.updateItems();
@@ -156,7 +153,7 @@ export class AeAccordion extends LitElement {
         );
         identityChanged = true;
       }
-      if (identityChanged) this.syncPublicValues();
+      if (identityChanged) this.syncPublicValue();
       this.updateItems();
     });
 
@@ -176,26 +173,14 @@ export class AeAccordion extends LitElement {
   }
 
   updated(changedProperties: Map<string, unknown>) {
-    const valueChanged = changedProperties.has('value');
-    const expandedChanged = changedProperties.has('expanded');
-    if (!valueChanged && !expandedChanged) return;
+    if (!changedProperties.has('value')) return;
 
-    const nextValue =
-      valueChanged && (this.value.length > 0 || !expandedChanged) ? this.value : this.expanded;
-    this.openPanels = new Set(nextValue);
-    if (!this.arraysEqual(this.value, nextValue)) this.value = [...nextValue];
-    if (!this.arraysEqual(this.expanded, nextValue)) this.expanded = [...nextValue];
+    this.openPanels = new Set(this.value);
     this.updateItems();
   }
 
-  private arraysEqual(left: readonly string[], right: readonly string[]): boolean {
-    return left.length === right.length && left.every((value, index) => value === right[index]);
-  }
-
-  private syncPublicValues() {
-    const nextValue = Array.from(this.openPanels);
-    if (!this.arraysEqual(this.value, nextValue)) this.value = [...nextValue];
-    if (!this.arraysEqual(this.expanded, nextValue)) this.expanded = [...nextValue];
+  private syncPublicValue() {
+    this.value = Array.from(this.openPanels);
   }
 
   private updateItems() {
@@ -210,20 +195,26 @@ export class AeAccordion extends LitElement {
         const firstPanelId = openPanelIds[0];
         this.openPanels.clear();
         this.openPanels.add(firstPanelId);
-        this.syncPublicValues();
+        this.syncPublicValue();
       }
     }
 
     // Apply the open state to all items
-    items.forEach((item) => {
-      const headerId = item.getAttribute('data-header-id');
-      if (headerId) {
-        (item as AeAccordionItem).open = this.openPanels.has(headerId);
-      }
-    });
+    this.syncingItems = true;
+    try {
+      items.forEach((item) => {
+        const headerId = item.getAttribute('data-header-id');
+        if (headerId) {
+          (item as AeAccordionItem).open = this.openPanels.has(headerId);
+        }
+      });
+    } finally {
+      this.syncingItems = false;
+    }
   }
 
   private handlePanelChange(event: CustomEvent) {
+    if (this.syncingItems) return;
     // Prevent handling events from nested accordions
     const target = event.target as Element;
     if (!target || target.closest('ae-accordion') !== this) return;
@@ -240,16 +231,6 @@ export class AeAccordion extends LitElement {
     } else {
       // In single selection mode, close all other panels when one is opened
       if (open) {
-        // First close all panels - we'll do this manually to ensure it works
-        const items = Array.from(this.querySelectorAll('ae-accordion-item'));
-        items.forEach((item) => {
-          const itemId = item.getAttribute('data-header-id');
-          if (itemId && itemId !== headerId) {
-            (item as AeAccordionItem).open = false;
-          }
-        });
-
-        // Clear the set and add only the new panel
         this.openPanels.clear();
         this.openPanels.add(headerId);
       } else {
@@ -261,7 +242,7 @@ export class AeAccordion extends LitElement {
     // Update all accordion items to reflect the new state
     this.updateItems();
 
-    this.syncPublicValues();
+    this.syncPublicValue();
 
     // Dispatch standardized event
     this.dispatchEvent(

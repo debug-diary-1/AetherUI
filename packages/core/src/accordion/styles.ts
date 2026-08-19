@@ -10,11 +10,11 @@ export const accordionStyles = css`
     font-family: var(--ae-font-family, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif);
     border-radius: var(--ae-accordion-radius, var(--ae-radius, 0.375rem));
     overflow: hidden;
-    background: var(--ae-accordion-bg);
+    background: var(--ae-accordion-bg, Canvas);
     /* Add subtle shadow for depth */
-    box-shadow: var(--ae-accordion-shadow);
+    box-shadow: var(--ae-accordion-shadow, none);
     /* Optional border */
-    border: var(--ae-accordion-border);
+    border: var(--ae-accordion-border, 1px solid color-mix(in srgb, currentColor 20%, transparent));
   }
 
   .accordion {
@@ -24,7 +24,10 @@ export const accordionStyles = css`
   }
 
   ::slotted(ae-accordion-item:not(:last-child)) {
-    border-bottom: var(--ae-accordion-divider);
+    border-bottom: var(
+      --ae-accordion-divider,
+      1px solid color-mix(in srgb, currentColor 15%, transparent)
+    );
   }
 `;
 
@@ -51,7 +54,7 @@ export const accordionItemStyles = css`
     cursor: pointer;
     border: none;
     text-align: left;
-    color: var(--ae-accordion-header-color, var(--ae-text-primary));
+    color: var(--ae-accordion-header-color, var(--ae-text-primary, CanvasText));
     font-weight: var(--ae-accordion-header-font-weight, 500);
     font-family: inherit;
     font-size: var(--ae-accordion-header-font-size, 0.875rem);
@@ -70,12 +73,15 @@ export const accordionItemStyles = css`
 
   /* Header hover & focus states */
   .header:hover {
-    background: var(--ae-accordion-header-hover-bg);
+    background: var(
+      --ae-accordion-header-hover-bg,
+      color-mix(in srgb, currentColor 8%, transparent)
+    );
   }
 
   .header:focus-visible {
     outline: none;
-    box-shadow: inset 0 0 0 2px var(--ae-focus-ring-color);
+    box-shadow: inset 0 0 0 2px var(--ae-focus-ring-color, Highlight);
   }
 
   /* Icon styling & animation */
@@ -83,14 +89,14 @@ export const accordionItemStyles = css`
     flex-shrink: 0;
     width: 1rem;
     height: 1rem;
-    color: var(--ae-accordion-icon-color);
+    color: var(--ae-accordion-icon-color, currentColor);
     transition: transform 0.2s ease;
     margin-left: 0.5rem;
   }
 
   :host([open]) .icon {
     transform: rotate(90deg);
-    color: var(--ae-accordion-icon-active-color);
+    color: var(--ae-accordion-icon-active-color, currentColor);
   }
 
   /* Panel styling & animation */
@@ -105,8 +111,8 @@ export const accordionItemStyles = css`
 
   .panel-content {
     padding: var(--ae-accordion-panel-padding, 1rem);
-    background: var(--ae-accordion-panel-bg);
-    color: var(--ae-accordion-panel-color, var(--ae-text-primary));
+    background: var(--ae-accordion-panel-bg, Canvas);
+    color: var(--ae-accordion-panel-color, var(--ae-text-primary, CanvasText));
     font-size: var(--ae-accordion-panel-font-size, 0.875rem);
   }
 
@@ -117,18 +123,21 @@ export const accordionItemStyles = css`
   }
 
   :host([open]) .header {
-    background: var(--ae-accordion-header-active-bg);
-    color: var(--ae-accordion-header-active-color);
+    background: var(
+      --ae-accordion-header-active-bg,
+      color-mix(in srgb, currentColor 12%, transparent)
+    );
+    color: var(--ae-accordion-header-active-color, CanvasText);
   }
 
   /* Disabled state */
   :host([disabled]) .header {
     cursor: not-allowed;
     opacity: 0.6;
-    color: var(--ae-accordion-header-disabled-color);
+    color: var(--ae-accordion-header-disabled-color, GrayText);
   }
 
   :host([disabled]) .icon {
-    color: var(--ae-accordion-icon-disabled-color);
+    color: var(--ae-accordion-icon-disabled-color, GrayText);
   }
 `;

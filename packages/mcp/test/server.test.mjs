@@ -74,3 +74,21 @@ test('returns structured validation issues for deeply nested property values', a
     assert.equal(validation.structuredContent.issues[0].code, 'limit-exceeded');
   });
 });
+
+test('forwards allowed URL protocols to the runtime validator', async () => {
+  await withClient(async (client) => {
+    const validation = await client.callTool({
+      name: 'validate_agent_ui',
+      arguments: {
+        document: {
+          version: '1',
+          root: { component: 'ae-breadcrumb-item', props: { href: 'ftp://example.com/file' } },
+        },
+        allowedUrlProtocols: ['ftp:'],
+      },
+    });
+
+    assert.equal(validation.isError, undefined);
+    assert.equal(validation.structuredContent.ok, true);
+  });
+});

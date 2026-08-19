@@ -89,6 +89,26 @@ describe('ae-select', () => {
     expect(options[1].disabled).to.be.true;
   });
 
+  it('preserves the controlled value when programmatic options are replaced', async () => {
+    const el = await fixture<AeSelect>(html`<ae-select value="ca"></ae-select>`);
+    el.options = [
+      { value: 'us', label: 'United States' },
+      { value: 'ca', label: 'Canada' },
+    ];
+    await el.updateComplete;
+
+    const select = el.shadowRoot!.querySelector('select')!;
+    expect(select.value).to.equal('ca');
+
+    el.options = [
+      { value: 'mx', label: 'Mexico' },
+      { value: 'ca', label: 'Canada' },
+    ];
+    await el.updateComplete;
+
+    expect(select.value).to.equal('ca');
+  });
+
   it('emits ae-select-change event when value changes', async () => {
     const el = await fixture<AeSelect>(html`
       <ae-select>

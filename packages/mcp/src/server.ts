@@ -81,15 +81,24 @@ export function createAetherUiMcpServer(): McpServer {
       inputSchema: z.object({
         document: z.unknown().describe('Candidate AetherUI agent document.'),
         allowedComponents: z.array(z.string()).optional(),
+        allowedUrlProtocols: z.array(z.string()).optional(),
         maxDepth: z.number().int().positive().optional(),
         maxNodes: z.number().int().positive().optional(),
         maxPropertyDepth: z.number().int().positive().optional(),
       }),
       annotations: { readOnlyHint: true, idempotentHint: true },
     },
-    async ({ document, allowedComponents, maxDepth, maxNodes, maxPropertyDepth }) => {
+    async ({
+      document,
+      allowedComponents,
+      allowedUrlProtocols,
+      maxDepth,
+      maxNodes,
+      maxPropertyDepth,
+    }) => {
       const result = validateAgentUi(document, {
         allowedComponents,
+        allowedUrlProtocols,
         maxDepth,
         maxNodes,
         maxPropertyDepth,

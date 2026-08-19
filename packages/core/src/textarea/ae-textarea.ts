@@ -22,7 +22,7 @@ import { textareaStyles } from './styles';
  * @property {number} minlength - Minimum length
  * @property {number} maxlength - Maximum length
  * @property {number} rows - Number of visible text rows
- * @property {boolean} resize - Whether the textarea can be manually resized (none, vertical, horizontal, both)
+ * @property {'none'|'vertical'|'horizontal'|'both'} resize - How the textarea can be manually resized
  * @property {boolean} autoResize - Whether to automatically resize based on content
  * @property {boolean} showCount - Whether to show character count
  * @property {string} ariaLabel - Accessible label for the textarea (used when no visible label)

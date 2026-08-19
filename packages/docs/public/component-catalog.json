@@ -19,7 +19,7 @@
           "name": "expanded",
           "attribute": "expanded",
           "type": "string[]",
-          "default": "[]",
+          "default": null,
           "description": "Compatibility alias retained for the standalone accordion package."
         },
         {
@@ -108,7 +108,7 @@
           "name": "open",
           "attribute": "open",
           "type": "boolean",
-          "default": "false",
+          "default": null,
           "description": "Whether this panel is currently open"
         }
       ],
@@ -274,7 +274,7 @@
         {
           "name": "options",
           "attribute": "options",
-          "type": "string|AutocompleteOption[]",
+          "type": "(string|AutocompleteOption)[]",
           "default": null,
           "description": "Options to display in the dropdown"
         },
@@ -410,16 +410,16 @@
         {
           "name": "size",
           "attribute": "size",
-          "type": "string",
+          "type": "'sm'|'md'|'lg'",
           "default": "'md'",
-          "description": "The size of the badge (sm, md, lg)"
+          "description": "The size of the badge"
         },
         {
           "name": "variant",
           "attribute": "variant",
-          "type": "string",
+          "type": "'primary'|'secondary'|'success'|'warning'|'error'|'info'",
           "default": "'primary'",
-          "description": "The visual variant (primary, secondary, success, warning, error, info)"
+          "description": "The visual variant"
         }
       ],
       "events": [
@@ -1091,14 +1091,14 @@
         {
           "name": "placement",
           "attribute": "placement",
-          "type": "Placement",
+          "type": "| 'top'\n  | 'top-start'\n  | 'top-end'\n  | 'bottom'\n  | 'bottom-start'\n  | 'bottom-end'\n  | 'left'\n  | 'left-start'\n  | 'left-end'\n  | 'right'\n  | 'right-start'\n  | 'right-end'",
           "default": "'bottom-start'",
           "description": "Menu placement relative to trigger"
         },
         {
           "name": "strategy",
           "attribute": "strategy",
-          "type": "Strategy",
+          "type": "'absolute' | 'fixed'",
           "default": "'absolute'",
           "description": "Positioning strategy"
         },
@@ -2123,109 +2123,139 @@
       "tagName": "ae-select",
       "className": "AeSelect",
       "module": "src/select/ae-select.ts",
-      "description": "",
+      "description": "A select dropdown component with support for single/multiple selection and form participation.\nParticipates in native form submission via ElementInternals API.",
       "properties": [
         {
           "name": "ariaLabel",
           "attribute": "aria-label",
           "type": "string",
           "default": "''",
-          "description": ""
+          "description": "Accessible label for the select (used when no visible label)"
         },
         {
           "name": "defaultValue",
           "attribute": "default-value",
           "type": "string",
           "default": "''",
-          "description": ""
+          "description": "Initial value for uncontrolled usage"
         },
         {
           "name": "disabled",
           "attribute": "disabled",
           "type": "boolean",
           "default": "false",
-          "description": ""
+          "description": "Whether the select is disabled"
         },
         {
           "name": "error",
           "attribute": "error",
           "type": "string",
           "default": "''",
-          "description": ""
+          "description": "Error message to display"
         },
         {
           "name": "helpText",
           "attribute": "help-text",
           "type": "string",
           "default": "''",
-          "description": ""
+          "description": "Helper text to display below the select"
         },
         {
           "name": "label",
           "attribute": "label",
           "type": "string",
           "default": "''",
-          "description": ""
+          "description": "Label text for the select"
         },
         {
           "name": "multiple",
           "attribute": "multiple",
           "type": "boolean",
           "default": "false",
-          "description": ""
+          "description": "Whether multiple selection is allowed"
         },
         {
           "name": "name",
           "attribute": "name",
           "type": "string",
           "default": "''",
-          "description": ""
+          "description": "The name attribute for form submission"
         },
         {
           "name": "options",
           "attribute": "options",
           "type": "SelectOption[]",
           "default": "[]",
-          "description": ""
+          "description": "Programmatic options for structured or agent-generated UIs"
         },
         {
           "name": "placeholder",
           "attribute": "placeholder",
           "type": "string",
           "default": "''",
-          "description": ""
+          "description": "Placeholder text when no option is selected"
         },
         {
           "name": "required",
           "attribute": "required",
           "type": "boolean",
           "default": "false",
-          "description": ""
+          "description": "Whether the select is required"
         },
         {
           "name": "value",
           "attribute": "value",
           "type": "string",
           "default": "''",
-          "description": ""
+          "description": "The current selected value (single select)"
         },
         {
           "name": "values",
           "attribute": "values",
           "type": "string[]",
           "default": "[]",
-          "description": ""
+          "description": "The current selected values (multiple select)"
         }
       ],
       "events": [
         {
           "name": "ae-select-change",
-          "type": "CustomEvent",
-          "description": ""
+          "type": "CustomEvent<{value: string | string[]}>",
+          "description": "Fired when the selection changes"
         }
       ],
-      "slots": [],
-      "cssParts": [],
+      "slots": [
+        {
+          "name": "",
+          "description": "The select options (ae-option elements)"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        },
+        {
+          "name": "error-text",
+          "description": "The error text element"
+        },
+        {
+          "name": "help-text",
+          "description": "The help text element"
+        },
+        {
+          "name": "label",
+          "description": "The label element"
+        },
+        {
+          "name": "select",
+          "description": "The native select element"
+        },
+        {
+          "name": "select-wrapper",
+          "description": "The wrapper around the select"
+        }
+      ],
       "cssProperties": []
     },
     {
@@ -2628,9 +2658,9 @@
         {
           "name": "resize",
           "attribute": "resize",
-          "type": "boolean",
+          "type": "'none'|'vertical'|'horizontal'|'both'",
           "default": "'vertical'",
-          "description": "Whether the textarea can be manually resized (none, vertical, horizontal, both)"
+          "description": "How the textarea can be manually resized"
         },
         {
           "name": "rows",
@@ -2750,7 +2780,7 @@
         {
           "name": "placement",
           "attribute": "placement",
-          "type": "ToastPlacement",
+          "type": "'top-right' | 'bottom-right' | 'top-left' | 'bottom-left'",
           "default": "'bottom-right'",
           "description": "Position on the screen"
         },
@@ -2764,7 +2794,7 @@
         {
           "name": "variant",
           "attribute": "variant",
-          "type": "ToastVariant",
+          "type": "'info' | 'success' | 'warning' | 'error'",
           "default": "'info'",
           "description": "Visual style of the toast"
         }
@@ -2859,7 +2889,7 @@
         {
           "name": "placement",
           "attribute": "placement",
-          "type": "Placement",
+          "type": "| 'top'\n  | 'top-start'\n  | 'top-end'\n  | 'bottom'\n  | 'bottom-start'\n  | 'bottom-end'\n  | 'left'\n  | 'left-start'\n  | 'left-end'\n  | 'right'\n  | 'right-start'\n  | 'right-end'",
           "default": "'top'",
           "description": "Preferred placement of the tooltip"
         },
@@ -2873,7 +2903,7 @@
         {
           "name": "strategy",
           "attribute": "strategy",
-          "type": "Strategy",
+          "type": "'absolute' | 'fixed'",
           "default": "'fixed'",
           "description": "Positioning strategy (absolute or fixed)"
         },

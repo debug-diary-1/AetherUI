@@ -26,7 +26,7 @@ A collapsible disclosure component that shows or hides content panels.
 
 Properties:
 - `defaultValue` (string[], default []): Initial panel IDs to open (uncontrolled mode)
-- `expanded` (string[], default []): Compatibility alias retained for the standalone accordion package.
+- `expanded` (string[]): Compatibility alias retained for the standalone accordion package.
 - `multiselectable` (boolean, default false): Allows multiple panels to be open simultaneously
 - `value` (string[], default []): Array of panel IDs that are currently open/expanded
 
@@ -47,7 +47,7 @@ An individual collapsible panel within an accordion.
 Properties:
 - `disabled` (boolean, default false): Whether this accordion item is disabled
 - `headerId` (string, default `ae-accordion-${AeAccordionItem._idCounter++}`): Unique identifier for this accordion item
-- `open` (boolean, default false): Whether this panel is currently open
+- `open` (boolean): Whether this panel is currently open
 
 Events:
 - `ae-accordion-item-change` (CustomEvent<{headerId: string, open: boolean}>): Standardized event fired when opened/closed
@@ -94,7 +94,7 @@ Properties:
 - `disabled` (boolean, default false): Whether the input is disabled
 - `maxItems` (number): Maximum number of items to show in dropdown
 - `minChars` (number): Minimum characters before showing suggestions
-- `options` (string|AutocompleteOption[]): Options to display in the dropdown
+- `options` ((string|AutocompleteOption)[]): Options to display in the dropdown
 - `placeholder` (string, default 'Start typing...'): Placeholder text for the input
 - `value` (string): Current input value
 
@@ -125,8 +125,8 @@ Properties:
 - `closable` (boolean, default false): Whether to show a close button
 - `dot` (boolean, default false): Whether to display as a dot indicator
 - `outline` (boolean, default false): Whether to use outline style
-- `size` (string, default 'md'): The size of the badge (sm, md, lg)
-- `variant` (string, default 'primary'): The visual variant (primary, secondary, success, warning, error, info)
+- `size` ('sm'|'md'|'lg', default 'md'): The size of the badge
+- `variant` ('primary'|'secondary'|'success'|'warning'|'error'|'info', default 'primary'): The visual variant
 
 Events:
 - `ae-badge-close` (CustomEvent<void>): Fired when the close button is clicked
@@ -299,8 +299,19 @@ Properties:
 - `disabled` (boolean, default false): Whether the dropdown trigger is disabled
 - `header` (string, default ''): Header text for the dropdown
 - `open` (boolean, default false): Whether the dropdown is open (controlled)
-- `placement` (Placement, default 'bottom-start'): Menu placement relative to trigger
-- `strategy` (Strategy, default 'absolute'): Positioning strategy
+- `placement` (| 'top'
+  | 'top-start'
+  | 'top-end'
+  | 'bottom'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left'
+  | 'left-start'
+  | 'left-end'
+  | 'right'
+  | 'right-start'
+  | 'right-end', default 'bottom-start'): Menu placement relative to trigger
+- `strategy` ('absolute' | 'fixed', default 'absolute'): Positioning strategy
 - `theme` ('light' | 'dark', default 'dark'): Theme of the dropdown (light or dark)
 
 Events:
@@ -618,31 +629,37 @@ CSS parts:
 
 ## `<ae-select>`
 
-AeSelect custom element.
+A select dropdown component with support for single/multiple selection and form participation.
+Participates in native form submission via ElementInternals API.
 
 Properties:
-- `ariaLabel` (string, default ''): No description.
-- `defaultValue` (string, default ''): No description.
-- `disabled` (boolean, default false): No description.
-- `error` (string, default ''): No description.
-- `helpText` (string, default ''): No description.
-- `label` (string, default ''): No description.
-- `multiple` (boolean, default false): No description.
-- `name` (string, default ''): No description.
-- `options` (SelectOption[], default []): No description.
-- `placeholder` (string, default ''): No description.
-- `required` (boolean, default false): No description.
-- `value` (string, default ''): No description.
-- `values` (string[], default []): No description.
+- `ariaLabel` (string, default ''): Accessible label for the select (used when no visible label)
+- `defaultValue` (string, default ''): Initial value for uncontrolled usage
+- `disabled` (boolean, default false): Whether the select is disabled
+- `error` (string, default ''): Error message to display
+- `helpText` (string, default ''): Helper text to display below the select
+- `label` (string, default ''): Label text for the select
+- `multiple` (boolean, default false): Whether multiple selection is allowed
+- `name` (string, default ''): The name attribute for form submission
+- `options` (SelectOption[], default []): Programmatic options for structured or agent-generated UIs
+- `placeholder` (string, default ''): Placeholder text when no option is selected
+- `required` (boolean, default false): Whether the select is required
+- `value` (string, default ''): The current selected value (single select)
+- `values` (string[], default []): The current selected values (multiple select)
 
 Events:
-- `ae-select-change` (CustomEvent): No description.
+- `ae-select-change` (CustomEvent<{value: string | string[]}>): Fired when the selection changes
 
 Slots:
-- None documented
+- `default`: The select options (ae-option elements)
 
 CSS parts:
-- None documented
+- `base`: The component's base wrapper
+- `error-text`: The error text element
+- `help-text`: The help text element
+- `label`: The label element
+- `select`: The native select element
+- `select-wrapper`: The wrapper around the select
 
 ## `<ae-spinner>`
 
@@ -770,7 +787,7 @@ Properties:
 - `placeholder` (string, default ''): Placeholder text
 - `readonly` (boolean, default false): Whether the textarea is readonly
 - `required` (boolean, default false): Whether the textarea is required
-- `resize` (boolean, default 'vertical'): Whether the textarea can be manually resized (none, vertical, horizontal, both)
+- `resize` ('none'|'vertical'|'horizontal'|'both', default 'vertical'): How the textarea can be manually resized
 - `rows` (number, default 4): Number of visible text rows
 - `showCount` (boolean, default false): Whether to show character count
 - `value` (string, default ''): The current textarea value
@@ -803,9 +820,9 @@ Properties:
 - `message` (string, default ''): Toast message (falls back to slot content if not provided)
 - `open` (boolean, default true): Whether the toast is visible
 - `pauseOnHover` (boolean, default true): Pause the auto-dismiss timer when hovering
-- `placement` (ToastPlacement, default 'bottom-right'): Position on the screen
+- `placement` ('top-right' | 'bottom-right' | 'top-left' | 'bottom-left', default 'bottom-right'): Position on the screen
 - `size` ('sm' | 'md' | 'lg', default 'md'): Size of the toast
-- `variant` (ToastVariant, default 'info'): Visual style of the toast
+- `variant` ('info' | 'success' | 'warning' | 'error', default 'info'): Visual style of the toast
 
 Events:
 - `ae-click` (CustomEvent): Fired when the toast is clicked
@@ -832,9 +849,20 @@ Properties:
 - `hideDelay` (number, default 100): Delay in milliseconds before hiding on mouse leave/blur
 - `hoverDelay` (number, default 100): Delay in milliseconds before showing on hover/focus
 - `open` (boolean, default false): Whether the tooltip is currently visible
-- `placement` (Placement, default 'top'): Preferred placement of the tooltip
+- `placement` (| 'top'
+  | 'top-start'
+  | 'top-end'
+  | 'bottom'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left'
+  | 'left-start'
+  | 'left-end'
+  | 'right'
+  | 'right-start'
+  | 'right-end', default 'top'): Preferred placement of the tooltip
 - `showArrow` (boolean, default true): Whether to show an arrow pointing to the anchor
-- `strategy` (Strategy, default 'fixed'): Positioning strategy (absolute or fixed)
+- `strategy` ('absolute' | 'fixed', default 'fixed'): Positioning strategy (absolute or fixed)
 - `text` (string, default ''): The text content to display in the tooltip
 
 Events:

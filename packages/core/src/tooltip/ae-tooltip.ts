@@ -423,14 +423,12 @@ export class AeTooltip extends LitElement {
   }
 
   private _emitOpenChange() {
-    const eventName = this.open ? 'ae-tooltip-show' : 'ae-tooltip-hide';
-    this.dispatchEvent(
-      new CustomEvent(eventName, {
-        detail: { open: this.open },
-        bubbles: true,
-        composed: true,
-      }),
-    );
+    const event = new CustomEvent(this.open ? 'ae-tooltip-show' : 'ae-tooltip-hide', {
+      detail: { open: this.open },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(event);
   }
 }
 

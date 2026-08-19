@@ -3,6 +3,13 @@ import { customElement, property, query, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { selectStyles } from './styles';
 
+export interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+  selected?: boolean;
+}
+
 /**
  * A select dropdown component with support for single/multiple selection and form participation.
  * Participates in native form submission via ElementInternals API.
@@ -50,13 +57,6 @@ import { selectStyles } from './styles';
  * </ae-select>
  * ```
  */
-export interface SelectOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
-  selected?: boolean;
-}
-
 @customElement('ae-select')
 export class AeSelect extends LitElement {
   static styles = selectStyles;
@@ -248,7 +248,14 @@ export class AeSelect extends LitElement {
       this.selectElement.appendChild(clone);
     });
 
-    // Sync value with selected option
+    // Reapply controlled selection after replacing the native options.
+    if (this.multiple) {
+      this._syncOptionSelection();
+    } else if (this.value) {
+      this.selectElement.value = this.value;
+    }
+
+    // Adopt a declaratively selected option only when uncontrolled.
     const selectedOption = this.selectElement.querySelector<HTMLOptionElement>('option:checked');
     if (selectedOption && !this.value) {
       this.value = selectedOption.value;

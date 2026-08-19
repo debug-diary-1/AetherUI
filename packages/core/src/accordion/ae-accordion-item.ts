@@ -52,7 +52,18 @@ export class AeAccordionItem extends LitElement {
    * Whether this panel is currently open
    */
   @property({ type: Boolean, reflect: true })
-  accessor open = false;
+  set open(value: boolean) {
+    const previous = this._open;
+    if (value === previous) return;
+    this._open = value;
+    this.requestUpdate('open', previous);
+    if (this.isConnected) this.dispatchOpenChange();
+  }
+  get open(): boolean {
+    return this._open;
+  }
+
+  private _open = false;
 
   /**
    * Whether this accordion item is disabled
@@ -65,8 +76,7 @@ export class AeAccordionItem extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     if (!this.hasAttribute('header-id')) {
-      const legacyHeaderId = this.legacyHeaderId || this.getAttribute('data-header-id');
-      if (legacyHeaderId) this.headerId = legacyHeaderId;
+      if (this.legacyHeaderId) this.headerId = this.legacyHeaderId;
     }
     this.setAttribute('data-header-id', this.headerId);
   }
@@ -81,6 +91,24 @@ export class AeAccordionItem extends LitElement {
     if (changedProperties.has('open')) {
       this.updatePanelHeight();
     }
+  }
+
+  private dispatchOpenChange() {
+    const detail = { headerId: this.headerId, open: this.open };
+    this.dispatchEvent(
+      new CustomEvent('ae-accordion-item-change', {
+        detail,
+        bubbles: true,
+        composed: true,
+      }),
+    );
+    this.dispatchEvent(
+      new CustomEvent('ae-panel-change', {
+        detail,
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private updatePanelHeight() {
@@ -99,24 +127,6 @@ export class AeAccordionItem extends LitElement {
   private handleHeaderClick() {
     if (this.disabled) return;
     this.open = !this.open;
-
-    const detail = { headerId: this.headerId, open: this.open };
-
-    this.dispatchEvent(
-      new CustomEvent('ae-accordion-item-change', {
-        detail,
-        bubbles: true,
-        composed: true,
-      }),
-    );
-
-    this.dispatchEvent(
-      new CustomEvent('ae-panel-change', {
-        detail,
-        bubbles: true,
-        composed: true,
-      }),
-    );
   }
 
   render() {

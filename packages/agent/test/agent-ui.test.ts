@@ -91,6 +91,28 @@ describe('@aetherui/agent', () => {
     if (!result.ok) expect(result.issues[0]?.code).to.equal('invalid-property');
   });
 
+  it('enforces resolved aliases and literal unions', () => {
+    for (const [component, props] of [
+      ['ae-tooltip', { placement: 5 }],
+      ['ae-tooltip', { placement: 'sideways' }],
+      ['ae-toast', { variant: 123 }],
+      ['ae-toast', { variant: 'urgent' }],
+      ['ae-textarea', { resize: true }],
+      ['ae-button', { variant: 'not-a-variant' }],
+    ] as const) {
+      const result = validateAgentUi({ version: '1', root: { component, props } });
+      expect(result.ok, component).to.equal(false);
+      if (!result.ok) expect(result.issues[0]?.code).to.equal('invalid-property');
+    }
+
+    expect(
+      validateAgentUi({
+        version: '1',
+        root: { component: 'ae-textarea', props: { resize: 'vertical' } },
+      }).ok,
+    ).to.equal(true);
+  });
+
   it('accepts shared JSON subtrees while rejecting cycles and excessive property depth', () => {
     const shared = { id: 'shared' };
     expect(
@@ -118,6 +140,20 @@ describe('@aetherui/agent', () => {
     });
     expect(result.ok).to.equal(false);
     if (!result.ok) expect(result.issues[0]?.code).to.equal('limit-exceeded');
+  });
+
+  it('validates deeply shared DAGs without revisiting every path', () => {
+    let shared: Record<string, unknown> = {};
+    for (let index = 0; index < 24; index += 1) shared = { left: shared, right: shared };
+
+    const started = performance.now();
+    const result = validateAgentUi({
+      version: '1',
+      root: { component: 'ae-treeview', props: { data: [shared] } },
+    });
+
+    expect(result.ok).to.equal(true);
+    expect(performance.now() - started).to.be.lessThan(500);
   });
 
   it('enforces document size and depth limits', () => {

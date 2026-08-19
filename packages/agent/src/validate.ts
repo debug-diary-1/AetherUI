@@ -22,30 +22,52 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
-type JsonInspection = 'valid' | 'invalid' | 'too-deep';
+type JsonInspectionStatus = 'valid' | 'invalid' | 'too-deep';
+interface JsonInspection {
+  status: JsonInspectionStatus;
+  height: number;
+}
 
 function inspectJsonValue(
   value: unknown,
   maxDepth: number,
   depth = 0,
   ancestors = new Set<object>(),
+  memo = new WeakMap<object, JsonInspection>(),
 ): JsonInspection {
-  if (depth > maxDepth) return 'too-deep';
-  if (value === null || typeof value === 'string' || typeof value === 'boolean') return 'valid';
-  if (typeof value === 'number') return Number.isFinite(value) ? 'valid' : 'invalid';
-  if (typeof value !== 'object' || ancestors.has(value)) return 'invalid';
+  if (depth > maxDepth) return { status: 'too-deep', height: 0 };
+  if (value === null || typeof value === 'string' || typeof value === 'boolean') {
+    return { status: 'valid', height: 0 };
+  }
+  if (typeof value === 'number') {
+    return { status: Number.isFinite(value) ? 'valid' : 'invalid', height: 0 };
+  }
+  if (typeof value !== 'object' || ancestors.has(value)) {
+    return { status: 'invalid', height: 0 };
+  }
+
+  const cached = memo.get(value);
+  if (cached) {
+    return depth + cached.height > maxDepth
+      ? { status: 'too-deep', height: cached.height }
+      : cached;
+  }
 
   ancestors.add(value);
   const entries = Array.isArray(value) ? value : Object.values(value as Record<string, unknown>);
+  let height = 0;
   for (const entry of entries) {
-    const result = inspectJsonValue(entry, maxDepth, depth + 1, ancestors);
-    if (result !== 'valid') {
+    const result = inspectJsonValue(entry, maxDepth, depth + 1, ancestors, memo);
+    if (result.status !== 'valid') {
       ancestors.delete(value);
       return result;
     }
+    height = Math.max(height, result.height + 1);
   }
   ancestors.delete(value);
-  return 'valid';
+  const result: JsonInspection = { status: 'valid', height };
+  memo.set(value, result);
+  return result;
 }
 
 type JsonKind = 'string' | 'number' | 'boolean' | 'array' | 'object' | 'null';
@@ -79,9 +101,35 @@ function expectedJsonKinds(contractType: string): Set<JsonKind> | undefined {
   return kinds.size > 0 ? kinds : undefined;
 }
 
+function expectedLiteralValues(contractType: string): AgentUiJsonValue[] | undefined {
+  const normalized = contractType.trim().replace(/^\((.*)\)$/, '$1');
+  const parts = normalized
+    .split('|')
+    .map((part) => part.trim())
+    .filter(Boolean);
+  const values: AgentUiJsonValue[] = [];
+  for (const part of parts) {
+    if (/^(['"]).*\1$/.test(part)) {
+      values.push(part.slice(1, -1));
+    } else if (/^-?(?:\d+\.?\d*|\.\d+)$/.test(part)) {
+      values.push(Number(part));
+    } else if (part === 'true' || part === 'false') {
+      values.push(part === 'true');
+    } else if (part === 'null') {
+      values.push(null);
+    } else {
+      return undefined;
+    }
+  }
+  return values;
+}
+
 function matchesPropertyType(value: AgentUiJsonValue, contractType: string): boolean {
+  if (/\b(?:any|unknown|AgentUiJsonValue)\b/.test(contractType)) return true;
   const expectedKinds = expectedJsonKinds(contractType);
-  return !expectedKinds || expectedKinds.has(jsonKind(value));
+  if (!expectedKinds || !expectedKinds.has(jsonKind(value))) return false;
+  const expectedValues = expectedLiteralValues(contractType);
+  return !expectedValues || expectedValues.some((expected) => Object.is(expected, value));
 }
 
 function isSafeUrl(value: string, protocols: readonly string[]): boolean {
@@ -186,12 +234,12 @@ export function validateAgentUi(
             });
           } else {
             const jsonInspection = inspectJsonValue(value, maxPropertyDepth);
-            if (jsonInspection !== 'valid') {
+            if (jsonInspection.status !== 'valid') {
               issues.push({
                 path: propertyPath,
-                code: jsonInspection === 'too-deep' ? 'limit-exceeded' : 'invalid-node',
+                code: jsonInspection.status === 'too-deep' ? 'limit-exceeded' : 'invalid-node',
                 message:
-                  jsonInspection === 'too-deep'
+                  jsonInspection.status === 'too-deep'
                     ? `Property value exceeds depth ${maxPropertyDepth}.`
                     : 'Property value must be JSON.',
               });

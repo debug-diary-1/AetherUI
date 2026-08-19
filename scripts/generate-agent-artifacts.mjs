@@ -3,6 +3,12 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {
+  collectTypeAliases,
+  compareText,
+  isLiteralPublicEvent,
+  resolveTypeAlias,
+} from './artifact-helpers.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const manifestPath = resolve(root, 'packages/core/custom-elements.json');
@@ -10,8 +16,9 @@ const checkOnly = process.argv.includes('--check');
 const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
 
 const clean = (value) => (typeof value === 'string' ? value.trim() : '');
-const compareText = (left, right) => (left < right ? -1 : left > right ? 1 : 0);
-const isLiteralPublicEvent = (event) => /^ae-[a-z0-9-]+$/.test(event.name ?? '');
+
+const typeAliases = collectTypeAliases(resolve(root, 'packages/core/src'));
+
 const publicProperties = (declaration) =>
   (declaration.members ?? [])
     .filter(
@@ -26,7 +33,7 @@ const publicProperties = (declaration) =>
     .map((member) => ({
       name: member.name,
       attribute: member.attribute ?? null,
-      type: member.type?.text ?? 'unknown',
+      type: resolveTypeAlias(member.type?.text ?? 'unknown', typeAliases),
       default: member.default ?? null,
       description: clean(member.description),
     }))

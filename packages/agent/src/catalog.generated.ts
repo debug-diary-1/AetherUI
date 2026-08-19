@@ -124,7 +124,7 @@ export const componentCatalog = [
       {
         "name": "options",
         "attribute": "options",
-        "type": "string|AutocompleteOption[]"
+        "type": "(string|AutocompleteOption)[]"
       },
       {
         "name": "placeholder",
@@ -169,12 +169,12 @@ export const componentCatalog = [
       {
         "name": "size",
         "attribute": "size",
-        "type": "string"
+        "type": "'sm'|'md'|'lg'"
       },
       {
         "name": "variant",
         "attribute": "variant",
-        "type": "string"
+        "type": "'primary'|'secondary'|'success'|'warning'|'error'|'info'"
       }
     ],
     "events": [
@@ -424,12 +424,12 @@ export const componentCatalog = [
       {
         "name": "placement",
         "attribute": "placement",
-        "type": "Placement"
+        "type": "| 'top'\n  | 'top-start'\n  | 'top-end'\n  | 'bottom'\n  | 'bottom-start'\n  | 'bottom-end'\n  | 'left'\n  | 'left-start'\n  | 'left-end'\n  | 'right'\n  | 'right-start'\n  | 'right-end'"
       },
       {
         "name": "strategy",
         "attribute": "strategy",
-        "type": "Strategy"
+        "type": "'absolute' | 'fixed'"
       },
       {
         "name": "theme",
@@ -959,7 +959,7 @@ export const componentCatalog = [
     "events": [
       {
         "name": "ae-select-change",
-        "type": "CustomEvent"
+        "type": "CustomEvent<{value: string | string[]}>"
       }
     ]
   },
@@ -1184,7 +1184,7 @@ export const componentCatalog = [
       {
         "name": "resize",
         "attribute": "resize",
-        "type": "boolean"
+        "type": "'none'|'vertical'|'horizontal'|'both'"
       },
       {
         "name": "rows",
@@ -1247,7 +1247,7 @@ export const componentCatalog = [
       {
         "name": "placement",
         "attribute": "placement",
-        "type": "ToastPlacement"
+        "type": "'top-right' | 'bottom-right' | 'top-left' | 'bottom-left'"
       },
       {
         "name": "size",
@@ -1257,7 +1257,7 @@ export const componentCatalog = [
       {
         "name": "variant",
         "attribute": "variant",
-        "type": "ToastVariant"
+        "type": "'info' | 'success' | 'warning' | 'error'"
       }
     ],
     "events": [
@@ -1302,7 +1302,7 @@ export const componentCatalog = [
       {
         "name": "placement",
         "attribute": "placement",
-        "type": "Placement"
+        "type": "| 'top'\n  | 'top-start'\n  | 'top-end'\n  | 'bottom'\n  | 'bottom-start'\n  | 'bottom-end'\n  | 'left'\n  | 'left-start'\n  | 'left-end'\n  | 'right'\n  | 'right-start'\n  | 'right-end'"
       },
       {
         "name": "showArrow",
@@ -1312,7 +1312,7 @@ export const componentCatalog = [
       {
         "name": "strategy",
         "attribute": "strategy",
-        "type": "Strategy"
+        "type": "'absolute' | 'fixed'"
       },
       {
         "name": "text",
