@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
@@ -63,8 +63,9 @@ test('React declarations exclude inferred dynamic event variable names', async (
   assert.doesNotMatch(generator, /checkOnly|--check/);
 });
 
-test('same-named divergent aliases do not crash artifact generation', async () => {
+test('same-named divergent aliases do not crash artifact generation', async (t) => {
   const directory = await mkdtemp(join(tmpdir(), 'aetherui-aliases-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
   await mkdir(join(directory, 'one'));
   await mkdir(join(directory, 'two'));
   await writeFile(join(directory, 'one', 'types.ts'), "export type Placement = 'top';\n");

@@ -4,12 +4,46 @@ import test from 'node:test';
 
 const root = new URL('../', import.meta.url);
 const read = (path) => readFile(new URL(path, root), 'utf8');
-const nestedBuildCommand = /\bpnpm(?:\s+--filter\s+\S+)?\s+(?:run\s+)?build\b/;
-const namedWorkflowSteps = (workflow) =>
-  Array.from(
-    workflow.matchAll(/^\s{6}- name:\s*(.+)\n((?:(?!^\s{6}- ).*(?:\n|$))*)/gm),
-    ([, name, body]) => ({ name, body }),
-  );
+
+// Any pnpm/turbo invocation of a build task inside the same command segment.
+// Catches: `pnpm build`, `pnpm run build`, `pnpm --filter x build`,
+// `pnpm -F x build`, `pnpm exec turbo build`, `turbo build`, `turbo run build`.
+const nestedBuildCommand = /\b(?:pnpm|turbo)\b[^&;|\n]*\bbuild\b/;
+
+/** Parse a workflow into jobs, each with its ordered named steps. */
+const workflowJobs = (workflow) => {
+  const lines = workflow.split('\n');
+  const jobs = [];
+  let inJobs = false;
+  let current = null;
+  for (const line of lines) {
+    if (/^jobs:\s*$/.test(line)) {
+      inJobs = true;
+      continue;
+    }
+    if (!inJobs) continue;
+    if (/^\S/.test(line) && line.trim()) {
+      inJobs = false;
+      current = null;
+      continue;
+    }
+    const jobStart = line.match(/^ {2}([\w-]+):\s*$/);
+    if (jobStart) {
+      current = { name: jobStart[1], lines: [] };
+      jobs.push(current);
+      continue;
+    }
+    if (current) current.lines.push(line);
+  }
+  return jobs.map((job) => {
+    const body = job.lines.join('\n');
+    const steps = Array.from(
+      body.matchAll(/^(\s*)- name:\s*(.+)\n((?:(?!\1- ).*(?:\n|$))*)/gm),
+      ([, , name, stepBody]) => ({ name: name.trim(), body: stepBody }),
+    );
+    return { name: job.name, body, steps };
+  });
+};
 
 test('cross-package tests declare their build dependencies in the Turbo graph', async () => {
   const turbo = JSON.parse(await read('turbo.json'));
@@ -28,33 +62,69 @@ test('cross-package tests declare their build dependencies in the Turbo graph', 
     assert.doesNotMatch(manifest.scripts.test, nestedBuildCommand, packageName);
   }
 
-  for (const command of ['pnpm build', 'pnpm run build', 'pnpm --filter @aetherui/core build']) {
-    assert.match(command, nestedBuildCommand);
+  // The guard must catch every invocation shape, not just the canonical one.
+  for (const command of [
+    'pnpm build',
+    'pnpm run build',
+    'pnpm --filter @aetherui/core build',
+    'pnpm --filter @aetherui/core run build',
+    'pnpm -F @aetherui/core build',
+    'pnpm exec turbo build',
+    'turbo build',
+    'turbo run build',
+  ]) {
+    assert.match(command, nestedBuildCommand, command);
+  }
+  for (const command of ['node --test test/', 'web-test-runner --group build-output']) {
+    assert.doesNotMatch(command, nestedBuildCommand, command);
   }
 });
 
 test('the publish workflow installs Chromium before running browser tests', async () => {
   const workflow = await read('.github/workflows/publish.yml');
-  const steps = namedWorkflowSteps(workflow);
-  const install = steps.findIndex((step) => step.name === 'Install Playwright browser');
-  const tests = steps.findIndex((step) => step.name === 'Run tests');
+  // Step order only matters within a single job, so assert per job.
+  const job = workflowJobs(workflow).find((candidate) =>
+    candidate.steps.some((step) => step.name === 'Run tests'),
+  );
+  assert.ok(job, 'missing a job that runs tests');
+  const install = job.steps.findIndex((step) => step.name === 'Install Playwright browser');
+  const tests = job.steps.findIndex((step) => step.name === 'Run tests');
 
   assert.ok(install >= 0, 'missing Playwright Chromium installation');
-  assert.ok(install < tests, 'Playwright installation must precede tests');
-  assert.match(steps[install].body, /run:\s*npx playwright install --with-deps chromium/);
+  assert.ok(install < tests, 'Playwright installation must precede tests in the same job');
+  assert.match(job.steps[install].body, /run:\s*npx playwright install --with-deps chromium/);
 });
 
-test('CI executes the release-contract guards', async () => {
-  const workflow = await read('.github/workflows/ci.yml');
-  const steps = namedWorkflowSteps(workflow);
-  assert.match(
-    steps.find((step) => step.name === 'Run release contract tests')?.body ?? '',
-    /run: pnpm test:release-contracts/,
+test('CI and publish workflows execute the release-contract guards', async () => {
+  for (const workflowPath of ['.github/workflows/ci.yml', '.github/workflows/publish.yml']) {
+    const workflow = await read(workflowPath);
+    const steps = workflowJobs(workflow).flatMap((job) => job.steps);
+    assert.match(
+      steps.find((step) => step.name === 'Run release contract tests')?.body ?? '',
+      /run: pnpm test:release-contracts/,
+      `${workflowPath} must run the release contract tests`,
+    );
+    assert.match(
+      steps.find((step) => step.name === 'Typecheck generated React declarations')?.body ?? '',
+      /run: pnpm typecheck:react/,
+      `${workflowPath} must typecheck the generated React declarations`,
+    );
+    assert.match(
+      steps.find((step) => step.name === 'Verify generated agent artifacts')?.body ?? '',
+      /run: pnpm check:agent-artifacts/,
+      `${workflowPath} must verify the generated agent artifacts`,
+    );
+  }
+});
+
+test('the React declaration typecheck runs against real React typings', async () => {
+  const config = JSON.parse(await read('scripts/tsconfig.react-types.json'));
+  assert.ok(
+    config.compilerOptions.types.includes('react'),
+    'typecheck:react must resolve @types/react, not a hand-rolled shim',
   );
-  assert.match(
-    steps.find((step) => step.name === 'Typecheck generated React declarations')?.body ?? '',
-    /run: pnpm typecheck:react/,
-  );
+  const manifest = JSON.parse(await read('package.json'));
+  assert.ok(manifest.devDependencies['@types/react'], 'missing @types/react devDependency');
 });
 
 test('agent resource links use the build-time Astro base', async () => {

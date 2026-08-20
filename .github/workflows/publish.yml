@@ -71,6 +71,17 @@ jobs:
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
 
+      # The same release-contract guards CI runs, so a workflow_dispatch
+      # publish of an arbitrary tag cannot skip them.
+      - name: Verify generated agent artifacts
+        run: pnpm check:agent-artifacts
+
+      - name: Run release contract tests
+        run: pnpm test:release-contracts
+
+      - name: Typecheck generated React declarations
+        run: pnpm typecheck:react
+
       - name: Publish @aetherui/tokens
         run: |
           cd packages/tokens

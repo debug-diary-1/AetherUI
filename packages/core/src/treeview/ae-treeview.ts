@@ -3,6 +3,7 @@ import { customElement, property, state, query } from 'lit/decorators.js';
 import { TreeNode, renderTreeNode, renderEmptyState, renderLoadingState } from './node';
 import { TreeViewKeyboardController } from './keyboard';
 import { treeviewStyles } from './styles';
+import { arraysShallowEqual, toArrayCopy } from '../internal/array-props';
 
 /**
  * @element ae-treeview
@@ -102,11 +103,35 @@ export class AeTreeView extends LitElement {
   })
   accessor data: TreeNode[] = [];
 
-  @property({ type: Array })
-  accessor expanded: string[] = [];
+  private _expanded: string[] = [];
 
+  /** @default [] */
   @property({ type: Array })
-  accessor selected: string[] = [];
+  set expanded(next: string[]) {
+    const expanded = toArrayCopy<string>(next);
+    const previous = this._expanded;
+    if (arraysShallowEqual(previous, expanded)) return;
+    this._expanded = expanded;
+    this.requestUpdate('expanded', previous);
+  }
+  get expanded(): string[] {
+    return [...this._expanded];
+  }
+
+  private _selected: string[] = [];
+
+  /** @default [] */
+  @property({ type: Array })
+  set selected(next: string[]) {
+    const selected = toArrayCopy<string>(next);
+    const previous = this._selected;
+    if (arraysShallowEqual(previous, selected)) return;
+    this._selected = selected;
+    this.requestUpdate('selected', previous);
+  }
+  get selected(): string[] {
+    return [...this._selected];
+  }
 
   @property({ type: String, attribute: 'selection-mode' })
   accessor selectionMode: 'single' | 'multiple' | 'none' = 'single';

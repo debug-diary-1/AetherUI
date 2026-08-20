@@ -5,10 +5,10 @@
     "noEmit": true,
     "skipLibCheck": false,
     "allowJs": false,
-    "types": [],
+    "types": ["react"],
     "lib": ["ES2022", "DOM", "DOM.Iterable"]
   },
-  "files": ["react-shim.d.ts", "../packages/core/react.d.ts"],
+  "files": ["../packages/core/react.d.ts"],
   "include": [],
   "exclude": []
 }

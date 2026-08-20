@@ -12,6 +12,8 @@ export const normalizeTypeText = (type) =>
     .replace(/^\|\s*/, '')
     .trim();
 
+const aliasPrinter = ts.createPrinter({ removeComments: true });
+
 export const collectTypeAliases = (sourceRoot) => {
   const aliases = new Map();
   const ambiguous = new Set();
@@ -21,8 +23,16 @@ export const collectTypeAliases = (sourceRoot) => {
   const resolveImport = (sourcePath, specifier) => {
     if (!specifier.startsWith('.')) return undefined;
     const base = resolve(dirname(sourcePath), specifier);
-    for (const candidate of [`${base}.ts`, resolve(base, 'index.ts')]) {
-      if (existsSync(candidate)) return candidate;
+    // The repo uses NodeNext-style relative imports ('./middleware.js') that
+    // point at TypeScript sources, alongside extensionless ones.
+    const candidates = [
+      base.replace(/\.(?:js|mjs|cjs)$/, '.ts'),
+      `${base}.ts`,
+      base,
+      resolve(base, 'index.ts'),
+    ];
+    for (const candidate of candidates) {
+      if (candidate.endsWith('.ts') && existsSync(candidate)) return candidate;
     }
     return undefined;
   };
@@ -56,11 +66,18 @@ export const collectTypeAliases = (sourceRoot) => {
           }
           if (!ts.isTypeAliasDeclaration(statement)) continue;
           const name = statement.name.text;
-          const type = statement.type.getText(source);
+          // Print through the TypeScript printer so comments are dropped and
+          // the text is canonical; then collapse layout whitespace. Comparing
+          // the normalized text (instead of stripping all whitespace) keeps
+          // whitespace inside string literals significant, so 'no wrap' and
+          // 'nowrap' correctly count as divergent aliases.
+          const type = normalizeTypeText(
+            aliasPrinter.printNode(ts.EmitHint.Unspecified, statement.type, source),
+          );
           sourceAliases.set(name, type);
           if (ambiguous.has(name)) continue;
           const existing = aliases.get(name);
-          if (existing && existing.replace(/\s/g, '') !== type.replace(/\s/g, '')) {
+          if (existing && existing !== type) {
             aliases.delete(name);
             ambiguous.add(name);
             continue;

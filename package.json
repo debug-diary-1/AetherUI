@@ -59,6 +59,7 @@
     "@playwright/test": "catalog:",
     "@storybook/test-runner": "catalog:",
     "@types/node": "catalog:",
+    "@types/react": "catalog:",
     "@web/dev-server-esbuild": "catalog:",
     "@web/test-runner": "catalog:",
     "@web/test-runner-playwright": "catalog:",

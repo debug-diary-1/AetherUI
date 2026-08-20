@@ -254,6 +254,80 @@ describe('ae-accordion', () => {
     expect(observedValue).to.deep.equal(['second']);
   });
 
+  it('keeps a controlled value when items are authored open', async () => {
+    const accordion = await fixture<AeAccordion>(html`
+      <ae-accordion value='["second"]'>
+        <ae-accordion-item header-id="first" open>
+          <span slot="header">First</span>
+          One
+        </ae-accordion-item>
+        <ae-accordion-item header-id="second">
+          <span slot="header">Second</span>
+          Two
+        </ae-accordion-item>
+      </ae-accordion>
+    `);
+    await accordion.updateComplete;
+
+    const items = Array.from(accordion.querySelectorAll<AeAccordionItem>('ae-accordion-item'));
+    expect(accordion.value).to.deep.equal(['second']);
+    expect(items.map((item) => item.open)).to.deep.equal([false, true]);
+  });
+
+  it('keeps default-value authoritative over initially open items', async () => {
+    const accordion = await fixture<AeAccordion>(html`
+      <ae-accordion default-value='["second"]'>
+        <ae-accordion-item header-id="first" open>
+          <span slot="header">First</span>
+          One
+        </ae-accordion-item>
+        <ae-accordion-item header-id="second">
+          <span slot="header">Second</span>
+          Two
+        </ae-accordion-item>
+      </ae-accordion>
+    `);
+    await accordion.updateComplete;
+
+    const items = Array.from(accordion.querySelectorAll<AeAccordionItem>('ae-accordion-item'));
+    expect(accordion.value).to.deep.equal(['second']);
+    expect(items.map((item) => item.open)).to.deep.equal([false, true]);
+  });
+
+  it('adopts an injected open item even when another panel is already open', async () => {
+    const accordion = await fixture<AeAccordion>(html`
+      <ae-accordion multiselectable>
+        <ae-accordion-item header-id="first" open>
+          <span slot="header">First</span>
+          One
+        </ae-accordion-item>
+      </ae-accordion>
+    `);
+    await accordion.updateComplete;
+    expect(accordion.value).to.deep.equal(['first']);
+
+    const injected = document.createElement('ae-accordion-item') as AeAccordionItem;
+    injected.headerId = 'second';
+    injected.open = true;
+    const changed = oneEvent(accordion, 'ae-accordion-change');
+    accordion.appendChild(injected);
+    const event = await changed;
+    await accordion.updateComplete;
+
+    expect(injected.open).to.be.true;
+    expect(accordion.value).to.deep.equal(['first', 'second']);
+    expect(event.detail.value).to.deep.equal(['first', 'second']);
+  });
+
+  it('gives value precedence over expanded regardless of property write order', async () => {
+    const accordion = await fixture<AeAccordion>(html`<ae-accordion></ae-accordion>`);
+    accordion.value = ['canonical'];
+    accordion.expanded = ['legacy'];
+    await accordion.updateComplete;
+
+    expect(accordion.value).to.deep.equal(['canonical']);
+  });
+
   it('copies arrays assigned through the expanded compatibility alias', async () => {
     const accordion = await fixture<AeAccordion>(html`<ae-accordion></ae-accordion>`);
     const expanded = ['first'];
