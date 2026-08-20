@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "moduleResolution": "bundler",
     "noEmit": true,
@@ -8,7 +8,7 @@
     "types": ["react"],
     "lib": ["ES2022", "DOM", "DOM.Iterable"]
   },
-  "files": ["../packages/core/react.d.ts"],
+  "files": ["react.d.ts"],
   "include": [],
   "exclude": []
 }

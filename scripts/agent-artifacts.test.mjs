@@ -60,7 +60,9 @@ test('React declarations exclude inferred dynamic event variable names', async (
   assert.match(reactTypes, /import type \{[^}]*SelectOption[^}]*\} from '\.\/dist\/index\.js';/s);
   const generator = await readFile(new URL('./generate-react-types.mjs', import.meta.url), 'utf8');
   assert.doesNotMatch(generator, /AutocompleteOption, ComboItem, SelectOption, TreeNode/);
-  assert.doesNotMatch(generator, /checkOnly|--check/);
+  // The generator must offer a read-only --check mode so CI and publish can
+  // verify the committed declarations instead of silently rewriting them.
+  assert.match(generator, /--check/);
 });
 
 test('same-named divergent aliases do not crash artifact generation', async (t) => {

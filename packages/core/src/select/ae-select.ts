@@ -295,20 +295,22 @@ export class AeSelect extends LitElement {
     });
 
     // Preserve the current selection after replacing the native options.
-    // Adopt authored `selected` state only while nothing (consumer write,
-    // user change, or an earlier adoption) has established a selection.
+    // While uncontrolled, authored `selected` state stays authoritative: a
+    // replaced option set is re-adopted rather than leaving `values` holding
+    // ids that no longer exist in the list.
     if (this.multiple) {
-      if (this._valuesWereSet || this._values.length > 0) {
+      if (this._valuesWereSet) {
         this._syncOptionSelection();
       } else {
+        // Uncontrolled: the rendered options are the source of truth, so a
+        // replaced option set re-adopts (and drops ids that are gone).
         const selectedValues = Array.from(
           this.selectElement.selectedOptions,
           (option) => option.value,
         );
-        if (selectedValues.length > 0) {
-          this.assignValues(selectedValues);
-          this._updateFormValue();
-        }
+        const changed = !arraysShallowEqual(this._values, selectedValues);
+        this.assignValues(selectedValues);
+        if (changed) this._updateFormValue();
       }
     } else {
       if (this.value) {
@@ -366,21 +368,28 @@ export class AeSelect extends LitElement {
   }
 
   formResetCallback() {
+    // Native reset semantics: restore the authored defaults (`selected`
+    // attributes on light-DOM options and `selected` flags on programmatic
+    // options) rather than clearing. Uses the internal write paths so a reset
+    // never marks the select as controlled.
+    const defaults = this._getDefaultValues();
     if (this.multiple) {
-      // Native reset semantics: restore the authored defaults (`selected`
-      // attributes on light-DOM options and `selected` flags on programmatic
-      // options) rather than clearing the selection. Uses the internal write
-      // path so a reset never marks the select as controlled.
-      this.assignValues(this._getDefaultValues());
+      this.assignValues(defaults);
       this._syncOptionSelection();
     } else {
-      this.value = this._defaultValue;
+      // An explicit `value`/`default-value` on the element wins over an
+      // authored `selected` option, matching how the initial value is chosen.
+      this.value = this._defaultValue || defaults[0] || '';
     }
     this._updateFormValue();
     this._updateValidity();
   }
 
-  /** Authored default selection, mirroring HTMLOptionElement.defaultSelected. */
+  /**
+   * Authored default selection, mirroring HTMLOptionElement.defaultSelected.
+   * Programmatic and light-DOM options are rendered into the same list, so
+   * the result is de-duplicated to match what the native select can report.
+   */
   private _getDefaultValues(): string[] {
     const fromOptions = this._options
       .filter((option) => option.selected)
@@ -388,7 +397,7 @@ export class AeSelect extends LitElement {
     const fromLightDOM = Array.from(this.querySelectorAll('option'))
       .filter((option) => option.defaultSelected)
       .map((option) => option.value);
-    return [...fromOptions, ...fromLightDOM];
+    return [...new Set([...fromOptions, ...fromLightDOM])];
   }
 
   formStateRestoreCallback(state: string | FormData | null, _mode: 'restore' | 'autocomplete') {

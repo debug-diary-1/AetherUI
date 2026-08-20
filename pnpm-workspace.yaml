@@ -20,7 +20,6 @@ catalog:
   '@storybook/web-components-vite': 10.5.8
   '@types/node': 20.19.13
   '@types/prismjs': 1.26.6
-  '@types/react': 19.2.18
   '@web/dev-server-esbuild': 2.0.0
   '@web/test-runner': 1.0.0
   '@web/test-runner-playwright': 1.0.0

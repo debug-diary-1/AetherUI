@@ -309,6 +309,68 @@ describe('ae-select', () => {
     expect(el.options).to.have.lengthOf(1);
   });
 
+  it('re-adopts authored selection when the option set is replaced', async () => {
+    const el = await fixture<AeSelect>(html`
+      <ae-select multiple>
+        <option value="a" selected>A</option>
+        <option value="b">B</option>
+      </ae-select>
+    `);
+    await el.updateComplete;
+    expect(el.values).to.deep.equal(['a']);
+
+    el.innerHTML = '<option value="c" selected>C</option><option value="d">D</option>';
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    await el.updateComplete;
+
+    expect(el.values).to.deep.equal(['c']);
+    expect(
+      Array.from(el.shadowRoot!.querySelector('select')!.selectedOptions, (option) => option.value),
+    ).to.deep.equal(['c']);
+  });
+
+  it('does not duplicate values that are authored twice on reset', async () => {
+    const form = await fixture<HTMLFormElement>(html`
+      <form>
+        <ae-select name="m" multiple>
+          <option value="a" selected>A</option>
+        </ae-select>
+      </form>
+    `);
+    const el = form.querySelector('ae-select') as AeSelect;
+    el.options = [{ value: 'a', label: 'A prog', selected: true }];
+    await el.updateComplete;
+
+    form.reset();
+    await el.updateComplete;
+
+    expect(el.values).to.deep.equal(['a']);
+    expect(new FormData(form).getAll('m')).to.deep.equal(['a']);
+  });
+
+  it('restores an authored selected option on reset in single mode', async () => {
+    const form = await fixture<HTMLFormElement>(html`
+      <form>
+        <ae-select name="pick">
+          <option value="a">A</option>
+          <option value="b" selected>B</option>
+        </ae-select>
+      </form>
+    `);
+    const el = form.querySelector('ae-select') as AeSelect;
+    await el.updateComplete;
+    expect(el.value).to.equal('b');
+
+    el.value = 'a';
+    await el.updateComplete;
+
+    form.reset();
+    await el.updateComplete;
+
+    expect(el.value).to.equal('b');
+    expect(new FormData(form).get('pick')).to.equal('b');
+  });
+
   it('participates in form submission', async () => {
     const form = await fixture<HTMLFormElement>(html`
       <form>

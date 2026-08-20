@@ -24,6 +24,10 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          # On a release this is the release commit; on workflow_dispatch it is
+          # the tag the operator asked for, so the guards below validate the
+          # code that is actually about to be published.
+          ref: ${{ github.event.inputs.tag || github.ref }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -63,6 +67,12 @@ jobs:
         env:
           NODE_OPTIONS: '--max-old-space-size=2048'
 
+      - name: Verify generated agent artifacts
+        run: pnpm check:agent-artifacts
+
+      - name: Run release contract tests
+        run: pnpm test:release-contracts
+
       - name: Audit production dependencies
         run: pnpm audit:prod
 
@@ -70,14 +80,6 @@ jobs:
         run: pnpm build
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
-
-      # The same release-contract guards CI runs, so a workflow_dispatch
-      # publish of an arbitrary tag cannot skip them.
-      - name: Verify generated agent artifacts
-        run: pnpm check:agent-artifacts
-
-      - name: Run release contract tests
-        run: pnpm test:release-contracts
 
       - name: Typecheck generated React declarations
         run: pnpm typecheck:react

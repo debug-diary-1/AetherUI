@@ -191,7 +191,8 @@
     "test": "web-test-runner --config web-test-runner.config.mjs",
     "test:coverage": "COVERAGE=true web-test-runner --config web-test-runner.config.mjs",
     "test:cross-browser": "CROSS_BROWSER=true web-test-runner --config web-test-runner.config.mjs",
-    "test:watch": "web-test-runner --watch"
+    "test:watch": "web-test-runner --watch",
+    "typecheck:react": "tsc -p tsconfig.react.json"
   },
   "dependencies": {
     "lit": "catalog:"
@@ -200,6 +201,7 @@
     "@custom-elements-manifest/analyzer": "catalog:",
     "@open-wc/testing": "catalog:",
     "@types/node": "catalog:",
+    "@types/react": "18.3.20",
     "@web/test-runner-playwright": "catalog:",
     "playwright": "catalog:",
     "rimraf": "catalog:",

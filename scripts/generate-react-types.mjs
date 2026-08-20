@@ -8,7 +8,7 @@
  * Run via `pnpm gen:react-types` from packages/core (or as part of build).
  */
 
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import {
@@ -122,6 +122,21 @@ ${body}
 
 export {};
 `;
+
+// `--check` verifies the committed file matches what the sources produce,
+// without touching the working tree. Publish and CI use it as a read-only
+// guard; the plain invocation regenerates during builds.
+if (process.argv.includes('--check')) {
+  const current = existsSync(outPath) ? readFileSync(outPath, 'utf8') : '';
+  if (current !== output) {
+    console.error(
+      `Stale generated artifact: ${outPath}\nRun \`pnpm --filter @aetherui/core gen:react-types\` and commit the result.`,
+    );
+    process.exit(1);
+  }
+  console.log(`Verified ${outPath} is up to date.`);
+  process.exit(0);
+}
 
 writeFileSync(outPath, output);
 console.log(

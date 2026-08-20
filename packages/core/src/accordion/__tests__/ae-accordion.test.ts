@@ -328,6 +328,91 @@ describe('ae-accordion', () => {
     expect(accordion.value).to.deep.equal(['canonical']);
   });
 
+  it('keeps the open panels when the accordion is re-parented', async () => {
+    const host = await fixture<HTMLElement>(html`
+      <div>
+        <div id="a">
+          <ae-accordion default-value='["first"]'>
+            <ae-accordion-item header-id="first"
+              ><span slot="header">First</span>One</ae-accordion-item
+            >
+            <ae-accordion-item header-id="second"
+              ><span slot="header">Second</span>Two</ae-accordion-item
+            >
+          </ae-accordion>
+        </div>
+        <div id="b"></div>
+      </div>
+    `);
+    const accordion = host.querySelector<AeAccordion>('ae-accordion')!;
+    await accordion.updateComplete;
+
+    const second = accordion.querySelectorAll<AeAccordionItem>('ae-accordion-item')[1];
+    second.shadowRoot!.querySelector<HTMLButtonElement>('button')!.click();
+    await accordion.updateComplete;
+    expect(accordion.value).to.deep.equal(['second']);
+
+    host.querySelector('#b')!.appendChild(accordion);
+    await accordion.updateComplete;
+
+    expect(accordion.value).to.deep.equal(['second']);
+    expect(second.open).to.be.true;
+  });
+
+  it('returns to uncontrolled behaviour when the value attribute is removed', async () => {
+    const accordion = await fixture<AeAccordion>(html`
+      <ae-accordion value='["first"]'>
+        <ae-accordion-item header-id="first"><span slot="header">First</span>One</ae-accordion-item>
+        <ae-accordion-item header-id="second"
+          ><span slot="header">Second</span>Two</ae-accordion-item
+        >
+      </ae-accordion>
+    `);
+    await accordion.updateComplete;
+
+    accordion.removeAttribute('value');
+    accordion.expanded = ['second'];
+    await accordion.updateComplete;
+
+    expect(accordion.value).to.deep.equal(['second']);
+  });
+
+  it('honours an expanded write over authored open markup', async () => {
+    const accordion = document.createElement('ae-accordion') as AeAccordion;
+    const first = document.createElement('ae-accordion-item') as AeAccordionItem;
+    first.headerId = 'first';
+    first.open = true;
+    const second = document.createElement('ae-accordion-item') as AeAccordionItem;
+    second.headerId = 'second';
+    accordion.append(first, second);
+    accordion.expanded = ['second'];
+
+    const host = await fixture<HTMLElement>(html`<div></div>`);
+    host.appendChild(accordion);
+    await accordion.updateComplete;
+
+    expect(accordion.value).to.deep.equal(['second']);
+  });
+
+  it('drops panels whose items are removed from the DOM', async () => {
+    const accordion = await fixture<AeAccordion>(html`
+      <ae-accordion multiselectable value='["first","second"]'>
+        <ae-accordion-item header-id="first"><span slot="header">First</span>One</ae-accordion-item>
+        <ae-accordion-item header-id="second"
+          ><span slot="header">Second</span>Two</ae-accordion-item
+        >
+      </ae-accordion>
+    `);
+    await accordion.updateComplete;
+    expect(accordion.value).to.deep.equal(['first', 'second']);
+
+    accordion.querySelector('[header-id="first"]')!.remove();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    await accordion.updateComplete;
+
+    expect(accordion.value).to.deep.equal(['second']);
+  });
+
   it('copies arrays assigned through the expanded compatibility alias', async () => {
     const accordion = await fixture<AeAccordion>(html`<ae-accordion></ae-accordion>`);
     const expanded = ['first'];

@@ -48,11 +48,21 @@ export class AeAccordion extends LitElement {
   private _value: string[] = [];
 
   /**
-   * Set once the consumer writes `value` (attribute or property). From that
-   * point the accordion is controlled: authored `open` markup is never
-   * adopted and the legacy `expanded` alias can no longer override `value`.
+   * Set while the consumer's `value` is authoritative, so a later write
+   * through the legacy `expanded` alias cannot override it. Cleared when the
+   * `value` attribute is removed, which returns the accordion to the
+   * uncontrolled behaviour it had before the attribute appeared.
    */
   private _valueWasSet = false;
+
+  /**
+   * Set once open state has been established by any means: a consumer write
+   * (`value` or `expanded`), `default-value` seeding, adoption of authored
+   * `open` markup, or user interaction. Determines whether reconnecting
+   * restores the live state (it must) or re-seeds from defaults, and whether
+   * authored `open` markup may still be adopted.
+   */
+  private _stateEstablished = false;
 
   /**
    * Array of panel IDs that are currently open/expanded (controlled)
@@ -61,6 +71,7 @@ export class AeAccordion extends LitElement {
   @property({ type: Array, attribute: 'value' })
   set value(next: string[]) {
     this._valueWasSet = true;
+    this._stateEstablished = true;
     this.assignValue(next);
   }
   get value(): string[] {
@@ -72,12 +83,24 @@ export class AeAccordion extends LitElement {
   set expanded(next: string[]) {
     // The canonical value wins regardless of attribute or property write
     // order: once `value` has been written by the consumer, alias writes are
-    // ignored. Legacy consumers that only ever use `expanded` are unaffected.
-    if (this._valueWasSet || this.hasAttribute('value')) return;
+    // ignored. A legacy consumer that only ever writes `expanded` still
+    // establishes state, so authored `open` markup cannot override it.
+    if (this._valueWasSet) return;
+    this._stateEstablished = true;
     this.assignValue(next);
   }
   get expanded(): string[] {
     return this.value;
+  }
+
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
+    // Removing the `value` attribute hands control back rather than pinning
+    // the accordion to an empty controlled value forever.
+    if (name === 'value' && newValue === null) {
+      this._valueWasSet = false;
+      return;
+    }
+    super.attributeChangedCallback(name, oldValue, newValue);
   }
 
   /**
@@ -93,6 +116,15 @@ export class AeAccordion extends LitElement {
   private _observer: MutationObserver | null = null;
   private syncingItems = false;
 
+  /**
+   * Whether the accordion has finished its initial adoption of authored
+   * `open` markup. Later adoptions (items injected by an application) report
+   * through the public change events; the initial one stays silent. This is
+   * per-instance on purpose: keying it on document.readyState would make the
+   * event contract depend on when the surrounding script happened to run.
+   */
+  private _initialAdoptionDone = false;
+
   /** Internal write path shared by user interaction, adoption, and aliases. */
   private assignValue(next: unknown) {
     const value = toArrayCopy<string>(next);
@@ -102,30 +134,29 @@ export class AeAccordion extends LitElement {
     this.requestUpdate('value', previous);
   }
 
-  private isControlled(): boolean {
-    return this._valueWasSet || this.hasAttribute('value');
+  private normalizeForMode(value: readonly string[]): string[] {
+    return this.multiselectable ? [...value] : value.slice(0, 1);
   }
 
   connectedCallback() {
     super.connectedCallback();
     this.setupMutationObserver();
 
-    if (this.isControlled()) {
-      // Controlled state (including an explicit empty array) is the single
-      // source of truth; authored `open` markup is never adopted.
-      const normalized = this.multiselectable ? this.value : this.value.slice(0, 1);
-      this.openPanels = new Set(normalized);
+    if (this._stateEstablished) {
+      // Established state is authoritative, whether it came from a consumer
+      // write, an earlier adoption, or user interaction. Re-parenting the
+      // accordion must not discard the panels the user opened.
+      this.openPanels = new Set(this.normalizeForMode(this._value));
       this.updateItems();
     } else if (this.defaultValue.length) {
-      const normalized = this.multiselectable ? this.defaultValue : this.defaultValue.slice(0, 1);
+      const normalized = this.normalizeForMode(this.defaultValue);
       this.openPanels = new Set(normalized);
+      this._stateEstablished = true;
       this.assignValue(normalized);
       this.updateItems();
-    } else {
-      // Children are usually not parsed yet here; firstUpdated() and the
-      // mutation observer retry adoption once items exist.
-      this.adoptAuthoredOpenItems(false);
     }
+    // Otherwise adoption of authored `open` markup happens on slotchange,
+    // once children are actually assigned.
   }
 
   disconnectedCallback() {
@@ -136,21 +167,22 @@ export class AeAccordion extends LitElement {
 
   /**
    * Adopt items authored with the `open` attribute/property as accordion
-   * state. Only runs while uncontrolled. Initial adoption (mount, parse) is
-   * silent; adoption of items injected after mount reports the value change
-   * through the public change events so event-driven consumers stay in sync.
+   * state. Skipped once `value` is controlled or state was otherwise
+   * established by the consumer. The first adoption is silent; adoption of
+   * items injected afterwards reports the value change through the public
+   * change events so event-driven consumers stay in sync.
    *
    * In single-select mode the first authored-open item wins during initial
-   * adoption (matching the longstanding parse behavior), while a post-mount
+   * adoption (matching the longstanding parse behavior), while a later
    * injection wins over an already-open panel (matching native
    * `<details name>` semantics where the newly opened panel closes others).
    *
    * @returns whether any authored open state was adopted
    */
-  private adoptAuthoredOpenItems(notify: boolean): boolean {
-    if (this.isControlled()) return false;
+  private adoptAuthoredOpenItems(items: AeAccordionItem[]): boolean {
+    if (this._valueWasSet || (this._stateEstablished && !this._initialAdoptionDone)) return false;
 
-    const items = this.getItems();
+    const notify = this._initialAdoptionDone;
     const authoredOpen = items.filter(
       (item) => (item.open || item.hasAttribute('open')) && item.headerId,
     );
@@ -166,19 +198,64 @@ export class AeAccordion extends LitElement {
     }
 
     const previous = this._value;
+    this._stateEstablished = true;
     this.assignValue(Array.from(this.openPanels));
     this.updateItems(notify, items);
     if (notify && !arraysShallowEqual(previous, this._value)) this.dispatchChangeEvents();
     return true;
   }
 
+  /**
+   * Drop open panels whose items were removed from the DOM, so `value` never
+   * reports panels that no longer exist. Only ids belonging to the removed
+   * nodes are considered: pruning against the surviving items would discard
+   * a controlled value for items that have not been parsed yet.
+   */
+  private pruneRemovedItems(removed: readonly Node[]): boolean {
+    if (this.openPanels.size === 0) return false;
+    const removedIds = new Set<string>();
+    for (const node of removed) {
+      if (!(node instanceof Element)) continue;
+      const items =
+        node.tagName === 'AE-ACCORDION-ITEM'
+          ? [node]
+          : Array.from(node.querySelectorAll('ae-accordion-item'));
+      for (const item of items) {
+        const headerId = (item as AeAccordionItem).headerId ?? item.getAttribute('data-header-id');
+        if (headerId) removedIds.add(headerId);
+      }
+    }
+    // An item that was moved rather than deleted still lives under this
+    // accordion, so keep its panel open.
+    const surviving = new Set(this.getItems().map((item) => item.headerId));
+    let changed = false;
+    for (const id of removedIds) {
+      if (this.openPanels.has(id) && !surviving.has(id)) {
+        this.openPanels.delete(id);
+        changed = true;
+      }
+    }
+    if (changed) this.syncPublicValue();
+    return changed;
+  }
+
+  /** Light-DOM children are assigned; adopt authored state and prune stale ids. */
+  private handleSlotChange() {
+    const items = this.getItems();
+    const adopted = this.adoptAuthoredOpenItems(items);
+    this._initialAdoptionDone = true;
+    if (!adopted) this.updateItems(false, items);
+  }
+
   private setupMutationObserver() {
     this._observer = new MutationObserver((mutations) => {
-      let identityChanged = false;
-      let childrenChanged = false;
+      let stateChanged = false;
+      let itemsAdded = false;
+      const removedNodes: Node[] = [];
       for (const mutation of mutations) {
         if (mutation.type === 'childList') {
-          childrenChanged = true;
+          removedNodes.push(...Array.from(mutation.removedNodes));
+          if (mutation.addedNodes.length > 0) itemsAdded = true;
           continue;
         }
         if (mutation.type !== 'attributes' || mutation.attributeName !== 'data-header-id') continue;
@@ -192,17 +269,14 @@ export class AeAccordion extends LitElement {
         this.openPanels = new Set(
           Array.from(this.openPanels, (panelId) => (panelId === previousId ? nextId : panelId)),
         );
-        identityChanged = true;
+        stateChanged = true;
       }
-      if (identityChanged) this.syncPublicValue();
-      if (childrenChanged) {
-        // Adopt authored open state on injected items regardless of whether
-        // other panels are already open. Adoption during document parsing is
-        // part of initial mount and stays silent; later injections notify.
-        const notify = this.hasUpdated && this.ownerDocument.readyState !== 'loading';
-        if (this.adoptAuthoredOpenItems(notify)) return;
-      }
-      this.updateItems();
+      if (stateChanged) this.syncPublicValue();
+      if (removedNodes.length > 0) this.pruneRemovedItems(removedNodes);
+      // Added items are handled by slotchange, which fires outside the
+      // reactive update cycle. Reconciling here first would close an injected
+      // item before its authored `open` state can be adopted.
+      if (!itemsAdded) this.updateItems();
     });
 
     this._observer.observe(this, {
@@ -212,15 +286,6 @@ export class AeAccordion extends LitElement {
       attributeFilter: ['data-header-id'],
       attributeOldValue: true,
     });
-  }
-
-  firstUpdated() {
-    // Children exist by now; adopt authored open markup only when nothing
-    // (controlled value or default-value) has established state already.
-    if (!this.isControlled() && this.openPanels.size === 0 && this.defaultValue.length === 0) {
-      this.adoptAuthoredOpenItems(false);
-    }
-    this.updateItems();
   }
 
   updated(changedProperties: Map<string, unknown>) {
@@ -235,6 +300,10 @@ export class AeAccordion extends LitElement {
   }
 
   private syncPublicValue() {
+    // Any internal state change (user interaction, identity rename, pruning)
+    // counts as established state, so reconnecting restores it instead of
+    // falling back to default-value.
+    this._stateEstablished = true;
     this.assignValue(Array.from(this.openPanels));
   }
 
@@ -332,7 +401,7 @@ export class AeAccordion extends LitElement {
         part="base"
         @ae-panel-change="${(e: CustomEvent) => this.handlePanelChange(e)}"
       >
-        <slot></slot>
+        <slot @slotchange="${this.handleSlotChange}"></slot>
       </div>
     `;
   }
