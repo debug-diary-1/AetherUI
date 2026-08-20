@@ -92,3 +92,21 @@ test('forwards allowed URL protocols to the runtime validator', async () => {
     assert.equal(validation.structuredContent.ok, true);
   });
 });
+
+test('normalizes URL protocol names without a trailing colon', async () => {
+  await withClient(async (client) => {
+    const validation = await client.callTool({
+      name: 'validate_agent_ui',
+      arguments: {
+        document: {
+          version: '1',
+          root: { component: 'ae-breadcrumb-item', props: { href: 'https://example.com/' } },
+        },
+        allowedUrlProtocols: ['https'],
+      },
+    });
+
+    assert.equal(validation.isError, undefined);
+    assert.equal(validation.structuredContent.ok, true);
+  });
+});

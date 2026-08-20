@@ -4,6 +4,12 @@ import test from 'node:test';
 
 const root = new URL('../', import.meta.url);
 const read = (path) => readFile(new URL(path, root), 'utf8');
+const nestedBuildCommand = /\bpnpm(?:\s+--filter\s+\S+)?\s+(?:run\s+)?build\b/;
+const namedWorkflowSteps = (workflow) =>
+  Array.from(
+    workflow.matchAll(/^\s{6}- name:\s*(.+)\n((?:(?!^\s{6}- ).*(?:\n|$))*)/gm),
+    ([, name, body]) => ({ name, body }),
+  );
 
 test('cross-package tests declare their build dependencies in the Turbo graph', async () => {
   const turbo = JSON.parse(await read('turbo.json'));
@@ -19,17 +25,36 @@ test('cross-package tests declare their build dependencies in the Turbo graph', 
 
   for (const packageName of ['accordion', 'mcp', 'datatable']) {
     const manifest = JSON.parse(await read(`packages/${packageName}/package.json`));
-    assert.doesNotMatch(manifest.scripts.test, /pnpm (?:--filter .* )?build/, packageName);
+    assert.doesNotMatch(manifest.scripts.test, nestedBuildCommand, packageName);
+  }
+
+  for (const command of ['pnpm build', 'pnpm run build', 'pnpm --filter @aetherui/core build']) {
+    assert.match(command, nestedBuildCommand);
   }
 });
 
 test('the publish workflow installs Chromium before running browser tests', async () => {
   const workflow = await read('.github/workflows/publish.yml');
-  const install = workflow.indexOf('playwright install --with-deps chromium');
-  const tests = workflow.indexOf('- name: Run tests');
+  const steps = namedWorkflowSteps(workflow);
+  const install = steps.findIndex((step) => step.name === 'Install Playwright browser');
+  const tests = steps.findIndex((step) => step.name === 'Run tests');
 
   assert.ok(install >= 0, 'missing Playwright Chromium installation');
   assert.ok(install < tests, 'Playwright installation must precede tests');
+  assert.match(steps[install].body, /run:\s*npx playwright install --with-deps chromium/);
+});
+
+test('CI executes the release-contract guards', async () => {
+  const workflow = await read('.github/workflows/ci.yml');
+  const steps = namedWorkflowSteps(workflow);
+  assert.match(
+    steps.find((step) => step.name === 'Run release contract tests')?.body ?? '',
+    /run: pnpm test:release-contracts/,
+  );
+  assert.match(
+    steps.find((step) => step.name === 'Typecheck generated React declarations')?.body ?? '',
+    /run: pnpm typecheck:react/,
+  );
 });
 
 test('agent resource links use the build-time Astro base', async () => {

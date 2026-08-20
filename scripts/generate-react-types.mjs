@@ -12,6 +12,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import {
+  collectPublicTypeExports,
   collectTypeAliases,
   compareText,
   isLiteralPublicEvent,
@@ -22,8 +23,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, '..');
 const manifestPath = resolve(repoRoot, 'packages/core/custom-elements.json');
 const outPath = resolve(repoRoot, 'packages/core/react.d.ts');
-const checkOnly = process.argv.includes('--check');
 const typeAliases = collectTypeAliases(resolve(repoRoot, 'packages/core/src'));
+const publicTypeExports = collectPublicTypeExports(resolve(repoRoot, 'packages/core/src/index.ts'));
 
 const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
 
@@ -48,7 +49,12 @@ for (const mod of manifest.modules) {
     if (decl.kind !== 'class' || !decl.tagName) continue;
     const props = (decl.members ?? []).filter(isPublicField).map((m) => ({
       name: m.name,
-      type: resolveTypeAlias(m.type?.text ?? 'unknown', typeAliases),
+      type: resolveTypeAlias(
+        m.type?.text ?? 'unknown',
+        typeAliases,
+        new Set(),
+        resolve(repoRoot, 'packages/core', mod.path),
+      ),
       description: m.description,
     }));
     const events = (decl.events ?? []).filter(isLiteralPublicEvent).map((e) => ({
@@ -92,10 +98,19 @@ ${body || '        // (no public props)'}
 };
 
 const body = components.map(renderEntry).join('\n');
+const referencedPublicTypes = new Set();
+for (const component of components) {
+  for (const contract of [...component.props, ...component.events]) {
+    for (const identifier of contract.type.match(/[A-Za-z_$][\w$]*/g) ?? []) {
+      if (publicTypeExports.has(identifier)) referencedPublicTypes.add(identifier);
+    }
+  }
+}
+const publicTypeImport = [...referencedPublicTypes].sort(compareText).join(', ');
 
 const output = `${banner}
 import type * as React from 'react';
-import type { AutocompleteOption, ComboItem, SelectOption, TreeNode } from './dist/index.js';
+${publicTypeImport ? `import type { ${publicTypeImport} } from './dist/index.js';` : ''}
 
 declare module 'react' {
   namespace JSX {
@@ -108,21 +123,7 @@ ${body}
 export {};
 `;
 
-if (checkOnly) {
-  let current = '';
-  try {
-    current = readFileSync(outPath, 'utf8');
-  } catch {
-    // A missing declaration file is stale.
-  }
-  if (current !== output) {
-    console.error('Stale generated artifact: packages/core/react.d.ts');
-    console.error('Run pnpm --filter @aetherui/core gen:react-types.');
-    process.exit(1);
-  }
-} else {
-  writeFileSync(outPath, output);
-  console.log(
-    `Wrote ${outPath} (${components.length} components, ${components.reduce((n, c) => n + c.props.length, 0)} props, ${components.reduce((n, c) => n + c.events.length, 0)} events).`,
-  );
-}
+writeFileSync(outPath, output);
+console.log(
+  `Wrote ${outPath} (${components.length} components, ${components.reduce((n, c) => n + c.props.length, 0)} props, ${components.reduce((n, c) => n + c.events.length, 0)} events).`,
+);

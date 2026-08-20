@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import test from 'node:test';
+import { collectTypeAliases, resolveTypeAlias } from './artifact-helpers.mjs';
 
 const catalog = JSON.parse(
   await readFile(new URL('../packages/core/component-catalog.json', import.meta.url), 'utf8'),
@@ -36,6 +39,11 @@ test('catalog property contracts match their runtime value shapes', () => {
   assert.doesNotMatch(property('ae-autocomplete', 'options').type, /^string\|/);
   assert.match(property('ae-textarea', 'resize').type, /'vertical'/);
   assert.match(property('ae-tooltip', 'placement').type, /'top'/);
+  for (const component of catalog.components) {
+    for (const entry of component.properties) {
+      assert.doesNotMatch(entry.type, /[\r\n]/, `${component.tagName}.${entry.name}`);
+    }
+  }
 });
 
 test('React declarations exclude inferred dynamic event variable names', async () => {
@@ -49,9 +57,28 @@ test('React declarations exclude inferred dynamic event variable names', async (
     reactTypes,
     /\?: (?:Placement|Strategy|ToastPlacement|ToastVariant|AutocompleteFilterFunction|ComboFilterFunction)\b/,
   );
-  assert.match(
-    reactTypes,
-    /import type \{ AutocompleteOption, ComboItem, SelectOption, TreeNode \} from '\.\/dist\/index\.js';/,
+  assert.match(reactTypes, /import type \{[^}]*SelectOption[^}]*\} from '\.\/dist\/index\.js';/s);
+  const generator = await readFile(new URL('./generate-react-types.mjs', import.meta.url), 'utf8');
+  assert.doesNotMatch(generator, /AutocompleteOption, ComboItem, SelectOption, TreeNode/);
+  assert.doesNotMatch(generator, /checkOnly|--check/);
+});
+
+test('same-named divergent aliases do not crash artifact generation', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'aetherui-aliases-'));
+  await mkdir(join(directory, 'one'));
+  await mkdir(join(directory, 'two'));
+  await writeFile(join(directory, 'one', 'types.ts'), "export type Placement = 'top';\n");
+  await writeFile(join(directory, 'two', 'types.ts'), "export type Placement = 'bottom';\n");
+
+  const aliases = collectTypeAliases(directory);
+  assert.equal(aliases.has('Placement'), false);
+  assert.equal(
+    resolveTypeAlias('Placement', aliases, new Set(), join(directory, 'one', 'types.ts')),
+    "'top'",
+  );
+  assert.equal(
+    resolveTypeAlias('Placement', aliases, new Set(), join(directory, 'two', 'types.ts')),
+    "'bottom'",
   );
 });
 

@@ -6,6 +6,11 @@ import fullCatalog from '../component-catalog.json' with { type: 'json' };
 
 const catalogText = `${JSON.stringify(fullCatalog, null, 2)}\n`;
 const schemaText = `${JSON.stringify(agentUiSchema, null, 2)}\n`;
+const urlProtocolSchema = z
+  .string()
+  .trim()
+  .regex(/^[a-z][a-z\d+.-]*:?$/i, 'Expected a URL protocol such as https or https:')
+  .transform((protocol) => `${protocol.replace(/:$/, '').toLowerCase()}:`);
 
 export function createAetherUiMcpServer(): McpServer {
   const server = new McpServer(
@@ -81,7 +86,7 @@ export function createAetherUiMcpServer(): McpServer {
       inputSchema: z.object({
         document: z.unknown().describe('Candidate AetherUI agent document.'),
         allowedComponents: z.array(z.string()).optional(),
-        allowedUrlProtocols: z.array(z.string()).optional(),
+        allowedUrlProtocols: z.array(urlProtocolSchema).optional(),
         maxDepth: z.number().int().positive().optional(),
         maxNodes: z.number().int().positive().optional(),
         maxPropertyDepth: z.number().int().positive().optional(),

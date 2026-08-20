@@ -98,6 +98,9 @@ jobs:
       - name: Verify generated agent artifacts
         run: pnpm check:agent-artifacts
 
+      - name: Run release contract tests
+        run: pnpm test:release-contracts
+
       - name: Run tests
         run: NODE_OPTIONS='--max-old-space-size=2048' pnpm test
         timeout-minutes: 15
@@ -123,6 +126,9 @@ jobs:
       - name: Run build
         run: NODE_OPTIONS='--max-old-space-size=4096' pnpm build
         timeout-minutes: 15
+
+      - name: Typecheck generated React declarations
+        run: pnpm typecheck:react
 
       - name: Run agent UI evals
         run: pnpm test:agent-evals

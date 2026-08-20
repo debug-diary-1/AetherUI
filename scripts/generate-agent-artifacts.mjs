@@ -19,7 +19,7 @@ const clean = (value) => (typeof value === 'string' ? value.trim() : '');
 
 const typeAliases = collectTypeAliases(resolve(root, 'packages/core/src'));
 
-const publicProperties = (declaration) =>
+const publicProperties = (declaration, modulePath) =>
   (declaration.members ?? [])
     .filter(
       (member) =>
@@ -33,7 +33,7 @@ const publicProperties = (declaration) =>
     .map((member) => ({
       name: member.name,
       attribute: member.attribute ?? null,
-      type: resolveTypeAlias(member.type?.text ?? 'unknown', typeAliases),
+      type: resolveTypeAlias(member.type?.text ?? 'unknown', typeAliases, new Set(), modulePath),
       default: member.default ?? null,
       description: clean(member.description),
     }))
@@ -48,7 +48,7 @@ const components = manifest.modules
         className: declaration.name,
         module: module.path,
         description: clean(declaration.description),
-        properties: publicProperties(declaration),
+        properties: publicProperties(declaration, resolve(root, 'packages/core', module.path)),
         events: (declaration.events ?? [])
           .filter(isLiteralPublicEvent)
           .map((event) => ({

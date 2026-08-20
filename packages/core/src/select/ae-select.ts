@@ -66,8 +66,27 @@ export class AeSelect extends LitElement {
   @property({ type: String })
   accessor value = '';
 
+  private _values: string[] = [];
+  private _valuesWereSet = false;
+
+  /** @default [] */
   @property({ type: Array })
-  accessor values: string[] = [];
+  set values(next: string[]) {
+    const values = Array.isArray(next) ? [...next] : [];
+    const previous = this._values;
+    this._valuesWereSet = true;
+    if (
+      previous.length === values.length &&
+      previous.every((value, index) => value === values[index])
+    ) {
+      return;
+    }
+    this._values = values;
+    this.requestUpdate('values', previous);
+  }
+  get values(): string[] {
+    return [...this._values];
+  }
 
   @property({ type: String, attribute: 'default-value' })
   accessor defaultValue = '';
@@ -248,9 +267,22 @@ export class AeSelect extends LitElement {
       this.selectElement.appendChild(clone);
     });
 
-    // Reapply controlled selection after replacing the native options.
+    // Preserve controlled selection after replacing the native options. When
+    // values has never been assigned, adopt native/programmatic `selected`
+    // state as the initial uncontrolled value instead.
     if (this.multiple) {
-      this._syncOptionSelection();
+      if (this._valuesWereSet) {
+        this._syncOptionSelection();
+      } else {
+        const selectedValues = Array.from(
+          this.selectElement.selectedOptions,
+          (option) => option.value,
+        );
+        if (selectedValues.length > 0) {
+          this.values = selectedValues;
+          this._updateFormValue();
+        }
+      }
     } else if (this.value) {
       this.selectElement.value = this.value;
     }

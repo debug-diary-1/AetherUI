@@ -198,6 +198,38 @@ describe('ae-select', () => {
     expect(options[2].selected).to.be.true;
   });
 
+  it('adopts declaratively selected values in multiple mode', async () => {
+    const form = await fixture<HTMLFormElement>(html`
+      <form>
+        <ae-select name="choices" multiple>
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c" selected>C</option>
+        </ae-select>
+      </form>
+    `);
+    const el = form.querySelector('ae-select') as AeSelect;
+    await el.updateComplete;
+
+    expect(el.values).to.deep.equal(['a', 'c']);
+    expect(new FormData(form).getAll('choices')).to.deep.equal(['a', 'c']);
+  });
+
+  it('adopts selected programmatic options in multiple mode', async () => {
+    const el = await fixture<AeSelect>(html`<ae-select multiple></ae-select>`);
+    el.options = [
+      { value: 'a', label: 'A', selected: true },
+      { value: 'b', label: 'B' },
+      { value: 'c', label: 'C', selected: true },
+    ];
+    await el.updateComplete;
+
+    expect(el.values).to.deep.equal(['a', 'c']);
+    expect(
+      Array.from(el.shadowRoot!.querySelector('select')!.selectedOptions, (option) => option.value),
+    ).to.deep.equal(['a', 'c']);
+  });
+
   it('participates in form submission', async () => {
     const form = await fixture<HTMLFormElement>(html`
       <form>

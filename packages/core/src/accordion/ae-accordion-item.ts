@@ -52,18 +52,7 @@ export class AeAccordionItem extends LitElement {
    * Whether this panel is currently open
    */
   @property({ type: Boolean, reflect: true })
-  set open(value: boolean) {
-    const previous = this._open;
-    if (value === previous) return;
-    this._open = value;
-    this.requestUpdate('open', previous);
-    if (this.isConnected) this.dispatchOpenChange();
-  }
-  get open(): boolean {
-    return this._open;
-  }
-
-  private _open = false;
+  accessor open = false;
 
   /**
    * Whether this accordion item is disabled
@@ -72,6 +61,8 @@ export class AeAccordionItem extends LitElement {
   accessor disabled = false;
 
   private panelHeight = 0;
+  private hasCompletedInitialUpdate = false;
+  private suppressNextOpenNotification = false;
 
   connectedCallback() {
     super.connectedCallback();
@@ -90,7 +81,20 @@ export class AeAccordionItem extends LitElement {
     }
     if (changedProperties.has('open')) {
       this.updatePanelHeight();
+      if (this.hasCompletedInitialUpdate && !this.suppressNextOpenNotification) {
+        this.dispatchOpenChange();
+      }
+      this.suppressNextOpenNotification = false;
     }
+    this.hasCompletedInitialUpdate = true;
+  }
+
+  /** Coordinate state from a parent without confusing initialization with user intent. */
+  setOpenFromAccordion(open: boolean, notify = false) {
+    if (this.open === open) return;
+    this.suppressNextOpenNotification = true;
+    this.open = open;
+    if (notify && this.hasCompletedInitialUpdate) this.dispatchOpenChange();
   }
 
   private dispatchOpenChange() {
@@ -126,7 +130,7 @@ export class AeAccordionItem extends LitElement {
    */
   private handleHeaderClick() {
     if (this.disabled) return;
-    this.open = !this.open;
+    this.setOpenFromAccordion(!this.open, true);
   }
 
   render() {

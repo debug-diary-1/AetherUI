@@ -47,7 +47,7 @@ An individual collapsible panel within an accordion.
 Properties:
 - `disabled` (boolean, default false): Whether this accordion item is disabled
 - `headerId` (string, default `ae-accordion-${AeAccordionItem._idCounter++}`): Unique identifier for this accordion item
-- `open` (boolean): Whether this panel is currently open
+- `open` (boolean, default false): Whether this panel is currently open
 
 Events:
 - `ae-accordion-item-change` (CustomEvent<{headerId: string, open: boolean}>): Standardized event fired when opened/closed
@@ -299,18 +299,7 @@ Properties:
 - `disabled` (boolean, default false): Whether the dropdown trigger is disabled
 - `header` (string, default ''): Header text for the dropdown
 - `open` (boolean, default false): Whether the dropdown is open (controlled)
-- `placement` (| 'top'
-  | 'top-start'
-  | 'top-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'left'
-  | 'left-start'
-  | 'left-end'
-  | 'right'
-  | 'right-start'
-  | 'right-end', default 'bottom-start'): Menu placement relative to trigger
+- `placement` ('top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end', default 'bottom-start'): Menu placement relative to trigger
 - `strategy` ('absolute' | 'fixed', default 'absolute'): Positioning strategy
 - `theme` ('light' | 'dark', default 'dark'): Theme of the dropdown (light or dark)
 
@@ -849,18 +838,7 @@ Properties:
 - `hideDelay` (number, default 100): Delay in milliseconds before hiding on mouse leave/blur
 - `hoverDelay` (number, default 100): Delay in milliseconds before showing on hover/focus
 - `open` (boolean, default false): Whether the tooltip is currently visible
-- `placement` (| 'top'
-  | 'top-start'
-  | 'top-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'left'
-  | 'left-start'
-  | 'left-end'
-  | 'right'
-  | 'right-start'
-  | 'right-end', default 'top'): Preferred placement of the tooltip
+- `placement` ('top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end', default 'top'): Preferred placement of the tooltip
 - `showArrow` (boolean, default true): Whether to show an arrow pointing to the anchor
 - `strategy` ('absolute' | 'fixed', default 'fixed'): Positioning strategy (absolute or fixed)
 - `text` (string, default ''): The text content to display in the tooltip

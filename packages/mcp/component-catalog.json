@@ -108,7 +108,7 @@
           "name": "open",
           "attribute": "open",
           "type": "boolean",
-          "default": null,
+          "default": "false",
           "description": "Whether this panel is currently open"
         }
       ],
@@ -1091,7 +1091,7 @@
         {
           "name": "placement",
           "attribute": "placement",
-          "type": "| 'top'\n  | 'top-start'\n  | 'top-end'\n  | 'bottom'\n  | 'bottom-start'\n  | 'bottom-end'\n  | 'left'\n  | 'left-start'\n  | 'left-end'\n  | 'right'\n  | 'right-start'\n  | 'right-end'",
+          "type": "'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end'",
           "default": "'bottom-start'",
           "description": "Menu placement relative to trigger"
         },
@@ -2889,7 +2889,7 @@
         {
           "name": "placement",
           "attribute": "placement",
-          "type": "| 'top'\n  | 'top-start'\n  | 'top-end'\n  | 'bottom'\n  | 'bottom-start'\n  | 'bottom-end'\n  | 'left'\n  | 'left-start'\n  | 'left-end'\n  | 'right'\n  | 'right-start'\n  | 'right-end'",
+          "type": "'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end'",
           "default": "'top'",
           "description": "Preferred placement of the tooltip"
         },

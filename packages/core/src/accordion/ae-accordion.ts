@@ -44,16 +44,35 @@ export class AeAccordion extends LitElement {
   @property({ type: Boolean, reflect: true })
   accessor multiselectable = false;
 
+  private _value: string[] = [];
+
   /**
    * Array of panel IDs that are currently open/expanded (controlled)
+   * @default []
    */
   @property({ type: Array, attribute: 'value' })
-  accessor value: string[] = [];
+  set value(next: string[]) {
+    const value = Array.isArray(next) ? [...next] : [];
+    const previous = this._value;
+    if (
+      previous.length === value.length &&
+      previous.every((entry, index) => entry === value[index])
+    ) {
+      return;
+    }
+    this._value = value;
+    this.requestUpdate('value', previous);
+  }
+  get value(): string[] {
+    return [...this._value];
+  }
 
   /** Compatibility alias retained for the standalone accordion package. */
   @property({ type: Array })
   set expanded(value: string[]) {
-    this.value = value;
+    // The canonical value attribute wins regardless of source attribute order.
+    if (this.hasAttribute('value')) return;
+    this.value = Array.isArray(value) ? [...value] : [];
   }
   get expanded(): string[] {
     return this.value;
@@ -86,7 +105,7 @@ export class AeAccordion extends LitElement {
     }
 
     // Check for initially open items (set via HTML attributes)
-    this.handleInitiallyOpenItems();
+    if (!this.hasAttribute('value') && initialValue.length === 0) this.handleInitiallyOpenItems();
   }
 
   /**
@@ -94,15 +113,14 @@ export class AeAccordion extends LitElement {
    * This ensures only one panel is open if multiselectable is false
    */
   private handleInitiallyOpenItems() {
-    // Get all items with the open attribute
-    const items = Array.from(this.querySelectorAll('ae-accordion-item[open]'));
+    const items = this.getItems().filter((item) => item.open || item.hasAttribute('open'));
 
     if (items.length === 0) return;
 
     if (!this.multiselectable && items.length > 0) {
       // In single selection mode, only the first open item should stay open
       const firstOpenItem = items[0];
-      const headerId = firstOpenItem.getAttribute('data-header-id');
+      const headerId = firstOpenItem.headerId;
 
       if (headerId) {
         // Clear any existing open panels
@@ -111,15 +129,12 @@ export class AeAccordion extends LitElement {
         this.openPanels.add(headerId);
 
         // Force close all other items by setting open=false
-        items.slice(1).forEach((item) => {
-          item.removeAttribute('open');
-          (item as AeAccordionItem).open = false;
-        });
+        items.slice(1).forEach((item) => item.setOpenFromAccordion(false));
       }
     } else if (this.multiselectable) {
       // In multiselectable mode, add all open items to the set
       items.forEach((item) => {
-        const headerId = item.getAttribute('data-header-id');
+        const headerId = item.headerId;
         if (headerId) {
           this.openPanels.add(headerId);
         }
@@ -141,10 +156,17 @@ export class AeAccordion extends LitElement {
   private setupMutationObserver() {
     this._observer = new MutationObserver((mutations) => {
       let identityChanged = false;
+      let childrenChanged = false;
       for (const mutation of mutations) {
+        if (mutation.type === 'childList') {
+          childrenChanged = true;
+          continue;
+        }
         if (mutation.type !== 'attributes' || mutation.attributeName !== 'data-header-id') continue;
+        const item = mutation.target as AeAccordionItem;
+        if (item.closest('ae-accordion') !== this) continue;
         const previousId = mutation.oldValue;
-        const nextId = (mutation.target as Element).getAttribute('data-header-id');
+        const nextId = item.getAttribute('data-header-id');
         if (!previousId || !nextId || previousId === nextId || !this.openPanels.has(previousId)) {
           continue;
         }
@@ -154,6 +176,10 @@ export class AeAccordion extends LitElement {
         identityChanged = true;
       }
       if (identityChanged) this.syncPublicValue();
+      if (childrenChanged && this.openPanels.size === 0 && !this.hasAttribute('value')) {
+        this.handleInitiallyOpenItems();
+        return;
+      }
       this.updateItems();
     });
 
@@ -183,9 +209,14 @@ export class AeAccordion extends LitElement {
     this.value = Array.from(this.openPanels);
   }
 
-  private updateItems() {
-    // Update all accordion items based on the current open panels
-    const items = Array.from(this.querySelectorAll('ae-accordion-item'));
+  private getItems(): AeAccordionItem[] {
+    return Array.from(this.querySelectorAll<AeAccordionItem>('ae-accordion-item')).filter(
+      (item) => item.closest('ae-accordion') === this,
+    );
+  }
+
+  private updateItems(notify = false) {
+    const items = this.getItems();
 
     if (!this.multiselectable && items.length > 0) {
       // Make sure only one panel is open in non-multiselectable mode
@@ -203,9 +234,9 @@ export class AeAccordion extends LitElement {
     this.syncingItems = true;
     try {
       items.forEach((item) => {
-        const headerId = item.getAttribute('data-header-id');
+        const headerId = item.headerId;
         if (headerId) {
-          (item as AeAccordionItem).open = this.openPanels.has(headerId);
+          item.setOpenFromAccordion(this.openPanels.has(headerId), notify);
         }
       });
     } finally {
@@ -239,10 +270,9 @@ export class AeAccordion extends LitElement {
       }
     }
 
-    // Update all accordion items to reflect the new state
-    this.updateItems();
-
+    // Publish the next value before sibling close notifications can run.
     this.syncPublicValue();
+    this.updateItems(true);
 
     // Dispatch standardized event
     this.dispatchEvent(

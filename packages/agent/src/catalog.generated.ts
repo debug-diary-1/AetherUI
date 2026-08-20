@@ -424,7 +424,7 @@ export const componentCatalog = [
       {
         "name": "placement",
         "attribute": "placement",
-        "type": "| 'top'\n  | 'top-start'\n  | 'top-end'\n  | 'bottom'\n  | 'bottom-start'\n  | 'bottom-end'\n  | 'left'\n  | 'left-start'\n  | 'left-end'\n  | 'right'\n  | 'right-start'\n  | 'right-end'"
+        "type": "'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end'"
       },
       {
         "name": "strategy",
@@ -1302,7 +1302,7 @@ export const componentCatalog = [
       {
         "name": "placement",
         "attribute": "placement",
-        "type": "| 'top'\n  | 'top-start'\n  | 'top-end'\n  | 'bottom'\n  | 'bottom-start'\n  | 'bottom-end'\n  | 'left'\n  | 'left-start'\n  | 'left-end'\n  | 'right'\n  | 'right-start'\n  | 'right-end'"
+        "type": "'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end'"
       },
       {
         "name": "showArrow",
