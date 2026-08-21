@@ -145,6 +145,9 @@ jobs:
           mkdir -p .output/docs
           mkdir -p .output/storybook
           cp -r .github/pages/* .output/
+          # Landing page is shared with the Vercel preview build so the two roots
+          # cannot drift apart.
+          cp landing/index.html .output/index.html
 
       - name: Download docs artifact
         continue-on-error: true
