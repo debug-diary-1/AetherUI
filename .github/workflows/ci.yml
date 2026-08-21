@@ -63,10 +63,14 @@ jobs:
           key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium firefox webkit
 
       - name: Run lint
         run: pnpm lint
+        timeout-minutes: 5
+
+      - name: Run typecheck
+        run: pnpm typecheck
         timeout-minutes: 5
 
       - name: Validate theme integration (no hardcoded colors)
@@ -91,8 +95,22 @@ jobs:
           echo "Theme validation passed - no hardcoded colors found!"
         timeout-minutes: 2
 
+      - name: Verify generated agent artifacts
+        run: pnpm check:agent-artifacts
+
+      - name: Run release contract tests
+        run: pnpm test:release-contracts
+
       - name: Run tests
         run: NODE_OPTIONS='--max-old-space-size=2048' pnpm test
+        timeout-minutes: 15
+
+      - name: Enforce core coverage thresholds
+        run: pnpm test:coverage
+        timeout-minutes: 10
+
+      - name: Run core tests across browser engines
+        run: pnpm test:cross-browser
         timeout-minutes: 15
 
       - name: Upload coverage to Codecov
@@ -100,7 +118,7 @@ jobs:
         if: always()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/**/coverage-final.json
+          files: ./packages/core/coverage/lcov.info
           flags: unittests
           name: codecov-aetherui
           fail_ci_if_error: false
@@ -109,12 +127,28 @@ jobs:
         run: NODE_OPTIONS='--max-old-space-size=4096' pnpm build
         timeout-minutes: 15
 
+      - name: Typecheck generated React declarations
+        run: pnpm typecheck:react
+
+      - name: Run agent UI evals
+        run: pnpm test:agent-evals
+
+      - name: Verify publishable package contents
+        run: pnpm pack:check
+
+      - name: Audit production dependencies
+        run: pnpm audit:prod
+
       - name: Build Storybook
         run: pnpm build-storybook
         timeout-minutes: 10
 
       - name: Run Storybook Tests
         run: pnpm test:storybook:ci
+        timeout-minutes: 10
+
+      - name: Run end-to-end component flows
+        run: pnpm test:e2e:static
         timeout-minutes: 10
 
       # Secrets are not available to Dependabot-triggered runs or to pull requests

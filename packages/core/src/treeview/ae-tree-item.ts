@@ -94,14 +94,12 @@ export class AeTreeItem extends LitElement {
 
     this.expanded = !this.expanded;
 
-    const eventName = this.expanded ? 'ae-tree-item-expand' : 'ae-tree-item-collapse';
-    this.dispatchEvent(
-      new CustomEvent(eventName, {
-        bubbles: true,
-        composed: true,
-        detail: { item: this },
-      }),
-    );
+    const event = new CustomEvent(this.expanded ? 'ae-tree-item-expand' : 'ae-tree-item-collapse', {
+      bubbles: true,
+      composed: true,
+      detail: { item: this },
+    });
+    this.dispatchEvent(event);
   }
 
   private handleItemClick(e: Event) {

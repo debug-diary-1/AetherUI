@@ -112,6 +112,20 @@ describe('ae-treeview', () => {
     expect(treeView.selected.length).to.equal(2);
   });
 
+  it('copies arrays assigned to expanded and selected', async () => {
+    const expanded = ['node1'];
+    treeView.expanded = expanded;
+    expanded.push('node2');
+    await elementUpdated(treeView);
+    expect(treeView.expanded).to.deep.equal(['node1']);
+
+    const selected = ['node1'];
+    treeView.selected = selected;
+    selected.push('node2');
+    await elementUpdated(treeView);
+    expect(treeView.selected).to.deep.equal(['node1']);
+  });
+
   it('should show loading state when loading is true', async () => {
     treeView.loading = true;
     await elementUpdated(treeView);

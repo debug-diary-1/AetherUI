@@ -2,6 +2,14 @@ import { LitElement, html, PropertyValues } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { selectStyles } from './styles';
+import { arraysShallowEqual, toArrayCopy } from '../internal/array-props';
+
+export interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+  selected?: boolean;
+}
 
 /**
  * A select dropdown component with support for single/multiple selection and form participation.
@@ -21,6 +29,7 @@ import { selectStyles } from './styles';
  * @property {string} error - Error message to display
  * @property {string} helpText - Helper text to display below the select
  * @property {string} ariaLabel - Accessible label for the select (used when no visible label)
+ * @property {SelectOption[]} options - Programmatic options for structured or agent-generated UIs
  *
  * @fires {CustomEvent<{value: string | string[]}>} ae-select-change - Fired when the selection changes
  *
@@ -58,8 +67,34 @@ export class AeSelect extends LitElement {
   @property({ type: String })
   accessor value = '';
 
+  private _values: string[] = [];
+
+  /**
+   * Set only when the consumer (or the user, via a change) writes `values`.
+   * Internal writes — adoption of authored `selected` options and form
+   * resets — go through assignValues() and never latch, so declarative
+   * defaults keep working until the consumer actually takes control.
+   */
+  private _valuesWereSet = false;
+
+  /** @default [] */
   @property({ type: Array })
-  accessor values: string[] = [];
+  set values(next: string[]) {
+    this._valuesWereSet = true;
+    this.assignValues(next);
+  }
+  get values(): string[] {
+    return [...this._values];
+  }
+
+  /** Internal write path for `values` that does not mark the select controlled. */
+  private assignValues(next: unknown) {
+    const values = toArrayCopy<string>(next);
+    const previous = this._values;
+    if (arraysShallowEqual(previous, values)) return;
+    this._values = values;
+    this.requestUpdate('values', previous);
+  }
 
   @property({ type: String, attribute: 'default-value' })
   accessor defaultValue = '';
@@ -90,6 +125,21 @@ export class AeSelect extends LitElement {
 
   @property({ type: String, attribute: 'aria-label' })
   accessor ariaLabel = '';
+
+  private _options: SelectOption[] = [];
+
+  /** @default [] */
+  @property({ type: Array })
+  set options(next: SelectOption[]) {
+    const options = toArrayCopy<SelectOption>(next);
+    const previous = this._options;
+    if (arraysShallowEqual(previous, options)) return;
+    this._options = options;
+    this.requestUpdate('options', previous);
+  }
+  get options(): SelectOption[] {
+    return [...this._options];
+  }
 
   @state()
   private accessor focused = false;
@@ -141,17 +191,28 @@ export class AeSelect extends LitElement {
     super.updated(changedProperties);
 
     if (changedProperties.has('value') || changedProperties.has('values')) {
-      this._updateFormValue();
-      this._updateValidity();
+      // Apply the single-select value imperatively. The template deliberately
+      // has no `.value` binding: assigning HTMLSelectElement.value collapses
+      // a multiple-select's selection to a single option on every render.
+      if (!this.multiple && changedProperties.has('value') && this.selectElement) {
+        this.selectElement.value = this.value;
+      }
 
       // Update option selection state in multiple mode
       if (this.multiple && changedProperties.has('values')) {
         this._syncOptionSelection();
       }
+
+      this._updateFormValue();
+      this._updateValidity();
     }
 
     if (changedProperties.has('required')) {
       this._updateValidity();
+    }
+
+    if (changedProperties.has('options')) {
+      this._syncOptionsFromLightDOM();
     }
   }
 
@@ -217,17 +278,52 @@ export class AeSelect extends LitElement {
       }
     });
 
-    // Clone light DOM options into shadow DOM select
+    // Create programmatic options before compatibility light-DOM options.
+    this.options.forEach((option) => {
+      const element = document.createElement('option');
+      element.value = option.value;
+      element.textContent = option.label;
+      element.disabled = option.disabled ?? false;
+      element.selected = option.selected ?? false;
+      this.selectElement.appendChild(element);
+    });
+
+    // Clone light DOM options into shadow DOM select.
     lightDOMOptions.forEach((option) => {
       const clone = option.cloneNode(true) as HTMLOptionElement;
       this.selectElement.appendChild(clone);
     });
 
-    // Sync value with selected option
-    const selectedOption = lightDOMOptions.find((opt) => opt.selected);
-    if (selectedOption && !this.value) {
-      this.value = selectedOption.value;
-      this._updateFormValue();
+    // Preserve the current selection after replacing the native options.
+    // While uncontrolled, authored `selected` state stays authoritative: a
+    // replaced option set is re-adopted rather than leaving `values` holding
+    // ids that no longer exist in the list.
+    if (this.multiple) {
+      if (this._valuesWereSet) {
+        this._syncOptionSelection();
+      } else {
+        // Uncontrolled: the rendered options are the source of truth, so a
+        // replaced option set re-adopts (and drops ids that are gone).
+        const selectedValues = Array.from(
+          this.selectElement.selectedOptions,
+          (option) => option.value,
+        );
+        const changed = !arraysShallowEqual(this._values, selectedValues);
+        this.assignValues(selectedValues);
+        if (changed) this._updateFormValue();
+      }
+    } else {
+      if (this.value) {
+        this.selectElement.value = this.value;
+      } else {
+        // Adopt a declaratively selected option only when uncontrolled.
+        const selectedOption =
+          this.selectElement.querySelector<HTMLOptionElement>('option:checked');
+        if (selectedOption && !selectedOption.hasAttribute('data-placeholder')) {
+          this.value = selectedOption.value;
+          this._updateFormValue();
+        }
+      }
     }
 
     // Update validity after syncing options
@@ -272,10 +368,36 @@ export class AeSelect extends LitElement {
   }
 
   formResetCallback() {
-    this.value = this._defaultValue;
-    this.values = [];
+    // Native reset semantics: restore the authored defaults (`selected`
+    // attributes on light-DOM options and `selected` flags on programmatic
+    // options) rather than clearing. Uses the internal write paths so a reset
+    // never marks the select as controlled.
+    const defaults = this._getDefaultValues();
+    if (this.multiple) {
+      this.assignValues(defaults);
+      this._syncOptionSelection();
+    } else {
+      // An explicit `value`/`default-value` on the element wins over an
+      // authored `selected` option, matching how the initial value is chosen.
+      this.value = this._defaultValue || defaults[0] || '';
+    }
     this._updateFormValue();
     this._updateValidity();
+  }
+
+  /**
+   * Authored default selection, mirroring HTMLOptionElement.defaultSelected.
+   * Programmatic and light-DOM options are rendered into the same list, so
+   * the result is de-duplicated to match what the native select can report.
+   */
+  private _getDefaultValues(): string[] {
+    const fromOptions = this._options
+      .filter((option) => option.selected)
+      .map((option) => option.value);
+    const fromLightDOM = Array.from(this.querySelectorAll('option'))
+      .filter((option) => option.defaultSelected)
+      .map((option) => option.value);
+    return [...new Set([...fromOptions, ...fromLightDOM])];
   }
 
   formStateRestoreCallback(state: string | FormData | null, _mode: 'restore' | 'autocomplete') {
@@ -331,7 +453,6 @@ export class AeSelect extends LitElement {
             part="select"
             id="select"
             class="select-control"
-            .value="${this.value}"
             ?disabled="${this.disabled}"
             ?required="${this.required}"
             ?multiple="${this.multiple}"

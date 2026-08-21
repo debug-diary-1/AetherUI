@@ -12,7 +12,7 @@ import { autocompleteStyles } from './styles';
  *
  * @element ae-autocomplete
  *
- * @property {string|AutocompleteOption[]} options - Options to display in the dropdown
+ * @property {(string|AutocompleteOption)[]} options - Options to display in the dropdown
  * @property {string} value - Current input value
  * @property {string} placeholder - Placeholder text for the input
  * @property {boolean} disabled - Whether the input is disabled
@@ -115,6 +115,9 @@ export class AeAutocomplete extends LitElement {
   @property({ attribute: false })
   set filterFn(fn: AutocompleteFilterFunction) {
     this._controller.filterFn = fn;
+  }
+  get filterFn(): AutocompleteFilterFunction {
+    return this._controller.filterFn;
   }
 
   /**

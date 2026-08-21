@@ -111,6 +111,13 @@ export class AutocompleteController implements ReactiveController {
   }
 
   /**
+   * Get the active filter function.
+   */
+  get filterFn(): AutocompleteFilterFunction {
+    return this._filterFn;
+  }
+
+  /**
    * Get the current filtered options
    */
   get filteredOptions(): AutocompleteOption[] {

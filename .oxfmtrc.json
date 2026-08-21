@@ -1,5 +1,18 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
   "singleQuote": true,
-  "ignorePatterns": ["**/*.md", "**/*.mdx"]
+  "ignorePatterns": [
+    "**/*.md",
+    "**/*.mdx",
+    "packages/core/custom-elements.json",
+    "packages/core/react.d.ts",
+    "packages/core/component-catalog.json",
+    "packages/agent/agent-ui.schema.json",
+    "packages/agent/component-catalog.json",
+    "packages/agent/src/catalog.generated.ts",
+    "packages/mcp/agent-ui.schema.json",
+    "packages/mcp/component-catalog.json",
+    "packages/docs/public/agent-ui.schema.json",
+    "packages/docs/public/component-catalog.json"
+  ]
 }

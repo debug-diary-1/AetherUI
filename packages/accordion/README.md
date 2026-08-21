@@ -1,6 +1,6 @@
-# @aetherui/accordion
+# `@aetherui/accordion`
 
-A Lit-based accordion component for AetherUI.
+Compatibility package for the AetherUI accordion custom elements. Importing the package registers both `ae-accordion` and `ae-accordion-item`.
 
 ## Installation
 
@@ -8,67 +8,29 @@ A Lit-based accordion component for AetherUI.
 pnpm add @aetherui/accordion
 ```
 
+The components include usable system-color fallbacks. For the complete AetherUI theme, also install `@aetherui/tokens` and import either `@aetherui/tokens/light.css` or `@aetherui/tokens/dark.css` once in your application.
+
 ## Usage
 
 ```html
-<ae-accordion>
-  <ae-accordion-panel heading="Section 1">
+<script type="module">
+  import '@aetherui/accordion';
+</script>
+
+<ae-accordion value='["first"]'>
+  <ae-accordion-item header-id="first">
+    <span slot="header">Section 1</span>
     Content for section 1
-  </ae-accordion-panel>
-  <ae-accordion-panel heading="Section 2">
+  </ae-accordion-item>
+  <ae-accordion-item header-id="second">
+    <span slot="header">Section 2</span>
     Content for section 2
-  </ae-accordion-panel>
+  </ae-accordion-item>
 </ae-accordion>
 ```
 
-## API
-
-### `<ae-accordion>`
-
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `multiselectable` | `boolean` | `false` | Whether multiple panels can be open at once |
-| `defaultOpen` | `boolean` | `false` | Whether panels are open by default |
-
-### `<ae-accordion-panel>`
-
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `heading` | `string` | `''` | The heading text for the panel |
-| `open` | `boolean` | `false` | Whether the panel is open |
-
-## Events
-
-### `<ae-accordion>`
-
-| Event | Description |
-|-------|-------------|
-| `ae-toggle` | Fired when a panel is toggled |
-
-### `<ae-accordion-panel>`
-
-| Event | Description |
-|-------|-------------|
-| `ae-toggle` | Fired when the panel is toggled |
-
-## Development
-
-```bash
-pnpm dev
-```
-
-## Building
-
-```bash
-pnpm build
-```
-
-## Testing
-
-```bash
-pnpm test
-```
+`ae-accordion` supports `value`, `defaultValue`, and `multiselectable`. The compatibility aliases `expanded`, `headerid`, and `ae-expand-change` remain available for applications using the original standalone API. State changes emit `ae-accordion-change`; items emit `ae-accordion-item-change` and `ae-panel-change` for both user and programmatic changes.
 
 ## License
 
-MIT 
+MIT

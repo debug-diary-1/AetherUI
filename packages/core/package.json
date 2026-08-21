@@ -25,6 +25,7 @@
   "files": [
     "dist",
     "custom-elements.json",
+    "component-catalog.json",
     "react.d.ts"
   ],
   "type": "module",
@@ -167,6 +168,7 @@
       "types": "./react.d.ts"
     },
     "./custom-elements.json": "./custom-elements.json",
+    "./component-catalog.json": "./component-catalog.json",
     "./package.json": "./package.json",
     "./*": {
       "types": "./dist/*/index.d.ts",
@@ -182,11 +184,15 @@
     "build": "pnpm analyze && pnpm gen:react-types && vite build",
     "analyze": "cem analyze --litelement --globs 'src/**/ae-*.ts'",
     "gen:react-types": "node ../../scripts/generate-react-types.mjs",
+    "gen:agent-artifacts": "pnpm analyze && node ../../scripts/generate-agent-artifacts.mjs",
     "dev": "vite",
     "clean": "rimraf dist",
     "lint": "oxlint src",
-    "test": "node run-tests.cjs",
-    "test:watch": "web-test-runner --watch"
+    "test": "web-test-runner --config web-test-runner.config.mjs",
+    "test:coverage": "COVERAGE=true web-test-runner --config web-test-runner.config.mjs",
+    "test:cross-browser": "CROSS_BROWSER=true web-test-runner --config web-test-runner.config.mjs",
+    "test:watch": "web-test-runner --watch",
+    "typecheck:react": "tsc -p tsconfig.react.json"
   },
   "dependencies": {
     "lit": "catalog:"
@@ -195,6 +201,7 @@
     "@custom-elements-manifest/analyzer": "catalog:",
     "@open-wc/testing": "catalog:",
     "@types/node": "catalog:",
+    "@types/react": "18.3.20",
     "@web/test-runner-playwright": "catalog:",
     "playwright": "catalog:",
     "rimraf": "catalog:",

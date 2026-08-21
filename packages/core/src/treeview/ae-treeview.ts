@@ -3,6 +3,7 @@ import { customElement, property, state, query } from 'lit/decorators.js';
 import { TreeNode, renderTreeNode, renderEmptyState, renderLoadingState } from './node';
 import { TreeViewKeyboardController } from './keyboard';
 import { treeviewStyles } from './styles';
+import { arraysShallowEqual, toArrayCopy } from '../internal/array-props';
 
 /**
  * @element ae-treeview
@@ -102,11 +103,35 @@ export class AeTreeView extends LitElement {
   })
   accessor data: TreeNode[] = [];
 
-  @property({ type: Array })
-  accessor expanded: string[] = [];
+  private _expanded: string[] = [];
 
+  /** @default [] */
   @property({ type: Array })
-  accessor selected: string[] = [];
+  set expanded(next: string[]) {
+    const expanded = toArrayCopy<string>(next);
+    const previous = this._expanded;
+    if (arraysShallowEqual(previous, expanded)) return;
+    this._expanded = expanded;
+    this.requestUpdate('expanded', previous);
+  }
+  get expanded(): string[] {
+    return [...this._expanded];
+  }
+
+  private _selected: string[] = [];
+
+  /** @default [] */
+  @property({ type: Array })
+  set selected(next: string[]) {
+    const selected = toArrayCopy<string>(next);
+    const previous = this._selected;
+    if (arraysShallowEqual(previous, selected)) return;
+    this._selected = selected;
+    this.requestUpdate('selected', previous);
+  }
+  get selected(): string[] {
+    return [...this._selected];
+  }
 
   @property({ type: String, attribute: 'selection-mode' })
   accessor selectionMode: 'single' | 'multiple' | 'none' = 'single';
@@ -167,10 +192,10 @@ export class AeTreeView extends LitElement {
   }
 
   private toggleExpanded(nodeId: string) {
-    const isExpanded = this.expanded.includes(nodeId);
+    const isExpanded = this._expanded.includes(nodeId);
     const newExpanded = isExpanded
-      ? this.expanded.filter((id) => id !== nodeId)
-      : [...this.expanded, nodeId];
+      ? this._expanded.filter((id) => id !== nodeId)
+      : [...this._expanded, nodeId];
 
     this.expanded = newExpanded;
     this.dispatchEvent(
@@ -183,15 +208,15 @@ export class AeTreeView extends LitElement {
   }
 
   private toggleSelected(nodeId: string) {
-    const isSelected = this.selected.includes(nodeId);
+    const isSelected = this._selected.includes(nodeId);
     let newSelected: string[];
 
     if (this.selectionMode === 'single') {
       newSelected = isSelected ? [] : [nodeId];
     } else {
       newSelected = isSelected
-        ? this.selected.filter((id) => id !== nodeId)
-        : [...this.selected, nodeId];
+        ? this._selected.filter((id) => id !== nodeId)
+        : [...this._selected, nodeId];
     }
 
     this.selected = newSelected;
@@ -205,11 +230,15 @@ export class AeTreeView extends LitElement {
   }
 
   private renderNodes(nodes: TreeNode[], level = 1): unknown {
+    // Read the backing fields: the public getters copy on read (so callers
+    // cannot mutate internal state), which would allocate two arrays per node.
+    const expanded = new Set(this._expanded);
+    const selected = new Set(this._selected);
     return nodes.map((node) =>
       renderTreeNode(node, {
         level,
-        isExpanded: this.expanded.includes(node.id),
-        isSelected: this.selected.includes(node.id),
+        isExpanded: expanded.has(node.id),
+        isSelected: selected.has(node.id),
         selectionMode: this.selectionMode,
       }),
     );

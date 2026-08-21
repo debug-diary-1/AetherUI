@@ -1,0 +1,917 @@
+# AetherUI
+
+> Headless, accessible custom elements built with Lit. Register elements explicitly, import one token theme, and use the documented properties and custom events.
+
+## Canonical resources
+
+- component-catalog.json — machine-readable element interfaces
+- agent-ui.schema.json — constrained runtime-generated UI document
+- llms-full.txt — complete property, event, slot, and CSS-part reference
+- getting-started/installation/ — installation and registration
+- getting-started/integrations/react/ — React 19 JSX typing
+
+## Rules
+
+- Import from @aetherui/core or a documented subpath and call the matching define function once.
+- Import @aetherui/tokens/light.css or @aetherui/tokens/dark.css once.
+- Listen for documented ae-* CustomEvents; read payloads from event.detail.
+- Treat accessibility and keyboard behavior as part of each element's interface.
+- For model-generated interfaces, emit the JSON schema and validate it with @aetherui/agent before rendering.
+
+# Complete component catalog
+
+## `<ae-accordion>`
+
+A collapsible disclosure component that shows or hides content panels.
+
+Properties:
+- `defaultValue` (string[], default []): Initial panel IDs to open (uncontrolled mode)
+- `expanded` (string[]): Compatibility alias retained for the standalone accordion package.
+- `multiselectable` (boolean, default false): Allows multiple panels to be open simultaneously
+- `value` (string[], default []): Array of panel IDs that are currently open/expanded
+
+Events:
+- `ae-accordion-change` (CustomEvent<{value: string[]}>): Fired when open/expanded panels change
+- `ae-expand-change` (CustomEvent): No description.
+
+Slots:
+- `default`: Default slot for accordion items
+
+CSS parts:
+- `base`: The container element for the accordion
+
+## `<ae-accordion-item>`
+
+An individual collapsible panel within an accordion.
+
+Properties:
+- `disabled` (boolean, default false): Whether this accordion item is disabled
+- `headerId` (string, default `ae-accordion-${AeAccordionItem._idCounter++}`): Unique identifier for this accordion item
+- `open` (boolean, default false): Whether this panel is currently open
+
+Events:
+- `ae-accordion-item-change` (CustomEvent<{headerId: string, open: boolean}>): Standardized event fired when opened/closed
+- `ae-panel-change` (CustomEvent<{headerId: string, open: boolean}>): Fired when this panel is opened or closed
+
+Slots:
+- `default`: Default slot for panel content
+- `header`: Content for the accordion header/button
+
+CSS parts:
+- `base`: The container element
+- `header`: The clickable header button
+- `icon`: The expand/collapse icon
+- `panel`: The content panel
+
+## `<ae-alert>`
+
+AeAlert custom element.
+
+Properties:
+- `closable` (boolean, default false): Whether the alert can be closed
+- `open` (boolean, default true): Control visibility
+- `size` ('sm' | 'md' | 'lg', default 'md'): Size of the alert
+- `variant` ('info' | 'success' | 'warning' | 'error', default 'info'): Visual theme of the alert
+
+Events:
+- `ae-close` (CustomEvent): Fired when the alert is closed
+
+Slots:
+- None documented
+
+CSS parts:
+- None documented
+
+## `<ae-autocomplete>`
+
+Aether UI Autocomplete Component
+
+A text input with dropdown suggestions as users type, helping them quickly
+find and select from a list of options.
+
+Properties:
+- `ariaLabel` (string, default ''): Accessible label for the input (falls back to placeholder)
+- `disabled` (boolean, default false): Whether the input is disabled
+- `maxItems` (number): Maximum number of items to show in dropdown
+- `minChars` (number): Minimum characters before showing suggestions
+- `options` ((string|AutocompleteOption)[]): Options to display in the dropdown
+- `placeholder` (string, default 'Start typing...'): Placeholder text for the input
+- `value` (string): Current input value
+
+Events:
+- `ae-autocomplete-change` (CustomEvent<{value: string, option: AutocompleteOption|null}>): Fired when the value changes
+- `ae-autocomplete-select` (CustomEvent<{value: string, option: AutocompleteOption}>): Fired when an option is selected
+
+Slots:
+- `arrow`: Custom template for the dropdown arrow
+- `clear`: Custom template for the clear button
+- `no-results`: Content shown when no results match
+- `option`: Custom template for rendering each option
+
+CSS parts:
+- `arrow`: The dropdown arrow
+- `clear`: The clear button
+- `dropdown`: The dropdown container
+- `group`: Group heading for categorized options
+- `input`: The text input element
+- `option`: Each option in the dropdown
+
+## `<ae-badge>`
+
+A badge component for displaying small labels, tags, counts, or status indicators.
+Supports multiple variants, sizes, closable option, dot indicators, and outline styles.
+
+Properties:
+- `closable` (boolean, default false): Whether to show a close button
+- `dot` (boolean, default false): Whether to display as a dot indicator
+- `outline` (boolean, default false): Whether to use outline style
+- `size` ('sm'|'md'|'lg', default 'md'): The size of the badge
+- `variant` ('primary'|'secondary'|'success'|'warning'|'error'|'info', default 'primary'): The visual variant
+
+Events:
+- `ae-badge-close` (CustomEvent<void>): Fired when the close button is clicked
+
+Slots:
+- `default`: The badge content
+- `icon`: Optional icon to display before the content
+
+CSS parts:
+- `base`: The component's base wrapper
+- `close-button`: The close button
+- `content`: The content container
+- `icon`: The icon container
+
+## `<ae-breadcrumb>`
+
+A breadcrumb navigation component for showing the current page's location in the site hierarchy.
+
+Properties:
+- `ariaLabel` (string, default 'Breadcrumb'): No description.
+- `separator` (string, default '/'): The separator character or icon between items (default: '/')
+
+Events:
+- None documented
+
+Slots:
+- `default`: The breadcrumb items (ae-breadcrumb-item elements)
+
+CSS parts:
+- `base`: The component's base wrapper
+- `list`: The breadcrumb list element
+
+## `<ae-breadcrumb-item>`
+
+A breadcrumb item component to be used within ae-breadcrumb.
+
+Properties:
+- `ariaLabel` (string, default ''): Accessible label for the breadcrumb item link
+- `current` (boolean, default false): Whether this is the current/active page
+- `href` (string, default ''): The URL to navigate to
+
+Events:
+- None documented
+
+Slots:
+- `default`: The breadcrumb item content
+
+CSS parts:
+- `base`: The component's base wrapper (list item)
+- `link`: The link element
+- `separator`: The separator element
+
+## `<ae-button>`
+
+Primary action trigger with variants (primary, secondary, ghost, icon‑only) and sizes (sm, md, lg).
+
+Properties:
+- `disabled` (boolean, default false): Whether the button is disabled and cannot be interacted with
+- `iconOnly` (boolean, default false): Whether the button contains only an icon (auto-detected, but can be set manually)
+- `iconPosition` ('start' | 'end', default 'start'): Position of the icon relative to the label (defaults to 'start')
+- `size` ('sm' | 'md' | 'lg', default 'md'): Size of the button affecting padding and font-size (defaults to 'md')
+- `unstyled` (boolean, default false): Whether to use unstyled/headless mode (no default styles)
+- `variant` ('primary' | 'secondary' | 'ghost', default 'primary'): Visual style of the button (defaults to 'primary')
+
+Events:
+- `ae-button-click` (CustomEvent<{sourceEvent: Event}>): Fired when the button is clicked and not disabled
+
+Slots:
+- `default`: Button label text (default slot)
+- `icon`: Icon content (SVG or other icon element)
+
+CSS parts:
+- `base`: The button element itself
+- `icon`: The icon wrapper element
+- `label`: Text wrapper element for the default slot content
+
+## `<ae-checkbox>`
+
+A checkbox input component with support for checked, unchecked, and indeterminate states.
+Participates in native form submission via ElementInternals API.
+
+Properties:
+- `checked` (boolean, default false): Whether the checkbox is checked
+- `defaultChecked` (boolean, default false): Initial checked state for uncontrolled usage
+- `disabled` (boolean, default false): Whether the checkbox is disabled
+- `indeterminate` (boolean, default false): Whether the checkbox is in an indeterminate state
+- `name` (string, default ''): The name attribute for form submission
+- `required` (boolean, default false): Whether the checkbox is required
+- `value` (string, default 'on'): The value attribute for form submission
+
+Events:
+- `ae-checkbox-change` (CustomEvent<{checked: boolean, indeterminate: boolean}>): Fired when the checkbox state changes
+
+Slots:
+- `default`: The checkbox label content
+
+CSS parts:
+- `base`: The component's base wrapper (label element)
+- `control`: The custom checkbox control container
+- `icon`: The checkmark icon
+- `indeterminate-icon`: The indeterminate state icon
+- `input`: The native checkbox input element
+- `label`: The label text container
+
+## `<ae-combo>`
+
+Aether UI Combobox Component
+
+An autocomplete dropdown that allows free-text input or selection
+from a filtered list, following the ARIA Listbox Combobox pattern.
+
+Properties:
+- `ariaLabel` (string, default ''): Accessible label for the input (falls back to placeholder)
+- `disabled` (boolean, default false): Whether the input is disabled
+- `freeInput` (boolean, default true): Whether user can enter values not in the list
+- `items` ((string|ComboItem)[]): Items to display in the dropdown
+- `placeholder` (string, default ''): Placeholder text for the input
+- `value` (string, default ''): Current input value (controlled)
+
+Events:
+- `ae-combo-input` (CustomEvent<{value: string}>): Fired on each keystroke
+- `ae-combo-select` (CustomEvent<{value: string, item: ComboItem | null}>): Fired when an item is selected
+
+Slots:
+- `default`: Default slot (not used)
+
+CSS parts:
+- `caret`: Dropdown arrow icon wrapper
+- `highlight`: Query match highlights
+- `input`: Text input field
+- `listbox`: Scroll container
+- `option`: Each list option
+- `overlay`: Positioned wrapper for the popup
+
+## `<ae-drawer>`
+
+A drawer component that slides in from the edge of the screen.
+
+Properties:
+- `ariaLabel` (string | null, default null): No description.
+- `backdrop` (boolean, default true): Whether to show a backdrop behind the drawer
+- `closable` (boolean, default true): Whether the drawer can be closed by the user
+- `open` (boolean, default false): Whether the drawer is open
+- `placement` (string, default 'right'): Which side the drawer appears from (left, right, top, bottom)
+- `size` (string, default 'md'): The size of the drawer (sm, md, lg, full)
+
+Events:
+- `ae-drawer-close` (CustomEvent<void>): Fired when the drawer closes
+- `ae-drawer-open` (CustomEvent<void>): Fired when the drawer opens
+
+Slots:
+- `default`: The drawer body content
+- `footer`: The drawer footer content
+- `header`: The drawer header content
+
+CSS parts:
+- `backdrop`: The backdrop overlay
+- `body`: The body section
+- `close-button`: The close button
+- `footer`: The footer section
+- `header`: The header section
+- `panel`: The drawer panel container
+
+## `<ae-dropdown>`
+
+Dropdown menu component
+
+Properties:
+- `defaultOpen` (boolean, default false): Initial open state (uncontrolled)
+- `disabled` (boolean, default false): Whether the dropdown trigger is disabled
+- `header` (string, default ''): Header text for the dropdown
+- `open` (boolean, default false): Whether the dropdown is open (controlled)
+- `placement` ('top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end', default 'bottom-start'): Menu placement relative to trigger
+- `strategy` ('absolute' | 'fixed', default 'absolute'): Positioning strategy
+- `theme` ('light' | 'dark', default 'dark'): Theme of the dropdown (light or dark)
+
+Events:
+- `ae-open-change` (CustomEvent): When the dropdown opens or closes
+- `ae-select` (CustomEvent<unknown>): When a menu item is selected
+
+Slots:
+- None documented
+
+CSS parts:
+- None documented
+
+## `<ae-dropdown-item>`
+
+AeDropdownItem custom element.
+
+Properties:
+- `disabled` (boolean, default false): Whether this item is disabled
+- `hasSubmenu` (boolean, default false): Whether this item has a submenu (will show an indicator)
+- `value` (string, default ''): Value to emit when this item is selected
+
+Events:
+- None documented
+
+Slots:
+- None documented
+
+CSS parts:
+- None documented
+
+## `<ae-input>`
+
+A text input component with support for various input types, validation, and form participation.
+Participates in native form submission via ElementInternals API.
+
+Properties:
+- `ariaLabel` (string, default ''): Accessible label for the input (used when no visible label)
+- `autocomplete` (string, default undefined): Autocomplete attribute
+- `clearable` (boolean, default false): Whether to show a clear button
+- `defaultValue` (string, default ''): Initial value for uncontrolled usage
+- `disabled` (boolean, default false): Whether the input is disabled
+- `error` (string, default ''): Error message to display
+- `helpText` (string, default ''): Helper text to display below the input
+- `label` (string, default ''): Label text for the input
+- `max` (number, default undefined): Maximum value for number inputs
+- `maxlength` (number, default undefined): Maximum length for text inputs
+- `min` (number, default undefined): Minimum value for number inputs
+- `minlength` (number, default undefined): Minimum length for text inputs
+- `name` (string, default ''): The name attribute for form submission
+- `pattern` (string, default undefined): Regex pattern for validation
+- `placeholder` (string, default ''): Placeholder text
+- `readonly` (boolean, default false): Whether the input is readonly
+- `required` (boolean, default false): Whether the input is required
+- `step` (number, default undefined): Step value for number inputs
+- `type` (string, default 'text'): The type of input (text, email, password, number, tel, url, search)
+- `value` (string, default ''): The current input value
+
+Events:
+- `ae-input-blur` (CustomEvent<void>): Fired when input loses focus
+- `ae-input-change` (CustomEvent<{value: string}>): Fired when the input value changes
+- `ae-input-clear` (CustomEvent<void>): Fired when clear button is clicked
+- `ae-input-focus` (CustomEvent<void>): Fired when input receives focus
+- `ae-input-input` (CustomEvent<{value: string}>): Fired on input event
+
+Slots:
+- `prefix`: Content to display before the input
+- `suffix`: Content to display after the input
+
+CSS parts:
+- `base`: The component's base wrapper
+- `clear-button`: The clear button
+- `error-text`: The error text element
+- `help-text`: The help text element
+- `input`: The native input element
+- `input-wrapper`: The wrapper around the input and slots
+- `label`: The label element
+- `prefix`: The prefix slot container
+- `suffix`: The suffix slot container
+
+## `<ae-menu>`
+
+A menu container component for grouping menu items.
+
+Properties:
+- None documented
+
+Events:
+- None documented
+
+Slots:
+- `default`: The menu items (ae-menu-item elements)
+
+CSS parts:
+- `base`: The component's base wrapper
+
+## `<ae-menu-divider>`
+
+A menu divider component for separating menu items.
+
+Properties:
+- None documented
+
+Events:
+- None documented
+
+Slots:
+- None documented
+
+CSS parts:
+- `base`: The component's base wrapper
+
+## `<ae-menu-item>`
+
+A menu item component to be used within ae-menu.
+
+Properties:
+- `disabled` (boolean, default false): Whether the menu item is disabled
+- `value` (string, default ''): The value associated with this menu item
+
+Events:
+- `ae-menu-select` (CustomEvent<{value: string}>): Fired when the menu item is selected
+
+Slots:
+- `default`: The menu item content
+- `prefix`: Content to display before the menu item text
+- `suffix`: Content to display after the menu item text
+
+CSS parts:
+- `base`: The component's base wrapper
+- `label`: The label container
+- `prefix`: The prefix slot container
+- `suffix`: The suffix slot container
+
+## `<ae-menu-section>`
+
+AeMenuSection custom element.
+
+Properties:
+- `title` (string, default ''): Optional title for the section
+
+Events:
+- None documented
+
+Slots:
+- None documented
+
+CSS parts:
+- None documented
+
+## `<ae-menu-separator>`
+
+AeMenuSeparator custom element.
+
+Properties:
+- None documented
+
+Events:
+- None documented
+
+Slots:
+- None documented
+
+CSS parts:
+- None documented
+
+## `<ae-modal>`
+
+A modal dialog component with backdrop, focus management, and accessibility features.
+
+Properties:
+- `ariaLabel` (string | null, default null): No description.
+- `backdrop` (boolean, default true): Whether to show a backdrop behind the modal
+- `closable` (boolean, default true): Whether the modal can be closed by the user (shows close button, allows Escape key)
+- `open` (boolean, default false): Whether the modal is open
+- `size` ('small' | 'medium' | 'large', default 'medium'): The size of the modal panel
+
+Events:
+- `ae-modal-close` (CustomEvent): Fired when the modal closes
+- `ae-modal-open` (CustomEvent): Fired when the modal opens
+
+Slots:
+- `body`: The modal body content
+- `footer`: The modal footer content (typically action buttons)
+- `header`: The modal header content
+
+CSS parts:
+- `backdrop`: The backdrop overlay
+- `body`: The body section
+- `close-button`: The close button in the header
+- `close-icon`: The close icon SVG
+- `footer`: The footer section
+- `header`: The header section
+- `panel`: The modal panel container
+
+## `<ae-pagination>`
+
+A pagination component for navigating through pages of content.
+
+Properties:
+- `ariaLabel` (string, default 'Pagination'): No description.
+- `currentPage` (number, default 1): The current active page (1-indexed)
+- `showFirstLast` (boolean, default false): Whether to show first/last page buttons
+- `showPrevNext` (boolean, default true): Whether to show previous/next buttons
+- `siblingCount` (number, default 1): Number of page buttons to show on each side of current page
+- `size` (string, default 'md'): The size of the pagination (sm, md, lg)
+- `totalPages` (number, default 1): The total number of pages
+
+Events:
+- `ae-page-change` (CustomEvent<{page: number}>): Fired when page changes
+
+Slots:
+- None documented
+
+CSS parts:
+- `base`: The component's base wrapper
+- `button`: Each pagination button
+- `ellipsis`: The ellipsis element
+- `item`: Each pagination item
+- `list`: The pagination list element
+
+## `<ae-popover>`
+
+A popover component for displaying floating content relative to a trigger element.
+
+Properties:
+- `arrow` (boolean, default true): Whether to show an arrow pointing to the trigger
+- `closeOnClickOutside` (boolean, default true): Whether to close when clicking outside
+- `offset` (number, default 8): Distance in pixels from the trigger
+- `open` (boolean, default false): Whether the popover is open
+- `placement` (string, default 'bottom'): Placement of the popover relative to trigger (top, bottom, left, right, etc.)
+- `trigger` (string, default 'click'): How the popover is triggered (click, hover, manual)
+
+Events:
+- `ae-popover-close` (CustomEvent<void>): Fired when the popover closes
+- `ae-popover-open` (CustomEvent<void>): Fired when the popover opens
+
+Slots:
+- `default`: The popover content
+- `trigger`: The trigger element
+
+CSS parts:
+- `arrow`: The arrow element
+- `popover`: The popover container
+- `trigger`: The trigger container
+
+## `<ae-progress>`
+
+A progress indicator component for showing task completion or loading states.
+
+Properties:
+- `animated` (boolean, default false): Whether to animate the stripes
+- `ariaLabel` (string, default ''): Accessible label for the progress bar
+- `indeterminate` (boolean, default false): Whether to show indeterminate/loading state
+- `label` (string, default ''): Custom label text (overrides percentage)
+- `max` (number, default 100): The maximum value (default: 100)
+- `showLabel` (boolean, default false): Whether to show percentage label
+- `size` (string, default 'md'): The size of the progress bar (sm, md, lg)
+- `striped` (boolean, default false): Whether to show striped pattern
+- `value` (number, default 0): The current progress value (0-100)
+- `variant` (string, default 'primary'): The visual variant (primary, secondary, success, warning, error, info)
+
+Events:
+- None documented
+
+Slots:
+- None documented
+
+CSS parts:
+- `bar`: The progress bar/indicator
+- `base`: The component's base wrapper
+- `label`: The label text
+- `track`: The progress track/background
+
+## `<ae-radio>`
+
+A radio button input component that participates in native form submission.
+Should be used within an ae-radio-group for proper grouping.
+
+Properties:
+- `checked` (boolean, default false): Whether the radio is checked
+- `disabled` (boolean, default false): Whether the radio is disabled
+- `name` (string, default ''): The name attribute for form submission
+- `value` (string, default ''): The value attribute for form submission
+
+Events:
+- `ae-radio-change` (CustomEvent<{checked: boolean, value: string}>): Fired when the radio state changes
+
+Slots:
+- `default`: The radio label content
+
+CSS parts:
+- `base`: The component's base wrapper (label element)
+- `control`: The custom radio control container
+- `dot`: The radio dot indicator
+- `input`: The native radio input element
+- `label`: The label text container
+
+## `<ae-radio-group>`
+
+A container component that manages a group of radio buttons and their selection state.
+
+Properties:
+- `disabled` (boolean, default false): Whether all radio buttons in the group are disabled
+- `name` (string, default ''): The name attribute for all radio buttons in the group
+- `value` (string, default ''): The value of the currently selected radio button
+
+Events:
+- `ae-radio-group-change` (CustomEvent<{value: string}>): Fired when the selected radio changes
+
+Slots:
+- `default`: The radio buttons (ae-radio elements) to be grouped
+
+CSS parts:
+- `base`: The component's base wrapper
+
+## `<ae-select>`
+
+A select dropdown component with support for single/multiple selection and form participation.
+Participates in native form submission via ElementInternals API.
+
+Properties:
+- `ariaLabel` (string, default ''): Accessible label for the select (used when no visible label)
+- `defaultValue` (string, default ''): Initial value for uncontrolled usage
+- `disabled` (boolean, default false): Whether the select is disabled
+- `error` (string, default ''): Error message to display
+- `helpText` (string, default ''): Helper text to display below the select
+- `label` (string, default ''): Label text for the select
+- `multiple` (boolean, default false): Whether multiple selection is allowed
+- `name` (string, default ''): The name attribute for form submission
+- `options` (SelectOption[], default []): Programmatic options for structured or agent-generated UIs
+- `placeholder` (string, default ''): Placeholder text when no option is selected
+- `required` (boolean, default false): Whether the select is required
+- `value` (string, default ''): The current selected value (single select)
+- `values` (string[], default []): The current selected values (multiple select)
+
+Events:
+- `ae-select-change` (CustomEvent<{value: string | string[]}>): Fired when the selection changes
+
+Slots:
+- `default`: The select options (ae-option elements)
+
+CSS parts:
+- `base`: The component's base wrapper
+- `error-text`: The error text element
+- `help-text`: The help text element
+- `label`: The label element
+- `select`: The native select element
+- `select-wrapper`: The wrapper around the select
+
+## `<ae-spinner>`
+
+A loading spinner component for indicating loading or processing states.
+
+Properties:
+- `label` (string, default 'Loading...'): Accessible label for screen readers
+- `size` (string, default 'md'): The size of the spinner (xs, sm, md, lg, xl)
+- `variant` (string, default 'primary'): The visual variant (primary, secondary, success, warning, error, info)
+
+Events:
+- None documented
+
+Slots:
+- None documented
+
+CSS parts:
+- `base`: The component's base wrapper
+- `label`: The label element (visually hidden by default)
+- `spinner`: The spinner SVG element
+
+## `<ae-switch>`
+
+A toggle switch component for boolean on/off states.
+Participates in native form submission via ElementInternals API.
+
+Properties:
+- `ariaLabel` (string, default ''): Accessible label for the switch (used when no visible label)
+- `checked` (boolean, default false): Whether the switch is checked
+- `defaultChecked` (boolean, default false): Initial checked state for uncontrolled usage
+- `disabled` (boolean, default false): Whether the switch is disabled
+- `name` (string, default ''): The name attribute for form submission
+- `required` (boolean, default false): Whether the switch is required
+- `size` (string, default 'md'): The size of the switch (sm, md, lg)
+- `value` (string, default 'on'): The value attribute for form submission
+
+Events:
+- `ae-switch-change` (CustomEvent<{checked: boolean}>): Fired when the switch state changes
+
+Slots:
+- `default`: The switch label content
+
+CSS parts:
+- `base`: The component's base wrapper (label element)
+- `control`: The switch control container
+- `input`: The native checkbox input element
+- `label`: The label text container
+- `thumb`: The switch thumb element
+
+## `<ae-tab>`
+
+AeTab custom element.
+
+Properties:
+- `ariaControls` (string, default ''): ID of the panel this tab controls
+- `ariaSelected` (string, default 'false'): Whether tab is selected
+- `id` (string, default ''): ID of the tab
+- `internalTabIndex` (number, default -1): Tab index for keyboard navigation (internal property, uses data attribute to avoid nested interactive elements)
+
+Events:
+- None documented
+
+Slots:
+- None documented
+
+CSS parts:
+- None documented
+
+## `<ae-tab-panel>`
+
+AeTabPanel custom element.
+
+Properties:
+- `ariaLabelledby` (string, default ''): ID of the tab that controls this panel
+- `hidden` (boolean, default false): Whether the panel is hidden
+- `id` (string, default ''): ID for the panel
+
+Events:
+- None documented
+
+Slots:
+- None documented
+
+CSS parts:
+- None documented
+
+## `<ae-tabs>`
+
+A tabbed interface component with keyboard navigation and ARIA compliant behavior.
+
+Properties:
+- `activation` ('auto' | 'manual', default 'auto'): How tab selection works with keyboard navigation (auto: selects on focus, manual: selects on Enter/Space)
+- `label` (string, default ''): Accessible label for the tablist
+- `orientation` ('horizontal' | 'vertical', default 'horizontal'): The orientation of the tabs layout
+- `value` (string, default ''): The ID of the currently active tab
+
+Events:
+- `ae-tab-change` (CustomEvent<{tab: string}>): Fired when the active tab changes
+
+Slots:
+- `panel`: The panel elements (ae-tab-panel)
+- `tab`: The tab elements (ae-tab)
+
+CSS parts:
+- `base`: The component's base wrapper
+- `panels`: The panels container
+- `tablist`: The tab list container
+
+## `<ae-textarea>`
+
+A textarea component with support for auto-resize, character counting, and form participation.
+Participates in native form submission via ElementInternals API.
+
+Properties:
+- `ariaLabel` (string, default ''): Accessible label for the textarea (used when no visible label)
+- `autoResize` (boolean, default false): Whether to automatically resize based on content
+- `defaultValue` (string, default ''): Initial value for uncontrolled usage
+- `disabled` (boolean, default false): Whether the textarea is disabled
+- `error` (string, default ''): Error message to display
+- `helpText` (string, default ''): Helper text to display below the textarea
+- `label` (string, default ''): Label text for the textarea
+- `maxlength` (number, default undefined): Maximum length
+- `minlength` (number, default undefined): Minimum length
+- `name` (string, default ''): The name attribute for form submission
+- `placeholder` (string, default ''): Placeholder text
+- `readonly` (boolean, default false): Whether the textarea is readonly
+- `required` (boolean, default false): Whether the textarea is required
+- `resize` ('none'|'vertical'|'horizontal'|'both', default 'vertical'): How the textarea can be manually resized
+- `rows` (number, default 4): Number of visible text rows
+- `showCount` (boolean, default false): Whether to show character count
+- `value` (string, default ''): The current textarea value
+
+Events:
+- `ae-textarea-blur` (CustomEvent<void>): Fired when textarea loses focus
+- `ae-textarea-change` (CustomEvent<{value: string}>): Fired when the textarea value changes
+- `ae-textarea-focus` (CustomEvent<void>): Fired when textarea receives focus
+- `ae-textarea-input` (CustomEvent<{value: string}>): Fired on input event
+
+Slots:
+- None documented
+
+CSS parts:
+- `base`: The component's base wrapper
+- `char-count`: The character count element
+- `error-text`: The error text element
+- `footer`: The footer container
+- `help-text`: The help text element
+- `label`: The label element
+- `textarea`: The native textarea element
+- `textarea-wrapper`: The wrapper around the textarea
+
+## `<ae-toast>`
+
+AeToast custom element.
+
+Properties:
+- `duration` (number, default 5000): Auto-dismiss duration in milliseconds (0 = sticky)
+- `message` (string, default ''): Toast message (falls back to slot content if not provided)
+- `open` (boolean, default true): Whether the toast is visible
+- `pauseOnHover` (boolean, default true): Pause the auto-dismiss timer when hovering
+- `placement` ('top-right' | 'bottom-right' | 'top-left' | 'bottom-left', default 'bottom-right'): Position on the screen
+- `size` ('sm' | 'md' | 'lg', default 'md'): Size of the toast
+- `variant` ('info' | 'success' | 'warning' | 'error', default 'info'): Visual style of the toast
+
+Events:
+- `ae-click` (CustomEvent): Fired when the toast is clicked
+- `ae-close` (CustomEvent): Fired when the toast is closed
+
+Slots:
+- `default`: Default slot for the message content
+- `icon`: Custom icon
+
+CSS parts:
+- `close`: Close button
+- `content`: Message text wrapper
+- `icon`: Icon element
+- `progress`: Animated time remaining bar
+- `toast`: Main container
+
+## `<ae-tooltip>`
+
+A lightweight tooltip component that shows contextual information on hover/focus
+
+Properties:
+- `animation` ('fade' | 'scale', default 'fade'): Animation type (fade or scale)
+- `disabled` (boolean, default false): Whether the tooltip is disabled
+- `hideDelay` (number, default 100): Delay in milliseconds before hiding on mouse leave/blur
+- `hoverDelay` (number, default 100): Delay in milliseconds before showing on hover/focus
+- `open` (boolean, default false): Whether the tooltip is currently visible
+- `placement` ('top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end', default 'top'): Preferred placement of the tooltip
+- `showArrow` (boolean, default true): Whether to show an arrow pointing to the anchor
+- `strategy` ('absolute' | 'fixed', default 'fixed'): Positioning strategy (absolute or fixed)
+- `text` (string, default ''): The text content to display in the tooltip
+
+Events:
+- `ae-tooltip-hide` (CustomEvent<unknown>): Fired when tooltip closes
+- `ae-tooltip-show` (CustomEvent<unknown>): Fired when tooltip opens
+
+Slots:
+- `default`: Default slot for the anchor element that triggers the tooltip
+
+CSS parts:
+- `arrow`: The tooltip arrow indicator
+- `content`: The tooltip content wrapper
+- `overlay`: The tooltip container
+
+## `<ae-tree-item>`
+
+AeTreeItem custom element.
+
+Properties:
+- `disabled` (boolean, default false): Whether the tree item is disabled
+- `expanded` (boolean, default false): Whether the tree item is expanded
+- `label` (string, default ''): The text label for this tree item
+- `lazy` (boolean, default false): Enable lazy loading for child items
+- `selected` (boolean, default false): Whether the tree item is selected
+
+Events:
+- `ae-tree-item-collapse` (CustomEvent): Fired when the item is collapsed
+- `ae-tree-item-expand` (CustomEvent): Fired when the item is expanded
+- `ae-tree-item-select` (CustomEvent): Fired when the item is selected
+
+Slots:
+- `default`: The default slot for nested tree items
+- `icon`: Custom icon to display before the label
+
+CSS parts:
+- `base`: The component's base wrapper
+- `checkbox`: The checkbox element (if selectable)
+- `children`: The children container
+- `expand-button`: The expand/collapse button
+- `indentation`: The indentation element
+- `item`: The tree item's main container
+- `label`: The label element
+
+## `<ae-treeview>`
+
+AeTreeView custom element.
+
+Properties:
+- `data` (TreeNode[], default []): Nodes to display in the tree view (data-driven mode)
+- `emptyMessage` (string, default 'No items'): Message to display when there are no items
+- `expanded` (string[], default []): List of node IDs that should be expanded
+- `indentSize` (number, default 20): Pixels to indent each depth level
+- `label` (string, default ''): Accessible label for the tree (defaults to "Tree")
+- `loading` (boolean, default false): Shows a loading state when true
+- `selected` (string[], default []): List of node IDs that should be selected
+- `selectionMode` ('single'|'multiple'|'none', default 'single'): Selection behavior
+
+Events:
+- `ae-treeview-expand` (CustomEvent<{expanded: string[]}>): Fired when expansion state changes
+- `ae-treeview-select` (CustomEvent<{selected: string[]}>): Fired when selection changes
+
+Slots:
+- `default`: Default slot for ae-tree-item elements (slot-based mode)
+
+CSS parts:
+- `caret`: Toggle icon wrapper
+- `caret-spacer`: Placeholder for caret on leaf nodes
+- `checkbox`: Checkbox indicator
+- `empty`: Empty state container
+- `icon`: Node icon wrapper
+- `label`: Text label
+- `loading`: Loading state container
+- `node`: Focusable row for each item
+- `spinner`: Loading spinner

@@ -8,8 +8,8 @@ import { badgeStyles } from './styles';
  *
  * @element ae-badge
  *
- * @property {string} variant - The visual variant (primary, secondary, success, warning, error, info)
- * @property {string} size - The size of the badge (sm, md, lg)
+ * @property {'primary'|'secondary'|'success'|'warning'|'error'|'info'} variant - The visual variant
+ * @property {'sm'|'md'|'lg'} size - The size of the badge
  * @property {boolean} closable - Whether to show a close button
  * @property {boolean} dot - Whether to display as a dot indicator
  * @property {boolean} outline - Whether to use outline style

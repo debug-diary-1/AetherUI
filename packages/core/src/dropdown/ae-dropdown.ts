@@ -306,8 +306,13 @@ export class AeDropdown extends LitElement {
                 <slot
                   name="item"
                   @click=${(e: Event) => {
-                    // Find the closest menuitem role
-                    const menuItem = (e.target as HTMLElement).closest('[role="menuitem"]');
+                    // A slotted item may render the menuitem inside its shadow root.
+                    const menuItem = e
+                      .composedPath()
+                      .find(
+                        (node): node is HTMLElement =>
+                          node instanceof HTMLElement && node.matches('[role="menuitem"]'),
+                      );
                     if (menuItem) {
                       const value = menuItem.getAttribute('data-value') || '';
                       this.handleItemClick(e, value);

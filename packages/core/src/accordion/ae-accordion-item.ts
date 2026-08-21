@@ -41,8 +41,12 @@ export class AeAccordionItem extends LitElement {
   /**
    * Unique identifier for this accordion item
    */
-  @property({ type: String })
+  @property({ type: String, attribute: 'header-id' })
   accessor headerId = `ae-accordion-${AeAccordionItem._idCounter++}`;
+
+  /** Compatibility alias for the original package's `headerid` attribute. */
+  @property({ type: String, attribute: 'headerid' })
+  private accessor legacyHeaderId = '';
 
   /**
    * Whether this panel is currently open
@@ -57,16 +61,58 @@ export class AeAccordionItem extends LitElement {
   accessor disabled = false;
 
   private panelHeight = 0;
+  private hasCompletedInitialUpdate = false;
+  private suppressNextOpenNotification = false;
 
   connectedCallback() {
     super.connectedCallback();
+    if (!this.hasAttribute('header-id')) {
+      if (this.legacyHeaderId) this.headerId = this.legacyHeaderId;
+    }
     this.setAttribute('data-header-id', this.headerId);
   }
 
   updated(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has('legacyHeaderId') && this.legacyHeaderId) {
+      this.headerId = this.legacyHeaderId;
+    }
+    if (changedProperties.has('headerId')) {
+      this.setAttribute('data-header-id', this.headerId);
+    }
     if (changedProperties.has('open')) {
       this.updatePanelHeight();
+      if (this.hasCompletedInitialUpdate && !this.suppressNextOpenNotification) {
+        this.dispatchOpenChange();
+      }
+      this.suppressNextOpenNotification = false;
     }
+    this.hasCompletedInitialUpdate = true;
+  }
+
+  /** Coordinate state from a parent without confusing initialization with user intent. */
+  setOpenFromAccordion(open: boolean, notify = false) {
+    if (this.open === open) return;
+    this.suppressNextOpenNotification = true;
+    this.open = open;
+    if (notify && this.hasCompletedInitialUpdate) this.dispatchOpenChange();
+  }
+
+  private dispatchOpenChange() {
+    const detail = { headerId: this.headerId, open: this.open };
+    this.dispatchEvent(
+      new CustomEvent('ae-accordion-item-change', {
+        detail,
+        bubbles: true,
+        composed: true,
+      }),
+    );
+    this.dispatchEvent(
+      new CustomEvent('ae-panel-change', {
+        detail,
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private updatePanelHeight() {
@@ -84,34 +130,17 @@ export class AeAccordionItem extends LitElement {
    */
   private handleHeaderClick() {
     if (this.disabled) return;
-    this.open = !this.open;
-
-    const detail = { headerId: this.headerId, open: this.open };
-
-    this.dispatchEvent(
-      new CustomEvent('ae-accordion-item-change', {
-        detail,
-        bubbles: true,
-        composed: true,
-      }),
-    );
-
-    this.dispatchEvent(
-      new CustomEvent('ae-panel-change', {
-        detail,
-        bubbles: true,
-        composed: true,
-      }),
-    );
+    this.setOpenFromAccordion(!this.open, true);
   }
 
   render() {
     return html`
-      <div class="accordion-item" part="base">
+      <div class="accordion-item" part="base item">
         <div role="heading" aria-level="3">
           <button
             class="header"
             part="header"
+            id="header-${this.headerId}"
             aria-expanded=${this.open}
             aria-controls="panel-${this.headerId}"
             ?disabled=${this.disabled}

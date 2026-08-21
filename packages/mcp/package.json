@@ -1,0 +1,70 @@
+{
+  "name": "@aetherui/mcp",
+  "version": "0.1.0",
+  "description": "MCP server for AetherUI component discovery and agent UI validation",
+  "keywords": [
+    "aetherui",
+    "llm",
+    "mcp",
+    "model-context-protocol",
+    "web-components"
+  ],
+  "homepage": "https://github.com/debug-diary-1/AetherUI#readme",
+  "bugs": {
+    "url": "https://github.com/debug-diary-1/AetherUI/issues"
+  },
+  "license": "MIT",
+  "author": "AetherUI Contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/debug-diary-1/AetherUI.git",
+    "directory": "packages/mcp"
+  },
+  "bin": {
+    "aetherui-mcp": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "agent-ui.schema.json",
+    "component-catalog.json",
+    "README.md"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/server.js",
+  "module": "./dist/server.js",
+  "types": "./dist/server.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    },
+    "./schema.json": "./agent-ui.schema.json",
+    "./catalog.json": "./component-catalog.json",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf dist",
+    "lint": "oxlint src test",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@aetherui/agent": "workspace:^",
+    "@modelcontextprotocol/server": "2.0.0",
+    "zod": "^4.2.0"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.0.0",
+    "@types/node": "catalog:",
+    "rimraf": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  }
+}

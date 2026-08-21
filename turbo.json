@@ -1,7 +1,11 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": [
+    "**/.env.*local",
+    "scripts/artifact-helpers.mjs",
+    "scripts/generate-react-types.mjs"
+  ],
   "boundaries": {
     "tags": {
       "foundation": {
@@ -26,7 +30,7 @@
     "build": {
       "description": "Compile TypeScript and bundle web components with Vite",
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"],
+      "outputs": ["dist/**", ".next/**", "custom-elements.json", "react.d.ts"],
       "cache": true
     },
     "dev": {
@@ -50,6 +54,18 @@
       "dependsOn": [],
       "outputs": ["{projectRoot}/coverage/**"],
       "cache": true
+    },
+    "@aetherui/accordion#test": {
+      "dependsOn": ["^build", "build"],
+      "outputs": []
+    },
+    "@aetherui/mcp#test": {
+      "dependsOn": ["^build", "build"],
+      "outputs": []
+    },
+    "@aetherui/datatable#test": {
+      "dependsOn": ["^build", "build"],
+      "outputs": []
     },
     "test:memory": {
       "description": "Run memory leak detection tests",

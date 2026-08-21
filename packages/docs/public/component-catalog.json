@@ -1,0 +1,3217 @@
+{
+  "schemaVersion": "1.0.0",
+  "source": "packages/core/custom-elements.json",
+  "components": [
+    {
+      "tagName": "ae-accordion",
+      "className": "AeAccordion",
+      "module": "src/accordion/ae-accordion.ts",
+      "description": "A collapsible disclosure component that shows or hides content panels.",
+      "properties": [
+        {
+          "name": "defaultValue",
+          "attribute": "default-value",
+          "type": "string[]",
+          "default": "[]",
+          "description": "Initial panel IDs to open (uncontrolled mode)"
+        },
+        {
+          "name": "expanded",
+          "attribute": "expanded",
+          "type": "string[]",
+          "default": null,
+          "description": "Compatibility alias retained for the standalone accordion package."
+        },
+        {
+          "name": "multiselectable",
+          "attribute": "multiselectable",
+          "type": "boolean",
+          "default": "false",
+          "description": "Allows multiple panels to be open simultaneously"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "string[]",
+          "default": "[]",
+          "description": "Array of panel IDs that are currently open/expanded"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-accordion-change",
+          "type": "CustomEvent<{value: string[]}>",
+          "description": "Fired when open/expanded panels change"
+        },
+        {
+          "name": "ae-expand-change",
+          "type": "CustomEvent",
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "Default slot for accordion items"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The container element for the accordion"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--ae-accordion-bg",
+          "description": "Background color"
+        },
+        {
+          "name": "--ae-accordion-border",
+          "description": "Border style"
+        },
+        {
+          "name": "--ae-accordion-divider",
+          "description": "Divider between items"
+        },
+        {
+          "name": "--ae-accordion-radius",
+          "description": "Border radius"
+        },
+        {
+          "name": "--ae-accordion-shadow",
+          "description": "Box shadow"
+        }
+      ]
+    },
+    {
+      "tagName": "ae-accordion-item",
+      "className": "AeAccordionItem",
+      "module": "src/accordion/ae-accordion-item.ts",
+      "description": "An individual collapsible panel within an accordion.",
+      "properties": [
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether this accordion item is disabled"
+        },
+        {
+          "name": "headerId",
+          "attribute": "header-id",
+          "type": "string",
+          "default": "`ae-accordion-${AeAccordionItem._idCounter++}`",
+          "description": "Unique identifier for this accordion item"
+        },
+        {
+          "name": "open",
+          "attribute": "open",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether this panel is currently open"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-accordion-item-change",
+          "type": "CustomEvent<{headerId: string, open: boolean}>",
+          "description": "Standardized event fired when opened/closed"
+        },
+        {
+          "name": "ae-panel-change",
+          "type": "CustomEvent<{headerId: string, open: boolean}>",
+          "description": "Fired when this panel is opened or closed"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "Default slot for panel content"
+        },
+        {
+          "name": "header",
+          "description": "Content for the accordion header/button"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The container element"
+        },
+        {
+          "name": "header",
+          "description": "The clickable header button"
+        },
+        {
+          "name": "icon",
+          "description": "The expand/collapse icon"
+        },
+        {
+          "name": "panel",
+          "description": "The content panel"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--ae-accordion-header-active-bg",
+          "description": "Open header background color"
+        },
+        {
+          "name": "--ae-accordion-header-active-color",
+          "description": "Open header text color"
+        },
+        {
+          "name": "--ae-accordion-header-bg",
+          "description": "Header background color"
+        },
+        {
+          "name": "--ae-accordion-header-color",
+          "description": "Header text color"
+        },
+        {
+          "name": "--ae-accordion-header-hover-bg",
+          "description": "Header hover background"
+        },
+        {
+          "name": "--ae-accordion-icon-active-color",
+          "description": "Open state icon color"
+        },
+        {
+          "name": "--ae-accordion-icon-color",
+          "description": "Icon color"
+        },
+        {
+          "name": "--ae-accordion-panel-bg",
+          "description": "Panel background color"
+        },
+        {
+          "name": "--ae-accordion-panel-color",
+          "description": "Panel text color"
+        }
+      ]
+    },
+    {
+      "tagName": "ae-alert",
+      "className": "AeAlert",
+      "module": "src/alert/ae-alert.ts",
+      "description": "",
+      "properties": [
+        {
+          "name": "closable",
+          "attribute": "closable",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the alert can be closed"
+        },
+        {
+          "name": "open",
+          "attribute": "open",
+          "type": "boolean",
+          "default": "true",
+          "description": "Control visibility"
+        },
+        {
+          "name": "size",
+          "attribute": "size",
+          "type": "'sm' | 'md' | 'lg'",
+          "default": "'md'",
+          "description": "Size of the alert"
+        },
+        {
+          "name": "variant",
+          "attribute": "variant",
+          "type": "'info' | 'success' | 'warning' | 'error'",
+          "default": "'info'",
+          "description": "Visual theme of the alert"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-close",
+          "type": "CustomEvent",
+          "description": "Fired when the alert is closed"
+        }
+      ],
+      "slots": [],
+      "cssParts": [],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-autocomplete",
+      "className": "AeAutocomplete",
+      "module": "src/autocomplete/ae-autocomplete.ts",
+      "description": "Aether UI Autocomplete Component\n\nA text input with dropdown suggestions as users type, helping them quickly\nfind and select from a list of options.",
+      "properties": [
+        {
+          "name": "ariaLabel",
+          "attribute": "aria-label",
+          "type": "string",
+          "default": "''",
+          "description": "Accessible label for the input (falls back to placeholder)"
+        },
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the input is disabled"
+        },
+        {
+          "name": "maxItems",
+          "attribute": "max-items",
+          "type": "number",
+          "default": null,
+          "description": "Maximum number of items to show in dropdown"
+        },
+        {
+          "name": "minChars",
+          "attribute": "min-chars",
+          "type": "number",
+          "default": null,
+          "description": "Minimum characters before showing suggestions"
+        },
+        {
+          "name": "options",
+          "attribute": "options",
+          "type": "(string|AutocompleteOption)[]",
+          "default": null,
+          "description": "Options to display in the dropdown"
+        },
+        {
+          "name": "placeholder",
+          "attribute": "placeholder",
+          "type": "string",
+          "default": "'Start typing...'",
+          "description": "Placeholder text for the input"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "string",
+          "default": null,
+          "description": "Current input value"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-autocomplete-change",
+          "type": "CustomEvent<{value: string, option: AutocompleteOption|null}>",
+          "description": "Fired when the value changes"
+        },
+        {
+          "name": "ae-autocomplete-select",
+          "type": "CustomEvent<{value: string, option: AutocompleteOption}>",
+          "description": "Fired when an option is selected"
+        }
+      ],
+      "slots": [
+        {
+          "name": "arrow",
+          "description": "Custom template for the dropdown arrow"
+        },
+        {
+          "name": "clear",
+          "description": "Custom template for the clear button"
+        },
+        {
+          "name": "no-results",
+          "description": "Content shown when no results match"
+        },
+        {
+          "name": "option",
+          "description": "Custom template for rendering each option"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "arrow",
+          "description": "The dropdown arrow"
+        },
+        {
+          "name": "clear",
+          "description": "The clear button"
+        },
+        {
+          "name": "dropdown",
+          "description": "The dropdown container"
+        },
+        {
+          "name": "group",
+          "description": "Group heading for categorized options"
+        },
+        {
+          "name": "input",
+          "description": "The text input element"
+        },
+        {
+          "name": "option",
+          "description": "Each option in the dropdown"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--ae-autocomplete-background",
+          "description": "Background color of the input"
+        },
+        {
+          "name": "--ae-autocomplete-border-color",
+          "description": "Border color of the input"
+        },
+        {
+          "name": "--ae-autocomplete-dropdown-shadow",
+          "description": "Shadow for the dropdown"
+        },
+        {
+          "name": "--ae-autocomplete-highlight-background",
+          "description": "Background color for highlighted/hovered options"
+        },
+        {
+          "name": "--ae-autocomplete-highlight-color",
+          "description": "Color for highlighted text"
+        },
+        {
+          "name": "--ae-autocomplete-highlight-text-color",
+          "description": "Text color for highlighted/hovered options"
+        },
+        {
+          "name": "--ae-autocomplete-text-color",
+          "description": "Text color of the input"
+        }
+      ]
+    },
+    {
+      "tagName": "ae-badge",
+      "className": "AeBadge",
+      "module": "src/badge/ae-badge.ts",
+      "description": "A badge component for displaying small labels, tags, counts, or status indicators.\nSupports multiple variants, sizes, closable option, dot indicators, and outline styles.",
+      "properties": [
+        {
+          "name": "closable",
+          "attribute": "closable",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether to show a close button"
+        },
+        {
+          "name": "dot",
+          "attribute": "dot",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether to display as a dot indicator"
+        },
+        {
+          "name": "outline",
+          "attribute": "outline",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether to use outline style"
+        },
+        {
+          "name": "size",
+          "attribute": "size",
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "The size of the badge"
+        },
+        {
+          "name": "variant",
+          "attribute": "variant",
+          "type": "'primary'|'secondary'|'success'|'warning'|'error'|'info'",
+          "default": "'primary'",
+          "description": "The visual variant"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-badge-close",
+          "type": "CustomEvent<void>",
+          "description": "Fired when the close button is clicked"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "The badge content"
+        },
+        {
+          "name": "icon",
+          "description": "Optional icon to display before the content"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        },
+        {
+          "name": "close-button",
+          "description": "The close button"
+        },
+        {
+          "name": "content",
+          "description": "The content container"
+        },
+        {
+          "name": "icon",
+          "description": "The icon container"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-breadcrumb",
+      "className": "AeBreadcrumb",
+      "module": "src/breadcrumb/ae-breadcrumb.ts",
+      "description": "A breadcrumb navigation component for showing the current page's location in the site hierarchy.",
+      "properties": [
+        {
+          "name": "ariaLabel",
+          "attribute": "aria-label",
+          "type": "string",
+          "default": "'Breadcrumb'",
+          "description": ""
+        },
+        {
+          "name": "separator",
+          "attribute": "separator",
+          "type": "string",
+          "default": "'/'",
+          "description": "The separator character or icon between items (default: '/')"
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "",
+          "description": "The breadcrumb items (ae-breadcrumb-item elements)"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        },
+        {
+          "name": "list",
+          "description": "The breadcrumb list element"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-breadcrumb-item",
+      "className": "AeBreadcrumbItem",
+      "module": "src/breadcrumb/ae-breadcrumb-item.ts",
+      "description": "A breadcrumb item component to be used within ae-breadcrumb.",
+      "properties": [
+        {
+          "name": "ariaLabel",
+          "attribute": "aria-label",
+          "type": "string",
+          "default": "''",
+          "description": "Accessible label for the breadcrumb item link"
+        },
+        {
+          "name": "current",
+          "attribute": "current",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether this is the current/active page"
+        },
+        {
+          "name": "href",
+          "attribute": "href",
+          "type": "string",
+          "default": "''",
+          "description": "The URL to navigate to"
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "",
+          "description": "The breadcrumb item content"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper (list item)"
+        },
+        {
+          "name": "link",
+          "description": "The link element"
+        },
+        {
+          "name": "separator",
+          "description": "The separator element"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-button",
+      "className": "AeButton",
+      "module": "src/button/ae-button.ts",
+      "description": "Primary action trigger with variants (primary, secondary, ghost, icon‑only) and sizes (sm, md, lg).",
+      "properties": [
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the button is disabled and cannot be interacted with"
+        },
+        {
+          "name": "iconOnly",
+          "attribute": "icon-only",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the button contains only an icon (auto-detected, but can be set manually)"
+        },
+        {
+          "name": "iconPosition",
+          "attribute": "icon-position",
+          "type": "'start' | 'end'",
+          "default": "'start'",
+          "description": "Position of the icon relative to the label (defaults to 'start')"
+        },
+        {
+          "name": "size",
+          "attribute": "size",
+          "type": "'sm' | 'md' | 'lg'",
+          "default": "'md'",
+          "description": "Size of the button affecting padding and font-size (defaults to 'md')"
+        },
+        {
+          "name": "unstyled",
+          "attribute": "unstyled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether to use unstyled/headless mode (no default styles)"
+        },
+        {
+          "name": "variant",
+          "attribute": "variant",
+          "type": "'primary' | 'secondary' | 'ghost'",
+          "default": "'primary'",
+          "description": "Visual style of the button (defaults to 'primary')"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-button-click",
+          "type": "CustomEvent<{sourceEvent: Event}>",
+          "description": "Fired when the button is clicked and not disabled"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "Button label text (default slot)"
+        },
+        {
+          "name": "icon",
+          "description": "Icon content (SVG or other icon element)"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The button element itself"
+        },
+        {
+          "name": "icon",
+          "description": "The icon wrapper element"
+        },
+        {
+          "name": "label",
+          "description": "Text wrapper element for the default slot content"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--ae-button-bg-ghost",
+          "description": "Ghost button background color (default: transparent)"
+        },
+        {
+          "name": "--ae-button-bg-ghost-hover",
+          "description": "Ghost button hover background color (default: rgba(94, 124, 226, 0.08))"
+        },
+        {
+          "name": "--ae-button-bg-primary",
+          "description": "Primary button background color (default: #5e7ce2)"
+        },
+        {
+          "name": "--ae-button-bg-primary-hover",
+          "description": "Primary button hover background color (default: #4b69c8)"
+        },
+        {
+          "name": "--ae-button-bg-secondary",
+          "description": "Secondary button background color (default: #f3f4f6)"
+        },
+        {
+          "name": "--ae-button-bg-secondary-hover",
+          "description": "Secondary button hover background color (default: #e5e7eb)"
+        },
+        {
+          "name": "--ae-button-fg-ghost",
+          "description": "Ghost button text color (default: #5e7ce2)"
+        },
+        {
+          "name": "--ae-button-fg-primary",
+          "description": "Primary button text color (default: white)"
+        },
+        {
+          "name": "--ae-button-fg-secondary",
+          "description": "Secondary button text color (default: #333333)"
+        },
+        {
+          "name": "--ae-button-gap",
+          "description": "Space between icon and label (default: 0.5rem)"
+        },
+        {
+          "name": "--ae-button-padding-x",
+          "description": "Horizontal padding (default: 1rem)"
+        },
+        {
+          "name": "--ae-button-padding-y",
+          "description": "Vertical padding (default: 0.5rem)"
+        },
+        {
+          "name": "--ae-button-radius",
+          "description": "Button border radius (default: 0.375rem)"
+        },
+        {
+          "name": "--ae-button-transition-duration",
+          "description": "Transition duration for hover effects (default: 200ms)"
+        },
+        {
+          "name": "--ae-button-transition-timing",
+          "description": "Transition timing function (default: ease)"
+        }
+      ]
+    },
+    {
+      "tagName": "ae-checkbox",
+      "className": "AeCheckbox",
+      "module": "src/checkbox/ae-checkbox.ts",
+      "description": "A checkbox input component with support for checked, unchecked, and indeterminate states.\nParticipates in native form submission via ElementInternals API.",
+      "properties": [
+        {
+          "name": "checked",
+          "attribute": "checked",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the checkbox is checked"
+        },
+        {
+          "name": "defaultChecked",
+          "attribute": "default-checked",
+          "type": "boolean",
+          "default": "false",
+          "description": "Initial checked state for uncontrolled usage"
+        },
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the checkbox is disabled"
+        },
+        {
+          "name": "indeterminate",
+          "attribute": "indeterminate",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the checkbox is in an indeterminate state"
+        },
+        {
+          "name": "name",
+          "attribute": "name",
+          "type": "string",
+          "default": "''",
+          "description": "The name attribute for form submission"
+        },
+        {
+          "name": "required",
+          "attribute": "required",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the checkbox is required"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "string",
+          "default": "'on'",
+          "description": "The value attribute for form submission"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-checkbox-change",
+          "type": "CustomEvent<{checked: boolean, indeterminate: boolean}>",
+          "description": "Fired when the checkbox state changes"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "The checkbox label content"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper (label element)"
+        },
+        {
+          "name": "control",
+          "description": "The custom checkbox control container"
+        },
+        {
+          "name": "icon",
+          "description": "The checkmark icon"
+        },
+        {
+          "name": "indeterminate-icon",
+          "description": "The indeterminate state icon"
+        },
+        {
+          "name": "input",
+          "description": "The native checkbox input element"
+        },
+        {
+          "name": "label",
+          "description": "The label text container"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--ae-checkbox-bg",
+          "description": "The background color of the checkbox"
+        },
+        {
+          "name": "--ae-checkbox-bg-checked",
+          "description": "The background color when checked"
+        },
+        {
+          "name": "--ae-checkbox-bg-hover",
+          "description": "The background color on hover"
+        },
+        {
+          "name": "--ae-checkbox-border",
+          "description": "The border style of the checkbox"
+        },
+        {
+          "name": "--ae-checkbox-fg",
+          "description": "The checkmark color"
+        },
+        {
+          "name": "--ae-checkbox-gap",
+          "description": "The gap between checkbox and label"
+        },
+        {
+          "name": "--ae-checkbox-radius",
+          "description": "The border radius of the checkbox"
+        },
+        {
+          "name": "--ae-checkbox-size",
+          "description": "The size of the checkbox control"
+        }
+      ]
+    },
+    {
+      "tagName": "ae-combo",
+      "className": "AeCombo",
+      "module": "src/combo/ae-combo.ts",
+      "description": "Aether UI Combobox Component\n\nAn autocomplete dropdown that allows free-text input or selection\nfrom a filtered list, following the ARIA Listbox Combobox pattern.",
+      "properties": [
+        {
+          "name": "ariaLabel",
+          "attribute": "aria-label",
+          "type": "string",
+          "default": "''",
+          "description": "Accessible label for the input (falls back to placeholder)"
+        },
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the input is disabled"
+        },
+        {
+          "name": "freeInput",
+          "attribute": "free-input",
+          "type": "boolean",
+          "default": "true",
+          "description": "Whether user can enter values not in the list"
+        },
+        {
+          "name": "items",
+          "attribute": "items",
+          "type": "(string|ComboItem)[]",
+          "default": null,
+          "description": "Items to display in the dropdown"
+        },
+        {
+          "name": "placeholder",
+          "attribute": "placeholder",
+          "type": "string",
+          "default": "''",
+          "description": "Placeholder text for the input"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "string",
+          "default": "''",
+          "description": "Current input value (controlled)"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-combo-input",
+          "type": "CustomEvent<{value: string}>",
+          "description": "Fired on each keystroke"
+        },
+        {
+          "name": "ae-combo-select",
+          "type": "CustomEvent<{value: string, item: ComboItem | null}>",
+          "description": "Fired when an item is selected"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "Default slot (not used)"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "caret",
+          "description": "Dropdown arrow icon wrapper"
+        },
+        {
+          "name": "highlight",
+          "description": "Query match highlights"
+        },
+        {
+          "name": "input",
+          "description": "Text input field"
+        },
+        {
+          "name": "listbox",
+          "description": "Scroll container"
+        },
+        {
+          "name": "option",
+          "description": "Each list option"
+        },
+        {
+          "name": "overlay",
+          "description": "Positioned wrapper for the popup"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--ae-combo-bg",
+          "description": "Input background"
+        },
+        {
+          "name": "--ae-combo-border",
+          "description": "Input border color"
+        },
+        {
+          "name": "--ae-combo-fg",
+          "description": "Text color"
+        },
+        {
+          "name": "--ae-combo-option-hover-bg",
+          "description": "Hover/active option background"
+        },
+        {
+          "name": "--ae-combo-option-selected-bg",
+          "description": "Selected option background"
+        },
+        {
+          "name": "--ae-combo-option-selected-fg",
+          "description": "Selected option text color"
+        },
+        {
+          "name": "--ae-combo-radius",
+          "description": "Corner radius of input & listbox"
+        },
+        {
+          "name": "--ae-combo-shadow",
+          "description": "Overlay shadow"
+        }
+      ]
+    },
+    {
+      "tagName": "ae-drawer",
+      "className": "AeDrawer",
+      "module": "src/drawer/ae-drawer.ts",
+      "description": "A drawer component that slides in from the edge of the screen.",
+      "properties": [
+        {
+          "name": "ariaLabel",
+          "attribute": "aria-label",
+          "type": "string | null",
+          "default": "null",
+          "description": ""
+        },
+        {
+          "name": "backdrop",
+          "attribute": "backdrop",
+          "type": "boolean",
+          "default": "true",
+          "description": "Whether to show a backdrop behind the drawer"
+        },
+        {
+          "name": "closable",
+          "attribute": "closable",
+          "type": "boolean",
+          "default": "true",
+          "description": "Whether the drawer can be closed by the user"
+        },
+        {
+          "name": "open",
+          "attribute": "open",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the drawer is open"
+        },
+        {
+          "name": "placement",
+          "attribute": "placement",
+          "type": "string",
+          "default": "'right'",
+          "description": "Which side the drawer appears from (left, right, top, bottom)"
+        },
+        {
+          "name": "size",
+          "attribute": "size",
+          "type": "string",
+          "default": "'md'",
+          "description": "The size of the drawer (sm, md, lg, full)"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-drawer-close",
+          "type": "CustomEvent<void>",
+          "description": "Fired when the drawer closes"
+        },
+        {
+          "name": "ae-drawer-open",
+          "type": "CustomEvent<void>",
+          "description": "Fired when the drawer opens"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "The drawer body content"
+        },
+        {
+          "name": "footer",
+          "description": "The drawer footer content"
+        },
+        {
+          "name": "header",
+          "description": "The drawer header content"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "backdrop",
+          "description": "The backdrop overlay"
+        },
+        {
+          "name": "body",
+          "description": "The body section"
+        },
+        {
+          "name": "close-button",
+          "description": "The close button"
+        },
+        {
+          "name": "footer",
+          "description": "The footer section"
+        },
+        {
+          "name": "header",
+          "description": "The header section"
+        },
+        {
+          "name": "panel",
+          "description": "The drawer panel container"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-dropdown",
+      "className": "AeDropdown",
+      "module": "src/dropdown/ae-dropdown.ts",
+      "description": "Dropdown menu component",
+      "properties": [
+        {
+          "name": "defaultOpen",
+          "attribute": "default-open",
+          "type": "boolean",
+          "default": "false",
+          "description": "Initial open state (uncontrolled)"
+        },
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the dropdown trigger is disabled"
+        },
+        {
+          "name": "header",
+          "attribute": "header",
+          "type": "string",
+          "default": "''",
+          "description": "Header text for the dropdown"
+        },
+        {
+          "name": "open",
+          "attribute": "open",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the dropdown is open (controlled)"
+        },
+        {
+          "name": "placement",
+          "attribute": "placement",
+          "type": "'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end'",
+          "default": "'bottom-start'",
+          "description": "Menu placement relative to trigger"
+        },
+        {
+          "name": "strategy",
+          "attribute": "strategy",
+          "type": "'absolute' | 'fixed'",
+          "default": "'absolute'",
+          "description": "Positioning strategy"
+        },
+        {
+          "name": "theme",
+          "attribute": "theme",
+          "type": "'light' | 'dark'",
+          "default": "'dark'",
+          "description": "Theme of the dropdown (light or dark)"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-open-change",
+          "type": "CustomEvent",
+          "description": "When the dropdown opens or closes"
+        },
+        {
+          "name": "ae-select",
+          "type": "CustomEvent<unknown>",
+          "description": "When a menu item is selected"
+        }
+      ],
+      "slots": [],
+      "cssParts": [],
+      "cssProperties": [
+        {
+          "name": "--ae-dropdown-bg",
+          "description": "Menu background"
+        },
+        {
+          "name": "--ae-dropdown-fg",
+          "description": "Text color"
+        },
+        {
+          "name": "--ae-dropdown-gap",
+          "description": "Vertical spacing between items"
+        },
+        {
+          "name": "--ae-dropdown-item-active-bg",
+          "description": "Active/selected state background"
+        },
+        {
+          "name": "--ae-dropdown-item-hover-bg",
+          "description": "Hover state background"
+        },
+        {
+          "name": "--ae-dropdown-radius",
+          "description": "Corner rounding"
+        },
+        {
+          "name": "--ae-dropdown-shadow",
+          "description": "Overlay box shadow"
+        }
+      ]
+    },
+    {
+      "tagName": "ae-dropdown-item",
+      "className": "AeDropdownItem",
+      "module": "src/dropdown/ae-dropdown.ts",
+      "description": "",
+      "properties": [
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether this item is disabled"
+        },
+        {
+          "name": "hasSubmenu",
+          "attribute": "has-submenu",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether this item has a submenu (will show an indicator)"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "string",
+          "default": "''",
+          "description": "Value to emit when this item is selected"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "cssParts": [],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-input",
+      "className": "AeInput",
+      "module": "src/input/ae-input.ts",
+      "description": "A text input component with support for various input types, validation, and form participation.\nParticipates in native form submission via ElementInternals API.",
+      "properties": [
+        {
+          "name": "ariaLabel",
+          "attribute": "aria-label",
+          "type": "string",
+          "default": "''",
+          "description": "Accessible label for the input (used when no visible label)"
+        },
+        {
+          "name": "autocomplete",
+          "attribute": "autocomplete",
+          "type": "string",
+          "default": "undefined",
+          "description": "Autocomplete attribute"
+        },
+        {
+          "name": "clearable",
+          "attribute": "clearable",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether to show a clear button"
+        },
+        {
+          "name": "defaultValue",
+          "attribute": "default-value",
+          "type": "string",
+          "default": "''",
+          "description": "Initial value for uncontrolled usage"
+        },
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the input is disabled"
+        },
+        {
+          "name": "error",
+          "attribute": "error",
+          "type": "string",
+          "default": "''",
+          "description": "Error message to display"
+        },
+        {
+          "name": "helpText",
+          "attribute": "help-text",
+          "type": "string",
+          "default": "''",
+          "description": "Helper text to display below the input"
+        },
+        {
+          "name": "label",
+          "attribute": "label",
+          "type": "string",
+          "default": "''",
+          "description": "Label text for the input"
+        },
+        {
+          "name": "max",
+          "attribute": "max",
+          "type": "number",
+          "default": "undefined",
+          "description": "Maximum value for number inputs"
+        },
+        {
+          "name": "maxlength",
+          "attribute": "maxlength",
+          "type": "number",
+          "default": "undefined",
+          "description": "Maximum length for text inputs"
+        },
+        {
+          "name": "min",
+          "attribute": "min",
+          "type": "number",
+          "default": "undefined",
+          "description": "Minimum value for number inputs"
+        },
+        {
+          "name": "minlength",
+          "attribute": "minlength",
+          "type": "number",
+          "default": "undefined",
+          "description": "Minimum length for text inputs"
+        },
+        {
+          "name": "name",
+          "attribute": "name",
+          "type": "string",
+          "default": "''",
+          "description": "The name attribute for form submission"
+        },
+        {
+          "name": "pattern",
+          "attribute": "pattern",
+          "type": "string",
+          "default": "undefined",
+          "description": "Regex pattern for validation"
+        },
+        {
+          "name": "placeholder",
+          "attribute": "placeholder",
+          "type": "string",
+          "default": "''",
+          "description": "Placeholder text"
+        },
+        {
+          "name": "readonly",
+          "attribute": "readonly",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the input is readonly"
+        },
+        {
+          "name": "required",
+          "attribute": "required",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the input is required"
+        },
+        {
+          "name": "step",
+          "attribute": "step",
+          "type": "number",
+          "default": "undefined",
+          "description": "Step value for number inputs"
+        },
+        {
+          "name": "type",
+          "attribute": "type",
+          "type": "string",
+          "default": "'text'",
+          "description": "The type of input (text, email, password, number, tel, url, search)"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "string",
+          "default": "''",
+          "description": "The current input value"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-input-blur",
+          "type": "CustomEvent<void>",
+          "description": "Fired when input loses focus"
+        },
+        {
+          "name": "ae-input-change",
+          "type": "CustomEvent<{value: string}>",
+          "description": "Fired when the input value changes"
+        },
+        {
+          "name": "ae-input-clear",
+          "type": "CustomEvent<void>",
+          "description": "Fired when clear button is clicked"
+        },
+        {
+          "name": "ae-input-focus",
+          "type": "CustomEvent<void>",
+          "description": "Fired when input receives focus"
+        },
+        {
+          "name": "ae-input-input",
+          "type": "CustomEvent<{value: string}>",
+          "description": "Fired on input event"
+        }
+      ],
+      "slots": [
+        {
+          "name": "prefix",
+          "description": "Content to display before the input"
+        },
+        {
+          "name": "suffix",
+          "description": "Content to display after the input"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        },
+        {
+          "name": "clear-button",
+          "description": "The clear button"
+        },
+        {
+          "name": "error-text",
+          "description": "The error text element"
+        },
+        {
+          "name": "help-text",
+          "description": "The help text element"
+        },
+        {
+          "name": "input",
+          "description": "The native input element"
+        },
+        {
+          "name": "input-wrapper",
+          "description": "The wrapper around the input and slots"
+        },
+        {
+          "name": "label",
+          "description": "The label element"
+        },
+        {
+          "name": "prefix",
+          "description": "The prefix slot container"
+        },
+        {
+          "name": "suffix",
+          "description": "The suffix slot container"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-menu",
+      "className": "AeMenu",
+      "module": "src/menu/ae-menu.ts",
+      "description": "A menu container component for grouping menu items.",
+      "properties": [],
+      "events": [],
+      "slots": [
+        {
+          "name": "",
+          "description": "The menu items (ae-menu-item elements)"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-menu-divider",
+      "className": "AeMenuDivider",
+      "module": "src/menu/ae-menu-divider.ts",
+      "description": "A menu divider component for separating menu items.",
+      "properties": [],
+      "events": [],
+      "slots": [],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-menu-item",
+      "className": "AeMenuItem",
+      "module": "src/menu/ae-menu-item.ts",
+      "description": "A menu item component to be used within ae-menu.",
+      "properties": [
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the menu item is disabled"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "string",
+          "default": "''",
+          "description": "The value associated with this menu item"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-menu-select",
+          "type": "CustomEvent<{value: string}>",
+          "description": "Fired when the menu item is selected"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "The menu item content"
+        },
+        {
+          "name": "prefix",
+          "description": "Content to display before the menu item text"
+        },
+        {
+          "name": "suffix",
+          "description": "Content to display after the menu item text"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        },
+        {
+          "name": "label",
+          "description": "The label container"
+        },
+        {
+          "name": "prefix",
+          "description": "The prefix slot container"
+        },
+        {
+          "name": "suffix",
+          "description": "The suffix slot container"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-menu-section",
+      "className": "AeMenuSection",
+      "module": "src/dropdown/ae-dropdown.ts",
+      "description": "",
+      "properties": [
+        {
+          "name": "title",
+          "attribute": "title",
+          "type": "string",
+          "default": "''",
+          "description": "Optional title for the section"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "cssParts": [],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-menu-separator",
+      "className": "AeMenuSeparator",
+      "module": "src/dropdown/ae-dropdown.ts",
+      "description": "",
+      "properties": [],
+      "events": [],
+      "slots": [],
+      "cssParts": [],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-modal",
+      "className": "AeModal",
+      "module": "src/modal/ae-modal.ts",
+      "description": "A modal dialog component with backdrop, focus management, and accessibility features.",
+      "properties": [
+        {
+          "name": "ariaLabel",
+          "attribute": "aria-label",
+          "type": "string | null",
+          "default": "null",
+          "description": ""
+        },
+        {
+          "name": "backdrop",
+          "attribute": "backdrop",
+          "type": "boolean",
+          "default": "true",
+          "description": "Whether to show a backdrop behind the modal"
+        },
+        {
+          "name": "closable",
+          "attribute": "closable",
+          "type": "boolean",
+          "default": "true",
+          "description": "Whether the modal can be closed by the user (shows close button, allows Escape key)"
+        },
+        {
+          "name": "open",
+          "attribute": "open",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the modal is open"
+        },
+        {
+          "name": "size",
+          "attribute": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'",
+          "description": "The size of the modal panel"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-modal-close",
+          "type": "CustomEvent",
+          "description": "Fired when the modal closes"
+        },
+        {
+          "name": "ae-modal-open",
+          "type": "CustomEvent",
+          "description": "Fired when the modal opens"
+        }
+      ],
+      "slots": [
+        {
+          "name": "body",
+          "description": "The modal body content"
+        },
+        {
+          "name": "footer",
+          "description": "The modal footer content (typically action buttons)"
+        },
+        {
+          "name": "header",
+          "description": "The modal header content"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "backdrop",
+          "description": "The backdrop overlay"
+        },
+        {
+          "name": "body",
+          "description": "The body section"
+        },
+        {
+          "name": "close-button",
+          "description": "The close button in the header"
+        },
+        {
+          "name": "close-icon",
+          "description": "The close icon SVG"
+        },
+        {
+          "name": "footer",
+          "description": "The footer section"
+        },
+        {
+          "name": "header",
+          "description": "The header section"
+        },
+        {
+          "name": "panel",
+          "description": "The modal panel container"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--ae-modal-backdrop-blur",
+          "description": "The backdrop blur amount"
+        },
+        {
+          "name": "--ae-modal-backdrop-color",
+          "description": "The backdrop background color"
+        },
+        {
+          "name": "--ae-modal-background",
+          "description": "The panel background color"
+        },
+        {
+          "name": "--ae-modal-border-radius",
+          "description": "The panel border radius"
+        },
+        {
+          "name": "--ae-modal-height",
+          "description": "The modal height (default: auto)"
+        },
+        {
+          "name": "--ae-modal-max-height",
+          "description": "Maximum height (default: calc(100vh - 2rem))"
+        },
+        {
+          "name": "--ae-modal-max-width",
+          "description": "Maximum width (default: calc(100vw - 2rem))"
+        },
+        {
+          "name": "--ae-modal-padding",
+          "description": "The panel padding"
+        },
+        {
+          "name": "--ae-modal-shadow",
+          "description": "The panel box shadow"
+        },
+        {
+          "name": "--ae-modal-text-color",
+          "description": "The text color"
+        },
+        {
+          "name": "--ae-modal-width",
+          "description": "The modal width (default: 32rem)"
+        }
+      ]
+    },
+    {
+      "tagName": "ae-pagination",
+      "className": "AePagination",
+      "module": "src/pagination/ae-pagination.ts",
+      "description": "A pagination component for navigating through pages of content.",
+      "properties": [
+        {
+          "name": "ariaLabel",
+          "attribute": "aria-label",
+          "type": "string",
+          "default": "'Pagination'",
+          "description": ""
+        },
+        {
+          "name": "currentPage",
+          "attribute": "current-page",
+          "type": "number",
+          "default": "1",
+          "description": "The current active page (1-indexed)"
+        },
+        {
+          "name": "showFirstLast",
+          "attribute": "show-first-last",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether to show first/last page buttons"
+        },
+        {
+          "name": "showPrevNext",
+          "attribute": "show-prev-next",
+          "type": "boolean",
+          "default": "true",
+          "description": "Whether to show previous/next buttons"
+        },
+        {
+          "name": "siblingCount",
+          "attribute": "sibling-count",
+          "type": "number",
+          "default": "1",
+          "description": "Number of page buttons to show on each side of current page"
+        },
+        {
+          "name": "size",
+          "attribute": "size",
+          "type": "string",
+          "default": "'md'",
+          "description": "The size of the pagination (sm, md, lg)"
+        },
+        {
+          "name": "totalPages",
+          "attribute": "total-pages",
+          "type": "number",
+          "default": "1",
+          "description": "The total number of pages"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-page-change",
+          "type": "CustomEvent<{page: number}>",
+          "description": "Fired when page changes"
+        }
+      ],
+      "slots": [],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        },
+        {
+          "name": "button",
+          "description": "Each pagination button"
+        },
+        {
+          "name": "ellipsis",
+          "description": "The ellipsis element"
+        },
+        {
+          "name": "item",
+          "description": "Each pagination item"
+        },
+        {
+          "name": "list",
+          "description": "The pagination list element"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-popover",
+      "className": "AePopover",
+      "module": "src/popover/ae-popover.ts",
+      "description": "A popover component for displaying floating content relative to a trigger element.",
+      "properties": [
+        {
+          "name": "arrow",
+          "attribute": "arrow",
+          "type": "boolean",
+          "default": "true",
+          "description": "Whether to show an arrow pointing to the trigger"
+        },
+        {
+          "name": "closeOnClickOutside",
+          "attribute": "close-on-click-outside",
+          "type": "boolean",
+          "default": "true",
+          "description": "Whether to close when clicking outside"
+        },
+        {
+          "name": "offset",
+          "attribute": "offset",
+          "type": "number",
+          "default": "8",
+          "description": "Distance in pixels from the trigger"
+        },
+        {
+          "name": "open",
+          "attribute": "open",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the popover is open"
+        },
+        {
+          "name": "placement",
+          "attribute": "placement",
+          "type": "string",
+          "default": "'bottom'",
+          "description": "Placement of the popover relative to trigger (top, bottom, left, right, etc.)"
+        },
+        {
+          "name": "trigger",
+          "attribute": "trigger",
+          "type": "string",
+          "default": "'click'",
+          "description": "How the popover is triggered (click, hover, manual)"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-popover-close",
+          "type": "CustomEvent<void>",
+          "description": "Fired when the popover closes"
+        },
+        {
+          "name": "ae-popover-open",
+          "type": "CustomEvent<void>",
+          "description": "Fired when the popover opens"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "The popover content"
+        },
+        {
+          "name": "trigger",
+          "description": "The trigger element"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "arrow",
+          "description": "The arrow element"
+        },
+        {
+          "name": "popover",
+          "description": "The popover container"
+        },
+        {
+          "name": "trigger",
+          "description": "The trigger container"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-progress",
+      "className": "AeProgress",
+      "module": "src/progress/ae-progress.ts",
+      "description": "A progress indicator component for showing task completion or loading states.",
+      "properties": [
+        {
+          "name": "animated",
+          "attribute": "animated",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether to animate the stripes"
+        },
+        {
+          "name": "ariaLabel",
+          "attribute": "aria-label",
+          "type": "string",
+          "default": "''",
+          "description": "Accessible label for the progress bar"
+        },
+        {
+          "name": "indeterminate",
+          "attribute": "indeterminate",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether to show indeterminate/loading state"
+        },
+        {
+          "name": "label",
+          "attribute": "label",
+          "type": "string",
+          "default": "''",
+          "description": "Custom label text (overrides percentage)"
+        },
+        {
+          "name": "max",
+          "attribute": "max",
+          "type": "number",
+          "default": "100",
+          "description": "The maximum value (default: 100)"
+        },
+        {
+          "name": "showLabel",
+          "attribute": "show-label",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether to show percentage label"
+        },
+        {
+          "name": "size",
+          "attribute": "size",
+          "type": "string",
+          "default": "'md'",
+          "description": "The size of the progress bar (sm, md, lg)"
+        },
+        {
+          "name": "striped",
+          "attribute": "striped",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether to show striped pattern"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "number",
+          "default": "0",
+          "description": "The current progress value (0-100)"
+        },
+        {
+          "name": "variant",
+          "attribute": "variant",
+          "type": "string",
+          "default": "'primary'",
+          "description": "The visual variant (primary, secondary, success, warning, error, info)"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "cssParts": [
+        {
+          "name": "bar",
+          "description": "The progress bar/indicator"
+        },
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        },
+        {
+          "name": "label",
+          "description": "The label text"
+        },
+        {
+          "name": "track",
+          "description": "The progress track/background"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-radio",
+      "className": "AeRadio",
+      "module": "src/radio/ae-radio.ts",
+      "description": "A radio button input component that participates in native form submission.\nShould be used within an ae-radio-group for proper grouping.",
+      "properties": [
+        {
+          "name": "checked",
+          "attribute": "checked",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the radio is checked"
+        },
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the radio is disabled"
+        },
+        {
+          "name": "name",
+          "attribute": "name",
+          "type": "string",
+          "default": "''",
+          "description": "The name attribute for form submission"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "string",
+          "default": "''",
+          "description": "The value attribute for form submission"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-radio-change",
+          "type": "CustomEvent<{checked: boolean, value: string}>",
+          "description": "Fired when the radio state changes"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "The radio label content"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper (label element)"
+        },
+        {
+          "name": "control",
+          "description": "The custom radio control container"
+        },
+        {
+          "name": "dot",
+          "description": "The radio dot indicator"
+        },
+        {
+          "name": "input",
+          "description": "The native radio input element"
+        },
+        {
+          "name": "label",
+          "description": "The label text container"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--ae-radio-bg",
+          "description": "The background color of the radio"
+        },
+        {
+          "name": "--ae-radio-bg-checked",
+          "description": "The background color when checked"
+        },
+        {
+          "name": "--ae-radio-bg-hover",
+          "description": "The background color on hover"
+        },
+        {
+          "name": "--ae-radio-border",
+          "description": "The border style of the radio"
+        },
+        {
+          "name": "--ae-radio-fg",
+          "description": "The dot color"
+        },
+        {
+          "name": "--ae-radio-gap",
+          "description": "The gap between radio and label"
+        },
+        {
+          "name": "--ae-radio-size",
+          "description": "The size of the radio control"
+        }
+      ]
+    },
+    {
+      "tagName": "ae-radio-group",
+      "className": "AeRadioGroup",
+      "module": "src/radio/ae-radio-group.ts",
+      "description": "A container component that manages a group of radio buttons and their selection state.",
+      "properties": [
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether all radio buttons in the group are disabled"
+        },
+        {
+          "name": "name",
+          "attribute": "name",
+          "type": "string",
+          "default": "''",
+          "description": "The name attribute for all radio buttons in the group"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "string",
+          "default": "''",
+          "description": "The value of the currently selected radio button"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-radio-group-change",
+          "type": "CustomEvent<{value: string}>",
+          "description": "Fired when the selected radio changes"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "The radio buttons (ae-radio elements) to be grouped"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--ae-radio-group-direction",
+          "description": "The flex direction (column or row)"
+        },
+        {
+          "name": "--ae-radio-group-gap",
+          "description": "The gap between radio buttons"
+        }
+      ]
+    },
+    {
+      "tagName": "ae-select",
+      "className": "AeSelect",
+      "module": "src/select/ae-select.ts",
+      "description": "A select dropdown component with support for single/multiple selection and form participation.\nParticipates in native form submission via ElementInternals API.",
+      "properties": [
+        {
+          "name": "ariaLabel",
+          "attribute": "aria-label",
+          "type": "string",
+          "default": "''",
+          "description": "Accessible label for the select (used when no visible label)"
+        },
+        {
+          "name": "defaultValue",
+          "attribute": "default-value",
+          "type": "string",
+          "default": "''",
+          "description": "Initial value for uncontrolled usage"
+        },
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the select is disabled"
+        },
+        {
+          "name": "error",
+          "attribute": "error",
+          "type": "string",
+          "default": "''",
+          "description": "Error message to display"
+        },
+        {
+          "name": "helpText",
+          "attribute": "help-text",
+          "type": "string",
+          "default": "''",
+          "description": "Helper text to display below the select"
+        },
+        {
+          "name": "label",
+          "attribute": "label",
+          "type": "string",
+          "default": "''",
+          "description": "Label text for the select"
+        },
+        {
+          "name": "multiple",
+          "attribute": "multiple",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether multiple selection is allowed"
+        },
+        {
+          "name": "name",
+          "attribute": "name",
+          "type": "string",
+          "default": "''",
+          "description": "The name attribute for form submission"
+        },
+        {
+          "name": "options",
+          "attribute": "options",
+          "type": "SelectOption[]",
+          "default": "[]",
+          "description": "Programmatic options for structured or agent-generated UIs"
+        },
+        {
+          "name": "placeholder",
+          "attribute": "placeholder",
+          "type": "string",
+          "default": "''",
+          "description": "Placeholder text when no option is selected"
+        },
+        {
+          "name": "required",
+          "attribute": "required",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the select is required"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "string",
+          "default": "''",
+          "description": "The current selected value (single select)"
+        },
+        {
+          "name": "values",
+          "attribute": "values",
+          "type": "string[]",
+          "default": "[]",
+          "description": "The current selected values (multiple select)"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-select-change",
+          "type": "CustomEvent<{value: string | string[]}>",
+          "description": "Fired when the selection changes"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "The select options (ae-option elements)"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        },
+        {
+          "name": "error-text",
+          "description": "The error text element"
+        },
+        {
+          "name": "help-text",
+          "description": "The help text element"
+        },
+        {
+          "name": "label",
+          "description": "The label element"
+        },
+        {
+          "name": "select",
+          "description": "The native select element"
+        },
+        {
+          "name": "select-wrapper",
+          "description": "The wrapper around the select"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-spinner",
+      "className": "AeSpinner",
+      "module": "src/spinner/ae-spinner.ts",
+      "description": "A loading spinner component for indicating loading or processing states.",
+      "properties": [
+        {
+          "name": "label",
+          "attribute": "label",
+          "type": "string",
+          "default": "'Loading...'",
+          "description": "Accessible label for screen readers"
+        },
+        {
+          "name": "size",
+          "attribute": "size",
+          "type": "string",
+          "default": "'md'",
+          "description": "The size of the spinner (xs, sm, md, lg, xl)"
+        },
+        {
+          "name": "variant",
+          "attribute": "variant",
+          "type": "string",
+          "default": "'primary'",
+          "description": "The visual variant (primary, secondary, success, warning, error, info)"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        },
+        {
+          "name": "label",
+          "description": "The label element (visually hidden by default)"
+        },
+        {
+          "name": "spinner",
+          "description": "The spinner SVG element"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-switch",
+      "className": "AeSwitch",
+      "module": "src/switch/ae-switch.ts",
+      "description": "A toggle switch component for boolean on/off states.\nParticipates in native form submission via ElementInternals API.",
+      "properties": [
+        {
+          "name": "ariaLabel",
+          "attribute": "aria-label",
+          "type": "string",
+          "default": "''",
+          "description": "Accessible label for the switch (used when no visible label)"
+        },
+        {
+          "name": "checked",
+          "attribute": "checked",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the switch is checked"
+        },
+        {
+          "name": "defaultChecked",
+          "attribute": "default-checked",
+          "type": "boolean",
+          "default": "false",
+          "description": "Initial checked state for uncontrolled usage"
+        },
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the switch is disabled"
+        },
+        {
+          "name": "name",
+          "attribute": "name",
+          "type": "string",
+          "default": "''",
+          "description": "The name attribute for form submission"
+        },
+        {
+          "name": "required",
+          "attribute": "required",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the switch is required"
+        },
+        {
+          "name": "size",
+          "attribute": "size",
+          "type": "string",
+          "default": "'md'",
+          "description": "The size of the switch (sm, md, lg)"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "string",
+          "default": "'on'",
+          "description": "The value attribute for form submission"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-switch-change",
+          "type": "CustomEvent<{checked: boolean}>",
+          "description": "Fired when the switch state changes"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "The switch label content"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper (label element)"
+        },
+        {
+          "name": "control",
+          "description": "The switch control container"
+        },
+        {
+          "name": "input",
+          "description": "The native checkbox input element"
+        },
+        {
+          "name": "label",
+          "description": "The label text container"
+        },
+        {
+          "name": "thumb",
+          "description": "The switch thumb element"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-tab",
+      "className": "AeTab",
+      "module": "src/tabs/ae-tab.ts",
+      "description": "",
+      "properties": [
+        {
+          "name": "ariaControls",
+          "attribute": "aria-controls",
+          "type": "string",
+          "default": "''",
+          "description": "ID of the panel this tab controls"
+        },
+        {
+          "name": "ariaSelected",
+          "attribute": "aria-selected",
+          "type": "string",
+          "default": "'false'",
+          "description": "Whether tab is selected"
+        },
+        {
+          "name": "id",
+          "attribute": "id",
+          "type": "string",
+          "default": "''",
+          "description": "ID of the tab"
+        },
+        {
+          "name": "internalTabIndex",
+          "attribute": "data-tabindex",
+          "type": "number",
+          "default": "-1",
+          "description": "Tab index for keyboard navigation (internal property, uses data attribute to avoid nested interactive elements)"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "cssParts": [],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-tab-panel",
+      "className": "AeTabPanel",
+      "module": "src/tabs/ae-tab-panel.ts",
+      "description": "",
+      "properties": [
+        {
+          "name": "ariaLabelledby",
+          "attribute": "aria-labelledby",
+          "type": "string",
+          "default": "''",
+          "description": "ID of the tab that controls this panel"
+        },
+        {
+          "name": "hidden",
+          "attribute": "hidden",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the panel is hidden"
+        },
+        {
+          "name": "id",
+          "attribute": "id",
+          "type": "string",
+          "default": "''",
+          "description": "ID for the panel"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "cssParts": [],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-tabs",
+      "className": "AeTabs",
+      "module": "src/tabs/ae-tabs.ts",
+      "description": "A tabbed interface component with keyboard navigation and ARIA compliant behavior.",
+      "properties": [
+        {
+          "name": "activation",
+          "attribute": "activation",
+          "type": "'auto' | 'manual'",
+          "default": "'auto'",
+          "description": "How tab selection works with keyboard navigation (auto: selects on focus, manual: selects on Enter/Space)"
+        },
+        {
+          "name": "label",
+          "attribute": "label",
+          "type": "string",
+          "default": "''",
+          "description": "Accessible label for the tablist"
+        },
+        {
+          "name": "orientation",
+          "attribute": "orientation",
+          "type": "'horizontal' | 'vertical'",
+          "default": "'horizontal'",
+          "description": "The orientation of the tabs layout"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "string",
+          "default": "''",
+          "description": "The ID of the currently active tab"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-tab-change",
+          "type": "CustomEvent<{tab: string}>",
+          "description": "Fired when the active tab changes"
+        }
+      ],
+      "slots": [
+        {
+          "name": "panel",
+          "description": "The panel elements (ae-tab-panel)"
+        },
+        {
+          "name": "tab",
+          "description": "The tab elements (ae-tab)"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        },
+        {
+          "name": "panels",
+          "description": "The panels container"
+        },
+        {
+          "name": "tablist",
+          "description": "The tab list container"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--ae-tabs-border",
+          "description": "The border style for the tab list"
+        },
+        {
+          "name": "--ae-tabs-gap",
+          "description": "The gap between tabs"
+        },
+        {
+          "name": "--ae-tabs-padding",
+          "description": "The padding around the tab list"
+        }
+      ]
+    },
+    {
+      "tagName": "ae-textarea",
+      "className": "AeTextarea",
+      "module": "src/textarea/ae-textarea.ts",
+      "description": "A textarea component with support for auto-resize, character counting, and form participation.\nParticipates in native form submission via ElementInternals API.",
+      "properties": [
+        {
+          "name": "ariaLabel",
+          "attribute": "aria-label",
+          "type": "string",
+          "default": "''",
+          "description": "Accessible label for the textarea (used when no visible label)"
+        },
+        {
+          "name": "autoResize",
+          "attribute": "auto-resize",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether to automatically resize based on content"
+        },
+        {
+          "name": "defaultValue",
+          "attribute": "default-value",
+          "type": "string",
+          "default": "''",
+          "description": "Initial value for uncontrolled usage"
+        },
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the textarea is disabled"
+        },
+        {
+          "name": "error",
+          "attribute": "error",
+          "type": "string",
+          "default": "''",
+          "description": "Error message to display"
+        },
+        {
+          "name": "helpText",
+          "attribute": "help-text",
+          "type": "string",
+          "default": "''",
+          "description": "Helper text to display below the textarea"
+        },
+        {
+          "name": "label",
+          "attribute": "label",
+          "type": "string",
+          "default": "''",
+          "description": "Label text for the textarea"
+        },
+        {
+          "name": "maxlength",
+          "attribute": "maxlength",
+          "type": "number",
+          "default": "undefined",
+          "description": "Maximum length"
+        },
+        {
+          "name": "minlength",
+          "attribute": "minlength",
+          "type": "number",
+          "default": "undefined",
+          "description": "Minimum length"
+        },
+        {
+          "name": "name",
+          "attribute": "name",
+          "type": "string",
+          "default": "''",
+          "description": "The name attribute for form submission"
+        },
+        {
+          "name": "placeholder",
+          "attribute": "placeholder",
+          "type": "string",
+          "default": "''",
+          "description": "Placeholder text"
+        },
+        {
+          "name": "readonly",
+          "attribute": "readonly",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the textarea is readonly"
+        },
+        {
+          "name": "required",
+          "attribute": "required",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the textarea is required"
+        },
+        {
+          "name": "resize",
+          "attribute": "resize",
+          "type": "'none'|'vertical'|'horizontal'|'both'",
+          "default": "'vertical'",
+          "description": "How the textarea can be manually resized"
+        },
+        {
+          "name": "rows",
+          "attribute": "rows",
+          "type": "number",
+          "default": "4",
+          "description": "Number of visible text rows"
+        },
+        {
+          "name": "showCount",
+          "attribute": "show-count",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether to show character count"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "type": "string",
+          "default": "''",
+          "description": "The current textarea value"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-textarea-blur",
+          "type": "CustomEvent<void>",
+          "description": "Fired when textarea loses focus"
+        },
+        {
+          "name": "ae-textarea-change",
+          "type": "CustomEvent<{value: string}>",
+          "description": "Fired when the textarea value changes"
+        },
+        {
+          "name": "ae-textarea-focus",
+          "type": "CustomEvent<void>",
+          "description": "Fired when textarea receives focus"
+        },
+        {
+          "name": "ae-textarea-input",
+          "type": "CustomEvent<{value: string}>",
+          "description": "Fired on input event"
+        }
+      ],
+      "slots": [],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        },
+        {
+          "name": "char-count",
+          "description": "The character count element"
+        },
+        {
+          "name": "error-text",
+          "description": "The error text element"
+        },
+        {
+          "name": "footer",
+          "description": "The footer container"
+        },
+        {
+          "name": "help-text",
+          "description": "The help text element"
+        },
+        {
+          "name": "label",
+          "description": "The label element"
+        },
+        {
+          "name": "textarea",
+          "description": "The native textarea element"
+        },
+        {
+          "name": "textarea-wrapper",
+          "description": "The wrapper around the textarea"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-toast",
+      "className": "AeToast",
+      "module": "src/toast/ae-toast.ts",
+      "description": "",
+      "properties": [
+        {
+          "name": "duration",
+          "attribute": "duration",
+          "type": "number",
+          "default": "5000",
+          "description": "Auto-dismiss duration in milliseconds (0 = sticky)"
+        },
+        {
+          "name": "message",
+          "attribute": "message",
+          "type": "string",
+          "default": "''",
+          "description": "Toast message (falls back to slot content if not provided)"
+        },
+        {
+          "name": "open",
+          "attribute": "open",
+          "type": "boolean",
+          "default": "true",
+          "description": "Whether the toast is visible"
+        },
+        {
+          "name": "pauseOnHover",
+          "attribute": "pauseOnHover",
+          "type": "boolean",
+          "default": "true",
+          "description": "Pause the auto-dismiss timer when hovering"
+        },
+        {
+          "name": "placement",
+          "attribute": "placement",
+          "type": "'top-right' | 'bottom-right' | 'top-left' | 'bottom-left'",
+          "default": "'bottom-right'",
+          "description": "Position on the screen"
+        },
+        {
+          "name": "size",
+          "attribute": "size",
+          "type": "'sm' | 'md' | 'lg'",
+          "default": "'md'",
+          "description": "Size of the toast"
+        },
+        {
+          "name": "variant",
+          "attribute": "variant",
+          "type": "'info' | 'success' | 'warning' | 'error'",
+          "default": "'info'",
+          "description": "Visual style of the toast"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-click",
+          "type": "CustomEvent",
+          "description": "Fired when the toast is clicked"
+        },
+        {
+          "name": "ae-close",
+          "type": "CustomEvent",
+          "description": "Fired when the toast is closed"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "Default slot for the message content"
+        },
+        {
+          "name": "icon",
+          "description": "Custom icon"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "close",
+          "description": "Close button"
+        },
+        {
+          "name": "content",
+          "description": "Message text wrapper"
+        },
+        {
+          "name": "icon",
+          "description": "Icon element"
+        },
+        {
+          "name": "progress",
+          "description": "Animated time remaining bar"
+        },
+        {
+          "name": "toast",
+          "description": "Main container"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-tooltip",
+      "className": "AeTooltip",
+      "module": "src/tooltip/ae-tooltip.ts",
+      "description": "A lightweight tooltip component that shows contextual information on hover/focus",
+      "properties": [
+        {
+          "name": "animation",
+          "attribute": "animation",
+          "type": "'fade' | 'scale'",
+          "default": "'fade'",
+          "description": "Animation type (fade or scale)"
+        },
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the tooltip is disabled"
+        },
+        {
+          "name": "hideDelay",
+          "attribute": "hide-delay",
+          "type": "number",
+          "default": "100",
+          "description": "Delay in milliseconds before hiding on mouse leave/blur"
+        },
+        {
+          "name": "hoverDelay",
+          "attribute": "hover-delay",
+          "type": "number",
+          "default": "100",
+          "description": "Delay in milliseconds before showing on hover/focus"
+        },
+        {
+          "name": "open",
+          "attribute": "open",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the tooltip is currently visible"
+        },
+        {
+          "name": "placement",
+          "attribute": "placement",
+          "type": "'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end'",
+          "default": "'top'",
+          "description": "Preferred placement of the tooltip"
+        },
+        {
+          "name": "showArrow",
+          "attribute": "show-arrow",
+          "type": "boolean",
+          "default": "true",
+          "description": "Whether to show an arrow pointing to the anchor"
+        },
+        {
+          "name": "strategy",
+          "attribute": "strategy",
+          "type": "'absolute' | 'fixed'",
+          "default": "'fixed'",
+          "description": "Positioning strategy (absolute or fixed)"
+        },
+        {
+          "name": "text",
+          "attribute": "text",
+          "type": "string",
+          "default": "''",
+          "description": "The text content to display in the tooltip"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-tooltip-hide",
+          "type": "CustomEvent<unknown>",
+          "description": "Fired when tooltip closes"
+        },
+        {
+          "name": "ae-tooltip-show",
+          "type": "CustomEvent<unknown>",
+          "description": "Fired when tooltip opens"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "Default slot for the anchor element that triggers the tooltip"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "arrow",
+          "description": "The tooltip arrow indicator"
+        },
+        {
+          "name": "content",
+          "description": "The tooltip content wrapper"
+        },
+        {
+          "name": "overlay",
+          "description": "The tooltip container"
+        }
+      ],
+      "cssProperties": []
+    },
+    {
+      "tagName": "ae-tree-item",
+      "className": "AeTreeItem",
+      "module": "src/treeview/ae-tree-item.ts",
+      "description": "",
+      "properties": [
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the tree item is disabled"
+        },
+        {
+          "name": "expanded",
+          "attribute": "expanded",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the tree item is expanded"
+        },
+        {
+          "name": "label",
+          "attribute": "label",
+          "type": "string",
+          "default": "''",
+          "description": "The text label for this tree item"
+        },
+        {
+          "name": "lazy",
+          "attribute": "lazy",
+          "type": "boolean",
+          "default": "false",
+          "description": "Enable lazy loading for child items"
+        },
+        {
+          "name": "selected",
+          "attribute": "selected",
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the tree item is selected"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-tree-item-collapse",
+          "type": "CustomEvent",
+          "description": "Fired when the item is collapsed"
+        },
+        {
+          "name": "ae-tree-item-expand",
+          "type": "CustomEvent",
+          "description": "Fired when the item is expanded"
+        },
+        {
+          "name": "ae-tree-item-select",
+          "type": "CustomEvent",
+          "description": "Fired when the item is selected"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "The default slot for nested tree items"
+        },
+        {
+          "name": "icon",
+          "description": "Custom icon to display before the label"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "base",
+          "description": "The component's base wrapper"
+        },
+        {
+          "name": "checkbox",
+          "description": "The checkbox element (if selectable)"
+        },
+        {
+          "name": "children",
+          "description": "The children container"
+        },
+        {
+          "name": "expand-button",
+          "description": "The expand/collapse button"
+        },
+        {
+          "name": "indentation",
+          "description": "The indentation element"
+        },
+        {
+          "name": "item",
+          "description": "The tree item's main container"
+        },
+        {
+          "name": "label",
+          "description": "The label element"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--indent-guide-width",
+          "description": "The width of the indentation guide (default: 0)"
+        },
+        {
+          "name": "--indent-size",
+          "description": "The indentation size (default: 1rem)"
+        }
+      ]
+    },
+    {
+      "tagName": "ae-treeview",
+      "className": "AeTreeView",
+      "module": "src/treeview/ae-treeview.ts",
+      "description": "",
+      "properties": [
+        {
+          "name": "data",
+          "attribute": "data",
+          "type": "TreeNode[]",
+          "default": "[]",
+          "description": "Nodes to display in the tree view (data-driven mode)"
+        },
+        {
+          "name": "emptyMessage",
+          "attribute": "empty-message",
+          "type": "string",
+          "default": "'No items'",
+          "description": "Message to display when there are no items"
+        },
+        {
+          "name": "expanded",
+          "attribute": "expanded",
+          "type": "string[]",
+          "default": "[]",
+          "description": "List of node IDs that should be expanded"
+        },
+        {
+          "name": "indentSize",
+          "attribute": "indent-size",
+          "type": "number",
+          "default": "20",
+          "description": "Pixels to indent each depth level"
+        },
+        {
+          "name": "label",
+          "attribute": "label",
+          "type": "string",
+          "default": "''",
+          "description": "Accessible label for the tree (defaults to \"Tree\")"
+        },
+        {
+          "name": "loading",
+          "attribute": "loading",
+          "type": "boolean",
+          "default": "false",
+          "description": "Shows a loading state when true"
+        },
+        {
+          "name": "selected",
+          "attribute": "selected",
+          "type": "string[]",
+          "default": "[]",
+          "description": "List of node IDs that should be selected"
+        },
+        {
+          "name": "selectionMode",
+          "attribute": "selection-mode",
+          "type": "'single'|'multiple'|'none'",
+          "default": "'single'",
+          "description": "Selection behavior"
+        }
+      ],
+      "events": [
+        {
+          "name": "ae-treeview-expand",
+          "type": "CustomEvent<{expanded: string[]}>",
+          "description": "Fired when expansion state changes"
+        },
+        {
+          "name": "ae-treeview-select",
+          "type": "CustomEvent<{selected: string[]}>",
+          "description": "Fired when selection changes"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "Default slot for ae-tree-item elements (slot-based mode)"
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "caret",
+          "description": "Toggle icon wrapper"
+        },
+        {
+          "name": "caret-spacer",
+          "description": "Placeholder for caret on leaf nodes"
+        },
+        {
+          "name": "checkbox",
+          "description": "Checkbox indicator"
+        },
+        {
+          "name": "empty",
+          "description": "Empty state container"
+        },
+        {
+          "name": "icon",
+          "description": "Node icon wrapper"
+        },
+        {
+          "name": "label",
+          "description": "Text label"
+        },
+        {
+          "name": "loading",
+          "description": "Loading state container"
+        },
+        {
+          "name": "node",
+          "description": "Focusable row for each item"
+        },
+        {
+          "name": "spinner",
+          "description": "Loading spinner"
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--ae-treeview-caret-color",
+          "description": "Caret icon color"
+        },
+        {
+          "name": "--ae-treeview-caret-open",
+          "description": "Expanded caret icon color"
+        },
+        {
+          "name": "--ae-treeview-caret-size",
+          "description": "Caret icon size (default: 12px)"
+        },
+        {
+          "name": "--ae-treeview-focus-color",
+          "description": "Focus outline color"
+        },
+        {
+          "name": "--ae-treeview-indent",
+          "description": "Pixel indent per depth (default: 16px)"
+        },
+        {
+          "name": "--ae-treeview-row-hover-bg",
+          "description": "Hover background color"
+        },
+        {
+          "name": "--ae-treeview-row-selected-bg",
+          "description": "Selected row background color"
+        },
+        {
+          "name": "--ae-treeview-row-selected-fg",
+          "description": "Selected text color"
+        }
+      ]
+    }
+  ]
+}

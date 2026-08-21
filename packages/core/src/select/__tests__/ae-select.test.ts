@@ -72,6 +72,43 @@ describe('ae-select', () => {
     expect(options.length).to.equal(3);
   });
 
+  it('renders options supplied through the public options property', async () => {
+    const el = await fixture<AeSelect>(html`<ae-select label="Country"></ae-select>`);
+    (
+      el as AeSelect & {
+        options: Array<{ value: string; label: string; disabled?: boolean }>;
+      }
+    ).options = [
+      { value: 'us', label: 'United States' },
+      { value: 'ca', label: 'Canada', disabled: true },
+    ];
+    await el.updateComplete;
+
+    const options = Array.from(el.shadowRoot!.querySelectorAll('option'));
+    expect(options.map((option) => option.value)).to.deep.equal(['us', 'ca']);
+    expect(options[1].disabled).to.be.true;
+  });
+
+  it('preserves the controlled value when programmatic options are replaced', async () => {
+    const el = await fixture<AeSelect>(html`<ae-select value="ca"></ae-select>`);
+    el.options = [
+      { value: 'us', label: 'United States' },
+      { value: 'ca', label: 'Canada' },
+    ];
+    await el.updateComplete;
+
+    const select = el.shadowRoot!.querySelector('select')!;
+    expect(select.value).to.equal('ca');
+
+    el.options = [
+      { value: 'mx', label: 'Mexico' },
+      { value: 'ca', label: 'Canada' },
+    ];
+    await el.updateComplete;
+
+    expect(select.value).to.equal('ca');
+  });
+
   it('emits ae-select-change event when value changes', async () => {
     const el = await fixture<AeSelect>(html`
       <ae-select>
@@ -159,6 +196,179 @@ describe('ae-select', () => {
     expect(options[0].selected).to.be.true;
     expect(options[1].selected).to.be.false;
     expect(options[2].selected).to.be.true;
+  });
+
+  it('adopts declaratively selected values in multiple mode', async () => {
+    const form = await fixture<HTMLFormElement>(html`
+      <form>
+        <ae-select name="choices" multiple>
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c" selected>C</option>
+        </ae-select>
+      </form>
+    `);
+    const el = form.querySelector('ae-select') as AeSelect;
+    await el.updateComplete;
+
+    expect(el.values).to.deep.equal(['a', 'c']);
+    expect(new FormData(form).getAll('choices')).to.deep.equal(['a', 'c']);
+  });
+
+  it('adopts selected programmatic options in multiple mode', async () => {
+    const el = await fixture<AeSelect>(html`<ae-select multiple></ae-select>`);
+    el.options = [
+      { value: 'a', label: 'A', selected: true },
+      { value: 'b', label: 'B' },
+      { value: 'c', label: 'C', selected: true },
+    ];
+    await el.updateComplete;
+
+    expect(el.values).to.deep.equal(['a', 'c']);
+    expect(
+      Array.from(el.shadowRoot!.querySelector('select')!.selectedOptions, (option) => option.value),
+    ).to.deep.equal(['a', 'c']);
+  });
+
+  it('restores authored defaults on form reset in multiple mode', async () => {
+    const form = await fixture<HTMLFormElement>(html`
+      <form>
+        <ae-select name="choices" multiple>
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c" selected>C</option>
+        </ae-select>
+      </form>
+    `);
+    const el = form.querySelector('ae-select') as AeSelect;
+    await el.updateComplete;
+
+    el.values = ['b'];
+    await el.updateComplete;
+    expect(new FormData(form).getAll('choices')).to.deep.equal(['b']);
+
+    form.reset();
+    await el.updateComplete;
+
+    expect(el.values).to.deep.equal(['a', 'c']);
+    expect(new FormData(form).getAll('choices')).to.deep.equal(['a', 'c']);
+  });
+
+  it('keeps authored multiple selection adoptable after an early form reset', async () => {
+    const form = await fixture<HTMLFormElement>(html`
+      <form><ae-select name="choices" multiple></ae-select></form>
+    `);
+    const el = form.querySelector('ae-select') as AeSelect;
+    await el.updateComplete;
+
+    form.reset();
+    el.options = [
+      { value: 'a', label: 'A', selected: true },
+      { value: 'b', label: 'B' },
+    ];
+    await el.updateComplete;
+
+    expect(el.values).to.deep.equal(['a']);
+    expect(new FormData(form).getAll('choices')).to.deep.equal(['a']);
+  });
+
+  it('keeps multiple selections when only value changes', async () => {
+    const el = await fixture<AeSelect>(html`
+      <ae-select multiple>
+        <option value="a">A</option>
+        <option value="b">B</option>
+        <option value="c">C</option>
+      </ae-select>
+    `);
+    el.values = ['a', 'c'];
+    await el.updateComplete;
+
+    el.value = 'b';
+    await el.updateComplete;
+
+    expect(
+      Array.from(el.shadowRoot!.querySelector('select')!.selectedOptions, (option) => option.value),
+    ).to.deep.equal(['a', 'c']);
+    expect(el.values).to.deep.equal(['a', 'c']);
+  });
+
+  it('copies arrays assigned through values and options', async () => {
+    const el = await fixture<AeSelect>(html`<ae-select multiple></ae-select>`);
+    const values = ['a'];
+    el.values = values;
+    values.push('b');
+    await el.updateComplete;
+
+    expect(el.values).to.deep.equal(['a']);
+
+    const options = [{ value: 'a', label: 'A' }];
+    el.options = options;
+    options.push({ value: 'b', label: 'B' });
+    await el.updateComplete;
+
+    expect(el.options).to.have.lengthOf(1);
+  });
+
+  it('re-adopts authored selection when the option set is replaced', async () => {
+    const el = await fixture<AeSelect>(html`
+      <ae-select multiple>
+        <option value="a" selected>A</option>
+        <option value="b">B</option>
+      </ae-select>
+    `);
+    await el.updateComplete;
+    expect(el.values).to.deep.equal(['a']);
+
+    el.innerHTML = '<option value="c" selected>C</option><option value="d">D</option>';
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    await el.updateComplete;
+
+    expect(el.values).to.deep.equal(['c']);
+    expect(
+      Array.from(el.shadowRoot!.querySelector('select')!.selectedOptions, (option) => option.value),
+    ).to.deep.equal(['c']);
+  });
+
+  it('does not duplicate values that are authored twice on reset', async () => {
+    const form = await fixture<HTMLFormElement>(html`
+      <form>
+        <ae-select name="m" multiple>
+          <option value="a" selected>A</option>
+        </ae-select>
+      </form>
+    `);
+    const el = form.querySelector('ae-select') as AeSelect;
+    el.options = [{ value: 'a', label: 'A prog', selected: true }];
+    await el.updateComplete;
+
+    form.reset();
+    await el.updateComplete;
+
+    expect(el.values).to.deep.equal(['a']);
+    expect(new FormData(form).getAll('m')).to.deep.equal(['a']);
+  });
+
+  it('restores an authored selected option on reset in single mode', async () => {
+    const form = await fixture<HTMLFormElement>(html`
+      <form>
+        <ae-select name="pick">
+          <option value="a">A</option>
+          <option value="b" selected>B</option>
+        </ae-select>
+      </form>
+    `);
+    const el = form.querySelector('ae-select') as AeSelect;
+    await el.updateComplete;
+    expect(el.value).to.equal('b');
+
+    el.value = 'a';
+    await el.updateComplete;
+
+    form.reset();
+    await el.updateComplete;
+
+    expect(el.value).to.equal('b');
+    expect(new FormData(form).get('pick')).to.equal('b');
   });
 
   it('participates in form submission', async () => {

@@ -1,14 +1,6 @@
-import { AeAccordion } from './ae-accordion';
-import { AeAccordionItem } from './ae-accordion-item';
+import { AeAccordion, AeAccordionItem, defineAeAccordion } from '@aetherui/core/accordion';
 
-export { AeAccordion } from './ae-accordion';
-export { AeAccordionItem } from './ae-accordion-item';
+// Preserve the standalone package's historical side-effect registration contract.
+defineAeAccordion();
 
-export function defineAeAccordion() {
-  if (!customElements.get('ae-accordion')) {
-    customElements.define('ae-accordion', AeAccordion);
-  }
-  if (!customElements.get('ae-accordion-item')) {
-    customElements.define('ae-accordion-item', AeAccordionItem);
-  }
-}
+export { AeAccordion, AeAccordionItem, defineAeAccordion };

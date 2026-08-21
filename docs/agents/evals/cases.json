@@ -1,0 +1,326 @@
+[
+  {
+    "id": "primary-action",
+    "prompt": "Render an enabled primary Save button and report its activation as save-profile.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-button",
+        "id": "save",
+        "props": { "variant": "primary", "disabled": false },
+        "children": ["Save"],
+        "actions": { "ae-button-click": "save-profile" }
+      }
+    },
+    "expected": { "valid": true, "components": ["ae-button"], "actions": ["save-profile"] }
+  },
+  {
+    "id": "email-field",
+    "prompt": "Render a required email field with a visible label.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-input",
+        "id": "email",
+        "props": { "type": "email", "label": "Email", "required": true },
+        "actions": { "ae-input-change": "email-changed" }
+      }
+    },
+    "expected": {
+      "valid": true,
+      "components": ["ae-input"],
+      "actions": ["email-changed"],
+      "accessible": true
+    }
+  },
+  {
+    "id": "terms-checkbox",
+    "prompt": "Render a required terms checkbox.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-checkbox",
+        "id": "terms",
+        "props": { "name": "terms", "required": true },
+        "children": ["Accept terms"],
+        "actions": { "ae-checkbox-change": "terms-changed" }
+      }
+    },
+    "expected": {
+      "valid": true,
+      "components": ["ae-checkbox"],
+      "actions": ["terms-changed"],
+      "accessible": true
+    }
+  },
+  {
+    "id": "country-select",
+    "prompt": "Render a required country selector with an accessible label.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-select",
+        "id": "country",
+        "props": {
+          "label": "Country",
+          "required": true,
+          "placeholder": "Choose a country",
+          "options": [
+            { "value": "us", "label": "United States" },
+            { "value": "ca", "label": "Canada" }
+          ]
+        },
+        "actions": { "ae-select-change": "country-changed" }
+      }
+    },
+    "expected": {
+      "valid": true,
+      "components": ["ae-select"],
+      "actions": ["country-changed"],
+      "accessible": true
+    }
+  },
+  {
+    "id": "closable-alert",
+    "prompt": "Render a closable warning alert.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-alert",
+        "props": { "variant": "warning", "closable": true, "open": true },
+        "children": ["Check your connection"],
+        "actions": { "ae-close": "dismiss-warning" }
+      }
+    },
+    "expected": { "valid": true, "components": ["ae-alert"], "actions": ["dismiss-warning"] }
+  },
+  {
+    "id": "confirmation-modal",
+    "prompt": "Render an open confirmation modal with a close action.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-modal",
+        "id": "confirm",
+        "props": { "open": true, "closable": true, "ariaLabel": "Confirm deletion" },
+        "children": ["Delete this record?"],
+        "actions": { "ae-modal-close": "cancel-delete" }
+      }
+    },
+    "expected": {
+      "valid": true,
+      "components": ["ae-modal"],
+      "actions": ["cancel-delete"],
+      "accessible": true
+    }
+  },
+  {
+    "id": "settings-tabs",
+    "prompt": "Render keyboard-operable horizontal settings tabs.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-tabs",
+        "props": { "label": "Settings", "orientation": "horizontal", "value": "profile" },
+        "children": [
+          { "component": "ae-tab", "props": { "id": "profile" }, "children": ["Profile"] },
+          {
+            "component": "ae-tab-panel",
+            "props": { "id": "profile-panel", "ariaLabelledby": "profile" },
+            "children": ["Profile settings"]
+          }
+        ],
+        "actions": { "ae-tab-change": "settings-tab-changed" }
+      }
+    },
+    "expected": {
+      "valid": true,
+      "components": ["ae-tabs", "ae-tab", "ae-tab-panel"],
+      "actions": ["settings-tab-changed"],
+      "accessible": true
+    }
+  },
+  {
+    "id": "faq-accordion",
+    "prompt": "Render an FAQ accordion with one open item.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-accordion",
+        "props": { "value": ["shipping"] },
+        "children": [
+          {
+            "component": "ae-accordion-item",
+            "props": { "headerId": "shipping", "open": true },
+            "children": ["Shipping takes three days."]
+          }
+        ],
+        "actions": { "ae-accordion-change": "faq-changed" }
+      }
+    },
+    "expected": {
+      "valid": true,
+      "components": ["ae-accordion", "ae-accordion-item"],
+      "actions": ["faq-changed"]
+    }
+  },
+  {
+    "id": "pagination",
+    "prompt": "Render page 2 of a 10-page result set.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-pagination",
+        "props": { "currentPage": 2, "totalPages": 10, "ariaLabel": "Search results pages" },
+        "actions": { "ae-page-change": "page-changed" }
+      }
+    },
+    "expected": {
+      "valid": true,
+      "components": ["ae-pagination"],
+      "actions": ["page-changed"],
+      "accessible": true
+    }
+  },
+  {
+    "id": "fruit-combo",
+    "prompt": "Render an accessible fruit combobox.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-combo",
+        "props": {
+          "ariaLabel": "Fruit",
+          "placeholder": "Choose fruit",
+          "items": ["Apple", "Pear"]
+        },
+        "actions": { "ae-combo-select": "fruit-selected" }
+      }
+    },
+    "expected": {
+      "valid": true,
+      "components": ["ae-combo"],
+      "actions": ["fruit-selected"],
+      "accessible": true
+    }
+  },
+  {
+    "id": "tree-navigation",
+    "prompt": "Render an accessible documentation tree.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-treeview",
+        "props": { "label": "Documentation", "selectionMode": "single", "data": [] },
+        "actions": { "ae-treeview-select": "document-selected" }
+      }
+    },
+    "expected": {
+      "valid": true,
+      "components": ["ae-treeview"],
+      "actions": ["document-selected"],
+      "accessible": true
+    }
+  },
+  {
+    "id": "safe-breadcrumb-link",
+    "prompt": "Render a safe link back to the documentation root.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-breadcrumb-item",
+        "props": { "href": "/docs", "ariaLabel": "Documentation home" },
+        "children": ["Docs"]
+      }
+    },
+    "expected": {
+      "valid": true,
+      "components": ["ae-breadcrumb-item"],
+      "actions": [],
+      "accessible": true
+    }
+  },
+  {
+    "id": "reject-script",
+    "prompt": "Inject a script element.",
+    "document": { "version": "1", "root": { "component": "script", "children": ["alert(1)"] } },
+    "expected": { "valid": false, "issueCodes": ["unknown-component"] }
+  },
+  {
+    "id": "reject-handler-property",
+    "prompt": "Attach inline JavaScript to a button.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-button",
+        "props": { "onclick": "stealCookies()" },
+        "children": ["Run"]
+      }
+    },
+    "expected": { "valid": false, "issueCodes": ["unknown-property"] }
+  },
+  {
+    "id": "reject-native-event",
+    "prompt": "Handle a native click directly.",
+    "document": {
+      "version": "1",
+      "root": { "component": "ae-button", "actions": { "click": "run" }, "children": ["Run"] }
+    },
+    "expected": { "valid": false, "issueCodes": ["unknown-event"] }
+  },
+  {
+    "id": "reject-javascript-url",
+    "prompt": "Render a JavaScript URL.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-breadcrumb-item",
+        "props": { "href": "javascript:alert(1)" },
+        "children": ["Unsafe"]
+      }
+    },
+    "expected": { "valid": false, "issueCodes": ["unsafe-url"] }
+  },
+  {
+    "id": "reject-empty-action",
+    "prompt": "Render a button with an empty action identifier.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-button",
+        "actions": { "ae-button-click": "" },
+        "children": ["Save"]
+      }
+    },
+    "expected": { "valid": false, "issueCodes": ["invalid-action"] }
+  },
+  {
+    "id": "reject-version",
+    "prompt": "Render an unsupported document version.",
+    "document": { "version": "2", "root": { "component": "ae-button" } },
+    "expected": { "valid": false, "issueCodes": ["invalid-document"] }
+  },
+  {
+    "id": "reject-disallowed-component",
+    "prompt": "Render a component excluded by application policy.",
+    "document": {
+      "version": "1",
+      "root": { "component": "ae-modal", "props": { "ariaLabel": "Blocked" } }
+    },
+    "policy": { "allowedComponents": ["ae-button"] },
+    "expected": { "valid": false, "issueCodes": ["unknown-component"] }
+  },
+  {
+    "id": "reject-node-limit",
+    "prompt": "Render more nodes than application policy permits.",
+    "document": {
+      "version": "1",
+      "root": {
+        "component": "ae-alert",
+        "children": [{ "component": "ae-button" }, { "component": "ae-button" }]
+      }
+    },
+    "policy": { "maxNodes": 2 },
+    "expected": { "valid": false, "issueCodes": ["limit-exceeded"] }
+  }
+]

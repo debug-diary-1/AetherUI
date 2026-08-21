@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "noEmit": true
+  },
+  "include": [
+    "packages/core/src/**/*.ts",
+    "packages/tokens/src/**/*.ts",
+    "packages/accordion/src/**/*.ts",
+    "packages/datatable/src/**/*.ts",
+    "packages/agent/src/**/*.ts",
+    "packages/mcp/src/**/*.ts"
+  ],
+  "exclude": ["**/__tests__/**", "**/*.test.ts", "**/*.spec.ts", "**/dist/**"]
+}

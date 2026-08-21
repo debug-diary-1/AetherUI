@@ -98,6 +98,10 @@ export default defineConfig({
             { label: 'TreeView', slug: 'components/treeview' },
           ],
         },
+        {
+          label: 'Agentic UI',
+          items: [{ label: 'Generate UI safely', slug: 'agentic-ui/generate-safely' }],
+        },
       ],
       components: {
         Hero: './src/components/Hero.astro',
