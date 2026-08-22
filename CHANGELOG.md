@@ -8,14 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Visual regression testing with Chromatic
 - Additional component variants and sizes
-- Enhanced theming system
-- Performance optimizations
+- Framework wrapper packages (React, Vue)
 
-## [0.1.0] - TBD
+## [0.1.0] - Unreleased
 
 ### Added
+- **`@aetherui/agent`** - validated JSON UI documents rendered to AetherUI
+  components, for LLM-generated interfaces
+- **`@aetherui/mcp`** - MCP server exposing the component catalog and the same
+  semantic validation to agent hosts
+- Generated machine-readable artifacts published with the docs: `llms.txt`,
+  `component-catalog.json`, `agent-ui.schema.json`, and React 19 JSX types
+- Visual regression testing with Chromatic
+- Release gates: coverage thresholds, cross-browser runs (Chromium/Firefox/
+  WebKit), Storybook interaction tests, Playwright e2e, package-contents
+  checks, generated-artifact drift detection, agent evals, and production
+  dependency audit
+- npm publishing via Trusted Publishing (OIDC) with provenance attestations
 - Initial release of AetherUI component library
 - Core components:
   - **Button** - Primary action trigger with variants (primary, secondary, ghost) and sizes
