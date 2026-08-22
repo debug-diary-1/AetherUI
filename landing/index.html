@@ -426,7 +426,8 @@
         gap: 7px;
         height: 40px;
         border-radius: var(--radius-sm);
-        border: 1px solid var(--border-strong);
+        border: 1px solid transparent;
+        color: var(--brand-bright);
         font-size: 0.885rem;
         font-weight: 550;
         transition:
@@ -435,6 +436,7 @@
       }
       .card:hover .card-cta span {
         background: var(--bg-inset);
+        border-color: var(--border);
       }
       .card.featured .card-cta span {
         background: var(--brand-solid);
@@ -563,8 +565,6 @@
         </a>
 
         <div class="masthead-links">
-          <a class="ghost-link" href="/docs/">Docs</a>
-          <a class="ghost-link" href="/storybook/">Storybook</a>
           <a
             class="ghost-link"
             href="https://github.com/debug-diary-1/AetherUI"
