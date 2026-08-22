@@ -1,57 +1,36 @@
 name: Publish to NPM
 
-on:
-  release:
-    types: [published]
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag to publish (e.g., v0.1.0)'
-        required: true
-        type: string
+# Least privilege by default; the publish job opts into id-token below.
+permissions:
+  contents: read
 
-env:
-  NODE_VERSION: '24'
+on:
+  push:
+    tags: ['v*']
 
 jobs:
   publish:
+    name: Publish to npm
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write # Required for npm provenance
+      id-token: write # npm Trusted Publishing (OIDC) + provenance
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
-          # On a release this is the release commit; on workflow_dispatch it is
-          # the tag the operator asked for, so the guards below validate the
-          # code that is actually about to be published.
-          ref: ${{ github.event.inputs.tag || github.ref }}
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      # No dependency caches in this job: it holds npm publish rights via OIDC,
+      # so a restored pnpm store or turbo cache would be attacker-controlled
+      # input if it were ever poisoned. This job builds from a clean state;
+      # ci.yml keeps its caches (those jobs publish nothing).
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: '24'
+          package-manager-cache: false
           registry-url: 'https://registry.npmjs.org'
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v6
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -84,47 +63,34 @@ jobs:
       - name: Typecheck generated React declarations
         run: pnpm typecheck:react
 
-      - name: Publish @aetherui/tokens
+      # Publishing authenticates with npm Trusted Publishing (OIDC); there is no
+      # long-lived npm token in this repository. `pnpm publish` packs the package
+      # (rewriting `workspace:*` deps to real versions) and shells out to the
+      # system `npm publish`, which exchanges this job's GitHub OIDC token
+      # (`id-token: write` above) for a short-lived npm token. Configure each
+      # @aetherui/* package on npmjs.com with this exact publisher:
+      # GitHub Actions, owner debug-diary-1, repo AetherUI, workflow publish.yml.
+      # `registry-url` above writes a placeholder `_authToken` into .npmrc;
+      # npm >= 11.5.1 overrides it once the OIDC exchange succeeds.
+      - name: Assert npm supports trusted publishing (>= 11.5.1)
         run: |
-          cd packages/tokens
-          pnpm publish --no-git-checks --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          v="$(npm --version)"
+          node -e '
+            const [maj, min, pat] = process.argv[1].split(".").map(Number);
+            const ok = maj > 11 || (maj === 11 && (min > 5 || (min === 5 && pat >= 1)));
+            if (!ok) {
+              console.error(`npm ${process.argv[1]} is older than 11.5.1; trusted publishing (OIDC) needs 11.5.1+`);
+              process.exit(1);
+            }
+            console.log(`npm ${process.argv[1]} supports trusted publishing`);
+          ' "$v"
 
-      - name: Publish @aetherui/core
+      # tokens first (no workspace deps), then core, then the packages that
+      # depend on core.
+      - name: Publish packages
         run: |
-          cd packages/core
-          pnpm publish --no-git-checks --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish @aetherui/accordion
-        run: |
-          cd packages/accordion
-          pnpm publish --no-git-checks --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish @aetherui/datatable
-        run: |
-          cd packages/datatable
-          pnpm publish --no-git-checks --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish @aetherui/agent
-        run: |
-          cd packages/agent
-          pnpm publish --no-git-checks --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish @aetherui/mcp
-        run: |
-          cd packages/mcp
-          pnpm publish --no-git-checks --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Summarize publication
-        run: echo '✅ AetherUI packages published to npm with provenance.' >> "$GITHUB_STEP_SUMMARY"
+          for pkg in tokens core accordion datatable agent mcp; do
+            echo "::group::publish @aetherui/$pkg"
+            (cd "packages/$pkg" && pnpm publish --access public --no-git-checks --provenance)
+            echo "::endgroup::"
+          done

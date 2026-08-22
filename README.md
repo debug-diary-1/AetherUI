@@ -105,9 +105,48 @@ import { AeModal } from '@aetherui/core/modal';
 | **Forms** | Input, Textarea, Select, Checkbox, Radio, Switch, Combo, Autocomplete |
 | **Feedback & data display** | Alert, Badge, Progress, Spinner, Accordion, TreeView |
 
-Also available as separate packages: **`@aetherui/datatable`** (sortable/selectable data table) and **`@aetherui/tokens`** (design tokens + light/dark/minimal themes).
-
 See the [component docs](https://debug-diary-1.github.io/AetherUI/docs/components/button/) for props, events, slots, and CSS parts of each.
+
+### Packages
+
+| Package | What it is |
+|---------|------------|
+| **`@aetherui/core`** | The 25 components above, plus generated React 19 JSX types |
+| **`@aetherui/tokens`** | Design tokens and the light / dark / minimal themes |
+| **`@aetherui/datatable`** | Sortable, selectable data table |
+| **`@aetherui/accordion`** | Standalone accordion (re-exports the core implementation) |
+| **`@aetherui/agent`** | Render a validated JSON UI document to AetherUI components — for LLM-generated interfaces |
+| **`@aetherui/mcp`** | MCP server exposing the component catalog and the same validation to agent hosts |
+
+## 🤖 Agent-generated UI
+
+AetherUI ships a machine-readable contract so a model can generate an interface
+without inventing components or props. `@aetherui/agent` validates a JSON UI
+document against the component catalog — unknown components, unknown or
+wrongly-typed props, unsafe URLs, and oversized documents are rejected before
+anything renders.
+
+```ts
+import { renderAgentUi } from '@aetherui/agent';
+
+renderAgentUi(
+  {
+    version: '1',
+    root: {
+      component: 'ae-alert',
+      props: { variant: 'success' },
+      children: ['Saved.'],
+    },
+  },
+  { target: document.body },
+);
+```
+
+Machine-readable references are published with the docs:
+[`llms.txt`](https://debug-diary-1.github.io/AetherUI/docs/llms.txt),
+[`component-catalog.json`](https://debug-diary-1.github.io/AetherUI/docs/component-catalog.json),
+[`agent-ui.schema.json`](https://debug-diary-1.github.io/AetherUI/docs/agent-ui.schema.json).
+See [Generating UI safely](https://debug-diary-1.github.io/AetherUI/docs/agentic-ui/generate-safely/).
 
 ## 🎛️ Playground
 

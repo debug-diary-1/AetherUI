@@ -37,9 +37,28 @@ const workflowJobs = (workflow) => {
   }
   return jobs.map((job) => {
     const body = job.lines.join('\n');
+    // Match every step, including unnamed ones (`- uses: ...`).
     const steps = Array.from(
-      body.matchAll(/^(\s*)- name:\s*(.+)\n((?:(?!\1- ).*(?:\n|$))*)/gm),
-      ([, , name, stepBody]) => ({ name: name.trim(), body: stepBody }),
+      body.matchAll(/^(\s*)- (name|uses):\s*(.+)\n((?:(?!\1- ).*(?:\n|$))*)/gm),
+      ([whole, , key, value, rest]) => {
+        const stepBody = key === 'uses' ? `uses: ${value}\n${rest}` : rest;
+        return {
+          name: key === 'name' ? value.trim() : '',
+          uses:
+            key === 'uses' ? value.trim() : (rest.match(/^\s*uses:\s*(.+)$/m)?.[1].trim() ?? ''),
+          body: stepBody,
+          // Only the shell commands: YAML comment lines are dropped so an
+          // assertion can never match explanatory prose instead of a command.
+          run: Array.from(
+            whole.matchAll(/^\s*(?:- )?run:\s*(?:\|)?(.*(?:\n(?!\s*- ).*)*)/gm),
+            (m) => m[1],
+          )
+            .join('\n')
+            .split('\n')
+            .filter((line) => !/^\s*#/.test(line))
+            .join('\n'),
+        };
+      },
     );
     return { name: job.name, body, steps };
   });
@@ -115,11 +134,11 @@ test('the publish workflow runs every guard in the job that publishes', async ()
   // Scope to the job that actually publishes: guards sitting in a separate,
   // undepended-on job would never gate a release.
   const job = workflowJobs(workflow).find((candidate) =>
-    candidate.steps.some((step) => /pnpm publish/.test(step.body)),
+    candidate.steps.some((step) => /pnpm publish/.test(step.run)),
   );
   assert.ok(job, 'no job publishes packages');
 
-  const firstPublish = job.steps.findIndex((step) => /pnpm publish/.test(step.body));
+  const firstPublish = job.steps.findIndex((step) => /pnpm publish/.test(step.run));
   for (const [name, command] of [
     ['Run tests', /run: pnpm test\b/],
     ['Verify generated agent artifacts', /run: pnpm check:agent-artifacts/],
@@ -133,18 +152,60 @@ test('the publish workflow runs every guard in the job that publishes', async ()
   }
 });
 
-test('the publish workflow builds the tag it was asked to publish', async () => {
+test('the publish workflow uses npm trusted publishing, not a long-lived token', async () => {
   const workflow = await read('.github/workflows/publish.yml');
+
+  // Tag-triggered, so the published tree is exactly the tagged commit.
+  assert.match(workflow, /^on:\n\s+push:\n\s+tags:/m, 'publish must trigger on a version tag');
+
   const job = workflowJobs(workflow).find((candidate) =>
-    candidate.steps.some((step) => /pnpm publish/.test(step.body)),
+    candidate.steps.some((step) => /pnpm publish/.test(step.run)),
   );
-  const checkout = job?.steps.find((step) => /actions\/checkout/.test(step.body));
-  assert.ok(checkout, 'publish job does not check out the repository');
+  assert.ok(job, 'no job publishes packages');
+
+  assert.match(job.body, /id-token:\s*write/, 'OIDC needs id-token: write');
+  assert.doesNotMatch(
+    workflow,
+    /NPM_TOKEN/,
+    'publishing authenticates via OIDC; no long-lived npm token belongs in this workflow',
+  );
   assert.match(
-    checkout.body,
-    /ref:\s*\$\{\{\s*github\.event\.inputs\.tag\s*\|\|\s*github\.ref\s*\}\}/,
-    'workflow_dispatch tag input must be checked out, otherwise the default branch is published',
+    job.steps.map((step) => step.run).join('\n'),
+    /--provenance/,
+    'publish with provenance',
   );
+
+  // A cache restored into the job that holds publish rights is attacker-
+  // controlled input, so this job must build from a clean state.
+  assert.ok(
+    job.steps.every((step) => !/actions\/cache/.test(step.uses)),
+    'the publishing job must not restore dependency caches',
+  );
+  assert.match(
+    job.body,
+    /package-manager-cache:\s*false/,
+    'setup-node must not restore a package manager cache in the publishing job',
+  );
+});
+
+test('every GitHub Action is pinned to a full commit SHA', async () => {
+  for (const name of ['ci.yml', 'publish.yml', 'deploy.yml', 'setup.yml']) {
+    const workflow = await read(`.github/workflows/${name}`);
+    for (const [, ref] of workflow.matchAll(/uses:\s*[\w.\-/]+@(\S+)/g)) {
+      assert.match(ref, /^[0-9a-f]{40}$/, `${name}: "${ref}" must be a 40-character commit SHA`);
+    }
+  }
+});
+
+test('workflows declare least-privilege permissions', async () => {
+  for (const name of ['ci.yml', 'publish.yml', 'deploy.yml', 'setup.yml']) {
+    const workflow = await read(`.github/workflows/${name}`);
+    assert.match(
+      workflow.split('\njobs:')[0],
+      /^permissions:/m,
+      `${name} must declare top-level permissions`,
+    );
+  }
 });
 
 test('the React declaration typecheck runs against real React typings', async () => {
