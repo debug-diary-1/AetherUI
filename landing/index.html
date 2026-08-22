@@ -2,516 +2,814 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AetherUI - Modern Web Components</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AetherUI — Headless Web Components</title>
     <meta
       name="description"
-      content="A headless, framework-agnostic Web Component library built on Lit. Beautiful, accessible, and themeable."
+      content="A headless, themeable web component library built with Lit. 25 accessible components that work with React, Vue, Angular, Svelte, or no framework at all."
     />
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta name="color-scheme" content="dark light" />
+    <meta property="og:title" content="AetherUI — Headless Web Components" />
+    <meta
+      property="og:description"
+      content="A headless, themeable web component library built with Lit. Works with React, Vue, Angular, Svelte, or no framework at all."
+    />
+    <meta property="og:type" content="website" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3 4 27h5.4l2.4-5h8.4l2.4 5H28L16 3Zm-2.5 14L16 11.7 18.5 17h-5Z' fill='%236366f1'/%3E%3C/svg%3E"
     />
+
     <style>
+      :root {
+        color-scheme: dark light;
+
+        --bg: #08080b;
+        --bg-elevated: #101015;
+        --bg-inset: #16161d;
+        --border: #26262f;
+        --border-strong: #34343f;
+        --text: #f4f4f6;
+        --text-muted: #a0a0ad;
+        --text-subtle: #8a8a99;
+        --brand: #6366f1;
+        --brand-bright: #818cf8;
+        /* Solid button fills: white text on these meets WCAG AA (>=4.5:1). */
+        --brand-solid: #5b5ee8;
+        --brand-solid-hover: #6165ee;
+        --brand-contrast: #ffffff;
+        --brand-tint: rgba(99, 102, 241, 0.12);
+        --brand-ring: rgba(99, 102, 241, 0.45);
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+
+        --radius: 14px;
+        --radius-sm: 8px;
+        --maxw: 1080px;
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #fbfbfd;
+          --bg-elevated: #ffffff;
+          --bg-inset: #f4f4f7;
+          --border: #e4e4ea;
+          --border-strong: #d3d3dc;
+          --text: #16161a;
+          --text-muted: #56565f;
+          --text-subtle: #63636e;
+          --brand: #5457e5;
+          --brand-bright: #4f46e5;
+          --brand-solid: #5457e5;
+          --brand-solid-hover: #4f52e0;
+          --brand-tint: rgba(99, 102, 241, 0.09);
+          --brand-ring: rgba(99, 102, 241, 0.4);
+          --shadow: 0 1px 2px rgba(16, 16, 24, 0.05), 0 12px 28px -14px rgba(16, 16, 24, 0.18);
+        }
+      }
+
       *,
       *::before,
       *::after {
         box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      :root {
-        --color-bg: #ffffff;
-        --color-bg-subtle: #f8fafc;
-        --color-text: #0f172a;
-        --color-text-muted: #64748b;
-        --color-accent: #2563eb;
-        --color-accent-light: #3b82f6;
-        --color-accent-bg: #eff6ff;
-        --color-border: #e2e8f0;
-        --color-card-bg: #ffffff;
-        --gradient-start: #2563eb;
-        --gradient-end: #7c3aed;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --color-bg: #0f172a;
-          --color-bg-subtle: #1e293b;
-          --color-text: #f1f5f9;
-          --color-text-muted: #94a3b8;
-          --color-accent: #3b82f6;
-          --color-accent-light: #60a5fa;
-          --color-accent-bg: #1e3a5f;
-          --color-border: #334155;
-          --color-card-bg: #1e293b;
-        }
       }
 
       html {
-        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
       }
 
       body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
         font-family:
-          'Inter',
+          ui-sans-serif,
+          system-ui,
           -apple-system,
           BlinkMacSystemFont,
           'Segoe UI',
           Roboto,
+          'Helvetica Neue',
+          Arial,
           sans-serif;
-        background: var(--color-bg);
-        color: var(--color-text);
+        font-size: 16px;
         line-height: 1.6;
-        min-height: 100vh;
         -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
       }
 
-      /* Hero Section */
-      .hero {
+      /* Subtle brand glow behind the hero, purely decorative. */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: -20vh 0 auto 0;
+        height: 70vh;
+        background: radial-gradient(60% 60% at 50% 0%, var(--brand-tint), transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .page {
         position: relative;
-        padding: 6rem 2rem 4rem;
-        text-align: center;
-        overflow: hidden;
+        z-index: 1;
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 24px 64px;
       }
 
-      .hero::before {
-        content: '';
+      a {
+        color: inherit;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--brand-ring);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+
+      .skip-link {
         position: absolute;
+        left: -9999px;
         top: 0;
-        left: 0;
-        right: 0;
-        height: 100%;
-        background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-        opacity: 0.05;
-        z-index: -1;
+        background: var(--bg-elevated);
+        color: var(--text);
+        padding: 10px 16px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-strong);
+      }
+      .skip-link:focus {
+        left: 24px;
+        top: 16px;
+        z-index: 10;
       }
 
-      .hero::after {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle at 30% 30%, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
-        z-index: -1;
-      }
+      /* ---------- header ---------- */
 
-      .logo {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .logo-icon {
-        width: 48px;
-        height: 48px;
-        background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-        border-radius: 12px;
+      .masthead {
         display: flex;
         align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+        justify-content: space-between;
+        gap: 16px;
+        padding: 22px 0;
       }
 
-      .logo-icon svg {
-        width: 28px;
-        height: 28px;
-        color: white;
+      .wordmark {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        font-weight: 650;
+        letter-spacing: -0.01em;
+        text-decoration: none;
+        font-size: 0.975rem;
       }
 
-      .logo-text {
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+      .wordmark svg {
+        width: 20px;
+        height: 20px;
+        color: var(--brand-bright);
+        flex: none;
+      }
+
+      .masthead-links {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .ghost-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 12px;
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition:
+          color 0.15s ease,
+          background-color 0.15s ease;
+      }
+      .ghost-link:hover {
+        color: var(--text);
+        background: var(--bg-inset);
+      }
+      .ghost-link svg {
+        width: 16px;
+        height: 16px;
+        flex: none;
+      }
+
+      /* ---------- hero ---------- */
+
+      .hero {
+        text-align: center;
+        padding: 64px 0 48px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 12px 5px 8px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--bg-elevated);
+        color: var(--text-muted);
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+      }
+      .eyebrow b {
+        color: var(--brand-bright);
+        font-weight: 650;
+      }
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--brand);
+        flex: none;
       }
 
       .hero h1 {
-        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        margin: 22px 0 0;
+        font-size: clamp(2.5rem, 6vw, 3.75rem);
+        line-height: 1.06;
+        letter-spacing: -0.035em;
         font-weight: 700;
-        letter-spacing: -0.03em;
-        line-height: 1.1;
-        margin-bottom: 1.5rem;
-        color: var(--color-text);
       }
 
-      .hero h1 span {
-        background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+      .hero p {
+        margin: 18px auto 0;
+        max-width: 34rem;
+        font-size: clamp(1rem, 2vw, 1.115rem);
+        color: var(--text-muted);
+        text-wrap: balance;
       }
 
-      .hero-description {
-        font-size: 1.25rem;
-        color: var(--color-text-muted);
-        max-width: 600px;
-        margin: 0 auto 2.5rem;
-        line-height: 1.7;
+      /* ---------- install ---------- */
+
+      .install {
+        margin: 30px auto 0;
+        display: inline-flex;
+        align-items: stretch;
+        max-width: 100%;
+        border: 1px solid var(--border);
+        background: var(--bg-elevated);
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+        box-shadow: var(--shadow);
       }
 
-      /* Badge */
-      .badge {
+      .install code {
+        display: block;
+        padding: 11px 14px;
+        font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 0.845rem;
+        color: var(--text);
+        white-space: nowrap;
+        overflow-x: auto;
+        text-align: left;
+      }
+      .install code .prompt {
+        color: var(--text-subtle);
+        user-select: none;
+      }
+
+      .copy {
+        flex: none;
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.375rem 0.875rem;
-        background: var(--color-accent-bg);
-        color: var(--color-accent);
-        font-size: 0.875rem;
-        font-weight: 500;
-        border-radius: 2rem;
-        margin-bottom: 1.5rem;
-      }
-
-      /* Buttons */
-      .button-group {
-        display: flex;
         justify-content: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-        margin-bottom: 4rem;
-      }
-
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.875rem 1.75rem;
-        font-size: 1rem;
-        font-weight: 600;
-        text-decoration: none;
-        border-radius: 0.75rem;
-        transition: all 0.2s ease;
+        width: 42px;
+        border: 0;
+        border-left: 1px solid var(--border);
+        background: transparent;
+        color: var(--text-muted);
         cursor: pointer;
-        border: none;
+        transition:
+          color 0.15s ease,
+          background-color 0.15s ease;
+      }
+      .copy:hover {
+        color: var(--text);
+        background: var(--bg-inset);
+      }
+      .copy svg {
+        width: 15px;
+        height: 15px;
+      }
+      .copy .check {
+        display: none;
+      }
+      .copy[data-copied='true'] {
+        color: #34d399;
+      }
+      .copy[data-copied='true'] .check {
+        display: block;
+      }
+      .copy[data-copied='true'] .clip {
+        display: none;
       }
 
-      .btn-primary {
-        background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-        color: white;
-        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
-      }
+      /* ---------- cards ---------- */
 
-      .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
-      }
-
-      .btn-secondary {
-        background: var(--color-bg-subtle);
-        color: var(--color-text);
-        border: 1px solid var(--color-border);
-      }
-
-      .btn-secondary:hover {
-        border-color: var(--color-accent);
-        background: var(--color-accent-bg);
-      }
-
-      .btn svg {
-        width: 18px;
-        height: 18px;
-      }
-
-      /* Resources Section */
-      .resources {
-        padding: 0 2rem 6rem;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-
-      .resource-grid {
+      .cards {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 12px;
       }
 
-      .resource-card {
+      .card {
+        position: relative;
         display: flex;
         flex-direction: column;
-        background: var(--color-card-bg);
-        border: 1px solid var(--color-border);
-        border-radius: 1rem;
-        padding: 2rem;
+        padding: 26px 24px 24px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--bg-elevated);
         text-decoration: none;
-        transition: all 0.3s ease;
-        position: relative;
+        color: inherit;
+        box-shadow: var(--shadow);
+        transition:
+          transform 0.18s ease,
+          border-color 0.18s ease;
+      }
+      .card:hover {
+        transform: translateY(-3px);
+        border-color: var(--border-strong);
+      }
+      .card.featured {
+        border-color: var(--brand-ring);
       }
 
-      .resource-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-        border-color: var(--color-accent);
-      }
-
-      .resource-card.recommended::before {
-        content: 'Recommended';
+      .card-badge {
         position: absolute;
-        top: 1rem;
-        left: 1rem;
-        padding: 0.25rem 0.75rem;
-        background: var(--color-accent);
-        color: white;
-        font-size: 0.75rem;
-        font-weight: 600;
-        border-radius: 1rem;
+        top: 14px;
+        right: 14px;
+        padding: 3px 9px;
+        border-radius: 999px;
+        background: var(--brand-tint);
+        color: var(--brand-bright);
+        font-size: 0.7rem;
+        font-weight: 650;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
       }
 
-      .resource-card .icon {
-        width: 56px;
-        height: 56px;
-        background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1.5rem;
-        color: white;
-        font-size: 1.75rem;
-      }
-
-      .resource-card h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 0.75rem;
-        color: var(--color-text);
-      }
-
-      .resource-card p {
-        color: var(--color-text-muted);
-        margin-bottom: 1.5rem;
-        flex-grow: 1;
-      }
-
-      .resource-card .features {
-        list-style: none;
-        margin-bottom: 1.5rem;
-      }
-
-      .resource-card .features li {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: var(--color-text-muted);
-        font-size: 0.9rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .resource-card .features li::before {
-        content: '';
-        width: 6px;
-        height: 6px;
-        background: var(--color-accent);
-        border-radius: 50%;
-      }
-
-      .resource-card .link-btn {
+      .card-icon {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 0.5rem;
-        padding: 0.75rem 1.5rem;
-        background: var(--color-accent);
-        color: white;
-        font-weight: 600;
-        border-radius: 0.5rem;
-        text-decoration: none;
-        transition: all 0.2s ease;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: var(--bg-inset);
+        border: 1px solid var(--border);
+        color: var(--brand-bright);
+        margin-bottom: 16px;
+      }
+      .card-icon svg {
+        width: 19px;
+        height: 19px;
       }
 
-      .resource-card .link-btn:hover {
-        background: var(--color-accent-light);
+      .card h2 {
+        margin: 0;
+        font-size: 1.125rem;
+        font-weight: 650;
+        letter-spacing: -0.012em;
       }
 
-      .resource-card .link-btn svg {
-        width: 16px;
-        height: 16px;
+      .card > p {
+        margin: 7px 0 0;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        line-height: 1.55;
       }
 
-      /* Footer */
-      .footer {
-        padding: 2rem;
-        text-align: center;
-        border-top: 1px solid var(--color-border);
-        color: var(--color-text-muted);
+      .card ul {
+        list-style: none;
+        margin: 16px 0 0;
+        padding: 0;
+        display: grid;
+        gap: 7px;
+      }
+      .card li {
+        position: relative;
+        padding-left: 20px;
+        font-size: 0.855rem;
+        color: var(--text-muted);
+      }
+      .card li::before {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 0.62em;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--brand);
+        opacity: 0.75;
+      }
+
+      /* Pins every CTA to the same baseline regardless of list length. */
+      .card-cta {
+        margin-top: auto;
+        padding-top: 22px;
+      }
+      .card-cta span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        height: 40px;
+        border-radius: var(--radius-sm);
+        border: 1px solid transparent;
+        color: var(--brand-bright);
+        font-size: 0.885rem;
+        font-weight: 550;
+        transition:
+          background-color 0.15s ease,
+          border-color 0.15s ease;
+      }
+      .card:hover .card-cta span {
+        background: var(--bg-inset);
+        border-color: var(--border);
+      }
+      .card.featured .card-cta span {
+        background: var(--brand-solid);
+        border-color: var(--brand-solid);
+        color: var(--brand-contrast);
+      }
+      .card.featured:hover .card-cta span {
+        background: var(--brand-solid-hover);
+        border-color: var(--brand-solid-hover);
+      }
+      .card-cta svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.18s ease;
+      }
+      .card:hover .card-cta svg {
+        transform: translateX(2px);
+      }
+
+      /* ---------- highlights ---------- */
+
+      .highlights {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-top: 44px;
+        padding: 24px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--bg-elevated);
+      }
+      .highlight dt {
         font-size: 0.875rem;
+        font-weight: 600;
+        letter-spacing: -0.005em;
+      }
+      .highlight dd {
+        margin: 4px 0 0;
+        font-size: 0.83rem;
+        color: var(--text-muted);
+        line-height: 1.5;
       }
 
+      /* ---------- footer ---------- */
+
+      .footer {
+        margin-top: 48px;
+        padding-top: 22px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 0.845rem;
+        color: var(--text-subtle);
+      }
       .footer a {
-        color: var(--color-accent);
+        color: var(--text-muted);
         text-decoration: none;
       }
-
       .footer a:hover {
+        color: var(--text);
         text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .footer nav {
+        display: flex;
+        gap: 16px;
       }
 
-      /* Responsive */
-      @media (max-width: 640px) {
-        .hero {
-          padding: 4rem 1.5rem 3rem;
-        }
+      /* ---------- responsive ---------- */
 
-        .button-group {
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .btn {
-          width: 100%;
-          max-width: 280px;
-          justify-content: center;
-        }
-
-        .resource-grid {
+      @media (max-width: 900px) {
+        .cards {
           grid-template-columns: 1fr;
+        }
+        .highlights {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .hero {
+          padding: 44px 0 36px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .page {
+          padding: 0 18px 48px;
+        }
+        .highlights {
+          grid-template-columns: 1fr;
+          gap: 14px;
+        }
+        .install {
+          width: 100%;
+        }
+        .masthead-links .label {
+          display: none;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
+        .card:hover {
+          transform: none;
         }
       }
     </style>
   </head>
+
   <body>
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="logo">
-        <div class="logo-icon">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="page">
+      <header class="masthead">
+        <a class="wordmark" href="/" aria-label="AetherUI home">
+          <svg viewBox="0 0 32 32" aria-hidden="true" fill="currentColor">
+            <path d="M16 3 4 27h5.4l2.4-5h8.4l2.4 5H28L16 3Zm-2.5 14L16 11.7 18.5 17h-5Z" />
+          </svg>
+          AetherUI
+        </a>
+
+        <div class="masthead-links">
+          <a
+            class="ghost-link"
+            href="https://github.com/debug-diary-1/AetherUI"
+            target="_blank"
+            rel="noopener"
           >
-            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-            <polyline points="2 17 12 22 22 17"></polyline>
-            <polyline points="2 12 12 17 22 12"></polyline>
-          </svg>
+            <svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor">
+              <path
+                d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38l-.01-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.72 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"
+              />
+            </svg>
+            <span class="label">GitHub</span>
+          </a>
         </div>
-        <span class="logo-text">AetherUI</span>
-      </div>
+      </header>
 
-      <div class="badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-          <path
-            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-          />
-        </svg>
-        Open Source
-      </div>
+      <main id="main">
+        <section class="hero">
+          <p class="eyebrow">
+            <span class="dot"></span><span><b>25 components</b> · MIT licensed</span>
+          </p>
 
-      <h1>Build Beautiful UIs with<br /><span>Modern Web Components</span></h1>
+          <h1>Headless web components</h1>
 
-      <p class="hero-description">
-        A headless, framework-agnostic component library built on Lit. Fully accessible, themeable
-        with design tokens, and works everywhere.
-      </p>
+          <p>
+            A themeable component library built on Lit and web standards. Works with React, Vue,
+            Angular, Svelte — or no framework at all.
+          </p>
 
-      <div class="button-group">
-        <a href="./docs/" class="btn btn-primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-          </svg>
-          Get Started
-        </a>
-        <a
-          href="https://github.com/debug-diary-1/AetherUI"
-          class="btn btn-secondary"
-          target="_blank"
-          rel="noopener"
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"
-            />
-          </svg>
-          GitHub
-        </a>
-      </div>
-    </section>
+          <div class="install">
+            <code id="install-cmd"
+              ><span class="prompt">$ </span>npm install @aetherui/core @aetherui/tokens</code
+            >
+            <button class="copy" type="button" aria-label="Copy install command">
+              <svg
+                class="clip"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                aria-hidden="true"
+              >
+                <rect x="5.5" y="5.5" width="8" height="9" rx="1.6" />
+                <path
+                  d="M10.5 3.5v-.5a1.5 1.5 0 0 0-1.5-1.5H4a1.5 1.5 0 0 0-1.5 1.5v7A1.5 1.5 0 0 0 4 11.5h.5"
+                />
+              </svg>
+              <svg
+                class="check"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.9"
+                aria-hidden="true"
+              >
+                <path d="m3 8.5 3.2 3.2L13 5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </div>
+        </section>
 
-    <!-- Resources Section -->
-    <section class="resources">
-      <div class="resource-grid">
-        <a href="./playground/" class="resource-card recommended">
-          <div class="icon">🎨</div>
-          <h3>Playground</h3>
-          <p>Design and customize components visually. Export ready-to-use CSS and HTML.</p>
-          <ul class="features">
-            <li>Visual CSS variable editor</li>
-            <li>Real-time preview</li>
-            <li>Code generation</li>
-            <li>Export to HTML file</li>
-          </ul>
-          <span class="link-btn">
-            Open Playground
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </span>
-        </a>
+        <div class="cards">
+          <a class="card featured" href="/playground/">
+            <span class="card-badge">Start here</span>
+            <span class="card-icon">
+              <svg
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <path
+                  d="M10 2.5a7.5 7.5 0 1 0 0 15c.9 0 1.5-.6 1.5-1.4 0-.4-.15-.75-.4-1a1.4 1.4 0 0 1 1-2.4h1.7a3.7 3.7 0 0 0 3.7-3.7C17.5 5.4 14.1 2.5 10 2.5Z"
+                />
+                <circle cx="6.6" cy="8" r="1" fill="currentColor" stroke="none" />
+                <circle cx="10" cy="6.2" r="1" fill="currentColor" stroke="none" />
+                <circle cx="13.4" cy="8" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </span>
+            <h2>Playground</h2>
+            <p>Design and customize components visually, then export ready-to-use CSS and HTML.</p>
+            <ul>
+              <li>Visual CSS variable editor</li>
+              <li>Real-time preview</li>
+              <li>Code generation</li>
+              <li>Export to HTML file</li>
+            </ul>
+            <span class="card-cta">
+              <span>
+                Open Playground
+                <svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 8h9m0 0-3.4-3.4M12 8l-3.4 3.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </span>
+          </a>
 
-        <a href="./storybook/" class="resource-card">
-          <div class="icon">📚</div>
-          <h3>Storybook</h3>
-          <p>Interactive component explorer with full API documentation and controls.</p>
-          <ul class="features">
-            <li>Live component states</li>
-            <li>Interactive controls</li>
-            <li>API documentation</li>
-            <li>Accessibility testing</li>
-          </ul>
-          <span class="link-btn">
-            Open Storybook
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </span>
-        </a>
+          <a class="card" href="/storybook/">
+            <span class="card-icon">
+              <svg
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <path d="M3 4.6c0-.6.5-1.1 1.1-1.1H9v13H4.1c-.6 0-1.1-.5-1.1-1.1V4.6Z" />
+                <path d="M17 4.6c0-.6-.5-1.1-1.1-1.1H11v13h4.9c.6 0 1.1-.5 1.1-1.1V4.6Z" />
+              </svg>
+            </span>
+            <h2>Storybook</h2>
+            <p>Interactive component explorer with full API documentation and controls.</p>
+            <ul>
+              <li>Live component states</li>
+              <li>Interactive controls</li>
+              <li>API documentation</li>
+              <li>Accessibility testing</li>
+            </ul>
+            <span class="card-cta">
+              <span>
+                Open Storybook
+                <svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 8h9m0 0-3.4-3.4M12 8l-3.4 3.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </span>
+          </a>
 
-        <a href="./docs/" class="resource-card">
-          <div class="icon">📖</div>
-          <h3>Documentation</h3>
-          <p>Comprehensive guides, API references, and integration examples.</p>
-          <ul class="features">
-            <li>Installation guides</li>
-            <li>Framework integration</li>
-            <li>Theme customization</li>
-            <li>Best practices</li>
-          </ul>
-          <span class="link-btn">
-            View Docs
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </span>
-        </a>
-      </div>
-    </section>
+          <a class="card" href="/docs/">
+            <span class="card-icon">
+              <svg
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4 4.2c0-.5.4-.9.9-.9H13a3 3 0 0 1 3 3v9.5H7.9A2.9 2.9 0 0 0 4 15.9V4.2Z"
+                />
+                <path d="M4 15.9a2.9 2.9 0 0 1 2.9-1.1H16" />
+                <path d="M7.5 7h5M7.5 10h3.5" stroke-linecap="round" />
+              </svg>
+            </span>
+            <h2>Documentation</h2>
+            <p>Comprehensive guides, API references, and framework integration examples.</p>
+            <ul>
+              <li>Installation guides</li>
+              <li>Framework integration</li>
+              <li>Theme customization</li>
+              <li>Accessibility notes</li>
+            </ul>
+            <span class="card-cta">
+              <span>
+                View Docs
+                <svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 8h9m0 0-3.4-3.4M12 8l-3.4 3.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </span>
+          </a>
+        </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <p>
-        Built by the AetherUI Contributors ·
-        <a href="https://github.com/debug-diary-1/AetherUI" target="_blank" rel="noopener"
-          >GitHub</a
-        >
-      </p>
-    </footer>
+        <dl class="highlights">
+          <div class="highlight">
+            <dt>Framework-agnostic</dt>
+            <dd>Standard custom elements — drop them into any stack.</dd>
+          </div>
+          <div class="highlight">
+            <dt>Truly headless</dt>
+            <dd>Unstyled by default, or use the prebuilt light and dark themes.</dd>
+          </div>
+          <div class="highlight">
+            <dt>Accessible</dt>
+            <dd>WCAG 2.1 AA patterns with full keyboard support.</dd>
+          </div>
+          <div class="highlight">
+            <dt>Tree-shakeable</dt>
+            <dd>Typed subpath exports — ship only what you import.</dd>
+          </div>
+        </dl>
+      </main>
+
+      <footer class="footer">
+        <span>Built by the AetherUI contributors · MIT</span>
+        <nav aria-label="Resources">
+          <a href="https://github.com/debug-diary-1/AetherUI" target="_blank" rel="noopener"
+            >GitHub</a
+          >
+          <a href="/docs/">Docs</a>
+          <a href="/storybook/">Storybook</a>
+          <a href="/playground/">Playground</a>
+        </nav>
+      </footer>
+    </div>
+
+    <script>
+      // Copy the install command; falls back silently where the clipboard API
+      // is unavailable (non-secure contexts).
+      document.querySelector('.copy')?.addEventListener('click', async (event) => {
+        const button = event.currentTarget;
+        const command = document.getElementById('install-cmd').textContent.replace(/^\$\s*/, '');
+        try {
+          await navigator.clipboard.writeText(command.trim());
+          button.dataset.copied = 'true';
+          button.setAttribute('aria-label', 'Copied');
+          setTimeout(() => {
+            delete button.dataset.copied;
+            button.setAttribute('aria-label', 'Copy install command');
+          }, 1600);
+        } catch {
+          /* clipboard unavailable — leave the command selectable */
+        }
+      });
+    </script>
   </body>
 </html>
