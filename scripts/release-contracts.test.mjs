@@ -1,9 +1,14 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const root = new URL('../', import.meta.url);
 const read = (path) => readFile(new URL(path, root), 'utf8');
+
+// Enumerated, not hard-coded: a workflow added later must not silently escape
+// the guards below. `.example` templates are not run by GitHub, so they are out.
+const workflowNames = async () =>
+  (await readdir(new URL('.github/workflows/', root))).filter((name) => name.endsWith('.yml'));
 
 // Any pnpm/turbo invocation of a build task inside the same command segment.
 // Catches: `pnpm build`, `pnpm run build`, `pnpm --filter x build`,
@@ -189,7 +194,7 @@ test('the publish workflow uses npm trusted publishing, not a long-lived token',
 });
 
 test('every GitHub Action is pinned to a full commit SHA', async () => {
-  for (const name of ['ci.yml', 'publish.yml', 'deploy.yml', 'setup.yml']) {
+  for (const name of await workflowNames()) {
     const workflow = await read(`.github/workflows/${name}`);
     for (const [, ref] of workflow.matchAll(/uses:\s*[\w.\-/]+@(\S+)/g)) {
       assert.match(ref, /^[0-9a-f]{40}$/, `${name}: "${ref}" must be a 40-character commit SHA`);
@@ -198,7 +203,7 @@ test('every GitHub Action is pinned to a full commit SHA', async () => {
 });
 
 test('workflows declare least-privilege permissions', async () => {
-  for (const name of ['ci.yml', 'publish.yml', 'deploy.yml', 'setup.yml']) {
+  for (const name of await workflowNames()) {
     const workflow = await read(`.github/workflows/${name}`);
     assert.match(
       workflow.split('\njobs:')[0],
