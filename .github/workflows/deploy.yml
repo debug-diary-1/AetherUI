@@ -75,6 +75,18 @@ jobs:
           path: packages/docs/dist
           retention-days: 1
 
+      # The landing page is a small Vite app: its live component demo is bundled
+      # from @aetherui/core, which this job has already built.
+      - name: Build landing page
+        run: pnpm --filter @aetherui/landing build
+
+      - name: Upload landing artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: landing-dist
+          path: packages/landing/dist
+          retention-days: 1
+
   build-storybook:
     name: Build Storybook
     runs-on: ubuntu-latest
@@ -145,9 +157,6 @@ jobs:
           mkdir -p .output/docs
           mkdir -p .output/storybook
           cp -r .github/pages/* .output/
-          # Landing page is shared with the Vercel preview build so the two roots
-          # cannot drift apart.
-          cp landing/index.html .output/index.html
 
       - name: Download docs artifact
         continue-on-error: true
@@ -155,6 +164,14 @@ jobs:
         with:
           name: docs-dist
           path: .output/docs
+
+      # Landing page assets use relative paths, so the same build works under
+      # the /AetherUI/ Pages prefix and at the Vercel root.
+      - name: Download landing artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: landing-dist
+          path: .output
 
       - name: Download Storybook artifact
         continue-on-error: true

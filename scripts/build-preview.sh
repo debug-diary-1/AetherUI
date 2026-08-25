@@ -36,9 +36,13 @@ cp -r packages/docs/dist preview-build/docs
 echo "📋 Copying Playground..."
 cp -r packages/playground/dist preview-build/playground
 
-# Copy the landing page (single source of truth, shared with GitHub Pages)
-echo "🎨 Copying landing page..."
-cp landing/index.html preview-build/index.html
+# Build the landing page (a small Vite app so its live component demo is bundled)
+echo "🎨 Building Landing..."
+pnpm --filter @aetherui/landing build
+
+# Copy it to the site root. Single source of truth, shared with GitHub Pages.
+echo "📋 Copying Landing..."
+cp -r packages/landing/dist/. preview-build/
 
 echo "✅ Preview build complete!"
 echo "📁 Output: preview-build/"
