@@ -117,15 +117,34 @@ jobs:
         run: pnpm test:cross-browser
         timeout-minutes: 15
 
+      # Codecov rejects tokenless uploads. CODECOV_TOKEN has never been set in
+      # this repository, so every upload failed with "Token required - not valid
+      # tokenless upload" while fail_ci_if_error: false swallowed it and the step
+      # still reported success. CI has been claiming coverage uploads that never
+      # happened. Gate on the token the same way Chromatic does, and fail loudly
+      # when a token IS present so a real upload failure cannot go unnoticed.
+      - name: Check Codecov token
+        id: codecov-token
+        if: always()
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: |
+          if [ -n "$CODECOV_TOKEN" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "CODECOV_TOKEN not available - skipping coverage upload."
+          fi
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7
-        if: always()
+        if: always() && steps.codecov-token.outputs.available == 'true'
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./packages/core/coverage/lcov.info
           flags: unittests
           name: codecov-aetherui
-          fail_ci_if_error: false
+          fail_ci_if_error: true
 
       - name: Run build
         run: NODE_OPTIONS='--max-old-space-size=4096' pnpm build
