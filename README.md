@@ -218,17 +218,25 @@ const handleClick = (e) => {
 
 ### Using with Vanilla JavaScript
 
+After installing AetherUI, save this as `index.html` in your project. Use Vite to resolve the npm imports:
+
+```bash
+pnpm add -D vite
+pnpm exec vite
+```
+
 ```html
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="node_modules/@aetherui/tokens/dist/light.css">
+  <title>AetherUI example</title>
 </head>
 <body>
   <ae-button variant="primary">Click me</ae-button>
 
   <script type="module">
     import { defineAeButton } from '@aetherui/core';
+    import '@aetherui/tokens/light.css';
 
     defineAeButton();
 
@@ -275,6 +283,7 @@ import '@aetherui/tokens/dark.css';
 - **[Agentic UI Guide](./packages/docs/src/content/docs/agentic-ui/generate-safely.mdx)** - Validate and render structured model output
 - **[LLM Index](./packages/docs/public/llms.txt)** - Machine-readable documentation and catalog pointers
 - **[Architecture](./ARCHITECTURE.md)** and **[Component Standards](./STANDARDS.md)** - How the library is built
+- **[Release Guide](./docs/RELEASING.md)** - First-publication setup and release verification
 
 ## 🛠️ Development
 

@@ -1,11 +1,13 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { inputStyles } from './styles';
 
 /**
  * A text input component with support for various input types, validation, and form participation.
  * Participates in native form submission via ElementInternals API.
+ * Enabled, named inputs submit empty strings. Validity follows changes to native constraints.
  *
  * @element ae-input
  *
@@ -171,6 +173,10 @@ export class AeInput extends LitElement {
     }
 
     if (
+      changedProperties.has('type') ||
+      changedProperties.has('step') ||
+      changedProperties.has('readonly') ||
+      changedProperties.has('disabled') ||
       changedProperties.has('required') ||
       changedProperties.has('pattern') ||
       changedProperties.has('minlength') ||
@@ -183,7 +189,7 @@ export class AeInput extends LitElement {
   }
 
   private _updateFormValue() {
-    this._internals.setFormValue(this.value || null);
+    this._internals.setFormValue(this.value);
   }
 
   private _updateValidity() {

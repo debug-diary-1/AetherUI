@@ -1,5 +1,6 @@
 import { LitElement, html, PropertyValues, nothing, css } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { dropdownStyles } from './styles';
 import { KeyboardController } from './keyboard';
 import { updatePosition, type Placement, type Strategy } from './positioning';

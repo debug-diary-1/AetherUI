@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, state, query } from 'lit/decorators.js';
+import { property, state, query } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { TreeNode, renderTreeNode, renderEmptyState, renderLoadingState } from './node';
 import { TreeViewKeyboardController } from './keyboard';
 import { treeviewStyles } from './styles';

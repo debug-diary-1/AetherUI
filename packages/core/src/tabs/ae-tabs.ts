@@ -1,5 +1,6 @@
 import { LitElement, html, PropertyValues } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { property, query } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { tabStyles } from './styles';
 
 /**

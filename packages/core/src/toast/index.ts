@@ -1,6 +1,5 @@
 // Re-export components
 export { AeToast } from './ae-toast';
-export { ToastManager } from './toast-manager';
 
 // Re-export API functions explicitly
 import { showToast, createToastHelpers } from './api';

@@ -61,7 +61,7 @@ after(async () => {
   if (directory) await rm(directory, { recursive: true, force: true });
 });
 
-async function consumer(t, source, repetitions = 1) {
+async function consumer(t, source, repetitions = 1, markup = '<main id="surface"></main>') {
   const entry = join(directory, 'entry.tsx');
   await writeFile(entry, source);
   const result = await build({
@@ -84,7 +84,7 @@ async function consumer(t, source, repetitions = 1) {
     await page.close();
     assert.deepEqual(errors, [], 'consumer must not throw browser errors');
   });
-  await page.setContent('<main id="surface"></main>');
+  await page.setContent(markup);
   for (const asset of output.filter(
     (item) => item.type === 'asset' && item.fileName.endsWith('.css'),
   )) {
@@ -140,6 +140,67 @@ test('the README agent example renders a registered alert', async (t) => {
   const page = await consumer(t, example);
   await expect(page.locator('ae-alert')).toHaveText('Saved.');
   assert.equal(await page.locator('ae-alert').evaluate((element) => !!element.shadowRoot), true);
+});
+
+test('core registration remains usable when two independent bundles load all components', async (t) => {
+  const page = await consumer(
+    t,
+    `
+    import { AeInput, defineAll } from '@aetherui/core';
+    defineAll();
+    const input = new AeInput();
+    input.label = 'Name';
+    document.querySelector('#surface').append(input);
+  `,
+    2,
+  );
+  await expect(page.getByRole('textbox', { name: 'Name' })).toHaveCount(2);
+  await page.getByRole('textbox', { name: 'Name' }).last().fill('Ada');
+  await expect(page.locator('ae-input').last()).toHaveJSProperty('value', 'Ada');
+});
+
+test('the README vanilla example upgrades and activates its button', async (t) => {
+  const readme = await readFile(join(root, 'README.md'), 'utf8');
+  const example = readme.match(
+    /### Using with Vanilla JavaScript[\s\S]*?```html\n([\s\S]*?)```/,
+  )?.[1];
+  assert.ok(example, 'missing README vanilla example');
+  const script = example.match(/<script type="module">([\s\S]*?)<\/script>/)?.[1];
+  assert.ok(script, 'missing module script');
+  const page = await consumer(t, script, 1, example.replace(/<script[\s\S]*?<\/script>/g, ''));
+  const activated = page.waitForEvent('console', (message) =>
+    message.text().startsWith('Button clicked!'),
+  );
+  await page.getByRole('button', { name: 'Click me' }).click();
+  await activated;
+});
+
+test('public packages keep implementation helpers internal', async (t) => {
+  const page = await consumer(
+    t,
+    `
+    import * as core from '@aetherui/core';
+    import * as autocomplete from '@aetherui/core/autocomplete';
+    import * as combo from '@aetherui/core/combo';
+    import * as table from '@aetherui/datatable';
+    window.exportNames = [...Object.keys(core), ...Object.keys(autocomplete), ...Object.keys(combo), ...Object.keys(table)];
+  `,
+  );
+  const names = await page.evaluate(() => window.exportNames);
+  assert.deepEqual(
+    names.filter((name) => /(?:Controller|Manager)$/.test(name)),
+    [],
+  );
+  for (const name of ['sortData', 'filterData', 'getCellValue']) {
+    assert.ok(!names.includes(name), `${name} is internal`);
+  }
+  const manifest = JSON.parse(
+    await readFile(join(directory, 'node_modules/@aetherui/core/package.json'), 'utf8'),
+  );
+  assert.ok(
+    !Object.keys(manifest.exports).some((key) => key.includes('*')),
+    'only documented subpaths are public',
+  );
 });
 
 const tableExample = `
@@ -239,4 +300,54 @@ test('disabled DataTable controls are absent from keyboard navigation', async (t
   await expect(page.getByRole('columnheader')).toHaveText('Name');
   await expect(page.getByRole('button')).toHaveCount(0);
   await expect(page.getByRole('separator')).toHaveCount(0);
+});
+
+test('DataTable sorting is stable and preserves the caller data', async (t) => {
+  const page = await consumer(
+    t,
+    `
+    import '@aetherui/datatable';
+    const table = document.createElement('ae-datatable');
+    table.data = [{id: 'a', score: 2}, {id: 'b', score: 1}, {id: 'c', score: 2}];
+    table.columns = [{id: 'id', field: 'id', header: 'ID'}, {id: 'score', field: 'score', header: 'Score'}];
+    table.filterable = false;
+    document.querySelector('#surface').append(table);
+  `,
+  );
+  await page.getByRole('button', { name: 'Score', exact: true }).click();
+  await expect(page.locator('ae-datatable-cell')).toHaveText(['b', '1', 'a', '2', 'c', '2']);
+  assert.deepEqual(
+    await page.locator('ae-datatable').evaluate((table) => table.data.map((row) => row.id)),
+    ['a', 'b', 'c'],
+  );
+});
+
+test('DataTable column and global filters compose through the public interface', async (t) => {
+  const page = await consumer(
+    t,
+    `
+    import '@aetherui/datatable';
+    const table = document.createElement('ae-datatable');
+    table.data = [{name: 'Ada', team: 'Platform'}, {name: 'Grace', team: 'Compiler'}, {name: 'Linus', team: 'Platform'}];
+    table.columns = [{id: 'name', field: 'name', header: 'Name'}, {id: 'team', field: 'team', header: 'Team'}];
+    window.filters = [];
+    table.addEventListener('ae-datatable-filter', (event) => window.filters.push(event.detail));
+    document.querySelector('#surface').append(table);
+  `,
+  );
+  await expect(page.locator('ae-datatable-cell')).toHaveCount(6);
+  await page
+    .locator('ae-datatable')
+    .evaluate((table) => table.handleColumnFilter('team', 'platform'));
+  await expect(page.locator('ae-datatable-cell')).toHaveText([
+    'Ada',
+    'Platform',
+    'Linus',
+    'Platform',
+  ]);
+  await page.getByPlaceholder('Search...').fill('ada');
+  await expect(page.locator('ae-datatable-cell')).toHaveText(['Ada', 'Platform']);
+  await expect
+    .poll(() => page.evaluate(() => window.filters.at(-1)))
+    .toEqual({ globalFilter: 'ada', filterState: [{ id: 'team', value: 'platform' }] });
 });

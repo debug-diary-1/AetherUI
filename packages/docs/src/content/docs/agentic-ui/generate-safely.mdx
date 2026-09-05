@@ -53,6 +53,7 @@ An action maps a documented custom event to an application-owned identifier. The
 `validateAgentUi` and `renderAgentUi` reject:
 
 - unknown or policy-excluded elements;
+- unknown fields on the document or its nodes;
 - properties and events absent from the canonical component catalog;
 - executable URL protocols;
 - empty action identifiers;
@@ -60,6 +61,8 @@ An action maps a documented custom event to an application-owned identifier. The
 - cyclic or non-JSON property values.
 
 The renderer builds DOM nodes with `document.createElement`, assigns validated properties, and never uses `innerHTML`.
+
+`maxNodes` counts elements and text children, including the root and empty strings. Its default is 100, and the returned `nodeCount` follows the same rule. Component shadow DOM is excluded. `maxDepth` counts nested components, with the root at depth 1 (default limit: 12); `maxPropertyDepth` limits JSON property nesting (default: 32). Validation stops visiting siblings after exceeding the node budget and completes before replacing existing content. Bound incoming JSON size before parsing it as well.
 
 ## Machine-readable references
 

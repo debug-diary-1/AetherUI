@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { readdir, readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import test from 'node:test';
 
 const root = new URL('../', import.meta.url);
@@ -269,4 +270,31 @@ test('standalone accordion styles retain usable token fallbacks', async () => {
   ]) {
     assert.match(styles, new RegExp(`var\\(\\s*${token},\\s*[^)]`), token);
   }
+});
+
+test('Pages uploads the actual Storybook build output and requires complete artifacts', async () => {
+  const workflow = await read('.github/workflows/deploy.yml');
+  const manifest = JSON.parse(await read('packages/storybook/package.json'));
+  const outputDirectory = manifest.scripts['build-storybook'].match(/--output-dir\s+(\S+)/)?.[1];
+  assert.ok(outputDirectory, 'missing Storybook output directory');
+  const jobs = workflowJobs(workflow);
+  const upload = jobs
+    .find((job) => job.name === 'build-storybook')
+    .steps.find((step) => step.name === 'Upload Storybook artifact');
+  const uploadPath = upload.body.match(/^\s*path:\s*(\S+)/m)?.[1];
+  assert.ok(uploadPath, 'missing upload path');
+  assert.equal(resolve('packages/storybook', outputDirectory), resolve(uploadPath));
+  assert.doesNotMatch(workflow, /continue-on-error:\s*true|fallback\.html/);
+  for (const jobName of ['build-docs', 'build-storybook']) {
+    const job = jobs.find((candidate) => candidate.name === jobName);
+    assert.match(
+      job.steps.find((step) => /Upload .* artifact/.test(step.name)).body,
+      /if-no-files-found:\s*error/,
+    );
+  }
+  const verify = jobs
+    .find((job) => job.name === 'deploy')
+    .steps.find((step) => step.name === 'Verify site entry points');
+  assert.match(verify.run, /test -s \.output\/docs\/index\.html/);
+  assert.match(verify.run, /test -s \.output\/storybook\/index\.html/);
 });

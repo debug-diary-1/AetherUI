@@ -1192,7 +1192,7 @@
       "tagName": "ae-input",
       "className": "AeInput",
       "module": "src/input/ae-input.ts",
-      "description": "A text input component with support for various input types, validation, and form participation.\nParticipates in native form submission via ElementInternals API.",
+      "description": "A text input component with support for various input types, validation, and form participation.\nParticipates in native form submission via ElementInternals API.\nEnabled, named inputs submit empty strings. Validity follows changes to native constraints.",
       "properties": [
         {
           "name": "ariaLabel",
@@ -2562,7 +2562,7 @@
       "tagName": "ae-textarea",
       "className": "AeTextarea",
       "module": "src/textarea/ae-textarea.ts",
-      "description": "A textarea component with support for auto-resize, character counting, and form participation.\nParticipates in native form submission via ElementInternals API.",
+      "description": "A textarea component with support for auto-resize, character counting, and form participation.\nParticipates in native form submission via ElementInternals API.\nEnabled, named textareas submit empty strings.",
       "properties": [
         {
           "name": "ariaLabel",

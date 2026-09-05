@@ -167,6 +167,18 @@ describe('ae-textarea', () => {
     expect(textarea.hasAttribute('maxlength')).to.be.false;
   });
 
+  it('submits an empty string for an enabled named textarea', async () => {
+    const form = await fixture<HTMLFormElement>(html`
+      <form><ae-textarea name="comments"></ae-textarea></form>
+    `);
+    const el = form.querySelector('ae-textarea') as AeTextarea;
+    await el.updateComplete;
+    expect([...new FormData(form)]).to.deep.equal([['comments', '']]);
+    el.disabled = true;
+    await el.updateComplete;
+    expect([...new FormData(form)]).to.deep.equal([]);
+  });
+
   describe('Theme Integration', () => {
     it('uses CSS variables for textarea styling', async () => {
       const el = await fixture<AeTextarea>(html`<ae-textarea></ae-textarea>`);

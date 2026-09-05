@@ -335,6 +335,7 @@ CSS parts:
 
 A text input component with support for various input types, validation, and form participation.
 Participates in native form submission via ElementInternals API.
+Enabled, named inputs submit empty strings. Validity follows changes to native constraints.
 
 Properties:
 - `ariaLabel` (string, default ''): Accessible label for the input (used when no visible label)
@@ -761,6 +762,7 @@ CSS parts:
 
 A textarea component with support for auto-resize, character counting, and form participation.
 Participates in native form submission via ElementInternals API.
+Enabled, named textareas submit empty strings.
 
 Properties:
 - `ariaLabel` (string, default ''): Accessible label for the textarea (used when no visible label)

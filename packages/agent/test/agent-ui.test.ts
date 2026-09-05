@@ -23,7 +23,7 @@ describe('@aetherui/agent', () => {
     expect(validateAgentUi(buttonDocument)).to.deep.equal({
       ok: true,
       document: buttonDocument,
-      nodeCount: 1,
+      nodeCount: 2,
     });
   });
 
@@ -171,6 +171,55 @@ describe('@aetherui/agent', () => {
     expect(result.ok).to.equal(false);
     if (!result.ok)
       expect(result.issues.some((issue) => issue.code === 'limit-exceeded')).to.equal(true);
+  });
+
+  it('counts element and text nodes, including empty text, before rendering', () => {
+    const input = {
+      version: '1',
+      root: {
+        component: 'ae-alert',
+        children: ['', { component: 'ae-button', children: ['Save'] }],
+      },
+    };
+    const container = document.createElement('div');
+    container.textContent = 'preserve me';
+    expect(() => renderAgentUi(container, input, { maxNodes: 3 })).to.throw(AgentUiValidationError);
+    expect(container.textContent).to.equal('preserve me');
+    const rendered = renderAgentUi(container, input, { maxNodes: 4 });
+    expect(rendered.nodeCount).to.equal(4);
+    expect(rendered.element.childNodes).to.have.length(2);
+    rendered.dispose();
+  });
+
+  it('stops visiting siblings after the node budget is exhausted', () => {
+    const result = validateAgentUi(
+      {
+        version: '1',
+        root: { component: 'ae-alert', children: Array(1000).fill('text') },
+      },
+      { maxNodes: 1 },
+    );
+    expect(result.ok).to.equal(false);
+    if (!result.ok) {
+      expect(result.issues).to.have.length(1);
+      expect(result.issues[0].code).to.equal('limit-exceeded');
+    }
+  });
+
+  it('rejects unknown document and node fields before rendering', () => {
+    for (const input of [
+      { version: '1', root: { component: 'ae-alert' }, html: '<b>ignored</b>' },
+      { version: '1', root: { component: 'ae-alert', html: '<b>ignored</b>' } },
+      {
+        version: '1',
+        root: { component: 'ae-alert', children: [{ component: 'ae-button', onClick: 'save()' }] },
+      },
+    ]) {
+      const container = document.createElement('div');
+      container.textContent = 'preserve me';
+      expect(() => renderAgentUi(container, input)).to.throw(AgentUiValidationError);
+      expect(container.textContent).to.equal('preserve me');
+    }
   });
 
   it('renders validated elements and converts declared events to action data', () => {

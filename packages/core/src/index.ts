@@ -46,18 +46,15 @@ import type {
 import { AeAutocomplete } from './autocomplete/ae-autocomplete';
 import { defineAeAutocomplete } from './autocomplete';
 import { autocompleteStyles } from './autocomplete';
-import { AutocompleteController } from './autocomplete';
 
 import { AeCombo } from './combo/ae-combo';
 import { defineAeCombo } from './combo';
 import { comboboxStyles } from './combo';
-import { ComboController } from './combo';
 
 // Re-export components
 export { AeAutocomplete };
 export { defineAeAutocomplete };
 export { autocompleteStyles };
-export { AutocompleteController };
 export type {
   AutocompleteOption,
   AutocompleteFilterFunction,
@@ -68,7 +65,6 @@ export type {
 export { AeCombo };
 export { defineAeCombo };
 export { comboboxStyles };
-export { ComboController };
 export type { ComboItem, ComboFilterFunction, AeComboSelectEvent, AeComboInputEvent };
 
 // Rename the conflicting defaultFilter exports
