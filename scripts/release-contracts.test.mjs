@@ -104,19 +104,22 @@ test('cross-package tests declare their build dependencies in the Turbo graph', 
   }
 });
 
-test('the publish workflow installs Chromium before running browser tests', async () => {
+test('the publish workflow installs all browsers before running release checks', async () => {
   const workflow = await read('.github/workflows/publish.yml');
   // Step order only matters within a single job, so assert per job.
   const job = workflowJobs(workflow).find((candidate) =>
-    candidate.steps.some((step) => step.name === 'Run tests'),
+    candidate.steps.some((step) => /run: pnpm check:release\b/.test(step.body)),
   );
-  assert.ok(job, 'missing a job that runs tests');
-  const install = job.steps.findIndex((step) => step.name === 'Install Playwright browser');
-  const tests = job.steps.findIndex((step) => step.name === 'Run tests');
+  assert.ok(job, 'missing a job that runs release checks');
+  const install = job.steps.findIndex((step) => step.name === 'Install Playwright browsers');
+  const tests = job.steps.findIndex((step) => /run: pnpm check:release\b/.test(step.body));
 
   assert.ok(install >= 0, 'missing Playwright Chromium installation');
   assert.ok(install < tests, 'Playwright installation must precede tests in the same job');
-  assert.match(job.steps[install].body, /run:\s*npx playwright install --with-deps chromium/);
+  assert.match(
+    job.steps[install].body,
+    /run:\s*npx playwright install --with-deps chromium firefox webkit/,
+  );
 });
 
 test('CI executes the release-contract guards', async () => {
@@ -144,17 +147,32 @@ test('the publish workflow runs every guard in the job that publishes', async ()
   assert.ok(job, 'no job publishes packages');
 
   const firstPublish = job.steps.findIndex((step) => /pnpm publish/.test(step.run));
-  for (const [name, command] of [
-    ['Run tests', /run: pnpm test\b/],
-    ['Verify generated agent artifacts', /run: pnpm check:agent-artifacts/],
-    ['Run release contract tests', /run: pnpm test:release-contracts/],
-    ['Typecheck generated React declarations', /run: pnpm typecheck:react/],
-  ]) {
-    const index = job.steps.findIndex((step) => step.name === name);
-    assert.ok(index >= 0, `publish job is missing the "${name}" step`);
-    assert.match(job.steps[index].body, command, String(name));
-    assert.ok(index < firstPublish, `"${name}" must run before any package is published`);
-  }
+  const index = job.steps.findIndex((step) => /run: pnpm check:release\b/.test(step.body));
+  assert.ok(index >= 0, 'publish job must run the canonical release gate');
+  assert.ok(index < firstPublish, 'release checks must precede publishing');
+  assert.doesNotMatch(job.steps[index].body, /continue-on-error:\s*true/);
+  const { scripts } = JSON.parse(await read('package.json'));
+  assert.match(scripts['check:release'], /^pnpm check && /);
+  const commands = `${scripts.check} && ${scripts['check:release']}`.split(' && ');
+  for (const command of [
+    'pnpm format:check',
+    'pnpm lint',
+    'pnpm typecheck',
+    'pnpm test',
+    'pnpm check:agent-artifacts',
+    'pnpm test:release-contracts',
+    'pnpm build',
+    'pnpm typecheck:react',
+    'pnpm test:agent-evals',
+    'pnpm pack:check',
+    'pnpm test:consumers',
+    'pnpm audit:prod',
+    'pnpm test:coverage',
+    'pnpm test:cross-browser',
+    'pnpm build-storybook',
+    'pnpm test:e2e:static',
+  ])
+    assert.ok(commands.includes(command), `release gate is missing ${command}`);
 });
 
 test('the publish workflow uses npm trusted publishing, not a long-lived token', async () => {

@@ -100,7 +100,7 @@ Works with any framework or vanilla JavaScript:
 
 ## Accessibility
 
-All components are WCAG 2.1 Level AA compliant with full keyboard navigation and proper ARIA attributes.
+Components provide keyboard interactions and ARIA semantics covered by browser tests. Verify accessibility in your application with its content and styling.
 
 ## Documentation
 

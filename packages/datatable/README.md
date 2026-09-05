@@ -10,8 +10,20 @@ A flexible data table component for complex data visualization with sorting, fil
 - Pagination
 - Row selection
 - Customizable cells and headers
-- Virtualization for large datasets
-- Accessibility focused
+- Keyboard sorting and column resizing, with table/row/cell semantics
+
+## Registration and keyboard controls
+
+Import the package before using its custom elements. Bundlers retain this registration import:
+
+```js
+import '@aetherui/datatable';
+```
+
+Tab to a column's sort button and press Enter or Space to cycle through ascending,
+descending, and unsorted. Tab to its resize separator and use Left/Right to change
+the width by 10 pixels, Shift+Left/Right for 50 pixels, or Home for the 50-pixel minimum.
+Set `aria-label` on the table to give it a name appropriate to its data.
 
 ## Usage
 

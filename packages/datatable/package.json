@@ -1,7 +1,7 @@
 {
   "name": "@aetherui/datatable",
   "version": "0.1.0",
-  "description": "DataTable component for AetherUI with virtualization",
+  "description": "DataTable component for AetherUI with sorting, filtering, pagination, and row selection",
   "keywords": [
     "aetherui",
     "datatable",
@@ -24,7 +24,7 @@
     "dist"
   ],
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": true,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

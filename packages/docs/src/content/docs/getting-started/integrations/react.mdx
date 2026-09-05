@@ -53,7 +53,7 @@ export function SignupForm() {
     <form>
       <ae-checkbox
         checked={accepted}
-        onAeCheckboxChange={(e) => setAccepted(e.detail.checked)}
+        onae-checkbox-change={(e) => setAccepted(e.detail.checked)}
       >
         I accept the terms
       </ae-checkbox>
@@ -69,7 +69,7 @@ export function SignupForm() {
 Three things to note:
 
 1. **Boolean and array props** are passed as values (`checked={accepted}`), not stringified. React 19 sets them as DOM properties on custom elements automatically.
-2. **Custom events** use camelCase handler props (`onAeCheckboxChange`, `onAeButtonClick`) and receive the underlying `CustomEvent`. Read the typed payload from `event.detail`.
+2. **Custom events** preserve the event name after the `on` prefix (`onae-checkbox-change`, `onae-button-click`) and receive the underlying `CustomEvent`. Read the typed payload from `event.detail`.
 3. **No imports for the elements themselves** — once `defineAe*()` is called, the custom element is registered globally for the page lifetime.
 
 ## Form integration

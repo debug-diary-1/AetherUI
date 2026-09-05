@@ -42,6 +42,10 @@ export const datatableStyles = css`
     z-index: 10;
   }
 
+  .datatable__table {
+    display: contents;
+  }
+
   .datatable__body {
     display: grid;
     overflow-y: auto;
@@ -156,6 +160,7 @@ export const datatableStyles = css`
 
 export const headerCellStyles = css`
   :host {
+    box-sizing: border-box;
     position: relative;
     display: flex;
     align-items: center;
@@ -171,6 +176,20 @@ export const headerCellStyles = css`
     align-items: center;
     gap: 0.5rem;
     flex: 1;
+    min-width: 0;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: inherit;
+    cursor: inherit;
+  }
+
+  .header-cell__content:focus-visible,
+  .header-cell__resize-handle:focus-visible {
+    outline: 2px solid var(--ae-focus-ring-color, Highlight);
+    outline-offset: 2px;
   }
 
   .header-cell__sort-icon {

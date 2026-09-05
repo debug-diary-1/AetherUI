@@ -3,7 +3,7 @@
  * Reads packages/core/custom-elements.json and emits packages/core/react.d.ts.
  * The output augments React's JSX.IntrinsicElements with one entry per tagged
  * AetherUI component so React 19+ consumers get full prop and custom-event
- * autocomplete for tags like <ae-checkbox checked onAeCheckboxChange={...}>.
+ * autocomplete for tags like <ae-checkbox checked onae-checkbox-change={...}>.
  *
  * Run via `pnpm gen:react-types` from packages/core (or as part of build).
  */
@@ -35,13 +35,8 @@ const isPublicField = (member) =>
   member.privacy !== 'protected' &&
   !member.name.startsWith('_');
 
-const kebabToPascal = (s) =>
-  s
-    .split('-')
-    .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
-    .join('');
-
-const eventToHandler = (eventName) => `on${kebabToPascal(eventName)}`;
+// React binds custom events verbatim after the "on" prefix, including dashes.
+const eventToHandler = (eventName) => `on${eventName}`;
 
 const components = [];
 for (const mod of manifest.modules) {
@@ -85,7 +80,7 @@ const renderEntry = ({ tagName, props, events, className }) => {
   });
   const eventLines = events.map((e) => {
     const doc = e.description ? `        /** ${e.description.replace(/\n/g, ' ')} */\n` : '';
-    return `${doc}        ${e.handler}?: (event: ${e.type}) => void;`;
+    return `${doc}        '${e.handler}'?: (event: ${e.type}) => void;`;
   });
   const body = [...propLines, ...eventLines].join('\n');
   return `      /** ${className ?? tagName} — see https://github.com/debug-diary-1/AetherUI for docs. */

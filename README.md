@@ -20,7 +20,7 @@
 - 🌐 **Framework-Agnostic** - Works with React, Vue, Angular, Svelte, or vanilla JavaScript
 - 🎨 **Truly Headless** - Complete styling control with unstyled mode or pre-built themes
 - 🎭 **Three Theming Options** - Use pre-built (light/dark), minimal foundation, or fully custom
-- ♿️ **Accessible** - WCAG 2.1 Level AA compliant with full keyboard navigation
+- ♿️ **Accessible** - Keyboard interactions and ARIA semantics covered by browser tests
 - 📦 **Tree-Shakeable** - Import only what you need for optimal bundle sizes
 - 🎯 **TypeScript** - Fully typed with excellent IntelliSense support
 - 🧪 **Well-Tested** - Browser-based test suite with Web Test Runner + Playwright
@@ -127,9 +127,13 @@ wrongly-typed props, unsafe URLs, and oversized documents are rejected before
 anything renders.
 
 ```ts
+import { defineAeAlert } from '@aetherui/core';
 import { renderAgentUi } from '@aetherui/agent';
 
+defineAeAlert();
+
 renderAgentUi(
+  document.body,
   {
     version: '1',
     root: {
@@ -138,7 +142,6 @@ renderAgentUi(
       children: ['Saved.'],
     },
   },
-  { target: document.body },
 );
 ```
 
@@ -165,6 +168,8 @@ There is also a full [Storybook](https://debug-diary-1.github.io/AetherUI/storyb
 
 ### Using with React
 
+Use React 19+ and include `@aetherui/core/react` in your TypeScript `types` configuration.
+
 ```tsx
 import { defineAeButton } from '@aetherui/core';
 import '@aetherui/tokens/light.css';
@@ -179,7 +184,7 @@ function App() {
   return (
     <ae-button
       variant="primary"
-      onAeButtonClick={handleClick}
+      onae-button-click={handleClick}
     >
       Click me
     </ae-button>

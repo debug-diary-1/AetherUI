@@ -160,8 +160,15 @@ export class DataTableController<T> implements ReactiveController {
    * Set sort state
    */
   setSortState(columnId: string, direction: SortDirection, multiSort = false): void {
-    const desc = direction === 'desc';
-    this._sortManager.toggleSorting(columnId, multiSort, desc);
+    const current = multiSort ? this._sortManager.getSorting() : [];
+    const next = { id: columnId, direction, desc: direction === 'desc' };
+    this._sortManager.setSorting(
+      direction === 'none'
+        ? current.filter((sort) => sort.id !== columnId)
+        : current.some((sort) => sort.id === columnId)
+          ? current.map((sort) => (sort.id === columnId ? next : sort))
+          : [...current, next],
+    );
     this.processData();
   }
 

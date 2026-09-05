@@ -159,6 +159,10 @@ jobs:
       - name: Verify publishable package contents
         run: pnpm pack:check
 
+      - name: Test packed package consumers
+        run: pnpm test:consumers
+        timeout-minutes: 10
+
       - name: Audit production dependencies
         run: pnpm audit:prod
 

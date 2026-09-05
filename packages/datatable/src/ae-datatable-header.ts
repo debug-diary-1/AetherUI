@@ -1,11 +1,14 @@
 import { LitElement, html } from 'lit';
-import { property } from 'lit/decorators.js';
-import { DATATABLE_HEADER_ELEMENT_NAME } from './index';
+import { property, state } from 'lit/decorators.js';
+import { DATATABLE_HEADER_ELEMENT_NAME } from './constants';
 import { headerCellStyles } from './styles';
 import type { SortDirection } from './models/sort-model';
 
 /**
  * Header cell component for the datatable
+ * Sort with Enter or Space on the header button. Resize with Left/Right
+ * (10 pixels, or 50 with Shift); Home resets to the 50-pixel minimum.
+ * Exposes columnheader/aria-sort and a labelled vertical resize separator.
  * @element ae-datatable-header
  *
  * @property {boolean} sortable - Whether the column is sortable
@@ -56,7 +59,20 @@ export class AeDatatableHeader extends LitElement {
   private isResizing = false;
   private startX = 0;
   private startWidth = 0;
+  @state()
   private currentWidth = 0;
+
+  connectedCallback() {
+    super.connectedCallback();
+    if (!this.hasAttribute('role')) this.setAttribute('role', 'columnheader');
+  }
+
+  updated() {
+    this.setAttribute(
+      'aria-sort',
+      this.direction === 'asc' ? 'ascending' : this.direction === 'desc' ? 'descending' : 'none',
+    );
+  }
 
   /**
    * Handle click to toggle sort
@@ -149,7 +165,22 @@ export class AeDatatableHeader extends LitElement {
       handle.classList.remove('header-cell__resize-handle--active');
     }
 
-    // Dispatch resize event with final width
+    this.dispatchResize();
+  };
+
+  private handleResizeKeydown(event: KeyboardEvent) {
+    if (!this.resizable || !['ArrowLeft', 'ArrowRight', 'Home'].includes(event.key)) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const width = Math.round(this.getBoundingClientRect().width);
+    const step = event.shiftKey ? 50 : 10;
+    this.currentWidth =
+      event.key === 'Home' ? 50 : Math.max(50, width + (event.key === 'ArrowRight' ? step : -step));
+    this.style.width = `${this.currentWidth}px`;
+    this.dispatchResize();
+  }
+
+  private dispatchResize() {
     this.dispatchEvent(
       new CustomEvent('ae-datatable-header-resize', {
         detail: {
@@ -159,7 +190,7 @@ export class AeDatatableHeader extends LitElement {
         composed: true,
       }),
     );
-  };
+  }
 
   /**
    * Render sort icon based on current direction
@@ -171,7 +202,7 @@ export class AeDatatableHeader extends LitElement {
 
     const iconClass = `header-cell__sort-icon header-cell__sort-icon--${this.direction}`;
 
-    return html` <div class=${iconClass} part="sort-icon">▲</div> `;
+    return html` <div class=${iconClass} part="sort-icon" aria-hidden="true">▲</div> `;
   }
 
   /**
@@ -184,17 +215,36 @@ export class AeDatatableHeader extends LitElement {
   }
 
   render() {
+    const label = this.textContent?.trim() || this.id || 'Column';
+    const content = html`
+      <slot name="content"><slot @slotchange=${() => this.requestUpdate()}></slot></slot>
+      ${this.renderSortIcon()}
+    `;
     return html`
-      <div class="header-cell__content" part="content" @click=${this.handleSortClick}>
-        <slot name="content"><slot></slot></slot>
-        ${this.renderSortIcon()}
-      </div>
-
+      ${this.sortable
+        ? html`<button
+            type="button"
+            class="header-cell__content"
+            part="content"
+            @click=${this.handleSortClick}
+          >
+            ${content}
+          </button>`
+        : html`<div class="header-cell__content" part="content">${content}</div>`}
       ${this.resizable
         ? html`
             <div
               class="header-cell__resize-handle"
               part="resize-handle"
+              role="separator"
+              tabindex="0"
+              aria-label=${`Resize ${label} column`}
+              aria-orientation="vertical"
+              aria-valuemin="50"
+              aria-valuenow=${String(
+                this.currentWidth || Math.round(this.getBoundingClientRect().width) || 50,
+              )}
+              @keydown=${this.handleResizeKeydown}
               @mousedown=${this.handleResizeStart}
             ></div>
           `
@@ -203,4 +253,6 @@ export class AeDatatableHeader extends LitElement {
   }
 }
 
-customElements.define(DATATABLE_HEADER_ELEMENT_NAME, AeDatatableHeader);
+if (!customElements.get(DATATABLE_HEADER_ELEMENT_NAME)) {
+  customElements.define(DATATABLE_HEADER_ELEMENT_NAME, AeDatatableHeader);
+}
