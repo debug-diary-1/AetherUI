@@ -1,11 +1,16 @@
-import { LitElement, html } from 'lit';
-import { property } from 'lit/decorators.js';
-import { DATATABLE_HEADER_ELEMENT_NAME } from './index';
+import { LitElement, html, type PropertyValues } from 'lit';
+import { property, state } from 'lit/decorators.js';
+import { DATATABLE_HEADER_ELEMENT_NAME } from './constants';
 import { headerCellStyles } from './styles';
 import type { SortDirection } from './models/sort-model';
 
 /**
  * Header cell component for the datatable
+ * Sort with Enter or Space on the header button. Resize with Left/Right
+ * (10 pixels, or 50 with Shift); Home resets to the 50-pixel minimum.
+ * Exposes columnheader/aria-sort and a labelled vertical resize separator.
+ * Resize values track layout in pixels, with a 50–10000 pixel interaction range.
+ * Header and resize names track slotted text changes; author ARIA overrides are preserved.
  * @element ae-datatable-header
  *
  * @property {boolean} sortable - Whether the column is sortable
@@ -56,7 +61,69 @@ export class AeDatatableHeader extends LitElement {
   private isResizing = false;
   private startX = 0;
   private startWidth = 0;
-  private currentWidth = 0;
+  @state()
+  private currentWidth = 50;
+  @state()
+  private contentLabel = 'Column';
+  private automaticLabel: string | null = null;
+  private textObserver = new MutationObserver(() => this.updateLabel());
+  private sizeObserver = new ResizeObserver((entries) => {
+    const width = entries[0]?.borderBoxSize[0]?.inlineSize;
+    if (width && Math.round(width) !== this.currentWidth) this.currentWidth = Math.round(width);
+  });
+  private automaticSort: string | null = null;
+
+  private updateLabel() {
+    const named = [...this.children].filter((child) => child.getAttribute('slot') === 'content');
+    const nodes = named.length
+      ? named
+      : [...this.childNodes].filter(
+          (node) =>
+            node.nodeType === Node.TEXT_NODE ||
+            (node instanceof Element && !node.hasAttribute('slot')),
+        );
+    this.contentLabel =
+      nodes
+        .map((node) => node.textContent)
+        .join('')
+        .trim() ||
+      this.id ||
+      'Column';
+    const existing = this.getAttribute('aria-label');
+    if (existing === null || existing === this.automaticLabel) {
+      this.automaticLabel = this.contentLabel;
+      this.setAttribute('aria-label', this.contentLabel);
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    if (!this.hasAttribute('role')) this.setAttribute('role', 'columnheader');
+    this.updateLabel();
+    this.textObserver.observe(this, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ['slot', 'id'],
+    });
+    this.sizeObserver.observe(this);
+  }
+
+  updated(changed: PropertyValues) {
+    if (!changed.has('direction') && !changed.has('sortable')) return;
+    const existing = this.getAttribute('aria-sort');
+    if (existing !== null && existing !== this.automaticSort) return;
+    this.automaticSort = this.sortable
+      ? this.direction === 'asc'
+        ? 'ascending'
+        : this.direction === 'desc'
+          ? 'descending'
+          : 'none'
+      : null;
+    if (this.automaticSort === null) this.removeAttribute('aria-sort');
+    else this.setAttribute('aria-sort', this.automaticSort);
+  }
 
   /**
    * Handle click to toggle sort
@@ -125,7 +192,7 @@ export class AeDatatableHeader extends LitElement {
 
     // Calculate new width based on mouse movement
     const diff = e.clientX - this.startX;
-    this.currentWidth = Math.max(50, this.startWidth + diff); // Minimum width of 50px
+    this.currentWidth = Math.min(10000, Math.max(50, this.startWidth + diff)); // Minimum width of 50px
 
     // Update current width during resize for visual feedback
     this.style.width = `${this.currentWidth}px`;
@@ -149,7 +216,24 @@ export class AeDatatableHeader extends LitElement {
       handle.classList.remove('header-cell__resize-handle--active');
     }
 
-    // Dispatch resize event with final width
+    this.dispatchResize();
+  };
+
+  private handleResizeKeydown(event: KeyboardEvent) {
+    if (!this.resizable || !['ArrowLeft', 'ArrowRight', 'Home'].includes(event.key)) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const width = Math.round(this.getBoundingClientRect().width);
+    const step = event.shiftKey ? 50 : 10;
+    this.currentWidth =
+      event.key === 'Home'
+        ? 50
+        : Math.min(10000, Math.max(50, width + (event.key === 'ArrowRight' ? step : -step)));
+    this.style.width = `${this.currentWidth}px`;
+    this.dispatchResize();
+  }
+
+  private dispatchResize() {
     this.dispatchEvent(
       new CustomEvent('ae-datatable-header-resize', {
         detail: {
@@ -159,7 +243,7 @@ export class AeDatatableHeader extends LitElement {
         composed: true,
       }),
     );
-  };
+  }
 
   /**
    * Render sort icon based on current direction
@@ -171,7 +255,7 @@ export class AeDatatableHeader extends LitElement {
 
     const iconClass = `header-cell__sort-icon header-cell__sort-icon--${this.direction}`;
 
-    return html` <div class=${iconClass} part="sort-icon">▲</div> `;
+    return html` <div class=${iconClass} part="sort-icon" aria-hidden="true">▲</div> `;
   }
 
   /**
@@ -179,22 +263,45 @@ export class AeDatatableHeader extends LitElement {
    */
   disconnectedCallback() {
     super.disconnectedCallback();
+    this.textObserver.disconnect();
+    this.sizeObserver.disconnect();
     document.removeEventListener('mousemove', this.handleResizeMove);
     document.removeEventListener('mouseup', this.handleResizeEnd);
   }
 
   render() {
+    const label = this.contentLabel;
+    const content = html`
+      <slot name="content" @slotchange=${this.updateLabel}
+        ><slot @slotchange=${this.updateLabel}></slot
+      ></slot>
+      ${this.renderSortIcon()}
+    `;
     return html`
-      <div class="header-cell__content" part="content" @click=${this.handleSortClick}>
-        <slot name="content"><slot></slot></slot>
-        ${this.renderSortIcon()}
-      </div>
-
+      ${this.sortable
+        ? html`<button
+            type="button"
+            class="header-cell__content"
+            part="content"
+            @click=${this.handleSortClick}
+          >
+            ${content}
+          </button>`
+        : html`<div class="header-cell__content" part="content">${content}</div>`}
       ${this.resizable
         ? html`
             <div
               class="header-cell__resize-handle"
               part="resize-handle"
+              role="separator"
+              tabindex="0"
+              aria-label=${`Resize ${label} column`}
+              aria-orientation="vertical"
+              aria-valuemin="50"
+              aria-valuemax=${String(Math.max(10000, this.currentWidth))}
+              aria-valuenow=${String(this.currentWidth)}
+              aria-valuetext=${`${this.currentWidth} pixels`}
+              @keydown=${this.handleResizeKeydown}
               @mousedown=${this.handleResizeStart}
             ></div>
           `
@@ -203,4 +310,6 @@ export class AeDatatableHeader extends LitElement {
   }
 }
 
-customElements.define(DATATABLE_HEADER_ELEMENT_NAME, AeDatatableHeader);
+if (!customElements.get(DATATABLE_HEADER_ELEMENT_NAME)) {
+  customElements.define(DATATABLE_HEADER_ELEMENT_NAME, AeDatatableHeader);
+}

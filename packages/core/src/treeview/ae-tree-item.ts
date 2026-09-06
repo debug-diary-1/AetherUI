@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { treeItemStyles } from './tree-item-styles';
 

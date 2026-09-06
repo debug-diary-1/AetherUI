@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { customElement, property } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { progressStyles } from './styles';
 
 /**

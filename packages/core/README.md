@@ -5,6 +5,8 @@ A headless, framework-agnostic Web Component library built with [Lit](https://li
 [![npm version](https://img.shields.io/npm/v/@aetherui/core)](https://www.npmjs.com/package/@aetherui/core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+Component registration is idempotent: loading another bundle with the same decorated component retains the first registered implementation. Public exports include components, registration functions, styles, and documented types; controllers and implementation utilities remain internal.
+
 ## Installation
 
 ```bash
@@ -100,7 +102,7 @@ Works with any framework or vanilla JavaScript:
 
 ## Accessibility
 
-All components are WCAG 2.1 Level AA compliant with full keyboard navigation and proper ARIA attributes.
+Components provide keyboard interactions and ARIA semantics covered by browser tests. Verify accessibility in your application with its content and styling.
 
 ## Documentation
 

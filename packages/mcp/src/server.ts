@@ -87,8 +87,18 @@ export function createAetherUiMcpServer(): McpServer {
         document: z.unknown().describe('Candidate AetherUI agent document.'),
         allowedComponents: z.array(z.string()).optional(),
         allowedUrlProtocols: z.array(urlProtocolSchema).optional(),
-        maxDepth: z.number().int().positive().optional(),
-        maxNodes: z.number().int().positive().optional(),
+        maxDepth: z
+          .number()
+          .int()
+          .positive()
+          .describe('Maximum component nesting; root depth is 1.')
+          .optional(),
+        maxNodes: z
+          .number()
+          .int()
+          .positive()
+          .describe('Maximum element and text nodes, including the root.')
+          .optional(),
         maxPropertyDepth: z.number().int().positive().optional(),
       }),
       annotations: { readOnlyHint: true, idempotentHint: true },

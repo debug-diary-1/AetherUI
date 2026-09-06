@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { DATATABLE_CELL_ELEMENT_NAME } from './index';
+import { DATATABLE_CELL_ELEMENT_NAME } from './constants';
 import { cellStyles } from './styles';
 
 /**
@@ -22,6 +22,11 @@ export class AeDatatableCell extends LitElement {
   @property({ type: String, reflect: true })
   align: 'left' | 'center' | 'right' = 'left';
 
+  connectedCallback() {
+    super.connectedCallback();
+    if (!this.hasAttribute('role')) this.setAttribute('role', 'cell');
+  }
+
   render() {
     return html`
       <div part="content">
@@ -31,4 +36,6 @@ export class AeDatatableCell extends LitElement {
   }
 }
 
-customElements.define(DATATABLE_CELL_ELEMENT_NAME, AeDatatableCell);
+if (!customElements.get(DATATABLE_CELL_ELEMENT_NAME)) {
+  customElements.define(DATATABLE_CELL_ELEMENT_NAME, AeDatatableCell);
+}

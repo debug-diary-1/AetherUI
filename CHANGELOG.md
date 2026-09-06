@@ -7,9 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned
-- Additional component variants and sizes
-- Framework wrapper packages (React, Vue)
+### Fixed
+- Repeated core imports across independent bundles reuse registered custom elements.
+- Toast subpath helpers remain available in production bundles; alert registration is synchronous.
+- DataTable selection uses consistent keys and mode settings; accessible names and resize values track updates.
+- Textareas revalidate when readonly or disabled constraints change.
+- Input validity updates when native constraints change; empty named inputs and textareas remain in form submission.
+- Agent node limits count text children and reject unknown document and node fields before rendering.
+- GitHub Pages uploads Storybook from its actual build directory and requires complete site artifacts.
+- Patched the docs dependency on `postcss-selector-parser` for GHSA-w9m9-85wc-3x92.
+
+### Changed
+- Removed internal controllers and DataTable utilities from public exports; core subpaths are explicitly enumerated.
+- Isolated registry consumer checks from the OIDC publishing job and preserved host content in the agent example.
+- Documented a runnable Vite-based vanilla example and the first-publication workflow.
 
 ## [0.1.0] - Unreleased
 
@@ -45,19 +56,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Tree-shakeable component architecture
 - Comprehensive TypeScript support with strict mode
 - Shadow DOM encapsulation for all components
-- WCAG 2.1 Level AA accessibility compliance
+- Keyboard interactions and ARIA semantics covered by browser tests; verify accessibility with application content and styling
 - Extensive JSDoc documentation
 - Storybook integration for component showcase
-- Comprehensive test suite with Vitest and Web Test Runner
-- Nx monorepo with optimized build pipeline
+- Component tests with Web Test Runner, Node package tests, and Playwright consumer tests
+- Turborepo monorepo with cached package builds
 - GitHub Actions CI/CD
 - Documentation site with Astro and Starlight
 
 ### Infrastructure
-- Nx monorepo setup with pnpm workspaces
+- Turborepo setup with pnpm workspaces
 - Vite build system with optimized bundles
-- Automated testing with memory optimization
-- ESLint and Prettier code quality tools
+- Browser, package, and consumer regression tests
+- oxlint and oxfmt code quality tools
 - Husky pre-commit hooks
 - GitHub issue and PR templates
 - Comprehensive development standards (STANDARDS.md)

@@ -31,3 +31,5 @@ renderAgentUi(document.querySelector('#surface')!, {
 ```
 
 Agent documents are JSON data. The renderer rejects unknown interface fields and never evaluates handlers, scripts, or HTML. Use `agent-ui.schema.json` for structured model output and keep the runtime validator at the rendering seam.
+
+The default `maxNodes` is 100 and counts the root, nested components, and every text child (including empty strings). The returned `nodeCount` uses the same definition; it excludes component shadow DOM. Validation stops visiting siblings once the budget is exceeded, and rendering leaves existing content intact on failure. `maxDepth` limits component nesting to 12 by default, and `maxPropertyDepth` limits JSON property nesting to 32. Hosts should also bound incoming JSON size before parsing it.

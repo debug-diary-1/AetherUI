@@ -1,11 +1,13 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { textareaStyles } from './styles';
 
 /**
  * A textarea component with support for auto-resize, character counting, and form participation.
  * Participates in native form submission via ElementInternals API.
+ * Enabled, named textareas submit empty strings.
  *
  * @element ae-textarea
  *
@@ -152,14 +154,16 @@ export class AeTextarea extends LitElement {
     if (
       changedProperties.has('required') ||
       changedProperties.has('minlength') ||
-      changedProperties.has('maxlength')
+      changedProperties.has('maxlength') ||
+      changedProperties.has('readonly') ||
+      changedProperties.has('disabled')
     ) {
       this._updateValidity();
     }
   }
 
   private _updateFormValue() {
-    this._internals.setFormValue(this.value || null);
+    this._internals.setFormValue(this.value);
   }
 
   private _updateValidity() {

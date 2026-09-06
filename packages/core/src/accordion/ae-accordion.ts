@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { accordionStyles } from './styles';
 import { arraysShallowEqual, toArrayCopy } from '../internal/array-props';
 import type { AeAccordionItem } from './ae-accordion-item';

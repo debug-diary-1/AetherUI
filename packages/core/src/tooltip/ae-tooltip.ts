@@ -1,5 +1,6 @@
 import { LitElement, html, type PropertyValues } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { styleMap } from 'lit/directives/style-map.js';
 import { tooltipStyles } from './styles.js';
 import {

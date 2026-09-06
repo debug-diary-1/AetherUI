@@ -29,7 +29,7 @@
     "react.d.ts"
   ],
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": true,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -169,12 +169,7 @@
     },
     "./custom-elements.json": "./custom-elements.json",
     "./component-catalog.json": "./component-catalog.json",
-    "./package.json": "./package.json",
-    "./*": {
-      "types": "./dist/*/index.d.ts",
-      "import": "./dist/*/index.js",
-      "require": "./dist/*/index.js"
-    }
+    "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public",
@@ -201,9 +196,11 @@
     "@custom-elements-manifest/analyzer": "catalog:",
     "@open-wc/testing": "catalog:",
     "@types/node": "catalog:",
-    "@types/react": "18.3.20",
+    "@types/react": "19.2.18",
     "@web/test-runner-playwright": "catalog:",
     "playwright": "catalog:",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "rimraf": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",

@@ -16,35 +16,16 @@ pnpm add @aetherui/core @aetherui/tokens
 
 ### TypeScript Setup
 
-Add type definitions for custom elements in your `vite-env.d.ts` or global types file:
+Use React 19 or later. Include the generated declarations in your `vite-env.d.ts` or another TypeScript setup file:
 
 ```typescript
 /// <reference types="vite/client" />
-
-declare namespace JSX {
-  interface IntrinsicElements {
-    'ae-button': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
-      variant?: 'primary' | 'secondary' | 'ghost';
-      size?: 'sm' | 'md' | 'lg';
-      disabled?: boolean;
-      onAeButtonClick?: (e: CustomEvent) => void;
-    }, HTMLElement>;
-    'ae-modal': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
-      open?: boolean;
-      closable?: boolean;
-      backdrop?: boolean;
-      size?: 'small' | 'medium' | 'large';
-      onAeModalOpen?: (e: CustomEvent) => void;
-      onAeModalClose?: (e: CustomEvent) => void;
-    }, HTMLElement>;
-  }
-}
+/// <reference types="@aetherui/core/react" />
 ```
 
 ### Basic Button Example
 
 ```tsx
-import { useEffect } from 'react';
 import { defineAeButton } from '@aetherui/core';
 import '@aetherui/tokens/light.css';
 
@@ -62,7 +43,7 @@ function App() {
 
       <ae-button
         variant="primary"
-        onAeButtonClick={handleClick}
+        onae-button-click={handleClick}
       >
         Click me
       </ae-button>
@@ -93,14 +74,14 @@ function ModalExample() {
     <div>
       <ae-button
         variant="primary"
-        onAeButtonClick={handleOpen}
+        onae-button-click={handleOpen}
       >
         Open Modal
       </ae-button>
 
       <ae-modal
         open={isOpen}
-        onAeModalClose={handleClose}
+        onae-modal-close={handleClose}
       >
         <h2 slot="header">Modal Title</h2>
         <div slot="body">
@@ -109,7 +90,7 @@ function ModalExample() {
         <div slot="footer">
           <ae-button
             variant="secondary"
-            onAeButtonClick={handleClose}
+            onae-button-click={handleClose}
           >
             Close
           </ae-button>
@@ -210,10 +191,10 @@ If you get TypeScript errors about custom elements, make sure you've added the t
 
 ### Event Handlers
 
-React uses a different naming convention for events. For AetherUI events like `ae-button-click`, use camelCase in React:
+React preserves the case and dashes of custom event names. For AetherUI events like `ae-button-click`, use the exact event name with an `on` prefix in React 19+:
 
 ```tsx
-<ae-button onAeButtonClick={handler}>Click</ae-button>
+<ae-button onae-button-click={handler}>Click</ae-button>
 ```
 
 ### SSR (Next.js)

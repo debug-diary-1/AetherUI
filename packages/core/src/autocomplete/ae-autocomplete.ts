@@ -1,3 +1,4 @@
+import { customElement } from '../internal/custom-element';
 import { html, LitElement } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import { AutocompleteController } from './controller';
@@ -44,6 +45,7 @@ import { autocompleteStyles } from './styles';
  * @cssproperty --ae-autocomplete-highlight-text-color - Text color for highlighted/hovered options
  * @cssproperty --ae-autocomplete-dropdown-shadow - Shadow for the dropdown
  */
+@customElement('ae-autocomplete')
 export class AeAutocomplete extends LitElement {
   static styles = autocompleteStyles;
 

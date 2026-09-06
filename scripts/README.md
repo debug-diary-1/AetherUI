@@ -315,3 +315,14 @@ If you encounter issues with these scripts:
 ---
 
 **Happy Migrating! 🎨**
+# Consumer release checks
+
+After `pnpm build`, run `pnpm test:consumers`. This packs all six public packages,
+installs the tarballs in a temporary consumer, builds production ES modules with code splitting,
+and tests the README examples, DataTable registration, keyboard interactions, and
+the Node MCP/validation entry points. It requires Chromium and npm registry access
+for consumer dependencies; temporary files are removed after the run.
+
+`pnpm check` includes this test. `pnpm check:release` adds the audit, coverage,
+cross-browser tests, Storybook build, and end-to-end flows. Tag publishing runs
+that same full release gate in a separate job without OIDC permission. Only after it passes does the publishing job rebuild from the committed lockfile and publish. On Windows, invoke this suite with `pnpm test:consumers` so child processes use the pnpm JavaScript entry point instead of a command shim.
