@@ -1,3 +1,4 @@
+import { customElement } from '../internal/custom-element';
 import { html, LitElement } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import { ComboController } from './controller';
@@ -41,6 +42,7 @@ import { comboStyles } from './styles';
  * @cssproperty --ae-combo-option-selected-fg - Selected option text color
  * @cssproperty --ae-combo-shadow - Overlay shadow
  */
+@customElement('ae-combo')
 export class AeCombo extends LitElement {
   static styles = comboStyles;
 

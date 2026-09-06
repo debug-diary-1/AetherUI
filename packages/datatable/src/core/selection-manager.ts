@@ -22,12 +22,12 @@ export class SelectionManager<T> {
    */
   getRowId(row: T): string {
     // First check for an id property directly on the row
-    if (row && typeof (row as Record<string, unknown>).id !== 'undefined') {
+    if (row && (row as Record<string, unknown>).id != null) {
       return String((row as Record<string, unknown>).id);
     }
 
     // Then check for an _id property (common in MongoDB)
-    if (row && typeof (row as Record<string, unknown>)._id !== 'undefined') {
+    if (row && (row as Record<string, unknown>)._id != null) {
       return String((row as Record<string, unknown>)._id);
     }
 

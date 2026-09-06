@@ -113,9 +113,7 @@ jobs:
 
       - name: Build Storybook
         id: build-storybook
-        run: |
-          cd packages/storybook
-          pnpm build-storybook
+        run: pnpm build-storybook
 
       - name: Upload Storybook artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7

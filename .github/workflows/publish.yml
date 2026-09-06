@@ -9,7 +9,28 @@ on:
     tags: ['v*']
 
 jobs:
+  checks:
+    name: Verify release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Run full release checks
+        run: pnpm check:release
+        timeout-minutes: 45
+
   publish:
+    needs: checks
     name: Publish to npm
     runs-on: ubuntu-latest
     permissions:
@@ -35,12 +56,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium firefox webkit
-
-      - name: Run full release checks
-        run: pnpm check:release
-        timeout-minutes: 45
+      # Rebuild the tagged source using only the committed dependency lockfile.
+      # Consumer checks run in the separate job without OIDC; no artifacts or
+      # caches from that job enter this privileged process.
+      - name: Build packages
+        run: pnpm build
 
       # Publishing authenticates with npm Trusted Publishing (OIDC); there is no
       # long-lived npm token in this repository. `pnpm publish` packs the package

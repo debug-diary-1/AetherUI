@@ -179,6 +179,24 @@ describe('ae-textarea', () => {
     expect([...new FormData(form)]).to.deep.equal([]);
   });
 
+  for (const constraint of ['readonly', 'disabled'] as const) {
+    it(`revalidates when ${constraint} is removed`, async () => {
+      const form = await fixture<HTMLFormElement>(
+        html`<form><ae-textarea required></ae-textarea></form>`,
+      );
+      const el = form.querySelector('ae-textarea') as AeTextarea;
+      el[constraint] = true;
+      el.value = 'temporary';
+      await el.updateComplete;
+      el.value = '';
+      await el.updateComplete;
+      expect(form.checkValidity()).to.be.true;
+      el[constraint] = false;
+      await el.updateComplete;
+      expect(form.checkValidity()).to.be.false;
+    });
+  }
+
   describe('Theme Integration', () => {
     it('uses CSS variables for textarea styling', async () => {
       const el = await fixture<AeTextarea>(html`<ae-textarea></ae-textarea>`);

@@ -1,9 +1,7 @@
+import { AeAlert } from './ae-alert';
 export * from './ae-alert';
 
-// Define function to register the custom element once
-export const defineAeAlert = () => {
-  if (!customElements.get('ae-alert')) {
-    // The element will be defined when the file is imported
-    import('./ae-alert');
-  }
-};
+/** Register the alert synchronously; repeated calls reuse the registered element. */
+export function defineAeAlert(): void {
+  if (!customElements.get('ae-alert')) customElements.define('ae-alert', AeAlert);
+}

@@ -13,6 +13,15 @@ const packages = ['tokens', 'core', 'accordion', 'datatable', 'agent', 'mcp'];
 let directory;
 let browser;
 
+function pnpm(args, options) {
+  const cli = process.env.npm_execpath;
+  if (cli) return execFileSync(process.execPath, [cli, ...args], options);
+  // Direct node invocation is supported on POSIX. Windows callers should use
+  // pnpm test:consumers so npm_execpath points to the executable JS entry.
+  if (process.platform === 'win32') throw new Error('Run pnpm test:consumers on Windows');
+  return execFileSync('pnpm', args, options);
+}
+
 before(async () => {
   directory = await mkdtemp(join(tmpdir(), 'aetherui-consumer-'));
   const tarballs = join(directory, 'tarballs');
@@ -21,7 +30,7 @@ before(async () => {
   for (const name of packages) {
     const packageRoot = join(root, 'packages', name);
     const manifest = JSON.parse(await readFile(join(packageRoot, 'package.json'), 'utf8'));
-    execFileSync('pnpm', ['pack', '--pack-destination', tarballs], {
+    pnpm(['pack', '--pack-destination', tarballs], {
       cwd: packageRoot,
       stdio: 'pipe',
     });
@@ -45,14 +54,10 @@ before(async () => {
   );
   // Install as a consumer without the repository's dependency overrides. Local
   // tarballs replace unpublished internal packages; everything else uses npm.
-  execFileSync(
-    'pnpm',
-    ['install', '--prefer-offline', '--ignore-scripts', '--no-frozen-lockfile'],
-    {
-      cwd: directory,
-      stdio: 'inherit',
-    },
-  );
+  pnpm(['install', '--prefer-offline', '--ignore-scripts', '--no-frozen-lockfile'], {
+    cwd: directory,
+    stdio: 'inherit',
+  });
   browser = await chromium.launch();
 });
 
@@ -73,25 +78,40 @@ async function consumer(t, source, repetitions = 1, markup = '<main id="surface"
     build: {
       write: false,
       minify: true,
-      lib: { entry, name: 'Consumer', formats: ['iife'] },
+      lib: { entry, name: 'Consumer', formats: ['es'] },
     },
   });
   const output = (Array.isArray(result) ? result[0] : result).output;
   const page = await browser.newPage();
+  page.setDefaultTimeout(10000);
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   t.after(async () => {
     await page.close();
     assert.deepEqual(errors, [], 'consumer must not throw browser errors');
   });
-  await page.setContent(markup);
+  await page.route('https://consumer.test/**', (route) => {
+    const fileName = new URL(route.request().url()).pathname.split('/').at(-1);
+    if (!fileName) return route.fulfill({ contentType: 'text/html', body: markup });
+    const file = output.find((item) => item.fileName === fileName);
+    if (!file) return route.fulfill({ status: 404, body: 'Missing bundle asset' });
+    return route.fulfill({
+      contentType: file.type === 'chunk' ? 'text/javascript' : 'text/css',
+      body: file.type === 'chunk' ? file.code : String(file.source),
+    });
+  });
+  await page.goto('https://consumer.test/');
   for (const asset of output.filter(
     (item) => item.type === 'asset' && item.fileName.endsWith('.css'),
   )) {
     await page.addStyleTag({ content: String(asset.source) });
   }
   for (let run = 0; run < repetitions; run += 1) {
-    await page.addScriptTag({ content: output.find((item) => item.type === 'chunk').code });
+    const entry = output.find((item) => item.type === 'chunk' && item.isEntry);
+    await page.addScriptTag({
+      type: 'module',
+      url: `https://consumer.test/run${run}/${entry.fileName}`,
+    });
   }
   return page;
 }
@@ -137,7 +157,13 @@ test('the README agent example renders a registered alert', async (t) => {
   const readme = await readFile(join(root, 'README.md'), 'utf8');
   const example = readme.match(/## 🤖 Agent-generated UI[\s\S]*?```ts\n([\s\S]*?)```/)?.[1];
   assert.ok(example, 'missing README agent example');
-  const page = await consumer(t, example);
+  const page = await consumer(
+    t,
+    example,
+    1,
+    '<nav>Host navigation</nav><main id="surface"></main>',
+  );
+  await expect(page.getByRole('navigation')).toHaveText('Host navigation');
   await expect(page.locator('ae-alert')).toHaveText('Saved.');
   assert.equal(await page.locator('ae-alert').evaluate((element) => !!element.shadowRoot), true);
 });
@@ -350,4 +376,150 @@ test('DataTable column and global filters compose through the public interface',
   await expect
     .poll(() => page.evaluate(() => window.filters.at(-1)))
     .toEqual({ globalFilter: 'ada', filterState: [{ id: 'team', value: 'platform' }] });
+});
+
+test('toast subpath exports helpers and registers its element in a production bundle', async (t) => {
+  const page = await consumer(
+    t,
+    `
+    import { showToast, createToastHelpers } from '@aetherui/core/toast';
+    showToast({message: 'Saved', duration: 0});
+    window.helpers = Object.keys(createToastHelpers());
+  `,
+  );
+  await expect(page.locator('ae-toast')).toHaveCount(1);
+  assert.equal(await page.locator('ae-toast').evaluate((el) => !!el.shadowRoot), true);
+  assert.deepEqual(await page.evaluate(() => window.helpers), [
+    'info',
+    'success',
+    'warning',
+    'error',
+  ]);
+});
+
+test('bare core component imports survive production tree shaking', async (t) => {
+  const page = await consumer(
+    t,
+    `import '@aetherui/core/button';`,
+    1,
+    '<ae-button>Ready</ae-button>',
+  );
+  await expect(page.getByRole('button', { name: 'Ready' })).toBeVisible();
+});
+
+test('every core constructor reuses the registered class across independent bundles', async (t) => {
+  const page = await consumer(
+    t,
+    `
+    import { AeButton, AeAutocomplete, AeCombo, defineAll } from '@aetherui/core';
+    defineAll();
+    for (const Constructor of [AeButton, AeAutocomplete, AeCombo]) {
+      const element = new Constructor();
+      if (!(document.createElement(element.localName) instanceof Constructor)) throw new Error('constructor mismatch');
+      document.querySelector('#surface').append(element);
+    }
+  `,
+    2,
+  );
+  for (const tag of ['ae-button', 'ae-autocomplete', 'ae-combo'])
+    await expect(page.locator(tag)).toHaveCount(2);
+});
+
+const selectionExample = `${tableExample}
+  table.selectable = true;
+  table.filterable = true;
+  table.data = [{id: 'b', name: 'Bravo'}, {id: 0, name: 'Zero'}, {_id: 'mongo', name: 'Mongo'}, {name: 'Anonymous'}];
+  window.selections = [];
+  table.addEventListener('ae-datatable-select', event => window.selections.push(event.detail.selectedRows));
+`;
+
+test('DataTable selection shares stable keys across row, header and filtered views', async (t) => {
+  const page = await consumer(t, selectionExample);
+  const all = page.getByRole('checkbox', { name: 'Select all rows', exact: true });
+  await all.check();
+  await expect
+    .poll(() => page.evaluate(() => window.selections.at(-1).slice().sort()))
+    .toEqual(['0', 'b', 'mongo', '{"name":"Anonymous"}'].sort());
+  await expect(page.locator('ae-datatable-row[selected]')).toHaveCount(4);
+  await page.getByRole('checkbox', { name: 'Select row 2', exact: true }).uncheck();
+  await expect(all).not.toBeChecked();
+  await expect(all).toHaveJSProperty('indeterminate', true);
+  await page.getByRole('button', { name: 'Name', exact: true }).click();
+  await expect(page.locator('ae-datatable-row[selected]')).toHaveCount(3);
+  await page.getByRole('textbox', { name: 'Search rows' }).fill('Zero');
+  await expect(all).not.toBeChecked();
+  await all.check();
+  await expect(page.locator('ae-datatable-row[selected]')).toHaveCount(1);
+  await expect.poll(() => page.evaluate(() => window.selections.at(-1))).toContain('0');
+});
+
+test('DataTable single selection toggles and follows mode changes', async (t) => {
+  const page = await consumer(t, `${selectionExample} table.selectionMode = 'single';`);
+  await expect(page.getByRole('checkbox', { name: 'Select all rows', exact: true })).toHaveCount(0);
+  const first = page.getByRole('checkbox', { name: 'Select row 1', exact: true });
+  const second = page.getByRole('checkbox', { name: 'Select row 2', exact: true });
+  await first.check();
+  await second.check();
+  await expect(first).not.toBeChecked();
+  await expect.poll(() => page.evaluate(() => window.selections.at(-1))).toEqual(['0']);
+  await second.uncheck();
+  await expect.poll(() => page.evaluate(() => window.selections.at(-1))).toEqual([]);
+  await page.locator('ae-datatable').evaluate((table) => (table.selectionMode = 'multiple'));
+  await page.getByRole('checkbox', { name: 'Select all rows', exact: true }).check();
+  await expect(page.locator('ae-datatable-row[selected]')).toHaveCount(4);
+});
+
+test('DataTable accessible names track host labels and edited header text', async (t) => {
+  const page = await consumer(t, tableExample);
+  await page
+    .locator('ae-datatable')
+    .evaluate((table) => table.setAttribute('aria-label', 'People'));
+  await expect(page.getByRole('table', { name: 'People' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Name', exact: true })).toBeVisible();
+  await page.locator('ae-datatable-header').evaluate((header) => {
+    const text = [...header.childNodes].find(
+      (node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim(),
+    );
+    text.data = 'Person';
+  });
+  await expect(page.getByRole('separator', { name: 'Resize Person column' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Person', exact: true })).toBeVisible();
+});
+
+test('DataTable resize values track layout and remain within their announced bounds', async (t) => {
+  const page = await consumer(t, `${tableExample} table.style.display = 'none';`);
+  await page.locator('ae-datatable').evaluate((table) => (table.style.display = 'block'));
+  const header = page.locator('ae-datatable-header');
+  const resize = page.getByRole('separator', { name: 'Resize Name column' });
+  for (const width of [240, 350]) {
+    await header.evaluate((el, width) => (el.style.width = width + 'px'), width);
+    await expect(resize).toHaveAttribute('aria-valuenow', String(width));
+    await expect(resize).toHaveAttribute('aria-valuetext', `${width} pixels`);
+    assert.ok(Number(await resize.getAttribute('aria-valuemax')) >= width);
+    await expect(page.getByRole('columnheader', { name: 'Name', exact: true })).toBeVisible();
+  }
+});
+
+test('non-sortable DataTable headers omit automatic sort state', async (t) => {
+  const page = await consumer(t, `${tableExample} table.sortable = false;`);
+  const header = page.getByRole('columnheader', { name: 'Name', exact: true });
+  await expect(header).not.toHaveAttribute('aria-sort');
+  await header.evaluate((el) => {
+    el.setAttribute('aria-sort', 'other');
+    el.align = 'right';
+  });
+  await expect(header).toHaveAttribute('aria-sort', 'other');
+});
+
+test('alert registration is synchronous in a split ESM consumer', async (t) => {
+  const page = await consumer(
+    t,
+    `
+    import { defineAeAlert } from '@aetherui/core/alert';
+    defineAeAlert();
+    window.registeredImmediately = !!customElements.get('ae-alert');
+    document.querySelector('#surface').append(document.createElement('ae-alert'));
+  `,
+  );
+  assert.equal(await page.evaluate(() => window.registeredImmediately), true);
 });

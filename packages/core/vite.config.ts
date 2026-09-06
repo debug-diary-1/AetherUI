@@ -13,6 +13,7 @@ const components = [
   'radio',
   'tabs',
   'treeview',
+  'toast',
   'combo',
   'autocomplete',
 ];

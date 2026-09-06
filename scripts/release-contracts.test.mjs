@@ -138,7 +138,7 @@ test('CI executes the release-contract guards', async () => {
   }
 });
 
-test('the publish workflow runs every guard in the job that publishes', async () => {
+test('the publish workflow gates publishing on isolated release checks', async () => {
   const workflow = await read('.github/workflows/publish.yml');
   // Scope to the job that actually publishes: guards sitting in a separate,
   // undepended-on job would never gate a release.
@@ -147,11 +147,13 @@ test('the publish workflow runs every guard in the job that publishes', async ()
   );
   assert.ok(job, 'no job publishes packages');
 
-  const firstPublish = job.steps.findIndex((step) => /pnpm publish/.test(step.run));
-  const index = job.steps.findIndex((step) => /run: pnpm check:release\b/.test(step.body));
-  assert.ok(index >= 0, 'publish job must run the canonical release gate');
-  assert.ok(index < firstPublish, 'release checks must precede publishing');
-  assert.doesNotMatch(job.steps[index].body, /continue-on-error:\s*true/);
+  assert.match(job.body, /needs: checks/);
+  assert.doesNotMatch(job.body, /check:release|test:consumers|actions\/download-artifact/);
+  assert.match(job.body, /run: pnpm build/);
+  const checks = workflowJobs(workflow).find((candidate) => candidate.name === 'checks');
+  assert.ok(checks, 'missing isolated checks job');
+  assert.doesNotMatch(checks.body, /id-token: write|continue-on-error: true/);
+  assert.match(checks.body, /run: pnpm check:release/);
   const { scripts } = JSON.parse(await read('package.json'));
   assert.match(scripts['check:release'], /^pnpm check && /);
   const commands = `${scripts.check} && ${scripts['check:release']}`.split(' && ');
@@ -297,4 +299,15 @@ test('Pages uploads the actual Storybook build output and requires complete arti
     .steps.find((step) => step.name === 'Verify site entry points');
   assert.match(verify.run, /test -s \.output\/docs\/index\.html/);
   assert.match(verify.run, /test -s \.output\/storybook\/index\.html/);
+});
+
+test('Pages builds the complete Storybook dependency graph', async () => {
+  const job = workflowJobs(await read('.github/workflows/deploy.yml')).find(
+    (job) => job.name === 'build-storybook',
+  );
+  const step = job.steps.find((step) => step.name === 'Build Storybook');
+  assert.match(step.run, /pnpm build-storybook/);
+  assert.doesNotMatch(step.run, /cd packages\/storybook/);
+  const turbo = JSON.parse(await read('turbo.json'));
+  assert.ok(turbo.tasks['build-storybook'].dependsOn.includes('^build'));
 });

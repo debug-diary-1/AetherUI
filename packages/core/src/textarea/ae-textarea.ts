@@ -154,7 +154,9 @@ export class AeTextarea extends LitElement {
     if (
       changedProperties.has('required') ||
       changedProperties.has('minlength') ||
-      changedProperties.has('maxlength')
+      changedProperties.has('maxlength') ||
+      changedProperties.has('readonly') ||
+      changedProperties.has('disabled')
     ) {
       this._updateValidity();
     }

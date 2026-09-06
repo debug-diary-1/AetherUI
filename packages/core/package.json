@@ -29,7 +29,7 @@
     "react.d.ts"
   ],
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": true,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -131,9 +131,12 @@ import { defineAeAlert } from '@aetherui/core';
 import { renderAgentUi } from '@aetherui/agent';
 
 defineAeAlert();
+const surface = document.createElement('div');
+document.body.append(surface);
 
+// Rendering replaces only the contents of this dedicated surface.
 renderAgentUi(
-  document.body,
+  surface,
   {
     version: '1',
     root: {

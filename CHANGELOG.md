@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Repeated core imports across independent bundles reuse registered custom elements.
+- Toast subpath helpers remain available in production bundles; alert registration is synchronous.
+- DataTable selection uses consistent keys and mode settings; accessible names and resize values track updates.
+- Textareas revalidate when readonly or disabled constraints change.
 - Input validity updates when native constraints change; empty named inputs and textareas remain in form submission.
 - Agent node limits count text children and reject unknown document and node fields before rendering.
 - GitHub Pages uploads Storybook from its actual build directory and requires complete site artifacts.
@@ -16,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Removed internal controllers and DataTable utilities from public exports; core subpaths are explicitly enumerated.
+- Isolated registry consumer checks from the OIDC publishing job and preserved host content in the agent example.
 - Documented a runnable Vite-based vanilla example and the first-publication workflow.
 
 ## [0.1.0] - Unreleased
