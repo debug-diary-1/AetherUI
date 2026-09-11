@@ -16,7 +16,7 @@ Verify first-publication authentication before pushing a version tag. If a packa
 
 ## Verify a release
 
-Use Node 24 or later and the pnpm version pinned by `packageManager` (currently 10.30.3).
+Use Node 24 or later and the pnpm version pinned by `packageManager` (currently 12.3.4).
 
 ```bash
 pnpm install --frozen-lockfile
@@ -43,3 +43,35 @@ If a multi-package publication partially succeeds, inspect npm before retrying. 
 ## Documentation deployment
 
 GitHub Pages builds docs into `packages/docs/dist` and Storybook into root `storybook-static`. Both builds, uploads, downloads, and entry-point checks must succeed before deployment. Failed or missing artifacts stop the workflow and preserve the previous site.
+
+## Dependency maintenance
+
+The workspace catalog pins direct tools and libraries to stable releases. Keep
+Node typings on the Node 24 LTS line, matching CI and the runtime pin, rather than
+using typings for APIs available only in Node 26.
+
+Type checking and TypeScript package builds use the native TypeScript 7 compiler
+through the `@typescript/native` alias. The `typescript` alias points to
+`@typescript/typescript6` for the JavaScript compiler API used by declaration
+generation, artifact analysis, and browser-test transforms. TypeScript 7 does not
+yet provide that stable API; this follows the
+[TypeScript migration guidance](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/).
+
+Vite 8 uses Rolldown and Oxc. Build configuration uses `rolldownOptions`, playground
+chunk groups use `codeSplitting`, and consumer JSX uses `oxc.jsx`. Legacy Lit
+decorator settings come from tsconfig. Declarations use `unplugin-dts/vite`;
+accordion declarations retain their public core re-export instead of bundling
+core's declarations. See the [Vite migration guide](https://vite.dev/guide/migration).
+
+pnpm configuration lives in `pnpm-workspace.yaml`, with explicit `allowBuilds`
+decisions. The one-day release-age policy permits only the exact reviewed
+same-day versions listed in `minimumReleaseAgeExclude`. Keep transitive packages
+within upstream compatibility ranges; the remaining security overrides cover
+API Extractor's pinned minimatch, AJV, and lodash, plus Storybook test runner's
+uuid (the patched CommonJS-compatible major). Recheck their necessity with
+`pnpm audit` on each upgrade.
+
+After changing versions, run `pnpm outdated -r`, `pnpm peers check`,
+`pnpm audit`, a frozen-lockfile install, and the release checks above. Some
+upstream test tools still use deprecated packages; do not force incompatible
+majors solely to suppress deprecation messages.

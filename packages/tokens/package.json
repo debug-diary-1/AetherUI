@@ -51,9 +51,10 @@
   },
   "devDependencies": {
     "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
     "rimraf": "catalog:",
     "typescript": "catalog:",
-    "vite": "catalog:",
-    "vite-plugin-dts": "catalog:"
+    "unplugin-dts": "catalog:",
+    "vite": "catalog:"
   }
 }

@@ -252,21 +252,23 @@ export class AePopover extends LitElement {
         <slot name="trigger"></slot>
       </div>
 
-      ${this.open
-        ? html`
-            <div
-              part="popover"
-              class="popover-content"
-              role="${this.trigger === 'hover' ? 'tooltip' : 'dialog'}"
-              style="${this.popoverStyles}"
-              @mouseenter="${this.handlePopoverMouseEnter}"
-              @mouseleave="${this.handlePopoverMouseLeave}"
-            >
-              ${this.arrow ? html` <div part="arrow" class="popover-arrow"></div> ` : ''}
-              <slot></slot>
-            </div>
-          `
-        : ''}
+      ${
+        this.open
+          ? html`
+              <div
+                part="popover"
+                class="popover-content"
+                role="${this.trigger === 'hover' ? 'tooltip' : 'dialog'}"
+                style="${this.popoverStyles}"
+                @mouseenter="${this.handlePopoverMouseEnter}"
+                @mouseleave="${this.handlePopoverMouseLeave}"
+              >
+                ${this.arrow ? html` <div part="arrow" class="popover-arrow"></div> ` : ''}
+                <slot></slot>
+              </div>
+            `
+          : ''
+      }
     `;
   }
 }

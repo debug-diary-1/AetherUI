@@ -227,15 +227,17 @@ export class AeDrawer extends LitElement {
     if (!this.open) return nothing;
 
     return html`
-      ${this.backdrop
-        ? html`
-            <div
-              part="backdrop"
-              class="drawer-backdrop"
-              @click="${this._handleBackdropClick}"
-            ></div>
-          `
-        : ''}
+      ${
+        this.backdrop
+          ? html`
+              <div
+                part="backdrop"
+                class="drawer-backdrop"
+                @click="${this._handleBackdropClick}"
+              ></div>
+            `
+          : ''
+      }
 
       <div
         part="panel"
@@ -245,25 +247,27 @@ export class AeDrawer extends LitElement {
         aria-label="${this.ariaLabel || 'Drawer'}"
         tabindex="-1"
       >
-        ${this.closable
-          ? html`
-              <button
-                part="close-button"
-                class="drawer-close"
-                @click="${this.handleCloseClick}"
-                aria-label="Close drawer"
-              >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path
-                    d="M15 5L5 15M5 5L15 15"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </button>
-            `
-          : ''}
+        ${
+          this.closable
+            ? html`
+                <button
+                  part="close-button"
+                  class="drawer-close"
+                  @click="${this.handleCloseClick}"
+                  aria-label="Close drawer"
+                >
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path
+                      d="M15 5L5 15M5 5L15 15"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </button>
+              `
+            : ''
+        }
 
         <slot name="header" part="header" class="drawer-header"></slot>
 

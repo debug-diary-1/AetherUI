@@ -293,7 +293,7 @@ export class AeAutocomplete extends LitElement {
    */
   private _getClasses(classes: Record<string, boolean>): string {
     return Object.entries(classes)
-      .filter(([_, active]) => active)
+      .filter(([, active]) => active)
       .map(([className]) => className)
       .join(' ');
   }
@@ -436,9 +436,13 @@ export class AeAutocomplete extends LitElement {
         <ul class="autocomplete-options" role="listbox" part="options">
           ${Object.entries(groupedOptions).map(
             ([group, options]) => html`
-              ${group
-                ? html` <li class="autocomplete-group-heading" part="group-heading">${group}</li> `
-                : ''}
+              ${
+                group
+                  ? html`
+                      <li class="autocomplete-group-heading" part="group-heading">${group}</li>
+                    `
+                  : ''
+              }
               ${options.map((option, _index) => {
                 // Calculate the overall index in the flat list
                 const flatIndex = filteredOptions.findIndex((o) => o.id === option.id);

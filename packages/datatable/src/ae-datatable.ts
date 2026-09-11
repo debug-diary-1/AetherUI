@@ -447,21 +447,25 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
 
     return html`
       <div class="datatable__header" part="header" role="row" style=${styleMap(headerStyle)}>
-        ${this.selectable
-          ? html`
-              <div class="datatable__header-cell" role="columnheader">
-                ${this.selectionMode === 'multiple'
-                  ? html`<input
-                      type="checkbox"
-                      aria-label="Select all rows"
-                      .checked=${live(this.controller.getVisibleSelectionState().all)}
-                      .indeterminate=${live(this.controller.getVisibleSelectionState().some)}
-                      @change=${this.handleSelectAll}
-                    />`
-                  : ''}
-              </div>
-            `
-          : ''}
+        ${
+          this.selectable
+            ? html`
+                <div class="datatable__header-cell" role="columnheader">
+                  ${
+                    this.selectionMode === 'multiple'
+                      ? html`<input
+                          type="checkbox"
+                          aria-label="Select all rows"
+                          .checked=${live(this.controller.getVisibleSelectionState().all)}
+                          .indeterminate=${live(this.controller.getVisibleSelectionState().some)}
+                          @change=${this.handleSelectAll}
+                        />`
+                      : ''
+                  }
+                </div>
+              `
+            : ''
+        }
         ${visibleColumns.map((column) => {
           const sortInfo = sortState.find((s) => s.id === column.id);
 
@@ -517,17 +521,19 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
               ?selectable=${this.selectable}
               @click=${() => this.selectable && this.handleRowSelect(rowId)}
             >
-              ${this.selectable
-                ? html`
-                    <ae-datatable-cell align="center">
-                      <input
-                        type="checkbox"
-                        aria-label=${`Select row ${index + 1}`}
-                        .checked=${live(isSelected)}
-                      />
-                    </ae-datatable-cell>
-                  `
-                : ''}
+              ${
+                this.selectable
+                  ? html`
+                      <ae-datatable-cell align="center">
+                        <input
+                          type="checkbox"
+                          aria-label=${`Select row ${index + 1}`}
+                          .checked=${live(isSelected)}
+                        />
+                      </ae-datatable-cell>
+                    `
+                  : ''
+              }
               ${visibleColumns.map((column) => {
                 let cellContent: string | TemplateResult;
 

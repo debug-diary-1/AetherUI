@@ -92,9 +92,11 @@ export class AeProgress extends LitElement {
         <div part="track" class="progress-track">
           <div part="bar" class="progress-bar" style="width: ${this.percentage}%"></div>
         </div>
-        ${this.showLabel
-          ? html` <div part="label" class="progress-label">${this.labelText}</div> `
-          : ''}
+        ${
+          this.showLabel
+            ? html` <div part="label" class="progress-label">${this.labelText}</div> `
+            : ''
+        }
       </div>
     `;
   }

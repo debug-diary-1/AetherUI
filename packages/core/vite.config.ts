@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
+import dts from 'unplugin-dts/vite';
 import { resolve } from 'path';
 
 // Define component entries
@@ -21,12 +21,12 @@ const components = [
 // Create entries object with index and components
 // Use Record<string, string> type to allow dynamic keys
 const entries: Record<string, string> = {
-  index: resolve(__dirname, 'src/index.ts'),
+  index: resolve(import.meta.dirname, 'src/index.ts'),
 };
 
 // Add individual component entries
 components.forEach((component) => {
-  entries[`${component}/index`] = resolve(__dirname, `src/${component}/index.ts`);
+  entries[`${component}/index`] = resolve(import.meta.dirname, `src/${component}/index.ts`);
 });
 
 export default defineConfig({
@@ -36,7 +36,7 @@ export default defineConfig({
       formats: ['es', 'cjs'],
       fileName: (format, entryName) => `${entryName}.${format === 'es' ? 'js' : 'cjs'}`,
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: [/^lit/, '@floating-ui/dom'],
       output: {
         preserveModules: true,
@@ -52,13 +52,4 @@ export default defineConfig({
       entryRoot: 'src',
     }),
   ],
-  esbuild: {
-    target: 'es2022',
-    tsconfigRaw: {
-      compilerOptions: {
-        useDefineForClassFields: false,
-        experimentalDecorators: true,
-      },
-    },
-  },
 });

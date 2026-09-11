@@ -124,7 +124,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: '10.30.2'
+          version: '12.3.4'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -317,7 +317,7 @@ pnpm build-storybook
 
 # If it works locally, check:
 # 1. Node version matches (22.x)
-# 2. pnpm version matches (10.30.2)
+# 2. pnpm version matches (12.3.4)
 # 3. Environment variables are set
 ```
 

@@ -114,7 +114,7 @@ export class SelectionManager<T> {
    */
   getSelectedRows(): (string | number)[] {
     return Object.entries(this._selectedRows)
-      .filter(([_, selected]) => selected)
+      .filter(([, selected]) => selected)
       .map(([id]) => id);
   }
 
@@ -131,7 +131,7 @@ export class SelectionManager<T> {
 
     if (this._selectionMode === 'single') {
       const selectedIds = Object.entries(newSelectedRows)
-        .filter(([_, selected]) => selected)
+        .filter(([, selected]) => selected)
         .map(([id]) => id);
 
       if (selectedIds.length > 1) {

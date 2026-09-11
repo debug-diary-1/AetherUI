@@ -1,37 +1,27 @@
 import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
+import dts from 'unplugin-dts/vite';
 import { resolve } from 'path';
 
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(import.meta.dirname, 'src/index.ts'),
       name: 'AetherUIAccordion',
       fileName: 'index',
       formats: ['es'],
     },
     target: 'es2022',
     outDir: 'dist',
-    rollupOptions: {
+    rolldownOptions: {
       external: [/^@aetherui\/core/],
     },
   },
   plugins: [
     dts({
       insertTypesEntry: true,
-      rollupTypes: true,
       aliasesExclude: [/^@aetherui\/core/],
     }),
   ],
-  esbuild: {
-    target: 'es2022',
-    tsconfigRaw: {
-      compilerOptions: {
-        useDefineForClassFields: false,
-        experimentalDecorators: true,
-      },
-    },
-  },
   server: {
     port: 3002,
   },

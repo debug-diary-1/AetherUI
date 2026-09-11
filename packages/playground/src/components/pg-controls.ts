@@ -269,30 +269,36 @@ export class PgControls extends LitElement {
     const selects = this.config.cssVariables.filter((v) => v.type === 'select');
 
     return html`
-      ${colors.length
-        ? html`
-            <div class="section">
-              <div class="section-title">Colors</div>
-              ${colors.map((v) => this._renderColorControl(v))}
-            </div>
-          `
-        : null}
-      ${sizes.length
-        ? html`
-            <div class="section">
-              <div class="section-title">Sizing</div>
-              ${sizes.map((v) => this._renderSizeControl(v))}
-            </div>
-          `
-        : null}
-      ${selects.length
-        ? html`
-            <div class="section">
-              <div class="section-title">Options</div>
-              ${selects.map((v) => this._renderSelectControl(v))}
-            </div>
-          `
-        : null}
+      ${
+        colors.length
+          ? html`
+              <div class="section">
+                <div class="section-title">Colors</div>
+                ${colors.map((v) => this._renderColorControl(v))}
+              </div>
+            `
+          : null
+      }
+      ${
+        sizes.length
+          ? html`
+              <div class="section">
+                <div class="section-title">Sizing</div>
+                ${sizes.map((v) => this._renderSizeControl(v))}
+              </div>
+            `
+          : null
+      }
+      ${
+        selects.length
+          ? html`
+              <div class="section">
+                <div class="section-title">Options</div>
+                ${selects.map((v) => this._renderSelectControl(v))}
+              </div>
+            `
+          : null
+      }
     `;
   }
 
@@ -339,18 +345,20 @@ export class PgControls extends LitElement {
         >
           Style
         </button>
-        ${hasVariants
-          ? html`
-              <button
-                class="tab ${this.activeTab === 'variants' ? 'active' : ''}"
-                @click=${() => {
-                  this.activeTab = 'variants';
-                }}
-              >
-                Variants
-              </button>
-            `
-          : null}
+        ${
+          hasVariants
+            ? html`
+                <button
+                  class="tab ${this.activeTab === 'variants' ? 'active' : ''}"
+                  @click=${() => {
+                    this.activeTab = 'variants';
+                  }}
+                >
+                  Variants
+                </button>
+              `
+            : null
+        }
       </div>
       <div class="content">
         ${this.activeTab === 'style' ? this._renderStyleTab() : this._renderVariantsTab()}
