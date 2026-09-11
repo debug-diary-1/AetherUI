@@ -56,11 +56,12 @@
   "dependencies": {
     "@aetherui/agent": "workspace:^",
     "@modelcontextprotocol/server": "2.0.0",
-    "zod": "^4.2.0"
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@modelcontextprotocol/client": "2.0.0",
     "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
     "rimraf": "catalog:",
     "typescript": "catalog:"
   },

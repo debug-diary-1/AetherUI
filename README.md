@@ -293,7 +293,7 @@ import '@aetherui/tokens/dark.css';
 ### Prerequisites
 
 - Node.js >= 24.0.0
-- pnpm 10.30.3 (pinned via `packageManager`; `corepack enable` will pick it up)
+- pnpm 12.3.4 (pinned via `packageManager`; `corepack enable` will pick it up)
 
 ### Setup
 

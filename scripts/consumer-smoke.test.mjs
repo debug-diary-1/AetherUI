@@ -15,9 +15,13 @@ let browser;
 
 function pnpm(args, options) {
   const cli = process.env.npm_execpath;
-  if (cli) return execFileSync(process.execPath, [cli, ...args], options);
+  if (cli) {
+    return /\.[cm]?js$/.test(cli)
+      ? execFileSync(process.execPath, [cli, ...args], options)
+      : execFileSync(cli, args, options);
+  }
   // Direct node invocation is supported on POSIX. Windows callers should use
-  // pnpm test:consumers so npm_execpath points to the executable JS entry.
+  // pnpm test:consumers so npm_execpath identifies the CLI entry or native executable.
   if (process.platform === 'win32') throw new Error('Run pnpm test:consumers on Windows');
   return execFileSync('pnpm', args, options);
 }
@@ -49,8 +53,11 @@ before(async () => {
       type: 'module',
       packageManager: workspace.packageManager,
       dependencies,
-      pnpm: { overrides: localPackages },
     }),
+  );
+  await writeFile(
+    join(directory, 'pnpm-workspace.yaml'),
+    JSON.stringify({ overrides: localPackages, minimumReleaseAge: 0 }),
   );
   // Install as a consumer without the repository's dependency overrides. Local
   // tarballs replace unpublished internal packages; everything else uses npm.
@@ -74,7 +81,7 @@ async function consumer(t, source, repetitions = 1, markup = '<main id="surface"
     configFile: false,
     logLevel: 'silent',
     define: { 'process.env.NODE_ENV': JSON.stringify('production') },
-    esbuild: { jsx: 'automatic' },
+    oxc: { jsx: { runtime: 'automatic' } },
     build: {
       write: false,
       minify: true,

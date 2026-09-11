@@ -4,10 +4,10 @@ export default defineConfig({
   base: '/playground/',
   build: {
     outDir: 'dist',
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        manualChunks: {
-          prism: ['prismjs'],
+        codeSplitting: {
+          groups: [{ name: 'prism', test: /node_modules[\\/]prismjs[\\/]/ }],
         },
       },
     },

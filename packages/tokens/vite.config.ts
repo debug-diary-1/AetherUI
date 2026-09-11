@@ -1,26 +1,26 @@
 import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
+import dts from 'unplugin-dts/vite';
 import { resolve } from 'path';
 import { copyFileSync, mkdirSync } from 'fs';
 
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(import.meta.dirname, 'src/index.ts'),
       name: 'AetherUITokens',
       fileName: 'index',
       formats: ['es'],
     },
     target: 'es2022',
     outDir: 'dist',
-    rollupOptions: {
+    rolldownOptions: {
       external: [],
     },
   },
   plugins: [
     dts({
       insertTypesEntry: true,
-      outDir: 'dist',
+      outDirs: 'dist',
       entryRoot: 'src',
     }),
     // Copy CSS files to dist
@@ -28,13 +28,19 @@ export default defineConfig({
       name: 'copy-css-files',
       closeBundle() {
         try {
-          mkdirSync(resolve(__dirname, 'dist'), { recursive: true });
+          mkdirSync(resolve(import.meta.dirname, 'dist'), { recursive: true });
           copyFileSync(
-            resolve(__dirname, 'src/minimal.css'),
-            resolve(__dirname, 'dist/minimal.css'),
+            resolve(import.meta.dirname, 'src/minimal.css'),
+            resolve(import.meta.dirname, 'dist/minimal.css'),
           );
-          copyFileSync(resolve(__dirname, 'src/light.css'), resolve(__dirname, 'dist/light.css'));
-          copyFileSync(resolve(__dirname, 'src/dark.css'), resolve(__dirname, 'dist/dark.css'));
+          copyFileSync(
+            resolve(import.meta.dirname, 'src/light.css'),
+            resolve(import.meta.dirname, 'dist/light.css'),
+          );
+          copyFileSync(
+            resolve(import.meta.dirname, 'src/dark.css'),
+            resolve(import.meta.dirname, 'dist/dark.css'),
+          );
           console.log('✅ CSS theme files copied to dist/');
         } catch (error) {
           console.error('❌ Error copying CSS files:', error);

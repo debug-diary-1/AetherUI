@@ -159,16 +159,20 @@ export class AeTooltip extends LitElement {
   render() {
     return html`
       <slot @slotchange=${this._handleSlotChange}></slot>
-      ${this.open
-        ? html`
-            <div part="overlay" role="tooltip" style=${styleMap(this._tooltipStyles)}>
-              ${this.showArrow
-                ? html` <div part="arrow" style=${styleMap(this._arrowStyles)}></div> `
-                : ''}
-              <span part="content">${this.text}</span>
-            </div>
-          `
-        : ''}
+      ${
+        this.open
+          ? html`
+              <div part="overlay" role="tooltip" style=${styleMap(this._tooltipStyles)}>
+                ${
+                  this.showArrow
+                    ? html` <div part="arrow" style=${styleMap(this._arrowStyles)}></div> `
+                    : ''
+                }
+                <span part="content">${this.text}</span>
+              </div>
+            `
+          : ''
+      }
     `;
   }
 

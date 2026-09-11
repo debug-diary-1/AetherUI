@@ -152,33 +152,35 @@ export class AeTreeItem extends LitElement {
           @click="${this.handleItemClick}"
           style="padding-left: calc(${indent} * var(--indent-size, 1.5rem))"
         >
-          ${this.hasChildren
-            ? html`
-                <button
-                  part="expand-button"
-                  class="expand-button ${this.expanded ? 'expanded' : ''}"
-                  @click="${this.handleExpandClick}"
-                  aria-label="${this.expanded ? 'Collapse' : 'Expand'}"
-                  tabindex="-1"
-                >
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+          ${
+            this.hasChildren
+              ? html`
+                  <button
+                    part="expand-button"
+                    class="expand-button ${this.expanded ? 'expanded' : ''}"
+                    @click="${this.handleExpandClick}"
+                    aria-label="${this.expanded ? 'Collapse' : 'Expand'}"
+                    tabindex="-1"
                   >
-                    <path
-                      d="M4.5 3L7.5 6L4.5 9"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </button>
-              `
-            : html`<span class="expand-spacer"></span>`}
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M4.5 3L7.5 6L4.5 9"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                `
+              : html`<span class="expand-spacer"></span>`
+          }
 
           <slot name="icon"></slot>
 

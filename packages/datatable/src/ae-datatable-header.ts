@@ -278,34 +278,38 @@ export class AeDatatableHeader extends LitElement {
       ${this.renderSortIcon()}
     `;
     return html`
-      ${this.sortable
-        ? html`<button
-            type="button"
-            class="header-cell__content"
-            part="content"
-            @click=${this.handleSortClick}
-          >
-            ${content}
-          </button>`
-        : html`<div class="header-cell__content" part="content">${content}</div>`}
-      ${this.resizable
-        ? html`
-            <div
-              class="header-cell__resize-handle"
-              part="resize-handle"
-              role="separator"
-              tabindex="0"
-              aria-label=${`Resize ${label} column`}
-              aria-orientation="vertical"
-              aria-valuemin="50"
-              aria-valuemax=${String(Math.max(10000, this.currentWidth))}
-              aria-valuenow=${String(this.currentWidth)}
-              aria-valuetext=${`${this.currentWidth} pixels`}
-              @keydown=${this.handleResizeKeydown}
-              @mousedown=${this.handleResizeStart}
-            ></div>
-          `
-        : ''}
+      ${
+        this.sortable
+          ? html`<button
+              type="button"
+              class="header-cell__content"
+              part="content"
+              @click=${this.handleSortClick}
+            >
+              ${content}
+            </button>`
+          : html`<div class="header-cell__content" part="content">${content}</div>`
+      }
+      ${
+        this.resizable
+          ? html`
+              <div
+                class="header-cell__resize-handle"
+                part="resize-handle"
+                role="separator"
+                tabindex="0"
+                aria-label=${`Resize ${label} column`}
+                aria-orientation="vertical"
+                aria-valuemin="50"
+                aria-valuemax=${String(Math.max(10000, this.currentWidth))}
+                aria-valuenow=${String(this.currentWidth)}
+                aria-valuetext=${`${this.currentWidth} pixels`}
+                @keydown=${this.handleResizeKeydown}
+                @mousedown=${this.handleResizeStart}
+              ></div>
+            `
+          : ''
+      }
     `;
   }
 }

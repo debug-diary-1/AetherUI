@@ -220,26 +220,28 @@ export class AeCheckbox extends LitElement {
         />
 
         <span part="control" class="checkbox-control">
-          ${this.indeterminate
-            ? html`
-                <svg part="indeterminate-icon" class="indeterminate-icon" viewBox="0 0 16 16">
-                  <rect x="3" y="7" width="10" height="2" fill="currentColor" />
-                </svg>
-              `
-            : this.checked
+          ${
+            this.indeterminate
               ? html`
-                  <svg part="icon" class="checkbox-icon" viewBox="0 0 16 16">
-                    <polyline
-                      points="3,8 6,11 13,4"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      fill="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
+                  <svg part="indeterminate-icon" class="indeterminate-icon" viewBox="0 0 16 16">
+                    <rect x="3" y="7" width="10" height="2" fill="currentColor" />
                   </svg>
                 `
-              : null}
+              : this.checked
+                ? html`
+                    <svg part="icon" class="checkbox-icon" viewBox="0 0 16 16">
+                      <polyline
+                        points="3,8 6,11 13,4"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  `
+                : null
+          }
         </span>
 
         <span part="label" class="checkbox-label-text">

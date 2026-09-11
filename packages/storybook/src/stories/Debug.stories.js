@@ -79,8 +79,7 @@ export const JsonData = () => {
         style="background: var(--ae-background-tertiary); padding: 10px; border-radius: 4px; color: var(--ae-text-primary);"
       >
         ${JSON.stringify(data, null, 2)}
-      </pre
-      >
+      </pre>
     </div>
   `;
 };

@@ -197,14 +197,15 @@
     "@open-wc/testing": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "19.2.18",
+    "@typescript/native": "catalog:",
     "@web/test-runner-playwright": "catalog:",
     "playwright": "catalog:",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "rimraf": "catalog:",
     "typescript": "catalog:",
-    "vite": "catalog:",
-    "vite-plugin-dts": "catalog:"
+    "unplugin-dts": "catalog:",
+    "vite": "catalog:"
   },
   "customElements": "custom-elements.json"
 }

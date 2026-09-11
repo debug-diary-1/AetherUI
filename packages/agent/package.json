@@ -53,6 +53,7 @@
   "devDependencies": {
     "@open-wc/testing": "catalog:",
     "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
     "@web/dev-server-esbuild": "catalog:",
     "@web/test-runner": "catalog:",
     "@web/test-runner-playwright": "catalog:",
@@ -61,7 +62,7 @@
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "@aetherui/core": "workspace:^"
+    "@aetherui/core": "workspace:^0.1.0"
   },
   "peerDependenciesMeta": {
     "@aetherui/core": {

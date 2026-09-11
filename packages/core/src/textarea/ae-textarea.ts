@@ -287,21 +287,22 @@ export class AeTextarea extends LitElement {
 
     return html`
       <div part="base" class="textarea-base">
-        ${this.label
-          ? html`
-              <label part="label" class="textarea-label" for="textarea">
-                ${this.label}
-                ${this.required ? html`<span class="required-indicator">*</span>` : ''}
-              </label>
-            `
-          : ''}
+        ${
+          this.label
+            ? html`
+                <label part="label" class="textarea-label" for="textarea">
+                  ${this.label}
+                  ${this.required ? html`<span class="required-indicator">*</span>` : ''}
+                </label>
+              `
+            : ''
+        }
 
         <div
           part="textarea-wrapper"
-          class="textarea-wrapper ${this.focused ? 'focused' : ''} ${hasError ? 'error' : ''} ${this
-            .disabled
-            ? 'disabled'
-            : ''}"
+          class="textarea-wrapper ${this.focused ? 'focused' : ''} ${hasError ? 'error' : ''} ${
+            this.disabled ? 'disabled' : ''
+          }"
         >
           <textarea
             part="textarea"
@@ -325,20 +326,28 @@ export class AeTextarea extends LitElement {
           ></textarea>
         </div>
 
-        ${showHelpText || showCharCount
-          ? html`
-              <div part="footer" class="textarea-footer">
-                ${showHelpText
-                  ? html` <div part="help-text" class="help-text">${this.helpText}</div> `
-                  : ''}
-                ${showCharCount
-                  ? html`
-                      <div part="char-count" class="char-count">${charCount}/${this.maxlength}</div>
-                    `
-                  : ''}
-              </div>
-            `
-          : ''}
+        ${
+          showHelpText || showCharCount
+            ? html`
+                <div part="footer" class="textarea-footer">
+                  ${
+                    showHelpText
+                      ? html` <div part="help-text" class="help-text">${this.helpText}</div> `
+                      : ''
+                  }
+                  ${
+                    showCharCount
+                      ? html`
+                          <div part="char-count" class="char-count">
+                            ${charCount}/${this.maxlength}
+                          </div>
+                        `
+                      : ''
+                  }
+                </div>
+              `
+            : ''
+        }
         ${hasError ? html` <div part="error-text" class="error-text">${this.error}</div> ` : ''}
       </div>
     `;
