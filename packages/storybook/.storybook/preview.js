@@ -1,19 +1,8 @@
-// Register the components we need
-import '../src/register-components.js';
-import { html } from 'lit-html';
+import { defineAll } from '@aetherui/core';
+import { html } from 'lit';
 
-// Debug registration for autocomplete and combo
-import('../src/debug-registration.js')
-  .then(() => console.log('Debug registration complete'))
-  .catch((e) => console.error('Debug registration failed:', e));
-
-// Try source components as a fallback if needed
-const useSourceImports = true; // Set to false to disable
-if (useSourceImports) {
-  import('../src/source-components.js')
-    .then(() => console.log('Source components loaded'))
-    .catch((e) => console.warn('Failed to load source components:', e));
-}
+// Register synchronously before Storybook renders or binds story properties.
+defineAll();
 
 /** @type { import('@storybook/web-components-vite').Preview } */
 const preview = {
