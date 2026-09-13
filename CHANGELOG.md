@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- Tooltips stay anchored with absolute or fixed positioning, follow layout changes, and remain readable without theme tokens.
 - Repeated core imports across independent bundles reuse registered custom elements.
 - Toast subpath helpers remain available in production bundles; alert registration is synchronous.
 - DataTable selection uses consistent keys and mode settings; accessible names and resize values track updates.

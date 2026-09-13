@@ -3,13 +3,7 @@ import { property, query, state } from 'lit/decorators.js';
 import { customElement } from '../internal/custom-element';
 import { styleMap } from 'lit/directives/style-map.js';
 import { tooltipStyles } from './styles.js';
-import {
-  positionTooltip,
-  createAutoUpdate,
-  type PositionOptions,
-  type Placement,
-  type Strategy,
-} from './middleware.js';
+import { positionTooltip, createAutoUpdate, type Placement, type Strategy } from './middleware.js';
 
 /**
  * A lightweight tooltip component that shows contextual information on hover/focus
@@ -23,8 +17,8 @@ import {
  * @part arrow - The tooltip arrow indicator
  * @part content - The tooltip content wrapper
  *
- * @cssvar --ae-tooltip-bg - Background color (default: #111)
- * @cssvar --ae-tooltip-fg - Text color (default: #fff)
+ * @cssvar --ae-tooltip-bg - Background color (default: black)
+ * @cssvar --ae-tooltip-fg - Text color (default: white)
  * @cssvar --ae-tooltip-radius - Border radius (default: 4px)
  * @cssvar --ae-tooltip-shadow - Box shadow (default: 0 2px 8px rgba(0,0,0,.15))
  * @cssvar --ae-tooltip-padding - Internal padding (default: 0.375rem 0.5rem)
@@ -79,9 +73,6 @@ export class AeTooltip extends LitElement {
   @state()
   private _arrowStyles: Record<string, string> = {};
 
-  @state()
-  private _isPositioned = false;
-
   @query('[part="overlay"]')
   private _overlay?: HTMLElement;
 
@@ -92,6 +83,8 @@ export class AeTooltip extends LitElement {
   private _slot?: HTMLSlotElement;
 
   private _anchorElement?: HTMLElement;
+  private _positionVersion = 0;
+  private _tooltipId = this._generateId();
   private _hoverTimer?: number;
   private _hideTimer?: number;
   private _cleanupAutoUpdate?: () => void;
@@ -128,27 +121,23 @@ export class AeTooltip extends LitElement {
 
   protected updated(changedProperties: PropertyValues) {
     if (changedProperties.has('open')) {
+      this._cleanupPositioning();
       if (this.open) {
-        // Reset positioned state when opening
-        this._isPositioned = false;
-        this._tooltipStyles = { visibility: 'hidden' };
-
-        this.updateComplete.then(() => {
-          // Use double-RAF to ensure the browser has painted the overlay
-          // before calculating its dimensions
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              this._updatePosition();
-              this._updateAriaDescribedBy(true);
-            });
-          });
-        });
-      } else {
-        this._cleanupPositioning();
-        this._updateAriaDescribedBy(false);
-        this._isPositioned = false;
+        this._tooltipStyles = { visibility: 'hidden', left: '0', top: '0' };
       }
+      this._updateAriaDescribedBy(this.open);
       this._emitOpenChange();
+    }
+
+    if (
+      this.open &&
+      ['open', 'placement', 'strategy', 'showArrow', 'text'].some((key) =>
+        changedProperties.has(key),
+      )
+    ) {
+      void this.updateComplete.then(() => {
+        if (this.open) this._updatePosition();
+      });
     }
 
     if (changedProperties.has('disabled') && this.disabled) {
@@ -162,7 +151,12 @@ export class AeTooltip extends LitElement {
       ${
         this.open
           ? html`
-              <div part="overlay" role="tooltip" style=${styleMap(this._tooltipStyles)}>
+              <div
+                id=${this._tooltipId}
+                part="overlay"
+                role="tooltip"
+                style=${styleMap({ ...this._tooltipStyles, position: this.strategy })}
+              >
                 ${
                   this.showArrow
                     ? html` <div part="arrow" style=${styleMap(this._arrowStyles)}></div> `
@@ -320,74 +314,46 @@ export class AeTooltip extends LitElement {
     }
   }
 
-  private async _updatePosition() {
-    // Ensure anchor element is set
-    if (!this._anchorElement) {
-      this._findAnchorElement();
-    }
+  private _updatePosition() {
+    if (!this._anchorElement) this._findAnchorElement();
+    const anchor = this._anchorElement;
+    const overlay = this._overlay;
+    if (!this.open || !anchor || !overlay) return;
+    this._updateAriaDescribedBy(true);
 
-    if (!this._anchorElement || !this._overlay) return;
-
-    // Verify overlay has valid dimensions
-    const overlayRect = this._overlay.getBoundingClientRect();
-    if (overlayRect.width === 0 || overlayRect.height === 0) {
-      // Wait for layout and retry
-      requestAnimationFrame(() => this._updatePosition());
-      return;
-    }
-
-    const options: PositionOptions = {
-      placement: this.placement,
-      strategy: this.strategy,
-      arrowElement: this.showArrow ? this._arrow : null,
-    };
-
+    this._cleanupPositioning();
+    const version = this._positionVersion;
     const updatePosition = async () => {
-      if (!this._anchorElement || !this._overlay) return;
-
-      try {
-        const result = await positionTooltip(this._anchorElement, this._overlay, options);
-
-        // Use Lit's reactive properties instead of direct style manipulation
-        this._tooltipStyles = {
-          left: `${result.x}px`,
-          top: `${result.y}px`,
-          position: this.strategy,
-          visibility: 'visible',
+      const result = await positionTooltip(anchor, overlay, {
+        placement: this.placement,
+        strategy: this.strategy,
+        arrowElement: this.showArrow ? this._arrow : null,
+      });
+      // Ignore work completed after closing, reopening, or restarting positioning.
+      if (version !== this._positionVersion || !this.open || this._overlay !== overlay) return;
+      this._tooltipStyles = {
+        left: `${result.x}px`,
+        top: `${result.y}px`,
+        visibility: 'visible',
+      };
+      this._arrowStyles = {};
+      if (this.showArrow && result.middlewareData.arrow) {
+        const { x, y } = result.middlewareData.arrow;
+        const staticSide = { top: 'bottom', right: 'left', bottom: 'top', left: 'right' }[
+          result.placement.split('-')[0]
+        ]!;
+        this._arrowStyles = {
+          left: x != null ? `${x}px` : '',
+          top: y != null ? `${y}px` : '',
+          [staticSide]: '-4px',
         };
-        this._isPositioned = true;
-
-        // Position arrow if present
-        if (this.showArrow && this._arrow && result.middlewareData.arrow) {
-          const { x, y } = result.middlewareData.arrow;
-          const staticSide = {
-            top: 'bottom',
-            right: 'left',
-            bottom: 'top',
-            left: 'right',
-          }[result.placement.split('-')[0]]!;
-
-          this._arrowStyles = {
-            left: x != null ? `${x}px` : '',
-            top: y != null ? `${y}px` : '',
-            right: '',
-            bottom: '',
-            [staticSide]: '-4px',
-          };
-        }
-      } catch {
-        // Silently handle positioning errors
       }
     };
-
-    // Initial position
-    await updatePosition();
-
-    // Setup auto-update for position changes
-    this._cleanupAutoUpdate = createAutoUpdate(this._anchorElement, this._overlay, updatePosition);
+    this._cleanupAutoUpdate = createAutoUpdate(anchor, overlay, updatePosition);
   }
 
   private _cleanupPositioning() {
+    this._positionVersion++;
     if (this._cleanupAutoUpdate) {
       this._cleanupAutoUpdate();
       this._cleanupAutoUpdate = undefined;
@@ -395,14 +361,15 @@ export class AeTooltip extends LitElement {
   }
 
   private _updateAriaDescribedBy(add: boolean) {
-    if (!this._anchorElement || !this._overlay) return;
+    if (!this._anchorElement) return;
 
-    const tooltipId = this._overlay.id || this._generateId();
+    const tooltipId = this._tooltipId;
 
     if (add) {
-      this._overlay.id = tooltipId;
       const currentDescribedBy = this._anchorElement.getAttribute('aria-describedby');
-      const newDescribedBy = currentDescribedBy ? `${currentDescribedBy} ${tooltipId}` : tooltipId;
+      const newDescribedBy = [
+        ...new Set([...(currentDescribedBy?.split(/\s+/).filter(Boolean) ?? []), tooltipId]),
+      ].join(' ');
       this._anchorElement.setAttribute('aria-describedby', newDescribedBy);
     } else {
       const currentDescribedBy = this._anchorElement.getAttribute('aria-describedby');

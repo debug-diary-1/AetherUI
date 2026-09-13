@@ -190,6 +190,7 @@
     "typecheck:react": "tsc -p tsconfig.react.json"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.8.0",
     "lit": "catalog:"
   },
   "devDependencies": {
