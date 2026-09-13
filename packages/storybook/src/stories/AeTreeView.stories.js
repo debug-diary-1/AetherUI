@@ -203,7 +203,7 @@ export const MultiSelect = {
         label="File selection"
         .data=${fileSystemData}
         .expanded=${['src']}
-        selectionMode="multiple"
+        selection-mode="multiple"
         .selected=${['button.js', 'index.js']}
         @ae-treeview-select=${action('ae-treeview-select')}
         @ae-treeview-expand=${action('ae-treeview-expand')}
@@ -282,7 +282,7 @@ export const EmptyAndLoading = {
         }
       </style>
       <div class="container">
-        <ae-treeview label="Empty tree" .data=${[]} emptyMessage="No files found"></ae-treeview>
+        <ae-treeview label="Empty tree" .data=${[]} empty-message="No files found"></ae-treeview>
 
         <ae-treeview label="Loading tree" .data=${[]} loading></ae-treeview>
       </div>
