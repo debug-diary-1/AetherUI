@@ -102,3 +102,36 @@ for (const example of [
     await expect(toast.locator('[part="toast"]')).toHaveCount(0);
   });
 }
+
+test('tooltip hover stays anchored and legible in the centered Storybook example', async ({
+  page,
+}) => {
+  await page.goto('/iframe.html?id=components-tooltip--default&viewMode=story');
+  const tooltip = page.locator('#storybook-root ae-tooltip');
+  const trigger = tooltip.getByRole('button', { name: 'Hover me', exact: true });
+  // The story runs its own hover/unhover demonstration on initial render.
+  await page.waitForTimeout(1200);
+  await trigger.hover();
+  const overlay = tooltip.getByRole('tooltip');
+  await expect(overlay).toBeVisible();
+  await expect
+    .poll(async () => {
+      const anchor = await trigger.boundingBox();
+      const box = await overlay.boundingBox();
+      return (
+        !!anchor &&
+        !!box &&
+        box.width > 90 &&
+        Math.abs(box.x + box.width / 2 - anchor.x - anchor.width / 2) < 2 &&
+        Math.abs(anchor.y - box.y - box.height - 8) < 2
+      );
+    })
+    .toBe(true);
+  await expect(overlay).toHaveCSS('color', 'rgb(255, 255, 255)');
+  await page.mouse.move(0, 0);
+  await expect(overlay).toHaveCount(0);
+  await trigger.focus();
+  await expect(tooltip.getByRole('tooltip')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(tooltip.getByRole('tooltip')).toHaveCount(0);
+});

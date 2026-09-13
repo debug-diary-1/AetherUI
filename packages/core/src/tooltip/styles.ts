@@ -14,8 +14,13 @@ export const tooltipStyles = css`
   /* Overlay container */
   [part='overlay'] {
     position: fixed;
-    background: var(--ae-tooltip-bg, var(--ae-text-primary));
-    color: var(--ae-tooltip-fg, var(--ae-bg-primary));
+    top: 0;
+    left: 0;
+    width: max-content;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
+    background: var(--ae-tooltip-bg, var(--ae-text-primary, black));
+    color: var(--ae-tooltip-fg, var(--ae-bg-primary, white));
     padding: var(--ae-tooltip-padding, 0.375rem 0.5rem);
     border-radius: var(--ae-tooltip-radius, 4px);
     font-size: var(--ae-tooltip-font-size, 0.8125rem);
