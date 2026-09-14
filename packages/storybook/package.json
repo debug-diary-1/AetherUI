@@ -20,7 +20,8 @@
   },
   "dependencies": {
     "@aetherui/core": "workspace:*",
-    "@aetherui/datatable": "workspace:*"
+    "@aetherui/datatable": "workspace:*",
+    "@aetherui/tokens": "workspace:*"
   },
   "devDependencies": {
     "@lit/reactive-element": "catalog:",

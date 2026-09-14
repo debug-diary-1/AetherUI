@@ -506,6 +506,9 @@ importers:
       '@aetherui/datatable':
         specifier: workspace:*
         version: link:../datatable
+      '@aetherui/tokens':
+        specifier: workspace:*
+        version: link:../tokens
     devDependencies:
       '@lit/reactive-element':
         specifier: 'catalog:'

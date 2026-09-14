@@ -1,5 +1,12 @@
 import { defineAll } from '@aetherui/core';
 import { html } from 'lit';
+import lightTheme from '@aetherui/tokens/light.css?inline';
+import darkTheme from '@aetherui/tokens/dark.css?inline';
+
+// Apply the complete theme at the document root, including body-mounted overlays.
+const themeStyle = document.createElement('style');
+themeStyle.dataset.aetheruiTheme = '';
+document.head.append(themeStyle);
 
 // Register synchronously before Storybook renders or binds story properties.
 defineAll();
@@ -41,47 +48,6 @@ const preview = {
         ],
       },
     },
-    // Enable dark mode
-    darkMode: {
-      // Override the default dark theme
-      dark: {
-        appBg: '#1a1a1a',
-        appContentBg: '#2b2b2b',
-        barBg: '#333333',
-        barTextColor: '#ffffff',
-        colorPrimary: '#3b82f6',
-        colorSecondary: '#2563eb',
-        textColor: '#ffffff',
-        textInverseColor: '#111111',
-        barSelectedColor: '#3b82f6',
-        inputBg: '#333333',
-        inputBorder: '#666666',
-        inputTextColor: '#ffffff',
-        brandTextColor: '#ffffff',
-      },
-      // Override the default light theme
-      light: {
-        appBg: '#f6f9fc',
-        appContentBg: '#ffffff',
-        barBg: '#ffffff',
-        barTextColor: '#333333',
-        colorPrimary: '#3b82f6',
-        colorSecondary: '#2563eb',
-        textColor: '#333333',
-        textInverseColor: '#ffffff',
-        barSelectedColor: '#3b82f6',
-        inputBg: '#ffffff',
-        inputBorder: '#cccccc',
-        inputTextColor: '#333333',
-        brandTextColor: '#333333',
-      },
-      // Set the current theme
-      current: 'light',
-      // Auto-detect preferred color scheme
-      darkClass: 'dark-theme',
-      lightClass: 'light-theme',
-      stylePreview: true,
-    },
     // Add backgrounds for component previews
     backgrounds: {
       options: {
@@ -99,11 +65,17 @@ const preview = {
       // Get the current theme
       const isDark = context.globals.theme === 'dark';
 
+      const theme = isDark ? 'dark' : 'light';
+      if (themeStyle.dataset.aetheruiTheme !== theme) {
+        themeStyle.textContent = isDark ? darkTheme : lightTheme;
+        themeStyle.dataset.aetheruiTheme = theme;
+      }
+
       // Use lit-html to wrap the story
       return html`
         <div
           class="${isDark ? 'dark-theme' : 'light-theme'}"
-          style="padding: 20px; transition: all 0.3s;"
+          style="padding: 20px; background: var(--ae-bg-primary); color: var(--ae-text-primary);"
         >
           ${Story()}
         </div>
@@ -116,7 +88,6 @@ const preview = {
     theme: {
       name: 'Theme',
       description: 'Global theme for components',
-      defaultValue: 'light',
       toolbar: {
         icon: 'paintbrush',
         items: [
@@ -129,6 +100,7 @@ const preview = {
   },
 
   initialGlobals: {
+    theme: 'light',
     backgrounds: {
       value: 'light',
     },
