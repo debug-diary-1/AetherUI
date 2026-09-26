@@ -40,7 +40,7 @@ catalog:
   lit-element: 4.2.2
   lit-html: 3.3.3
   oxfmt: 0.67.0
-  oxlint: 1.82.0
+  oxlint: 1.85.0
   playwright: 1.63.0
   prismjs: 1.30.0
   rimraf: 6.1.3
