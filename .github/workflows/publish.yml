@@ -85,11 +85,18 @@ jobs:
           ' "$v"
 
       # tokens first (no workspace deps), then core, then the packages that
-      # depend on core.
+      # depend on core. npm versions are immutable, so a tag publishes only the
+      # packages whose version is not yet on the registry; a rerun after a
+      # partial failure resumes with the missing ones.
       - name: Publish packages
         run: |
           for pkg in tokens core accordion datatable agent mcp; do
-            echo "::group::publish @aetherui-kit/$pkg"
+            version="$(node -p "require('./packages/$pkg/package.json').version")"
+            if [ "$(npm view "@aetherui-kit/$pkg@$version" version 2>/dev/null)" = "$version" ]; then
+              echo "@aetherui-kit/$pkg@$version is already published; skipping"
+              continue
+            fi
+            echo "::group::publish @aetherui-kit/$pkg@$version"
             (cd "packages/$pkg" && pnpm publish --access public --no-git-checks --provenance)
             echo "::endgroup::"
           done

@@ -200,6 +200,12 @@ test('the publish workflow uses npm trusted publishing, not a long-lived token',
     /--provenance/,
     'publish with provenance',
   );
+  // npm versions are immutable; a tag releases only packages whose version is new.
+  assert.match(
+    job.steps.map((step) => step.run).join('\n'),
+    /npm view "@aetherui-kit\/\$pkg@\$version" version[\s\S]*continue[\s\S]*pnpm publish/,
+    'publish must skip package versions already on npm',
+  );
 
   // A cache restored into the job that holds publish rights is attacker-
   // controlled input, so this job must build from a clean state.
