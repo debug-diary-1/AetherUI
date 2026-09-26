@@ -42,8 +42,8 @@ AetherUI follows these principles:
 ### Option 1: Use a Pre-built Theme (Quickest)
 
 ```typescript
-import { defineAeButton } from '@aetherui/core';
-import '@aetherui/tokens/light.css'; // Pre-built light theme
+import { defineAeButton } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css'; // Pre-built light theme
 
 defineAeButton();
 ```
@@ -55,8 +55,8 @@ defineAeButton();
 ### Option 2: Minimal Theme (Semantic Tokens Only)
 
 ```typescript
-import { defineAeButton } from '@aetherui/core';
-import '@aetherui/tokens/minimal.css'; // Only semantic tokens
+import { defineAeButton } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/minimal.css'; // Only semantic tokens
 
 defineAeButton();
 ```
@@ -77,7 +77,7 @@ Then customize:
 ### Option 3: Headless Mode (Maximum Control)
 
 ```typescript
-import { defineAeButton } from '@aetherui/core';
+import { defineAeButton } from '@aetherui-kit/core';
 // No theme import - completely unstyled
 
 defineAeButton();
@@ -365,7 +365,7 @@ AetherUI provides three pre-built themes:
 ### Light Theme
 
 ```typescript
-import '@aetherui/tokens/light.css';
+import '@aetherui-kit/tokens/light.css';
 ```
 
 Clean, modern light theme with professional color palette.
@@ -373,7 +373,7 @@ Clean, modern light theme with professional color palette.
 ### Dark Theme
 
 ```typescript
-import '@aetherui/tokens/dark.css';
+import '@aetherui-kit/tokens/dark.css';
 ```
 
 Beautiful dark theme optimized for low-light environments.
@@ -381,7 +381,7 @@ Beautiful dark theme optimized for low-light environments.
 ### Minimal Theme
 
 ```typescript
-import '@aetherui/tokens/minimal.css';
+import '@aetherui-kit/tokens/minimal.css';
 ```
 
 Only semantic tokens - provides a foundation for custom themes without opinionated component styling.
@@ -393,7 +393,7 @@ Only semantic tokens - provides a foundation for custom themes without opinionat
 ### Step 1: Start with Minimal Theme
 
 ```typescript
-import '@aetherui/tokens/minimal.css';
+import '@aetherui-kit/tokens/minimal.css';
 ```
 
 ### Step 2: Define Your Brand Tokens

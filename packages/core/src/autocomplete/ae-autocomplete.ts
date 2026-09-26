@@ -1,3 +1,4 @@
+import { customElement } from '../internal/custom-element';
 import { html, LitElement } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import { AutocompleteController } from './controller';
@@ -44,6 +45,7 @@ import { autocompleteStyles } from './styles';
  * @cssproperty --ae-autocomplete-highlight-text-color - Text color for highlighted/hovered options
  * @cssproperty --ae-autocomplete-dropdown-shadow - Shadow for the dropdown
  */
+@customElement('ae-autocomplete')
 export class AeAutocomplete extends LitElement {
   static styles = autocompleteStyles;
 
@@ -291,7 +293,7 @@ export class AeAutocomplete extends LitElement {
    */
   private _getClasses(classes: Record<string, boolean>): string {
     return Object.entries(classes)
-      .filter(([_, active]) => active)
+      .filter(([, active]) => active)
       .map(([className]) => className)
       .join(' ');
   }
@@ -434,9 +436,13 @@ export class AeAutocomplete extends LitElement {
         <ul class="autocomplete-options" role="listbox" part="options">
           ${Object.entries(groupedOptions).map(
             ([group, options]) => html`
-              ${group
-                ? html` <li class="autocomplete-group-heading" part="group-heading">${group}</li> `
-                : ''}
+              ${
+                group
+                  ? html`
+                      <li class="autocomplete-group-heading" part="group-heading">${group}</li>
+                    `
+                  : ''
+              }
               ${options.map((option, _index) => {
                 // Calculate the overall index in the flat list
                 const flatIndex = filteredOptions.findIndex((o) => o.id === option.id);

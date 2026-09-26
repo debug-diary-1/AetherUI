@@ -1,5 +1,5 @@
 {
-  "name": "@aetherui/landing",
+  "name": "@aetherui-kit/landing",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
@@ -11,8 +11,8 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@aetherui/core": "workspace:*",
-    "@aetherui/tokens": "workspace:*",
+    "@aetherui-kit/core": "workspace:*",
+    "@aetherui-kit/tokens": "workspace:*",
     "lit": "catalog:"
   },
   "devDependencies": {

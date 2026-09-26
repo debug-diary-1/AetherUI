@@ -24,6 +24,7 @@ Before creating an issue, please:
 5. **Run tests**: Use `pnpm test` (or `pnpm test:memory` for constrained environments)
 6. **Run linting**: Use `pnpm lint` and fix any issues
 7. **Format code**: Use `pnpm format`
+   Before submitting, run `pnpm check`. For release changes, run `pnpm check:release`.
 8. **Commit your changes**: Use conventional commit messages (see below)
 9. **Push to your fork** and submit a pull request
 
@@ -36,6 +37,9 @@ cd AetherUI
 
 # Install dependencies
 pnpm install
+
+# Install the browsers used by the test suites
+pnpm exec playwright install chromium firefox webkit
 
 # Start development
 pnpm dev
@@ -71,7 +75,7 @@ docs: update README with new examples
 
 When creating or modifying components:
 
-1. Follow the component structure in `packages/core/src/components/[component]/`
+1. Follow the component structure in `packages/core/src/[component]/`
 2. Use the naming conventions from [STANDARDS.md](STANDARDS.md)
 3. Ensure accessibility compliance (WAI-ARIA)
 4. Add proper TypeScript types
@@ -99,7 +103,7 @@ When creating or modifying components:
 If you need help with your contribution:
 
 1. Check the [documentation](https://debug-diary-1.github.io/AetherUI/docs/)
-2. Read the [CLAUDE.md](CLAUDE.md) file for codebase guidance
+2. Read the [component authoring guide](docs/agents/component-authoring.md) for codebase guidance
 3. Open a discussion in the GitHub Discussions tab
 4. Reach out in issues with questions
 

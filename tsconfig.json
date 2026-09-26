@@ -3,7 +3,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
@@ -12,14 +12,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "baseUrl": ".",
     "paths": {
-      "@aetherui/core/*": ["packages/core/src/*"],
-      "@aetherui/*": ["packages/*/src"]
+      "@aetherui-kit/core/*": ["./packages/core/src/*"],
+      "@aetherui-kit/*": ["./packages/*/src"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "types": ["node"]
   },
   "include": ["packages/**/*.ts", "packages/**/*.tsx"],
   "exclude": ["node_modules", "dist", "**/*.timestamp-*.mjs", "**/dist/**", "packages/*/dist/**"]

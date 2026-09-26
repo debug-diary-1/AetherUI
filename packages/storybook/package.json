@@ -1,5 +1,5 @@
 {
-  "name": "@aetherui/storybook",
+  "name": "@aetherui-kit/storybook",
   "version": "0.1.0",
   "private": true,
   "description": "Storybook for AetherUI Web Components",
@@ -19,8 +19,9 @@
     "chromatic": "chromatic"
   },
   "dependencies": {
-    "@aetherui/core": "workspace:*",
-    "@aetherui/datatable": "workspace:*"
+    "@aetherui-kit/core": "workspace:*",
+    "@aetherui-kit/datatable": "workspace:*",
+    "@aetherui-kit/tokens": "workspace:*"
   },
   "devDependencies": {
     "@lit/reactive-element": "catalog:",

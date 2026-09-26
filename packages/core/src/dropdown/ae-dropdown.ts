@@ -1,5 +1,6 @@
 import { LitElement, html, PropertyValues, nothing, css } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { dropdownStyles } from './styles';
 import { KeyboardController } from './keyboard';
 import { updatePosition, type Placement, type Strategy } from './positioning';
@@ -295,34 +296,38 @@ export class AeDropdown extends LitElement {
         <slot></slot>
       </div>
 
-      ${isOpen
-        ? html`
-            <div class="overlay" part="overlay">
-              ${this.header
-                ? html` <div class="header" part="header">${this.header}</div> `
-                : nothing}
+      ${
+        isOpen
+          ? html`
+              <div class="overlay" part="overlay">
+                ${
+                  this.header
+                    ? html` <div class="header" part="header">${this.header}</div> `
+                    : nothing
+                }
 
-              <div class="menu" part="menu" role="menu" tabindex="-1" aria-orientation="vertical">
-                <slot
-                  name="item"
-                  @click=${(e: Event) => {
-                    // A slotted item may render the menuitem inside its shadow root.
-                    const menuItem = e
-                      .composedPath()
-                      .find(
-                        (node): node is HTMLElement =>
-                          node instanceof HTMLElement && node.matches('[role="menuitem"]'),
-                      );
-                    if (menuItem) {
-                      const value = menuItem.getAttribute('data-value') || '';
-                      this.handleItemClick(e, value);
-                    }
-                  }}
-                ></slot>
+                <div class="menu" part="menu" role="menu" tabindex="-1" aria-orientation="vertical">
+                  <slot
+                    name="item"
+                    @click=${(e: Event) => {
+                      // A slotted item may render the menuitem inside its shadow root.
+                      const menuItem = e
+                        .composedPath()
+                        .find(
+                          (node): node is HTMLElement =>
+                            node instanceof HTMLElement && node.matches('[role="menuitem"]'),
+                        );
+                      if (menuItem) {
+                        const value = menuItem.getAttribute('data-value') || '';
+                        this.handleItemClick(e, value);
+                      }
+                    }}
+                  ></slot>
+                </div>
               </div>
-            </div>
-          `
-        : nothing}
+            `
+          : nothing
+      }
     `;
   }
 }
@@ -368,22 +373,24 @@ export class AeDropdownItem extends LitElement {
           <slot></slot>
         </div>
         <slot name="hint" part="item-hint"></slot>
-        ${this.hasSubmenu
-          ? html`
-              <span part="item-submenu-indicator">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                >
-                  <path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-            `
-          : nothing}
+        ${
+          this.hasSubmenu
+            ? html`
+                <span part="item-submenu-indicator">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              `
+            : nothing
+        }
       </button>
     `;
   }

@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { popoverStyles } from './styles';
 
 /**
@@ -251,21 +252,23 @@ export class AePopover extends LitElement {
         <slot name="trigger"></slot>
       </div>
 
-      ${this.open
-        ? html`
-            <div
-              part="popover"
-              class="popover-content"
-              role="${this.trigger === 'hover' ? 'tooltip' : 'dialog'}"
-              style="${this.popoverStyles}"
-              @mouseenter="${this.handlePopoverMouseEnter}"
-              @mouseleave="${this.handlePopoverMouseLeave}"
-            >
-              ${this.arrow ? html` <div part="arrow" class="popover-arrow"></div> ` : ''}
-              <slot></slot>
-            </div>
-          `
-        : ''}
+      ${
+        this.open
+          ? html`
+              <div
+                part="popover"
+                class="popover-content"
+                role="${this.trigger === 'hover' ? 'tooltip' : 'dialog'}"
+                style="${this.popoverStyles}"
+                @mouseenter="${this.handlePopoverMouseEnter}"
+                @mouseleave="${this.handlePopoverMouseLeave}"
+              >
+                ${this.arrow ? html` <div part="arrow" class="popover-arrow"></div> ` : ''}
+                <slot></slot>
+              </div>
+            `
+          : ''
+      }
     `;
   }
 }

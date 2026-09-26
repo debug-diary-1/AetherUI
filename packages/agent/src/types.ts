@@ -38,8 +38,11 @@ export interface AgentUiComponentContract {
 }
 
 export interface AgentUiPolicy {
+  /** Maximum component nesting, counting the root as 1. Default: 12. */
   maxDepth?: number;
+  /** Maximum rendered element and text nodes, including the root. Default: 100. */
   maxNodes?: number;
+  /** Maximum nesting within each JSON property value. Default: 32. */
   maxPropertyDepth?: number;
   allowedComponents?: readonly string[];
   allowedUrlProtocols?: readonly string[];
@@ -78,6 +81,7 @@ export interface AgentUiRenderOptions extends AgentUiPolicy {
 
 export interface AgentUiRenderResult {
   element: HTMLElement;
+  /** Number of element and text nodes created from the document (excludes shadow DOM). */
   nodeCount: number;
   dispose(): void;
 }

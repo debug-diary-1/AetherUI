@@ -693,7 +693,7 @@ pnpm test:e2e:update
 pnpm build
 
 # Build specific package
-pnpm --filter @aetherui/core build
+pnpm --filter @aetherui-kit/core build
 
 # Build Storybook
 pnpm build-storybook

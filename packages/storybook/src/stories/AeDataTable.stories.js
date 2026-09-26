@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import '@aetherui/datatable';
+import '@aetherui-kit/datatable';
 
 export default {
   title: 'Components/AeDataTable',

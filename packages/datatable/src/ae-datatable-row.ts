@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { DATATABLE_ROW_ELEMENT_NAME } from './index';
+import { DATATABLE_ROW_ELEMENT_NAME } from './constants';
 import { rowStyles } from './styles';
 
 /**
@@ -29,6 +29,11 @@ export class AeDatatableRow extends LitElement {
   @property({ type: Boolean, reflect: true })
   selectable = false;
 
+  connectedCallback() {
+    super.connectedCallback();
+    if (!this.hasAttribute('role')) this.setAttribute('role', 'row');
+  }
+
   /**
    * Handle row click
    */
@@ -53,4 +58,6 @@ export class AeDatatableRow extends LitElement {
   }
 }
 
-customElements.define(DATATABLE_ROW_ELEMENT_NAME, AeDatatableRow);
+if (!customElements.get(DATATABLE_ROW_ELEMENT_NAME)) {
+  customElements.define(DATATABLE_ROW_ELEMENT_NAME, AeDatatableRow);
+}

@@ -1,15 +1,15 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
-import dts from 'vite-plugin-dts';
+import dts from 'unplugin-dts/vite';
 
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(import.meta.dirname, 'src/index.ts'),
       formats: ['es'],
       fileName: 'index',
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: [/^lit/, /^@floating-ui/],
       output: {
         preserveModules: true,
@@ -18,27 +18,16 @@ export default defineConfig({
     target: 'es2022',
     outDir: 'dist',
   },
-  esbuild: {
-    target: 'es2022',
-    supported: {
-      decorators: true,
-    },
-  },
   plugins: [
     dts({
       entryRoot: 'src',
-      outDir: 'dist',
+      outDirs: 'dist',
       exclude: ['src/test/**'],
     }),
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
-    },
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      target: 'esnext',
+      '@': resolve(import.meta.dirname, 'src'),
     },
   },
 });

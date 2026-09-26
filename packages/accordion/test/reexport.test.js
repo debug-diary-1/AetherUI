@@ -10,7 +10,7 @@ const packageRoot = new URL('../', import.meta.url);
 test('the compatibility package delegates to the canonical core accordion', async () => {
   const source = await readFile(new URL('src/index.ts', packageRoot), 'utf8');
 
-  assert.match(source, /from '@aetherui\/core\/accordion'/);
+  assert.match(source, /from '@aetherui-kit\/core\/accordion'/);
   assert.match(source, /AeAccordion/);
   assert.match(source, /AeAccordionItem/);
   assert.match(source, /defineAeAccordion/);
@@ -23,13 +23,13 @@ test('the package exposes only its built public entry point', async () => {
   assert.deepEqual(manifest.files, ['dist']);
   assert.equal(manifest.exports['.'].import, './dist/index.js');
   assert.equal(manifest.exports['.'].types, './dist/index.d.ts');
-  assert.equal(manifest.dependencies['@aetherui/core'], 'workspace:^');
+  assert.equal(manifest.dependencies['@aetherui-kit/core'], 'workspace:^');
 });
 
 test('the published declarations keep the public package import', async () => {
   const declarations = await readFile(new URL('dist/index.d.ts', packageRoot), 'utf8');
 
-  assert.match(declarations, /@aetherui\/core\/accordion/);
+  assert.match(declarations, /@aetherui-kit\/core\/accordion/);
   assert.doesNotMatch(declarations, /\.\.\/\.\.\/core\/src/);
 });
 

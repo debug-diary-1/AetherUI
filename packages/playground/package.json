@@ -1,5 +1,5 @@
 {
-  "name": "@aetherui/playground",
+  "name": "@aetherui-kit/playground",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
@@ -10,13 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@aetherui/core": "workspace:*",
-    "@aetherui/tokens": "workspace:*",
+    "@aetherui-kit/agent": "workspace:*",
+    "@aetherui-kit/core": "workspace:*",
+    "@aetherui-kit/tokens": "workspace:*",
     "lit": "catalog:",
     "prismjs": "catalog:"
   },
   "devDependencies": {
     "@types/prismjs": "catalog:",
+    "@typescript/native": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"
   }

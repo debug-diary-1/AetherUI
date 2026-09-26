@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { ref } from 'lit/directives/ref.js';
 import { expect, within, userEvent } from 'storybook/test';
 
 export default {
@@ -140,7 +141,7 @@ export const AsContextMenu = {
       </div>
 
       <ae-menu
-        ${(el) => (menu = el)}
+        ${ref((el) => (menu = el))}
         style="display: none;"
         @ae-menu-select="${(e) => {
           console.log('Selected:', e.detail.value);

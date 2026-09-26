@@ -1,5 +1,6 @@
 import { LitElement, html, nothing, CSSResult } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { toastStyles } from './styles';
 
 /**

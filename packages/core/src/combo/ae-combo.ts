@@ -1,3 +1,4 @@
+import { customElement } from '../internal/custom-element';
 import { html, LitElement } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import { ComboController } from './controller';
@@ -41,6 +42,7 @@ import { comboStyles } from './styles';
  * @cssproperty --ae-combo-option-selected-fg - Selected option text color
  * @cssproperty --ae-combo-shadow - Overlay shadow
  */
+@customElement('ae-combo')
 export class AeCombo extends LitElement {
   static styles = comboStyles;
 
@@ -330,27 +332,29 @@ export class AeCombo extends LitElement {
 
         <div part="overlay" class="overlay" ?data-open=${this.isOpen}>
           <div part="listbox" class="listbox" role="listbox" id="listbox" tabindex="-1">
-            ${filteredItems.length === 0
-              ? html`<div part="empty-message" class="empty-message">No results found</div>`
-              : filteredItems.map((item, index) => {
-                  const isHighlighted = index === highlightIndex;
-                  const itemLabel = this.controller.highlightMatches(item.label, this.value);
+            ${
+              filteredItems.length === 0
+                ? html`<div part="empty-message" class="empty-message">No results found</div>`
+                : filteredItems.map((item, index) => {
+                    const isHighlighted = index === highlightIndex;
+                    const itemLabel = this.controller.highlightMatches(item.label, this.value);
 
-                  return html`
-                    <div
-                      part="option"
-                      class="option"
-                      role="option"
-                      ?data-highlighted=${isHighlighted}
-                      ?data-selected=${item.label === this.value}
-                      aria-selected=${item.label === this.value}
-                      aria-disabled=${item.disabled || false}
-                      @click=${() => this.handleOptionClick(item)}
-                    >
-                      ${itemLabel}
-                    </div>
-                  `;
-                })}
+                    return html`
+                      <div
+                        part="option"
+                        class="option"
+                        role="option"
+                        ?data-highlighted=${isHighlighted}
+                        ?data-selected=${item.label === this.value}
+                        aria-selected=${item.label === this.value}
+                        aria-disabled=${item.disabled || false}
+                        @click=${() => this.handleOptionClick(item)}
+                      >
+                        ${itemLabel}
+                      </div>
+                    `;
+                  })
+            }
           </div>
         </div>
       </div>

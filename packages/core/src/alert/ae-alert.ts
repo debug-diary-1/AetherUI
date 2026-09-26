@@ -1,11 +1,14 @@
 import { LitElement, html, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { alertStyles } from './styles';
 
 /**
  * @element ae-alert
  * @summary Non-modal, in-flow banner for status or messaging
  * @fires {CustomEvent} ae-close - Fired when the alert is closed
+ * @slot - The alert message content
+ * @slot icon - Custom icon that replaces the variant's default icon
  *
  * @example
  * ```html
@@ -104,18 +107,20 @@ export class AeAlert extends LitElement {
         <div part="content">
           <slot></slot>
         </div>
-        ${this.closable
-          ? html`
-              <button part="close" aria-label="Close" @click=${this.handleClose}>
-                <svg width="14" height="14" viewBox="0 0 14 14">
-                  <path
-                    fill="currentColor"
-                    d="M14 1.41L12.59 0 7 5.59 1.41 0 0 1.41 5.59 7 0 12.59 1.41 14 7 8.41 12.59 14 14 12.59 8.41 7z"
-                  />
-                </svg>
-              </button>
-            `
-          : ''}
+        ${
+          this.closable
+            ? html`
+                <button part="close" aria-label="Close" @click=${this.handleClose}>
+                  <svg width="14" height="14" viewBox="0 0 14 14">
+                    <path
+                      fill="currentColor"
+                      d="M14 1.41L12.59 0 7 5.59 1.41 0 0 1.41 5.59 7 0 12.59 1.41 14 7 8.41 12.59 14 14 12.59 8.41 7z"
+                    />
+                  </svg>
+                </button>
+              `
+            : ''
+        }
       </section>
     `;
   }

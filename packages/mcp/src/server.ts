@@ -1,4 +1,4 @@
-import { componentCatalog, validateAgentUi } from '@aetherui/agent';
+import { componentCatalog, validateAgentUi } from '@aetherui-kit/agent';
 import { McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
 import agentUiSchema from '../agent-ui.schema.json' with { type: 'json' };
@@ -87,8 +87,18 @@ export function createAetherUiMcpServer(): McpServer {
         document: z.unknown().describe('Candidate AetherUI agent document.'),
         allowedComponents: z.array(z.string()).optional(),
         allowedUrlProtocols: z.array(urlProtocolSchema).optional(),
-        maxDepth: z.number().int().positive().optional(),
-        maxNodes: z.number().int().positive().optional(),
+        maxDepth: z
+          .number()
+          .int()
+          .positive()
+          .describe('Maximum component nesting; root depth is 1.')
+          .optional(),
+        maxNodes: z
+          .number()
+          .int()
+          .positive()
+          .describe('Maximum element and text nodes, including the root.')
+          .optional(),
         maxPropertyDepth: z.number().int().positive().optional(),
       }),
       annotations: { readOnlyHint: true, idempotentHint: true },

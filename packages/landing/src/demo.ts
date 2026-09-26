@@ -5,15 +5,15 @@
  * bundle fails to load the page still renders readable content — the elements
  * simply stay unupgraded rather than disappearing.
  */
-import lightTheme from '@aetherui/tokens/light.css?inline';
-import darkTheme from '@aetherui/tokens/dark.css?inline';
+import lightTheme from '@aetherui-kit/tokens/light.css?inline';
+import darkTheme from '@aetherui-kit/tokens/dark.css?inline';
 
-import { defineAeButton } from '@aetherui/core/button';
-import { defineAeBadge } from '@aetherui/core/badge';
-import { defineAeInput } from '@aetherui/core/input';
-import { defineAeSwitch } from '@aetherui/core/switch';
-import { defineAeProgress } from '@aetherui/core/progress';
-import { defineAeAlert } from '@aetherui/core/alert';
+import { defineAeButton } from '@aetherui-kit/core/button';
+import { defineAeBadge } from '@aetherui-kit/core/badge';
+import { defineAeInput } from '@aetherui-kit/core/input';
+import { defineAeSwitch } from '@aetherui-kit/core/switch';
+import { defineAeProgress } from '@aetherui-kit/core/progress';
+import { defineAeAlert } from '@aetherui-kit/core/alert';
 
 // Both themes define tokens on :root, so importing them normally would make
 // whichever loaded last win. Attaching them as media-scoped stylesheets lets the

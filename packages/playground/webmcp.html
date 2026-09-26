@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AetherUI Playground - WebMCP agent surface</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="webmcp-demo">
+    <header class="demo-header">
+      <a class="demo-back" href="./">← Playground</a>
+      <h1>WebMCP agent surface</h1>
+      <p class="demo-lede">
+        This page registers AetherUI tools with the browser through
+        <a href="https://developer.chrome.com/docs/ai/webmcp">WebMCP</a>. A browser agent can list
+        the allowed components, render validated UI into the surface below, wait for your click, and
+        read what you entered. The page handles every action; the agent never supplies code.
+      </p>
+    </header>
+
+    <p id="status" class="demo-status" role="status">Checking for WebMCP…</p>
+
+    <main class="demo-grid">
+      <section aria-labelledby="surface-title">
+        <div class="demo-panel-header">
+          <h2 id="surface-title">Agent surface</h2>
+          <ae-button id="run" variant="primary" size="sm" disabled>Run sample agent</ae-button>
+        </div>
+        <div id="surface" class="demo-surface">
+          <p class="demo-placeholder">Waiting for an agent to render UI.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="log-title">
+        <div class="demo-panel-header">
+          <h2 id="log-title">Activity</h2>
+          <ae-button id="clear" variant="ghost" size="sm">Clear</ae-button>
+        </div>
+        <ol id="log" class="demo-log" aria-live="polite"></ol>
+      </section>
+    </main>
+
+    <script type="module" src="/src/webmcp-demo.ts"></script>
+  </body>
+</html>

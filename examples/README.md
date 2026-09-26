@@ -70,7 +70,7 @@ npm run dev
 ## Framework-Specific Notes
 
 ### React
-- Use camelCase for event handlers (`onAeButtonClick`)
+- Use the exact custom event name after `on` in React 19+ (`onae-button-click`)
 - Add TypeScript declarations for JSX
 - Consider SSR limitations with Next.js
 - Web Components work best with React 19+

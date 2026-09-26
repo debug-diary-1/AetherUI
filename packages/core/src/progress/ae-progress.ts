@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { customElement, property } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { progressStyles } from './styles';
 
 /**
@@ -91,9 +92,11 @@ export class AeProgress extends LitElement {
         <div part="track" class="progress-track">
           <div part="bar" class="progress-bar" style="width: ${this.percentage}%"></div>
         </div>
-        ${this.showLabel
-          ? html` <div part="label" class="progress-label">${this.labelText}</div> `
-          : ''}
+        ${
+          this.showLabel
+            ? html` <div part="label" class="progress-label">${this.labelText}</div> `
+            : ''
+        }
       </div>
     `;
   }

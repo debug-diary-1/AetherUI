@@ -1,14 +1,14 @@
-# @aetherui/tokens
+# @aetherui-kit/tokens
 
 Design tokens and pre-built themes for [AetherUI](https://github.com/debug-diary-1/AetherUI) components.
 
-[![npm version](https://img.shields.io/npm/v/@aetherui/tokens)](https://www.npmjs.com/package/@aetherui/tokens)
+[![npm version](https://img.shields.io/npm/v/@aetherui-kit/tokens)](https://www.npmjs.com/package/@aetherui-kit/tokens)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Installation
 
 ```bash
-npm install @aetherui/tokens
+npm install @aetherui-kit/tokens
 ```
 
 ## Usage
@@ -17,31 +17,32 @@ Import a pre-built theme:
 
 ```typescript
 // Light theme
-import '@aetherui/tokens/light.css';
+import '@aetherui-kit/tokens/light.css';
 
 // Dark theme
-import '@aetherui/tokens/dark.css';
+import '@aetherui-kit/tokens/dark.css';
 ```
 
 Or in HTML:
 
 ```html
-<link rel="stylesheet" href="node_modules/@aetherui/tokens/dist/light.css">
+<link rel="stylesheet" href="node_modules/@aetherui-kit/tokens/dist/light.css">
 ```
 
 ## Available Themes
 
 | Theme | Import |
 |-------|--------|
-| Light | `@aetherui/tokens/light.css` |
-| Dark | `@aetherui/tokens/dark.css` |
+| Light | `@aetherui-kit/tokens/light.css` |
+| Dark | `@aetherui-kit/tokens/dark.css` |
+| Minimal (semantic tokens only) | `@aetherui-kit/tokens/minimal.css` |
 
 ## Customization
 
 Override any token with CSS custom properties:
 
 ```css
-@import '@aetherui/tokens/light.css';
+@import '@aetherui-kit/tokens/light.css';
 
 :root {
   /* Colors */
@@ -88,7 +89,7 @@ Override any token with CSS custom properties:
 Tokens are also available as JavaScript values:
 
 ```typescript
-import { tokens } from '@aetherui/tokens';
+import { tokens } from '@aetherui-kit/tokens';
 
 console.log(tokens.colors.primary);  // 'var(--ae-color-primary, #0066cc)'
 console.log(tokens.spacing.md);      // 'var(--ae-spacing-md, 1rem)'

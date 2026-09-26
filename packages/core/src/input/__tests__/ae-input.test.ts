@@ -167,6 +167,52 @@ describe('ae-input', () => {
     expect(formData.get('username')).to.equal('john');
   });
 
+  it('updates form validity when type and step change', async () => {
+    const form = await fixture<HTMLFormElement>(html`
+      <form><ae-input name="value" value="not-an-email"></ae-input></form>
+    `);
+    const el = form.querySelector('ae-input') as AeInput;
+    await el.updateComplete;
+    expect(form.checkValidity()).to.be.true;
+    el.type = 'email';
+    await el.updateComplete;
+    expect(el.checkValidity()).to.be.false;
+    expect(form.checkValidity()).to.be.false;
+    el.type = 'text';
+    await el.updateComplete;
+    expect(form.checkValidity()).to.be.true;
+
+    el.type = 'number';
+    el.value = '3';
+    el.min = 0;
+    el.step = 1;
+    await el.updateComplete;
+    expect(form.checkValidity()).to.be.true;
+    el.step = 2;
+    await el.updateComplete;
+    expect(form.checkValidity()).to.be.false;
+    el.step = 1;
+    await el.updateComplete;
+    expect(form.checkValidity()).to.be.true;
+  });
+
+  it('submits empty strings and omits disabled inputs', async () => {
+    const form = await fixture<HTMLFormElement>(html`
+      <form><ae-input name="value"></ae-input></form>
+    `);
+    const el = form.querySelector('ae-input') as AeInput;
+    await el.updateComplete;
+    expect([...new FormData(form)]).to.deep.equal([['value', '']]);
+    el.value = 'saved';
+    await el.updateComplete;
+    el.value = '';
+    await el.updateComplete;
+    expect([...new FormData(form)]).to.deep.equal([['value', '']]);
+    el.disabled = true;
+    await el.updateComplete;
+    expect([...new FormData(form)]).to.deep.equal([]);
+  });
+
   it('uses ifDefined for optional attributes', async () => {
     const el = await fixture<AeInput>(html`<ae-input></ae-input>`);
     const input = el.shadowRoot!.querySelector('input')!;

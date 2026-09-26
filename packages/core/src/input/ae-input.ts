@@ -1,11 +1,13 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { inputStyles } from './styles';
 
 /**
  * A text input component with support for various input types, validation, and form participation.
  * Participates in native form submission via ElementInternals API.
+ * Enabled, named inputs submit empty strings. Validity follows changes to native constraints.
  *
  * @element ae-input
  *
@@ -171,6 +173,10 @@ export class AeInput extends LitElement {
     }
 
     if (
+      changedProperties.has('type') ||
+      changedProperties.has('step') ||
+      changedProperties.has('readonly') ||
+      changedProperties.has('disabled') ||
       changedProperties.has('required') ||
       changedProperties.has('pattern') ||
       changedProperties.has('minlength') ||
@@ -183,7 +189,7 @@ export class AeInput extends LitElement {
   }
 
   private _updateFormValue() {
-    this._internals.setFormValue(this.value || null);
+    this._internals.setFormValue(this.value);
   }
 
   private _updateValidity() {
@@ -322,21 +328,22 @@ export class AeInput extends LitElement {
 
     return html`
       <div part="base" class="input-base">
-        ${this.label
-          ? html`
-              <label part="label" class="input-label" for="input">
-                ${this.label}
-                ${this.required ? html`<span class="required-indicator">*</span>` : ''}
-              </label>
-            `
-          : ''}
+        ${
+          this.label
+            ? html`
+                <label part="label" class="input-label" for="input">
+                  ${this.label}
+                  ${this.required ? html`<span class="required-indicator">*</span>` : ''}
+                </label>
+              `
+            : ''
+        }
 
         <div
           part="input-wrapper"
-          class="input-wrapper ${this.focused ? 'focused' : ''} ${hasError ? 'error' : ''} ${this
-            .disabled
-            ? 'disabled'
-            : ''}"
+          class="input-wrapper ${this.focused ? 'focused' : ''} ${hasError ? 'error' : ''} ${
+            this.disabled ? 'disabled' : ''
+          }"
         >
           <slot name="prefix" part="prefix"></slot>
 
@@ -366,33 +373,35 @@ export class AeInput extends LitElement {
             @blur="${this.handleBlur}"
           />
 
-          ${this.clearable && this.value && !this.disabled && !this.readonly
-            ? html`
-                <button
-                  part="clear-button"
-                  class="clear-button"
-                  type="button"
-                  @click="${this.handleClear}"
-                  aria-label="Clear input"
-                >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path
-                      d="M12 4L4 12M4 4L12 12"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                    />
-                  </svg>
-                </button>
-              `
-            : ''}
+          ${
+            this.clearable && this.value && !this.disabled && !this.readonly
+              ? html`
+                  <button
+                    part="clear-button"
+                    class="clear-button"
+                    type="button"
+                    @click="${this.handleClear}"
+                    aria-label="Clear input"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M12 4L4 12M4 4L12 12"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                `
+              : ''
+          }
 
           <slot name="suffix" part="suffix"></slot>
         </div>
 
-        ${showHelpText
-          ? html` <div part="help-text" class="help-text">${this.helpText}</div> `
-          : ''}
+        ${
+          showHelpText ? html` <div part="help-text" class="help-text">${this.helpText}</div> ` : ''
+        }
         ${hasError ? html` <div part="error-text" class="error-text">${this.error}</div> ` : ''}
       </div>
     `;

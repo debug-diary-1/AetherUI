@@ -53,11 +53,10 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build dependencies
-        run: pnpm exec turbo build --filter=@aetherui/core --filter=@aetherui/tokens
+        run: pnpm exec turbo build --filter=@aetherui-kit/core --filter=@aetherui-kit/tokens
 
       - name: Build docs
         id: build-docs
-        continue-on-error: true
         env:
           # Project pages live under /AetherUI/, so the docs site must be built with
           # that prefix or its /_astro assets 404 (see packages/docs/astro.config.mjs).
@@ -68,23 +67,24 @@ jobs:
           pnpm build
 
       - name: Upload docs artifact
-        if: steps.build-docs.outcome == 'success'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: docs-dist
           path: packages/docs/dist
+          if-no-files-found: error
           retention-days: 1
 
       # The landing page is a small Vite app: its live component demo is bundled
-      # from @aetherui/core, which this job has already built.
+      # from @aetherui-kit/core, which this job has already built.
       - name: Build landing page
-        run: pnpm --filter @aetherui/landing build
+        run: pnpm --filter @aetherui-kit/landing build
 
       - name: Upload landing artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: landing-dist
           path: packages/landing/dist
+          if-no-files-found: error
           retention-days: 1
 
   build-storybook:
@@ -122,21 +122,18 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build dependencies
-        run: pnpm exec turbo build --filter=@aetherui/core --filter=@aetherui/tokens
+        run: pnpm exec turbo build --filter=@aetherui-kit/core --filter=@aetherui-kit/tokens
 
       - name: Build Storybook
         id: build-storybook
-        continue-on-error: true
-        run: |
-          cd packages/storybook
-          pnpm build-storybook
+        run: pnpm build-storybook
 
       - name: Upload Storybook artifact
-        if: steps.build-storybook.outcome == 'success'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: storybook-dist
-          path: packages/storybook/storybook-static
+          path: storybook-static
+          if-no-files-found: error
           retention-days: 1
 
   deploy:
@@ -156,41 +153,33 @@ jobs:
         run: |
           mkdir -p .output/docs
           mkdir -p .output/storybook
-          cp -r .github/pages/* .output/
 
-      - name: Download docs artifact
-        continue-on-error: true
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
-        with:
-          name: docs-dist
-          path: .output/docs
-
-      # Landing page assets use relative paths, so the same build works under
-      # the /AetherUI/ Pages prefix and at the Vercel root.
+      # The landing build is shared with the Vercel preview, so the two roots cannot
+      # drift apart. Its assets use relative paths, so the same build works under the
+      # /AetherUI/ Pages prefix and at the Vercel root.
       - name: Download landing artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: landing-dist
           path: .output
 
+      - name: Download docs artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: docs-dist
+          path: .output/docs
+
       - name: Download Storybook artifact
-        continue-on-error: true
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: storybook-dist
           path: .output/storybook
 
-      - name: Create fallback pages if needed
+      - name: Verify site entry points
         run: |
-          # Check if docs exist
-          if [ ! -f .output/docs/index.html ]; then
-            cp .github/pages/docs-fallback.html .output/docs/index.html
-          fi
-
-          # Check if storybook exists
-          if [ ! -f .output/storybook/index.html ]; then
-            cp .github/pages/storybook-fallback.html .output/storybook/index.html
-          fi
+          test -s .output/index.html
+          test -s .output/docs/index.html
+          test -s .output/storybook/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5

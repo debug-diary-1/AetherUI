@@ -5,48 +5,29 @@ This example demonstrates how to use AetherUI components in a React application.
 ## Installation
 
 ```bash
-npm install @aetherui/core @aetherui/tokens
+npm install @aetherui-kit/core @aetherui-kit/tokens
 # or
-yarn add @aetherui/core @aetherui/tokens
+yarn add @aetherui-kit/core @aetherui-kit/tokens
 # or
-pnpm add @aetherui/core @aetherui/tokens
+pnpm add @aetherui-kit/core @aetherui-kit/tokens
 ```
 
 ## Usage
 
 ### TypeScript Setup
 
-Add type definitions for custom elements in your `vite-env.d.ts` or global types file:
+Use React 19 or later. Include the generated declarations in your `vite-env.d.ts` or another TypeScript setup file:
 
 ```typescript
 /// <reference types="vite/client" />
-
-declare namespace JSX {
-  interface IntrinsicElements {
-    'ae-button': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
-      variant?: 'primary' | 'secondary' | 'ghost';
-      size?: 'sm' | 'md' | 'lg';
-      disabled?: boolean;
-      onAeButtonClick?: (e: CustomEvent) => void;
-    }, HTMLElement>;
-    'ae-modal': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
-      open?: boolean;
-      closable?: boolean;
-      backdrop?: boolean;
-      size?: 'small' | 'medium' | 'large';
-      onAeModalOpen?: (e: CustomEvent) => void;
-      onAeModalClose?: (e: CustomEvent) => void;
-    }, HTMLElement>;
-  }
-}
+/// <reference types="@aetherui-kit/core/react" />
 ```
 
 ### Basic Button Example
 
 ```tsx
-import { useEffect } from 'react';
-import { defineAeButton } from '@aetherui/core';
-import '@aetherui/tokens/light.css';
+import { defineAeButton } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css';
 
 // Register the component once when app loads
 defineAeButton();
@@ -62,7 +43,7 @@ function App() {
 
       <ae-button
         variant="primary"
-        onAeButtonClick={handleClick}
+        onae-button-click={handleClick}
       >
         Click me
       </ae-button>
@@ -77,8 +58,8 @@ export default App;
 
 ```tsx
 import { useState } from 'react';
-import { defineAeButton, defineAeModal } from '@aetherui/core';
-import '@aetherui/tokens/light.css';
+import { defineAeButton, defineAeModal } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css';
 
 defineAeButton();
 defineAeModal();
@@ -93,14 +74,14 @@ function ModalExample() {
     <div>
       <ae-button
         variant="primary"
-        onAeButtonClick={handleOpen}
+        onae-button-click={handleOpen}
       >
         Open Modal
       </ae-button>
 
       <ae-modal
         open={isOpen}
-        onAeModalClose={handleClose}
+        onae-modal-close={handleClose}
       >
         <h2 slot="header">Modal Title</h2>
         <div slot="body">
@@ -109,7 +90,7 @@ function ModalExample() {
         <div slot="footer">
           <ae-button
             variant="secondary"
-            onAeButtonClick={handleClose}
+            onae-button-click={handleClose}
           >
             Close
           </ae-button>
@@ -126,8 +107,8 @@ export default ModalExample;
 
 ```tsx
 import { useRef, useEffect } from 'react';
-import { defineAeButton } from '@aetherui/core';
-import type { AeButton } from '@aetherui/core/button';
+import { defineAeButton } from '@aetherui-kit/core';
+import type { AeButton } from '@aetherui-kit/core/button';
 
 defineAeButton();
 
@@ -169,7 +150,7 @@ export function useAetherUIComponent(defineFunction: () => void) {
 
 // Usage in component:
 import { useAetherUIComponent } from './hooks/useAetherUI';
-import { defineAeButton } from '@aetherui/core';
+import { defineAeButton } from '@aetherui-kit/core';
 
 function MyComponent() {
   useAetherUIComponent(defineAeButton);
@@ -183,7 +164,7 @@ function MyComponent() {
 To use the dark theme, simply import it instead:
 
 ```tsx
-import '@aetherui/tokens/dark.css';
+import '@aetherui-kit/tokens/dark.css';
 ```
 
 ## Custom Theming
@@ -192,7 +173,7 @@ Override CSS variables in your global CSS:
 
 ```css
 /* styles/globals.css */
-@import '@aetherui/tokens/light.css';
+@import '@aetherui-kit/tokens/light.css';
 
 :root {
   --ae-button-bg-primary: #0066cc;
@@ -210,10 +191,10 @@ If you get TypeScript errors about custom elements, make sure you've added the t
 
 ### Event Handlers
 
-React uses a different naming convention for events. For AetherUI events like `ae-button-click`, use camelCase in React:
+React preserves the case and dashes of custom event names. For AetherUI events like `ae-button-click`, use the exact event name with an `on` prefix in React 19+:
 
 ```tsx
-<ae-button onAeButtonClick={handler}>Click</ae-button>
+<ae-button onae-button-click={handler}>Click</ae-button>
 ```
 
 ### SSR (Next.js)

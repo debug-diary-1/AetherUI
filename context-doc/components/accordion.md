@@ -63,7 +63,7 @@ packages/accordion/
 
 ## 7 · Performance Budget
 
-* Incremental cost ≤ 1 KB gzip over `@aetherui/core`.
+* Incremental cost ≤ 1 KB gzip over `@aetherui-kit/core`.
 
 ## 8 · Testing Strategy
 

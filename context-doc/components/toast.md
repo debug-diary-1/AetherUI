@@ -20,7 +20,7 @@ Ephemeral **non‑modal notifications** that appear and disappear automatically.
 | `ae-close` | `void` fired when dismissed.        |
 | `ae-click` | `MouseEvent` emitted on user click. |
 
-> **Imperative helper**: `showToast({ message, variant, duration })` imported from `@aetherui/toast` inserts a toast element via manager.
+> **Imperative helper**: `showToast({ message, variant, duration })` imported from `@aetherui-kit/toast` inserts a toast element via manager.
 
 ## 3 · Accessibility
 

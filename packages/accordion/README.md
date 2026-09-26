@@ -1,20 +1,20 @@
-# `@aetherui/accordion`
+# `@aetherui-kit/accordion`
 
 Compatibility package for the AetherUI accordion custom elements. Importing the package registers both `ae-accordion` and `ae-accordion-item`.
 
 ## Installation
 
 ```bash
-pnpm add @aetherui/accordion
+pnpm add @aetherui-kit/accordion
 ```
 
-The components include usable system-color fallbacks. For the complete AetherUI theme, also install `@aetherui/tokens` and import either `@aetherui/tokens/light.css` or `@aetherui/tokens/dark.css` once in your application.
+The components include usable system-color fallbacks. For the complete AetherUI theme, also install `@aetherui-kit/tokens` and import either `@aetherui-kit/tokens/light.css` or `@aetherui-kit/tokens/dark.css` once in your application.
 
 ## Usage
 
 ```html
 <script type="module">
-  import '@aetherui/accordion';
+  import '@aetherui-kit/accordion';
 </script>
 
 <ae-accordion value='["first"]'>

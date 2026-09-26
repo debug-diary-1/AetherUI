@@ -313,11 +313,12 @@
       .grid > * {
         padding: 28px 24px;
       }
+      /* minmax(0, 1fr) lets columns shrink below their code blocks' line length. */
       .grid.two {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .grid.three {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
       .grid > * + * {
         border-left: var(--rail) solid var(--line);
@@ -473,7 +474,7 @@
       @media (max-width: 860px) {
         .grid.three,
         .grid.two {
-          grid-template-columns: 1fr;
+          grid-template-columns: minmax(0, 1fr);
         }
         .grid > * + * {
           border-left: 0;
@@ -578,7 +579,7 @@
                 <ae-button variant="secondary">Cancel</ae-button>
               </div>
             </div>
-            <p class="demo-note" style="margin-top: 18px">Rendered with @aetherui/core</p>
+            <p class="demo-note" style="margin-top: 18px">Rendered with @aetherui-kit/core</p>
           </section>
         </div>
 
@@ -607,7 +608,7 @@
                 <button
                   class="copy"
                   type="button"
-                  data-copy="npm install @aetherui/core @aetherui/tokens"
+                  data-copy="npm install @aetherui-kit/core @aetherui-kit/tokens"
                 >
                   <svg
                     class="clip"
@@ -635,7 +636,7 @@
                   Copy
                 </button>
               </header>
-              <pre>npm install @aetherui/core @aetherui/tokens</pre>
+              <pre>npm install @aetherui-kit/core @aetherui-kit/tokens</pre>
             </div>
 
             <div class="snippet">
@@ -644,7 +645,7 @@
                 <button
                   class="copy"
                   type="button"
-                  data-copy="import { defineAeButton } from '@aetherui/core/button';&#10;import '@aetherui/tokens/light.css';&#10;&#10;defineAeButton();"
+                  data-copy="import { defineAeButton } from '@aetherui-kit/core/button';&#10;import '@aetherui-kit/tokens/light.css';&#10;&#10;defineAeButton();"
                 >
                   <svg
                     class="clip"
@@ -673,11 +674,10 @@
                 </button>
               </header>
               <pre>
-import { defineAeButton } from '@aetherui/core/button';
-import '@aetherui/tokens/light.css';
+import { defineAeButton } from '@aetherui-kit/core/button';
+import '@aetherui-kit/tokens/light.css';
 
-defineAeButton();</pre
-              >
+defineAeButton();</pre>
             </div>
           </div>
         </div>
@@ -713,8 +713,9 @@ defineAeButton();</pre
             <p>
               A generated component catalog, JSON schema, and
               <code class="inline">llms.txt</code> let a model generate interfaces without inventing
-              props. <code class="inline">@aetherui/agent</code> validates every document before it
-              renders; <code class="inline">@aetherui/mcp</code> serves the same contract over MCP.
+              props. <code class="inline">@aetherui-kit/agent</code> validates every document before
+              it renders; <code class="inline">@aetherui-kit/mcp</code> serves the same contract
+              over MCP.
             </p>
             <div class="chips">
               <span class="chip">llms.txt</span>
