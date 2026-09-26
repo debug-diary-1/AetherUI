@@ -31,14 +31,14 @@ The audit gate fails on high or critical findings. Review lower-severity finding
 
 ## Publish an update
 
-1. Choose package versions and update `CHANGELOG.md` with the release date and actual behavior changes. Keep workspace dependency ranges valid and refresh the lockfile with pnpm.
+1. Bump the version of each package whose published contents change; leave unchanged packages at their published versions. Update `CHANGELOG.md` with the release date and actual behavior changes. Keep workspace dependency ranges valid and refresh the lockfile with pnpm.
 2. Run the release checks against the intended commit and obtain a green CI result on that commit.
-3. Confirm all six packages have npm trusted publishing configured. The tag-triggered workflow publishes every package, so each version in that workflow must be unpublished.
-4. Tag the reviewed commit using `v<version>` and push the tag. `.github/workflows/publish.yml` rebuilds from a clean checkout, runs the full release gate in a separate job with read-only permissions, then rebuilds from the committed lockfile in the OIDC publishing job and publishes with provenance. The publishing job does not consume artifacts or caches from the verification job.
-5. Check all six registry versions and test a fresh application installed from npm, including React event delivery and the MCP executable. Packed-consumer tests verify local tarballs; they cannot prove the registry publication succeeded.
+3. Confirm all six packages have npm trusted publishing configured. The tag-triggered workflow publishes each package whose version is not yet on npm and skips the rest.
+4. Tag the reviewed commit using `v<version>`, matching the changelog release heading, and push the tag. `.github/workflows/publish.yml` rebuilds from a clean checkout, runs the full release gate in a separate job with read-only permissions, then rebuilds from the committed lockfile in the OIDC publishing job and publishes with provenance. The publishing job does not consume artifacts or caches from the verification job.
+5. Check the registry versions of the released packages and test a fresh application installed from npm, including React event delivery and the MCP executable. Packed-consumer tests verify local tarballs; they cannot prove the registry publication succeeded.
 6. Publish release notes and confirm the public docs and Storybook URLs show the actual sites.
 
-If a multi-package publication partially succeeds, inspect npm before retrying. Resolve authentication or registry failures, then publish only the missing packages at the reviewed versions; blindly rerunning the entire loop can fail on already-published versions.
+If a multi-package publication partially succeeds, inspect npm and resolve the authentication or registry failure, then rerun the publish job. It skips versions already on npm and publishes only the missing packages at the reviewed versions.
 
 ## Documentation deployment
 

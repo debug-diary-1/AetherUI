@@ -7,11 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
-- Package names, imports, and installation examples now use the owned `@aetherui-kit` npm scope.
+## [0.1.1] - 2026-09-26
+
+Releases `@aetherui-kit/tokens@0.1.1` only; the other packages are unchanged at their published versions.
 
 ### Fixed
 - `@aetherui-kit/tokens/minimal.css` is exported, so the documented minimal theme import resolves in bundlers.
+
+### Changed
+- The publish workflow skips package versions already on npm, so a tag releases only packages with new versions and a rerun after a partial failure publishes only the missing ones.
+
+## [0.1.0] - 2026-09-26
+
+### Changed
+- Package names, imports, and installation examples now use the owned `@aetherui-kit` npm scope.
+- Removed internal controllers and DataTable utilities from public exports; core subpaths are explicitly enumerated.
+- Isolated registry consumer checks from the OIDC publishing job and preserved host content in the agent example.
+- Documented a runnable Vite-based vanilla example and the first-publication workflow.
+
+### Fixed
 - Tooltips stay anchored with absolute or fixed positioning, follow layout changes, and remain readable without theme tokens.
 - Repeated core imports across independent bundles reuse registered custom elements.
 - Toast subpath helpers remain available in production bundles; alert registration is synchronous.
@@ -21,13 +35,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Agent node limits count text children and reject unknown document and node fields before rendering.
 - GitHub Pages uploads Storybook from its actual build directory and requires complete site artifacts.
 - Patched the docs dependency on `postcss-selector-parser` for GHSA-w9m9-85wc-3x92.
-
-### Changed
-- Removed internal controllers and DataTable utilities from public exports; core subpaths are explicitly enumerated.
-- Isolated registry consumer checks from the OIDC publishing job and preserved host content in the agent example.
-- Documented a runnable Vite-based vanilla example and the first-publication workflow.
-
-## [0.1.0] - Unreleased
 
 ### Added
 - **`@aetherui-kit/agent`** - validated JSON UI documents rendered to AetherUI
@@ -41,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   WebKit), Storybook interaction tests, Playwright e2e, package-contents
   checks, generated-artifact drift detection, agent evals, and production
   dependency audit
-- npm publishing via Trusted Publishing (OIDC) with provenance attestations
+- npm publishing workflow using Trusted Publishing (OIDC) with provenance attestations; the initial 0.1.0 packages were published locally, without provenance
 - Initial release of AetherUI component library
 - Core components:
   - **Button** - Primary action trigger with variants (primary, secondary, ghost) and sizes
