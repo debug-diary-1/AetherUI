@@ -10,6 +10,7 @@
     "packages/agent/agent-ui.schema.json",
     "packages/agent/component-catalog.json",
     "packages/agent/src/catalog.generated.ts",
+    "packages/agent/src/webmcp.generated.ts",
     "packages/mcp/agent-ui.schema.json",
     "packages/mcp/component-catalog.json",
     "packages/docs/public/agent-ui.schema.json",

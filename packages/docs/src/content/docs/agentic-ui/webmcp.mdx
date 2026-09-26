@@ -1,0 +1,51 @@
+---
+title: WebMCP tools
+description: Let an in-browser agent discover allowed components and render validated UI through WebMCP.
+---
+
+[WebMCP](https://developer.chrome.com/docs/ai/webmcp) is a proposed web standard for exposing page tools to browser agents. `@aetherui-kit/agent/webmcp` registers tools for one surface on your page, so an agent can build interface from allowlisted AetherUI components instead of scraping the DOM.
+
+:::caution
+WebMCP is a Chrome origin trial (Chrome 149+) and its API may change. Enable it for local development with `chrome://flags/#enable-webmcp-testing`. The module is experimental.
+:::
+
+```ts
+import { defineAeButton, defineAeInput } from '@aetherui-kit/core';
+import { registerAgentUiTools } from '@aetherui-kit/agent/webmcp';
+import '@aetherui-kit/tokens/light.css';
+
+defineAeButton();
+defineAeInput();
+
+const tools = new AbortController();
+const registered = await registerAgentUiTools(document.querySelector('#agent-surface')!, {
+  allowedComponents: ['ae-button', 'ae-input'],
+  surfaceDescription: 'Profile editing panel.',
+  maxNodes: 30,
+  signal: tools.signal,
+  onAction(action) {
+    if (action.actionId === 'save-profile') saveProfile();
+  },
+});
+```
+
+## Tools
+
+| Tool | Behavior |
+| --- | --- |
+| `aetherui_list_components` | Read-only. Returns the allowed components with their properties, events, and slots. |
+| `aetherui_render_ui` | Validates an agent document and renders it into the surface. Returns `{ "ok": true, "nodeCount": n }`, or `{ "ok": false, "issues": [...] }` with the surface unchanged. |
+
+The render tool's input schema is [`agent-ui.schema.json`](../../agent-ui.schema.json) with `component` narrowed to `allowedComponents`. Each call replaces the previous render and releases its event listeners.
+
+## Guarantees
+
+- The host chooses the components: `allowedComponents` is required, and the validation policy from [Generate UI safely](../generate-safely/) applies to every document.
+- Agent documents are data. Declared events become action identifiers delivered to `onAction` on the page; the agent never supplies handlers.
+- Without `document.modelContext`, the call resolves to `false` and registers nothing.
+- Aborting `signal` unregisters both tools. Rendered content stays until the host replaces it.
+- `toolPrefix` gives each surface distinct tool names, for example `checkout_list_components`.
+
+## Declarative forms
+
+Chrome 154 builds a declarative WebMCP tool (`<form toolname="...">`) from native form controls only. Form-associated custom elements, including `ae-input` and `ae-select`, are not included in the tool's input schema. Use `registerAgentUiTools` or your own imperative tools for agent access to AetherUI forms.
