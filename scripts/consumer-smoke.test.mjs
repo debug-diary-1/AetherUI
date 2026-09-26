@@ -209,6 +209,47 @@ test('the README vanilla example upgrades and activates its button', async (t) =
   await activated;
 });
 
+test('the WebMCP subpath registers tools that render validated agent documents', async (t) => {
+  const page = await consumer(
+    t,
+    `
+    import { defineAeButton } from '@aetherui-kit/core';
+    import * as agent from '@aetherui-kit/agent';
+    import { registerAgentUiTools } from '@aetherui-kit/agent/webmcp';
+    const tools = new Map();
+    Object.defineProperty(document, 'modelContext', {
+      configurable: true,
+      value: { async registerTool(tool) { tools.set(tool.name, tool); } },
+    });
+    defineAeButton();
+    window.mainExports = Object.keys(agent);
+    window.actions = [];
+    window.result = registerAgentUiTools(document.querySelector('#surface'), {
+      allowedComponents: ['ae-button'],
+      onAction: (action) => window.actions.push(action.actionId),
+    }).then(async (registered) => ({
+      registered,
+      names: [...tools.keys()],
+      render: JSON.parse(await tools.get('aetherui_render_ui').execute(
+        { version: '1', root: { component: 'ae-button', children: ['Save'], actions: { 'ae-button-click': 'save' } } },
+        { signal: new AbortController().signal },
+      )),
+    }));
+  `,
+  );
+  assert.deepEqual(await page.evaluate(() => window.result), {
+    registered: true,
+    names: ['aetherui_list_components', 'aetherui_render_ui'],
+    render: { ok: true, nodeCount: 2 },
+  });
+  assert.ok(
+    !(await page.evaluate(() => window.mainExports)).includes('registerAgentUiTools'),
+    'WebMCP support is opt-in through its own subpath',
+  );
+  await page.getByRole('button', { name: 'Save' }).click();
+  assert.deepEqual(await page.evaluate(() => window.actions), ['save']);
+});
+
 test('public packages keep implementation helpers internal', async (t) => {
   const page = await consumer(
     t,

@@ -100,7 +100,10 @@ export default defineConfig({
         },
         {
           label: 'Agentic UI',
-          items: [{ label: 'Generate UI safely', slug: 'agentic-ui/generate-safely' }],
+          items: [
+            { label: 'Generate UI safely', slug: 'agentic-ui/generate-safely' },
+            { label: 'WebMCP tools', slug: 'agentic-ui/webmcp' },
+          ],
         },
       ],
       components: {

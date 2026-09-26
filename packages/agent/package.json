@@ -7,7 +7,8 @@
     "agentic-ui",
     "json-schema",
     "llm",
-    "web-components"
+    "web-components",
+    "webmcp"
   ],
   "homepage": "https://github.com/debug-diary-1/AetherUI#readme",
   "bugs": {
@@ -35,6 +36,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./webmcp": {
+      "types": "./dist/webmcp.d.ts",
+      "import": "./dist/webmcp.js"
     },
     "./schema.json": "./agent-ui.schema.json",
     "./catalog.json": "./component-catalog.json",
