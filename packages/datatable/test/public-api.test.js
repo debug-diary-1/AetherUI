@@ -24,42 +24,7 @@ test('the built entry point registers each public custom element', () => {
   assert.equal(datatable.defineDataTableElements(), true);
 });
 
-test('sorting is stable, ordered, and does not mutate caller data', () => {
-  const rows = [
-    { id: 'a', score: 2 },
-    { id: 'b', score: 1 },
-    { id: 'c', score: 2 },
-  ];
-  const columns = [{ id: 'score', accessorKey: 'score' }];
-
-  const sorted = datatable.sortData(rows, [{ id: 'score', desc: false }], columns);
-
-  assert.deepEqual(
-    sorted.map(({ id }) => id),
-    ['b', 'a', 'c'],
-  );
-  assert.deepEqual(
-    rows.map(({ id }) => id),
-    ['a', 'b', 'c'],
-  );
-});
-
-test('column and global filters compose', () => {
-  const rows = [
-    { name: 'Ada', team: 'Platform' },
-    { name: 'Grace', team: 'Compiler' },
-    { name: 'Linus', team: 'Platform' },
-  ];
-  const columns = [
-    { id: 'name', accessorKey: 'name' },
-    { id: 'team', accessorKey: 'team' },
-  ];
-
-  assert.deepEqual(
-    datatable.filterData(rows, [{ id: 'team', value: 'platform' }], 'ada', columns),
-    [rows[0]],
-  );
-});
+// Sorting and filtering are exercised through the rendered table in scripts/consumer-smoke.test.mjs.
 
 test('pagination clamps the visible row range at the end of a data set', () => {
   assert.deepEqual(datatable.getPaginationInfo({ page: 3, pageSize: 10, totalItems: 23 }), {

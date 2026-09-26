@@ -69,7 +69,7 @@ if (!isCI && !forceRun && isIntensiveCommand) {
     console.warn('   Tests may run slowly or fail.\n');
     console.warn('   Alternatives:');
     console.warn('   • Close other applications to free memory');
-    console.warn('   • Run tests for individual packages: pnpm test --filter @aetherui/core');
+    console.warn('   • Run tests for individual packages: pnpm test --filter @aetherui-kit/core');
     console.warn('   • FORCE_TEST=true pnpm test  (skip this check)\n');
     process.exit(1);
   }

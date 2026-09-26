@@ -4,7 +4,6 @@ import { AeTreeItem } from './ae-tree-item';
 export { AeTreeView } from './ae-treeview';
 export { AeTreeItem } from './ae-tree-item';
 export type { TreeNode } from './node';
-export { TreeViewKeyboardController } from './keyboard';
 
 // Event type definitions
 export interface AeTreeviewSelectEvent extends CustomEvent {

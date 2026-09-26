@@ -1,8 +1,9 @@
 import { LitElement, html, TemplateResult, PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
+import { live } from 'lit/directives/live.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import { DATATABLE_ELEMENT_NAME } from './index';
+import { DATATABLE_ELEMENT_NAME } from './constants';
 import { datatableStyles } from './styles';
 import { DataTableController } from './controllers/datatable-controller';
 import { ColumnDef } from './models/column-model';
@@ -14,6 +15,8 @@ import './ae-datatable-cell';
 
 /**
  * A powerful data table component for displaying and manipulating tabular data
+ * Sort buttons support Enter/Space; resize separators support Left/Right,
+ * Shift+Left/Right and Home. Table, row and cell semantics expose the data.
  * @element ae-datatable
  *
  * @property {Object[]} data - Array of data objects to display in the table
@@ -21,7 +24,9 @@ import './ae-datatable-cell';
  * @property {boolean} sortable - Whether the table supports sorting (global setting)
  * @property {boolean} filterable - Whether the table supports filtering (global setting)
  * @property {boolean} selectable - Whether rows can be selected
- * @property {string} selectionMode - Selection mode ('single' or 'multiple')
+ * @property {string} selectionMode - Selection mode ('single' or 'multiple'); changes retain at most one selection in single mode.
+ * Selected row keys are strings derived from id, then _id, then serialized row data.
+ * Select-all acts on the visible rows and is available only in multiple mode.
  * @property {boolean} paginated - Whether to enable pagination
  * @property {number} pageSize - Number of rows per page
  * @property {string} emptyMessage - Message to display when there is no data
@@ -61,6 +66,10 @@ import './ae-datatable-cell';
  */
 export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
   static styles = datatableStyles;
+
+  /** Accessible name forwarded reactively to the inner table. */
+  @property({ type: String, attribute: 'aria-label' })
+  override ariaLabel: string | null = null;
 
   /**
    * The data to display in the table
@@ -171,6 +180,10 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
       this.initializeController();
     }
 
+    if (changedProperties.has('selectable') || changedProperties.has('selectionMode')) {
+      this.controller.setSelectionMode(this.selectable ? this.selectionMode : 'none');
+    }
+
     if (changedProperties.has('pageSize') && this.initialized) {
       this.controller.setPageSize(this.pageSize);
     }
@@ -182,6 +195,7 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
   private initializeController() {
     if (this.data.length > 0 && this.columns.length > 0) {
       this.controller.initialize(this.data, this.columns);
+      this.controller.setSelectionMode(this.selectable ? this.selectionMode : 'none');
       this.updateGridTemplateColumns();
       this.paginationState = this.controller.getPaginationState();
       this.initialized = true;
@@ -275,9 +289,7 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
    * @param rowId Row ID
    */
   handleRowSelect(rowId: string | number) {
-    if (this.selectionMode === 'single') {
-      this.controller.deselectAllRows();
-    }
+    if (!this.selectable) return;
 
     this.controller.toggleRowSelection(rowId);
 
@@ -297,8 +309,8 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
    * Handle select all rows
    */
   handleSelectAll() {
-    const allSelected =
-      this.controller.getSelectedRows().length === this.controller.getProcessedData().length;
+    if (!this.selectable || this.selectionMode !== 'multiple') return;
+    const allSelected = this.controller.getVisibleSelectionState().all;
 
     if (allSelected) {
       this.controller.deselectAllRows();
@@ -406,6 +418,7 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
           <div class="datatable__filter">
             <input
               type="text"
+              aria-label="Search rows"
               placeholder="Search..."
               .value=${this.globalFilter}
               @input=${this.handleGlobalFilterChange}
@@ -433,18 +446,26 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
     };
 
     return html`
-      <div class="datatable__header" part="header" style=${styleMap(headerStyle)}>
-        ${this.selectable
-          ? html`
-              <ae-datatable-header-cell
-                id="selection"
-                .sortable=${false}
-                @click=${this.handleSelectAll}
-              >
-                <input type="checkbox" slot="content" />
-              </ae-datatable-header-cell>
-            `
-          : ''}
+      <div class="datatable__header" part="header" role="row" style=${styleMap(headerStyle)}>
+        ${
+          this.selectable
+            ? html`
+                <div class="datatable__header-cell" role="columnheader">
+                  ${
+                    this.selectionMode === 'multiple'
+                      ? html`<input
+                          type="checkbox"
+                          aria-label="Select all rows"
+                          .checked=${live(this.controller.getVisibleSelectionState().all)}
+                          .indeterminate=${live(this.controller.getVisibleSelectionState().some)}
+                          @change=${this.handleSelectAll}
+                        />`
+                      : ''
+                  }
+                </div>
+              `
+            : ''
+        }
         ${visibleColumns.map((column) => {
           const sortInfo = sortState.find((s) => s.id === column.id);
 
@@ -477,18 +498,20 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
 
     if (processedData.length === 0) {
       return html`
-        <div class="datatable__body" part="body">
-          <div class="datatable__empty">
-            <slot name="empty">${this.emptyMessage}</slot>
+        <div class="datatable__body" part="body" role="rowgroup">
+          <div class="datatable__empty" role="row">
+            <div role="cell">
+              <slot name="empty">${this.emptyMessage}</slot>
+            </div>
           </div>
         </div>
       `;
     }
 
     return html`
-      <div class="datatable__body" part="body">
+      <div class="datatable__body" part="body" role="rowgroup">
         ${repeat(processedData, (item: T, index) => {
-          const rowId = ((item as Record<string, unknown>).id as string | number) || index;
+          const rowId = this.controller.getRowId(item);
           const isSelected = this.controller.isRowSelected(rowId);
 
           return html`
@@ -498,13 +521,19 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
               ?selectable=${this.selectable}
               @click=${() => this.selectable && this.handleRowSelect(rowId)}
             >
-              ${this.selectable
-                ? html`
-                    <ae-datatable-cell align="center">
-                      <input type="checkbox" ?checked=${isSelected} />
-                    </ae-datatable-cell>
-                  `
-                : ''}
+              ${
+                this.selectable
+                  ? html`
+                      <ae-datatable-cell align="center">
+                        <input
+                          type="checkbox"
+                          aria-label=${`Select row ${index + 1}`}
+                          .checked=${live(isSelected)}
+                        />
+                      </ae-datatable-cell>
+                    `
+                  : ''
+              }
               ${visibleColumns.map((column) => {
                 let cellContent: string | TemplateResult;
 
@@ -555,7 +584,10 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
 
     return html`
       <div class="datatable" part="base">
-        ${this.renderToolbar()} ${this.renderHeader()} ${this.renderBody()}
+        ${this.renderToolbar()}
+        <div class="datatable__table" role="table" aria-label=${this.ariaLabel || 'Data table'}>
+          ${this.renderHeader()} ${this.renderBody()}
+        </div>
         ${this.renderPagination()}
       </div>
     `;
@@ -563,4 +595,6 @@ export class AeDataTable<T extends Record<string, unknown>> extends LitElement {
 }
 
 // Define the custom elements
-customElements.define(DATATABLE_ELEMENT_NAME, AeDataTable);
+if (!customElements.get(DATATABLE_ELEMENT_NAME)) {
+  customElements.define(DATATABLE_ELEMENT_NAME, AeDataTable);
+}

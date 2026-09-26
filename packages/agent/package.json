@@ -1,5 +1,5 @@
 {
-  "name": "@aetherui/agent",
+  "name": "@aetherui-kit/agent",
   "version": "0.1.0",
   "description": "Validated, safe runtime rendering for agent-generated AetherUI documents",
   "keywords": [
@@ -7,7 +7,8 @@
     "agentic-ui",
     "json-schema",
     "llm",
-    "web-components"
+    "web-components",
+    "webmcp"
   ],
   "homepage": "https://github.com/debug-diary-1/AetherUI#readme",
   "bugs": {
@@ -36,6 +37,10 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./webmcp": {
+      "types": "./dist/webmcp.d.ts",
+      "import": "./dist/webmcp.js"
+    },
     "./schema.json": "./agent-ui.schema.json",
     "./catalog.json": "./component-catalog.json",
     "./package.json": "./package.json"
@@ -53,6 +58,7 @@
   "devDependencies": {
     "@open-wc/testing": "catalog:",
     "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
     "@web/dev-server-esbuild": "catalog:",
     "@web/test-runner": "catalog:",
     "@web/test-runner-playwright": "catalog:",
@@ -61,10 +67,10 @@
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "@aetherui/core": "workspace:^"
+    "@aetherui-kit/core": "workspace:^0.1.0"
   },
   "peerDependenciesMeta": {
-    "@aetherui/core": {
+    "@aetherui-kit/core": {
       "optional": true
     }
   }

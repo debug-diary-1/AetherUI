@@ -3,9 +3,9 @@ set -e
 
 echo "🏗️  Building AetherUI Preview (Storybook + Documentation + Playground)"
 
-# Build core + tokens first (docs and playground import @aetherui/tokens/*.css)
+# Build core, tokens, and agent first (docs and playground import them)
 echo "🔧 Building Core + Tokens..."
-pnpm exec turbo build --filter=@aetherui/core --filter=@aetherui/tokens
+pnpm exec turbo build --filter=@aetherui-kit/core --filter=@aetherui-kit/tokens --filter=@aetherui-kit/agent
 
 # Build Storybook
 echo "📚 Building Storybook..."
@@ -13,11 +13,11 @@ pnpm build-storybook
 
 # Build Documentation (force to ensure output exists)
 echo "📖 Building Documentation..."
-pnpm --filter @aetherui/docs run docs:build
+pnpm --filter @aetherui-kit/docs run docs:build
 
 # Build Playground
 echo "🎨 Building Playground..."
-pnpm --filter @aetherui/playground build
+pnpm --filter @aetherui-kit/playground build
 
 # Create preview directory structure
 echo "📦 Creating preview directory..."

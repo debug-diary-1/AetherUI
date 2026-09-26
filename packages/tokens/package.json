@@ -1,6 +1,6 @@
 {
-  "name": "@aetherui/tokens",
-  "version": "0.1.0",
+  "name": "@aetherui-kit/tokens",
+  "version": "0.1.1",
   "description": "Design tokens for AetherUI components",
   "keywords": [
     "aetherui",
@@ -36,6 +36,9 @@
     },
     "./dark.css": {
       "import": "./dist/dark.css"
+    },
+    "./minimal.css": {
+      "import": "./dist/minimal.css"
     }
   },
   "publishConfig": {
@@ -51,9 +54,10 @@
   },
   "devDependencies": {
     "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
     "rimraf": "catalog:",
     "typescript": "catalog:",
-    "vite": "catalog:",
-    "vite-plugin-dts": "catalog:"
+    "unplugin-dts": "catalog:",
+    "vite": "catalog:"
   }
 }

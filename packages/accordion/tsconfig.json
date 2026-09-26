@@ -6,7 +6,8 @@
     "declarationMap": true,
     "sourceMap": true,
     "experimentalDecorators": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "paths": {}
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

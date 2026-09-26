@@ -12,7 +12,7 @@ React 18 and older do not pass non-string props or attach custom-event listeners
 ## Install
 
 ```bash
-pnpm add @aetherui/core
+pnpm add @aetherui-kit/core
 ```
 
 ## Configure TypeScript
@@ -22,7 +22,7 @@ The package ships an auto-generated `react.d.ts` that augments React's `JSX.Intr
 ```json
 {
   "compilerOptions": {
-    "types": ["@aetherui/core/react"]
+    "types": ["@aetherui-kit/core/react"]
   }
 }
 ```
@@ -30,7 +30,7 @@ The package ships an auto-generated `react.d.ts` that augments React's `JSX.Intr
 If you cannot edit `compilerOptions.types`, add a triple-slash directive to a setup file (e.g. `src/main.tsx`):
 
 ```ts
-/// <reference types="@aetherui/core/react" />
+/// <reference types="@aetherui-kit/core/react" />
 ```
 
 Either form gives you autocomplete and type-checking for tags, props, and custom-event handlers.
@@ -41,7 +41,7 @@ Register the components you need (this defines the custom elements with the brow
 
 ```tsx
 import { useState } from 'react';
-import { defineAeCheckbox, defineAeButton } from '@aetherui/core';
+import { defineAeCheckbox, defineAeButton } from '@aetherui-kit/core';
 
 defineAeCheckbox();
 defineAeButton();
@@ -53,7 +53,7 @@ export function SignupForm() {
     <form>
       <ae-checkbox
         checked={accepted}
-        onAeCheckboxChange={(e) => setAccepted(e.detail.checked)}
+        onae-checkbox-change={(e) => setAccepted(e.detail.checked)}
       >
         I accept the terms
       </ae-checkbox>
@@ -69,7 +69,7 @@ export function SignupForm() {
 Three things to note:
 
 1. **Boolean and array props** are passed as values (`checked={accepted}`), not stringified. React 19 sets them as DOM properties on custom elements automatically.
-2. **Custom events** use camelCase handler props (`onAeCheckboxChange`, `onAeButtonClick`) and receive the underlying `CustomEvent`. Read the typed payload from `event.detail`.
+2. **Custom events** preserve the event name after the `on` prefix (`onae-checkbox-change`, `onae-button-click`) and receive the underlying `CustomEvent`. Read the typed payload from `event.detail`.
 3. **No imports for the elements themselves** — once `defineAe*()` is called, the custom element is registered globally for the page lifetime.
 
 ## Form integration

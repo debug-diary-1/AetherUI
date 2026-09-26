@@ -1,5 +1,6 @@
 import { LitElement, html, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { breadcrumbItemStyles } from './item-styles';
 
 /**
@@ -48,29 +49,33 @@ export class AeBreadcrumbItem extends LitElement {
 
     return html`
       <li part="base" class="breadcrumb-item" aria-current="${this.current ? 'page' : nothing}">
-        ${this.href && !this.current
-          ? html`
-              <a
-                part="link"
-                class="breadcrumb-link"
-                href="${this.href}"
-                aria-label="${this.ariaLabel || nothing}"
-              >
-                <slot></slot>
-              </a>
-            `
-          : html`
-              <span part="link" class="breadcrumb-text" aria-label="${this.ariaLabel || nothing}">
-                <slot></slot>
-              </span>
-            `}
-        ${!this.current
-          ? html`
-              <span part="separator" class="breadcrumb-separator" aria-hidden="true"
-                >${separator}</span
-              >
-            `
-          : ''}
+        ${
+          this.href && !this.current
+            ? html`
+                <a
+                  part="link"
+                  class="breadcrumb-link"
+                  href="${this.href}"
+                  aria-label="${this.ariaLabel || nothing}"
+                >
+                  <slot></slot>
+                </a>
+              `
+            : html`
+                <span part="link" class="breadcrumb-text" aria-label="${this.ariaLabel || nothing}">
+                  <slot></slot>
+                </span>
+              `
+        }
+        ${
+          !this.current
+            ? html`
+                <span part="separator" class="breadcrumb-separator" aria-hidden="true"
+                  >${separator}</span
+                >
+              `
+            : ''
+        }
       </li>
     `;
   }

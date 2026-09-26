@@ -64,7 +64,7 @@ Add the `unstyled` attribute to any component:
 Simply don't import any theme CSS:
 
 ```typescript
-import { defineAeButton } from '@aetherui/core';
+import { defineAeButton } from '@aetherui-kit/core';
 // No theme import - components are unstyled by default
 
 defineAeButton();
@@ -75,7 +75,7 @@ defineAeButton();
 Set all components to unstyled mode:
 
 ```typescript
-import { defineAll } from '@aetherui/core';
+import { defineAll } from '@aetherui-kit/core';
 
 // Set global config (if you've built custom config)
 defineAll();
@@ -276,7 +276,7 @@ For a complete reference of all parts, see [CSS_PROPERTIES.md](./CSS_PROPERTIES.
 ### React with Tailwind CSS
 
 ```tsx
-import { defineAeButton } from '@aetherui/core';
+import { defineAeButton } from '@aetherui-kit/core';
 import './button-styles.css'; // Your custom styles
 
 defineAeButton();
@@ -307,7 +307,7 @@ ae-button.btn-primary::part(base) {
 </template>
 
 <script setup>
-import { defineAeButton } from '@aetherui/core';
+import { defineAeButton } from '@aetherui-kit/core';
 
 defineAeButton();
 </script>
@@ -333,7 +333,7 @@ ae-button.custom-button::part(base):hover {
 
 ```typescript
 import { Component } from '@angular/core';
-import { defineAeButton } from '@aetherui/core';
+import { defineAeButton } from '@aetherui-kit/core';
 
 defineAeButton();
 
@@ -361,7 +361,7 @@ export class AppComponent {}
 
 ```svelte
 <script>
-  import { defineAeButton } from '@aetherui/core';
+  import { defineAeButton } from '@aetherui-kit/core';
 
   defineAeButton();
 </script>
@@ -621,7 +621,7 @@ If you're currently using styled components and want to migrate:
 
 ```typescript
 // Before
-import '@aetherui/tokens/light.css';
+import '@aetherui-kit/tokens/light.css';
 
 // After
 import './my-custom-theme.css';

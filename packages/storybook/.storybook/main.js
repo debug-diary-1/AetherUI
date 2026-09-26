@@ -52,14 +52,6 @@ const config = {
         ...config.resolve,
         dedupe: ['lit', 'lit-html', 'lit-element', '@lit/reactive-element'],
       },
-      build: {
-        ...config.build,
-        commonjsOptions: {
-          ...config.build?.commonjsOptions,
-          include: [/node_modules/],
-          extensions: ['.js', '.cjs'],
-        },
-      },
     };
   },
 };

@@ -1,3 +1,4 @@
+import { customElement } from '../internal/custom-element';
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { buttonStyles } from './styles';
@@ -60,6 +61,7 @@ import { buttonStyles } from './styles';
  * </ae-button>
  * ```
  */
+@customElement('ae-button')
 export class AeButton extends LitElement {
   static styles = buttonStyles;
 

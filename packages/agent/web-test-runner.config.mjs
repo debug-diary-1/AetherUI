@@ -8,7 +8,15 @@ export default {
   browsers: [
     playwrightLauncher({
       product: 'chromium',
-      launchOptions: { headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage'] },
+      launchOptions: {
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-dev-shm-usage',
+          // Exposes document.modelContext so WebMCP tests run against Chromium's implementation.
+          '--enable-features=WebMCPTesting',
+        ],
+      },
     }),
   ],
   plugins: [

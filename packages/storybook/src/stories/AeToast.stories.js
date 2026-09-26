@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { expect, within, userEvent, waitFor } from 'storybook/test';
-// Import from the wrapper to avoid dynamic imports
-import { showToast, createToastHelpers } from '../toast-wrapper';
+import { showToast, createToastHelpers } from '@aetherui-kit/core/toast';
+import { createRef, ref } from 'lit/directives/ref.js';
 
 export default {
   title: 'Components/AeToast',
@@ -295,54 +295,34 @@ export const MultipleToasts = () => {
   return html` <button @click=${showMultipleToasts}>Show Multiple Toasts</button> `;
 };
 
-// Custom content with HTML
+// Rich content uses the component's public slot, not HTML strings in the text API.
 export const CustomContentToast = () => {
-  const showCustomToast = () => {
-    // Use the showToast API with HTML content
-    showToast({
-      message: `<div style="display: flex; align-items: center; gap: 0.5rem;">
-        <div style="width: 24px; height: 24px; background: #3b82f6; border-radius: 50%;"></div>
+  const notification = createRef();
+  return html`
+    <button @click=${() => (notification.value.open = true)}>Show Toast with Custom Content</button>
+    <ae-toast ${ref(notification)} .open=${false} duration="8000" variant="info">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span aria-hidden="true">✉</span>
         <div>
-          <div style="font-weight: bold;">New Message</div>
-          <div style="font-size: 0.875rem;">You have a new message from User123</div>
-        </div>
-      </div>`,
-      variant: 'info',
-      duration: 8000,
-    });
-  };
-
-  return html` <button @click=${showCustomToast}>Show Toast with Custom Content</button> `;
-};
-
-// Using the HTML helper method
-export const HtmlHelper = () => {
-  const showHtmlToast = () => {
-    // Use the html helper from createToastHelpers
-    const toastHelpers = createToastHelpers();
-    toastHelpers.html(
-      `
-      <div style="display: flex; align-items: center; gap: 0.75rem;">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" aria-hidden="true">
-          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" />
-          <path d="M16 10L10.5 15.5L8 13" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div>
-          <div style="font-weight: bold; margin-bottom: 0.25rem;">Payment Successful</div>
-          <div style="font-size: 0.875rem;">Your payment of $199.99 has been processed.</div>
+          <strong>New Message</strong>
+          <div>You have a new message from User123</div>
         </div>
       </div>
-    `,
-      {
-        variant: 'success',
+    </ae-toast>
+  `;
+};
+
+export const VariantHelper = () => html`
+  <button
+    @click=${() =>
+      toast.success('Your payment of $199.99 has been processed.', {
         duration: 7000,
         placement: 'top-right',
-      },
-    );
-  };
-
-  return html` <button type="button" @click=${showHtmlToast}>Show Toast with HTML Helper</button> `;
-};
+      })}
+  >
+    Show Toast with Success Helper
+  </button>
+`;
 
 // PauseOnHover Demonstration
 export const PauseOnHover = () => {

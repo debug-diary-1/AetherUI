@@ -2,7 +2,7 @@ import { html } from 'lit';
 import { expect, within, userEvent } from 'storybook/test';
 
 // Import directly from the main package
-import { AeTreeView } from '@aetherui/core';
+import { AeTreeView } from '@aetherui-kit/core';
 
 // Make sure the component is defined
 if (!customElements.get('ae-treeview')) {
@@ -203,7 +203,7 @@ export const MultiSelect = {
         label="File selection"
         .data=${fileSystemData}
         .expanded=${['src']}
-        selectionMode="multiple"
+        selection-mode="multiple"
         .selected=${['button.js', 'index.js']}
         @ae-treeview-select=${action('ae-treeview-select')}
         @ae-treeview-expand=${action('ae-treeview-expand')}
@@ -282,7 +282,7 @@ export const EmptyAndLoading = {
         }
       </style>
       <div class="container">
-        <ae-treeview label="Empty tree" .data=${[]} emptyMessage="No files found"></ae-treeview>
+        <ae-treeview label="Empty tree" .data=${[]} empty-message="No files found"></ae-treeview>
 
         <ae-treeview label="Loading tree" .data=${[]} loading></ae-treeview>
       </div>

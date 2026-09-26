@@ -6,7 +6,7 @@ import { PaginationState } from '../models/pagination-model';
 import { ColumnManager } from '../core/column-manager';
 import { SortManager } from '../core/sort-manager';
 import { FilterManager } from '../core/filter-manager';
-import { SelectionManager } from '../core/selection-manager';
+import { SelectionManager, type SelectionMode } from '../core/selection-manager';
 import { PaginationManager } from '../core/pagination-manager';
 
 /**
@@ -160,8 +160,15 @@ export class DataTableController<T> implements ReactiveController {
    * Set sort state
    */
   setSortState(columnId: string, direction: SortDirection, multiSort = false): void {
-    const desc = direction === 'desc';
-    this._sortManager.toggleSorting(columnId, multiSort, desc);
+    const current = multiSort ? this._sortManager.getSorting() : [];
+    const next = { id: columnId, direction, desc: direction === 'desc' };
+    this._sortManager.setSorting(
+      direction === 'none'
+        ? current.filter((sort) => sort.id !== columnId)
+        : current.some((sort) => sort.id === columnId)
+          ? current.map((sort) => (sort.id === columnId ? next : sort))
+          : [...current, next],
+    );
     this.processData();
   }
 
@@ -202,6 +209,30 @@ export class DataTableController<T> implements ReactiveController {
   clearFilters(): void {
     this._filterManager.clearFilters();
     this.processData();
+  }
+
+  /** Configure selection through the same manager used by row and header controls. */
+  setSelectionMode(mode: SelectionMode): void {
+    const selected = this._selectionManager.getSelectedRows();
+    const ids = mode === 'none' ? [] : mode === 'single' ? selected.slice(0, 1) : selected;
+    this._selectionManager.initialize(Object.fromEntries(ids.map((id) => [id, true])), {
+      selectionMode: mode,
+    });
+    this._host.requestUpdate();
+  }
+
+  getRowId(row: T): string {
+    return this._selectionManager.getRowId(row);
+  }
+
+  getVisibleSelectionState(): { all: boolean; some: boolean } {
+    const count = this._processedData.filter((row) =>
+      this.isRowSelected(this.getRowId(row)),
+    ).length;
+    return {
+      all: count > 0 && count === this._processedData.length,
+      some: count > 0 && count < this._processedData.length,
+    };
   }
 
   /**

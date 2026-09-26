@@ -1,11 +1,13 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { textareaStyles } from './styles';
 
 /**
  * A textarea component with support for auto-resize, character counting, and form participation.
  * Participates in native form submission via ElementInternals API.
+ * Enabled, named textareas submit empty strings.
  *
  * @element ae-textarea
  *
@@ -152,14 +154,16 @@ export class AeTextarea extends LitElement {
     if (
       changedProperties.has('required') ||
       changedProperties.has('minlength') ||
-      changedProperties.has('maxlength')
+      changedProperties.has('maxlength') ||
+      changedProperties.has('readonly') ||
+      changedProperties.has('disabled')
     ) {
       this._updateValidity();
     }
   }
 
   private _updateFormValue() {
-    this._internals.setFormValue(this.value || null);
+    this._internals.setFormValue(this.value);
   }
 
   private _updateValidity() {
@@ -283,21 +287,22 @@ export class AeTextarea extends LitElement {
 
     return html`
       <div part="base" class="textarea-base">
-        ${this.label
-          ? html`
-              <label part="label" class="textarea-label" for="textarea">
-                ${this.label}
-                ${this.required ? html`<span class="required-indicator">*</span>` : ''}
-              </label>
-            `
-          : ''}
+        ${
+          this.label
+            ? html`
+                <label part="label" class="textarea-label" for="textarea">
+                  ${this.label}
+                  ${this.required ? html`<span class="required-indicator">*</span>` : ''}
+                </label>
+              `
+            : ''
+        }
 
         <div
           part="textarea-wrapper"
-          class="textarea-wrapper ${this.focused ? 'focused' : ''} ${hasError ? 'error' : ''} ${this
-            .disabled
-            ? 'disabled'
-            : ''}"
+          class="textarea-wrapper ${this.focused ? 'focused' : ''} ${hasError ? 'error' : ''} ${
+            this.disabled ? 'disabled' : ''
+          }"
         >
           <textarea
             part="textarea"
@@ -321,20 +326,28 @@ export class AeTextarea extends LitElement {
           ></textarea>
         </div>
 
-        ${showHelpText || showCharCount
-          ? html`
-              <div part="footer" class="textarea-footer">
-                ${showHelpText
-                  ? html` <div part="help-text" class="help-text">${this.helpText}</div> `
-                  : ''}
-                ${showCharCount
-                  ? html`
-                      <div part="char-count" class="char-count">${charCount}/${this.maxlength}</div>
-                    `
-                  : ''}
-              </div>
-            `
-          : ''}
+        ${
+          showHelpText || showCharCount
+            ? html`
+                <div part="footer" class="textarea-footer">
+                  ${
+                    showHelpText
+                      ? html` <div part="help-text" class="help-text">${this.helpText}</div> `
+                      : ''
+                  }
+                  ${
+                    showCharCount
+                      ? html`
+                          <div part="char-count" class="char-count">
+                            ${charCount}/${this.maxlength}
+                          </div>
+                        `
+                      : ''
+                  }
+                </div>
+              `
+            : ''
+        }
         ${hasError ? html` <div part="error-text" class="error-text">${this.error}</div> ` : ''}
       </div>
     `;

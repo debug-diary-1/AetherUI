@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { live } from 'lit/directives/live.js';
 import { expect, within, userEvent, waitFor } from 'storybook/test';
 
 export default {
@@ -90,7 +91,7 @@ export const Default = {
           class="custom-alert"
           variant="${args.variant}"
           ?closable="${args.closable}"
-          ?open="${args.open}"
+          .open=${live(args.open)}
           @ae-close="${handleClose}"
         >
           ${args.slotContent}
@@ -98,33 +99,19 @@ export const Default = {
       </div>
     `;
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Get the alert element
+  play: async ({ canvasElement, args }) => {
     const aeAlert = canvasElement.querySelector('ae-alert');
-    expect(aeAlert).toBeInTheDocument();
+    await aeAlert.updateComplete;
+    expect(aeAlert.open).toBe(args.open);
+    expect(aeAlert.variant).toBe(args.variant);
+    if (!args.open || !args.closable) return;
 
-    // Initially open
-    expect(aeAlert.open).toBe(true);
+    await userEvent.click(aeAlert.shadowRoot.querySelector('[part="close"]'));
+    await waitFor(() => expect(aeAlert.open).toBe(false));
 
-    // Verify variant attribute
-    expect(aeAlert.getAttribute('variant')).toBe('info');
-
-    // Verify content is visible
-    const base = aeAlert.shadowRoot.querySelector('[part="base"]');
-    expect(base).toBeTruthy();
-
-    // Find and click close button
-    const closeButton = aeAlert.shadowRoot.querySelector('[part="close"]');
-    expect(closeButton).toBeTruthy();
-
-    await userEvent.click(closeButton);
-
-    // Wait for alert to close
-    await waitFor(() => {
-      expect(aeAlert.open).toBe(false);
-    });
+    // Leave the example usable after demonstrating dismissal.
+    aeAlert.open = args.open;
+    await aeAlert.updateComplete;
   },
 };
 

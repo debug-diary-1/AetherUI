@@ -1,5 +1,5 @@
 // Import and register all AetherUI components
-import { defineAll } from '@aetherui/core';
+import { defineAll } from '@aetherui-kit/core';
 
 // Only run in browser context
 if (typeof window !== 'undefined') {

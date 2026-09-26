@@ -1,5 +1,6 @@
 import { LitElement, html, PropertyValues } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
+import { customElement } from '../internal/custom-element';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { selectStyles } from './styles';
 import { arraysShallowEqual, toArrayCopy } from '../internal/array-props';
@@ -433,21 +434,22 @@ export class AeSelect extends LitElement {
 
     return html`
       <div part="base" class="select-base">
-        ${this.label
-          ? html`
-              <label part="label" class="select-label" for="select">
-                ${this.label}
-                ${this.required ? html`<span class="required-indicator">*</span>` : ''}
-              </label>
-            `
-          : ''}
+        ${
+          this.label
+            ? html`
+                <label part="label" class="select-label" for="select">
+                  ${this.label}
+                  ${this.required ? html`<span class="required-indicator">*</span>` : ''}
+                </label>
+              `
+            : ''
+        }
 
         <div
           part="select-wrapper"
-          class="select-wrapper ${this.focused ? 'focused' : ''} ${hasError ? 'error' : ''} ${this
-            .disabled
-            ? 'disabled'
-            : ''}"
+          class="select-wrapper ${this.focused ? 'focused' : ''} ${hasError ? 'error' : ''} ${
+            this.disabled ? 'disabled' : ''
+          }"
         >
           <select
             part="select"
@@ -463,41 +465,45 @@ export class AeSelect extends LitElement {
             @focus="${this.handleFocus}"
             @blur="${this.handleBlur}"
           >
-            ${this.placeholder && !this.multiple
-              ? html`
-                  <option value="" disabled ?selected="${!this.value}" data-placeholder>
-                    ${this.placeholder}
-                  </option>
-                `
-              : ''}
+            ${
+              this.placeholder && !this.multiple
+                ? html`
+                    <option value="" disabled ?selected="${!this.value}" data-placeholder>
+                      ${this.placeholder}
+                    </option>
+                  `
+                : ''
+            }
             <slot></slot>
           </select>
 
-          ${!this.multiple
-            ? html`
-                <svg
-                  part="icon"
-                  class="select-icon"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                >
-                  <path
-                    d="M7 8.5L10 11.5L13 8.5"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              `
-            : ''}
+          ${
+            !this.multiple
+              ? html`
+                  <svg
+                    part="icon"
+                    class="select-icon"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M7 8.5L10 11.5L13 8.5"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                `
+              : ''
+          }
         </div>
 
-        ${showHelpText
-          ? html` <div part="help-text" class="help-text">${this.helpText}</div> `
-          : ''}
+        ${
+          showHelpText ? html` <div part="help-text" class="help-text">${this.helpText}</div> ` : ''
+        }
         ${hasError ? html` <div part="error-text" class="error-text">${this.error}</div> ` : ''}
       </div>
     `;

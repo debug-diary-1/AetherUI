@@ -12,11 +12,11 @@
 
 ## Rules
 
-- Import from @aetherui/core or a documented subpath and call the matching define function once.
-- Import @aetherui/tokens/light.css or @aetherui/tokens/dark.css once.
+- Import from @aetherui-kit/core or a documented subpath and call the matching define function once.
+- Import @aetherui-kit/tokens/light.css or @aetherui-kit/tokens/dark.css once.
 - Listen for documented ae-* CustomEvents; read payloads from event.detail.
 - Treat accessibility and keyboard behavior as part of each element's interface.
-- For model-generated interfaces, emit the JSON schema and validate it with @aetherui/agent before rendering.
+- For model-generated interfaces, emit the JSON schema and validate it with @aetherui-kit/agent before rendering.
 
 # Complete component catalog
 
@@ -77,7 +77,8 @@ Events:
 - `ae-close` (CustomEvent): Fired when the alert is closed
 
 Slots:
-- None documented
+- `default`: The alert message content
+- `icon`: Custom icon that replaces the variant's default icon
 
 CSS parts:
 - None documented
@@ -335,6 +336,7 @@ CSS parts:
 
 A text input component with support for various input types, validation, and form participation.
 Participates in native form submission via ElementInternals API.
+Enabled, named inputs submit empty strings. Validity follows changes to native constraints.
 
 Properties:
 - `ariaLabel` (string, default ''): Accessible label for the input (used when no visible label)
@@ -761,6 +763,7 @@ CSS parts:
 
 A textarea component with support for auto-resize, character counting, and form participation.
 Participates in native form submission via ElementInternals API.
+Enabled, named textareas submit empty strings.
 
 Properties:
 - `ariaLabel` (string, default ''): Accessible label for the textarea (used when no visible label)

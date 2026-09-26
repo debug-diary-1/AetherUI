@@ -1,4 +1,4 @@
-import { AeAccordion, AeAccordionItem, defineAeAccordion } from '@aetherui/core/accordion';
+import { AeAccordion, AeAccordionItem, defineAeAccordion } from '@aetherui-kit/core/accordion';
 
 // Preserve the standalone package's historical side-effect registration contract.
 defineAeAccordion();

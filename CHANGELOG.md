@@ -7,16 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned
-- Additional component variants and sizes
-- Framework wrapper packages (React, Vue)
+### Added
+- Experimental `@aetherui-kit/agent/webmcp` subpath: `registerAgentUiTools` registers WebMCP tools that let an in-browser agent list the allowed components and render validated documents into a host surface. Documents that fail validation leave the surface unchanged and return their issues. With `shareState` and `shareActions`, hosts can let the agent read component values and wait for user actions.
 
-## [0.1.0] - Unreleased
+### Fixed
+- `ae-alert` documents its default and `icon` slots, so the component catalog, `llms-full.txt`, and agent tools describe where alert content goes.
+
+## [0.1.1] - 2026-09-26
+
+Releases `@aetherui-kit/tokens@0.1.1` only; the other packages are unchanged at their published versions.
+
+### Fixed
+- `@aetherui-kit/tokens/minimal.css` is exported, so the documented minimal theme import resolves in bundlers.
+
+### Changed
+- The publish workflow skips package versions already on npm, so a tag releases only packages with new versions and a rerun after a partial failure publishes only the missing ones.
+
+## [0.1.0] - 2026-09-26
+
+### Changed
+- Package names, imports, and installation examples now use the owned `@aetherui-kit` npm scope.
+- Removed internal controllers and DataTable utilities from public exports; core subpaths are explicitly enumerated.
+- Isolated registry consumer checks from the OIDC publishing job and preserved host content in the agent example.
+- Documented a runnable Vite-based vanilla example and the first-publication workflow.
+
+### Fixed
+- Tooltips stay anchored with absolute or fixed positioning, follow layout changes, and remain readable without theme tokens.
+- Repeated core imports across independent bundles reuse registered custom elements.
+- Toast subpath helpers remain available in production bundles; alert registration is synchronous.
+- DataTable selection uses consistent keys and mode settings; accessible names and resize values track updates.
+- Textareas revalidate when readonly or disabled constraints change.
+- Input validity updates when native constraints change; empty named inputs and textareas remain in form submission.
+- Agent node limits count text children and reject unknown document and node fields before rendering.
+- GitHub Pages uploads Storybook from its actual build directory and requires complete site artifacts.
+- Patched the docs dependency on `postcss-selector-parser` for GHSA-w9m9-85wc-3x92.
 
 ### Added
-- **`@aetherui/agent`** - validated JSON UI documents rendered to AetherUI
+- **`@aetherui-kit/agent`** - validated JSON UI documents rendered to AetherUI
   components, for LLM-generated interfaces
-- **`@aetherui/mcp`** - MCP server exposing the component catalog and the same
+- **`@aetherui-kit/mcp`** - MCP server exposing the component catalog and the same
   semantic validation to agent hosts
 - Generated machine-readable artifacts published with the docs: `llms.txt`,
   `component-catalog.json`, `agent-ui.schema.json`, and React 19 JSX types
@@ -25,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   WebKit), Storybook interaction tests, Playwright e2e, package-contents
   checks, generated-artifact drift detection, agent evals, and production
   dependency audit
-- npm publishing via Trusted Publishing (OIDC) with provenance attestations
+- npm publishing workflow using Trusted Publishing (OIDC) with provenance attestations; the initial 0.1.0 packages were published locally, without provenance
 - Initial release of AetherUI component library
 - Core components:
   - **Button** - Primary action trigger with variants (primary, secondary, ghost) and sizes
@@ -41,23 +70,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **TreeView** - Hierarchical data display with expand/collapse
   - **Combo** - Combo box with filtering and keyboard navigation
   - **Autocomplete** - Auto-completing input with custom matching
-- Design token system (`@aetherui/tokens`)
+- Design token system (`@aetherui-kit/tokens`)
 - Tree-shakeable component architecture
 - Comprehensive TypeScript support with strict mode
 - Shadow DOM encapsulation for all components
-- WCAG 2.1 Level AA accessibility compliance
+- Keyboard interactions and ARIA semantics covered by browser tests; verify accessibility with application content and styling
 - Extensive JSDoc documentation
 - Storybook integration for component showcase
-- Comprehensive test suite with Vitest and Web Test Runner
-- Nx monorepo with optimized build pipeline
+- Component tests with Web Test Runner, Node package tests, and Playwright consumer tests
+- Turborepo monorepo with cached package builds
 - GitHub Actions CI/CD
 - Documentation site with Astro and Starlight
 
 ### Infrastructure
-- Nx monorepo setup with pnpm workspaces
+- Turborepo setup with pnpm workspaces
 - Vite build system with optimized bundles
-- Automated testing with memory optimization
-- ESLint and Prettier code quality tools
+- Browser, package, and consumer regression tests
+- oxlint and oxfmt code quality tools
 - Husky pre-commit hooks
 - GitHub issue and PR templates
 - Comprehensive development standards (STANDARDS.md)

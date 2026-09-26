@@ -110,3 +110,22 @@ test('normalizes URL protocol names without a trailing colon', async () => {
     assert.equal(validation.structuredContent.ok, true);
   });
 });
+
+test('counts text nodes and rejects unknown fields through MCP validation', async () => {
+  await withClient(async (client) => {
+    const document = { version: '1', root: { component: 'ae-alert', children: ['Saved'] } };
+    const accepted = await client.callTool({
+      name: 'validate_agent_ui',
+      arguments: { document, maxNodes: 2 },
+    });
+    assert.deepEqual(accepted.structuredContent, { ok: true, nodeCount: 2 });
+    for (const arguments_ of [
+      { document, maxNodes: 1 },
+      { document: { ...document, html: '<b>ignored</b>' } },
+    ]) {
+      const rejected = await client.callTool({ name: 'validate_agent_ui', arguments: arguments_ });
+      assert.equal(rejected.isError, true);
+      assert.equal(rejected.structuredContent.ok, false);
+    }
+  });
+});

@@ -38,8 +38,8 @@ hero:
       </a>
     </div>
     <div class="install-command">
-      <code>npm install @aetherui/core</code>
-      <button class="copy-btn" onclick="navigator.clipboard.writeText('npm install @aetherui/core')">
+      <code>npm install @aetherui-kit/core</code>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('npm install @aetherui-kit/core')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
           <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
@@ -105,7 +105,7 @@ hero:
         <span class="code-dot"></span>
         <span class="code-filename">app.js</span>
       </div>
-      <pre><code><span class="code-keyword">import</span> { defineAeButton } <span class="code-keyword">from</span> <span class="code-string">'@aetherui/core'</span>;
+      <pre><code><span class="code-keyword">import</span> { defineAeButton } <span class="code-keyword">from</span> <span class="code-string">'@aetherui-kit/core'</span>;
 
 <span class="code-comment">// Register the component</span>
 defineAeButton();

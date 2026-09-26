@@ -8,7 +8,7 @@ export { AeModal, modalStyles };
  *
  * @example
  * ```ts
- * import { defineAeModal } from '@aetherui/core';
+ * import { defineAeModal } from '@aetherui-kit/core';
  *
  * defineAeModal(); // Now <ae-modal> is available
  * ```

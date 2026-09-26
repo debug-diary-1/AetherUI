@@ -1,5 +1,5 @@
 {
-  "name": "@aetherui/core",
+  "name": "@aetherui-kit/core",
   "version": "0.1.0",
   "description": "Headless, framework-agnostic Web Component library built with Lit",
   "keywords": [
@@ -29,7 +29,7 @@
     "react.d.ts"
   ],
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": true,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -169,12 +169,7 @@
     },
     "./custom-elements.json": "./custom-elements.json",
     "./component-catalog.json": "./component-catalog.json",
-    "./package.json": "./package.json",
-    "./*": {
-      "types": "./dist/*/index.d.ts",
-      "import": "./dist/*/index.js",
-      "require": "./dist/*/index.js"
-    }
+    "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public",
@@ -195,19 +190,23 @@
     "typecheck:react": "tsc -p tsconfig.react.json"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.8.0",
     "lit": "catalog:"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "catalog:",
     "@open-wc/testing": "catalog:",
     "@types/node": "catalog:",
-    "@types/react": "18.3.20",
+    "@types/react": "19.2.18",
+    "@typescript/native": "catalog:",
     "@web/test-runner-playwright": "catalog:",
     "playwright": "catalog:",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "rimraf": "catalog:",
     "typescript": "catalog:",
-    "vite": "catalog:",
-    "vite-plugin-dts": "catalog:"
+    "unplugin-dts": "catalog:",
+    "vite": "catalog:"
   },
   "customElements": "custom-elements.json"
 }

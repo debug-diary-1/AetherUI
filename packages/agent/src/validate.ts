@@ -13,6 +13,8 @@ const DEFAULT_MAX_NODES = 100;
 const DEFAULT_MAX_PROPERTY_DEPTH = 32;
 const DEFAULT_URL_PROTOCOLS = ['https:', 'http:', 'mailto:', 'tel:'];
 const URL_PROPERTY = /^(?:href|src|action|formAction)$/i;
+const DOCUMENT_FIELDS = new Set(['version', 'root']);
+const NODE_FIELDS = new Set(['component', 'id', 'slot', 'props', 'actions', 'children']);
 
 const catalogByTag = new Map<string, AgentUiComponentContract>(
   componentCatalog.map((component) => [component.tagName, component]),
@@ -157,6 +159,7 @@ export function validateAgentUi(
     : undefined;
   const allowedUrlProtocols = policy.allowedUrlProtocols ?? DEFAULT_URL_PROTOCOLS;
   let nodeCount = 0;
+  let nodeLimitExceeded = false;
 
   if (!isRecord(input) || input.version !== '1' || !isRecord(input.root)) {
     return {
@@ -171,7 +174,30 @@ export function validateAgentUi(
     };
   }
 
+  const rejectUnknownFields = (
+    value: Record<string, unknown>,
+    allowed: Set<string>,
+    path: string,
+    code: 'invalid-document' | 'invalid-node',
+  ): void => {
+    for (const name of Object.keys(value)) {
+      if (!allowed.has(name)) {
+        issues.push({ path: `${path}.${name}`, code, message: `Unknown field "${name}".` });
+      }
+    }
+  };
+  rejectUnknownFields(input, DOCUMENT_FIELDS, '$', 'invalid-document');
+
   const visit = (candidate: unknown, path: string, depth: number): void => {
+    if (nodeLimitExceeded) return;
+    nodeCount += 1;
+    if (nodeCount > maxNodes) {
+      nodeLimitExceeded = true;
+      issues.push({ path, code: 'limit-exceeded', message: `Document exceeds ${maxNodes} nodes.` });
+      return;
+    }
+    // maxDepth measures component nesting; text leaves share their parent's depth.
+    if (typeof candidate === 'string') return;
     if (!isRecord(candidate) || typeof candidate.component !== 'string') {
       issues.push({
         path,
@@ -181,15 +207,12 @@ export function validateAgentUi(
       return;
     }
 
-    nodeCount += 1;
-    if (nodeCount > maxNodes) {
-      issues.push({ path, code: 'limit-exceeded', message: `Document exceeds ${maxNodes} nodes.` });
-      return;
-    }
     if (depth > maxDepth) {
       issues.push({ path, code: 'limit-exceeded', message: `Document exceeds depth ${maxDepth}.` });
       return;
     }
+
+    rejectUnknownFields(candidate, NODE_FIELDS, path, 'invalid-node');
 
     const contract = catalogByTag.get(candidate.component);
     if (!contract || (allowedComponents && !allowedComponents.has(candidate.component))) {
@@ -306,9 +329,9 @@ export function validateAgentUi(
           message: 'children must be an array.',
         });
       } else {
-        candidate.children.forEach((child, index) => {
-          if (typeof child !== 'string') visit(child, `${path}.children[${index}]`, depth + 1);
-        });
+        for (let index = 0; index < candidate.children.length && !nodeLimitExceeded; index += 1) {
+          visit(candidate.children[index], `${path}.children[${index}]`, depth + 1);
+        }
       }
     }
   };

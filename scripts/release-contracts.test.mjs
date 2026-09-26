@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { readdir, readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import test from 'node:test';
 
 const root = new URL('../', import.meta.url);
@@ -74,9 +75,9 @@ test('cross-package tests declare their build dependencies in the Turbo graph', 
   assert.ok(turbo.globalDependencies.includes('scripts/artifact-helpers.mjs'));
   assert.ok(turbo.globalDependencies.includes('scripts/generate-react-types.mjs'));
   for (const task of [
-    '@aetherui/accordion#test',
-    '@aetherui/mcp#test',
-    '@aetherui/datatable#test',
+    '@aetherui-kit/accordion#test',
+    '@aetherui-kit/mcp#test',
+    '@aetherui-kit/datatable#test',
   ]) {
     assert.deepEqual(turbo.tasks[task]?.dependsOn, ['^build', 'build'], task);
   }
@@ -90,9 +91,9 @@ test('cross-package tests declare their build dependencies in the Turbo graph', 
   for (const command of [
     'pnpm build',
     'pnpm run build',
-    'pnpm --filter @aetherui/core build',
-    'pnpm --filter @aetherui/core run build',
-    'pnpm -F @aetherui/core build',
+    'pnpm --filter @aetherui-kit/core build',
+    'pnpm --filter @aetherui-kit/core run build',
+    'pnpm -F @aetherui-kit/core build',
     'pnpm exec turbo build',
     'turbo build',
     'turbo run build',
@@ -104,19 +105,22 @@ test('cross-package tests declare their build dependencies in the Turbo graph', 
   }
 });
 
-test('the publish workflow installs Chromium before running browser tests', async () => {
+test('the publish workflow installs all browsers before running release checks', async () => {
   const workflow = await read('.github/workflows/publish.yml');
   // Step order only matters within a single job, so assert per job.
   const job = workflowJobs(workflow).find((candidate) =>
-    candidate.steps.some((step) => step.name === 'Run tests'),
+    candidate.steps.some((step) => /run: pnpm check:release\b/.test(step.body)),
   );
-  assert.ok(job, 'missing a job that runs tests');
-  const install = job.steps.findIndex((step) => step.name === 'Install Playwright browser');
-  const tests = job.steps.findIndex((step) => step.name === 'Run tests');
+  assert.ok(job, 'missing a job that runs release checks');
+  const install = job.steps.findIndex((step) => step.name === 'Install Playwright browsers');
+  const tests = job.steps.findIndex((step) => /run: pnpm check:release\b/.test(step.body));
 
   assert.ok(install >= 0, 'missing Playwright Chromium installation');
   assert.ok(install < tests, 'Playwright installation must precede tests in the same job');
-  assert.match(job.steps[install].body, /run:\s*npx playwright install --with-deps chromium/);
+  assert.match(
+    job.steps[install].body,
+    /run:\s*npx playwright install --with-deps chromium firefox webkit/,
+  );
 });
 
 test('CI executes the release-contract guards', async () => {
@@ -134,7 +138,7 @@ test('CI executes the release-contract guards', async () => {
   }
 });
 
-test('the publish workflow runs every guard in the job that publishes', async () => {
+test('the publish workflow gates publishing on isolated release checks', async () => {
   const workflow = await read('.github/workflows/publish.yml');
   // Scope to the job that actually publishes: guards sitting in a separate,
   // undepended-on job would never gate a release.
@@ -143,18 +147,35 @@ test('the publish workflow runs every guard in the job that publishes', async ()
   );
   assert.ok(job, 'no job publishes packages');
 
-  const firstPublish = job.steps.findIndex((step) => /pnpm publish/.test(step.run));
-  for (const [name, command] of [
-    ['Run tests', /run: pnpm test\b/],
-    ['Verify generated agent artifacts', /run: pnpm check:agent-artifacts/],
-    ['Run release contract tests', /run: pnpm test:release-contracts/],
-    ['Typecheck generated React declarations', /run: pnpm typecheck:react/],
-  ]) {
-    const index = job.steps.findIndex((step) => step.name === name);
-    assert.ok(index >= 0, `publish job is missing the "${name}" step`);
-    assert.match(job.steps[index].body, command, String(name));
-    assert.ok(index < firstPublish, `"${name}" must run before any package is published`);
-  }
+  assert.match(job.body, /needs: checks/);
+  assert.doesNotMatch(job.body, /check:release|test:consumers|actions\/download-artifact/);
+  assert.match(job.body, /run: pnpm build/);
+  const checks = workflowJobs(workflow).find((candidate) => candidate.name === 'checks');
+  assert.ok(checks, 'missing isolated checks job');
+  assert.doesNotMatch(checks.body, /id-token: write|continue-on-error: true/);
+  assert.match(checks.body, /run: pnpm check:release/);
+  const { scripts } = JSON.parse(await read('package.json'));
+  assert.match(scripts['check:release'], /^pnpm check && /);
+  const commands = `${scripts.check} && ${scripts['check:release']}`.split(' && ');
+  for (const command of [
+    'pnpm format:check',
+    'pnpm lint',
+    'pnpm typecheck',
+    'pnpm test',
+    'pnpm check:agent-artifacts',
+    'pnpm test:release-contracts',
+    'pnpm build',
+    'pnpm typecheck:react',
+    'pnpm test:agent-evals',
+    'pnpm pack:check',
+    'pnpm test:consumers',
+    'pnpm audit:prod',
+    'pnpm test:coverage',
+    'pnpm test:cross-browser',
+    'pnpm build-storybook',
+    'pnpm test:e2e:static',
+  ])
+    assert.ok(commands.includes(command), `release gate is missing ${command}`);
 });
 
 test('the publish workflow uses npm trusted publishing, not a long-lived token', async () => {
@@ -178,6 +199,12 @@ test('the publish workflow uses npm trusted publishing, not a long-lived token',
     job.steps.map((step) => step.run).join('\n'),
     /--provenance/,
     'publish with provenance',
+  );
+  // npm versions are immutable; a tag releases only packages whose version is new.
+  assert.match(
+    job.steps.map((step) => step.run).join('\n'),
+    /npm view "@aetherui-kit\/\$pkg@\$version" version[\s\S]*continue[\s\S]*pnpm publish/,
+    'publish must skip package versions already on npm',
   );
 
   // A cache restored into the job that holds publish rights is attacker-
@@ -222,12 +249,12 @@ test('the React declaration typecheck runs against real React typings', async ()
   const manifest = JSON.parse(await read('packages/core/package.json'));
   assert.ok(
     manifest.devDependencies['@types/react'],
-    'missing @types/react devDependency on @aetherui/core',
+    'missing @types/react devDependency on @aetherui-kit/core',
   );
   const root = JSON.parse(await read('package.json'));
   assert.ok(
     !root.devDependencies['@types/react'],
-    'keep @types/react scoped to @aetherui/core: a root dependency re-resolves the Storybook peer graph',
+    'keep @types/react scoped to @aetherui-kit/core: a root dependency re-resolves the Storybook peer graph',
   );
 });
 
@@ -251,4 +278,42 @@ test('standalone accordion styles retain usable token fallbacks', async () => {
   ]) {
     assert.match(styles, new RegExp(`var\\(\\s*${token},\\s*[^)]`), token);
   }
+});
+
+test('Pages uploads the actual Storybook build output and requires complete artifacts', async () => {
+  const workflow = await read('.github/workflows/deploy.yml');
+  const manifest = JSON.parse(await read('packages/storybook/package.json'));
+  const outputDirectory = manifest.scripts['build-storybook'].match(/--output-dir\s+(\S+)/)?.[1];
+  assert.ok(outputDirectory, 'missing Storybook output directory');
+  const jobs = workflowJobs(workflow);
+  const upload = jobs
+    .find((job) => job.name === 'build-storybook')
+    .steps.find((step) => step.name === 'Upload Storybook artifact');
+  const uploadPath = upload.body.match(/^\s*path:\s*(\S+)/m)?.[1];
+  assert.ok(uploadPath, 'missing upload path');
+  assert.equal(resolve('packages/storybook', outputDirectory), resolve(uploadPath));
+  assert.doesNotMatch(workflow, /continue-on-error:\s*true|fallback\.html/);
+  for (const jobName of ['build-docs', 'build-storybook']) {
+    const job = jobs.find((candidate) => candidate.name === jobName);
+    assert.match(
+      job.steps.find((step) => /Upload .* artifact/.test(step.name)).body,
+      /if-no-files-found:\s*error/,
+    );
+  }
+  const verify = jobs
+    .find((job) => job.name === 'deploy')
+    .steps.find((step) => step.name === 'Verify site entry points');
+  assert.match(verify.run, /test -s \.output\/docs\/index\.html/);
+  assert.match(verify.run, /test -s \.output\/storybook\/index\.html/);
+});
+
+test('Pages builds the complete Storybook dependency graph', async () => {
+  const job = workflowJobs(await read('.github/workflows/deploy.yml')).find(
+    (job) => job.name === 'build-storybook',
+  );
+  const step = job.steps.find((step) => step.name === 'Build Storybook');
+  assert.match(step.run, /pnpm build-storybook/);
+  assert.doesNotMatch(step.run, /cd packages\/storybook/);
+  const turbo = JSON.parse(await read('turbo.json'));
+  assert.ok(turbo.tasks['build-storybook'].dependsOn.includes('^build'));
 });
