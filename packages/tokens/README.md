@@ -35,6 +35,7 @@ Or in HTML:
 |-------|--------|
 | Light | `@aetherui-kit/tokens/light.css` |
 | Dark | `@aetherui-kit/tokens/dark.css` |
+| Minimal (semantic tokens only) | `@aetherui-kit/tokens/minimal.css` |
 
 ## Customization
 

@@ -405,6 +405,21 @@ test('toast subpath exports helpers and registers its element in a production bu
   ]);
 });
 
+for (const [theme, token] of [
+  ['light.css', '--ae-text-primary'],
+  ['dark.css', '--ae-color-primary'],
+  ['minimal.css', '--ae-color-primary'],
+]) {
+  test(`documented ${theme} theme import applies its tokens in a production bundle`, async (t) => {
+    const page = await consumer(t, `import '@aetherui-kit/tokens/${theme}';`);
+    const value = await page.evaluate(
+      (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim(),
+      token,
+    );
+    assert.notEqual(value, '', `${theme} must define ${token}`);
+  });
+}
+
 test('bare core component imports survive production tree shaking', async (t) => {
   const page = await consumer(
     t,

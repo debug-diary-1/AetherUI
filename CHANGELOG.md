@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Package names, imports, and installation examples now use the owned `@aetherui-kit` npm scope.
 
 ### Fixed
+- `@aetherui-kit/tokens/minimal.css` is exported, so the documented minimal theme import resolves in bundlers.
 - Tooltips stay anchored with absolute or fixed positioning, follow layout changes, and remain readable without theme tokens.
 - Repeated core imports across independent bundles reuse registered custom elements.
 - Toast subpath helpers remain available in production bundles; alert registration is synchronous.
