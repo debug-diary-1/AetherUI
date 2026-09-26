@@ -38,6 +38,7 @@
         --brand-solid-hover: #6165ee;
         --brand-tint: rgba(99, 102, 241, 0.12);
         --on-brand: #fff;
+        --success: #34d399;
 
         --rail: 1px;
         --maxw: 1120px;
@@ -58,6 +59,7 @@
           --brand-solid: #5457e5;
           --brand-solid-hover: #4f52e0;
           --brand-tint: rgba(99, 102, 241, 0.08);
+          --success: #047857;
         }
       }
 
@@ -265,12 +267,20 @@
         box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.7);
         display: grid;
         gap: 16px;
-        /* Hidden until the elements upgrade, so nothing flashes unstyled. */
+        /* Hidden until the elements upgrade, so nothing flashes unstyled. If the
+           bundle never loads, the reveal animation shows the fallback markup. */
         opacity: 0;
         transition: opacity 0.35s ease;
+        animation: demo-fallback-reveal 0.35s ease 2s forwards;
       }
       html[data-components-ready='true'] .demo {
         opacity: 1;
+        animation: none;
+      }
+      @keyframes demo-fallback-reveal {
+        to {
+          opacity: 1;
+        }
       }
       @media (prefers-reduced-motion: reduce) {
         .demo {
@@ -406,8 +416,8 @@
         display: none;
       }
       .copy[data-copied] {
-        color: #34d399;
-        border-color: #34d399;
+        color: var(--success);
+        border-color: var(--success);
       }
       .copy[data-copied] .ok {
         display: block;
