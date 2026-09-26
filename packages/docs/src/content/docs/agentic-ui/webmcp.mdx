@@ -62,7 +62,7 @@ Actions triggered before the agent asks are queued in order and each is delivere
 - The host chooses the components: `allowedComponents` is required, and the validation policy from [Generate UI safely](../generate-safely/) applies to every document.
 - Agent documents are data. Declared events become action identifiers delivered to `onAction` on the page; the agent never supplies handlers.
 - The agent sees user input only when the host sets `shareState` or `shareActions`. Those tools carry `untrustedContentHint`, because the values come from the user.
-- Without `document.modelContext`, the call resolves to `false` and registers nothing.
+- The call resolves to `true` once the tools are registered. Without `document.modelContext`, or with an aborted `signal`, it resolves to `false` and registers nothing.
 - Aborting `signal` unregisters both tools. Rendered content stays until the host replaces it.
 - `toolPrefix` gives each surface distinct tool names, for example `checkout_list_components`.
 

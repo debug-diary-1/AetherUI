@@ -111,8 +111,8 @@ function identifiedComponents(
  * Registers WebMCP tools that let an in-browser agent discover the allowed AetherUI
  * components and render validated documents into `surface`.
  *
- * Resolves to `false` without registering anything when the browser does not provide
- * `document.modelContext`. Agent documents pass through `renderAgentUi`, so the host's
+ * Resolves to `true` when the tools are registered. Resolves to `false` without registering
+ * anything when the browser does not provide `document.modelContext` or `signal` is aborted. Agent documents pass through `renderAgentUi`, so the host's
  * policy applies and declared events reach `onAction`. The agent sees component state
  * and actions only when the host sets `shareState` or `shareActions`.
  */
@@ -133,7 +133,7 @@ export async function registerAgentUiTools(
     throw new TypeError(`Invalid WebMCP tool prefix "${toolPrefix}".`);
   }
   const modelContext = (document as Document & { modelContext?: WebMcpModelContext }).modelContext;
-  if (!modelContext) return false;
+  if (!modelContext || signal?.aborted) return false;
 
   const allowed = new Set(policy.allowedComponents);
   const tagNames = componentCatalog
@@ -174,7 +174,6 @@ export async function registerAgentUiTools(
   const unregister = (): void => registration.abort();
   registration.signal.addEventListener('abort', () => endWaits('unregistered'), { once: true });
   signal?.addEventListener('abort', unregister, { once: true });
-  if (signal?.aborted) unregister();
 
   const renderOptions: AgentUiRenderOptions = {
     ...policy,
@@ -328,6 +327,7 @@ export async function registerAgentUiTools(
 
   try {
     for (const tool of tools) {
+      if (registration.signal.aborted) break;
       await modelContext.registerTool(tool, { signal: registration.signal });
     }
   } catch (error) {
@@ -335,5 +335,6 @@ export async function registerAgentUiTools(
     signal?.removeEventListener('abort', unregister);
     throw error;
   }
-  return true;
+  // The host may abort while registration is in progress; aborting removes the tools.
+  return !registration.signal.aborted;
 }
