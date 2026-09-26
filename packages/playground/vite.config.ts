@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -5,9 +6,15 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     rolldownOptions: {
+      input: {
+        main: resolve(import.meta.dirname, 'index.html'),
+        webmcp: resolve(import.meta.dirname, 'webmcp.html'),
+      },
       output: {
         codeSplitting: {
-          groups: [{ name: 'prism', test: /node_modules[\\/]prismjs[\\/]/ }],
+          // Only Prism core: its CommonJS wrapper runs lazily, so the language components
+          // must stay with the code that initializes core before they run.
+          groups: [{ name: 'prism', test: /node_modules[\\/]prismjs[\\/]prism\.js$/ }],
         },
       },
     },
