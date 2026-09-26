@@ -202,6 +202,36 @@ describe('@aetherui-kit/agent/webmcp', () => {
     expect(modelContext.tools.size).to.equal(0);
   });
 
+  it('reports false and registers nothing when the host signal is already aborted', async () => {
+    const controller = new AbortController();
+    controller.abort();
+
+    expect(
+      await registerAgentUiTools(surface, {
+        allowedComponents: ['ae-button'],
+        signal: controller.signal,
+      }),
+    ).to.equal(false);
+    expect(modelContext.tools.size).to.equal(0);
+  });
+
+  it('reports false when the host aborts while registration is in progress', async () => {
+    const controller = new AbortController();
+    const registerTool = modelContext.registerTool.bind(modelContext);
+    modelContext.registerTool = async (tool, options) => {
+      await registerTool(tool, options);
+      controller.abort();
+    };
+
+    expect(
+      await registerAgentUiTools(surface, {
+        allowedComponents: ['ae-button'],
+        signal: controller.signal,
+      }),
+    ).to.equal(false);
+    expect(modelContext.tools.size).to.equal(0);
+  });
+
   it('uses a tool prefix and surface description so several surfaces can coexist', async () => {
     await registerAgentUiTools(surface, {
       allowedComponents: ['ae-button'],
