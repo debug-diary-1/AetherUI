@@ -442,6 +442,28 @@ importers:
         specifier: 'catalog:'
         version: 8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4)
 
+  packages/landing:
+    dependencies:
+      '@aetherui-kit/core':
+        specifier: workspace:*
+        version: link:../core
+      '@aetherui-kit/tokens':
+        specifier: workspace:*
+        version: link:../tokens
+      lit:
+        specifier: 'catalog:'
+        version: 3.3.3
+    devDependencies:
+      rimraf:
+        specifier: 'catalog:'
+        version: 6.1.3
+      typescript:
+        specifier: 'catalog:'
+        version: '@typescript/typescript6@6.0.2'
+      vite:
+        specifier: 'catalog:'
+        version: 8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4)
+
   packages/mcp:
     dependencies:
       '@aetherui-kit/agent':
