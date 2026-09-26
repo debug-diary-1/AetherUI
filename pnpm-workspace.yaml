@@ -25,7 +25,7 @@ catalog:
   '@storybook/addon-links': 10.6.0
   '@storybook/test-runner': 0.24.5
   '@storybook/web-components-vite': 10.6.0
-  '@types/node': 24.13.3
+  '@types/node': 26.6.2
   '@types/prismjs': 1.26.6
   '@web/dev-server-esbuild': 2.0.0
   '@web/test-runner': 1.0.0
