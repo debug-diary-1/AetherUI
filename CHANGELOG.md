@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Experimental `@aetherui-kit/agent/webmcp` subpath: `registerAgentUiTools` registers WebMCP tools that let an in-browser agent list the allowed components and render validated documents into a host surface. Documents that fail validation leave the surface unchanged and return their issues. With `shareState` and `shareActions`, hosts can let the agent read component values and wait for user actions.
 
+### Fixed
+- `ae-alert` documents its default and `icon` slots, so the component catalog, `llms-full.txt`, and agent tools describe where alert content goes.
+
 ## [0.1.1] - 2026-09-26
 
 Releases `@aetherui-kit/tokens@0.1.1` only; the other packages are unchanged at their published versions.
