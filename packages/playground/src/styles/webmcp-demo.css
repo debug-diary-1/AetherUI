@@ -1,0 +1,112 @@
+body.webmcp-demo {
+  overflow: auto;
+  padding: 2rem clamp(1rem, 4vw, 3rem) 3rem;
+}
+
+.demo-header {
+  max-width: 72ch;
+  margin-bottom: 1.5rem;
+}
+
+.demo-header h1 {
+  font-size: 1.75rem;
+  margin: 0.75rem 0;
+}
+
+.demo-back,
+.demo-lede a {
+  color: var(--pg-accent-hover);
+}
+
+.demo-lede {
+  color: var(--pg-text-muted);
+  line-height: 1.6;
+}
+
+.demo-status {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--pg-border);
+  border-radius: 0.5rem;
+  background: var(--pg-bg-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.demo-status[data-state='available'] {
+  border-color: var(--pg-success);
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: 1.5rem;
+}
+
+.demo-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.demo-panel-header h2 {
+  font-size: 1rem;
+}
+
+.demo-surface,
+.demo-log {
+  min-height: 16rem;
+  padding: 1rem;
+  border: 1px solid var(--pg-border);
+  border-radius: 0.5rem;
+  background: var(--pg-bg-secondary);
+}
+
+.demo-surface ae-input {
+  display: block;
+  margin: 0.75rem 0;
+}
+
+.demo-surface ae-button + ae-button {
+  margin-left: 0.5rem;
+}
+
+.demo-placeholder {
+  color: var(--pg-text-muted);
+}
+
+.demo-log {
+  list-style: none;
+  max-height: 32rem;
+  overflow: auto;
+  font-size: 0.875rem;
+}
+
+.demo-log li + li {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--pg-border);
+}
+
+.demo-log-source {
+  display: inline-block;
+  min-width: 3.5rem;
+  margin-right: 0.5rem;
+  font-weight: 600;
+  color: var(--pg-accent-hover);
+}
+
+.demo-log li[data-source='page'] .demo-log-source {
+  color: var(--pg-success);
+}
+
+.demo-log pre {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  overflow-x: auto;
+  border-radius: 0.375rem;
+  background: var(--pg-bg-tertiary);
+  font-family: var(--pg-font-mono);
+  font-size: 0.75rem;
+}
