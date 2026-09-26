@@ -16,7 +16,7 @@ allowBuilds:
   unrs-resolver: false
 catalog:
   '@custom-elements-manifest/analyzer': 0.11.0
-  '@astrojs/starlight': 0.42.0
+  '@astrojs/starlight': 0.42.3
   '@lit/reactive-element': 2.1.2
   '@open-wc/testing': 5.0.0
   '@playwright/test': 1.63.0
