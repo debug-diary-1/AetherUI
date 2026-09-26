@@ -8,7 +8,7 @@ export { AeDropdown, AeDropdownItem, AeMenuSeparator, AeMenuSection, dropdownSty
  *
  * @example
  * ```ts
- * import { defineAeDropdown } from '@aetherui/core';
+ * import { defineAeDropdown } from '@aetherui-kit/core';
  *
  * defineAeDropdown(); // Now <ae-dropdown>, <ae-dropdown-item>, <ae-menu-separator>, and <ae-menu-section> are available
  * ```

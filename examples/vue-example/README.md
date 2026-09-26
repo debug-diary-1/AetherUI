@@ -5,11 +5,11 @@ This example demonstrates how to use AetherUI components in a Vue 3 application.
 ## Installation
 
 ```bash
-npm install @aetherui/core @aetherui/tokens
+npm install @aetherui-kit/core @aetherui-kit/tokens
 # or
-yarn add @aetherui/core @aetherui/tokens
+yarn add @aetherui-kit/core @aetherui-kit/tokens
 # or
-pnpm add @aetherui/core @aetherui/tokens
+pnpm add @aetherui-kit/core @aetherui-kit/tokens
 ```
 
 ## Configuration
@@ -45,9 +45,9 @@ Add type definitions in `env.d.ts`:
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AeButton: typeof import('@aetherui/core/button').AeButton;
-    AeModal: typeof import('@aetherui/core/modal').AeModal;
-    AeDropdown: typeof import('@aetherui/core/dropdown').AeDropdown;
+    AeButton: typeof import('@aetherui-kit/core/button').AeButton;
+    AeModal: typeof import('@aetherui-kit/core/modal').AeModal;
+    AeDropdown: typeof import('@aetherui-kit/core/dropdown').AeDropdown;
     // Add other components as needed
   }
 }
@@ -74,8 +74,8 @@ export {};
 </template>
 
 <script setup lang="ts">
-import { defineAeButton } from '@aetherui/core';
-import '@aetherui/tokens/light.css';
+import { defineAeButton } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css';
 
 // Register the component once
 defineAeButton();
@@ -120,8 +120,8 @@ const handleClick = (e: CustomEvent) => {
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { defineAeButton, defineAeModal } from '@aetherui/core';
-import '@aetherui/tokens/light.css';
+import { defineAeButton, defineAeModal } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css';
 
 defineAeButton();
 defineAeModal();
@@ -149,8 +149,8 @@ const closeModal = () => {
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { defineAeButton } from '@aetherui/core';
-import type { AeButton } from '@aetherui/core/button';
+import { defineAeButton } from '@aetherui-kit/core';
+import type { AeButton } from '@aetherui-kit/core/button';
 
 defineAeButton();
 
@@ -185,7 +185,7 @@ export function useAetherUIComponent(name: string, defineFunction: () => void) {
 
 // Usage in component:
 import { useAetherUIComponent } from './composables/useAetherUI';
-import { defineAeButton } from '@aetherui/core';
+import { defineAeButton } from '@aetherui-kit/core';
 
 useAetherUIComponent('ae-button', defineAeButton);
 ```
@@ -195,8 +195,8 @@ useAetherUIComponent('ae-button', defineAeButton);
 ```typescript
 // plugins/aetherui.ts
 import { App } from 'vue';
-import { defineAll } from '@aetherui/core';
-import '@aetherui/tokens/light.css';
+import { defineAll } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css';
 
 export default {
   install(app: App) {
@@ -256,8 +256,8 @@ app.mount('#app');
 
 <script setup lang="ts">
 import { reactive } from 'vue';
-import { defineAeButton, defineAeCheckbox } from '@aetherui/core';
-import '@aetherui/tokens/light.css';
+import { defineAeButton, defineAeCheckbox } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css';
 
 defineAeButton();
 defineAeCheckbox();
@@ -314,7 +314,7 @@ const resetForm = () => {
 To use the dark theme:
 
 ```typescript
-import '@aetherui/tokens/dark.css';
+import '@aetherui-kit/tokens/dark.css';
 ```
 
 ### Dynamic Theme Switching
@@ -330,7 +330,7 @@ import '@aetherui/tokens/dark.css';
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { defineAeButton } from '@aetherui/core';
+import { defineAeButton } from '@aetherui-kit/core';
 
 defineAeButton();
 
@@ -344,7 +344,7 @@ watch(theme, (newTheme) => {
   // Dynamically load theme CSS
   const themeLink = document.getElementById('theme-css') as HTMLLinkElement;
   if (themeLink) {
-    themeLink.href = `@aetherui/tokens/${newTheme}.css`;
+    themeLink.href = `@aetherui-kit/tokens/${newTheme}.css`;
   }
 });
 </script>
@@ -356,7 +356,7 @@ Override CSS variables in your global styles:
 
 ```css
 /* styles/main.css */
-@import '@aetherui/tokens/light.css';
+@import '@aetherui-kit/tokens/light.css';
 
 :root {
   --ae-button-bg-primary: #0066cc;
@@ -391,7 +391,7 @@ Import components client-side only:
 
 <script setup>
 if (process.client) {
-  const { defineAeButton } = await import('@aetherui/core');
+  const { defineAeButton } = await import('@aetherui-kit/core');
   defineAeButton();
 }
 </script>

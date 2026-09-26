@@ -86,7 +86,7 @@ Both frameworks support custom elements out of the box — no configuration need
 No build tooling required. Import the `define*` helper for each component you use and let the browser do the rest:
 
 ```ts
-import { defineAeCheckbox } from '@aetherui/core';
+import { defineAeCheckbox } from '@aetherui-kit/core';
 
 defineAeCheckbox();
 
@@ -96,4 +96,4 @@ checkbox?.addEventListener('ae-checkbox-change', (e) => {
 });
 ```
 
-TypeScript users automatically get autocomplete via the `HTMLElementTagNameMap` declarations shipped with `@aetherui/core` — `document.querySelector('ae-checkbox')` returns `AeCheckbox | null` without any extra setup.
+TypeScript users automatically get autocomplete via the `HTMLElementTagNameMap` declarations shipped with `@aetherui-kit/core` — `document.querySelector('ae-checkbox')` returns `AeCheckbox | null` without any extra setup.

@@ -13,8 +13,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "paths": {
-      "@aetherui/core/*": ["./packages/core/src/*"],
-      "@aetherui/*": ["./packages/*/src"]
+      "@aetherui-kit/core/*": ["./packages/core/src/*"],
+      "@aetherui-kit/*": ["./packages/*/src"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

@@ -1,8 +1,8 @@
-# @aetherui/core
+# @aetherui-kit/core
 
 A headless, framework-agnostic Web Component library built with [Lit](https://lit.dev).
 
-[![npm version](https://img.shields.io/npm/v/@aetherui/core)](https://www.npmjs.com/package/@aetherui/core)
+[![npm version](https://img.shields.io/npm/v/@aetherui-kit/core)](https://www.npmjs.com/package/@aetherui-kit/core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Component registration is idempotent: loading another bundle with the same decorated component retains the first registered implementation. Public exports include components, registration functions, styles, and documented types; controllers and implementation utilities remain internal.
@@ -10,14 +10,14 @@ Component registration is idempotent: loading another bundle with the same decor
 ## Installation
 
 ```bash
-npm install @aetherui/core @aetherui/tokens
+npm install @aetherui-kit/core @aetherui-kit/tokens
 ```
 
 ## Quick Start
 
 ```typescript
-import { defineAeButton, defineAeModal } from '@aetherui/core';
-import '@aetherui/tokens/light.css';
+import { defineAeButton, defineAeModal } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css';
 
 // Register only the components you need
 defineAeButton();
@@ -31,7 +31,7 @@ defineAeModal();
 Or register all components at once:
 
 ```typescript
-import { defineAll } from '@aetherui/core';
+import { defineAll } from '@aetherui-kit/core';
 
 defineAll();
 ```
@@ -41,9 +41,9 @@ defineAll();
 Import individual components for optimal bundle sizes:
 
 ```typescript
-import { AeButton } from '@aetherui/core/button';
-import { AeModal } from '@aetherui/core/modal';
-import { AeTabs } from '@aetherui/core/tabs';
+import { AeButton } from '@aetherui-kit/core/button';
+import { AeModal } from '@aetherui-kit/core/modal';
+import { AeTabs } from '@aetherui-kit/core/tabs';
 ```
 
 ## Available Components
@@ -78,10 +78,10 @@ import { AeTabs } from '@aetherui/core/tabs';
 
 ## Theming
 
-AetherUI is fully headless -- components ship with no visual styles by default. Use `@aetherui/tokens` for pre-built themes or bring your own CSS:
+AetherUI is fully headless -- components ship with no visual styles by default. Use `@aetherui-kit/tokens` for pre-built themes or bring your own CSS:
 
 ```css
-@import '@aetherui/tokens/light.css';
+@import '@aetherui-kit/tokens/light.css';
 
 /* Override any token */
 :root {

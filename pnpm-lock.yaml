@@ -283,7 +283,7 @@ importers:
 
   packages/accordion:
     dependencies:
-      '@aetherui/core':
+      '@aetherui-kit/core':
         specifier: workspace:^
         version: link:../core
     devDependencies:
@@ -308,7 +308,7 @@ importers:
 
   packages/agent:
     dependencies:
-      '@aetherui/core':
+      '@aetherui-kit/core':
         specifier: workspace:^0.1.0
         version: link:../core
     devDependencies:
@@ -416,10 +416,10 @@ importers:
 
   packages/docs:
     dependencies:
-      '@aetherui/core':
+      '@aetherui-kit/core':
         specifier: workspace:*
         version: link:../core
-      '@aetherui/tokens':
+      '@aetherui-kit/tokens':
         specifier: workspace:*
         version: link:../tokens
       '@astrojs/starlight':
@@ -444,7 +444,7 @@ importers:
 
   packages/mcp:
     dependencies:
-      '@aetherui/agent':
+      '@aetherui-kit/agent':
         specifier: workspace:^
         version: link:../agent
       '@modelcontextprotocol/server':
@@ -472,10 +472,10 @@ importers:
 
   packages/playground:
     dependencies:
-      '@aetherui/core':
+      '@aetherui-kit/core':
         specifier: workspace:*
         version: link:../core
-      '@aetherui/tokens':
+      '@aetherui-kit/tokens':
         specifier: workspace:*
         version: link:../tokens
       lit:
@@ -500,13 +500,13 @@ importers:
 
   packages/storybook:
     dependencies:
-      '@aetherui/core':
+      '@aetherui-kit/core':
         specifier: workspace:*
         version: link:../core
-      '@aetherui/datatable':
+      '@aetherui-kit/datatable':
         specifier: workspace:*
         version: link:../datatable
-      '@aetherui/tokens':
+      '@aetherui-kit/tokens':
         specifier: workspace:*
         version: link:../tokens
     devDependencies:

@@ -75,9 +75,9 @@ test('cross-package tests declare their build dependencies in the Turbo graph', 
   assert.ok(turbo.globalDependencies.includes('scripts/artifact-helpers.mjs'));
   assert.ok(turbo.globalDependencies.includes('scripts/generate-react-types.mjs'));
   for (const task of [
-    '@aetherui/accordion#test',
-    '@aetherui/mcp#test',
-    '@aetherui/datatable#test',
+    '@aetherui-kit/accordion#test',
+    '@aetherui-kit/mcp#test',
+    '@aetherui-kit/datatable#test',
   ]) {
     assert.deepEqual(turbo.tasks[task]?.dependsOn, ['^build', 'build'], task);
   }
@@ -91,9 +91,9 @@ test('cross-package tests declare their build dependencies in the Turbo graph', 
   for (const command of [
     'pnpm build',
     'pnpm run build',
-    'pnpm --filter @aetherui/core build',
-    'pnpm --filter @aetherui/core run build',
-    'pnpm -F @aetherui/core build',
+    'pnpm --filter @aetherui-kit/core build',
+    'pnpm --filter @aetherui-kit/core run build',
+    'pnpm -F @aetherui-kit/core build',
     'pnpm exec turbo build',
     'turbo build',
     'turbo run build',
@@ -243,12 +243,12 @@ test('the React declaration typecheck runs against real React typings', async ()
   const manifest = JSON.parse(await read('packages/core/package.json'));
   assert.ok(
     manifest.devDependencies['@types/react'],
-    'missing @types/react devDependency on @aetherui/core',
+    'missing @types/react devDependency on @aetherui-kit/core',
   );
   const root = JSON.parse(await read('package.json'));
   assert.ok(
     !root.devDependencies['@types/react'],
-    'keep @types/react scoped to @aetherui/core: a root dependency re-resolves the Storybook peer graph',
+    'keep @types/react scoped to @aetherui-kit/core: a root dependency re-resolves the Storybook peer graph',
   );
 });
 

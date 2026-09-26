@@ -44,7 +44,7 @@ export function generateReact(
     .join(',\n');
 
   return `import { useEffect } from 'react';
-import { defineAll } from '@aetherui/core';
+import { defineAll } from '@aetherui-kit/core';
 
 export default function ${component.name}Example() {
   useEffect(() => { defineAll(); }, []);
@@ -76,7 +76,7 @@ export function generateVue(
 
 <script setup>
 import { onMounted } from 'vue';
-import { defineAll } from '@aetherui/core';
+import { defineAll } from '@aetherui-kit/core';
 
 onMounted(() => { defineAll(); });
 </script>
@@ -111,7 +111,7 @@ export function generateFullExample(
 
   <!-- AetherUI Core -->
   <script type="module">
-    import { defineAll } from '@aetherui/core';
+    import { defineAll } from '@aetherui-kit/core';
     defineAll();
   </script>
 

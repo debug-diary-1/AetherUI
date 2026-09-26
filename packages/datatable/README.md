@@ -17,7 +17,7 @@ A flexible data table component for complex data visualization with sorting, fil
 Import the package before using its custom elements. Bundlers retain this registration import:
 
 ```js
-import '@aetherui/datatable';
+import '@aetherui-kit/datatable';
 ```
 
 Tab to a column's sort button and press Enter or Space to cycle through ascending,

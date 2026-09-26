@@ -13,13 +13,13 @@ export default defineConfig({
     target: 'es2022',
     outDir: 'dist',
     rolldownOptions: {
-      external: [/^@aetherui\/core/],
+      external: [/^@aetherui-kit\/core/],
     },
   },
   plugins: [
     dts({
       insertTypesEntry: true,
-      aliasesExclude: [/^@aetherui\/core/],
+      aliasesExclude: [/^@aetherui-kit\/core/],
     }),
   ],
   server: {

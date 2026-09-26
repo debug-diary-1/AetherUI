@@ -1,12 +1,12 @@
 # Releasing AetherUI
 
-A release consists of six packages: `@aetherui/tokens`, `@aetherui/core`, `@aetherui/accordion`, `@aetherui/datatable`, `@aetherui/agent`, and `@aetherui/mcp`. Publish in that order so internal dependencies are available first.
+A release consists of six packages: `@aetherui-kit/tokens`, `@aetherui-kit/core`, `@aetherui-kit/accordion`, `@aetherui-kit/datatable`, `@aetherui-kit/agent`, and `@aetherui-kit/mcp`. Publish in that order so internal dependencies are available first.
 
 ## First public release
 
 Complete the account setup before tagging a release:
 
-1. Confirm ownership of the `@aetherui` npm scope and publishing access for all six packages. Log in with `npm login`, then verify with `npm whoami`. Never commit credentials.
+1. Confirm ownership of the `@aetherui-kit` npm scope and publishing access for all six packages. Log in with `npm login`, then verify with `npm whoami`. Never commit credentials.
 2. Make the GitHub repository public when the source and its history are ready to share. Run a history scan first: `gitleaks git --log-opts='--all' --redact`. Check licensing and package contents as part of the release checks below.
 3. Enable private vulnerability reporting in GitHub's repository security settings and verify the link in `SECURITY.md` from an external account. Confirm the maintainer receives notifications.
 4. Verify GitHub Actions can start jobs. If a check says the job could not start because of billing or a spending limit, resolve that in account settings before relying on CI.

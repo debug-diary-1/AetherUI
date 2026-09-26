@@ -1,5 +1,5 @@
 {
-  "name": "@aetherui/agent",
+  "name": "@aetherui-kit/agent",
   "version": "0.1.0",
   "description": "Validated, safe runtime rendering for agent-generated AetherUI documents",
   "keywords": [
@@ -62,10 +62,10 @@
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "@aetherui/core": "workspace:^0.1.0"
+    "@aetherui-kit/core": "workspace:^0.1.0"
   },
   "peerDependenciesMeta": {
-    "@aetherui/core": {
+    "@aetherui-kit/core": {
       "optional": true
     }
   }

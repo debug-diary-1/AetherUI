@@ -1,10 +1,10 @@
-# `@aetherui/mcp`
+# `@aetherui-kit/mcp`
 
 Read-only AetherUI discovery and validation for MCP hosts. The stdio server exposes:
 
 - the full component catalog and agent document schema as resources;
 - `get_component` for focused interface lookup;
-- `validate_agent_ui` for the same semantic validation used by `@aetherui/agent`.
+- `validate_agent_ui` for the same semantic validation used by `@aetherui-kit/agent`.
 
 Configure an MCP host to spawn the published binary:
 
@@ -13,7 +13,7 @@ Configure an MCP host to spawn the published binary:
   "mcpServers": {
     "aetherui": {
       "command": "npx",
-      "args": ["-y", "@aetherui/mcp"]
+      "args": ["-y", "@aetherui-kit/mcp"]
     }
   }
 }

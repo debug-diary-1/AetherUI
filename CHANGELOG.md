@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Package names, imports, and installation examples now use the owned `@aetherui-kit` npm scope.
+
 ### Fixed
 - Tooltips stay anchored with absolute or fixed positioning, follow layout changes, and remain readable without theme tokens.
 - Repeated core imports across independent bundles reuse registered custom elements.
@@ -26,9 +29,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - Unreleased
 
 ### Added
-- **`@aetherui/agent`** - validated JSON UI documents rendered to AetherUI
+- **`@aetherui-kit/agent`** - validated JSON UI documents rendered to AetherUI
   components, for LLM-generated interfaces
-- **`@aetherui/mcp`** - MCP server exposing the component catalog and the same
+- **`@aetherui-kit/mcp`** - MCP server exposing the component catalog and the same
   semantic validation to agent hosts
 - Generated machine-readable artifacts published with the docs: `llms.txt`,
   `component-catalog.json`, `agent-ui.schema.json`, and React 19 JSX types
@@ -53,7 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **TreeView** - Hierarchical data display with expand/collapse
   - **Combo** - Combo box with filtering and keyboard navigation
   - **Autocomplete** - Auto-completing input with custom matching
-- Design token system (`@aetherui/tokens`)
+- Design token system (`@aetherui-kit/tokens`)
 - Tree-shakeable component architecture
 - Comprehensive TypeScript support with strict mode
 - Shadow DOM encapsulation for all components

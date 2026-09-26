@@ -55,15 +55,15 @@
       "outputs": ["{projectRoot}/coverage/**"],
       "cache": true
     },
-    "@aetherui/accordion#test": {
+    "@aetherui-kit/accordion#test": {
       "dependsOn": ["^build", "build"],
       "outputs": []
     },
-    "@aetherui/mcp#test": {
+    "@aetherui-kit/mcp#test": {
       "dependsOn": ["^build", "build"],
       "outputs": []
     },
-    "@aetherui/datatable#test": {
+    "@aetherui-kit/datatable#test": {
       "dependsOn": ["^build", "build"],
       "outputs": []
     },

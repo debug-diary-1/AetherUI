@@ -67,7 +67,7 @@ jobs:
       # (rewriting `workspace:*` deps to real versions) and shells out to the
       # system `npm publish`, which exchanges this job's GitHub OIDC token
       # (`id-token: write` above) for a short-lived npm token. Configure each
-      # @aetherui/* package on npmjs.com with this exact publisher:
+      # @aetherui-kit/* package on npmjs.com with this exact publisher:
       # GitHub Actions, owner debug-diary-1, repo AetherUI, workflow publish.yml.
       # `registry-url` above writes a placeholder `_authToken` into .npmrc;
       # npm >= 11.5.1 overrides it once the OIDC exchange succeeds.
@@ -89,7 +89,7 @@ jobs:
       - name: Publish packages
         run: |
           for pkg in tokens core accordion datatable agent mcp; do
-            echo "::group::publish @aetherui/$pkg"
+            echo "::group::publish @aetherui-kit/$pkg"
             (cd "packages/$pkg" && pnpm publish --access public --no-git-checks --provenance)
             echo "::endgroup::"
           done

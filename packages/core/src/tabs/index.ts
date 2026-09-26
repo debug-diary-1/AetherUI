@@ -18,7 +18,7 @@ export type { AeTabPanelElement } from './ae-tab-panel';
  *
  * @example
  * ```ts
- * import { defineAeTabs } from '@aetherui/core';
+ * import { defineAeTabs } from '@aetherui-kit/core';
  *
  * defineAeTabs(); // Now <ae-tabs>, <ae-tab>, and <ae-tab-panel> are available
  * ```

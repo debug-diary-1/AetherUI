@@ -5,7 +5,7 @@
 **A headless, framework-agnostic Web Component library built with Lit**
 
 [![CI](https://github.com/debug-diary-1/AetherUI/actions/workflows/ci.yml/badge.svg)](https://github.com/debug-diary-1/AetherUI/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/@aetherui/core?label=%40aetherui%2Fcore)](https://www.npmjs.com/package/@aetherui/core)
+[![npm version](https://img.shields.io/npm/v/@aetherui-kit/core?label=%40aetherui%2Fcore)](https://www.npmjs.com/package/@aetherui-kit/core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
@@ -32,19 +32,19 @@
 ## 📦 Installation
 
 ```bash
-npm install @aetherui/core @aetherui/tokens
+npm install @aetherui-kit/core @aetherui-kit/tokens
 ```
 
 Or with pnpm:
 
 ```bash
-pnpm add @aetherui/core @aetherui/tokens
+pnpm add @aetherui-kit/core @aetherui-kit/tokens
 ```
 
 Or with yarn:
 
 ```bash
-yarn add @aetherui/core @aetherui/tokens
+yarn add @aetherui-kit/core @aetherui-kit/tokens
 ```
 
 ## 🚀 Quick Start
@@ -52,8 +52,8 @@ yarn add @aetherui/core @aetherui/tokens
 ### Import and Register Components
 
 ```typescript
-import { defineAeButton, defineAeModal } from '@aetherui/core';
-import '@aetherui/tokens/light.css'; // Import theme
+import { defineAeButton, defineAeModal } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css'; // Import theme
 
 // Register only the components you need
 defineAeButton();
@@ -63,8 +63,8 @@ defineAeModal();
 Or register all components at once:
 
 ```typescript
-import { defineAll } from '@aetherui/core';
-import '@aetherui/tokens/light.css';
+import { defineAll } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css';
 
 defineAll();
 ```
@@ -90,13 +90,13 @@ defineAll();
 Import individual components for optimal bundle sizes:
 
 ```typescript
-import { AeButton } from '@aetherui/core/button';
-import { AeModal } from '@aetherui/core/modal';
+import { AeButton } from '@aetherui-kit/core/button';
+import { AeModal } from '@aetherui-kit/core/modal';
 ```
 
 ## 🧩 Available Components
 
-`@aetherui/core` ships 25 components, each importable from its own subpath (e.g. `@aetherui/core/button`):
+`@aetherui-kit/core` ships 25 components, each importable from its own subpath (e.g. `@aetherui-kit/core/button`):
 
 | Category | Components |
 |----------|------------|
@@ -111,24 +111,24 @@ See the [component docs](https://debug-diary-1.github.io/AetherUI/docs/component
 
 | Package | What it is |
 |---------|------------|
-| **`@aetherui/core`** | The 25 components above, plus generated React 19 JSX types |
-| **`@aetherui/tokens`** | Design tokens and the light / dark / minimal themes |
-| **`@aetherui/datatable`** | Sortable, selectable data table |
-| **`@aetherui/accordion`** | Standalone accordion (re-exports the core implementation) |
-| **`@aetherui/agent`** | Render a validated JSON UI document to AetherUI components — for LLM-generated interfaces |
-| **`@aetherui/mcp`** | MCP server exposing the component catalog and the same validation to agent hosts |
+| **`@aetherui-kit/core`** | The 25 components above, plus generated React 19 JSX types |
+| **`@aetherui-kit/tokens`** | Design tokens and the light / dark / minimal themes |
+| **`@aetherui-kit/datatable`** | Sortable, selectable data table |
+| **`@aetherui-kit/accordion`** | Standalone accordion (re-exports the core implementation) |
+| **`@aetherui-kit/agent`** | Render a validated JSON UI document to AetherUI components — for LLM-generated interfaces |
+| **`@aetherui-kit/mcp`** | MCP server exposing the component catalog and the same validation to agent hosts |
 
 ## 🤖 Agent-generated UI
 
 AetherUI ships a machine-readable contract so a model can generate an interface
-without inventing components or props. `@aetherui/agent` validates a JSON UI
+without inventing components or props. `@aetherui-kit/agent` validates a JSON UI
 document against the component catalog — unknown components, unknown or
 wrongly-typed props, unsafe URLs, and oversized documents are rejected before
 anything renders.
 
 ```ts
-import { defineAeAlert } from '@aetherui/core';
-import { renderAgentUi } from '@aetherui/agent';
+import { defineAeAlert } from '@aetherui-kit/core';
+import { renderAgentUi } from '@aetherui-kit/agent';
 
 defineAeAlert();
 const surface = document.createElement('div');
@@ -162,7 +162,7 @@ Want to see **every component in action**? The interactive playground lets you t
 - **Locally:**
 
 ```bash
-pnpm --filter @aetherui/playground dev
+pnpm --filter @aetherui-kit/playground dev
 ```
 
 There is also a full [Storybook](https://debug-diary-1.github.io/AetherUI/storybook/) with a story per component and an accessibility addon.
@@ -171,11 +171,11 @@ There is also a full [Storybook](https://debug-diary-1.github.io/AetherUI/storyb
 
 ### Using with React
 
-Use React 19+ and include `@aetherui/core/react` in your TypeScript `types` configuration.
+Use React 19+ and include `@aetherui-kit/core/react` in your TypeScript `types` configuration.
 
 ```tsx
-import { defineAeButton } from '@aetherui/core';
-import '@aetherui/tokens/light.css';
+import { defineAeButton } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css';
 
 defineAeButton();
 
@@ -208,8 +208,8 @@ function App() {
 </template>
 
 <script setup>
-import { defineAeButton } from '@aetherui/core';
-import '@aetherui/tokens/light.css';
+import { defineAeButton } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css';
 
 defineAeButton();
 
@@ -238,8 +238,8 @@ pnpm exec vite
   <ae-button variant="primary">Click me</ae-button>
 
   <script type="module">
-    import { defineAeButton } from '@aetherui/core';
-    import '@aetherui/tokens/light.css';
+    import { defineAeButton } from '@aetherui-kit/core';
+    import '@aetherui-kit/tokens/light.css';
 
     defineAeButton();
 
@@ -257,7 +257,7 @@ AetherUI uses CSS custom properties for theming:
 
 ```css
 /* Import base theme */
-@import '@aetherui/tokens/light.css';
+@import '@aetherui-kit/tokens/light.css';
 
 /* Customize tokens */
 :root {
@@ -271,7 +271,7 @@ AetherUI uses CSS custom properties for theming:
 Or use the dark theme:
 
 ```typescript
-import '@aetherui/tokens/dark.css';
+import '@aetherui-kit/tokens/dark.css';
 ```
 
 ## 📚 Documentation
@@ -321,7 +321,7 @@ pnpm storybook
 pnpm docs:dev
 
 # Run the interactive playground
-pnpm --filter @aetherui/playground dev
+pnpm --filter @aetherui-kit/playground dev
 ```
 
 ### Preview Deployments
@@ -340,10 +340,10 @@ Every PR automatically gets a **live Storybook preview** deployed to Vercel or N
 ```
 AetherUI/
 ├── packages/
-│   ├── core/          # Core component library (@aetherui/core)
-│   ├── tokens/        # Design tokens + themes (@aetherui/tokens)
-│   ├── datatable/     # Data table (@aetherui/datatable)
-│   ├── accordion/     # Standalone accordion (@aetherui/accordion)
+│   ├── core/          # Core component library (@aetherui-kit/core)
+│   ├── tokens/        # Design tokens + themes (@aetherui-kit/tokens)
+│   ├── datatable/     # Data table (@aetherui-kit/datatable)
+│   ├── accordion/     # Standalone accordion (@aetherui-kit/accordion)
 │   ├── docs/          # Documentation site (Astro + Starlight)
 │   ├── storybook/     # Storybook stories
 │   └── playground/    # Interactive playground (Vite + Lit)
@@ -366,7 +366,7 @@ pnpm test
 pnpm test:memory
 
 # Watch mode for a single package
-pnpm --filter @aetherui/core test:watch
+pnpm --filter @aetherui-kit/core test:watch
 
 # Storybook interaction tests / Playwright e2e
 pnpm test:storybook

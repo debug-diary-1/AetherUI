@@ -7,7 +7,7 @@ Keep each element's interface in its source JSDoc. Run `pnpm generate:agent-arti
 Test through DOM-visible behavior: properties, attributes, events, rendered roles, focus, keyboard interaction, slots, and registration. Prefer a focused browser test during iteration:
 
 ```bash
-pnpm --filter @aetherui/core test -- --files src/<module>/**/*.test.ts
+pnpm --filter @aetherui-kit/core test -- --files src/<module>/**/*.test.ts
 ```
 
 Completion requires the focused test plus root `pnpm check`.

@@ -1,7 +1,7 @@
-import { defineAll } from '@aetherui/core';
+import { defineAll } from '@aetherui-kit/core';
 import { html } from 'lit';
-import lightTheme from '@aetherui/tokens/light.css?inline';
-import darkTheme from '@aetherui/tokens/dark.css?inline';
+import lightTheme from '@aetherui-kit/tokens/light.css?inline';
+import darkTheme from '@aetherui-kit/tokens/dark.css?inline';
 
 // Apply the complete theme at the document root, including body-mounted overlays.
 const themeStyle = document.createElement('style');

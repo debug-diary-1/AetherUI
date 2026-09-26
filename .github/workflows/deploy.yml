@@ -53,7 +53,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build dependencies
-        run: pnpm exec turbo build --filter=@aetherui/core --filter=@aetherui/tokens
+        run: pnpm exec turbo build --filter=@aetherui-kit/core --filter=@aetherui-kit/tokens
 
       - name: Build docs
         id: build-docs
@@ -109,7 +109,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build dependencies
-        run: pnpm exec turbo build --filter=@aetherui/core --filter=@aetherui/tokens
+        run: pnpm exec turbo build --filter=@aetherui-kit/core --filter=@aetherui-kit/tokens
 
       - name: Build Storybook
         id: build-storybook

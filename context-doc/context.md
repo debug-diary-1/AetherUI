@@ -2,7 +2,7 @@
 
 ## 1 · Executive Summary
 
-**Aether UI** is a headless, framework‑agnostic Web Component library built on **Lit** and distributed under the **`@aetherui`** npm scope. Components expose behavior, accessibility contracts, and styling hooks while letting consumers handle presentation. The library targets modern web apps that need durable, theme‑able primitives without tying to a single front‑end framework.
+**Aether UI** is a headless, framework‑agnostic Web Component library built on **Lit** and distributed under the **`@aetherui-kit`** npm scope. Components expose behavior, accessibility contracts, and styling hooks while letting consumers handle presentation. The library targets modern web apps that need durable, theme‑able primitives without tying to a single front‑end framework.
 
 ---
 
@@ -31,7 +31,7 @@ Teams often reinvent basic UI primitives or adopt bulky framework‑bound librar
 
 ### 2.4 User Stories (excerpt)
 
-* **US‑01** As an FE‑ENG, I can install `@aetherui/button` and call `defineAeButton()` so my app uses `<ae-button>` without bundling React.
+* **US‑01** As an FE‑ENG, I can install `@aetherui-kit/button` and call `defineAeButton()` so my app uses `<ae-button>` without bundling React.
 * **US‑02** As a DS‑LEAD, I can override `--ae-color-primary` to switch themes site‑wide.
 * **US‑03** As an A11Y‑QA, I can run `pnpm test:a11y` and get zero critical issues.
 
@@ -44,7 +44,7 @@ Teams often reinvent basic UI primitives or adopt bulky framework‑bound librar
 ### 2.6 Assumptions & Dependencies
 
 * Consumers use evergreen browsers (ES2019+).
-* NPM scope **`@aetherui`** is available and owned.
+* NPM scope **`@aetherui-kit`** is available and owned.
 * Vercel Remote Cache credentials provisioned.
 
 ### 2.7 Milestones
@@ -52,7 +52,7 @@ Teams often reinvent basic UI primitives or adopt bulky framework‑bound librar
 | Date       | Milestone              | Deliverables                                |
 | ---------- | ---------------------- | ------------------------------------------- |
 |  T0 + 1 wk | Repo bootstrap         | Turborepo skeleton, tokens pkg, CI skeleton |
-|  + 3 wk    | Core MVP               | `@aetherui/button`, docs home               |
+|  + 3 wk    | Core MVP               | `@aetherui-kit/button`, docs home               |
 |  + 6 wk    | Accessibility sign‑off | Accordion, Dialog, Checkbox                 |
 |  + 8 wk    | **Beta v0.10.0**       | 80 % components, Storybook visual tests     |
 |  + 12 wk   | **GA v1.0.0**          | Stable API, CONTRIBUTING, versioning        |
@@ -76,9 +76,9 @@ Deliver a **vendor‑neutral, accessible, performance‑minded** component layer
 
 | Element Tag   | Package                                               | Import Helper                           |
 | ------------- | ----------------------------------------------------- | --------------------------------------- |
-| `<ae-button>` | `@aetherui/button` (also bundled in `@aetherui/core`) | `import '@aetherui/button/define.js';`  |
-| `<ae-dialog>` | `@aetherui/dialog`                                    | idem                                    |
-| Design tokens | `@aetherui/tokens`                                    | `@import '@aetherui/tokens/light.css';` |
+| `<ae-button>` | `@aetherui-kit/button` (also bundled in `@aetherui-kit/core`) | `import '@aetherui-kit/button/define.js';`  |
+| `<ae-dialog>` | `@aetherui-kit/dialog`                                    | idem                                    |
+| Design tokens | `@aetherui-kit/tokens`                                    | `@import '@aetherui-kit/tokens/light.css';` |
 
 ### 3.3 Architecture Overview
 
@@ -251,10 +251,10 @@ The core library is framework‑agnostic, but thin wrappers improve DX and SSR.
 
 | Framework   | Package             | Approach                                                                      | Example                                              |
 | ----------- | ------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------- |
-| **React**   | `@aetherui/react`   | Wrap `ae-*` in `forwardRef`, use `reactify` util                              | `import { AeButton } from '@aetherui/react';`        |
-| **Angular** | `@aetherui/angular` | Angular Module declares `CUSTOM_ELEMENTS_SCHEMA`, exports `AeButtonComponent` | `template: '<ae-button (click)="...">…</ae-button>'` |
-| **Vue 3**   | `@aetherui/vue`     | Global plugin registers all, or import on‑demand via `defineAsyncComponent`   | `app.use(AetherUIVue)`                               |
-| **Svelte**  | `@aetherui/svelte`  | Provide `.svelte` wrappers, export props as component props                   | `<AeButton on:click/>`                               |
+| **React**   | `@aetherui-kit/react`   | Wrap `ae-*` in `forwardRef`, use `reactify` util                              | `import { AeButton } from '@aetherui-kit/react';`        |
+| **Angular** | `@aetherui-kit/angular` | Angular Module declares `CUSTOM_ELEMENTS_SCHEMA`, exports `AeButtonComponent` | `template: '<ae-button (click)="...">…</ae-button>'` |
+| **Vue 3**   | `@aetherui-kit/vue`     | Global plugin registers all, or import on‑demand via `defineAsyncComponent`   | `app.use(AetherUIVue)`                               |
+| **Svelte**  | `@aetherui-kit/svelte`  | Provide `.svelte` wrappers, export props as component props                   | `<AeButton on:click/>`                               |
 
 *Each adapter re‑exports TypeScript types generated from core so editors keep intellisense consistent.*
 
@@ -310,11 +310,11 @@ Playwright test asserts chevron flips and focus order remains logical.
 
 ### 4.4 Polyfill Strategy
 
-Package **`@aetherui/polyfills`** lazy‑imports `:focus-visible` and `constructable‑stylesheets` only when feature‑detect fails:
+Package **`@aetherui-kit/polyfills`** lazy‑imports `:focus-visible` and `constructable‑stylesheets` only when feature‑detect fails:
 
 ```ts
 if (!('adoptedStyleSheets' in Document.prototype))
-  await import('@aetherui/polyfills/constructable');
+  await import('@aetherui-kit/polyfills/constructable');
 ```
 
 ### 4.5 Security Policy
@@ -347,10 +347,10 @@ Tokens package exports `figma-tokens.json`; designers sync via *Figma Tokens* pl
 
 ### 4.10 Migration Codemods
 
-`@aetherui/codemods` bundles jscodeshift transforms; release notes reference command:
+`@aetherui-kit/codemods` bundles jscodeshift transforms; release notes reference command:
 
 ```bash
-npx @aetherui/codemods@latest icon-slot-v2 path/to/**/*.tsx
+npx @aetherui-kit/codemods@latest icon-slot-v2 path/to/**/*.tsx
 ```
 
 ### 4.11 Architecture Decision Records (ADR)

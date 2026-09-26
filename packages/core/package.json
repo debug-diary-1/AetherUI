@@ -1,5 +1,5 @@
 {
-  "name": "@aetherui/core",
+  "name": "@aetherui-kit/core",
   "version": "0.1.0",
   "description": "Headless, framework-agnostic Web Component library built with Lit",
   "keywords": [

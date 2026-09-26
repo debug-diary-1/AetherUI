@@ -9,7 +9,7 @@ const ensureComponentsRegistered = async () => {
   if (typeof window !== 'undefined') {
     try {
       // Use a more reliable dynamic import approach
-      const datatableModule = await import('@aetherui/datatable');
+      const datatableModule = await import('@aetherui-kit/datatable');
 
       if (datatableModule.defineDataTableElements) {
         datatableModule.defineDataTableElements();
@@ -24,7 +24,7 @@ const ensureComponentsRegistered = async () => {
       const script = document.createElement('script');
       script.type = 'module';
       script.textContent = `
-        import('@aetherui/datatable')
+        import('@aetherui-kit/datatable')
           .then(m => m.defineDataTableElements?.())
           .catch(e => console.error('Fallback registration failed:', e));
       `;

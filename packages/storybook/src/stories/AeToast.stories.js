@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { expect, within, userEvent, waitFor } from 'storybook/test';
-import { showToast, createToastHelpers } from '@aetherui/core/toast';
+import { showToast, createToastHelpers } from '@aetherui-kit/core/toast';
 import { createRef, ref } from 'lit/directives/ref.js';
 
 export default {

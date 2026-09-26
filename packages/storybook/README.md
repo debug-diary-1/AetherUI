@@ -11,7 +11,7 @@ To run Storybook locally:
 pnpm storybook
 
 # Or directly from this package
-pnpm --filter @aetherui/storybook storybook
+pnpm --filter @aetherui-kit/storybook storybook
 ```
 
 This will start the Storybook development server at http://localhost:6006.
@@ -30,7 +30,7 @@ Storybook provides a visual testing environment for all AetherUI components. Use
 To add stories for a new component:
 
 1. Create a new file in `src/stories/ComponentName.stories.js`
-2. Import the component from `@aetherui/core`
+2. Import the component from `@aetherui-kit/core`
 3. Define the story with all relevant variants and states
 4. Ensure component is registered using its respective `define` function
 
@@ -38,7 +38,7 @@ Example:
 
 ```js
 import { html } from 'lit';
-import { defineAeComponent } from '@aetherui/core';
+import { defineAeComponent } from '@aetherui-kit/core';
 
 // Register the component
 defineAeComponent();

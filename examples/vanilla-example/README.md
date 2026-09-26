@@ -7,18 +7,18 @@ This example demonstrates how to use AetherUI components in plain HTML and JavaS
 ### Via npm/yarn/pnpm
 
 ```bash
-npm install @aetherui/core @aetherui/tokens
+npm install @aetherui-kit/core @aetherui-kit/tokens
 # or
-yarn add @aetherui/core @aetherui/tokens
+yarn add @aetherui-kit/core @aetherui-kit/tokens
 # or
-pnpm add @aetherui/core @aetherui/tokens
+pnpm add @aetherui-kit/core @aetherui-kit/tokens
 ```
 
 ### Via CDN (Coming Soon)
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/@aetherui/tokens/dist/light.css">
-<script type="module" src="https://unpkg.com/@aetherui/core/dist/index.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@aetherui-kit/tokens/dist/light.css">
+<script type="module" src="https://unpkg.com/@aetherui-kit/core/dist/index.js"></script>
 ```
 
 ## Basic Usage
@@ -34,7 +34,7 @@ pnpm add @aetherui/core @aetherui/tokens
   <title>AetherUI Vanilla JS Example</title>
 
   <!-- Import AetherUI theme -->
-  <link rel="stylesheet" href="./node_modules/@aetherui/tokens/dist/light.css">
+  <link rel="stylesheet" href="./node_modules/@aetherui-kit/tokens/dist/light.css">
 
   <style>
     body {
@@ -84,7 +84,7 @@ pnpm add @aetherui/core @aetherui/tokens
 
   <script type="module">
     // Import and register components
-    import { defineAeButton, defineAeModal } from './node_modules/@aetherui/core/dist/index.js';
+    import { defineAeButton, defineAeModal } from './node_modules/@aetherui-kit/core/dist/index.js';
 
     defineAeButton();
     defineAeModal();
@@ -126,7 +126,7 @@ pnpm add @aetherui/core @aetherui/tokens
 ```bash
 npm create vite@latest my-aetherui-app -- --template vanilla-ts
 cd my-aetherui-app
-npm install @aetherui/core @aetherui/tokens
+npm install @aetherui-kit/core @aetherui-kit/tokens
 ```
 
 ### index.html
@@ -166,8 +166,8 @@ npm install @aetherui/core @aetherui/tokens
 ### src/main.ts
 
 ```typescript
-import { defineAeButton, defineAeDropdown } from '@aetherui/core';
-import '@aetherui/tokens/light.css';
+import { defineAeButton, defineAeDropdown } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css';
 import './style.css';
 
 // Register components
@@ -199,7 +199,7 @@ dropdown?.addEventListener('ae-dropdown-select', (e: Event) => {
 ### Dynamic Component Creation
 
 ```javascript
-import { defineAeButton } from '@aetherui/core';
+import { defineAeButton } from '@aetherui-kit/core';
 
 defineAeButton();
 
@@ -223,7 +223,7 @@ document.body.appendChild(button);
 <head>
   <meta charset="UTF-8">
   <title>Form Example</title>
-  <link rel="stylesheet" href="./node_modules/@aetherui/tokens/dist/light.css">
+  <link rel="stylesheet" href="./node_modules/@aetherui-kit/tokens/dist/light.css">
   <style>
     .form-group {
       margin-bottom: 1rem;
@@ -289,7 +289,7 @@ document.body.appendChild(button);
       defineAeCheckbox,
       defineAeToast,
       showToast
-    } from './node_modules/@aetherui/core/dist/index.js';
+    } from './node_modules/@aetherui-kit/core/dist/index.js';
 
     defineAeButton();
     defineAeCheckbox();
@@ -329,7 +329,7 @@ document.body.appendChild(button);
 <head>
   <meta charset="UTF-8">
   <title>Toast Example</title>
-  <link rel="stylesheet" href="./node_modules/@aetherui/tokens/dist/light.css">
+  <link rel="stylesheet" href="./node_modules/@aetherui-kit/tokens/dist/light.css">
   <style>
     .button-group {
       display: flex;
@@ -361,7 +361,7 @@ document.body.appendChild(button);
       defineAeButton,
       showToast,
       createToastHelpers
-    } from './node_modules/@aetherui/core/dist/index.js';
+    } from './node_modules/@aetherui-kit/core/dist/index.js';
 
     defineAeButton();
 
@@ -393,7 +393,7 @@ document.body.appendChild(button);
 To use the dark theme, change the CSS import:
 
 ```html
-<link rel="stylesheet" href="./node_modules/@aetherui/tokens/dist/dark.css">
+<link rel="stylesheet" href="./node_modules/@aetherui-kit/tokens/dist/dark.css">
 ```
 
 ### Dynamic Theme Switching
@@ -403,12 +403,12 @@ let currentTheme = 'light';
 const themeLink = document.createElement('link');
 themeLink.rel = 'stylesheet';
 themeLink.id = 'theme-css';
-themeLink.href = './node_modules/@aetherui/tokens/dist/light.css';
+themeLink.href = './node_modules/@aetherui-kit/tokens/dist/light.css';
 document.head.appendChild(themeLink);
 
 function toggleTheme() {
   currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-  themeLink.href = `./node_modules/@aetherui/tokens/dist/${currentTheme}.css`;
+  themeLink.href = `./node_modules/@aetherui-kit/tokens/dist/${currentTheme}.css`;
 }
 
 // Add a button to toggle theme
@@ -424,7 +424,7 @@ Create a custom CSS file:
 
 ```css
 /* custom-theme.css */
-@import './node_modules/@aetherui/tokens/dist/light.css';
+@import './node_modules/@aetherui-kit/tokens/dist/light.css';
 
 :root {
   --ae-button-bg-primary: #ff6b6b;
