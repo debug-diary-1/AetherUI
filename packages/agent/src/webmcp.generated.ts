@@ -160,7 +160,16 @@ export const componentGuide = [
   {
     "tagName": "ae-alert",
     "description": "",
-    "slots": []
+    "slots": [
+      {
+        "name": "",
+        "description": "The alert message content"
+      },
+      {
+        "name": "icon",
+        "description": "Custom icon that replaces the variant's default icon"
+      }
+    ]
   },
   {
     "tagName": "ae-autocomplete",

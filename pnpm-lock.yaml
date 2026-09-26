@@ -472,6 +472,9 @@ importers:
 
   packages/playground:
     dependencies:
+      '@aetherui-kit/agent':
+        specifier: workspace:*
+        version: link:../agent
       '@aetherui-kit/core':
         specifier: workspace:*
         version: link:../core

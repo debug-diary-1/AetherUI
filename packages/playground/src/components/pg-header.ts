@@ -99,6 +99,10 @@ export class PgHeader extends LitElement {
       font-family: inherit;
     }
 
+    a.btn {
+      text-decoration: none;
+    }
+
     .btn-secondary {
       background: var(--pg-bg-tertiary);
       color: var(--pg-text);
@@ -291,6 +295,7 @@ export class PgHeader extends LitElement {
           }
         </button>
 
+        <a class="btn btn-secondary" href="webmcp.html">WebMCP demo</a>
         <button class="btn btn-secondary" @click=${this._reset}>Reset</button>
         <button class="btn btn-secondary" @click=${this._copyCSS}>Copy CSS</button>
         <button class="btn btn-primary" @click=${this._export}>Export</button>

@@ -7,6 +7,8 @@ import { alertStyles } from './styles';
  * @element ae-alert
  * @summary Non-modal, in-flow banner for status or messaging
  * @fires {CustomEvent} ae-close - Fired when the alert is closed
+ * @slot - The alert message content
+ * @slot icon - Custom icon that replaces the variant's default icon
  *
  * @example
  * ```html
