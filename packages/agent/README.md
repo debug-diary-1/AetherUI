@@ -58,6 +58,13 @@ const registered = await registerAgentUiTools(document.querySelector('#surface')
 });
 ```
 
+The agent can also follow up on what the user does, if the host opts in:
+
+- `shareState: true` registers `aetherui_get_ui_state`, which returns the current `value`, `checked`, `selected`, `expanded`, `open`, and similar values of rendered components that have an `id`.
+- `shareActions: true` registers `aetherui_wait_for_action`, which returns the next declared action the user triggers, such as `{ "actionId": "confirm-refund", "componentId": "confirm" }`. Actions that happen before the agent asks are queued; a wait ends with `timeout`, `replaced`, or `unregistered` otherwise. With `shareState`, the result also includes the current state.
+
+Both tools are marked `untrustedContentHint`, because their values come from the user. Event details are reduced to JSON data. The host's `onAction` still runs for every action.
+
 `allowedComponents` is required. The host policy (`maxNodes`, `maxDepth`, URL protocols) applies to every agent document, and declared events reach `onAction` on the page, never the agent. The call resolves to `false` without registering anything when the browser does not provide `document.modelContext`. Aborting `signal` unregisters both tools and leaves rendered content in place. Use `toolPrefix` to register several surfaces on one page, for example `checkout_render_ui`.
 
 WebMCP is a Chrome origin trial (Chrome 149+) and may change. Enable it locally with `chrome://flags/#enable-webmcp-testing`. In Chrome 154, declarative WebMCP forms (`<form toolname>`) include only native form controls; AetherUI form elements inside such a form are not part of the tool's input schema, so use this imperative module for agent access to AetherUI surfaces.

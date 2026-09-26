@@ -243,6 +243,213 @@ describe('@aetherui-kit/agent/webmcp', () => {
   });
 });
 
+describe('@aetherui-kit/agent/webmcp two-way tools', () => {
+  let modelContext: FakeModelContext;
+  let surface: HTMLElement;
+  const formDocument = {
+    version: '1',
+    root: {
+      component: 'ae-alert',
+      id: 'panel',
+      children: [
+        { component: 'ae-input', id: 'email' },
+        { component: 'ae-checkbox', id: 'terms' },
+        {
+          component: 'ae-button',
+          id: 'submit',
+          children: ['Submit'],
+          actions: { 'ae-button-click': 'submit-form' },
+        },
+        { component: 'ae-button', children: ['Untracked'] },
+      ],
+    },
+  };
+  const allowedComponents = ['ae-alert', 'ae-input', 'ae-checkbox', 'ae-button'];
+
+  beforeEach(() => {
+    modelContext = new FakeModelContext();
+    Object.defineProperty(document, 'modelContext', { configurable: true, value: modelContext });
+    surface = document.createElement('section');
+  });
+
+  afterEach(() => {
+    delete (document as { modelContext?: unknown }).modelContext;
+  });
+
+  it('shares nothing back with the agent unless the host opts in', async () => {
+    await registerAgentUiTools(surface, { allowedComponents });
+
+    expect([...modelContext.tools.keys()]).to.have.members([
+      'aetherui_list_components',
+      'aetherui_render_ui',
+    ]);
+  });
+
+  it('marks shared user input as untrusted, read-only content', async () => {
+    await registerAgentUiTools(surface, {
+      allowedComponents,
+      shareState: true,
+      shareActions: true,
+    });
+
+    for (const name of ['aetherui_get_ui_state', 'aetherui_wait_for_action']) {
+      expect(modelContext.tools.get(name)!.annotations).to.deep.equal({
+        readOnlyHint: true,
+        untrustedContentHint: true,
+      });
+    }
+  });
+
+  it('reports the current values of identified components', async () => {
+    await registerAgentUiTools(surface, { allowedComponents, shareState: true });
+    expect(await modelContext.call('aetherui_get_ui_state', {})).to.deep.equal({
+      ok: false,
+      reason: 'nothing-rendered',
+    });
+
+    await modelContext.call('aetherui_render_ui', formDocument);
+    Object.assign(surface.querySelector('#email')!, { value: 'ada@example.com' });
+    Object.assign(surface.querySelector('#terms')!, { checked: true });
+
+    expect(await modelContext.call('aetherui_get_ui_state', {})).to.deep.equal({
+      ok: true,
+      components: {
+        panel: { component: 'ae-alert', state: {} },
+        email: { component: 'ae-input', state: { value: 'ada@example.com' } },
+        terms: { component: 'ae-checkbox', state: { checked: true } },
+        submit: { component: 'ae-button', state: {} },
+      },
+    });
+  });
+
+  it('returns an action that happened before the agent asked, with JSON-safe detail', async () => {
+    const hostActions: string[] = [];
+    await registerAgentUiTools(surface, {
+      allowedComponents,
+      shareActions: true,
+      onAction: (action) => hostActions.push(action.actionId),
+    });
+    await modelContext.call('aetherui_render_ui', formDocument);
+
+    surface.querySelector('#submit')!.dispatchEvent(
+      new CustomEvent('ae-button-click', {
+        detail: { sourceEvent: new Event('click'), count: 1 },
+      }),
+    );
+
+    expect(await modelContext.call('aetherui_wait_for_action', {})).to.deep.equal({
+      ok: true,
+      action: {
+        actionId: 'submit-form',
+        componentId: 'submit',
+        component: 'ae-button',
+        eventName: 'ae-button-click',
+        detail: { count: 1 },
+      },
+    });
+    expect(hostActions).to.deep.equal(['submit-form']);
+  });
+
+  it('waits for the next action and includes the state when state is shared', async () => {
+    await registerAgentUiTools(surface, {
+      allowedComponents,
+      shareState: true,
+      shareActions: true,
+    });
+    await modelContext.call('aetherui_render_ui', formDocument);
+
+    const pending = modelContext.call('aetherui_wait_for_action', {});
+    Object.assign(surface.querySelector('#email')!, { value: 'grace@example.com' });
+    surface.querySelector('#submit')!.dispatchEvent(new CustomEvent('ae-button-click'));
+
+    const result = (await pending) as {
+      action: { actionId: string };
+      state: { components: Record<string, { state: unknown }> };
+    };
+    expect(result.action.actionId).to.equal('submit-form');
+    expect(result.state.components.email.state).to.deep.equal({ value: 'grace@example.com' });
+  });
+
+  it('delivers each action once, in order', async () => {
+    await registerAgentUiTools(surface, { allowedComponents, shareActions: true });
+    await modelContext.call('aetherui_render_ui', formDocument);
+    const submit = surface.querySelector('#submit')!;
+    submit.dispatchEvent(new CustomEvent('ae-button-click', { detail: { count: 1 } }));
+    submit.dispatchEvent(new CustomEvent('ae-button-click', { detail: { count: 2 } }));
+
+    const first = (await modelContext.call('aetherui_wait_for_action', {})) as {
+      action: { detail: unknown };
+    };
+    const second = (await modelContext.call('aetherui_wait_for_action', {})) as {
+      action: { detail: unknown };
+    };
+    expect([first.action.detail, second.action.detail]).to.deep.equal([{ count: 1 }, { count: 2 }]);
+  });
+
+  it('reports a timeout when the user does not act', async () => {
+    await registerAgentUiTools(surface, { allowedComponents, shareActions: true });
+    await modelContext.call('aetherui_render_ui', formDocument);
+
+    expect(
+      await modelContext.call('aetherui_wait_for_action', { timeoutSeconds: 1 }),
+    ).to.deep.equal({ ok: false, reason: 'timeout' });
+  });
+
+  it('reports when there is nothing to wait on', async () => {
+    await registerAgentUiTools(surface, { allowedComponents, shareActions: true });
+
+    expect(await modelContext.call('aetherui_wait_for_action', {})).to.deep.equal({
+      ok: false,
+      reason: 'nothing-rendered',
+    });
+  });
+
+  it('ends a pending wait and drops queued actions when the surface is replaced', async () => {
+    await registerAgentUiTools(surface, { allowedComponents, shareActions: true });
+    await modelContext.call('aetherui_render_ui', formDocument);
+    surface.querySelector('#submit')!.dispatchEvent(new CustomEvent('ae-button-click'));
+    await modelContext.call('aetherui_render_ui', formDocument);
+
+    const pending = modelContext.call('aetherui_wait_for_action', { timeoutSeconds: 5 });
+    await modelContext.call('aetherui_render_ui', formDocument);
+
+    expect(await pending).to.deep.equal({ ok: false, reason: 'replaced' });
+  });
+
+  it('ends a pending wait when the host unregisters the tools', async () => {
+    const controller = new AbortController();
+    await registerAgentUiTools(surface, {
+      allowedComponents,
+      shareActions: true,
+      signal: controller.signal,
+    });
+    await modelContext.call('aetherui_render_ui', formDocument);
+    const execute = modelContext.tools.get('aetherui_wait_for_action')!.execute;
+
+    const pending = execute({}, { signal: new AbortController().signal });
+    controller.abort();
+
+    expect(JSON.parse(String(await pending))).to.deep.equal({ ok: false, reason: 'unregistered' });
+  });
+
+  it('stops waiting when the agent cancels the call', async () => {
+    await registerAgentUiTools(surface, { allowedComponents, shareActions: true });
+    await modelContext.call('aetherui_render_ui', formDocument);
+    const call = new AbortController();
+
+    const pending = modelContext.call('aetherui_wait_for_action', {}, call.signal);
+    call.abort();
+
+    let error: unknown;
+    try {
+      await pending;
+    } catch (caught) {
+      error = caught;
+    }
+    expect((error as DOMException)?.name).to.equal('AbortError');
+  });
+});
+
 /**
  * Runs against the browser's own WebMCP implementation (the test runner enables
  * Chromium's WebMCPTesting feature). Agents call executeTool with JSON-encoded input.
@@ -295,6 +502,43 @@ describe('@aetherui-kit/agent/webmcp in Chromium', () => {
     expect(rendered).to.deep.equal({ ok: true, nodeCount: 2 });
     surface.querySelector('ae-button')!.dispatchEvent(new CustomEvent('ae-button-click'));
     expect(actions).to.deep.equal(['save-profile']);
+  });
+
+  it('lets an agent wait for the user and read what they entered', async () => {
+    const surface = document.createElement('section');
+    await registerAgentUiTools(surface, {
+      allowedComponents: ['ae-input', 'ae-button'],
+      toolPrefix: 'native_two_way',
+      shareState: true,
+      shareActions: true,
+      signal: registration.signal,
+    });
+    await modelContext().executeTool(
+      (await tool('native_two_way_render_ui'))!,
+      JSON.stringify({
+        version: '1',
+        root: {
+          component: 'ae-button',
+          id: 'confirm',
+          children: ['Confirm'],
+          actions: { 'ae-button-click': 'confirm' },
+        },
+      }),
+    );
+
+    const pending = modelContext().executeTool(
+      (await tool('native_two_way_wait_for_action'))!,
+      JSON.stringify({ timeoutSeconds: 5 }),
+    );
+    surface.querySelector('#confirm')!.dispatchEvent(new CustomEvent('ae-button-click'));
+
+    const result = JSON.parse(await pending);
+    expect(result.action.actionId).to.equal('confirm');
+    expect(result.state.components.confirm.component).to.equal('ae-button');
+    expect((await tool('native_two_way_get_ui_state'))?.annotations).to.include({
+      readOnlyHint: true,
+      untrustedContentHint: true,
+    });
   });
 
   it('unregisters from the browser when the host aborts', async () => {

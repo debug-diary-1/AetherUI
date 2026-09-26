@@ -35,13 +35,33 @@ const registered = await registerAgentUiTools(document.querySelector('#agent-sur
 | --- | --- |
 | `aetherui_list_components` | Read-only. Returns the allowed components with their properties, events, and slots. |
 | `aetherui_render_ui` | Validates an agent document and renders it into the surface. Returns `{ "ok": true, "nodeCount": n }`, or `{ "ok": false, "issues": [...] }` with the surface unchanged. |
+| `aetherui_get_ui_state` | With `shareState: true`. Read-only. Returns the current `value`, `checked`, `selected`, `expanded`, `open`, and similar values of rendered components that have an `id`. |
+| `aetherui_wait_for_action` | With `shareActions: true`. Read-only. Returns the next declared action the user triggers, or a reason (`timeout`, `replaced`, `unregistered`, `nothing-rendered`). Accepts `timeoutSeconds` (1–300, default 60). |
 
 The render tool's input schema is [`agent-ui.schema.json`](../../agent-ui.schema.json) with `component` narrowed to `allowedComponents`. Each call replaces the previous render and releases its event listeners.
+
+## Two-way flows
+
+With `shareState` and `shareActions`, an agent can render UI, wait for the user, and continue from what they chose:
+
+```ts
+await registerAgentUiTools(surface, {
+  allowedComponents: ['ae-alert', 'ae-button'],
+  shareState: true,
+  shareActions: true,
+});
+```
+
+1. The agent renders a confirmation with buttons whose actions are `confirm-refund` and `cancel`.
+2. It calls `aetherui_wait_for_action` and receives `{ "ok": true, "action": { "actionId": "confirm-refund", ... }, "state": { ... } }` when the user clicks.
+
+Actions triggered before the agent asks are queued in order and each is delivered once; the queue keeps the latest 20 per render. Rendering a new document clears the queue and ends a pending wait with `replaced`. Event details are reduced to JSON data; events, DOM nodes, and functions are dropped.
 
 ## Guarantees
 
 - The host chooses the components: `allowedComponents` is required, and the validation policy from [Generate UI safely](../generate-safely/) applies to every document.
 - Agent documents are data. Declared events become action identifiers delivered to `onAction` on the page; the agent never supplies handlers.
+- The agent sees user input only when the host sets `shareState` or `shareActions`. Those tools carry `untrustedContentHint`, because the values come from the user.
 - Without `document.modelContext`, the call resolves to `false` and registers nothing.
 - Aborting `signal` unregisters both tools. Rendered content stays until the host replaces it.
 - `toolPrefix` gives each surface distinct tool names, for example `checkout_list_components`.
