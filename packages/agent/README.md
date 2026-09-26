@@ -1,4 +1,4 @@
-# `@aetherui/agent`
+# `@aetherui-kit/agent`
 
 Validated rendering for agent-generated AetherUI documents. The module exposes two interfaces:
 
@@ -8,8 +8,8 @@ Validated rendering for agent-generated AetherUI documents. The module exposes t
 Register the AetherUI elements your application allows before rendering:
 
 ```ts
-import { defineAeButton, defineAeInput } from '@aetherui/core';
-import { renderAgentUi } from '@aetherui/agent';
+import { defineAeButton, defineAeInput } from '@aetherui-kit/core';
+import { renderAgentUi } from '@aetherui-kit/agent';
 
 defineAeButton();
 defineAeInput();

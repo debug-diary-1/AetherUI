@@ -1,1 +1,1 @@
-import '@aetherui/accordion';
+import '@aetherui-kit/accordion';

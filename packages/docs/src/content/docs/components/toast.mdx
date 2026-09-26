@@ -27,7 +27,7 @@ Toast components provide brief, temporary notifications that appear and disappea
   ```html
   <!-- In your HTML page -->
   <script type="module">
-    import { showToast, createToastHelpers } from '@aetherui/core/toast';
+    import { showToast, createToastHelpers } from '@aetherui-kit/core/toast';
     
     // Using the simple API
     showToast({
@@ -49,7 +49,7 @@ Toast components provide brief, temporary notifications that appear and disappea
   <TabItem label="React">
   ```jsx
   import { useEffect } from 'react';
-  import { showToast, createToastHelpers } from '@aetherui/core/toast';
+  import { showToast, createToastHelpers } from '@aetherui-kit/core/toast';
 
   function MyComponent() {
     // Create toast helpers
@@ -86,7 +86,7 @@ Toast components provide brief, temporary notifications that appear and disappea
   </template>
 
   <script>
-  import { showToast, createToastHelpers } from '@aetherui/core/toast';
+  import { showToast, createToastHelpers } from '@aetherui-kit/core/toast';
 
   export default {
     setup() {
@@ -207,7 +207,7 @@ toast.success('Custom success', {
 ### Basic Toast Variants
 
 ```js
-import { createToastHelpers } from '@aetherui/core/toast';
+import { createToastHelpers } from '@aetherui-kit/core/toast';
 
 const toast = createToastHelpers();
 
@@ -221,7 +221,7 @@ toast.error('Something went wrong');
 ### Custom Duration
 
 ```js
-import { showToast } from '@aetherui/core/toast';
+import { showToast } from '@aetherui-kit/core/toast';
 
 // Quick toast (2 seconds)
 showToast({
@@ -239,7 +239,7 @@ showToast({
 ### Custom Placement
 
 ```js
-import { showToast } from '@aetherui/core/toast';
+import { showToast } from '@aetherui-kit/core/toast';
 
 // Different placements
 showToast({

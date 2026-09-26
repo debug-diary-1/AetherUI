@@ -2,7 +2,7 @@ import { html } from 'lit';
 import { expect, within, userEvent } from 'storybook/test';
 
 // Import directly from the main package
-import { AeTreeView } from '@aetherui/core';
+import { AeTreeView } from '@aetherui-kit/core';
 
 // Make sure the component is defined
 if (!customElements.get('ae-treeview')) {

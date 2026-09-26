@@ -38,7 +38,8 @@ before(async () => {
       cwd: packageRoot,
       stdio: 'pipe',
     });
-    dependencies[manifest.name] = `file:./tarballs/aetherui-${name}-${manifest.version}.tgz`;
+    dependencies[manifest.name] =
+      `file:./tarballs/${manifest.name.replace('@', '').replace('/', '-')}-${manifest.version}.tgz`;
   }
   const core = JSON.parse(await readFile(join(root, 'packages/core/package.json'), 'utf8'));
   const workspace = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
@@ -131,8 +132,8 @@ test('the packed MCP server and validator import in Node without a DOM', () => {
       '-e',
       `
       import assert from 'node:assert/strict';
-      import { createAetherUiMcpServer } from '@aetherui/mcp';
-      import { validateAgentUi } from '@aetherui/agent';
+      import { createAetherUiMcpServer } from '@aetherui-kit/mcp';
+      import { validateAgentUi } from '@aetherui-kit/agent';
       assert.equal(typeof createAetherUiMcpServer, 'function');
       assert.equal(validateAgentUi({version: '1', root: {component: 'ae-alert'}}).ok, true);
     `,
@@ -179,7 +180,7 @@ test('core registration remains usable when two independent bundles load all com
   const page = await consumer(
     t,
     `
-    import { AeInput, defineAll } from '@aetherui/core';
+    import { AeInput, defineAll } from '@aetherui-kit/core';
     defineAll();
     const input = new AeInput();
     input.label = 'Name';
@@ -212,10 +213,10 @@ test('public packages keep implementation helpers internal', async (t) => {
   const page = await consumer(
     t,
     `
-    import * as core from '@aetherui/core';
-    import * as autocomplete from '@aetherui/core/autocomplete';
-    import * as combo from '@aetherui/core/combo';
-    import * as table from '@aetherui/datatable';
+    import * as core from '@aetherui-kit/core';
+    import * as autocomplete from '@aetherui-kit/core/autocomplete';
+    import * as combo from '@aetherui-kit/core/combo';
+    import * as table from '@aetherui-kit/datatable';
     window.exportNames = [...Object.keys(core), ...Object.keys(autocomplete), ...Object.keys(combo), ...Object.keys(table)];
   `,
   );
@@ -228,7 +229,7 @@ test('public packages keep implementation helpers internal', async (t) => {
     assert.ok(!names.includes(name), `${name} is internal`);
   }
   const manifest = JSON.parse(
-    await readFile(join(directory, 'node_modules/@aetherui/core/package.json'), 'utf8'),
+    await readFile(join(directory, 'node_modules/@aetherui-kit/core/package.json'), 'utf8'),
   );
   assert.ok(
     !Object.keys(manifest.exports).some((key) => key.includes('*')),
@@ -237,7 +238,7 @@ test('public packages keep implementation helpers internal', async (t) => {
 });
 
 const tableExample = `
-  import '@aetherui/datatable';
+  import '@aetherui-kit/datatable';
   const table = document.createElement('ae-datatable');
   table.data = [{id: 'b', name: 'Grace'}, {id: 'a', name: 'Ada'}];
   table.columns = [{id: 'name', field: 'name', header: 'Name', width: '200px'}];
@@ -267,7 +268,7 @@ test('DataTable sorting and resizing work from the keyboard', async (t) => {
   const page = await consumer(
     t,
     `
-    import { defineDataTableElements } from '@aetherui/datatable';
+    import { defineDataTableElements } from '@aetherui-kit/datatable';
     defineDataTableElements();
     ${tableExample}
   `,
@@ -339,7 +340,7 @@ test('DataTable sorting is stable and preserves the caller data', async (t) => {
   const page = await consumer(
     t,
     `
-    import '@aetherui/datatable';
+    import '@aetherui-kit/datatable';
     const table = document.createElement('ae-datatable');
     table.data = [{id: 'a', score: 2}, {id: 'b', score: 1}, {id: 'c', score: 2}];
     table.columns = [{id: 'id', field: 'id', header: 'ID'}, {id: 'score', field: 'score', header: 'Score'}];
@@ -359,7 +360,7 @@ test('DataTable column and global filters compose through the public interface',
   const page = await consumer(
     t,
     `
-    import '@aetherui/datatable';
+    import '@aetherui-kit/datatable';
     const table = document.createElement('ae-datatable');
     table.data = [{name: 'Ada', team: 'Platform'}, {name: 'Grace', team: 'Compiler'}, {name: 'Linus', team: 'Platform'}];
     table.columns = [{id: 'name', field: 'name', header: 'Name'}, {id: 'team', field: 'team', header: 'Team'}];
@@ -389,7 +390,7 @@ test('toast subpath exports helpers and registers its element in a production bu
   const page = await consumer(
     t,
     `
-    import { showToast, createToastHelpers } from '@aetherui/core/toast';
+    import { showToast, createToastHelpers } from '@aetherui-kit/core/toast';
     showToast({message: 'Saved', duration: 0});
     window.helpers = Object.keys(createToastHelpers());
   `,
@@ -407,7 +408,7 @@ test('toast subpath exports helpers and registers its element in a production bu
 test('bare core component imports survive production tree shaking', async (t) => {
   const page = await consumer(
     t,
-    `import '@aetherui/core/button';`,
+    `import '@aetherui-kit/core/button';`,
     1,
     '<ae-button>Ready</ae-button>',
   );
@@ -418,7 +419,7 @@ test('every core constructor reuses the registered class across independent bund
   const page = await consumer(
     t,
     `
-    import { AeButton, AeAutocomplete, AeCombo, defineAll } from '@aetherui/core';
+    import { AeButton, AeAutocomplete, AeCombo, defineAll } from '@aetherui-kit/core';
     defineAll();
     for (const Constructor of [AeButton, AeAutocomplete, AeCombo]) {
       const element = new Constructor();
@@ -522,7 +523,7 @@ test('alert registration is synchronous in a split ESM consumer', async (t) => {
   const page = await consumer(
     t,
     `
-    import { defineAeAlert } from '@aetherui/core/alert';
+    import { defineAeAlert } from '@aetherui-kit/core/alert';
     defineAeAlert();
     window.registeredImmediately = !!customElements.get('ae-alert');
     document.querySelector('#surface').append(document.createElement('ae-alert'));

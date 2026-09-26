@@ -5,11 +5,11 @@ This example demonstrates how to use AetherUI components in a React application.
 ## Installation
 
 ```bash
-npm install @aetherui/core @aetherui/tokens
+npm install @aetherui-kit/core @aetherui-kit/tokens
 # or
-yarn add @aetherui/core @aetherui/tokens
+yarn add @aetherui-kit/core @aetherui-kit/tokens
 # or
-pnpm add @aetherui/core @aetherui/tokens
+pnpm add @aetherui-kit/core @aetherui-kit/tokens
 ```
 
 ## Usage
@@ -20,14 +20,14 @@ Use React 19 or later. Include the generated declarations in your `vite-env.d.ts
 
 ```typescript
 /// <reference types="vite/client" />
-/// <reference types="@aetherui/core/react" />
+/// <reference types="@aetherui-kit/core/react" />
 ```
 
 ### Basic Button Example
 
 ```tsx
-import { defineAeButton } from '@aetherui/core';
-import '@aetherui/tokens/light.css';
+import { defineAeButton } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css';
 
 // Register the component once when app loads
 defineAeButton();
@@ -58,8 +58,8 @@ export default App;
 
 ```tsx
 import { useState } from 'react';
-import { defineAeButton, defineAeModal } from '@aetherui/core';
-import '@aetherui/tokens/light.css';
+import { defineAeButton, defineAeModal } from '@aetherui-kit/core';
+import '@aetherui-kit/tokens/light.css';
 
 defineAeButton();
 defineAeModal();
@@ -107,8 +107,8 @@ export default ModalExample;
 
 ```tsx
 import { useRef, useEffect } from 'react';
-import { defineAeButton } from '@aetherui/core';
-import type { AeButton } from '@aetherui/core/button';
+import { defineAeButton } from '@aetherui-kit/core';
+import type { AeButton } from '@aetherui-kit/core/button';
 
 defineAeButton();
 
@@ -150,7 +150,7 @@ export function useAetherUIComponent(defineFunction: () => void) {
 
 // Usage in component:
 import { useAetherUIComponent } from './hooks/useAetherUI';
-import { defineAeButton } from '@aetherui/core';
+import { defineAeButton } from '@aetherui-kit/core';
 
 function MyComponent() {
   useAetherUIComponent(defineAeButton);
@@ -164,7 +164,7 @@ function MyComponent() {
 To use the dark theme, simply import it instead:
 
 ```tsx
-import '@aetherui/tokens/dark.css';
+import '@aetherui-kit/tokens/dark.css';
 ```
 
 ## Custom Theming
@@ -173,7 +173,7 @@ Override CSS variables in your global CSS:
 
 ```css
 /* styles/globals.css */
-@import '@aetherui/tokens/light.css';
+@import '@aetherui-kit/tokens/light.css';
 
 :root {
   --ae-button-bg-primary: #0066cc;

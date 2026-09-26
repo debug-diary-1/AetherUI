@@ -1,4 +1,4 @@
-import { componentCatalog, validateAgentUi } from '@aetherui/agent';
+import { componentCatalog, validateAgentUi } from '@aetherui-kit/agent';
 import { McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
 import agentUiSchema from '../agent-ui.schema.json' with { type: 'json' };

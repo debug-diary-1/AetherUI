@@ -2,8 +2,8 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "paths": {
-      "@aetherui/core": ["../core/src"],
-      "@aetherui/core/*": ["../core/src/*"]
+      "@aetherui-kit/core": ["../core/src"],
+      "@aetherui-kit/core/*": ["../core/src/*"]
     }
   }
 }

@@ -9,7 +9,7 @@ export { AeAccordion, AeAccordionItem, accordionStyles, accordionItemStyles };
  *
  * @example
  * ```ts
- * import { defineAeAccordion } from '@aetherui/core';
+ * import { defineAeAccordion } from '@aetherui-kit/core';
  *
  * defineAeAccordion(); // Now <ae-accordion> and <ae-accordion-item> are available
  * ```

@@ -1,5 +1,5 @@
 {
-  "name": "@aetherui/docs",
+  "name": "@aetherui-kit/docs",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
@@ -14,8 +14,8 @@
     "docs:build": "astro build"
   },
   "dependencies": {
-    "@aetherui/core": "workspace:*",
-    "@aetherui/tokens": "workspace:*",
+    "@aetherui-kit/core": "workspace:*",
+    "@aetherui-kit/tokens": "workspace:*",
     "@astrojs/starlight": "catalog:",
     "astro": "catalog:"
   },

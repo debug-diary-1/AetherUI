@@ -1,5 +1,5 @@
 {
-  "name": "@aetherui/datatable",
+  "name": "@aetherui-kit/datatable",
   "version": "0.1.0",
   "description": "DataTable component for AetherUI with sorting, filtering, pagination, and row selection",
   "keywords": [

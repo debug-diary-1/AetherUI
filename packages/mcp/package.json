@@ -1,5 +1,5 @@
 {
-  "name": "@aetherui/mcp",
+  "name": "@aetherui-kit/mcp",
   "version": "0.1.0",
   "description": "MCP server for AetherUI component discovery and agent UI validation",
   "keywords": [
@@ -54,7 +54,7 @@
     "test": "node --test test/*.test.mjs"
   },
   "dependencies": {
-    "@aetherui/agent": "workspace:^",
+    "@aetherui-kit/agent": "workspace:^",
     "@modelcontextprotocol/server": "2.0.0",
     "zod": "^4.5.4"
   },

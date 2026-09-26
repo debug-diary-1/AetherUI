@@ -56,6 +56,6 @@ body:
         - OS: [e.g. macOS]
         - Browser: [e.g. Chrome, Safari]
         - Version: [e.g. 22]
-        - Package version: [e.g. @aetherui/core@1.0.0]
+        - Package version: [e.g. @aetherui-kit/core@1.0.0]
     validations:
       required: true

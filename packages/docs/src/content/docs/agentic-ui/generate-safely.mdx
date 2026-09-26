@@ -3,18 +3,18 @@ title: Generate UI safely
 description: Validate structured model output and render allowlisted AetherUI elements.
 ---
 
-Use `@aetherui/agent` when a model chooses interface elements at runtime. It accepts constrained JSON data rather than HTML or executable event handlers.
+Use `@aetherui-kit/agent` when a model chooses interface elements at runtime. It accepts constrained JSON data rather than HTML or executable event handlers.
 
 ```bash
-pnpm add @aetherui/core @aetherui/agent @aetherui/tokens
+pnpm add @aetherui-kit/core @aetherui-kit/agent @aetherui-kit/tokens
 ```
 
 Register only the elements the experience permits, then apply the same allowlist at the rendering seam:
 
 ```ts
-import { defineAeButton, defineAeInput } from '@aetherui/core';
-import { renderAgentUi } from '@aetherui/agent';
-import '@aetherui/tokens/light.css';
+import { defineAeButton, defineAeInput } from '@aetherui-kit/core';
+import { renderAgentUi } from '@aetherui-kit/agent';
+import '@aetherui-kit/tokens/light.css';
 
 defineAeButton();
 defineAeInput();
@@ -73,14 +73,14 @@ The renderer builds DOM nodes with `document.createElement`, assigns validated p
 
 ## MCP discovery
 
-`@aetherui/mcp` exposes the same catalog and schema to MCP hosts, plus read-only tools for focused component lookup and agent document validation:
+`@aetherui-kit/mcp` exposes the same catalog and schema to MCP hosts, plus read-only tools for focused component lookup and agent document validation:
 
 ```json
 {
   "mcpServers": {
     "aetherui": {
       "command": "npx",
-      "args": ["-y", "@aetherui/mcp"]
+      "args": ["-y", "@aetherui-kit/mcp"]
     }
   }
 }

@@ -94,7 +94,7 @@ export const tabStyles = css`
 Consumers who need to completely override visuals can import and extend:
 
 ```ts
-import { tabStyles as base } from '@aetherui/tabs/styles.js';
+import { tabStyles as base } from '@aetherui-kit/tabs/styles.js';
 ```
 
 ## 5 · Folder · Folder

@@ -7,7 +7,7 @@ export { buttonStyles } from './styles';
  *
  * @example
  * ```ts
- * import { defineAeButton } from '@aetherui/core';
+ * import { defineAeButton } from '@aetherui-kit/core';
  *
  * defineAeButton(); // Now <ae-button> is available
  * ```

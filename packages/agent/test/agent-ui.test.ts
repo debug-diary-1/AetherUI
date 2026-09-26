@@ -18,7 +18,7 @@ const buttonDocument: AgentUiDocument = {
   },
 };
 
-describe('@aetherui/agent', () => {
+describe('@aetherui-kit/agent', () => {
   it('validates a document against the generated component interface', () => {
     expect(validateAgentUi(buttonDocument)).to.deep.equal({
       ok: true,

@@ -37,8 +37,8 @@ Housekeeping
 
 ## 🔲 Maintainer actions (npm)
 
-- [ ] Create an npm account and claim the **@aetherui** org (scope is currently unclaimed — 0 packages)
-- [ ] For **each** `@aetherui/*` package on npmjs.com, configure the trusted publisher:
+- [ ] Create an npm account and claim the **@aetherui-kit** org (scope is currently unclaimed — 0 packages)
+- [ ] For **each** `@aetherui-kit/*` package on npmjs.com, configure the trusted publisher:
       GitHub Actions · owner `debug-diary-1` · repo `AetherUI` · workflow `publish.yml`.
       (First publish of a brand-new package name may need a manual `npm publish`
       to create it before a trusted publisher can be attached.)
@@ -63,7 +63,7 @@ for p in tokens core accordion datatable agent mcp; do (cd packages/$p && pnpm p
 3. Draft a GitHub Release for `v0.1.0` (title `AetherUI v0.1.0 – Initial Release`,
    body from CHANGELOG) for the changelog audience — publishing already happened
    at step 2.
-4. Verify: `npm view @aetherui/core`, then `npm i @aetherui/core @aetherui/tokens` in a scratch project
+4. Verify: `npm view @aetherui-kit/core`, then `npm i @aetherui-kit/core @aetherui-kit/tokens` in a scratch project
 
 ## 🔲 Go public
 
@@ -73,7 +73,7 @@ for p in tokens core accordion datatable agent mcp; do (cd packages/$p && pnpm p
 
 ## Known non-blockers to revisit after launch
 
-- Mixed element-registration model: 22 components self-register via `@customElement` on import *and* expose `defineAeX()`; `@aetherui/core` declares `sideEffects: false`. Decide on one model before 1.0.
+- Mixed element-registration model: 22 components self-register via `@customElement` on import *and* expose `defineAeX()`; `@aetherui-kit/core` declares `sideEffects: false`. Decide on one model before 1.0.
 - `ROADMAP.md` predates most of the current component set — refresh or remove.
 - `examples/*` are integration guides (README-only), not runnable apps.
 - Dev-dependency audit findings (astro 5.x, `shell-quote` via `concurrently`) — none affect published packages.
