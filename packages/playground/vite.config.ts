@@ -7,7 +7,9 @@ export default defineConfig({
     rolldownOptions: {
       output: {
         codeSplitting: {
-          groups: [{ name: 'prism', test: /node_modules[\\/]prismjs[\\/]/ }],
+          // Only Prism core: its CommonJS wrapper runs lazily, so the language components
+          // must stay with the code that initializes core before they run.
+          groups: [{ name: 'prism', test: /node_modules[\\/]prismjs[\\/]prism\.js$/ }],
         },
       },
     },
