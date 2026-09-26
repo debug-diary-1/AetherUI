@@ -36,6 +36,9 @@
     },
     "./dark.css": {
       "import": "./dist/dark.css"
+    },
+    "./minimal.css": {
+      "import": "./dist/minimal.css"
     }
   },
   "publishConfig": {
