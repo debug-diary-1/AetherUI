@@ -30,7 +30,7 @@ catalog:
   '@web/dev-server-esbuild': 2.0.0
   '@web/test-runner': 1.0.0
   '@web/test-runner-playwright': 1.0.0
-  astro: 7.3.2
+  astro: 7.3.4
   chromatic: 18.7.2
   concurrently: 10.0.5
   eslint-plugin-storybook: 10.6.0
