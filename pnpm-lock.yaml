@@ -207,8 +207,8 @@ catalogs:
       specifier: npm:@typescript/typescript6@6.0.2
       version: 6.0.2
     unplugin-dts:
-      specifier: 1.1.0
-      version: 1.1.0
+      specifier: 1.1.1
+      version: 1.1.1
     vite:
       specifier: 8.2.2
       version: 8.2.2
@@ -276,7 +276,7 @@ importers:
         version: '@typescript/typescript6@6.0.2'
       unplugin-dts:
         specifier: 'catalog:'
-        version: 1.1.0(@microsoft/api-extractor@7.52.8(@types/node@24.13.3))(@typescript/typescript6@6.0.2)(esbuild@0.28.2)(rolldown@1.2.7)(rollup@4.63.1)(supports-color@10.2.2)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4))
+        version: 1.1.1(@microsoft/api-extractor@7.52.8(@types/node@24.13.3))(@typescript/typescript6@6.0.2)(esbuild@0.28.2)(rolldown@1.2.7)(rollup@4.63.1)(supports-color@10.2.2)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4))
       vite:
         specifier: 'catalog:'
         version: 8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4)
@@ -301,7 +301,7 @@ importers:
         version: '@typescript/typescript6@6.0.2'
       unplugin-dts:
         specifier: 'catalog:'
-        version: 1.1.0(@microsoft/api-extractor@7.52.8(@types/node@24.13.3))(@typescript/typescript6@6.0.2)(esbuild@0.28.2)(rolldown@1.2.7)(rollup@4.63.1)(supports-color@10.2.2)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4))
+        version: 1.1.1(@microsoft/api-extractor@7.52.8(@types/node@24.13.3))(@typescript/typescript6@6.0.2)(esbuild@0.28.2)(rolldown@1.2.7)(rollup@4.63.1)(supports-color@10.2.2)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4))
       vite:
         specifier: 'catalog:'
         version: 8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4)
@@ -384,7 +384,7 @@ importers:
         version: '@typescript/typescript6@6.0.2'
       unplugin-dts:
         specifier: 'catalog:'
-        version: 1.1.0(@microsoft/api-extractor@7.52.8(@types/node@24.13.3))(@typescript/typescript6@6.0.2)(esbuild@0.28.2)(rolldown@1.2.7)(rollup@4.63.1)(supports-color@10.2.2)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4))
+        version: 1.1.1(@microsoft/api-extractor@7.52.8(@types/node@24.13.3))(@typescript/typescript6@6.0.2)(esbuild@0.28.2)(rolldown@1.2.7)(rollup@4.63.1)(supports-color@10.2.2)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4))
       vite:
         specifier: 'catalog:'
         version: 8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4)
@@ -409,7 +409,7 @@ importers:
         version: '@typescript/typescript6@6.0.2'
       unplugin-dts:
         specifier: 'catalog:'
-        version: 1.1.0(@microsoft/api-extractor@7.52.8(@types/node@24.13.3))(@typescript/typescript6@6.0.2)(esbuild@0.28.2)(rolldown@1.2.7)(rollup@4.63.1)(supports-color@10.2.2)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4))
+        version: 1.1.1(@microsoft/api-extractor@7.52.8(@types/node@24.13.3))(@typescript/typescript6@6.0.2)(esbuild@0.28.2)(rolldown@1.2.7)(rollup@4.63.1)(supports-color@10.2.2)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4))
       vite:
         specifier: 'catalog:'
         version: 8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4)
@@ -585,7 +585,7 @@ importers:
         version: '@typescript/typescript6@6.0.2'
       unplugin-dts:
         specifier: 'catalog:'
-        version: 1.1.0(@microsoft/api-extractor@7.52.8(@types/node@24.13.3))(@typescript/typescript6@6.0.2)(esbuild@0.28.2)(rolldown@1.2.7)(rollup@4.63.1)(supports-color@10.2.2)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4))
+        version: 1.1.1(@microsoft/api-extractor@7.52.8(@types/node@24.13.3))(@typescript/typescript6@6.0.2)(esbuild@0.28.2)(rolldown@1.2.7)(rollup@4.63.1)(supports-color@10.2.2)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4))
       vite:
         specifier: 'catalog:'
         version: 8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4)
@@ -6774,8 +6774,8 @@ packages:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
 
-  unplugin-dts@1.1.0:
-    resolution: {integrity: sha512-KZJ+qk+lmd9dJY/PJvDRFL9BUtVubKDiX7Ai/X6mlkCArcQNzwmupKjVqHbRA42uqO5ZfFRFc+o8/OCbQ1GonQ==}
+  unplugin-dts@1.1.1:
+    resolution: {integrity: sha512-Z2VcabC0hjYuzF62oWmZXVoxagkM8bUWgqUy+dotoJTPnooR5mNaxbpv63JCmcaxdGCW2Bb75omK6FOryOYCRg==}
     peerDependencies:
       '@microsoft/api-extractor': '>=7'
       '@rspack/core': ^1
@@ -13710,7 +13710,7 @@ snapshots:
 
   unpipe@1.0.0: {}
 
-  unplugin-dts@1.1.0(@microsoft/api-extractor@7.52.8(@types/node@24.13.3))(@typescript/typescript6@6.0.2)(esbuild@0.28.2)(rolldown@1.2.7)(rollup@4.63.1)(supports-color@10.2.2)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4)):
+  unplugin-dts@1.1.1(@microsoft/api-extractor@7.52.8(@types/node@24.13.3))(@typescript/typescript6@6.0.2)(esbuild@0.28.2)(rolldown@1.2.7)(rollup@4.63.1)(supports-color@10.2.2)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.4.2)(tsx@4.19.4)):
     dependencies:
       '@rollup/pluginutils': 5.4.0(rollup@4.63.1)
       '@volar/typescript': 2.4.28(@typescript/typescript6@6.0.2)
