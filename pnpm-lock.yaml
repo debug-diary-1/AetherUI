@@ -108,8 +108,8 @@ settings:
 catalogs:
   default:
     '@astrojs/starlight':
-      specifier: 0.42.0
-      version: 0.42.0
+      specifier: 0.42.4
+      version: 0.42.4
     '@custom-elements-manifest/analyzer':
       specifier: 0.11.0
       version: 0.11.0
@@ -424,7 +424,7 @@ importers:
         version: link:../tokens
       '@astrojs/starlight':
         specifier: 'catalog:'
-        version: 0.42.0(@typescript/typescript6@6.0.2)(astro@7.3.2(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.4.2)(tsx@4.19.4))(supports-color@10.2.2)
+        version: 0.42.4(@typescript/typescript6@6.0.2)(astro@7.3.2(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.4.2)(tsx@4.19.4))(supports-color@10.2.2)
       astro:
         specifier: 'catalog:'
         version: 7.3.2(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.4.2)(tsx@4.19.4)
@@ -684,8 +684,8 @@ packages:
   '@astrojs/sitemap@3.7.4':
     resolution: {integrity: sha512-LbKNC24bdUWcQf/pThB6qLlSqHojxGjZDURIzFocY8rlWnAn2t74nnhnK6S5x0NHriHoAduLEpVjRykmeGiVvA==}
 
-  '@astrojs/starlight@0.42.0':
-    resolution: {integrity: sha512-EVsGnyGJ6rRNwGRZFYmGABo0qTQ55F7OSmfSL0VK+5lsqD+u6GWcB8tFqXETcUvP8kyn90W+QBLSL2aer9jNJQ==}
+  '@astrojs/starlight@0.42.4':
+    resolution: {integrity: sha512-EsQsqGJ1uTBQcIMojvLqqg4Ku9idwi6PSNuppIOoYmvVP18xjoUkijMdKoDkhmmwKdhbB4ctLhGjPRJzxaq+Jw==}
     peerDependencies:
       '@astrojs/markdown-remark': ^7.3.0
       astro: ^7.2.10
@@ -7235,7 +7235,7 @@ snapshots:
       sitemap: 9.0.1
       zod: 4.5.4
 
-  '@astrojs/starlight@0.42.0(@typescript/typescript6@6.0.2)(astro@7.3.2(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.4.2)(tsx@4.19.4))(supports-color@10.2.2)':
+  '@astrojs/starlight@0.42.4(@typescript/typescript6@6.0.2)(astro@7.3.2(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.4.2)(tsx@4.19.4))(supports-color@10.2.2)':
     dependencies:
       '@astrojs/markdown-satteri': 0.4.1
       '@astrojs/mdx': 8.0.1(@astrojs/markdown-satteri@0.4.1)(astro@7.3.2(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.4.2)(tsx@4.19.4))
