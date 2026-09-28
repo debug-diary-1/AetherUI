@@ -159,8 +159,8 @@ catalogs:
       specifier: 7.3.2
       version: 7.3.2
     chromatic:
-      specifier: 18.7.2
-      version: 18.7.2
+      specifier: 18.9.5
+      version: 18.9.5
     concurrently:
       specifier: 10.0.5
       version: 10.0.5
@@ -249,7 +249,7 @@ importers:
         version: 1.0.0(supports-color@10.2.2)
       chromatic:
         specifier: 'catalog:'
-        version: 18.7.2
+        version: 18.9.5
       concurrently:
         specifier: 'catalog:'
         version: 10.0.5
@@ -3944,8 +3944,8 @@ packages:
     resolution: {integrity: sha512-TQMmc3w+5AxjpL8iIiwebF73dRDF4fBIieAqGn9RGCWaEVwQ6Fb2cGe31Yns0RRIzii5goJ1Y7xbMwo1TxMplw==}
     engines: {node: '>= 20.19.0'}
 
-  chromatic@18.7.2:
-    resolution: {integrity: sha512-e6YsVD1c97hF2Fz/IxmHiLSK6Di8PV6edc6lKql20Wp5ZUWxluBXC8ZHKgpqJMr6u3vhn708BqOEnZntOgiTOA==}
+  chromatic@18.9.5:
+    resolution: {integrity: sha512-PHYJ7f8j7eeautlPPgIy/FBWTaLY3H8UYavkCpRdfLP9w9wya/dJZ3tjL8RqbFb5EazUkXqg2qCuAOzUS/zTMA==}
     engines: {node: '>=22.0.0'}
     hasBin: true
     peerDependencies:
@@ -10289,7 +10289,7 @@ snapshots:
     dependencies:
       readdirp: 5.1.1
 
-  chromatic@18.7.2:
+  chromatic@18.9.5:
     dependencies:
       semver: 7.8.5
 
