@@ -132,8 +132,8 @@ catalogs:
       specifier: 10.6.0
       version: 10.6.0
     '@storybook/test-runner':
-      specifier: 0.24.5
-      version: 0.24.5
+      specifier: 0.26.0
+      version: 0.26.0
     '@storybook/web-components-vite':
       specifier: 10.6.0
       version: 10.6.0
@@ -231,7 +231,7 @@ importers:
         version: 1.63.0
       '@storybook/test-runner':
         specifier: 'catalog:'
-        version: 0.24.5(@swc/helpers@0.5.17)(@types/node@24.13.3)(debug@4.4.3(supports-color@10.2.2))(esbuild-register@3.6.0(esbuild@0.28.2)(supports-color@10.2.2))(storybook@10.6.0(@types/react@19.2.18)(prettier@3.6.2)(react@19.2.8))(supports-color@10.2.2)
+        version: 0.26.0(@swc/helpers@0.5.17)(@types/node@24.13.3)(debug@4.4.3(supports-color@10.2.2))(esbuild-register@3.6.0(esbuild@0.28.2)(supports-color@10.2.2))(storybook@10.6.0(@types/react@19.2.18)(prettier@3.6.2)(react@19.2.8))(supports-color@10.2.2)
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.3
@@ -2825,12 +2825,12 @@ packages:
       '@types/react-dom':
         optional: true
 
-  '@storybook/test-runner@0.24.5':
-    resolution: {integrity: sha512-U8ib6parBD+wA4z5ZW/JnsR3KkEXoP+sHP8WJdDZeh0GwfTlcWjhbeR6Ij/gxNFEA1bdpBa/P8qYTOs+LKIN1g==}
+  '@storybook/test-runner@0.26.0':
+    resolution: {integrity: sha512-q/B3Mf5QQuYAQ99AKcxTnNzPBso2OctLy13mEA23kYM8vW+Sz3WysdZIiQvNQ0bQFI9MDRkcLQVGIBcnnkaZXA==}
     engines: {node: '>=20.0.0'}
     hasBin: true
     peerDependencies:
-      storybook: ^0.0.0-0 || ^10.0.0 || ^10.0.0-0 || ^10.1.0-0 || ^10.2.0-0 || ^10.3.0-0 || ^10.4.0-0 || ^10.5.0-0 || ^10.6.0-0 || ^11.0.0-0
+      storybook: ^0.0.0-0 || ^10.0.0 || ^10.0.0-0 || ^10.1.0-0 || ^10.2.0-0 || ^10.3.0-0 || ^10.4.0-0 || ^10.5.0-0 || ^10.6.0-0 || ^11.0.0-0 || >=11
 
   '@storybook/web-components-vite@10.6.0':
     resolution: {integrity: sha512-1RIOeCoXW97gcZL39DhR+0/Ek1edwtWQNuFqa9lW63UZ4YULrbwR4K25sdkRHwgD67I7GDGHPY1uq1cPE7sVJA==}
@@ -9024,7 +9024,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.18
 
-  '@storybook/test-runner@0.24.5(@swc/helpers@0.5.17)(@types/node@24.13.3)(debug@4.4.3(supports-color@10.2.2))(esbuild-register@3.6.0(esbuild@0.28.2)(supports-color@10.2.2))(storybook@10.6.0(@types/react@19.2.18)(prettier@3.6.2)(react@19.2.8))(supports-color@10.2.2)':
+  '@storybook/test-runner@0.26.0(@swc/helpers@0.5.17)(@types/node@24.13.3)(debug@4.4.3(supports-color@10.2.2))(esbuild-register@3.6.0(esbuild@0.28.2)(supports-color@10.2.2))(storybook@10.6.0(@types/react@19.2.18)(prettier@3.6.2)(react@19.2.8))(supports-color@10.2.2)':
     dependencies:
       '@babel/core': 7.29.7(supports-color@10.2.2)
       '@babel/generator': 7.29.8

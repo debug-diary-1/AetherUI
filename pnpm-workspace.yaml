@@ -23,7 +23,7 @@ catalog:
   '@storybook/addon-a11y': 10.6.0
   '@storybook/addon-docs': 10.6.0
   '@storybook/addon-links': 10.6.0
-  '@storybook/test-runner': 0.24.5
+  '@storybook/test-runner': 0.26.0
   '@storybook/web-components-vite': 10.6.0
   '@types/node': 24.13.3
   '@types/prismjs': 1.26.6
