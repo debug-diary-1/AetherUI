@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@aetherui-kit/agent": "workspace:^",
-    "@modelcontextprotocol/server": "2.0.0",
+    "@modelcontextprotocol/server": "2.3.0",
     "zod": "^4.5.4"
   },
   "devDependencies": {
